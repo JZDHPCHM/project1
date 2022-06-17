@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+<script type="text/javascript" th:src="@{/webjars/echarts/js/echarts.min.js}"></script>
+<script type="text/javascript" th:src="@{/org.wsp.framework.mvc.ui.template.smartclient/js/smartclient-echarts.js}"></script>
+</head>
+<body>
+</body>
+<script>
+
+var task ={
+		grid: [
+			{width:'200',name:'ID',    title:'序号',primaryKey:true,hidden:true},
+			{width:'400',name:'CUSTID',  title:'客户编号', formatCellValue:function(value,row,index){
+				return "<a href=\""+(FrameworkUiInterface.webContextPath+row.URL)+"\" >"+value+"</a>";
+			}},
+			{width:'400',name:'FD_CUSTNAME',  title:'客户名称'},
+			{width:'200',name:'TYPE',    title:'任务类型'},
+			{width:'*',name:'TASKDATE',  title:'任务时间'}
+	],
+	grid2: [
+			{width:'200',name:'ID',    title:'序号',primaryKey:true,hidden:true},
+			{width:'400',name:'CUSTID',  title:'客户编号'},
+			{width:'400',name:'FD_CUSTNAME',  title:'客户名称'},
+			{width:'200',name:'TYPE',    title:'任务类型'},
+			{width:'*',name:'TASKDATE',  title:'任务时间'}
+	]
+}
+
+//代办
+isc.FwRestDataSource.create({
+	ID: 'DBDS',
+    fields: task.grid,
+   	fetchDataURL: '[[@{/commom/index/queryTaskDbList}]]',
+});
+
+//已办
+isc.FwRestDataSource.create({
+	ID: 'DBYB',
+    fields: task.grid2,
+   	fetchDataURL: '[[@{/commom/index/queryTaskYbList}]]',
+});
+
+//已完成
+isc.FwRestDataSource.create({
+	ID: 'DBYWC',
+    fields: task.grid2,
+   	fetchDataURL: '[[@{/commom/index/queryTaskYwcList}]]',
+});
+
+//代办
+isc.FwListGrid.create({
+	ID: 'DBListGrid',
+	title: '<b>待办任务</b>',
+	dataSource: DBDS,
+	fields: task.grid,
+	initialCriteria:{
+		enable: true
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+	},
+});
+//已办
+isc.FwListGrid.create({
+	ID: 'YBListGrid',
+	title: '<b>已办任务</b>',
+	dataSource: DBYB,
+	fields: task.grid2,
+	initialCriteria:{
+		enable: true
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+	},
+});
+//已完成
+isc.FwListGrid.create({
+	ID: 'YWCListGrid',
+	title: '<b>已完成任务</b>',
+	dataSource: DBYWC,
+	fields: task.grid2,
+	initialCriteria:{
+		enable: true
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+	},
+});
+
+
+
+isc.TabSet.create({
+	title:"预警分析", 
+    ID: "theTabs",
+    height: '100%',
+    width: '100%', 
+    tabs: [
+        {title:"待办任务",
+         pane: isc.VLayout.create({
+	  			width:'100%',
+	  			height:'100%',
+	  			members:[
+	  				DBListGrid
+         		]
+	         })
+        },
+        {title:"已办任务", 
+	         pane:isc.HLayout.create({
+		  			width:'100%',
+		  			height:'100%',
+		  			members:[
+		  				YBListGrid
+	         		]
+		         })
+	        },
+        {title:"已完成任务", 
+	         pane:isc.HLayout.create({
+		  			width:'100%',
+		  			height:'100%',
+		  			members:[
+		  				YWCListGrid
+	         		]
+		         })
+	        }
+    ]
+})
+theTabs.selectTab([[${type}]]);
+isc.FwPage.create({
+	tab: {title:"任务列表",
+		pane: isc.HLayout.create({
+			members:[
+				theTabs
+			]
+		})
+	}
+});
+
+</script>
+</html>

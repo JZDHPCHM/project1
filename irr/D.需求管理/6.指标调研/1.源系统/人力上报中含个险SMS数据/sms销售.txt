@@ -1,0 +1,9 @@
+ select a.pid,a.studylevelno from t_naturegx a ;
+select * from t_codedef a where a.codetypeno='S002'
+
+
+
+select * from ssa.t_contract t
+
+A   算合同
+B+C 算代理

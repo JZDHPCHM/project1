@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="T_IRR_INDEX_RESULT" author="fc">
+        <createTable tableName="T_IRR_INDEX_RESULT" remarks="指标结果表">
+			<column name="ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键ID">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="INDEX_ID"       			type="VARCHAR(36)"      	 	remarks="指标ID"></column>
+			<column name="INDEX_NAME" 				type="VARCHAR(300)" 			remarks="指标名称"></column>
+			<column name="INDEX_CODE"      			type="VARCHAR(50)"      	 	remarks="指标编码"></column>
+			<column name="INDEX_RESULT_Q1"    		type="VARCHAR(300)"      		remarks="Q1指标结果"></column>
+			<column name="INDEX_SCORE_Q1"    		type="VARCHAR(10)"      		remarks="Q1指标得分"></column>
+			<column name="INDEX_RESULT_Q2"    		type="VARCHAR(300)"      		remarks="Q2指标结果"></column>
+			<column name="INDEX_SCORE_Q2"    		type="VARCHAR(10)"      		remarks="Q2指标得分"></column>
+			<column name="DATA_VALI"    			type="NUMBER(5,2)"      		remarks="数据验证"></column>
+			<column name="DATA_DESC"    			type="VARCHAR(300)"      		remarks="数据说明"></column>
+			<column name="FRAC_DIFF"    			type="NUMBER(5,2)"      		remarks="分数差"></column>
+			<column name="DEDU_VALUE"    			type="NUMBER(5,2)"      		remarks="扣分"></column>
+			<column name="WEIG_VALUE"    			type="NUMBER(5,2)"      		remarks="加权"></column>
+			<column name="HOLD_OPER_RISK"    		type="NUMBER(7,6)"      		remarks="占操作风险"></column>
+			<column name="HOLD_QUAN_DIFF"    		type="NUMBER(11,10)"      		remarks="占难以量化"></column>
+			<column name="TASK_ID"     				type="VARCHAR(36)"      	 	remarks="任务ID"></column>
+			<column name="TASK_BATCH"     			type="VARCHAR(10)"      	 	remarks="任务期次"></column>
+			<column name="DATA_BODY"      			type="VARCHAR(50)"      		remarks="主体编码"></column>
+			<column name="FD_CREATOR"           	type="VARCHAR(255)"  			remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"       	type="DATETIME"                 remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"     	type="VARCHAR(50)"  			remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"   	type="DATETIME"                 remarks="最后修改日期"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

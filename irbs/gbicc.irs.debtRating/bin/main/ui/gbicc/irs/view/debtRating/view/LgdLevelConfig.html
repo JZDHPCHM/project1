@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+//主要担保方式
+var intervalTypeS = [(${@frSystemDictionaryService.getDictionaryMapJsonString('DEBTRATING_LGD_INTERVAL_TYPE',#locale)})];
+
+//字段定义
+var DebtRatingBHSXSParamFields ={
+	grid: [
+			{width:'*',		name:'id',	primaryKey:true,	hidden:true},
+			{width:'*',		name:'level',	 title:'等级'},
+			{width:'*',		name:'intervalType',	 title:'区间类型',type:'select',valueMap:intervalTypeS},
+			{width:'*',		name:'intervalLower',		 title:'区间下限',
+				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		}},
+			{width:'*',		name:'intervalUpper',	 title:'区间上限',
+  			formatCellValue : function(value, record, rowNum, colNum){
+			       return (value*100).toFixed(2)+"%";
+		}},
+			{width:'*',		name:'meanValue',		title:'均值',
+			formatCellValue : function(value, record, rowNum, colNum){
+			       return (value*100).toFixed(2)+"%";
+		}}
+			
+	],
+	edit: [
+		{width:'*',		name:'id',	primaryKey:true,	hidden:true,canEdit:false,required:true},
+		{width:200,		name:'level',	 title:'等级'},
+		{width:200,		name:'intervalType',	 title:'区间类型',type:'select',valueMap:intervalTypeS},
+		{width:200,		name:'intervalLower',	 title:'区间下限',required:true},
+		{width:200,		name:'intervalUpper',	 title:'区间上限',required:true},
+		{width:200,		name:'meanValue',		title:'均值',required:true}
+			
+	]
+};
+
+//保证人回收调整系数数据源
+isc.FwRestDataSource.create({
+	ID: 'debtRatingBHSXSParamDS',
+    fields: DebtRatingBHSXSParamFields.grid,
+    dataURL: '[[@{/irs/config/lgdlevel/isc}]]'
+});
+
+//保证人回收调整系数列表
+isc.FwListGrid.create({
+	ID: 'debtRatingBHSXSParamListGrid',
+	title: '<b>LGD等级划分</b>',
+	dataSource: debtRatingBHSXSParamDS,
+	sortField:"bzTypeCode",
+	fields: DebtRatingBHSXSParamFields.grid,
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: debtRatingBHSXSParamDS,
+            fields: DebtRatingBHSXSParamFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh','update','remove','add'
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				debtRatingBHSXSParamListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

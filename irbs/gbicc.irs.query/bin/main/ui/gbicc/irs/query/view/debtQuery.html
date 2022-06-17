@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<body>
+</body>
+<script>
+var users=[(${@DefaultCustomerService.findUserNames()})];
+//当前登录人
+var currUserName = "[(${T(org.wsp.framework.security.util.SecurityUtil).getUserName()})]";
+//当前登录人账号
+var userAccout = "[(${T(org.wsp.framework.security.util.SecurityUtil).getLoginName()})]";
+//当前登录人默认角色
+var defaultRole = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+var userAccoutAndRole = defaultRole + userAccout;
+//模型列表(从模型系统获取)
+var AllModelList = [(${@frSystemDictionaryService.getDictionaryMapJsonString('MODEL_TYPE',#locale)})];
+//过滤金融同业模型
+var ModelList = {};
+for( modelCode in AllModelList){
+	if(modelCode.startsWith("B")){
+		ModelList[modelCode]=AllModelList[modelCode];
+	}
+}
+
+var rateType = {"":"年度评级",null:"年度评级"};
+var RatingResult = [(${@ProcessDataService.findRatingLevel("020")})];
+var configId=[];
+//公司客户评级类型
+var RatingType = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.RatingType),#locale)})];
+//公司客户评级流程状态
+var RatingProcessStatus = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.RatingProcessStatus),#locale)})];
+//评级状态
+var RatingStatus = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.RatingStatus),#locale)})];
+
+/**
+ *需配置字典
+**/
+
+var whetherStatus={
+		 "0" : "否",
+		  "1" : "是"
+}
+
+//字段定义
+var CompanyRatingFields ={
+	query: [
+		{width:'*',		name:'fdCustid',							title:'客户编号'},
+		{width:'*',		name:'fdCustname',							title:'客户名称'},
+		{width:'*',		name:'fdModelname',							title:'模型名称',type: 'select',valueMap:ModelList,autoFetchData:false},
+		{width:'*',		name:'fdFinalapprovalLevel',title:'最终审定等级',valueMap:RatingResult },
+		{width:'*',		name:'fdRatingState',						title:'评级状态',type:"select",valueMap:RatingStatus}
+],
+	grid: [
+		{width:80,		name:'fdCustid',		title:'客户编号'},
+		{width:80,	name:'fdCustname',		title:'客户名称'},
+		{width:90,		name:'fdModelname',		title:'模型名称',	type: 'select',valueMap:ModelList},
+		{width:80,	name:'fdRatingtype',		title:'评级类型',	type: 'select',valueMap:rateType},
+		{width:105,		name:'fdSystemEvaluationScore',title:'系统评估得分',type:"float",format:"0.00"},
+		{width:105,		name:'fdSystemEvaluationGrade',	title:'系统评估等级'},
+		{width:105,		name:'fdSpecialLevel',	title:'特例调整等级'},
+		{width:105,		name:'fdRecommendedLevel',	title:'建议认定等级'},
+		{width:105,		name:'fdFinalapprovalLevel',title:'最终审定等级'},
+		{width:105,		name:'fdEffectiveDate',title:'生效日期',type:'string'},
+		{width:105,		name:'fdExpiryDate',title:'失效日期',type:'string'},
+		{width:95,		name:'fdLaunchDate',title:'发起日期 ',type:'string'},
+		{width:80,		name:'fdOriginator',title:'发起人',type: 'select',valueMap:users},
+		{width:100,		name:'fdRatingState',title:'评级状态',valueMap:RatingStatus},
+	]
+};
+
+//客户评级列表数据源
+isc.FwRestDataSource.create({
+	ID: 'companyRatingDS',
+    fields: CompanyRatingFields.grid,
+    fetchDataURL: '[[@{/irs/debtQueryQuery/queryIssueRating}]]'
+});
+
+//客户评级列表
+isc.FwListGrid.create({
+	ID: 'companyRatingListGrid',
+	title: '<b>发债企业评级列表</b>',
+	dataSource: companyRatingDS,
+	sortField: 'fdCustid',
+	cellHeight: 30,
+	showRecordComponents: true,
+    showRecordComponentsByCell: true,
+    recordComponentPoolingMode: "recycle",
+	fields: CompanyRatingFields.grid,
+	initialCriteria:{
+		enable: true,
+		"creator" : userAccout
+	},
+	actionMembers:[
+		'query','reset','refresh'
+	],
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: CompanyRatingFields.query
+	},
+	createRecordComponent : function (record, colNum) {  
+		return createOperationButton(record, colNum);
+    },
+    updateRecordComponent: function (record, colNum, component, recordChanged) {
+    	return createOperationButton(record, colNum);
+    },
+});
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				companyRatingListGrid
+			]
+		})
+	}
+});
+
+
+
+
+</script>
+</html>

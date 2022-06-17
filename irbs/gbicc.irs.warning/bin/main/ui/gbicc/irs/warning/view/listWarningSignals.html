@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>预警结果信息</title>
+<style type="text/css">
+.form-group {
+	margin-bottom: 10px;
+}
+
+.ibox-content {
+	padding: 10px;
+}
+
+.modal-lg {
+	width: 600px;
+}
+
+.statistical-block {
+	padding-bottom: 10px;
+	font-weight: bolder;
+}
+
+.statistical-level {
+	display: inline-block;
+}
+.float-e-margins .btn{
+	margin-left: 10px;
+}
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+		                    	<h5>预警管理&nbsp;&nbsp;/&nbsp;&nbsp;预警结果信息</h5>
+		                    </div>
+		                    <div class="ibox-content" style="padding-bottom: 0;">
+	                    	<form class="form-horizontal" id="formSearch">
+							<div class="form-group">
+								<label class="col-sm-1 control-label">承租人名称</label>
+								<div class="col-sm-2">
+									<input id="lesseeName" type="text" placeholder="模糊查找"
+										name="custname" class="form-control" autocomplete="off" data-provide="typeahead">
+								</div>
+								<label class="col-sm-1 control-label">预警类别</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" name="warnType" id="warnType">
+										<option value=''>请选择</option>
+										<option
+											th:each="option: ${@frSystemDictionaryService.getDictionaryMap('WARN_CATE',#locale)}"
+											th:value="${option.key}" th:text="${option.value}"></option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label">预警小类</label>
+								<div class="col-sm-2">
+										
+									<select class="chosen-select" name="warnSmalt" id="warnSmalt">
+										<option value=''>请选择</option>
+										<!-- R001预警 -->
+										<option
+											th:each="option: ${@frSystemDictionaryService.getDictionaryMap('R001',#locale)}"
+											th:value="${option.key}" th:text="${option.value}"></option>
+									<!-- R002预警 -->
+										<option
+											th:each="option: ${@frSystemDictionaryService.getDictionaryMap('R002',#locale)}"
+											th:value="${option.key}" th:text="${option.value}"></option>
+									<!-- R003预警 -->
+										<option
+											th:each="option: ${@frSystemDictionaryService.getDictionaryMap('R003',#locale)}"
+											th:value="${option.key}" th:text="${option.value}"></option>
+									</select>	
+								</div>
+								<label class="col-sm-1 control-label">预警级别</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" name="level" id="level">
+										<option value=''>请选择</option>
+										<option
+											th:each="option: ${@frSystemDictionaryService.getDictionaryMap('RULE_WARN_LEVEL',#locale)}"
+											th:value="${option.key}" th:text="${option.value}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">推送状态</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" id="status" name="status">
+										<option value=''>请选择</option>
+										<option
+											th:each="option: ${@frSystemDictionaryService.getDictionaryMap('PushState',#locale)}"
+											th:value="${option.key}" th:text="${option.value}"></option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label">关联人类型</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" id="custType" name="custType">
+										<option value=''>请选择</option>
+										<option
+											th:each="option: ${@frSystemDictionaryService.getDictionaryMap('associates',#locale)}"
+											th:value="${option.key}" th:text="${option.value}"></option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label">预警规则</label>
+								<div class="col-sm-2">
+									<input id="warningRule" name="warnRule" type="text"
+										placeholder="模糊查找" class="form-control" autocomplete="off" data-provide="typeahead">
+								</div>
+								<label class="col-sm-1 control-label">预警流水号</label>
+								<div class="col-sm-2">
+									<input id="waterID" name="waterID" type="text"
+										placeholder="" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">预警时间</label>
+								<div class="col-sm-3">
+									<div class="input-daterange input-group" id="datepicker">
+										<input id="date2" type="text" class="form-control"
+											name="date2" placeholder="请选择开始日期" readonly /> <span
+											class="input-group-addon">至</span> <input id="date1"
+											type="text" class="form-control" name="date1"
+											placeholder="请选择结束日期" readonly />
+									</div>
+								</div>
+								<div class="col-sm-8" style="text-align: right;">
+									<b id="btn-query" class="btn btn-success">查询</b>
+									<b id="btn-reset" class="btn btn-success">重置</b>
+									<b id="btn-push" class="btn btn-success">推送</b>
+									<b id="btn-download" class="btn btn-success">下载</b>
+								</div>
+							</div>
+						</form>	
+	                    </div>
+						</div>
+						<form>
+							<div class="statistical-block">
+							<b id="btn-highSignal"  class="btn btn-default" style="margin-right: 10px;">高风险预警信号</b>
+							<b id="btn-middSignal"  class="btn btn-default" style="margin-right: 10px;">中风险预警信号</b>
+							<b id="btn-allsSignal"  class="btn btn-success">全部</b>
+							<!-- <div class="statistical-level" id="high">
+								高风险预警信号：（<span id="highSignal">0</span>）
+							</div>
+							<div class="statistical-level"
+								style="padding-left: 30px; color: #FF9900;">
+								中风险预警信号：（<span id="middSignal">0</span>）
+							</div> -->
+						</div>	
+						</form>
+						<!-- 模态窗口 -->
+						<div class="jqGrid_wrapper">
+							<table id="table_list"></table>
+							<div id="pager_list"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/js/seachList.js?t=2"></script>
+<script type="text/javascript">
+$("input").blur(function(){
+	$(".typeahead.dropdown-menu").css("display","none");
+});
+var warnCheck="";
+	$("#warnType").change(function(){
+		if($("#warnType").val()=='R001'){
+			var map	= [(${@frSystemDictionaryService.getDictionaryMapJsonString('R001','')})];
+			var html = '<option value="">请选择</option>';
+			$.each(map,function(i,row){
+				html+="<option value='"+i+"'>"
+				html+=row
+				html+="</option>";
+			})
+			$("#warnSmalt").html(html);
+			$("#formSearch select").trigger("chosen:updated");
+        }
+		
+		if($("#warnType").val()=='R002'){
+			var map	= [(${@frSystemDictionaryService.getDictionaryMapJsonString('R002','')})];
+			var html = '<option value="">请选择</option>';
+			$.each(map,function(i,row){
+				html+="<option value='"+i+"'>"
+				html+=row
+				html+="</option>";
+			})
+			$("#warnSmalt").html(html);
+			$("#formSearch select").trigger("chosen:updated");
+        }
+		
+		if($("#warnType").val()=='R003'){
+			var map	= [(${@frSystemDictionaryService.getDictionaryMapJsonString('R003','')})];
+			var html = '<option value="">请选择</option>';
+			$.each(map,function(i,row){
+				html+="<option value='"+i+"'>"
+				html+=row
+				html+="</option>";
+			})
+			$("#warnSmalt").html(html);
+			$("#formSearch select").trigger("chosen:updated");
+        }
+		
+		if($("#warnType").val()==''){
+			var map	= [(${@frSystemDictionaryService.getDictionaryMapJsonString('R001','')})];
+			map1 = [(${@frSystemDictionaryService.getDictionaryMapJsonString('R002','')})];
+			map2 = [(${@frSystemDictionaryService.getDictionaryMapJsonString('R003','')})];
+			 for(var key in map1){
+				 map[key] =map1[key];       
+			    }			 
+			 for(var key in map2){
+				 map[key] =map2[key];       
+			    }			 
+			var html = '<option value="">请选择</option>';
+			$.each(map,function(i,row){
+				html+="<option value='"+i+"'>"
+				html+=row
+				html+="</option>";
+			})
+			$("#warnSmalt").html(html);
+			$("#formSearch select").trigger("chosen:updated");
+        }	
+	})
+	$('.chosen-select').chosen({width: "100%"});
+	var form="";
+	$('#btn-query').click(function(){
+		form = $('#formSearch').serializeObject();
+	    $("#table_list").jqGrid('setGridParam', {postData:form,page:1}).trigger("reloadGrid");
+	 
+	});
+	
+	//点击改变颜色
+	$(".statistical-block b").click(function(){
+  var btn_index=$(this).index();
+  //添加按钮点击样式
+  $(".statistical-block b").removeClass("btn-success").removeClass("btn-default");
+  $(".statistical-block b").eq(btn_index).addClass("btn-success").siblings().addClass("btn-default");//方法一
+     //$(this).addClass("btn-success").siblings().addClass("btn-default");//方法二
+     //获取表格数据
+     if(btn_index==0){//第一个按钮
+    	var formHigh = $('#formSearch').serializeObject();
+    	formHigh.highWarn='high';
+    	warnCheck="high";
+   	$("#table_list").jqGrid('setGridParam', {postData:formHigh,page:1}).trigger("reloadGrid");
+     }else if(btn_index==1){//第二个按钮
+    	var formMed = $('#formSearch').serializeObject();
+    	formMed.highWarn='med';
+    	warnCheck="med";
+    	$("#table_list").jqGrid('setGridParam', {postData:formMed,page:1}).trigger("reloadGrid");
+     }else if(btn_index==2){//第三个按钮
+    	 var formAll = $('#formSearch').serializeObject();
+    	 formAll.highWarn="";
+     	$("#table_list").jqGrid('setGridParam', {postData:formAll,page:1}).trigger("reloadGrid");
+     }
+ })
+
+	$('#btn-push').click(function(){
+		  var selectedRowId = $("#table_list").jqGrid("getGridParam", "selrow");
+		  if(!selectedRowId){
+	        	swal({
+	                title: "提示",
+	                text: "请先选择要推送的数据！",
+	                type: "info"
+	            });
+	            return ;
+	        }
+		  var ids = $("#table_list").jqGrid('getGridParam', 'selarrrow');//获取 多行数据
+		  var par="";
+		  for(var i=0;i<ids.length;i++){
+			  var rowData = $("#table_list").jqGrid('getRowData', ids[i]);  
+			  par+=rowData.id+",";
+		  }
+		  
+		  
+		  swal({
+              title: "",
+              text: "确认推送"+ids.length+"条预警",
+              type: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#1c84c6",
+              cancelButtonText: "取消",
+              confirmButtonText: "确认",
+              closeOnConfirm: false
+          }, function () {
+        	  $.ajax({
+  				url: "/warn/warningByCode",
+  				data:{ids:par},
+  				async:false,
+  				success: function(result){
+  					if(result){
+  						swal({
+  			                title: "提示",
+  			                text: "推送成功！",
+  			                type: "success"
+  			            }, function(){
+  			            	swal.close();
+  			            	$("#table_list").jqGrid('clearGridData');　//先清空，再加载
+  			                $("#table_list").jqGrid('setGridParam', {
+  			                    datatype:"json",
+  			                    data:result　//result为ajax请求成功后后台返回的
+  			                }).trigger("reloadGrid");
+  			            });
+  					}else{
+  						swal({
+  			                title: "提示",
+  			                text: "推送失败！",
+  			                type: "error"
+  			            }, function(){
+  			            	swal.close();
+  			            	$("#table_list").jqGrid('clearGridData');　//先清空，再加载
+  			                $("#table_list").jqGrid('setGridParam', {
+  			                    datatype:"json",
+  			                    data:result　//result为ajax请求成功后后台返回的
+  			                }).trigger("reloadGrid");
+  			            });
+  					}
+  		      }})
+          });
+		  
+		
+	});
+	//重置按钮
+	$("#btn-reset").click(function(){
+		$("#formSearch input").val("");
+		$("#formSearch select").val("");
+		$("#formSearch select").trigger("chosen:updated");
+		$('#date2').datepicker('setEndDate', new Date());
+		$('#date1').datepicker('setEndDate', new Date());  
+		$('#date1').datepicker('setStartDate', null);
+	});
+	$("#date2").datepicker('setDate', new Date());//设置显示当前日期
+	$("#date1").datepicker('setDate', new Date());//设置显示当前日期
+	$('#date2').datepicker({
+		  autoclose : true,
+	      todayHighlight : true,
+	      endDate : new Date()
+	   }).on('show',function(e){
+	      if ($('#date1').val() == '') {
+	         //$('#date2').datepicker('setEndDate', null);
+	      }
+	   }).on('changeDate',function(e){
+	      if (e.date) {
+	         $('#date1').datepicker('setStartDate', new Date(e.date.valueOf()));
+	      } else {
+	         $('#date1').datepicker('setStartDate', null);
+	      }
+	   });
+	   
+	   $('#date1').datepicker({
+	      autoclose : true,
+	      todayHighlight : true,
+	      endDate : new Date()
+	   }).on('show',function(e){
+	      if ($('#date2').val() == '') {
+	         //$('#date1').datepicker('setStartDate', null);
+	      }
+	   }).on('changeDate',function(e){
+	      if (e.date) {
+	         $('#date2').datepicker('setEndDate', new Date(e.date.valueOf()));
+	      } else {
+	         $('#date2').datepicker('setEndDate', null);
+	      }
+	   });
+	
+	$(document).ready(function(){
+		//var height = window.innerHeight;
+		var form="";
+			form = $('#formSearch').serializeObject();
+			$.ajax({
+				url: "/warn/groupWarn",
+				async:false,
+				data:form,
+				success: function(result){
+					if(result.length==1){
+						if(result[0].WARN_LEVEL=='med'){
+							$("#middSignal").html(result[1].COUNT);
+							return ;
+						}
+					}
+					
+					if(result[0].COUNT){
+						$("#highSignal").html(result[0].COUNT);
+					}else{
+						$("#highSignal").html("");
+					}
+					if(result[1].COUNT){
+						$("#middSignal").html(result[1].COUNT);
+					}else{
+						$("#middSignal").html("");
+					}
+					
+				}
+			});	
+			 $("#table_list").jqGrid({
+					url : "/warn/warningList",
+					recordtext: "显示：{0} - {1}，总数：{2} ",
+				    emptyrecords: "本次查询无数据！",
+				    loadtext: "读取中...",
+				    pgtext : "第 {0}页， 共{1}页",
+					mtype : "post",
+					postData:form,
+			        datatype: "json",
+			        height: ($(window).height()-$(".float-e-margins").height()-$(".statistical-block").height()-150),//屏幕高度-查询框高度-高中风险信号高度-150的偏差值
+			        autowidth: true,
+			        fitHeight:true,
+			        shrinkToFit: true,
+			        multiselect : true, //允许多选
+			        scrollOffset : 0,
+			        prmNames: {
+			            page: "page"   // 表示请求页码的参数名称
+			        },
+		 	        rowNum: 20,
+			        rowList: [20, 30, 40],
+			        colNames:['评级流水号','承租人名称','关联人类型','预警级别','预警类别', '预警小类','预警规则', '预警详情', '预警时间', '推送状态'],
+			       // colNames:['承租人名称','关联人类型','预警级别','预警类别', '预警小类','预警规则', '预警详情', '预警时间', '推送状态'],
+			        colModel:[
+			        	{name:'id',index:'id', editable: true,hidden:true},
+			            {name:'lesseeid',index:'lesseeid', editable: true,width: 115, sortable: false}, 
+			            {name:'assotype',index:'assotype', editable: true, sortable: false,width: 45,formatter:function(value,row,index){
+			            	if([(${@frSystemDictionaryService.getDictionaryMapJsonString('associates','')})][value]){
+			            		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('associates',"")})][value];
+			            	}else{
+			            		return "";
+			            	}
+			            	return ;
+			            	
+			            }},
+			            {name:'warnsignlevel',index:'warnsignlevel', editable: true, sortable: false,width: 40,formatter:function(value,row,index){
+			            	if(!value){
+			            		return "";
+			            	}
+			            	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('RULE_WARN_LEVEL','')})][value];
+			            }},
+			            {name:'warncateid',index:'warncateid', editable: true,sortable: false,width: 40,formatter:function(value,row,index){
+			            	if(!value){
+			            		return "";
+			            	}
+			            	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('WARN_CATE','')})][value];
+			            }},
+			            {name:'warnsubid',index:'warnsubid', editable: true,sortable: false,width: 60,formatter:function(value,row,index){
+			            	if(!value){
+			            		return "";
+			            	}
+			            	if(value.indexOf("R001")>-1){
+				            	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('R001','')})][value];
+			            	}
+			            	if(value.indexOf("R002")>-1){
+				            	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('R002','')})][value];
+			            	}
+			            	if(value.indexOf("R003")>-1){
+				            	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('R003','')})][value];
+			            	}
+			            }},
+			            {name:'rulename',index:'rulename', editable: true,width: 100, sortable: false},
+			            {name:'warndesc',index:'warndesc', editable: true,width: 215, sortable: false},
+			            {name:'warntime',index:'warntime', editable: true,width: 45, sortable: false},
+			            {name:'pushStatus',index:'pushStatus', editable: true,sortable: false,width: 40,formatter:function(value,row,index){
+			            	if(!value){
+			            		return "未推送";
+			            	}
+			            	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('PushState','')})][value];
+			            }}
+			        ],
+			        pager: "#pager_list",
+			        viewrecords: true,
+			        caption: "",
+			        add: true,
+			        edit: true,
+			        addtext: 'Add',
+			        edittext: 'Edit',
+			        rownumbers: true,
+			        rownumWidth: 60,
+			        hidegrid: false,
+			        //设置点击当前行，不默认勾选checkbox。
+			        beforeSelectRow: function (rowid, e) {
+			            var $myGrid = $(this),
+			                i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),
+			                cm = $myGrid.jqGrid('getGridParam', 'colModel');
+			            return (cm[i].name === 'cb');
+			        },
+			        jsonReader: {
+			        	root: "response.data",
+			        	records: "response.totalRows",
+			        	//page: "response.currPage", // 当前第几页
+		                total: "response.totalPages", // 总共多少页
+			        	repeatitems: false,
+			        	id: "0"
+			        }
+			    });
+			    $("#table_list").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+				// Setup buttons
+		        $("#table_list").jqGrid('navGrid', '#pager_list',
+		                {edit: false, add: false, del: false, search: false},
+		                {height: 200, reloadAfterSubmit: true}
+		        );
+        // Add responsive to jqGrid
+        $(window).bind('resize', function () {
+            var width = $('.jqGrid_wrapper').width();
+            $('#table_list').setGridWidth(width);
+        });
+        
+      //下载
+        $("#btn-download").click(function(){
+            
+            var params = {
+            		"waterId":$("input[name='waterID']").val(),
+                    "custname":$("input[name='custname']").val(),
+                    "warnType":$("select[name='warnType']").val(),
+                    "warnSmalt":$("select[name='warnSmalt']").val(),
+                    "level":$("select[name='level']").val(),
+                    "pushStatus":$("select[name='status']").val(),
+                    "custType":$("select[name='custType']").val(),
+                    "warnRule":$("select[name='warnRule']").val(),
+                    "date2":$("input[name='date2']").val(),
+                    "date1":$("input[name='date1']").val(),
+                    "highWarn":warnCheck
+                };
+            var flag = true;
+            //判断查询条件下是否有结果
+            $.ajax({
+                url: "/warn/queryCount.action",
+                async:false,
+                type:"POST",
+                data:params,
+                success:function(data){
+                    if(!data.flag){
+                        swal('提示',data.data,'warning');
+                        flag = false;
+                    }
+                },
+                error:function(xhr,status,error){
+                    swal('错误',error,'error');
+                }
+            })
+            //如果没有记录
+            if(!flag){
+                return false;
+            }
+            
+            swal({
+                    title: "导出数据",
+                    text: "请输入下载文件名称",
+                    type: "input",
+                    showCancelButton: true,
+                    confirmButtonText: "确定",
+                    cancelButtonText : "取消",
+                    inputPlaceholder:"文件名称",
+                    closeOnConfirm: false
+                },
+                function(inputValue){
+                    if(inputValue){
+                        if(inputValue==null || inputValue==''){
+                            swal('提示','请输入文件名称','warning');
+                            return false;
+                        }
+                        params.fileName = inputValue;
+                        $.ajax({
+                            url: "/warn/exportData.action",
+                            async:true,
+                            type:"POST",
+                            data:params,
+                            success:function(data){
+                                swal('提示','数据导出中\n请稍后点击右上角用户名进入下载中心下载','warning');
+                            },
+                            error:function(xhr,status,error){
+                                swal('错误',error,'error');
+                            }
+                        })
+                    }else{
+                        swal('提示','请输入文件名称','warning');
+                    }
+                }
+            )
+        })
+	});
+</script>
+</html>

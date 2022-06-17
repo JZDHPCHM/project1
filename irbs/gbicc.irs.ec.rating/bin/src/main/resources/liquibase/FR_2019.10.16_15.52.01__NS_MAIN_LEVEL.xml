@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8'?><!--FR_2019.10.16_15.52.01__NS_MAIN_LEVEL.xml--><export>
+    <summary>
+        <t name="NS_MAIN_LEVEL">select * from NS_MAIN_LEVEL</t>
+    </summary>
+    <table name="NS_MAIN_LEVEL">
+        <sql>select * from NS_MAIN_LEVEL</sql>
+        <fields>
+            <field name="FD_ID" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_CODE" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_CODE_LOWER" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_CODE_UPPER" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_SORT" type="12" typeName="java.sql.Types.VARCHAR"/>
+        </fields>
+        <resultset>
+            <row>
+                <f>1</f>
+                <f>AAA</f>
+                <f>88.67</f>
+                <f>100</f>
+                <f>1</f>
+            </row>
+            <row>
+                <f>2</f>
+                <f>AA</f>
+                <f>82.47</f>
+                <f>88.67</f>
+                <f>2</f>
+            </row>
+            <row>
+                <f>3</f>
+                <f>A</f>
+                <f>76.27</f>
+                <f>82.47</f>
+                <f>3</f>
+            </row>
+            <row>
+                <f>4</f>
+                <f>BBB</f>
+                <f>70.04</f>
+                <f>76.27</f>
+                <f>4</f>
+            </row>
+            <row>
+                <f>5</f>
+                <f>BB</f>
+                <f>63.78</f>
+                <f>70.04</f>
+                <f>5</f>
+            </row>
+            <row>
+                <f>6</f>
+                <f>B+</f>
+                <f>57.47</f>
+                <f>63.78</f>
+                <f>6</f>
+            </row>
+            <row>
+                <f>7</f>
+                <f>B</f>
+                <f>51.07</f>
+                <f>57.47</f>
+                <f>7</f>
+            </row>
+            <row>
+                <f>8</f>
+                <f>B-</f>
+                <f>44.51</f>
+                <f>51.07</f>
+                <f>8</f>
+            </row>
+            <row>
+                <f>9</f>
+                <f>CCC+</f>
+                <f>37.65</f>
+                <f>44.51</f>
+                <f>9</f>
+            </row>
+            <row>
+                <f>10</f>
+                <f>CCC</f>
+                <f>30.25</f>
+                <f>37.65</f>
+                <f>10</f>
+            </row>
+            <row>
+                <f>11</f>
+                <f>CCC-</f>
+                <f>21.67</f>
+                <f>30.25</f>
+                <f>11</f>
+            </row>
+            <row>
+                <f>12</f>
+                <f>CC</f>
+                <f>9.91</f>
+                <f>21.67</f>
+                <f>12</f>
+            </row>
+            <row>
+                <f>13</f>
+                <f>C</f>
+                <f>0</f>
+                <f>9.91</f>
+                <f>13</f>
+            </row>
+            <row>
+                <f>14</f>
+                <f>D</f>
+                <f>0</f>
+                <f>0</f>
+                <f>14</f>
+            </row>
+        </resultset>
+    </table>
+</export>

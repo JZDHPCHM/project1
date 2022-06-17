@@ -1,0 +1,32 @@
+create table E_ADS_IRR_INDEX_VALUE
+(
+  index_id    VARCHAR2(10) not null,
+  org_id      VARCHAR2(10),
+  channel_id  VARCHAR2(20),
+  index_value NUMBER(24,4) not null,
+  eval_date   VARCHAR2(12) not null,
+  load_dt     DATE not null
+)
+tablespace SPC_DW
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column E_ADS_IRR_INDEX_VALUE.index_id
+  is '指标编号';
+comment on column E_ADS_IRR_INDEX_VALUE.org_id
+  is '机构编号';
+comment on column E_ADS_IRR_INDEX_VALUE.channel_id
+  is '渠道编号';
+comment on column E_ADS_IRR_INDEX_VALUE.index_value
+  is '指标值';
+comment on column E_ADS_IRR_INDEX_VALUE.eval_date
+  is '评估期';
+comment on column E_ADS_IRR_INDEX_VALUE.load_dt
+  is '加载日期';

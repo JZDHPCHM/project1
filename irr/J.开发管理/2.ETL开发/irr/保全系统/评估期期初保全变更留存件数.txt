@@ -1,0 +1,37 @@
+SELECT
+        --机构号
+         SUBSTR(T.DID, 0, 1) COMPANY,
+         --保单号
+         count(distinct T.POLICY_NOS),
+         T.SERVICE_NAME,
+          FROM (SELECT T2.DID,
+                       (SELECT MAX(OPERATOR_TIME)
+                          FROM HASLCSBPM.T_PROCESSSTEP
+                         WHERE CHANGE_ID = T1.CHANGE_ID
+                           AND SUB_CHANGE_ID = T1.SUB_CHANGE_ID
+                           AND SUB_CHANGE_ID = T1.SUB_CHANGE_ID
+                           AND STEP_NAME IN ('end', 'cancel')) FIN,
+                           T1.SERVICE_NAME,
+                       (SELECT NVL(PARAM_VALUE, T1.STATUS)
+                          FROM T_PARAM
+                         WHERE PARAM_TYPE = 'POST'
+                           AND T1.STATUS = PARAM_CODE) STATUS,
+                       T1.POLICY_NOS
+                  FROM HASLCSBPM.T_POLICY_SERVICE T1,
+                 HASLCSBPM.T_POLICY_CHANGE T2,
+                 (SELECT CHANGE_ID, MIN(OPERATOR_TIME) OPERATOR_TIME
+                          FROM HASLCSBPM.T_PROCESSSTEP
+                         WHERE OPERATOR_TIME IS NOT NULL
+                         GROUP BY CHANGE_ID) T3
+                 WHERE T1.CHANGE_ID = T2.CHANGE_ID
+                   AND T1.CHANGE_ID = T3.CHANGE_ID
+                      
+                   AND T1.STATUS IN ('end', 'cancel')
+                      --限定保全项目
+                   AND T1.SERVICE_ID IN
+                       (SELECT T.PARAM_CODE
+                          FROM T_PARAM T
+                         WHERE T.PARAM_VALUE IN ('AUTO', 'OUTER'))) T
+                    WHERE STARTDATE <=add_months(to_date('20180630','yyyymmdd'),-3)
+   AND SERVICE_NAME='外部保全'
+   AND STATUS NOT IN ('disabled','cancel')

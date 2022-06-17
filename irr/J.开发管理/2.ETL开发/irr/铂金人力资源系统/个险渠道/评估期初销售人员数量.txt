@@ -1,0 +1,42 @@
+SELECT
+  CASE WHEN sum(V_DM2_KPI_CHNL11_1.CURPSNNUM)
+IS NULL THEN 0
+ ELSE SUM(V_DM2_KPI_CHNL11_1.CURPSNNUM)
+   END 
+FROM
+  ( 
+  select * from D_MANAGECOMPANY
+  )  D_MANAGECOMPANY,
+  ( 
+  select * from v_dm2_kpi_chnl11_1 t where to_number(t.dateid)<=to_number(to_char((sysdate-1),'YYYYMM'))
+  )  V_DM2_KPI_CHNL11_1,
+  ( 
+  select t.companyno||t.branch  as ORI,
+t.areacode,t.longdesc,o.innerorgcode,o.origorgcode
+,d.provincechnname,d.branchchnname
+from bidm.d_fc_areacode t
+,bidm.d_orgmap o,bidm.d_managecompany d
+where o.origorgcode = t.companyno||t.branch
+and o.innerorgcode=d.innerorgcode
+
+  )  D_FC_AREACODE,
+  ( 
+  select * from d_managecompany_map
+  )  D_MANAGECOMPANY_MAP
+WHERE
+  ( V_DM2_KPI_CHNL11_1.ADD_BKCOD(+)=D_FC_AREACODE.AREACODE  )
+  AND  ( D_FC_AREACODE.INNERORGCODE=D_MANAGECOMPANY.INNERORGCODE(+)  )
+  AND  ( D_MANAGECOMPANY.INNERORGCODE=D_MANAGECOMPANY_MAP.BRANCHCOMCODE  )
+  AND  
+  (
+   (
+    V_DM2_KPI_CHNL11_1.DATEID  =  '201804'
+    OR
+    V_DM2_KPI_CHNL11_1.DATEID  Is Null  
+   )
+   AND
+   D_MANAGECOMPANY_MAP.PROVINCECOMCODE  Like  '86'
+  )
+
+
+

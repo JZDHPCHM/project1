@@ -1,0 +1,4 @@
+alter table T_IRR_CORPGOVE_RESULT add (EVAL_POINT varchar2(500));
+comment on column T_IRR_CORPGOVE_RESULT.EVAL_POINT is '评价点';
+alter table T_IRR_CORPGOVE_RESULT add (EVAL_CRIT varchar2(500));
+comment on column T_IRR_CORPGOVE_RESULT.EVAL_CRIT is '评价标准';

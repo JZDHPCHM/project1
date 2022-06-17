@@ -1,0 +1,2584 @@
+<?xml version='1.0' encoding='UTF-8'?><!--FR_2019.05.07_16.11.25__NS_RT_BASICS_LIB And More 1 Tables.xml--><export>
+    <summary>
+        <t name="NS_RT_BASICS_LIB">select * from NS_RT_BASICS_LIB</t>
+        <t name="NS_RT_KI_LIB">select * from NS_RT_KI_LIB</t>
+    </summary>
+    <table name="NS_RT_BASICS_LIB">
+        <sql>select * from NS_RT_BASICS_LIB</sql>
+        <fields>
+            <field name="FD_ID" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_BASICS_CODE" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_BASICS_NAME" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_BASICS_DESCRIBE" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_SMALLENTERPRISE" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_SMALLENTERPRISEOLD" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_GENERALENTERPRISE" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_GENERALENTERPRISEOLD" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_INSTITUTION" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_INSTITUTIONOLD" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_CREATOR" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_CREATE_DATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+            <field name="FD_LAST_MODIFIER" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_LAST_MODIFYDATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+        </fields>
+        <resultset>
+            <row>
+                <f>dcfbe97f-f43e-4121-8ad6-7ace3ed50e36</f>
+                <f>BASICS_100</f>
+                <f>委托贷款</f>
+                <f/>
+                <f>G1_DL003_003</f>
+                <f>G1_DL003_003</f>
+                <f>G1_DL003_003</f>
+                <f>G1_DL003_003</f>
+                <f>G1_DL003_003</f>
+                <f>G1_DL003_003</f>
+                <f>admin</f>
+                <f>2019-05-06 15:02:21.0</f>
+                <f>admin</f>
+                <f>2019-05-06 15:26:51.492</f>
+            </row>
+            <row>
+                <f>f3fbc12c-95c7-4dc9-877b-35b8946c2389</f>
+                <f>BASICS_098</f>
+                <f>期末短期责任准备</f>
+                <f/>
+                <f>G1_DL005_001</f>
+                <f>G1_DL005_001</f>
+                <f>G1_DL005_001</f>
+                <f>G1_DL005_001</f>
+                <f>G1_DL005_001</f>
+                <f>G1_DL005_001</f>
+                <f>admin</f>
+                <f>2019-05-06 15:03:02.0</f>
+                <f>admin</f>
+                <f>2019-05-06 15:26:35.305</f>
+            </row>
+            <row>
+                <f>08bce5f2-42a1-4bdf-b82e-5916e4ce770d</f>
+                <f>BASICS_095</f>
+                <f>长期责任准备</f>
+                <f/>
+                <f>G1_DL005_002</f>
+                <f>G1_DL005_002</f>
+                <f>G1_DL005_002</f>
+                <f>G1_DL005_002</f>
+                <f>G1_DL005_002</f>
+                <f>G1_DL005_002</f>
+                <f>admin</f>
+                <f>2019-05-06 15:03:25.0</f>
+                <f>admin</f>
+                <f>2019-05-06 15:26:12.879</f>
+            </row>
+            <row>
+                <f>6878c9f5-d963-4615-aa35-c3dca8d8fda7</f>
+                <f>BASICS_099</f>
+                <f>期末未到期担保责任余额</f>
+                <f/>
+                <f>G1_DL004_001</f>
+                <f>G1_DL004_001</f>
+                <f>G1_DL004_001</f>
+                <f>G1_DL004_001</f>
+                <f>G1_DL004_001</f>
+                <f>G1_DL004_001</f>
+                <f>admin</f>
+                <f>2019-05-06 15:03:53.0</f>
+                <f>admin</f>
+                <f>2019-05-06 15:26:42.892</f>
+            </row>
+            <row>
+                <f>68ec67b4-68eb-4537-bdb6-7d3d4889c351</f>
+                <f>BASICS_097</f>
+                <f>担保赔偿准备</f>
+                <f/>
+                <f>G1_DL005_003</f>
+                <f>G1_DL005_003</f>
+                <f>G1_DL005_003</f>
+                <f>G1_DL005_003</f>
+                <f>G1_DL005_003</f>
+                <f>G1_DL005_003</f>
+                <f>admin</f>
+                <f>2019-05-06 15:04:26.0</f>
+                <f>admin</f>
+                <f>2019-05-06 15:26:28.817</f>
+            </row>
+            <row>
+                <f>54298b4c-ad65-472c-a819-086e46950c6f</f>
+                <f>BASICS_101</f>
+                <f>一般风险准备</f>
+                <f/>
+                <f>G1_DL005_004</f>
+                <f>G1_DL005_004</f>
+                <f>G1_DL005_004</f>
+                <f>G1_DL005_004</f>
+                <f>G1_DL005_004</f>
+                <f>G1_DL005_004</f>
+                <f>admin</f>
+                <f>2019-05-06 15:04:57.0</f>
+                <f>admin</f>
+                <f>2019-05-06 15:37:02.342</f>
+            </row>
+            <row>
+                <f>fb8f51f2-ad5e-4922-8b0d-4481b65fae78</f>
+                <f>BASICS_094</f>
+                <f>存出担保保证金</f>
+                <f/>
+                <f>G1_DL003_002</f>
+                <f>G1_DL003_002</f>
+                <f>G1_DL003_002</f>
+                <f>G1_DL003_002</f>
+                <f>G1_DL003_002</f>
+                <f>G1_DL003_002</f>
+                <f>admin</f>
+                <f>2019-05-06 14:59:17.0</f>
+                <f>admin</f>
+                <f>2019-05-06 15:26:04.717</f>
+            </row>
+            <row>
+                <f>045C7FBB212C4B6296A480754C72BE35</f>
+                <f>BASICS_088</f>
+                <f>总借款3</f>
+                <f/>
+                <f>B020+B025+B021</f>
+                <f/>
+                <f>A024+A028+A030+A031+A025</f>
+                <f>A024+A028+A030+A031+A025</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>68509FC68BC040259A161CC95C49F604</f>
+                <f>BASICS_090</f>
+                <f>总资产</f>
+                <f/>
+                <f>B019</f>
+                <f>B019</f>
+                <f>A023</f>
+                <f>A023</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>BB458F8D5B324CB496C38D74C715876A</f>
+                <f>BASICS_092</f>
+                <f>总资产2</f>
+                <f/>
+                <f>B019</f>
+                <f/>
+                <f>A023</f>
+                <f>A023</f>
+                <f>AS08</f>
+                <f>AS08</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>9FC23EA87E2D40199FA22E0F2578D258</f>
+                <f>BASICS_030</f>
+                <f>净资产3</f>
+                <f/>
+                <f>B032</f>
+                <f>B032</f>
+                <f>A038</f>
+                <f>A038</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>173D0A96043440C5AF1A11DE8D415615</f>
+                <f>BASICS_032</f>
+                <f>类货币1</f>
+                <f/>
+                <f>B001+B002</f>
+                <f/>
+                <f>A001+A002</f>
+                <f>A001+A002-A003</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>654157DA956741B490DC871FE8A42DAC</f>
+                <f>BASICS_034</f>
+                <f>留存收益</f>
+                <f/>
+                <f>B031+B030</f>
+                <f>B031+B030</f>
+                <f>A037+A036</f>
+                <f>A037+A036</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>4D809A1B3DA3412CAE6F2C1E6F6173F7</f>
+                <f>BASICS_036</f>
+                <f>流动负债1</f>
+                <f/>
+                <f>B024</f>
+                <f>B024</f>
+                <f>A029</f>
+                <f>A029</f>
+                <f>AS10</f>
+                <f>AS12-AS11</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>6A48AB89C9AB4F419E1C220D04EEB686</f>
+                <f>BASICS_038</f>
+                <f>流动负债3</f>
+                <f/>
+                <f>B024-B023</f>
+                <f/>
+                <f>A029-A027</f>
+                <f>A029-A027</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>748712392A4B4FB8965E03A4312343CB</f>
+                <f>BASICS_040</f>
+                <f>流动资产1</f>
+                <f/>
+                <f>B012</f>
+                <f>B012</f>
+                <f>A017</f>
+                <f>A017</f>
+                <f>AS01</f>
+                <f>AS14+AS15+AS16+AS17+AS18+AS19+(AS20+AS21-AS29)+AS22</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>9727</f>
+                <f>2019-04-11 14:55:00.496</f>
+            </row>
+            <row>
+                <f>B3C34ED3A6834C0D833107F638D05D58</f>
+                <f>BASICS_042</f>
+                <f>毛利</f>
+                <f/>
+                <f>I001-I002</f>
+                <f>I001-I002</f>
+                <f>P001-P002</f>
+                <f>P001-P002</f>
+                <f>IE03+IE12</f>
+                <f>IE03-(IE02-IE08)+IE12</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>6A43AE47EF3749B3864A3402D2D452B8</f>
+                <f>BASICS_045</f>
+                <f>事业结余</f>
+                <f/>
+                <f/>
+                <f/>
+                <f/>
+                <f/>
+                <f>IE01+IE13</f>
+                <f>IE12+IE03</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>4D48FFB4F07743E6AD10903AC56C5C52</f>
+                <f>BASICS_046</f>
+                <f>事业借款</f>
+                <f/>
+                <f/>
+                <f/>
+                <f/>
+                <f/>
+                <f>AS09+AS11</f>
+                <f>AS09+AS11</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>AE90F57C61F84B91BA15F8387C88F9BA</f>
+                <f>BASICS_048</f>
+                <f>事业收入</f>
+                <f/>
+                <f/>
+                <f/>
+                <f/>
+                <f/>
+                <f>IE05+IE06+IE07+IE11</f>
+                <f>IE05+IE06+IE07+IE11</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>0A67DAA92A684C75B5F6B4AA3CF0616C</f>
+                <f>BASICS_050</f>
+                <f>事业总收入</f>
+                <f/>
+                <f/>
+                <f/>
+                <f/>
+                <f/>
+                <f>IE02+IE04+IE06</f>
+                <f>IE17-IE39</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>9727</f>
+                <f>2019-04-11 14:56:31.717</f>
+            </row>
+            <row>
+                <f>A1BD6CB803634EF99134814BEAB1F72A</f>
+                <f>BASICS_052</f>
+                <f>速动资产1</f>
+                <f/>
+                <f>B012-B009</f>
+                <f/>
+                <f>A017-A012</f>
+                <f>A017-A013</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>0E51200B375B456D919C5B8BF4FA020D</f>
+                <f>BASICS_054</f>
+                <f>速动资产3</f>
+                <f/>
+                <f>B001+B002+B003+B004</f>
+                <f/>
+                <f>A001+A002+A004+A005</f>
+                <f>A001+A002-A003+A004+A006</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>503B4C5799D24F28BABF3AE60141C0BD</f>
+                <f>BASICS_056</f>
+                <f>调整负债</f>
+                <f/>
+                <f>B028</f>
+                <f/>
+                <f>A034</f>
+                <f>A034</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>5AEEB0336A7D49F487332D3E4FC329B0</f>
+                <f>BASICS_058</f>
+                <f>调整现金</f>
+                <f/>
+                <f>B001</f>
+                <f/>
+                <f>A001</f>
+                <f>A001</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>5E2582B5497A4BC09A76CDF182F8D70F</f>
+                <f>BASICS_059</f>
+                <f>未分配利润</f>
+                <f/>
+                <f>B031</f>
+                <f>B031</f>
+                <f>A037</f>
+                <f>A037</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>3B6321F4860A4998974CB00C274C98B3</f>
+                <f>BASICS_061</f>
+                <f>销售现金流</f>
+                <f/>
+                <f>M001</f>
+                <f/>
+                <f>C001</f>
+                <f>C001</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>B42C08234A0545B09DDC9C99114F7003</f>
+                <f>BASICS_063</f>
+                <f>营业成本</f>
+                <f/>
+                <f>I002</f>
+                <f>I002</f>
+                <f>P002</f>
+                <f>P002</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>0F702357F4704B07BE1D234ADB7759B0</f>
+                <f>BASICS_064</f>
+                <f>营业利润</f>
+                <f/>
+                <f>I008</f>
+                <f>I008</f>
+                <f>P007</f>
+                <f>P007+P008</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>6623E7439EEF4F00AA28490449DC0D36</f>
+                <f>BASICS_066</f>
+                <f>营业利润2</f>
+                <f/>
+                <f>I008-I007</f>
+                <f/>
+                <f>P007-P008-P012</f>
+                <f>P007</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>0085B408AC6A46D38C7C23638E21CEC4</f>
+                <f>BASICS_068</f>
+                <f>营业总收入1</f>
+                <f/>
+                <f>I001</f>
+                <f/>
+                <f>P001</f>
+                <f>P001</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>15745C33FEAB4C6A944D604FFF4477DB</f>
+                <f>BASICS_070</f>
+                <f>营业总收入3</f>
+                <f/>
+                <f>I001</f>
+                <f>I001</f>
+                <f>P001</f>
+                <f>P001</f>
+                <f>IE04+IE06</f>
+                <f>IE05+IE07+IE11+IE14+IE06</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>2C1E7AF19B584804973B02A2DAF7DA62</f>
+                <f>BASICS_072</f>
+                <f>应付账款</f>
+                <f/>
+                <f>B022</f>
+                <f>B022</f>
+                <f>A026</f>
+                <f>A026</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>FB25AD512EB24DE8BA5AB98941259D8B</f>
+                <f>BASICS_074</f>
+                <f>应收款项1</f>
+                <f/>
+                <f>B004+B006</f>
+                <f>B004+B006</f>
+                <f>A005+A008</f>
+                <f>A006+A008</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>3135D98DCDF54CD1B085758C3FA29474</f>
+                <f>BASICS_076</f>
+                <f>有形净资产</f>
+                <f/>
+                <f>B032-B005-B016-B017-B018</f>
+                <f/>
+                <f>A038-A007-A020-A039-A021-A022-A040</f>
+                <f>A038-A014-A020-A021-A022</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>D68AAD03E0F2427DA60EA53287D1B7AB</f>
+                <f>BASICS_078</f>
+                <f>长期负债</f>
+                <f/>
+                <f>B027</f>
+                <f>B027</f>
+                <f>A033</f>
+                <f>A033</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>E505ABCCB83242E097D956835F80C777</f>
+                <f>BASICS_080</f>
+                <f>长期资金来源</f>
+                <f/>
+                <f>B027+B032</f>
+                <f>B027+B032</f>
+                <f>A038+A033</f>
+                <f>A038+A033</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>5498EB2E6DEA4C239CAB1CE3B28C59FD</f>
+                <f>BASICS_082</f>
+                <f>主营业务利润</f>
+                <f/>
+                <f>I001-I002-I004</f>
+                <f/>
+                <f>P001-P002-P004</f>
+                <f>P001-P002-P004</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>E4B8743E8408490093E6885D3B2523A0</f>
+                <f>BASICS_084</f>
+                <f>总负债1</f>
+                <f/>
+                <f>B028</f>
+                <f>B028</f>
+                <f>A034</f>
+                <f>A034</f>
+                <f>AS12</f>
+                <f>AS12</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>7AE8B1472FFD474691451E587B3A15FD</f>
+                <f>BASICS_086</f>
+                <f>总借款1</f>
+                <f/>
+                <f>B020+B025</f>
+                <f>B020+B025</f>
+                <f>A024+A028+A030+A031</f>
+                <f>A024+A028+A030+A031</f>
+                <f>AS09+AS11</f>
+                <f>AS09+AS11</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>A35830561D854D6EB5B60D62F499CAA6</f>
+                <f>BASICS_089</f>
+                <f>总借款4</f>
+                <f/>
+                <f>B020+B025+B021</f>
+                <f>B020+B025+B021</f>
+                <f>A024+A028+A030+A031+A025</f>
+                <f>A024+A028+A030+A031+A025</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>9E4CA26853BE498BA3CB1ECCC3C3FF86</f>
+                <f>BASICS_091</f>
+                <f>总资产1</f>
+                <f/>
+                <f>B019</f>
+                <f>B019</f>
+                <f>A023</f>
+                <f>A023</f>
+                <f>AS08</f>
+                <f>AS08</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>B09E9634A0BA4756B9887E18F377FE99</f>
+                <f>BASICS_093</f>
+                <f>总资产3</f>
+                <f/>
+                <f>B019</f>
+                <f/>
+                <f>A023</f>
+                <f>A023</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>265C9D2119074E77815B0B5821184CE3</f>
+                <f>BASICS_001</f>
+                <f>EBIT</f>
+                <f/>
+                <f>I011+I010+I006</f>
+                <f/>
+                <f>P011+P010+P006</f>
+                <f>P011+P010+P006</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>F74230F8C825457E969D9F3CF01D3729</f>
+                <f>BASICS_002</f>
+                <f>财务费用</f>
+                <f/>
+                <f>I006</f>
+                <f/>
+                <f>P006</f>
+                <f>P006</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>9B62D5DBC5794455992438CFACD78BD5</f>
+                <f>BASICS_003</f>
+                <f>超速动资产</f>
+                <f/>
+                <f>B001+B004</f>
+                <f>B001+B004</f>
+                <f>A001+A005</f>
+                <f>A001+A006</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>7C52678580EB4C639AA8F91A560DCCF3</f>
+                <f>BASICS_004</f>
+                <f>超速动资产1</f>
+                <f/>
+                <f>B001+B004</f>
+                <f/>
+                <f>A001+A005</f>
+                <f>A001+A006</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>343BCBFDBF054C6E95A441F6893CB728</f>
+                <f>BASICS_005</f>
+                <f>存货</f>
+                <f/>
+                <f>B009</f>
+                <f>B009</f>
+                <f>A012</f>
+                <f>A013</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>D78FCD58E30C449490814F6D4201B855</f>
+                <f>BASICS_006</f>
+                <f>存货及应收账款</f>
+                <f/>
+                <f>B004+B009</f>
+                <f>B004+B009</f>
+                <f>A005+A012</f>
+                <f>A006+A013</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>6589A26095D443A684916F39FF568598</f>
+                <f>BASICS_007</f>
+                <f>短期借款</f>
+                <f/>
+                <f>B020</f>
+                <f>B020</f>
+                <f>A024+A028</f>
+                <f>A024+A028</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>DB38EE7059DD48D39999B0463C74AF9D</f>
+                <f>BASICS_008</f>
+                <f>短期借款0</f>
+                <f/>
+                <f>B020</f>
+                <f>B020</f>
+                <f>A024</f>
+                <f>A024</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>9B2C4CDADFE842B183602BF6425B986A</f>
+                <f>BASICS_009</f>
+                <f>短期借款1</f>
+                <f/>
+                <f>B020+B021+B022</f>
+                <f>B020+B021+B022</f>
+                <f>A024+A028+A026+A025</f>
+                <f>A024+A028+A026+A025</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>295F3B4A8C9E4891B1E2C161F7F28FA7</f>
+                <f>BASICS_010</f>
+                <f>短期借款2</f>
+                <f/>
+                <f>B020</f>
+                <f/>
+                <f>A024+A028</f>
+                <f>A024+A028</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>B79778097C2F45C1A82A7F08338C79DA</f>
+                <f>BASICS_011</f>
+                <f>非货币资产</f>
+                <f/>
+                <f>B019-B001</f>
+                <f>B019-B001</f>
+                <f>A023-A001</f>
+                <f>A023-A001</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>318ED63CA7C64F82BA7A5FB75CF4410A</f>
+                <f>BASICS_012</f>
+                <f>非流动资产</f>
+                <f/>
+                <f>B019-B012</f>
+                <f>B019-B012</f>
+                <f>A023-A017</f>
+                <f>A023-A017</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>548DB695B732447982FF0BAA090D7F4D</f>
+                <f>BASICS_013</f>
+                <f>非流动资产1</f>
+                <f/>
+                <f>B019-B005-B016-B017-B018</f>
+                <f/>
+                <f>A023-A040-A007-A020-A039-A021-A022</f>
+                <f>A023-A014-A020-A021-A022</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>377C8D50C80D42E88A961D51BA927985</f>
+                <f>BASICS_014</f>
+                <f>分母1</f>
+                <f/>
+                <f>1</f>
+                <f>1</f>
+                <f>1</f>
+                <f>1</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>9F34188C9A0440CBBF53CEE6B95E7E04</f>
+                <f>BASICS_015</f>
+                <f>分母2</f>
+                <f/>
+                <f>1</f>
+                <f>1</f>
+                <f>1</f>
+                <f>1</f>
+                <f>1</f>
+                <f>1</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>A9FD1A7CB0F84FEEA455D8C922223239</f>
+                <f>BASICS_016</f>
+                <f>分母3</f>
+                <f/>
+                <f>1</f>
+                <f/>
+                <f>1</f>
+                <f>1</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>F18C9C3F12C84421AFCD059DADE63289</f>
+                <f>BASICS_017</f>
+                <f>付息债务</f>
+                <f/>
+                <f>B020+B025+B026</f>
+                <f/>
+                <f>A024+A028+A030+A031+A032</f>
+                <f>A024+A028+A030+A031+A032</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>33384DF3E89E4ACBAEDE64D6E430A57D</f>
+                <f>BASICS_018</f>
+                <f>付息债务1</f>
+                <f/>
+                <f>B020+B025+B026+B021</f>
+                <f/>
+                <f>A024+A028+A030+A031+A032+A025</f>
+                <f>A024+A028+A030+A031+A032+A025</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>74A4C035029D4ADAB752EC93DEE00A76</f>
+                <f>BASICS_019</f>
+                <f>固定资产</f>
+                <f/>
+                <f>B015</f>
+                <f>B015</f>
+                <f>A019</f>
+                <f>A019</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>D8D8B146253348DD983AC1050BBC632D</f>
+                <f>BASICS_020</f>
+                <f>经营活动现金流</f>
+                <f/>
+                <f>M002</f>
+                <f>M024-M025</f>
+                <f>C002</f>
+                <f>C002</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>C350233E0DE04665AFB6F331C49AB2EF</f>
+                <f>BASICS_021</f>
+                <f>经营活动现金流2</f>
+                <f/>
+                <f>M002</f>
+                <f/>
+                <f>C002</f>
+                <f>C002</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>E8C1B6DEEA834539BD659D17ECEF16F2</f>
+                <f>BASICS_022</f>
+                <f>净负债</f>
+                <f/>
+                <f>B020+B025-B001</f>
+                <f>B020+B025-B001</f>
+                <f>A024+A030+A028-A001</f>
+                <f>A024+A030+A028-A001</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>4361EAD183144F2DACDA0624BAD9A884</f>
+                <f>BASICS_023</f>
+                <f>净借款</f>
+                <f/>
+                <f>B020+B021+B025-B001</f>
+                <f>B020+B021+B025-B001</f>
+                <f>A024+A025+A030+A028+A031-A001</f>
+                <f>A024+A025+A030+A028+A031-A001</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>ADA7CC64F963433F887BBBBDB5E2EBEB</f>
+                <f>BASICS_024</f>
+                <f>净借款1</f>
+                <f/>
+                <f>B020+B021+B025-B001</f>
+                <f/>
+                <f>A024+A025+A030+A028+A031-A001</f>
+                <f>A024+A025+A030+A028+A031-A001</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>06021C7571AB415788FCA07D00277558</f>
+                <f>BASICS_025</f>
+                <f>净利润</f>
+                <f/>
+                <f>I011</f>
+                <f/>
+                <f>P011</f>
+                <f>P011</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>7F8446221B9140C5827EE12206E9E4B9</f>
+                <f>BASICS_026</f>
+                <f>净利润1</f>
+                <f/>
+                <f>I011</f>
+                <f/>
+                <f>P011</f>
+                <f>P011</f>
+                <f>IE03+IE12</f>
+                <f>IE03-(IE02-IE08)+IE12</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>7AF19BF45E6E43338369E821DAAFE43D</f>
+                <f>BASICS_027</f>
+                <f>净资产</f>
+                <f/>
+                <f>B032</f>
+                <f>B032</f>
+                <f>A038</f>
+                <f>A038</f>
+                <f>AS13</f>
+                <f>AS13</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>B1C3083CED2E463594C1A529BB50E02F</f>
+                <f>BASICS_028</f>
+                <f>净资产1</f>
+                <f/>
+                <f>B032</f>
+                <f/>
+                <f>A038</f>
+                <f>A038</f>
+                <f>AS13</f>
+                <f>AS13</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>11D4A63ED084417E9076CD626C66082D</f>
+                <f>BASICS_029</f>
+                <f>净资产2</f>
+                <f/>
+                <f>B032</f>
+                <f/>
+                <f>A038</f>
+                <f>A038</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>F3920BCD0A674CCA90D533888B70E86B</f>
+                <f>BASICS_031</f>
+                <f>类货币</f>
+                <f/>
+                <f>B001+B002</f>
+                <f>B001+B002</f>
+                <f>A001+A002</f>
+                <f>A001+A002-A003</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>79D3B2C638794357BD4F27E53CEB6797</f>
+                <f>BASICS_033</f>
+                <f>利润总额</f>
+                <f/>
+                <f>I009</f>
+                <f>I009</f>
+                <f>P009</f>
+                <f>P009</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>FEDCC2F57D114C20B121FF45D4D6D4FF</f>
+                <f>BASICS_035</f>
+                <f>流动负债</f>
+                <f/>
+                <f>B024</f>
+                <f>B024</f>
+                <f>A029</f>
+                <f>A029</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>FD02E3169FFD4646B32F553351D3F95B</f>
+                <f>BASICS_037</f>
+                <f>流动负债2</f>
+                <f/>
+                <f>B024</f>
+                <f/>
+                <f>A029</f>
+                <f>A029</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>53FFC47E32664DEE86EA6E9DB2D15669</f>
+                <f>BASICS_039</f>
+                <f>流动资产</f>
+                <f/>
+                <f>B012</f>
+                <f>B012</f>
+                <f>A017</f>
+                <f>A017</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>03EFAC0FD0884D509E64E19CB6B867C1</f>
+                <f>BASICS_041</f>
+                <f>流动资产2</f>
+                <f/>
+                <f>B012</f>
+                <f/>
+                <f>A017</f>
+                <f>A017</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>45434E295A4A44E7B683A6938EFBBDC1</f>
+                <f>BASICS_043</f>
+                <f>三费收入</f>
+                <f/>
+                <f>I003+I005+I006</f>
+                <f/>
+                <f>P003+P005+P006</f>
+                <f>P003+P005+P006</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>14E9E0AECB0043A3B36F90B05DC0BE06</f>
+                <f>BASICS_044</f>
+                <f>实收资本</f>
+                <f/>
+                <f>B029</f>
+                <f>B029</f>
+                <f>A035</f>
+                <f>A035</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>15322B4342D84D96B1FA7E856FE4F19C</f>
+                <f>BASICS_047</f>
+                <f>事业净资产</f>
+                <f/>
+                <f/>
+                <f/>
+                <f/>
+                <f/>
+                <f>AS13</f>
+                <f>AS13</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>2EB825A8184E47429CED9A48C2F8450C</f>
+                <f>BASICS_049</f>
+                <f>事业支出</f>
+                <f/>
+                <f/>
+                <f/>
+                <f/>
+                <f/>
+                <f>IE08+IE09+IE45</f>
+                <f>IE21+IE20+IE23+IE10+IE22+IE25</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>9727</f>
+                <f>2019-04-11 14:55:46.89</f>
+            </row>
+            <row>
+                <f>19A928C5ED5B4373961015156ADD2AE5</f>
+                <f>BASICS_051</f>
+                <f>速动资产</f>
+                <f/>
+                <f>B012-B009</f>
+                <f>B012-B009</f>
+                <f>A017-A012</f>
+                <f>A017-A013</f>
+                <f>AS01-AS02</f>
+                <f>AS14+AS15+AS16+AS17+AS18+AS19+AS22</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>9727</f>
+                <f>2019-04-11 14:05:57.761</f>
+            </row>
+            <row>
+                <f>F79E36AA1BE246829EF41AFC3BFD282D</f>
+                <f>BASICS_053</f>
+                <f>速动资产2</f>
+                <f/>
+                <f>B012-B009-B005</f>
+                <f/>
+                <f>A017-A012-A007</f>
+                <f>A017-A013-A007</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>8BE61BCDBC1744279E360FF37BB8FFC0</f>
+                <f>BASICS_055</f>
+                <f>速动资产4</f>
+                <f/>
+                <f>B012-B009</f>
+                <f>B012-B009</f>
+                <f>A017-A012</f>
+                <f>A017-A013</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>4B9A917726994901AC9688EAA2E30BE7</f>
+                <f>BASICS_057</f>
+                <f>调整负债1</f>
+                <f/>
+                <f>B028-B001</f>
+                <f>B028-B001</f>
+                <f>A034-A001</f>
+                <f>A034-A001</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>2B4846BDD71C4CE7A7E180839C69816F</f>
+                <f>BASICS_060</f>
+                <f>现金</f>
+                <f/>
+                <f>B001</f>
+                <f>B001</f>
+                <f>A001</f>
+                <f>A001</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>B30360847E254075A7FD024EEDD8D474</f>
+                <f>BASICS_062</f>
+                <f>银行借款</f>
+                <f/>
+                <f>B020+B025</f>
+                <f>B020+B025</f>
+                <f>A024+A028+A030</f>
+                <f>A024+A028+A030</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>0EABBEBB66894E968992AF79A40752EB</f>
+                <f>BASICS_065</f>
+                <f>营业利润1</f>
+                <f/>
+                <f>I008</f>
+                <f/>
+                <f>P007</f>
+                <f>P007+P008</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>39D1CDACF61E4BEABF23FC17D852EAC4</f>
+                <f>BASICS_067</f>
+                <f>营业总收入</f>
+                <f/>
+                <f>I001</f>
+                <f>I001</f>
+                <f>P001</f>
+                <f>P001</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>E3335F1CC3F64BB382A431558ED999FD</f>
+                <f>BASICS_069</f>
+                <f>营业总收入2</f>
+                <f/>
+                <f>I001</f>
+                <f>I001</f>
+                <f>P001</f>
+                <f>P001</f>
+                <f>IE02+IE04+IE06</f>
+                <f>IE17-IE39</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>B994406939394353A831E32EE02BD970</f>
+                <f>BASICS_071</f>
+                <f>营运资本</f>
+                <f/>
+                <f>B012-B024</f>
+                <f>B012-B024</f>
+                <f>A017-A029</f>
+                <f>A017-A029</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>19477E8087784EDB8000BC354611E622</f>
+                <f>BASICS_073</f>
+                <f>应收款项</f>
+                <f/>
+                <f>B004+B003</f>
+                <f/>
+                <f>A005+A004</f>
+                <f>A006+A004</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>C77103CC72CD43D7946D9B5EC49E234A</f>
+                <f>BASICS_075</f>
+                <f>应收账款</f>
+                <f/>
+                <f>B004</f>
+                <f>B004</f>
+                <f>A005</f>
+                <f>A006</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>E6691B9A1C9F4BDF87B0F3935079E01C</f>
+                <f>BASICS_077</f>
+                <f>预收款项</f>
+                <f/>
+                <f>B023</f>
+                <f/>
+                <f>A027</f>
+                <f>A027</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>FE09EFAD28804BCDADEE05A5212C3940</f>
+                <f>BASICS_079</f>
+                <f>长期资产</f>
+                <f/>
+                <f>B013+B014+B015</f>
+                <f>B015+B051</f>
+                <f>A019+A043+A044+A041</f>
+                <f>A042+A018</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>FF4E2E86203B4A0C9195C1D8F5D389B1</f>
+                <f>BASICS_081</f>
+                <f>长期资金来源1</f>
+                <f/>
+                <f>B027+B032</f>
+                <f/>
+                <f>A038+A033</f>
+                <f>A038+A033</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>99B1415C3E0249ECBF4E99D804C3F0AF</f>
+                <f>BASICS_083</f>
+                <f>总负债</f>
+                <f/>
+                <f>B028</f>
+                <f>B028</f>
+                <f>A034</f>
+                <f>A034</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>DB8CA9113C744295A868990BDCAE0870</f>
+                <f>BASICS_085</f>
+                <f>总借款</f>
+                <f/>
+                <f>B020+B025</f>
+                <f>B020+B025</f>
+                <f>A024+A028+A030+A031</f>
+                <f>A024+A028+A030+A031</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>8976FD3B678F44928EE182C628DF19A4</f>
+                <f>BASICS_087</f>
+                <f>总借款2</f>
+                <f/>
+                <f>B020+B025</f>
+                <f/>
+                <f>A024+A028+A030+A031</f>
+                <f>A024+A028+A030+A031</f>
+                <f/>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+                <f>admin</f>
+                <f>2019-04-02 15:16:44.0</f>
+            </row>
+            <row>
+                <f>0adf5481-6b4d-4e15-b997-3c8e496e5fee</f>
+                <f>BASICS_096</f>
+                <f>存入担保保证金</f>
+                <f/>
+                <f>G1_DL003_001</f>
+                <f>G1_DL003_001</f>
+                <f>G1_DL003_001</f>
+                <f>G1_DL003_001</f>
+                <f>G1_DL003_001</f>
+                <f>G1_DL003_001</f>
+                <f>admin</f>
+                <f>2019-05-06 15:00:29.0</f>
+                <f>admin</f>
+                <f>2019-05-06 15:26:21.633</f>
+            </row>
+        </resultset>
+    </table>
+    <table name="NS_RT_KI_LIB">
+        <sql>select * from NS_RT_KI_LIB</sql>
+        <fields>
+            <field name="FD_ID" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_KI_CODE" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_KI_NAME" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_KI_NUMERATOR" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_KI_DENOMINATOR" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_OUTLIER_HANDLING" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_CREATOR" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_CREATE_DATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+            <field name="FD_LAST_MODIFIER" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_LAST_MODIFYDATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+        </fields>
+        <resultset>
+            <row>
+                <f>9447ce73-bb85-4374-bc02-a544fe3dda9c</f>
+                <f>GM001</f>
+                <f>股东权益</f>
+                <f>净资产_N</f>
+                <f>1</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-05-06 14:41:15.139</f>
+                <f>admin</f>
+                <f>2019-05-06 14:41:15.139</f>
+            </row>
+            <row>
+                <f>8d1e0999-4a35-4949-8337-517cdc3d4b4c</f>
+                <f>GM002</f>
+                <f>担保业务收入</f>
+                <f>营业总收入_N</f>
+                <f>1</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-05-06 14:42:08.113</f>
+                <f>admin</f>
+                <f>2019-05-06 14:42:08.113</f>
+            </row>
+            <row>
+                <f>64b4d663-aa53-47c8-a3f0-fb4e5ae8cfd6</f>
+                <f>LD001</f>
+                <f>扣除委托贷款后流动比率</f>
+                <f>流动资产_N-存出担保保证金_N-委托贷款_N</f>
+                <f>流动负债_N-存入担保保证金_N</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-05-06 14:43:45.41</f>
+                <f>admin</f>
+                <f>2019-05-06 14:43:45.41</f>
+            </row>
+            <row>
+                <f>ae25f750-a5fb-4d38-bf9e-04c99ac7bca5</f>
+                <f>LD002</f>
+                <f>现金类资产/期末未到期担保责任</f>
+                <f>类货币_N +存出担保保证金_N-存入担保保证金_N</f>
+                <f>期末未到期担保责任余额_N</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-05-06 14:44:32.901</f>
+                <f>admin</f>
+                <f>2019-05-06 14:44:32.901</f>
+            </row>
+            <row>
+                <f>84b91568-88d8-4a68-81d5-37c28b59fbfc</f>
+                <f>CH002</f>
+                <f>净资产担保倍数</f>
+                <f>期末未到期担保责任余额_N</f>
+                <f>净资产_N</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-05-06 14:50:27.832</f>
+                <f>admin</f>
+                <f>2019-05-06 14:50:27.832</f>
+            </row>
+            <row>
+                <f>fc48d3f5-1493-4ab6-8622-659f874dbd69</f>
+                <f>YL001</f>
+                <f>净资产收益率</f>
+                <f>净利润_N</f>
+                <f>净资产_N+净资产_L</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-05-06 15:08:17.551</f>
+                <f>admin</f>
+                <f>2019-05-06 15:08:17.551</f>
+            </row>
+            <row>
+                <f>626f8662-37b1-4b05-b1bc-6b705715d403</f>
+                <f>CH001</f>
+                <f>准备金充足率</f>
+                <f>期末短期责任准备_N+长期责任准备_N+担保赔偿准备_N+一般风险准备_N</f>
+                <f>期末未到期担保责任余额_N</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-05-06 14:49:53.66</f>
+                <f>admin</f>
+                <f>2019-05-06 14:49:53.66</f>
+            </row>
+            <row>
+                <f>5c725cc0-1530-4311-a06d-be738ad5b91b</f>
+                <f>LV016</f>
+                <f>流动负债与流动资产比率</f>
+                <f>流动负债_N</f>
+                <f>流动资产_N</f>
+                <f>DEAL_ONE</f>
+                <f>9727</f>
+                <f>2019-04-11 15:37:25.309</f>
+                <f>9727</f>
+                <f>2019-04-11 15:37:25.309</f>
+            </row>
+            <row>
+                <f>9d998ae8-32e9-40af-837f-cf1fe9e4e621</f>
+                <f>PR017</f>
+                <f>税前权益收益率</f>
+                <f>利润总额_N</f>
+                <f>(净资产3_N+净资产3_L)/2</f>
+                <f>DEAL_TWO</f>
+                <f>admin</f>
+                <f>2019-04-03 20:08:13.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:12:24.976</f>
+            </row>
+            <row>
+                <f>61f2f405-30d2-49e1-a3a4-1218bec78a5d</f>
+                <f>OC014</f>
+                <f>营业周期</f>
+                <f>(180*(应收账款_N+应收账款_L))/营业总收入_N + (180*(存货_N+存货_L))/营业成本_N</f>
+                <f>1</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-03 20:06:56.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:10:12.325</f>
+            </row>
+            <row>
+                <f>3bfd1cd1-3ad2-4b43-bbd8-c522f001be82</f>
+                <f>PR016</f>
+                <f>税前资产收益率</f>
+                <f>利润总额_N</f>
+                <f>(总资产_N+总资产_L)/2</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-03 20:07:31.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:12:12.647</f>
+            </row>
+            <row>
+                <f>AFA01DF8F1BF466CB40EDA8BB43879C7</f>
+                <f>OC001</f>
+                <f>应收账款周转率</f>
+                <f>营业总收入_N</f>
+                <f>(应收账款_N+应收账款_L)/2</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:07:16.562</f>
+            </row>
+            <row>
+                <f>5A6803F3DF5043FA8382A29E768F2C79</f>
+                <f>OC002</f>
+                <f>调整应收账款周转率1</f>
+                <f>营业总收入1_N</f>
+                <f>(应收款项_N+应收款项_L)/2</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:07:49.505</f>
+            </row>
+            <row>
+                <f>B912D1B7A9404DDDB819F02FD881559D</f>
+                <f>OC004</f>
+                <f>存货周转率</f>
+                <f>营业成本_N</f>
+                <f>(存货_N+存货_L)/2</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:08:06.155</f>
+            </row>
+            <row>
+                <f>1F7CCEEDB2D24939B4B9470D48CD07CE</f>
+                <f>OC007</f>
+                <f>固定资产周转率</f>
+                <f>营业总收入_N</f>
+                <f>(固定资产_N+固定资产_L)/2</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:08:21.707</f>
+            </row>
+            <row>
+                <f>471D474FAF954125B7FDA75E290825C1</f>
+                <f>OC008</f>
+                <f>总资产周转率</f>
+                <f>营业总收入2_N</f>
+                <f>(总资产1_N+总资产1_L)/2</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:08:58.49</f>
+            </row>
+            <row>
+                <f>2E8D0AFC470741A1877D5489C1F4D021</f>
+                <f>OC010</f>
+                <f>应付账款周转率</f>
+                <f>营业成本_N</f>
+                <f>(应付账款_N+应付账款_L)/2</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:09:30.592</f>
+            </row>
+            <row>
+                <f>901951D832E44BDFA75F690A8330905E</f>
+                <f>OC013</f>
+                <f>收入费用比</f>
+                <f>营业总收入1_N</f>
+                <f>三费收入_N</f>
+                <f>DEAL_THREE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>DC52C0EF7C92459F9B366B04AF1D85A0</f>
+                <f>OC017</f>
+                <f>现金主营业务收入比</f>
+                <f>类货币_N</f>
+                <f>营业总收入_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>B376CBE375EF4F6D821A4C79E29523B5</f>
+                <f>OC018</f>
+                <f>经费自给率</f>
+                <f>事业收入_N</f>
+                <f>事业支出_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:01:28.428</f>
+            </row>
+            <row>
+                <f>C9BAB6B4B5ED450692FE3CFB24416975</f>
+                <f>OC019</f>
+                <f>收支结余率</f>
+                <f>事业结余_N</f>
+                <f>事业总收入_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>42DECF51868C4AAABF0F22491D9E8A98</f>
+                <f>PR001</f>
+                <f>毛利率</f>
+                <f>毛利_N</f>
+                <f>营业总收入3_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>8E3CF19BC1D941109BE5ED424C6AF1A3</f>
+                <f>PR002</f>
+                <f>营业利润率</f>
+                <f>营业利润_N</f>
+                <f>营业总收入_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>02693362F1D64D37971FB386D6FC1C9D</f>
+                <f>PR007</f>
+                <f>ROA</f>
+                <f>净利润1_N</f>
+                <f>(总资产2_N+总资产2_L)/2</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:10:57.891</f>
+            </row>
+            <row>
+                <f>5473FFF9258E4C0981F730204A7FAFBC</f>
+                <f>PR009</f>
+                <f>ROE</f>
+                <f>净利润1_N</f>
+                <f>(净资产1_N+净资产1_L)/2</f>
+                <f>DEAL_TWO</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:11:18.377</f>
+            </row>
+            <row>
+                <f>03306928FD7E43C6A8FA849A108EE9A2</f>
+                <f>PR010</f>
+                <f>EBIT净资产收益率</f>
+                <f>EBIT_N</f>
+                <f>(净资产2_N+净资产2_L)/2</f>
+                <f>DEAL_TWO</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:11:41.014</f>
+            </row>
+            <row>
+                <f>A8D14A3F08B8478D8252240C68043F5F</f>
+                <f>PR013</f>
+                <f>资产销售率</f>
+                <f>营业总收入_N</f>
+                <f>(总资产_N+总资产_L)/2</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:11:57.757</f>
+            </row>
+            <row>
+                <f>A7F0FFD1BFE3491880D2134D655DE4EF</f>
+                <f>PR020</f>
+                <f>营业利润变动率</f>
+                <f>(营业利润_N/营业总收入_N)-(营业利润_L/营业总收入_L)</f>
+                <f>1</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-03 20:08:42.121</f>
+            </row>
+            <row>
+                <f>37DD6F9CFF61441FA4B79ACED20F5E4C</f>
+                <f>PR021</f>
+                <f>权益收益变动率</f>
+                <f>(利润总额_N/((净资产3_N+净资产3_L)/2))-(利润总额_L/((净资产3_L+净资产3_L1)/2))</f>
+                <f>1</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:13:01.726</f>
+            </row>
+            <row>
+                <f>535A3907A074466B812B87849F348FD2</f>
+                <f>PR022</f>
+                <f>资产收益率变动率</f>
+                <f>(利润总额_N/((总资产_N+总资产_L)/2))-(利润总额_L/((总资产_L+总资产_L1)/2))</f>
+                <f>1</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:13:21.221</f>
+            </row>
+            <row>
+                <f>F811B5D4DFA44F71A821403CC84795BC</f>
+                <f>PR024</f>
+                <f>三费收入比</f>
+                <f>三费收入_N</f>
+                <f>营业总收入1_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>1BA31E97EA7549EB8D7826241BED75B5</f>
+                <f>SZ001</f>
+                <f>总资产</f>
+                <f>总资产_N</f>
+                <f>分母1_N</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>0A1FB35D0E2A41F891138D7C15837C2B</f>
+                <f>SZ002</f>
+                <f>净资产</f>
+                <f>净资产_N</f>
+                <f>分母2_N</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>1CEB17807ABC448BB1C0B3432DA3443D</f>
+                <f>SZ003</f>
+                <f>有形净资产</f>
+                <f>有形净资产_N</f>
+                <f>分母3_N</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>850AA92D32EE4117A61F7342ED060DAB</f>
+                <f>SZ005</f>
+                <f>营业收入</f>
+                <f>营业总收入2_N</f>
+                <f>分母2_N</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>9AD678A1C57A4070A13F1971B829A7D5</f>
+                <f>SZ009</f>
+                <f>总负债</f>
+                <f>总负债_N</f>
+                <f>分母1_N</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>F9A44BB8479B42BEB785A061FC60EFA6</f>
+                <f>SZ010</f>
+                <f>实收资本</f>
+                <f>实收资本_N</f>
+                <f>分母1_N</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>DA91A730CCBA43638ED840ECD38F7BEE</f>
+                <f>SZ011</f>
+                <f>流动资产</f>
+                <f>流动资产_N</f>
+                <f>分母1_N</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>0E330E320F154573850F94D249CDC1C0</f>
+                <f>SZ013</f>
+                <f>营业费用+管理费用+财务费用</f>
+                <f>三费收入_N</f>
+                <f>分母3_N</f>
+                <f/>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>65F676BC4C70481196168346140F0B53</f>
+                <f>GR001</f>
+                <f>总资产增长率</f>
+                <f>总资产_N-总资产_L</f>
+                <f>总资产_L</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>A8266882323044BE9845287E7E6392CB</f>
+                <f>GR002</f>
+                <f>净资产增长率</f>
+                <f>净资产3_N-净资产3_L</f>
+                <f>净资产3_L</f>
+                <f>DEAL_TWO</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>EDF027FC0AE549F59F374F2F16994F9C</f>
+                <f>GR003</f>
+                <f>营业收入增长率</f>
+                <f>营业总收入2_N-营业总收入2_L</f>
+                <f>营业总收入2_L</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>96FFFBF7640346A786BD411712E508D6</f>
+                <f>GR004</f>
+                <f>营业利润增长率</f>
+                <f>营业利润_N-营业利润_L</f>
+                <f>营业利润_L</f>
+                <f>DEAL_TWO</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>2BF5A1C362A840BDBCA15DD9BD058ADD</f>
+                <f>GR007</f>
+                <f>流动资产增长率</f>
+                <f>流动资产_N-流动资产_L</f>
+                <f>流动资产_L</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>C841F3B0744D420EAF9AD264AB8E5234</f>
+                <f>GR008</f>
+                <f>应收款项增长率</f>
+                <f>应收款项_N-应收款项_L</f>
+                <f>应收款项_L</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>0A673925770042A68F7B5894A5FD7B73</f>
+                <f>GR009</f>
+                <f>未分配利润增长率</f>
+                <f>未分配利润_N-未分配利润_L</f>
+                <f>未分配利润_L</f>
+                <f>DEAL_TWO</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>78D1F1D7F2CB4A4DBE4FC5240E5F042E</f>
+                <f>LQ001</f>
+                <f>流动比率</f>
+                <f>流动资产1_N</f>
+                <f>流动负债1_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>5262AFD88B194AA9BB70A8F8F22C306E</f>
+                <f>LQ003</f>
+                <f>速动比率</f>
+                <f>速动资产_N</f>
+                <f>流动负债1_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>4089643C373F4A19A6C0E0E1C183D587</f>
+                <f>LQ006</f>
+                <f>调整速动比率3</f>
+                <f>速动资产2_N</f>
+                <f>流动负债3_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>C710F6D88A7D42118677AAF4221654A9</f>
+                <f>LQ007</f>
+                <f>调整速动比率4</f>
+                <f>类货币_N</f>
+                <f>流动负债_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>90387AF9953C48AD9FB726AB32C1059F</f>
+                <f>LQ009</f>
+                <f>调整速动比率6</f>
+                <f>速动资产3_N</f>
+                <f>流动负债2_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>9F1AC0234DC04971AE4C09277A45C561</f>
+                <f>LQ014</f>
+                <f>调整现金比率</f>
+                <f>调整现金_N</f>
+                <f>流动负债3_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>3EC9DC26A1194C5BA40AA7B7C25D97E0</f>
+                <f>LQ015</f>
+                <f>现金短期借款比</f>
+                <f>现金_N</f>
+                <f>短期借款_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>E7C18DAE9C1A46708D840E180855B569</f>
+                <f>LQ017</f>
+                <f>现金银行借款比</f>
+                <f>现金_N</f>
+                <f>银行借款_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>E97D78856BA449848096CF4A9FC65A8A</f>
+                <f>LQ020</f>
+                <f>速动资产占比</f>
+                <f>速动资产4_N</f>
+                <f>总资产_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>E5CD5CD664A54AE69D87718802B06E00</f>
+                <f>LQ021</f>
+                <f>调整速动资产占比1</f>
+                <f>速动资产3_N</f>
+                <f>总资产3_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>DC6768CB3D5543F4BB463156147DF872</f>
+                <f>LQ022</f>
+                <f>调整速动资产占比2</f>
+                <f>类货币_N</f>
+                <f>总资产_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>C0F77E96642C4BB98D72E4A3F94E8A5A</f>
+                <f>DS001</f>
+                <f>收入利息保障倍数</f>
+                <f>营业总收入1_N</f>
+                <f>财务费用_N</f>
+                <f>DEAL_THREE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>F9A378861B074261B658B2FE91DA9932</f>
+                <f>DS002</f>
+                <f>收入平均总借款比</f>
+                <f>营业总收入2_N</f>
+                <f>(总借款1_N+总借款1_L)/2</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:13:43.074</f>
+            </row>
+            <row>
+                <f>ECC55236029141DF8C9E7A6083493D6C</f>
+                <f>DS005</f>
+                <f>收入平均短期债务比</f>
+                <f>营业总收入_N</f>
+                <f>(短期借款_N+短期借款_L)/2</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:13:56.97</f>
+            </row>
+            <row>
+                <f>8BC2562756F4420BAE13864AEAFD741A</f>
+                <f>DS006</f>
+                <f>主营业务利润利息保障倍数</f>
+                <f>主营业务利润_N</f>
+                <f>财务费用_N</f>
+                <f>DEAL_THREE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>C33EFCB468D2443DBCDC8541450E2785</f>
+                <f>DS007</f>
+                <f>EBIT利息保障倍数</f>
+                <f>EBIT_N</f>
+                <f>财务费用_N</f>
+                <f>DEAL_THREE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>265BEDA379354B82B42C9FCF4158970A</f>
+                <f>DS019</f>
+                <f>现金流利息保障倍数</f>
+                <f>经营活动现金流2_N</f>
+                <f>财务费用_N</f>
+                <f>DEAL_THREE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>38FAC23256234871A1703EF6BF8D3E60</f>
+                <f>DS021</f>
+                <f>现金流平均总借款比</f>
+                <f>经营活动现金流_N</f>
+                <f>(总借款_N+总借款_L)/2</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:14:15.847</f>
+            </row>
+            <row>
+                <f>F8366FA636B64D6CA1C4E8B39154A8D5</f>
+                <f>LV001</f>
+                <f>资产负债率</f>
+                <f>总负债1_N</f>
+                <f>总资产1_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>F9F1B041D0BD43109F4580F02A415572</f>
+                <f>LV005</f>
+                <f>长期负债总资产比率</f>
+                <f>长期负债_N</f>
+                <f>总资产_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>CEE43F2A447C4DE890536C2613696840</f>
+                <f>LV007</f>
+                <f>调整付息债务结构比</f>
+                <f>付息债务1_N</f>
+                <f>调整负债_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-05-05 18:29:38.009</f>
+            </row>
+            <row>
+                <f>E3F00EACCAAA43D49677789CAF3FCC7F</f>
+                <f>LV011</f>
+                <f>调整总借款权益比2</f>
+                <f>总借款3_N</f>
+                <f>有形净资产_N</f>
+                <f>DEAL_TWO</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>52D9C14306834ECF80DA5F41C60826B6</f>
+                <f>LV013</f>
+                <f>净借款权益比1</f>
+                <f>净借款1_N</f>
+                <f>有形净资产_N</f>
+                <f>DEAL_TWO</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>9E5779E6A7B34CFC93E952CC74C4E6DE</f>
+                <f>LV014</f>
+                <f>净负债率</f>
+                <f>净负债_N</f>
+                <f>净资产3_N</f>
+                <f>DEAL_TWO</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>8D54DA75929C46C8A2E3654C1B6AD629</f>
+                <f>LV019</f>
+                <f>长期资产适合率</f>
+                <f>长期资金来源_N</f>
+                <f>长期资产_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+                <f>admin</f>
+                <f>2019-04-02 19:03:58.0</f>
+            </row>
+            <row>
+                <f>5a29b22b-769a-4b67-83ee-556dbfc81700</f>
+                <f>LQ013</f>
+                <f>现金比率</f>
+                <f>现金_N</f>
+                <f>流动负债_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-10 17:08:02.687</f>
+                <f>admin</f>
+                <f>2019-04-10 17:08:02.687</f>
+            </row>
+            <row>
+                <f>a884caa0-6154-40b3-987e-58f20768e03b</f>
+                <f>LQ024</f>
+                <f>收入现金比</f>
+                <f>销售现金流_N</f>
+                <f>营业总收入1_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-10 17:10:03.008</f>
+                <f>admin</f>
+                <f>2019-04-10 17:10:03.008</f>
+            </row>
+            <row>
+                <f>a38c820d-3ef7-4693-a689-add58a15a08c</f>
+                <f>PR006</f>
+                <f>净利润率</f>
+                <f>净利润_N</f>
+                <f>营业总收入1_N</f>
+                <f>DEAL_ONE</f>
+                <f>admin</f>
+                <f>2019-04-10 17:11:55.605</f>
+                <f>admin</f>
+                <f>2019-04-10 17:11:55.605</f>
+            </row>
+            <row>
+                <f>f5078daf-8d0c-4caf-9e9b-b70b03297157</f>
+                <f>OC015</f>
+                <f>现金周期</f>
+                <f>(180*(应收账款_N+应收账款_L))/营业总收入_N + (180*((存货_N+存货_L)-(应付账款_N+应付账款_L)))/营业成本_N</f>
+                <f>1</f>
+                <f/>
+                <f>9727</f>
+                <f>2019-04-11 15:19:06.0</f>
+                <f>admin</f>
+                <f>2019-04-29 11:10:41.13</f>
+            </row>
+            <row>
+                <f>ed06d7b1-97f8-4113-8673-1aac66d9f08a</f>
+                <f>LQ011</f>
+                <f>超速动比率</f>
+                <f>超速动资产_N</f>
+                <f>流动负债_N</f>
+                <f>DEAL_ONE</f>
+                <f>9727</f>
+                <f>2019-04-11 15:32:22.762</f>
+                <f>9727</f>
+                <f>2019-04-11 15:32:22.762</f>
+            </row>
+            <row>
+                <f>7d0c2bba-038f-48f5-94aa-70a7f5f63f69</f>
+                <f>DS018</f>
+                <f>EBT流动负债比</f>
+                <f>利润总额_N</f>
+                <f>流动负债_N</f>
+                <f>DEAL_ONE</f>
+                <f>9727</f>
+                <f>2019-04-11 15:35:19.805</f>
+                <f>9727</f>
+                <f>2019-04-11 15:35:19.805</f>
+            </row>
+        </resultset>
+    </table>
+</export>

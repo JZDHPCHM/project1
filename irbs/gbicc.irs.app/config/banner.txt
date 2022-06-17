@@ -1,0 +1,50 @@
+
+**************************************************************************************
+    ${application.title} ${application.version} 
+    Base on Spring Boot ${spring-boot.version}
+**************************************************************************************
+System.properties:
+--------------------------------------------------------------------------------------
+    java.specification.version                = ${java.specification.version}
+    java.specification.vendor                 = ${java.specification.vendor}
+    java.specification.name                   = ${java.specification.name}
+    java.vm.specification.version             = ${java.vm.specification.version}
+    java.vm.specification.vendor              = ${java.vm.specification.vendor}
+    java.vm.specification.name                = ${java.vm.specification.name}
+    java.home                                 = ${java.home}
+    java.version                              = ${java.version}
+    java.vendor                               = ${java.vendor}
+    java.vendor.url                           = ${java.vendor.url}
+    java.vm.version                           = ${java.vm.version}
+    java.vm.vendor                            = ${java.vm.vendor}
+    java.vm.name                              = ${java.vm.name}
+    java.class.version                        = ${java.class.version}
+    java.class.path                           = ${java.class.path}
+    java.library.path                         = ${java.library.path}
+    java.io.tmpdir                            = ${java.io.tmpdir}
+    java.ext.dirs                             = ${java.ext.dirs}
+    os.name                                   = ${os.name}
+    os.arch                                   = ${os.arch}
+    os.version                                = ${os.version}
+    user.name                                 = ${user.name}
+    user.home                                 = ${user.home}
+    user.dir                                  = ${user.dir}
+    
+Application.environment
+--------------------------------------------------------------------------------------
+    application.home.dir                      = ${application.home.dir}
+    application.isInstallerNeeded             = ${application.isInstallerNeeded}
+    application.isInstalled                   = ${application.isInstalled}
+    application.isRunInStandaloneWebContainer = ${application.isRunInStandaloneWebContainer}
+    application.isRunInDevelopmentMode        = ${application.isRunInDevelopmentMode}
+    application.enable-multi-corporation      = ${application.enable-multi-corporation}
+    application.enable-db-schema-update-check = ${application.enable-db-schema-update-check}
+    application.enable-audit-log              = ${application.enable-audit-log}
+    application.enable-change-language        = ${application.enable-change-language}
+    application.enable-change-role            = ${application.enable-change-role}
+    
+    spring.config.location                    = ${spring.config.location}
+    spring.banner.location                    = ${spring.banner.location}
+    logging.config                            = ${logging.config}
+    server.port                               = ${server.port}
+**************************************************************************************

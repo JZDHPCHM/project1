@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="MV_1.0.0_20190917__NS_BP_MASTER.xml" author="framework">
+        
+        <!-- 客户信息表-->
+        <createTable tableName="NS_BP_MASTER" remarks=" 客户信息表">
+	<column name="FD_ID"						type="java.sql.Types.VARCHAR(36)"		remarks="uuid">
+				<constraints primaryKey="true"/>
+			</column>
+<column 	 remarks="商业伙伴名称" name="FD_BP_NAME" type="java.sql.Types.VARCHAR(2000)"></column>
+<column 	 remarks="商业伙伴类型" name="FD_BP_TYPE" type="java.sql.Types.VARCHAR(100)"></column>
+<column 	 remarks="商业伙伴类别" name="FD_BP_CATEGORY" type="java.sql.Types.VARCHAR(100)"></column>
+<column 	 remarks="商业伙伴编码" name="FD_BP_CODE" type="java.sql.Types.VARCHAR(30)"></column>
+<column 	 remarks="注册资本(万元)" name="FD_REGISTERED_CAPITAL" type="java.sql.Types.VARCHAR(20)"></column>
+<column 	 remarks="注册日期" name="FD_FOUNDED_DATE" type="java.sql.Types.VARCHAR(20)"></column>
+<column 	 remarks="法定代表人" name="FD_LEGAL_PERSON" type="java.sql.Types.VARCHAR(300)"></column>
+<column 	 remarks="企业规模" name="FD_ENTERPRISE_SCALE" type="java.sql.Types.VARCHAR(300)"></column>
+<column 	 remarks="登记注册号类型" name="FD_REG_NUMBER_TYPE" type="java.sql.Types.VARCHAR(30)"></column>
+<column 	 remarks="登记注册号码" name="FD_REG_NUMBER" type="java.sql.Types.VARCHAR(50)"></column>
+<column 	 remarks="国标行业" name="FD_SEGMENT_INDUSTRY" type="java.sql.Types.VARCHAR(100)"></column>
+<column 	 remarks="高精尖产业分类" name="FD_HIGH_PRECISION" type="java.sql.Types.VARCHAR(100)"></column>
+<column 	 remarks="经济类型" name="FD_ECONOMIC_TYPE" type="java.sql.Types.VARCHAR(100)"></column>
+<column 	 remarks="企业荣誉" name="FD_ENTERPRISE_HONOR" type="java.sql.Types.VARCHAR(100)"></column>
+<column 	 remarks="组织机构类别" name="FD_ORG_TYPE" type="java.sql.Types.VARCHAR(30)"></column>
+<column 	 remarks="组织机构类别细分" name="FD_ORG_SUB_TYPE" type="java.sql.Types.VARCHAR(30)"></column>
+<column 	 remarks="所在园区" name="FD_PARK_ADDRESS" type="java.sql.Types.VARCHAR(300)"></column>
+<column 	 remarks="主要产品" name="FD_MAIN_PRODUCTS" type="java.sql.Types.VARCHAR(2000)"></column>
+<column 	 remarks="业务经理" name="FD_EMPLOYEE_ID" type="java.sql.Types.VARCHAR(20)"></column>
+<column 	 remarks="业务经理所在部门" name="FD_LEASE_ORGANIZATION" type="java.sql.Types.VARCHAR(30)"></column>
+<column 	 remarks="是否实际承租人" name="FD_ACTUAL_LESSEE" type="java.sql.Types.VARCHAR(30)"></column>
+<column 	 remarks="主体评级模版(承租人类型)" name="FD_SCORE_TEMPLATE_ID" type="java.sql.Types.VARCHAR(30)"></column>
+        </createTable>
+             
+        
+<createTable tableName="NS_ZGC_HIGH_BJ" remarks="国标、高精尖、所在园区">
+<column name="CLASS_CODE"  remarks="" type="java.sql.Types.VARCHAR(60)"></column>
+<column name="VALUE_CODE"  remarks="" type="java.sql.Types.VARCHAR(10)"></column>
+<column name="VALUE_NAME"  remarks="" type="java.sql.Types.VARCHAR(4000)"></column>
+<column name="PARENT_ID"  remarks=""  type="java.sql.Types.VARCHAR(10)"></column>
+<column name="FLAG"  remarks="FLAG='01'国标；02高精尖；03所在园区" type="java.sql.Types.VARCHAR(2)"></column>
+</createTable>
+ 
+ <createTable tableName="NS_ECONOMIC_TYPE" remarks="经济类型">
+<column name="FD_CODE_VALUE"  remarks="" type="java.sql.Types.VARCHAR(200)"></column>
+<column name="FD_CODE_VALUE_NAME"  remarks="" type="java.sql.Types.VARCHAR(2000)"></column>
+</createTable>
+ 
+ 		
+ 
+ <createTable tableName="FD_ES_AL_ST_TYPE" remarks="经济类型">
+<column name="TYPE"  remarks="" type="java.sql.Types.VARCHAR(30)"></column>
+<column name="TYPE_NAME"  remarks="" type="java.sql.Types.VARCHAR(255)"></column>
+<column name="CODE"  remarks="" type="java.sql.Types.VARCHAR(20)"></column>
+<column name="CODE_NAME"  remarks="" type="java.sql.Types.VARCHAR(30)"></column>
+</createTable>
+        
+    </changeSet>
+</databaseChangeLog>

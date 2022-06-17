@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8'?><!--FR_2019.07.15_16.12.56__MV_CFG_DATA_EXTRACTOR.xml--><export>
+    <summary>
+        <t name="MV_CFG_DATA_EXTRACTOR">select * from MV_CFG_DATA_EXTRACTOR</t>
+    </summary>
+    <table name="MV_CFG_DATA_EXTRACTOR">
+        <sql>select * from MV_CFG_DATA_EXTRACTOR</sql>
+        <fields>
+            <field name="FD_ID" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_NAME" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_ENABLE" type="2" typeName="java.sql.Types.NUMERIC"/>
+            <field name="FD_ORDER" type="2" typeName="java.sql.Types.NUMERIC"/>
+            <field name="FD_EXECUTE_TIME_WEIGHT" type="2" typeName="java.sql.Types.NUMERIC"/>
+            <field name="FD_DATASOURCE_NAME" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_GROOVY_SCRIPT" type="2005" typeName="java.sql.Types.CLOB"/>
+            <field name="FD_CREATOR" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_CREATE_DATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+            <field name="FD_LAST_MODIFIER" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_LAST_MODIFYDATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+        </fields>
+        <resultset>
+            <row>
+                <f>e86abc60-013d-419f-993e-6d2de2bd911e</f>
+                <f>评级记录</f>
+                <f>1</f>
+                <f>1000</f>
+                <f>10</f>
+                <f/>
+                <f>import groovy.sql.Sql;
+
+/**
+ * 以下预定义变量可以直接在脚本中使用:
+ * 1. dataExtractor:       数据抽取器配置对象，通过该对象可获取本数据抽取器的配置信息
+ * 2. runtimeContext:      模型验证执行时的执行上下文对象，通过该对象可获取模型验证执行时的相关参数
+ * 3. applicationContext:  spring 应用上下文
+ * 4. defaultDataSource:   应用默认数据源
+ * 5. dataSource:          本数据抽取器配置的外部数据源
+**/
+
+//定义获取评分记录数据的查询SQL语句
+/* ----------------通常以下部分为客户定制部分---------------- */
+def query ="""
+    select
+        FD_CUSTNO  as FD_CUSTOM_ID,          /*客户唯一标识*/
+        FD_CUSTNAME     as FD_CUSTOM_NAME,        /*客户名称*/
+        FD_MODELCODE  as FD_MODEL_ID,           /*评级模型标识*/
+        (select fd_message from fr_sys_i18n_message where fd_code = 'dictionary.MODEL_TYPE.' ||  FD_MODELCODE)  as FD_MODEL_NAME,         /*评级模型名称*/
+        FD_PD           as FD_PD,                 /*评级结果（违约概率）*/
+        FD_SCO            as FD_SCORE,              /*评级结果（总体得分）*/
+        FD_QUAN_SCO            as FD_SCORE_QUANTITATIVE, /*评级结果（定量部分得分）*/
+        FD_QUAL_SCO            as FD_SCORE_QUALITATIVE,  /*评级结果（定性部分得分）*/
+        FD_FIN_LEVEL           as FD_LEVEL,              /*评级结果（等级）*/
+        FD_EFFECTIVE_TIME          as FD_SCORE_BEGIN_DATE,   /*评级有效期开始日期*/
+        FD_DUE_TIME          as FD_SCORE_END_DATE      /*评级有效期结束日期*/
+    from NS_COMPANY_RATING where FD_VAILD = 1 and FD_SOURCE = 'IRB'
+""";
+/* --------------------客户定制部分结束--------------------- */
+
+//定义插入到评分记录表的 SQL 语句
+def insert ="""
+    insert into MV_SCORE_RECORD(
+        FD_CUSTOM_ID,
+        FD_CUSTOM_NAME,
+        FD_MODEL_ID,
+        FD_MODEL_NAME,
+        FD_PD,
+        FD_SCORE,
+        FD_SCORE_QUANTITATIVE,
+        FD_SCORE_QUALITATIVE,
+        FD_LEVEL,
+        FD_SCORE_BEGIN_DATE,
+        FD_SCORE_END_DATE
+    ) values (?,?,?,?,?,?,?,?,?,?,?)
+""";
+
+//首先删除评级记录表的历史数据
+def defaultSql = new Sql(defaultDataSource);
+defaultSql.execute("delete from MV_SCORE_RECORD");
+
+//从数据抽取器配置的数据源中获取相关数据
+def Sql =new Sql(dataSource);
+defaultSql.withBatch(5000,insert){ps ->
+    Sql.eachRow(query){ row ->
+        ps.addBatch([
+            row['FD_CUSTOM_ID'],
+            row['FD_CUSTOM_NAME'],
+            row['FD_MODEL_ID'],
+            row['FD_MODEL_NAME'],
+            row['FD_PD'],
+            row['FD_SCORE'],
+            row['FD_SCORE_QUANTITATIVE'],
+            row['FD_SCORE_QUALITATIVE'],
+            row['FD_LEVEL'],
+            row['FD_SCORE_BEGIN_DATE'],
+            row['FD_SCORE_END_DATE']
+        ]);
+    }
+}</f>
+                <f>admin</f>
+                <f>2019-07-15 15:05:47.0</f>
+                <f>admin</f>
+                <f>2019-07-15 16:06:12.403</f>
+            </row>
+            <row>
+                <f>eb60ea45-f1b9-455c-82c5-34414002cb5c</f>
+                <f>违约记录</f>
+                <f>1</f>
+                <f>1100</f>
+                <f>10</f>
+                <f/>
+                <f>import groovy.sql.Sql;
+
+/**
+ * 以下预定义变量可以直接在脚本中使用:
+ * 1. dataExtractor:       数据抽取器配置对象，通过该对象可获取本数据抽取器的配置信息
+ * 2. runtimeContext:      模型验证执行时的执行上下文对象，通过该对象可获取模型验证执行时的相关参数
+ * 3. applicationContext:  spring 应用上下文
+ * 4. defaultDataSource:   应用默认数据源
+ * 5. dataSource:          本数据抽取器配置的外部数据源
+**/
+
+//定义获取评分记录数据的查询SQL语句
+/* ----------------通常以下部分为客户定制部分---------------- */
+def query ="""
+    select
+        FD_CUST_NO  as FD_CUSTOM_ID,            /*客户唯一标识*/
+        FD_LAST_MODIFYDATE          as FD_DEFAULT_CONFIRM_DATE  /*违约认定日期*/
+    from NS_DC_CUSTOMER where FD_VAILD = 1
+""";
+/* --------------------客户定制部分结束--------------------- */
+
+//定义插入到评分记录表的 SQL 语句
+def insert ="""
+    insert into MV_DEFAULT_RECORD(
+        FD_CUSTOM_ID,
+        FD_DEFAULT_CONFIRM_DATE
+    ) values (?,?)
+""";
+
+//首先删除评级记录表的历史数据
+def defaultSql = new Sql(defaultDataSource);
+defaultSql.execute("delete from MV_DEFAULT_RECORD");
+
+//从数据抽取器配置的数据源中获取相关数据
+def Sql =new Sql(dataSource);
+defaultSql.withBatch(5000,insert){ps ->
+    Sql.eachRow(query){ row ->
+        ps.addBatch([row['FD_CUSTOM_ID'],row['FD_DEFAULT_CONFIRM_DATE']]);
+    }
+}</f>
+                <f>admin</f>
+                <f>2019-07-15 15:05:47.0</f>
+                <f>admin</f>
+                <f>2019-07-15 15:14:01.748</f>
+            </row>
+        </resultset>
+    </table>
+</export>

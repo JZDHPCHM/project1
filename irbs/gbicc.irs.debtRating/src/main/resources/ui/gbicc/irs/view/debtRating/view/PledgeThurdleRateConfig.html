@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+//主要担保方式
+var tableTypes = [(${@frSystemDictionaryService.getDictionaryMapJsonString('DEBTRATING_TABLE_TYPE',#locale)})];
+
+//字段定义
+var DebtRatingBHSXSParamFields ={
+	grid: [
+			{width:'*',		name:'id',	primaryKey:true,	hidden:true},
+			{width:'*',		name:'collateralType',	 title:'担保品类型'},
+			{width:'*',		name:'collateralCode',	 title:'担保品编码'},
+			{width:'*',		name:'collateralName',	 title:'担保品名称'},
+			{width:'*',		name:'collateralMainCode',	 title:'担保品主体代码',},
+			{width:'*',		name:'collateralMainName',title:'担保品主体'},
+			{width:'*',		name:'isFinance',title:'是否金融类',type:'boolean'},
+			{width:'*',		name:'isBankCollateral', title:'是否本行接受押品',type:'boolean'},
+			{width:'*',		name:'discountFolded',	 title:'折扣率（已折）',
+				formatCellValue : function(value, record, rowNum, colNum){
+					if(value!="--"){
+					       return (value*100).toFixed(2)+"%";
+						}else{
+							return "";
+						}
+     				}	
+			},
+			{width:'*',		name:'discountInitial',	 title:'折扣率（初始）',
+				formatCellValue : function(value, record, rowNum, colNum){
+					if(value!="--"){
+				       return (value*100).toFixed(2)+"%";
+					}else{
+						return "";
+					}
+     			}	
+			},
+			{width:'*',		name:'thurdleRate',	 title:'基准回收率',
+				formatCellValue : function(value, record, rowNum, colNum){
+					console.info(value);
+					if(value!="--"){
+					       return (value*100).toFixed(2)+"%";
+							
+						}else{
+							return "";
+						}
+  		}}
+	],
+	edit: [
+		    {width:'*',		name:'id',	primaryKey:true,	hidden:true},
+			{width:200,		name:'collateralType',	 title:'担保品类型',required:true},
+			{width:200,		name:'collateralCode',	 title:'担保品编码',required:true},
+			{width:200,		name:'collateralName',	 title:'担保品名称',required:true},
+			{width:200,		name:'collateralMainCode',	 title:'担保品主体代码',required:true},
+			{width:200,		name:'collateralMainName',title:'担保品主体',required:true},
+			{width:200,		name:'thurdleRate',	 title:'基准回收率',required:true},
+			{width:200,		name:'isFinance',title:'是否金融类',type:'boolean'},
+			{width:200,		name:'isBankCollateral', title:'是否本行接受押品',type:'boolean'},
+			{width:200,		name:'discountFolded',	 title:'折扣率（已折）'	,required:true},
+			{width:200,		name:'discountInitial',	 title:'折扣率（初始）',required:true}
+			
+	]
+};
+
+//保证人回收调整系数数据源
+isc.FwRestDataSource.create({
+	ID: 'debtRatingBHSXSParamDS',
+    fields: DebtRatingBHSXSParamFields.grid,
+    dataURL: '[[@{/irs/config/pledgethurdlerate/isc}]]'
+});
+
+//保证人回收调整系数列表
+isc.FwListGrid.create({
+	ID: 'debtRatingBHSXSParamListGrid',
+	title: '<b>抵质押基准回收率</b>',
+	dataSource: debtRatingBHSXSParamDS,
+	sortField:"bzTypeCode",
+	fields: DebtRatingBHSXSParamFields.grid,
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: debtRatingBHSXSParamDS,
+            fields: DebtRatingBHSXSParamFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh','update','remove','add'
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				debtRatingBHSXSParamListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

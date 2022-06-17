@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+<body style='background-color:white'>
+	<div class="wrapper">
+		<div class="wrapper wrapper-content animated fadeInRight">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="row" style="margin-top:10px">
+						<form class="form-inline" id='searchForm'>
+                          	<div class="form-group">
+                                <label class="control-label" for="xbrlCode">公司</label>
+                              	<select class="form-control" name="xbrlCode" id="xbrlCode">
+                                   	<option value=''>请选择</option>
+                             		<option th:each="option: ${@irrDataImplHisServiceImpl.getHisDataOrg()}" th:value="${option.key}" th:text="${option.value}"></option>
+                              	</select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="taskBatch">期次</label>
+                              	<select class="form-control" name="taskBatch" id="taskBatch">
+                                   	<option value=''>请选择</option>
+                             		<option th:each="option: ${@irrDataImplHisServiceImpl.getHisDataTaskBatch()}" th:value="${option.key}" th:text="${option.value}"></option>
+                              	</select>
+                            </div>
+                            <div class="form-group formMargin">
+                                <label for="searchIndexName" class="control-label">指标名称</label>
+                                <input type="text" placeholder="模糊查询" id="searchIndexName" name="indexName" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                 <label class="control-label" for="projTypeCode">评估项目</label>
+                               	 <select class="form-control" name="projTypeCode" id="projTypeCode">
+                                    	<option value=''>请选择</option>
+	                             	<option th:each="option: ${@irrProjTypeServiceImpl.projTypeCodeSelect(4)}" th:value="${option.key}" th:text="${option.value}"></option>
+                               	 </select>
+                             </div>
+						</form>
+					</div>
+					<div class="row" style='margin-top:5px;'>
+						<button type='button' class='btn btn-primary btn-sm' id='searchBtn'>查询</button>
+						<button type='button' class='btn btn-primary btn-sm' id='resetBtn'>重置</button>
+						<button type="button" class="btn btn-primary btn-sm" id="importBtn">导入</button>
+						<button type="button" class="btn btn-primary btn-sm" id="exportBtn">导出</button>
+					</div>
+					<div class='row' style='margin-top:5px;'>
+						<div class="jqGrid_wrapper">
+		                    <table id="hisDataTable"></table>
+		                    <div id="hisDataTablePage"></div>
+		                </div>
+					</div>
+										
+					<!-- 上传模态框 -->
+                   	<div class="row">
+                   		<div class="modal inmodal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">
+											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+										</button>
+										<h4 class="modal-title">上传历史数据</h4>
+										<small class="font-bold">您可以在这里上传历史数据</small>
+									</div>
+									<div class="modal-body">
+										<form action="/irr/dataImplHis/uploadHisData.action" class="dropzone form-inline" id="dropzoneForm">
+			                                <div class="form-group" id="yearDiv">
+				                                <label class="font-normal">年</label>
+				                                <div class="input-group date">
+				                                    <span class="input-group-addon">
+				                                    	<i class="fa fa-calendar"></i>
+				                                    </span>
+				                                    <input type="text" class="form-control" name='year'>
+				                                </div>
+				                            </div>
+			                                <div class="form-group" id="season">
+			                                    <label for="quarter" class="control-label">季</label>
+			                                    <select class="form-control" name="quarter" id="quarter">
+			                                     	<option value=''>请选择</option>
+					                             	<option value='1'>1</option>
+					                             	<option value='2'>2</option>
+					                             	<option value='3'>3</option>
+					                             	<option value='4'>4</option>
+			                                	</select>
+			                                </div>
+			                                <div class="fallback">
+			                                    <input name="file" type="file" multiple />
+			                                </div>
+			                            </form> 
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+									</div>
+								</div>
+							</div>
+						</div>
+                   	</div>
+                   	<!-- 下载模态框 -->
+                   	<div class="row">
+                   		<div class="modal inmodal fade" id="downloadModal" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">
+											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+										</button>
+										<h4 class="modal-title">下载历史数据</h4>
+										<small class="font-bold">您可以在这里下载历史数据</small>
+									</div>
+									<div class="modal-body">
+										<form class="form-inline" id="downloadForm">
+			                                <div class="form-group">
+				                                <label class="control-label" for="taskBatch">期次</label>
+				                              	<select class="form-control" name="taskBatch" id="downloadTaskBatch">
+				                                   	<option value=''>请选择</option>
+				                             		<option th:each="option: ${@irrDataImplHisServiceImpl.getHisDataTaskBatch()}" th:value="${option.key}" th:text="${option.value}"></option>
+				                              	</select>
+				                            </div>
+			                            </form> 
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" id='downloadSureBtn'>确定</button>
+										<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+									</div>
+								</div>
+							</div>
+						</div>
+                   	</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!-- 遮罩模态框 -->
+    <div class="modal inmodal fade" id="waitModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop='static'>
+		<div class="modal-dialog">
+             <div class="ibox ">
+                 <div class="ibox-title">
+                     <h5>上传中,请等待...</h5>
+                 </div>
+                 <div class="ibox-content">
+                     <div class="spiner-example">
+                         <div class="sk-spinner sk-spinner-three-bounce">
+                             <div class="sk-bounce1"></div>
+                             <div class="sk-bounce2"></div>
+                             <div class="sk-bounce3"></div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	//时间组件
+	$('#yearDiv .input-group.date').datepicker({
+	    startView: 2,
+	    maxViewMode: 2,
+	    minViewMode: 2,
+	    todayBtn: "linked",
+	    keyboardNavigation: false,
+	    forceParse: false,
+	    autoclose: true,
+	    format: "yyyy"
+	});
+	//上传文件组件
+	Dropzone.autoDiscover = false;
+	var irrDropzone = new Dropzone('#dropzoneForm',{
+	    paramName: "file", // The name that will be used to transfer the file
+	    maxFilesize: 20, // MB
+	    maxFiles : 1,
+	    parallelUploads : 1,//并行处理多少文件上传
+	    dictRemoveFile : true,//如果addRemoveLinks为true，则用于删除文件的文本
+	    dictDefaultMessage: "<strong>拖动文件到这里或者点击此处进行上传文件</strong>",
+	    acceptedFiles : '.zip',
+	    addRemoveLinks : true,
+	    dictRemoveFile : '删除',
+	    autoProcessQueue : true,//是否自动上传
+	    sending: function(file, xhr, formData) {
+	    	$('#waitModal').modal({show: true,backdrop: 'static'});
+	    	$('#uploadModal').modal('hide');
+	    },
+	    success: function (file, response, e) {
+	    	if(response.flag){
+	    		swal('提示',response.data,'success');
+	    	}else{
+	    		swal('提示',response.data,'error');
+	    	}
+	    	window.location.reload();
+	    }
+	});
+	//查询函数
+	function searchFn(){
+		var formJson = $('#searchForm').getNotNullJson();
+		formJson.operationType = 'fetch';
+    	formJson.textMatchStyle = 'substring';
+    	formJson.sortBy = 'indexLine';
+    	$("#hisDataTable").jqGrid('clearGridData');//清空表格
+		$("#hisDataTable").jqGrid('setGridParam',{//重新加载数据
+			datatype : 'json',
+			postData : {
+				data : JSON.stringify(formJson)
+			},
+			page : 1
+		},true).trigger("reloadGrid");
+	}
+	
+	$(document).ready(function(){
+		/*历史数据表格*/
+		$("#hisDataTable").jqGrid({
+			url:"[(@{/irr/dataImplHis/findHisData.action})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 340,
+	        autowidth: true,
+	        shrinkToFit: true,
+	        autoScroll: true,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 1,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['id','评估项目编码','评估项目名称','行次','指标名称','指标结果','机构编码','机构名称','xbrl机构编码','xbrl机构名称','期次'],
+	        colModel:[{
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'projTypeCode',
+	        	index:'projTypeCode',
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name:'projTypeName',
+	        	index:'projTypeName',
+	        	sortable : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name:'indexLine',
+	        	index:'indexLine',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexName',
+	        	index:'indexName',
+	        	hidden : false,
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexResult',
+	        	index:'indexResult',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name : 'orgCode',
+	        	index : 'orgCode',
+	        	sortable : false,
+	        	editable : false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	name:'orgName',
+	        	index:'orgName',
+	        	sortable : false,
+	        	editable: true,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	name:'xbrlCode',
+	        	index:'xbrlCode',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	name:'xbrlName',
+	        	index:'xbrlName',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'taskBatch',
+	        	index:'taskBatch',
+	        	editable: false,
+	        	hidden : false,
+	        	search:true
+	        }],
+	        pager: "#hisDataTablePage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }
+	    });
+	    $("#hisDataTable").jqGrid('navGrid', '#hisDataTablePage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#hisDataTable').setGridWidth(width);
+	    });
+	    
+	    /*查询*/
+	    $('#searchBtn').click(function(){
+	    	searchFn();
+	    });
+	    
+	    /*重置*/
+	    $('#resetBtn').click(function(){
+	    	$('#searchForm')[0].reset();
+	    });
+	    
+		/*导入*/
+		$('#importBtn').click(function(){
+			$('#dropzoneForm')[0].reset();
+			irrDropzone.removeAllFiles();
+			$('#uploadModal').modal('show');
+		});
+		
+		/*导出*/
+		$('#exportBtn').click(function(){
+			$('#downloadForm')[0].reset();
+			$('#downloadModal').modal('show');
+		});
+		
+		/*确定导出按钮*/
+		$('#downloadSureBtn').click(function(){
+			var taskBatch = $('#downloadTaskBatch').val();
+			if(isSelect(taskBatch)){
+				swal('提示','请先选择期次！','warning');
+				return false;
+			}
+			window.location.href = '[(@{/irr/dataImplHis/downloadHisData.action?taskBatch='+taskBatch+'})]';
+		});
+		
+	});
+</script>
+</html>

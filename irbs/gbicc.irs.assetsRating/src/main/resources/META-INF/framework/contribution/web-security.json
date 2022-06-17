@@ -1,0 +1,31 @@
+/*
+ * 认证贡献项配置示例
+ * 功能: 该贡献项配置为框架提供不进行认证某些资源的功能
+ * 使用说明:
+ * ignoredSecurityControllerUrlMatchers	: 不进行安全认证检查的 url 模式
+ */
+
+
+{
+	"ignoredSecurityControllerUrlMatchers":[
+		"/irs/assetsRating/testAssetsModel",
+		"/irs/assetsRating/enterReport",
+		"/irs/assetsRating/assetsRatingReport",
+		"/irs/table/getAssetsHeader",
+		"/irs/table/getAssetsLevel",
+		"/irs/table/getAssetsPosition",
+		"/irs/table/getAssetsScore",
+		"/irs/table/getAssetsInfo",
+		"/irs/table/getGroup",
+		"/irs/table/getProduct",
+		"/irs/table/getAssetsDepartment",
+		"/irs/table/getBarIncome",
+		"/irs/table/getBarPreservation",
+		"/irs/table/getBarCirculation",
+		"/irs/table/getBarSteerable",
+		"/irs/table/getFooter",
+		"/irs/table/getAssetsTrait",
+		"/irs/table/**"
+	]
+}
+

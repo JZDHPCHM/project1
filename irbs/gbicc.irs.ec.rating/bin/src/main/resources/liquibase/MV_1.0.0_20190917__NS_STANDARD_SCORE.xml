@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="MV_1.0.0_20190917__NS_STANDARD_SCORE.xml" author="framework">
+        
+        <!-- 标准分值-->
+        <createTable tableName="NS_STANDARD_SCORE" remarks="标准分值表">
+       		<column name="FD_ID"						type="java.sql.Types.VARCHAR(36)"		remarks="uuid">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="FD_CODE"						type="java.sql.Types.VARCHAR(40)"		remarks="标准分值编码"></column>
+			<column name="FD_NAME"						type="java.sql.Types.VARCHAR(10)"		remarks="标准分值名称"></column>
+			<column name="FD_VALUE"           			type="java.sql.Types.VARCHAR(10)"       remarks="标准分值"></column>
+        	<column name="FD_VAILD"           			type="java.sql.Types.VARCHAR(10)"       remarks="标准分值是否有效"></column>
+       		<column name="FD_CREATOR"               	type="java.sql.Types.VARCHAR(254)"  remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"          		type="DATETIME"                     remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        		type="java.sql.Types.VARCHAR(254)"  remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       	type="DATETIME"                     remarks="最后修改日期"></column>
+       
+        </createTable>
+        
+         <!-- 主体评级表-->
+         <createTable tableName="NS_main_rating" remarks="主体评级表">
+         
+         <column name="FD_ID"						type="java.sql.Types.VARCHAR(36)"		remarks="评级ID">
+				<constraints primaryKey="true"/>
+			</column>
+<column name="FD_CUST_CODE"      		  type="java.sql.Types.VARCHAR(36)"                       						remarks="承租人编号"></column>
+<column name="FD_CUST_NAME"     		  type="java.sql.Types.VARCHAR(36)"                                  remarks="承租人名称"></column>
+<column name="FD_TYPE"   						 type="java.sql.Types.VARCHAR(36)"                                            remarks="评级类型"></column>
+<column name="FD_PD"      						 type="java.sql.Types.VARCHAR(36)"                                          remarks="违约概率"></column>
+<column name="FD_FIR_REP"  					 type="java.sql.Types.VARCHAR(36)"                                            remarks="第一年财报"></column>
+<column name="FD_SEC_REP"   					 type="java.sql.Types.VARCHAR(36)"                                          remarks="第年财报"></column>
+<column name="FD_QUAN_SCO"  					 type="java.sql.Types.VARCHAR(36)"                                          remarks="定量得分"></column>
+<column name="FD_QUAL_SCO"  					 type="java.sql.Types.VARCHAR(36)"                                          remarks="定性得分"></column>
+<column name="FD_SCO"  							 type="java.sql.Types.VARCHAR(36)"                                            remarks="得分"></column>
+<column name="FD_INTERN_CODE" 				 type="java.sql.Types.VARCHAR(255)"                                         remarks="初评人(发起人)"   ></column>
+<column name="FD_INTERN_NAME" 				 type="java.sql.Types.VARCHAR(255)"                                                                  ></column>                  
+<column name="FD_INTERN_DATE" 				type="DATETIME"                                          			  remarks="初评时间"          ></column>                                                                                    
+<column name="FD_INTERN_LEVEL" 			 type="java.sql.Types.VARCHAR(36)"                                            remarks="初评评级结果" ></column>
+<column name="FD_FINAL_CODE" 				 type="java.sql.Types.VARCHAR(255)"                                           remarks="复合人编码"    ></column>                                                                                                                                                                           
+<column name="FD_FINAL_NAME" 				 type="java.sql.Types.VARCHAR(255)"                                           remarks="复合人名称"    ></column>                                                                                
+<column name="FD_FINAL_LEVEL" 				 type="java.sql.Types.VARCHAR(36)"                                          remarks="终评结果"  ></column>
+<column name="FD_FINAL_ADVICE" 			 type="java.sql.Types.VARCHAR(255)"                                           remarks="复核人复合意见"></column>
+<column name="FD_FINAL_DATE" 				type="DATETIME"                                        				  remarks="评级日期(终评日期)"        ></column>                                                                                        
+<column name="FD_RATING_STATUS" 			 type="java.sql.Types.VARCHAR(36)"                                          remarks="评级状态"  ></column>                                                                                                                                                                                
+<column name="FD_CURRENT_STEPID" 		  type="java.sql.Types.VARCHAR(36)"                                  remarks="评级步骤id"></column>
+<column name="FD_VAILD"  				 type="java.sql.Types.VARCHAR(1)"                                  remarks="生效状态"></column>
+<column name="FD_RATING_TYPE"  				 type="java.sql.Types.VARCHAR(36)"                                  remarks="评级状态"></column>
+<column name="FD_CREATOR" 							 type="java.sql.Types.VARCHAR(255)"                                      remarks="创建人"></column>
+<column name="FD_CREATE_DATE" 				type="DATETIME"                                         		  remarks="创建时间"></column>
+<column name="FD_LAST_MODIFIER" 				type="java.sql.Types.VARCHAR(255)"                                      remarks="修改人"></column>
+<column name="FD_LAST_MODIFYDATE"			 type="DATETIME"                                          			  remarks="修改时间"></column>
+        </createTable> 
+        
+        <!-- 主体评级表-->
+         <createTable tableName="ns_non_fin" remarks="主体评级表">
+         <column name="FD_ID"			type="java.sql.Types.VARCHAR(36)"	 remarks="评级ID">
+				<constraints primaryKey="true"/>
+		</column>
+		<column name="FD_MAIN_ID"      	type="java.sql.Types.VARCHAR(36)"    remarks="承租人编号"></column>
+		<column name="FD_CODE"     		type="java.sql.Types.VARCHAR(36)"    remarks="承租人名称"></column>
+		<column name="FD_VALUE"   		type="java.sql.Types.VARCHAR(36)"    remarks="评级类型"></column>
+        </createTable> 
+        
+          <!-- 主体评级表-->
+         <createTable tableName="Ns_main_level" remarks="主体评级等级表">
+         <column name="FD_ID"			type="java.sql.Types.VARCHAR(36)"	 remarks="等级Id">
+				<constraints primaryKey="true"/>
+		</column>
+		<column name="FD_CODE"      	type="java.sql.Types.VARCHAR(36)"    remarks="等级"></column>
+		<column name="FD_CODE_LOWER"    type="java.sql.Types.VARCHAR(36)"    remarks="等级最低值"></column>
+		<column name="FD_CODE_UPPER"   	type="java.sql.Types.VARCHAR(36)"    remarks="等级最高值"></column>
+      	<column name="FD_SORT"   		type="java.sql.Types.VARCHAR(2)"    remarks="等级排序"></column>
+      
+        </createTable>
+        
+        <!--评级配置表  -->
+        <createTable tableName="ns_r_cfg_values" remarks="评级配置表">
+       		<column name="FD_ID"						type="java.sql.Types.VARCHAR(36)"		remarks="uuid"></column>
+			<column name="FD_DEF_ID"						type="java.sql.Types.VARCHAR(40)"		remarks="标准分值编码"></column>
+			<column name="FD_DEF_CODE"						type="java.sql.Types.VARCHAR(10)"		remarks="标准分值名称"></column>
+			<column name="FD_ORDER_NUM"           			type="java.sql.Types.VARCHAR(10)"       remarks="标准分值"></column>
+        	<column name="FD_DIS_VAL"           			type="java.sql.Types.VARCHAR(10)"       remarks="标准分值是否有效"></column>
+       		<column name="FD_VAL"               	type="java.sql.Types.VARCHAR(254)"  remarks="创建人"></column>
+			<column name="FD_WEIGHT"          		type="DATETIME"                     remarks="创建日期"></column>
+			<column name="FD_ADDIT_ID"        		type="java.sql.Types.VARCHAR(254)"  remarks="最后修改人"></column>
+			<column name="FD_REMARKS"       	type="DATETIME"                     remarks="最后修改日期"></column>
+      	<column name="FD_IS_HIS"						type="java.sql.Types.VARCHAR(40)"		remarks="标准分值编码"></column>
+			<column name="FD_CREATOR"						type="java.sql.Types.VARCHAR(10)"		remarks="标准分值名称"></column>
+			<column name="FD_LAST_MODIFIER"           			type="java.sql.Types.VARCHAR(10)"       remarks="标准分值"></column>
+        	<column name="FD_CREATE_DATE"           			type="java.sql.Types.VARCHAR(10)"       remarks="标准分值是否有效"></column>
+       		<column name="FD_LAST_MODIFYDATE"               	type="java.sql.Types.VARCHAR(254)"  remarks="创建人"></column>
+			<column name="FD_ADJUSTMENT_FRACTION"          		type="DATETIME"                     remarks="创建日期"></column>
+			<column name="FD_ADJUSTMENT_TYPE"       	type="DATETIME"                     remarks="最后修改日期"></column> 
+        </createTable>
+        
+         
+    </changeSet>
+</databaseChangeLog>

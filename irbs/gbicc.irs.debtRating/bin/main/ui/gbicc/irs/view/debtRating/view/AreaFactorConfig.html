@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+//主要担保方式
+var tableTypes = [(${@frSystemDictionaryService.getDictionaryMapJsonString('DEBTRATING_TABLE_TYPE',#locale)})];
+
+//字段定义
+var DebtRatingBHSXSParamFields ={
+	grid: [
+		{width:'*',		name:'id',	primaryKey:true,	hidden:true},
+		{width:'*',		name:'areaCode',	 title:'地区code',required:true},
+		{width:'*',		name:'areaName',	 title:'地区名称',required:true},
+		{width:'*',		name:'adjustRatio',	 title:'调整系数'	,required:true}
+	],
+	edit: [
+		{width:'*',		name:'id',	primaryKey:true,	hidden:true,canEdit:true,required:true},
+		{width:200,		name:'areaCode',	 title:'地区code',required:true},
+		{width:200,		name:'areaName',	 title:'地区名称',required:true},
+		{width:200,		name:'adjustRatio',	 title:'调整系数',required:true}	
+			
+	]
+};
+
+//保证人回收调整系数数据源
+isc.FwRestDataSource.create({
+	ID: 'debtRatingBHSXSParamDS',
+    fields: DebtRatingBHSXSParamFields.grid,
+    dataURL: '[[@{/irs/config/areafactor/isc}]]'
+});
+
+//保证人回收调整系数列表
+isc.FwListGrid.create({
+	ID: 'debtRatingBHSXSParamListGrid',
+	title: '<b>地区调整系数</b>',
+	dataSource: debtRatingBHSXSParamDS,
+	sortField:"bzTypeCode",
+	fields: DebtRatingBHSXSParamFields.grid,
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: debtRatingBHSXSParamDS,
+            fields: DebtRatingBHSXSParamFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh','update','remove','add'
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				debtRatingBHSXSParamListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

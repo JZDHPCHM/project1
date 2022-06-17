@@ -1,0 +1,5 @@
+#使用此CAS单点前提条件
+1、修改src/main/resources目录下casclient.properties配置文件；
+2、把Application.java的入口注解改成
+@SpringBootApplication(exclude = {WebSecurityAutoConfiguration.class} )
+把wsp框架jar包中springSecurity自动配置去掉

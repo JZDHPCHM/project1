@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script> 
+var orgs = [(${@ProcessDataService.findOrgs()})];
+var ishide = false;
+var validStatus = {"NOT_REBIRTH":"否决","REBIRTH":"同意","":"终止",null:"终止"};
+var ctmTyps =[(${@CodeLibraryService.findByItemCode("CustomerType")})];
+var users=[(${@DefaultCustomerService.findUserNames()})];
+var EnterpriseScales ={"2":"大型企业","3":"中型企业","4":"小型企业","5":"微型企业"};
+//当前登录人账号
+var userAccout = "[(${T(org.wsp.framework.security.util.SecurityUtil).getLoginName()})]";
+//当前登录人姓名
+var userName = "[(${T(org.wsp.framework.security.util.SecurityUtil).getUserName()})]";
+//违约客户重生流程状态
+var DefaultCustomerProcessStatus =  [(${@frSystemDictionaryService.getDictionaryMapJsonString('DEFAULT_REBORN_PROCESS_STATE',#locale)})];
+//违约客户发起方式
+var DefaultCustomerAffirmMode =[(${@frJsonObjectMapper.enumerate(T(gbicc.irs.defaultcustomer.support.DefaultCustomerAffirmMode),#locale)})];
+//违约事件列表
+var defaultEvent =[(${@jacksonObjectMapper.writeValueAsString(@defaultEventLibController.findAllDefaultEvent())})];
+//获取登陆用户角色
+var roleCode = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+var variables={
+		assignee:null,	//任务处理人
+		skipFirst:true  //跳过发起节点
+};
+var v_main_btn="";
+
+if(roleCode=="CUSTOMER_MANAGER"){
+	ishide = true;
+}else{
+}
+
+
+//字典数据_违约事件
+var defaultEvent =[(${@jacksonObjectMapper.writeValueAsString(@defaultEventLibController.findAllDefaultEvent())})];
+
+function isBlank(val){
+	if(val==""){
+		return true;
+	}
+	if(val==null){
+		return true;
+	}
+	if(typeof val=="undefined"){
+		return true;
+	}
+	return false;
+}
+
+
+//================================================发起违约重生客户页面定义===========================================================
+//客户基本信息字段定义
+var EnterpriseCustomerFieldsToShow ={
+		edit: [
+			{width:'100%',		name:'defaultId',           		primaryKey:true,hidden:true},//,hidden:true,hidden:true
+			{width:'100%',		name:'custNo',              title:'信贷客户号',	required:true},
+			{width:'100%',		name:'unCustNo',            title:'统一客户号',	required:true},
+			{width:'100%',		name:'custName',            title:'客户中文名',	required:true},
+			{width:'100%',		name:'regAmount',     		title:'注册金额'},//countryAreaDs
+			{width:'100%',		name:'ctmType',     title:'企业分类',type: 'select',valueMap:ctmTyps},
+			{width:'100%',		name:'businessLicense',     title:'营业执照号'},
+			{width:'100%',		name:'empCount',     		title:'员工数量'},
+			{width:'100%',		name:'legalRep',     		title:'法人代表名称'},
+			{width:'100%',		name:'managerName',     	title:'客户经理名称'},
+			{width:'100%',		name:'managerUser',     	title:'客户经理编号'},
+			{width:'100%',		name:'offcAddrZipCode',     title:'办公地址邮编',	length:6},
+			{width:'100%',		name:'enterpriseScale',    	title:'企业规模',		type: 'select',valueMap:EnterpriseScales,allowEmptyValue:true,autoFetchData:false},
+			{width:'100%',		name:'crdtAmt',    	 		title:'授信金额',type:'float', format:'0.00'},
+			{width:'100%',		name:'regAddress',     		title:'注册地址描述',		type:"textArea"	,rowspan:5},
+			{width:'100%',		name:'offcAddress',     	title:'办公地址',		type:"textArea"	,rowspan:5},
+			{width:'100%',		name:'busScope',     		title:'经营范围',		type:"textArea",	rowspan:5},
+			{width:'100%',		name:'abnormalOperation',   title:'经营异常',	type:'boolean'},
+			{width:'100%',		name:'blankBlackList',   title:'联合惩戒',	type:'boolean'},
+			{width:'100%',		name:'isLitigation',   title:'重大涉诉',	type:'boolean'},
+			{width:'100%',		name:'isNewMark',   title:'新建企业标识',	type:'boolean'}
+		]
+};
+
+isc.FwReadOnlyDynamicForm.create({
+	ID : "customerVieweForm",
+	numCols : 4,
+	width:'50%',
+	height:'100%',
+	autoDraw : false,
+	overflow : "auto",
+	autoFocus : false,
+	fields : EnterpriseCustomerFieldsToShow.edit
+});
+//违约历史事件字段定义	
+var HisEventItemFields ={
+	grid: [
+			{name:'id',					    	title:'主键',	primaryKey:true,hidden:true},
+			{name:'custNo',						hidden:true},	
+		    {name:'defaultEventCode',			width:250,	title:'违约事件',		valueMap:defaultEvent},	
+		    {name:'eventStartTime',				width:100,	showHover:false,	title:'违约日期',	type:'date'},
+		    {name:'defaultEventName',		width:'*',	title:'违约事件说明'}
+	]
+};
+//违约事件列表数据源
+isc.FwRestDataSource.create({
+	ID: 'hisEventDS',
+	autoFetchData:false,
+fields: HisEventItemFields.grid,
+fetchDataURL: '[[@{/irs/defaultCustomerEventItem/findRebirthHistoryEventItmes}]]'
+});
+//违约事件列表 
+isc.FwListGrid.create({
+	ID: 'hisEventGrid',
+	title: '<b>重生信息</b>',
+	dataSource: hisEventDS,	
+	autoFetchData:false,
+	canHover:true,
+	autoDraw:false,
+	canPageable:false,
+	fields: HisEventItemFields.grid
+});
+
+
+//表单
+ isc.DynamicForm.create({
+	ID : "customerFileUploadForm",
+	width:'100%',
+	canSubmit:true,
+	action: '[[@{/irs/defaultCustomerMan/fileUpload}]]',
+	method:'POST',
+	encoding:'multipart',
+	target: 'uploadIframe',
+	numCols:2,
+	colWidths:[150,'*'],
+	fields:[
+		   {width:'100%',		name:'defaultId',           		primaryKey:true,hidden:true},//,hidden:true
+		   {
+		        name: "havePhoneNumber",
+		        title: "是否满足最近半年还本付息",
+		        wrapTitle: false,
+		        editorType: "RadioGroupItem",
+		        vertical: false,
+		        valueMap: {
+		            "true": "是",
+		            "false": "否"
+		        }, required:true,disabled:true, defaultValue: true},
+		    {width:'100%',		name:'remark',     		title:'意见说明',		type:"textArea",	colSpan:9,required:true},
+		    {
+				width:300,
+				name: 'file',
+				title: '附件上传',
+				type:'upload',
+				required:false
+			}
+	]
+}); 
+
+//================================================发起违约重生客户页面定义——结束===========================================================
+
+//字段定义
+var DefaultCustomerFields ={
+	query: [
+			 {width:200,		name:'custNo',				title:'客户编号'},	
+		     {width:200,		name:'custName',			title:'客户名称'}
+	],
+	grid: [
+			{width:100,		name:'defaultId',		title:'违约主键',hidden:true},		
+			{width:100,		name:'taskId',		title:'',hidden:true},	
+			{width:100,		name:'rebirthNum',		title:'',hidden:true},	
+		    {width:150,		name:'custNo',				title:'客户编号'},	
+		    {width:300,		name:'custName',			title:'客户名称'},	
+		    {width:100,		name:'sfwy',			title:'违约状态'},	
+		    {width:250,		name:'wyrq',			title:'违约日期'},
+		    {width:100,		name:'rdfs',		title:'违约认定方式'},
+		    {width:250,		name:'startDate',			title:'发起时间'},
+		    {width:100,		name:'initiationMode',		title:'发起方式',		type:'select',	valueMap:DefaultCustomerAffirmMode},
+		    {width:100,		name:'startUser',			title:'发起人',type:'select', valueMap:users},
+		    {width:150,		name:'status',				title:'流程状态',		type:'select',	valueMap:DefaultCustomerProcessStatus},			   
+			{width:100,		name:'assignee',			title:'当前任务人',type:'select', valueMap:users},
+			{width:250,		name:'endDate',				title:'完成时间'},	
+			{width:250,		name:'csDate',				title:'重生日期'},	
+		    {width:250,		name:'btn',					title:'操作'}
+	]
+};
+
+//客户数据源
+isc.FwRestDataSource.create({
+	ID: 'defaultCustomerDS',
+    fields: DefaultCustomerFields.grid,
+    fetchDataURL: '[[@{/irs/rebirthDefaultCustomerMan/fetchCustomer}]]'
+});
+
+//客户列表
+isc.FwListGrid.create({
+	ID: 'custList',
+	title: '<b>违约重生列表</b>',
+	dataSource: defaultCustomerDS,
+    canHover:true,
+	fields: DefaultCustomerFields.grid,
+    showRecordComponents: true,
+    showRecordComponentsByCell: true,
+    recordComponentPoolingMode: "recycle",
+    cellHeight: 30,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: DefaultCustomerFields.query
+	},
+	actionMembers:[{
+			title:'<span class="fa fa-plus"></span> 人工终止',
+			name:"CUSTOMER_BREAK",
+		    click:function(){
+				var cusRecord = custList.getSelectedRecord();
+				if(cusRecord){
+				  if(roleCode=="admin"){//只有系统管理员才能做终止操作
+					if(cusRecord["taskId"]!=null){	
+						isc.ask("当前任务将被终止",function(e){
+							if(e){
+								//人工终止
+					        	isc.FwRPCManager.get({
+					        		url: "[[@{rebirthPeopleDone}]]" ,
+					        		urlParameters:{pkId:cusRecord.defaultId,taskId:cusRecord.taskId,doneType:"02"},
+					        		callback: function(response, rawData, request){
+					        		    custList.refresh();
+		  						     	isc.say('操作成功！');
+					        		}
+					        	});
+							}
+						});
+					}else{
+						isc.say("该流程尚未发起或者已经结束,人工终止无效！");
+					}
+				}else{
+					isc.say("只有系统管理员才能做终止操作！");
+				}
+			}else{
+				isc.say("请选择一条违约客户数据！");
+			}
+			
+		}
+	},
+		'query','reset','refresh',{
+			title:'<span class="fa fa-sitemap"></span> [(#{org.wsp.framework.flowable.action.showWorkflowDiagram})]',
+			name:'diagram',
+			click: function(){
+				if(custList.getSelectedRecord().taskId!=null){
+					isc.FwWindow.create({
+						title: '[(#{org.wsp.framework.flowable.window.workflowDiagram.title})]',
+						autoSize: false,
+						width: 800,
+						height: 500,
+						showActionBar: false,
+						members:[
+							isc.HTMLPane.create({
+							    width:'100%', 
+							    height:'100%', 
+							    styleName:"exampleTextBlock",
+							    contents:"<div style='background-color:white;width:100%;height:100%;overflow:auto;'><img src='[(@{/system/process/query/showProcessDiagramByTaskId})]/" + custList.getSelectedRecord().taskId + "'></img></div>",
+							    selectContentOnSelectAll:true
+							})
+						]
+					}).show();
+				}else{
+					isc.say('该流程尚未发起或该流程已经结束！');
+				}
+			}
+		}	
+	],
+	createRecordComponent : function (record, colNum) {
+    	return createOperationButton(record, colNum);
+    },
+	updateRecordComponent: function (record, colNum, component, recordChanged) {
+    	return createOperationButton(record, colNum);
+    },
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[custList]
+		})
+	}
+});
+
+var DefaultCustomerEventItemFields ={
+		comment: [
+				{name:'id',					    	title:'主键',		primaryKey:true,	hidden:true},
+				{name:'custNo',						title:'客户编号', 	hidden:true},	
+				{name:'rolename',		width:150,	title:'处理角色'},
+			    {name:'remark',			title:'意见说明',		width:'30%',hidden:ishide},	
+			    {name:'defaultStatus',				width:'20%',	title:'认定结果', valueMap:validStatus},
+			    {name:'creator',		title:'处理人',	width:'30%',type:'select', valueMap:users },
+			    {name:'org',		title:'所属机构',	width:'30%',type: 'select',	valueMap:orgs },
+			    {name:'createDate',		title:'处理时间',	width:'30%'}
+		]
+	};
+
+isc.FwRestDataSource.create({
+	ID: 'findComments',
+	autoFetchData:false,
+    fields: DefaultCustomerEventItemFields.comment,
+    fetchDataURL: '[[@{/irs/defaultCustomer/findRebirthComments}]]'
+});
+
+isc.FwListGrid.create({
+	ID : "commentDetail",
+	numCols : 4,
+	width:'100%',
+	height:'100%',
+	autoDraw : false,
+	overflow : "auto",
+	autoFocus : false,
+	fields : DefaultCustomerEventItemFields.comment,
+	dataSource: findComments,
+	showRecordComponents: true,
+    showRecordComponentsByCell: true,
+    recordComponentPoolingMode: "recycle",
+	initialCriteria:{
+		enable: true
+	}
+});
+
+isc.Window.create({
+	ID:"viewComment",
+	title: "意见列表",
+	width: '50%',						//窗口默认宽度
+	height:'50%',
+	autoCenter: true,
+	items: [
+  		isc.HLayout.create({
+  			/* width:'50%',
+  			height:'50%', */
+  			members:[
+  				isc.HLayout.create({
+  					/* width:'50%',
+  		  			height:'50%', */
+  					members:[
+  						commentDetail
+  					]
+  				})
+  			]
+  		})
+  	]
+});
+
+
+
+//====================================================违约重生客户列表页面发起按钮定义开始=====================================================================
+function createOperationButton(record, colNum){
+	//alert("2");
+    var fieldName = custList.getFieldName(colNum);  	
+    if (fieldName == "btn") {
+	    	 var recordCanvas = isc.HLayout.create({
+	             height: 22,
+	             width: "100%",
+	             align: "left"
+	         });
+    	
+    		 var button = isc.IButton.create({
+			    	            layoutAlign: "center",
+			    	            title: "发起",
+			    	            grid: this,
+			    	            click : function () {
+			    	            	customerFileUploadForm.setValue("remark","");
+					    	        
+					    	        isc.FwRPCManager.get({
+			    		        		url: "[[@{/irs/rebirthDefaultCustomerMan/isRepay}]]" ,
+			    		        		urlParameters:{custNo:record.custNo},
+			    		        		callback: function(response, rawData, request){
+			    		        			isRepay = rawData == '1' ? true:false;
+			    		        			
+			    		        			customerFileUploadForm.setValue("havePhoneNumber",isRepay)
+			    		        		}
+			    		        	});
+			    	        		customerVieweForm.getItem("custNo").setValue(record.custNo);
+			    	        		hisEventGrid.fetchData({'defaultId':record.cust_id});
+			    	        	    
+			    	        isc.FwRPCManager.get({
+	    		        		url: "[[@{/irs/companyCustomer/findByCustNo}]]" ,
+	    		        		urlParameters:{custNo:record.custNo},
+	    		        		callback: function(response, rawData, request){
+	    		        			customerVieweForm.setValues(rawData);   
+	    		        			//customerVieweForm.setValue("managerUser",rawData.managerUser.loginName);
+	    		        		}
+	    		        	});
+			    	        
+			    	        	    
+			    	        		//定义新增违约事件页面
+				    	        	isc.Window.create({
+				    	        		   	ID:"newDefaultWin",
+				    	        				title: "违约客户重生",
+				    	        				width: '80%',						//窗口默认宽度
+				    	        				height:'100%',
+				    	        				canDragResize: false,				//用户不能通过拖拽调整窗口大小
+				    	        				autoCenter: true,					//自动将窗口定位于页面中央
+				    	        				showMaximizeButton: false,			//在窗口标题栏中不显示最大化按钮
+				    	        				showMinimizeButton: false,			//在窗口标题栏中不显示最小化按钮
+				    	        				isModal: true,						//模式窗口
+				    	        				showModalMask: true,				//显示遮罩
+				    	        				autoSize:false,						
+				    	        				canFocus: true,						//窗口可以获得焦点
+				    	        				contentLayout:'hertical',			//窗口采用水平布局
+				    	        				bodyStyle: 'fwWindowBody',			//窗口 body 样式名称
+				    	        				dismissOnEscape: true,				//按 ESC 键后窗口关闭(会调用 close() 方法)
+				    	        				bodyDefaults:{
+				    	        				   		padding:0
+				    	        				},
+				    	        				closeAndDestroy: false,				//关闭按钮点击时是否关闭并摧毁窗口
+				    	        			  	items: [
+				    	        			  		isc.VLayout.create({
+				    	        			  			width:'100%',
+				    	        			  			height:'100%',
+				    	        			  			members:[
+				    	        			  				isc.HLayout.create({
+				    	        			  					width:'100%',
+				    	        			  		  			height:'90%',
+				    	        			  					members:[
+				    	        			  						customerVieweForm,
+				    	        			  						isc.VLayout.create({
+				    	        			  							widht:"50%",
+				    	        			  							height:"100%",
+				    	        			  							members:[
+				    	        			  								hisEventGrid,
+				    	        			  								isc.LayoutSpacer.create({height:'10'}),  //间距    	
+				    	        			  								customerFileUploadForm,
+				    	        			  								isc.HTMLFlow.create({
+				    	        			  		        		    		contents:'<iframe name="uploadIframe" id="approvalRatinguploadIframe" style="width:0px;height:0px;border:0px;"></iframe>'
+				    	        			  		        		    	})
+				    	        			  							]
+				    	        			  						})
+				    	        			  					]
+				    	        			  				}),
+				    	        			  				isc.LayoutSpacer.create({height:'30'}),  //间距
+				    	        			  				isc.HLayout.create({
+				    	        			  					width:'100%',
+				    	        			  		  			height:'10%',
+				    	        			  					members:[
+				    	        			  						isc.LayoutSpacer.create({width:'100%'}),  //间距
+				    	        			  						isc.FwWorkflowAction.create({
+				    	        			  							ID:"process_action",
+				    	        			  							taskId:"",
+				    	        			  							actionUrl: "[(@{/irs/rebirthDefaultCustomerMan/startRebirthDefaultCustProcess})]",
+				    	        			  				    		getData: function(){
+				    	        			  				    			return {
+				    	        			  				    		    	transientVariables	: {
+				    	        			  				    		    		taskId:record["taskId"],
+				    	        			  				    		    		birthId:record["defaultId"],
+				    	        			  				    		    		currentStatus:record["status"],
+				    	        			  				    		    		isValid:customerFileUploadForm.getValue("havePhoneNumber")==null?"":customerFileUploadForm.getValue("havePhoneNumber"),
+				    	        				  				    	        	remark:customerFileUploadForm.getValue("remark")==null?"":customerFileUploadForm.getValue("remark"),
+				    	        				  				    	        	flag:"1",
+				    	        				  				    	        	creator: userName,
+				    	        			  				    	        		first_task_assignee:""
+				    	        			  				    	        	},
+				    	        			  				    	        	autoCompleteFirstTask:true
+				    	        			  				    			}
+				    	        			  				    		},doSubmit:function(){
+
+				    	        			  				    			if(customerFileUploadForm.getValue("remark") == null || customerFileUploadForm.getValue("remark") == ""){
+				    	        			  				    				isc.say('意见说明不能为空');
+				    	        			  				    			}else if(customerFileUploadForm.getValue("file") == null){
+				    	        			  				    				isc.say('附件不能为空');
+				    	        			  				    			}else{
+					    	        			  				    			this.Super('doSubmit',arguments);
+					    	        			  				    		}
+	
+				    	        							    		},
+				    	        			  				    		successCallback: function(response,rawData,request){
+				    	        			  								customerFileUploadForm.setValue("defaultId",rawData.strCode);   
+				    	        							    			customerFileUploadForm.submit();
+				    	        			  						     	newDefaultWin.close();
+				    	        			  						     	recordCanvas.removeMember(button);
+				    	        			  			 	            	recordCanvas.removeMember(isc.LayoutSpacer.create({width:10}));
+				    	        			  			 	                custList.refresh();
+				    	        			  						     	isc.say('违约重生提交成功！');
+				    	        			  				    		}
+				    	        			  				    	}),
+				    	        			  						isc.LayoutSpacer.create({width:'100%'})  //间距
+				    	        			  					]
+				    	        			  				})
+				    	        			  			]
+				    	        			  		})
+				    	        			  	]
+				    	        		});
+				    	    		  newDefaultWin.show();
+			    	        		 //customerRemarkForm.getItem("havePhoneNumber").show();
+			    	            }
+		    	            });
+    	
+    		 var viewComments = isc.IButton.create({
+    	        	name:"viewComments",
+    	            title: "查看意见",
+    	            grid: this,
+    	            click : function () {
+    	            	commentDetail.fetchData({'defaultId':record.defaultId});
+    	            	commentDetail.setActionMemberButtonStatus("enable",null);
+    	            	viewComment.show();
+    	            }
+    	        });	
+    		 if(record["status"] == null || record["status"] != "APPROVAL"){//待确认  
+    			 if(roleCode=="CUSTOMER_MANAGER"){//客户经理对待确认的违约客户做发起操作
+    				if( record["status"] != "COMPLETED_REBORN"){//已完成不重生   record["status"] != "COMPLETED_NOREBORN" &&
+    				 	if(record["rebirthNum"]=='0'){//
+    				 		recordCanvas.addMember(button);
+    				 	}
+     	            	//recordCanvas.addMember(isc.LayoutSpacer.create({width:10}));
+    				}
+    			 }
+    		 }
+    		 
+    		if(record["status"] != null && record["status"] != ""){
+	    		recordCanvas.addMember(viewComments);
+    		}
+          	//recordCanvas.addMember(isc.LayoutSpacer.create({width:10}));
+    } 
+    
+    return recordCanvas;  
+}
+
+//保存建议等级
+function doFileAfter(url,filename){
+	var values = customerFileUploadForm.getValues();
+	values["fileUrl"]=url;
+	values["fileName"]=filename;
+	delete values["file"];
+	isc.FwRPCManager.post({
+       	url:FrameworkUiInterface.webContextPath + "/irs/defaultCustomerMan/updateDefaultCustomerStatus",
+    	urlParameters:values, 
+        callback: function(response,rawData,request){
+        	
+        }
+	});
+}
+//====================================================违约重生客户列表页面发起按钮定义结束=====================================================================
+</script>
+</html>

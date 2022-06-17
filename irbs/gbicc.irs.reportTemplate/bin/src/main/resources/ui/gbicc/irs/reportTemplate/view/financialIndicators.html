@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head></head>
+<body>
+</body>
+<script th:inline="javascript">	
+
+//财报科目分类
+var FinanciaAccountCategory = [(${@frSystemDictionaryService.getDictionaryMapJsonString('ACCOUNT_CLASSIFICATION',#locale)})]
+//系统标准财报模板
+var FinancialStatementTemplateType = [(${@frSystemDictionaryService.getDictionaryMapJsonString('FinancialStatementTemplateType',#locale)})];
+//模型列表(从模型系统获取)
+var ModelList = [(${@frSystemDictionaryService.getDictionaryMapJsonString('MODEL_TYPE',#locale)})];
+
+var FinancialAccountFields = {
+		query:[
+				{name:'faCode',				title:'[(#{faCode})]'},
+				{name:'faName',				title:'[(#{faName})]'},
+		    	{name:'faCategory',			title:'[(#{faCategory})]',type:'select',valueMap:FinanciaAccountCategory}
+		],
+		dataSourceGrid: [
+				{name:'id',		primaryKey:true,type: 'text',hidden:true},
+				{name:'faNumber'},
+				{name:'faCode'},
+				{name:'faName'},
+			    {name:'faCategory',			type:'select',valueMap:FinanciaAccountCategory},
+			    {name:"statementTemplate"},
+			    {name:'faInstitutionUse',	type:"boolean"},
+			    {name:"statementTemplates" ,type:"select",multiple:true,multipleAppearance:"picklist",valueMap: FinancialStatementTemplateType}
+		],
+		grid:[
+				{width:100,		name:'faCode',				title:'[(#{faCode})]'},
+				{width:"*",		name:'faName',				title:'[(#{faName})]'},
+				{width:"*",		name:'last_faName',			title:'上期科目'}
+		]
+}
+
+//财报模板科目数据源
+isc.FwRestDataSource.create({
+	ID: 'financialAccountDS',
+	autoFetchData:false,
+    fields:FinancialAccountFields.dataSourceGrid,
+    dataURL: '[(@{/reportTemplate/financialAccount/isc})]',
+    fetchDataURL:'[(@{/reportTemplate/financialAccount/queryAccoutByStatementTemplate})]'
+});
+
+
+//指标计算公式
+var IndicatorsCalculationFormulaFields = {
+	dataSourceGrid: [
+			{name:'id',hidden:true,primaryKey:true},
+			{name:'financialIndicators',hidden:true},
+			{name:'reportTemplate'},
+		    {name:'calculationFormula'},
+		    {name:'displayCalculationFormula'}
+	 ],
+	 grid:[
+		 	{name:'id',		title:'[(#{id})]',hidden:true},
+		 	{width:150,		name:'reportTemplate',		title:'[(#{reportTemplate})]',	type:"select",	valueMap: FinancialStatementTemplateType,	showHover:false},
+		 	{width:"*",		name:'calculationFormula',	title:'[(#{calculationFormula})]',	hidden:true},
+		 	{width:"*",		name:'displayCalculationFormula',	title:'[(#{calculationFormula})]',	showHover:true}
+	 ]
+}
+
+//指标计算公式数据源
+isc.FwRestDataSource.create({
+	ID: 'indicatorsCalculationFormulaDS',
+	autoFetchData:false,
+    fields:IndicatorsCalculationFormulaFields.dataSourceGrid,
+    dataURL: '[(@{/reportTemplate/indicatorsCalculationFormula/isc})]'
+});
+
+//指标计算公式列表
+isc.FwListGrid.create({
+	ID: 'indicatorsCalculationFormulaGrid',
+	title: '<b>计算公式列表</b>',
+	dataSource: indicatorsCalculationFormulaDS,
+	autoFetchData:false,
+	canHover:true,
+	sortField: 'reportTemplate',
+	width:"40%",
+	fields: IndicatorsCalculationFormulaFields.grid,
+	editWindow: {
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	width:500,
+            dataSource: indicatorsCalculationFormulaDS,
+            fields: IndicatorsCalculationFormulaFields.edit
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		{
+			title:" <span class='fa fa-xing-square'></span> 新增计算公式",
+			name:"addFormula",
+			disabled:true,
+			click:function(){
+				var financialIndicatorsRecord = financialIndicatorsGrid.getSelectedRecord();
+				isc.FormulaEditorWindow.create({
+					_financialIndicators:financialIndicatorsRecord//指标对象
+				}).show();
+			}
+		},
+		{
+			title:" <span class='fa fa-pencil-square-o'></span> 修改计算公式",
+			name:"editFormula",
+			disabled:true,
+			click:function(){
+				var indicatorsFormulaRecord = indicatorsCalculationFormulaGrid.getSelectedRecord();
+				var formulaEditorWindow = isc.FormulaEditorWindow.create({
+					_formulaData:indicatorsFormulaRecord//计算公式对象
+				});
+				formulaEditorWindow._financialAccoutListGrid.fetchData({"statementTemplate":indicatorsFormulaRecord.reportTemplate});
+				formulaEditorWindow.show();
+			}
+		},'remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		var financialIndicatorsRecord = financialIndicatorsGrid.getSelectedRecord();
+		if(financialIndicatorsRecord){
+			this.setActionMemberButtonStatus('enable',['addFormula']);
+			if(record){
+				this.setActionMemberButtonStatus('enable',['editFormula']);
+			}
+		}
+		this.Super('changeActionMemberButtonStatus',arguments);
+    }
+});
+
+var FinancialIndicatorsFields = {
+		query:[
+				{name:'indicatorsCode',				title:'[(#{indicatorsCode})]',	width:200},
+				{name:'indicatorsName',				title:'[(#{indicatorsName})]',	width:200},
+		],
+		dataSourceGrid: [
+				{name:'id',		primaryKey:true,type: 'text',hidden:true},
+				{name:'additID'},
+				{name:'indicatorsCode'},
+				{name:'indicatorsName'},
+				{name:'indicatorsDescribe'},
+			    {name:'applyModel' ,type:"select",multiple:true,multipleAppearance:"picklist",valueMap: ModelList}
+		],
+		grid:[
+			 	{width:100,	name:'indicatorsCode',			title:'[(#{indicatorsCode})]'},
+				{width:100,	name:'indicatorsName',			title:'[(#{indicatorsName})]'},
+				{width:200,	name:'indicatorsDescribe',		title:'[(#{indicatorsDescribe})]'},
+				{width:'*',	name:'applyModel',				title:'[(#{applyModel})]',type:'select',multiple:true,multipleAppearance:'picklist',valueMap: ModelList}
+		],
+		edit:[
+			 	{name:'id',									title:'[(#{id})]',					type: 'text',hidden:true},
+			 	{name:'applyModel',							width:400,		title:'[(#{applyModel})]',colSpan:4,type:'select',multiple:true,multipleAppearance:'picklist',valueMap: ModelList},
+			 	{name:'indicatorsCode',						width:150,		title:'[(#{indicatorsCode})]'},
+			 	{name:'indicatorsName',						width:150,		title:'[(#{indicatorsName})]'},
+			 	{name:'indicatorsDescribe',	    			width:400,		title:'[(#{indicatorsDescribe})]',	type:'textArea', colSpan:4}
+		]
+}
+
+//财报指标数据源
+isc.FwRestDataSource.create({
+	ID: 'financialIndicatorsDS',
+	autoFetchData:false,
+    fields:FinancialIndicatorsFields.dataSourceGrid,
+    dataURL: '[(@{/reportTemplate/financialIndicators/isc})]'
+});
+
+//财报指标列表
+isc.FwListGrid.create({
+	ID: 'financialIndicatorsGrid',
+	title: '<b>财务指标列表</b>',
+	dataSource: financialIndicatorsDS,
+	sortField: 'indicatorsCode',
+	width:"60%",
+	fields: FinancialIndicatorsFields.grid,
+	queryForm: {
+	    fields:FinancialIndicatorsFields.query
+	},
+	editWindow: {
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	width:500,
+            dataSource: financialIndicatorsDS,
+            fields: FinancialIndicatorsFields.edit
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		if(record){
+			indicatorsCalculationFormulaGrid.fetchData({"financialIndicators.id":record.id});
+		}
+		this.Super('selectionUpdated',arguments);
+	}
+});
+
+//公式编辑窗口
+isc.defineClass('FormulaEditorWindow','FwWindow').addProperties({
+	title:"新增公式",
+	width:700,
+	height:460,
+	autoSize:false,
+	closeAndDestroy:true,
+	//初始化自定义内部实例变量===========================================
+    init: function(){
+    	this._formulaForm =null;					//公式编辑器表单
+    	this._financialAccoutListGrid =null;		//财报客户列表
+    	this._formulaButtons =null;					//公式编辑按钮
+    	this._numberButtons =null;					//数字按钮
+    	this.Super('init',arguments);
+    },
+    getExecuteFormula:function(){ //获得可执行公式字符串
+    	if(this._formulaForm.validate()){
+			var calculationFormula = this._formulaForm.getValue("calculationFormula");
+			if(this._formulaForm.validate()){
+				var allAccountData = this._financialAccoutListGrid.data._allListCache;
+				//按字符串长度倒叙，解决先后替换问题
+				allAccountData.sort(function(a,b){
+					if(a.faName && b.faName){
+						if(a.faName.length > b.faName.length){
+							return -1;
+						}else if(a.faName.length > b.faName.length){
+							return 0;
+						}else{
+							return 1;
+						}
+					}
+					return 0;
+				});
+				//上期
+				for(var i=0 ;i < allAccountData.length;i++){
+					calculationFormula = calculationFormula.replace("上期_"+allAccountData[i].faName,"LAST_"+allAccountData[i].faCode);
+				}
+				for(var i=0 ;i < allAccountData.length;i++){
+					calculationFormula = calculationFormula.replace(allAccountData[i].faName,allAccountData[i].faCode);
+				}
+			}
+			return calculationFormula;
+		}
+    	return null;
+    },
+    initWidget: function () {
+    	this._formulaButtons = [
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;+&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'+';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;-&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'-';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;*&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'*';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;/&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'/';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;(&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'(';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;)&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+')';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    })
+    	];
+    	this._numberButtons =[
+    		isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;1&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	        	var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'1';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;2&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'2';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;3&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'3';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;4&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'4';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;5&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'5';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;6&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'6';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;7&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'7';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;8&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'8';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;9&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'9';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;&nbsp;0&nbsp;&nbsp;",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'0';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    }),
+    	    isc.ToolStripButton.create({
+    	    	title:"&nbsp;.&nbsp",
+    	    	target: this,
+    	        click: function () {
+    	        	var formulaFrom =this.target._formulaForm;
+    	    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+    	        	fromValue =(fromValue||'')+'.';
+    	        	formulaFrom.setValue("displayCalculationFormula",fromValue);
+    	        }
+    	    })
+    	];
+    	this._formulaForm =isc.FwDynamicForm.create({
+			numCols:1,
+			titleOrientation:"top",
+			dataSource: indicatorsCalculationFormulaDS,
+			target: this,
+			fields:[
+			 	{width:80,		name:'id',							title:'[(#{id})]',type: 'text',hidden:true},
+			 	{width:'*',		name:'financialIndicators',			hidden:true,	value:this._financialIndicators},
+			 	{
+			 		width:330,		
+			 		name:'reportTemplate',				
+			 		title:'[(#{reportTemplate})]',
+			 		type:"select",
+			 		required:true,
+			 		target:this,
+			 		valueMap: FinancialStatementTemplateType,
+			 		change:function(form, item, value, oldValue){
+			 			this.target._formulaForm.clearValue("displayCalculationFormula");
+			 			this.target._financialAccoutListGrid.fetchData({"statementTemplate":value});
+			 		}
+			 	},
+			 	{width:270,		name:'displayCalculationFormula',			title:'[(#{calculationFormula})]',type:"textArea",width:330,height:260,required:true}
+		 	]
+		});
+    	if(this._formulaData){ //公式数据有值则是编辑操作，给表单赋值
+    		this._formulaForm.setValues(this._formulaData);
+    	}
+    	this._financialAccoutListGrid =isc.FwListGrid.create({
+			title:"财报科目(双击插入)",
+			canPageable:false,
+			autoFetchData:false,
+			showFilterEditor: true,
+			groupByField: 'faCategory',
+			groupStartOpen:"all",
+			emptyMessage:"请您先选择适用财报模板",
+		    dataSource:financialAccountDS,
+		    defaultFields :FinancialAccountFields.grid,
+		    target: this,
+		    formatCellValue :function(value, record, rowNum, colNum){
+		    	if(colNum==2){
+		    		return "上期_"+record.faName;
+		    	}
+		    	return value;
+		    },
+		    cellDoubleClick:function(record, rowNum, colNum){
+		    	var formulaFrom =this.target._formulaForm;
+		    	if(colNum==1){
+		    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+                	if(fromValue){
+                		formulaFrom.setValue("displayCalculationFormula",fromValue + record.faName+" ");
+                	}else{
+                		formulaFrom.setValue("displayCalculationFormula",record.faName +" ");
+                	}
+		    	}else if(colNum==2){
+		    		var fromValue = formulaFrom.getValue("displayCalculationFormula");
+                	if(fromValue){
+                		formulaFrom.setValue("displayCalculationFormula",fromValue + "上期_"+record.faName+" ");
+                	}else{
+                		formulaFrom.setValue("displayCalculationFormula", "上期_"+record.faName+" ");
+                	}
+		    	}
+		    }
+		});
+    	
+    	this.items =[
+    		isc.HLayout.create({
+    			members:[
+    				this._formulaForm,
+    				isc.VLayout.create({
+    					width:"100%",
+    					height:"100%",
+    					members:[
+    						this._financialAccoutListGrid,
+    						isc.ToolStrip.create({
+    						    width: "100%", 
+    						    height:24, 
+    						    members: this._numberButtons
+    						}),
+    						isc.ToolStrip.create({
+    						    width: "100%", 
+    						    height:24, 
+    						    members: this._formulaButtons
+    						})
+    					]
+    				})
+    			]
+    		})
+    	];
+    	this.Super("initWidget", arguments);
+    },
+	actionMembers:[
+		{
+			title:"保存",
+			click:function(){
+				var editWindow = this.target;
+				this.target._formulaForm.submit(function(response){
+					if(response.httpResponseCode==200){
+						editWindow.close();
+						isc.say("计算公式保持成功！");
+					}
+				});
+			}
+		}
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				financialIndicatorsGrid,
+				indicatorsCalculationFormulaGrid
+			]
+		})
+	}
+});
+</script>
+</html>

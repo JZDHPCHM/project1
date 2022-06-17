@@ -1,0 +1,9 @@
+（咨诉系统：投诉业务管理——报表——投诉明细查询）
+select COMPLAINT_DATE,--受理日期
+id,--ID
+MAIN_STATUSNAME,--案件类型
+CLOSURE_TIME --结案日期
+from COMPLAINTSRISKREPORT
+where MAIN_STATUSNAME = '投诉件' --案件类型
+and CLOSURE_TIME>='20180901' --结案日期区间
+and CLOSURE_TIME<='20180915';?? 

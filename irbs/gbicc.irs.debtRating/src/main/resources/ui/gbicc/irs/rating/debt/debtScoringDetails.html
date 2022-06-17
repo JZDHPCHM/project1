@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>债项得分明细</title>
+<style type="text/css">
+	/* .ui-state-highlight, .ui-widget-content .ui-state-highlight{
+		background: #fff;
+	} */
+	.title{
+		color: #000;
+    	font-weight: bold;
+	}
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content" style="padding: 10px 0 !important;">
+				<div class="row">
+	                <div class="col-lg-12">
+	                	<div class="title">经营性现金流</div>
+	            		<div class="jqGrid_wrapper">
+	                    	<table id="table_list_1"></table>
+	                    </div>
+	                    <div class="jqGrid_wrapper" style="margin-top: -2px;">
+	                    	<table id="table_list_2"></table>
+	                    </div>
+	                </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$('.chosen-select').chosen({width: "100%"});
+	$(document).ready(function(){
+		var mydata1 = [
+	        {name1: "T", name2: "", name3: "T到T+1", name4: ""},
+	        {name1: "T-1", name2: "", name3: "T+1到T+2", name4: ""},
+	        {name1: "T-2", name2: "", name3: "T+2到T+3", name4: ""}
+	    ];
+		//
+		$("#table_list_1").jqGrid({
+			url : "",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        //datatype: "json",
+	        data: mydata1,
+	        datatype: "local",
+	        height: "100%",
+	        autowidth: true,
+	        shrinkToFit: true,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['时间','历史经营性现金流金额','时间','预测经营性现金流增速'],
+	        colModel:[
+	        	{name:'name1',index:'name1', sortable: false, sortable: false},
+				{name:'name2',index:'name2', editable: true, sortable: false},
+	            {name:'name3',index:'name3', editable: true, sortable: false},
+	            {name:'name4',index:'name4', editable: true, sortable: false}
+	        ],
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        //rownumbers: true,
+	        //rownumWidth: 100,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "data",
+	        	records: "recordsTotal",
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		//$("#table_list_1").jqGrid('setLabel','rn','#',{'text-align':'center','vertical-align':'middle'},'');
+		// Setup buttons
+        $("#table_list_1").jqGrid('navGrid',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        var mydata2 = [
+	        {name1: "现金流估算准确度调整", name2: "", name3: "", name4: "参见指标池"},
+	        {name1: "短期现金流保障能力调整", name2: "", name3: "", name4: "参见指标池"},
+	        {name1: "租期长度调整", name2: "", name3: "", name4: "参见指标池"}
+	    ];
+		//
+		$("#table_list_2").jqGrid({
+			url : "",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        //datatype: "json",
+	        data: mydata2,
+	        datatype: "local",
+	        height: "100%",
+	        autowidth: true,
+	        shrinkToFit: true,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['指标名称','指标值','调整系数','指标描述'],
+	        colModel:[
+	        	{name:'name1',index:'name1', sortable: false, sortable: false},
+				{name:'name2',index:'name2', editable: true, sortable: false},
+	            {name:'name3',index:'name3', editable: true, sortable: false},
+	            {name:'name4',index:'name4', editable: true, sortable: false}
+	        ],
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        //rownumbers: true,
+	        //rownumWidth: 100,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "data",
+	        	records: "recordsTotal",
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		//$("#table_list_2").jqGrid('setLabel','rn','#',{'text-align':'center','vertical-align':'middle'},'');
+		// Setup buttons
+        $("#table_list_2").jqGrid('navGrid',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        // Add responsive to jqGrid
+        $(window).bind('resize', function () {
+            var width = $('.jqGrid_wrapper').width();
+            $('#table_list_1').setGridWidth(width);
+            $('#table_list_2').setGridWidth(width);
+        });
+	});
+</script>
+</html>

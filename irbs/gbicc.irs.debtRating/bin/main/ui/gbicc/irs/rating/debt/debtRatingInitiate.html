@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>债项评级发起</title>
+    <link rel="stylesheet" href="/css/debtRatingInitiate.css?t=2"
+	type="text/css">
+	
+	 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+     <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+<style type="text/css">
+.modal-lg {
+	width: 60%;
+}
+.modal-lg, .modal-content {
+	height: 450px;
+}
+.bottom-btn{
+	padding-top: 0;
+}
+.col-sm-4{
+	padding: 0;
+}
+.span-value{
+	height: 30px;
+    line-height: 33px;''
+    display: inline-block;
+}
+/* 新增 */
+       .inventory-nav {
+            position: absolute;
+            top: 0;
+            box-shadow: none;
+        }
+        .inventory-nav h3 {
+            line-height: 28px;
+            font-size: 18px;
+            color: #585f66;
+        }
+        .inventory-nav h3 span {
+            display: inline-block;
+            height: 22px;
+            padding: 0 8px;
+            margin: 3px 0;
+            background: #52a1ff;
+            vertical-align: top;
+            line-height: 22px;
+            font-size: 14px;
+            font-weight: normal;
+        }
+        .inventory-nav .hr-line-dashed {
+            border-color: #c2c2c2;
+            background: none;
+        }
+        .inventory-nav .well-sm {
+            padding: 0;
+            background: none;
+        }
+        .inventory-nav .checkbox {
+            position: relative;
+            overflow: hidden;
+        }
+        .inventory-nav .checkbox .newlabel,
+        .inventory-nav .checkbox label {
+            display: block;
+            padding: 6px 10px 6px 30px;
+            border-radius: 4px;
+            background: #ffffff;
+            line-height: 22px;
+        }
+        .inventory-nav .checkbox > a.anchor {
+            position: absolute;
+            right: -34px;
+            top: 0;
+            display: block;
+            width: 34px;
+            height: 34px;
+            border-radius: 0 4px 4px 0;
+            background: #52a1ff;
+            line-height: 34px;
+            text-align: center;
+            font-size: 14px;
+            color: #fff;
+            overflow: hidden;
+            transition: .15s;
+        }
+        .inventory-nav .checkbox:hover > a.anchor {
+            right: 0;
+        }
+        .inventory-nav .checkbox:hover > a.anchor:hover {
+            width: 40px;
+        }
+        .inventory-form .panel {
+            box-shadow: rgba(82, 161, 255, 0) 0 3px 7px;
+            transition: .2s;
+        }
+        .inventory-form .panel.active {
+            border-color: #52a1ff;
+            box-shadow: rgba(82, 161, 255, .2) 0 4px 9px;
+        }
+        .inventory-form .panel-heading {
+            position: relative;
+            z-index: 2;
+        }
+        .inventory-form .panel-heading .btn {
+            padding: 3px 8px;
+            margin: -4px -9px 0 0;
+        }
+        .inventory-form .panel-body {
+            position: relative;
+            margin-bottom: 9px;
+            border-bottom: #ddd solid 1px;
+            border-radius: 0 0 4px 4px;
+            box-shadow: rgba(0, 0, 0, .12) 0 3px 7px;
+        }
+        .inventory-form .panel-body:last-child {
+            margin-bottom: 0;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+        .inventory-form .panel-body .panel-footer {
+            margin: 15px -15px -15px;
+            text-align: center;
+        }
+        .inventory-form .panel-body .panel-footer button.btn-danger {
+            width: 100px;
+        }
+        .inventory-form .input-group .input-group-addon {
+            padding: 6px 15px;
+            border-radius: 4px 0 0 4px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .inventory-form .input-group .form-control {
+            height: 36px;
+            border-radius: 0 4px 4px 0;
+            font-size: 13px;
+            text-align: right;
+            font-weight: bold;
+            color: #0075ff;
+            letter-spacing: 1px;
+        }
+        .inventory-form .input-group .form-control::placeholder {
+            font-weight: 400;
+            color: #999;
+        }
+        .inventory-form .form-footer {
+            box-shadow: none;
+        }
+        @media (max-width: 768px) {
+            .inventory-nav {
+                position: relative;
+            }
+        }
+        
+</style>
+</head>
+<body>
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>债项评级管理&nbsp;&nbsp;/&nbsp;&nbsp;债项评级发起</h5>
+							</div>
+							<div class="ibox-content" style="padding-bottom: 0;">
+								<form class="form-horizontal" id="formSearch">
+									<div class="form-group">
+										<label class="col-sm-1 control-label">项目名称</label>
+										<div class="col-sm-2">
+											<input id="entryName" type="text" placeholder="请选择项目名称"
+												name="entryName" class="form-control" autocomplete="off" data-provide="typeahead">
+										</div>
+										<label class="col-sm-1 control-label">项目编号</label>
+										<div class="col-sm-2">
+											<input id="entryCode" type="text" placeholder="请选择项目编号"
+												name="entryCode" class="form-control" autocomplete="off" data-provide="typeahead">
+										</div>
+										<label class="col-sm-1 control-label">所属部门</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="" name="leaseOrganization">
+												<option value="">请选择</option>
+												<option th:each="option: ${@clockDictionary.dicOrg()}"
+													th:value="${option.key}" th:text="${option.value}"></option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">业务经理</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" id="userSearch"
+												name="employee" class="form-control" autocomplete="off" data-provide="typeahead">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label">评级模板</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="productType" name="productType" >
+											<option value="">请选择</option>
+           									<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('DebtRatingTemplate','')}"
+             								th:value="${option.key}" th:text="${option.value}"></option>												
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">评级类型</label>
+                                    <div class="col-sm-2">
+                                        <select class="chosen-select" name='method'>
+                                            <option value="">请选择</option>
+                                            <option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('RatingMethods','')}"
+                                                    th:value="${option.key}" th:text="${option.value}"></option>
+                                        </select>
+                                    </div>
+										<label class="col-sm-1 control-label">评级日期</label>
+										<div class="col-sm-3">
+											<div class="input-daterange input-group" id="datepicker">
+												<input id="date2" type="text" class="form-control"
+													name="date2" placeholder="请选择开始日期" readonly /> <span
+													class="input-group-addon">至</span> <input id="date1"
+													type="text" class="form-control" name="date1"
+													placeholder="请选择结束日期" readonly />
+											</div>
+										</div>
+										<div class="col-sm-2" style="text-align: right;">
+											<b id="btn-query" class="btn btn-success">查询</b> <b
+												id="btn-reset" class="btn btn-success"
+												style="margin-left: 10px;">重置</b>
+										</div>
+									</div>
+								</form>
+
+							</div>
+						</div>
+						<div class="jqGrid_wrapper">
+							<table id="table_list"></table>
+							<div id="pager_list"></div>
+						</div>
+					</div>
+				</div>
+				<!-- 模态窗口 -->
+				<div class="modal inmodal fade" id="myModal" tabindex="-1"
+					role="dialog" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+								</button>
+								<h4 class="modal-title">债项评级发起</h4>
+							</div>
+							<div class="modal-body">
+	
+								<form id="formUpload" target="frame1"  action="/irs/ratingDebtIndex/fileUpload"
+								enctype="multipart/form-data" method="POST" 
+								class="form-horizontal">
+									<input type="text" name="id" id="id" hidden="true">
+									<input type="text" name="proCode" id="proCode" hidden="true">
+									<input type="text" name="custCode" id="custCode" hidden="true">
+									<div class="form-group">
+										<label class="col-sm-2 control-label">项目名称：</label>
+										<div class="col-sm-4">
+											<span id="proName" class="span-value"></span>
+											<input type="text" name="proName" id="proName1" hidden="true">
+											
+										</div>
+										<label class="col-sm-2 control-label">客户名称：</label>
+										<div class="col-sm-4">
+											<span id="custName" class="span-value"></span>
+											<input type="text" name="custName" id="custName1" hidden="true">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-2 control-label">资产评级等级：</label>
+										<div class="col-sm-4">
+											<span id="assetsSco" class="span-value"></span>
+											<input type="text" name="assetsSco1" id="assetsSco1" hidden="true"><span>分,</span>
+											<a><span id="assetsLevelSpan" class="span-value"></span><span id="refresh2" class="fa fa-refresh"></span></a>
+											<input type="text" hidden="true" name="assetsLevel" id="assetsLevel">
+										</div>
+										
+										<!-- <label class="col-sm-2 control-label">资产评级得分：</label>
+										<div class="col-sm-4">
+											<span id="assetsSco" class="span-value"></span>
+											<input type="text" name="custName" id="assetsSco1" hidden="true">
+										</div> -->
+									</div>
+									<div class="form-group">
+										
+										<label class="col-sm-2 control-label">主体评级等级：</label>
+										<div class="col-sm-4">
+										    <span id="mainSco" class="span-value"></span>
+											<input type="text" name="mainSco1" id="mainSco1" hidden="true"><span>分,</span>
+											<a><span id="ratingLevelSpan" class="span-value"></span><span id="refresh" class="fa fa-refresh"></span></a>
+											<input type="text" hidden="true" name="ratingLevel" id="ratingLevel">
+										</div>
+										<label class="col-sm-2 control-label">评级模板：</label>
+										<div class="col-sm-4">
+											<!-- <select class='chosen-select' name='modelSteps' id="modelType1" style="display:block!important;"> -->
+											<select id="modelType1" class='chosen-select'  data-placeholder="请选择">	
+												<option value="">请选择</option>										  
+												<option value="ZXAQPJ_LRX">债项安全评级_利润型</option>
+												<option value="ZXAQPJ_SZX">债项安全评级_市值型</option>
+												<option value="ZXAQPJ_ZSX">债项安全评级_增速型</option>
+											</select>
+										</div>
+									</div>
+								   
+									<div class="bottom-btn">
+									<!-- <button class="btn btn-default" type="button" onclick="downFile()">下载模板</button> -->
+									<!-- <button class="btn btn-default" type="submit" >上传并计算</button> -->
+									<button class="btn btn-default" type="submit"  style="background:#1C84C6;color:#fff;">发起评级</button>
+									<button class="btn btn-default" type="button"  onclick="skipRating()" style="background:#1C84C6;color:#fff;">跳过增信评级</button>
+									<b data-dismiss="modal" class="btn btn-default">返回</b>
+								</div>
+								</form>
+								<iframe name="frame1" frameborder="0" height="40" hidden="true"></iframe>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			
+			
+
+			   <!-- 模态窗口2 -->
+                <div class="modal inmodal fade modal-grade" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg2" style="width:100%;height:100%;">
+                    <div class="modal-content" style="height: 100%;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+                        <div class="modal-body">
+						     <div class="container">                                                                                                    
+
+								    <div class="space-20"></div>
+								    <div class="row">
+								        <div class="col-lg-3 col-md-3 col-sm-4">
+								            <div style="position:relative;">
+								                <div class="well inventory-nav">
+								                    <h3 class="no-margins">增信措施评级模型 <span class="label label-primary">变量清单</span></h3>
+								                    <div class="hr-line-dashed"></div>
+								                    <div class="well-sm" id="lablel_list">
+								                        <div class="checkbox" >
+								                            <div class="newlabel"><input type="checkbox" value="" id="label_0" checked>不动产</div>
+								                            <a href="JavaScript:void(0);" class="anchor"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+								                        </div>
+								                        <div class="checkbox">
+								                            <div class="newlabel"><input type="checkbox" value="" id="label_1" checked>土地使用权</div>
+								                            <a href="JavaScript:void(0);" class="anchor"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+								                        </div>
+								                        <div class="checkbox">
+								                            <div class="newlabel"><input type="checkbox" value="" id="label_2" checked>应收账款</div>
+								                            <a href="JavaScript:void(0);" class="anchor"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+								                        </div>
+								                        <div class="checkbox">
+								                            <div class="newlabel"><input type="checkbox" value="" id="label_3" checked>收益权</div>
+								                            <a href="JavaScript:void(0);" class="anchor"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+								                        </div>
+								                        <div class="checkbox">
+								                            <div class="newlabel"><input type="checkbox" value="" id="label_4" checked>股权</div>
+								                            <a href="JavaScript:void(0);" class="anchor"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span></a>
+								                        </div>
+								                    </div>
+								                </div>
+								            </div>
+								        </div>
+								        <div class="col-lg-9 col-md-9 col-sm-8">
+								        
+								            <form class="form-horizontal inventory-form" id="option_list"  method="get" action="">
+								               
+								            </form>
+								
+								        </div>
+								    </div>
+								</div>
+                        
+                        <!-- 模态窗口 3-->
+						<div class="modal inmodal fade" id="myModal3" tabindex="-1"
+								role="dialog" aria-hidden="true">
+								<div class="modal-dialog ">
+									<div class="modal-content" style="height:auto;">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">
+												<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+											</button>
+											<h4 class="modal-title">结果：</h4>
+										</div>
+										<div class="modal-body">
+											<form id="formUpload2" target="frame1"  action=""
+											enctype="multipart/form-data" method="POST" 
+											class="form-horizontal">
+												<input type="text" name="id" id="id" hidden="true">
+												<input type="text" name="proCode" id="proCode" hidden="true">
+												<input type="text" name="custCode" id="custCode" hidden="true">
+												<div class="form-group">
+													<label class="col-sm-3 control-label">分数：</label>
+													<div class="col-sm-3">
+														<span id="finalSco1" class="span-value"></span>
+														<input type="text" name="finalSco2" id="finalSco2" hidden="true">									
+													</div>
+												</div>		
+												<div class="form-group">
+													<label class="col-sm-3 control-label">保障倍数：</label>
+													<div class="col-sm-3">
+														<span id="finalPd1" class="span-value"></span>
+														<input type="text" name="finalPd2" id="finalPd2" hidden="true">
+													</div>
+												</div>	
+																						
+												<!-- <div class="bottom-btn">
+												<b data-dismiss="modal" class="btn btn-default">取消</b>
+												<button class="btn btn-default" type="submit"  style="background:#1C84C6;color:#fff;">确定</button>
+											</div> -->
+											</form>
+											<iframe name="frame3" frameborder="0" height="40" hidden="true"></iframe>
+											
+										</div>
+									    <div class="modal-footer">
+							                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+							                <button type="button" class="btn btn-primary" id="confirm2">确定</button>
+							            </div>
+									</div>
+								</div>
+							</div>
+						
+                        
+                        
+                        
+                        
+                        
+                        
+                        </div>
+                     
+                       <div class="modal-footer" id="footer2">
+                            <div id="scoreInfo" style="padding-right: 40px;font-size: 16px;display: none;">
+                                <span>定量得分：</span><span class="cale-score" id="dlScore"></span>
+                                <span>定性得分：</span><span class="cale-score" id="dxScore"></span>
+                                <span>总得分：</span><span class="cale-score" id="sumScore"></span>
+                            </div>
+                           
+                       
+                           <!--  <button type="button" class="btn btn-success" id="btn_next2">下一步</button> -->
+                        </div>
+                        <div class="modal-footer" id="footer3" style="display: none;">
+                           
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeModal">关闭
+                            </button>
+                        </div>
+                    </div>
+                </div>
+          
+          
+            </div>
+        
+              <!-- 模态窗口2 -->
+			
+			 
+			
+			
+			
+			
+			
+			</div>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript" src="/bootstrap/js/common.js?t=2"></script>
+<script type="text/javascript"
+	src="/bootstrap/js/debtRatingInitiate.js?t=2"></script>
+<script type="text/javascript"
+	src="/bootstrap/js/stepsDebtRating.js?t=2"></script>
+<script>
+var csName="";
+var prName="";
+var csCode="";
+var prCode="";
+var rs='';
+	$("input").blur(function(){
+		$(".typeahead.dropdown-menu").css("display","none");
+	});
+ 	$('#formUpload').submit(function(event) {
+ 		var assetsSco1=$("#assetsSco1").val();
+ 		console.log(1111,assetsSco1);
+ 		if(!assetsSco1){
+ 			swal({
+	            title: "提示",
+	            text: "请进行资产评级！",
+	            type: "info"
+	        });
+ 			return;
+ 		}
+ 		var mainSco1=$("#mainSco1").val();
+ 		console.log(1111,assetsSco1);
+ 		if(!mainSco1){
+ 			swal({
+	            title: "提示",
+	            text: "请进行主体评级！",
+	            type: "info"
+	        });
+ 			return;
+ 		}
+ 		var modelTypeVal=$("#modelType1").find("option:selected").val();
+ 		console.log(222,modelTypeVal);
+ 		if(!modelTypeVal){
+ 			swal({
+	            title: "提示",
+	            text: "请选择评级模板！",
+	            type: "info"
+	        });
+ 			return;
+ 		}
+ 		
+ 		/*  var fileName = $(this).find("input[name=file1]").val();
+         if (!fileName) {
+         	swal({
+	            title: "提示",
+	            text: "请选择文件！",
+	            type: "info"
+	        });
+             return;
+         } */
+         // mulitipart form,如文件上传类
+       /*   var formData = new FormData(this); */
+               $.ajax({
+                       async: false,
+                       type: "GET",
+                       url: "/irs/creditRating/getCreditIndexInput",
+                       success: function (data) {
+                           if (data.status) {
+                          	  $("#myModal").modal("hide");	
+							  $("#myModal2").modal("show");	
+							  renderData(data.data,DL_FXCK,csCode,prCode,mainId,assetsId,rs,DL_ZT_SRLRX, DL_ZC_BZBS);
+                           }
+                       }
+                   });
+        
+         return false; 
+	}); 
+
+ 
+var DL_ZX_BZBS=0;
+//忽略评级
+function skipRating(){
+	var assetsSco1=$("#assetsSco1").val();
+		if(!assetsSco1){
+			swal({
+            title: "提示",
+            text: "请进行资产评级！",
+            type: "info"
+        });
+			return;
+		}
+		
+		var mainSco1=$("#mainSco1").val();
+ 		if(!mainSco1){
+ 			swal({
+	            title: "提示",
+	            text: "请进行主体评级！",
+	            type: "info"
+	        });
+ 			return;
+ 		}
+		var modelTypeVal=$("#modelType1").find("option:selected").val();
+		console.log(222,modelTypeVal);
+		if(!modelTypeVal){
+			swal({
+            title: "提示",
+            text: "请选择评级模板！",
+            type: "info"
+        });
+			return;
+		}
+	$.ajax({
+        async: false,
+        type: "GET",
+        url: "/irs/creditRating/creatCreditRating",
+        data: {
+       	 bpCode:csCode,
+       	 proCode:prCode,
+        },
+        success: function (data) {
+       	 var mainId3=data.data;
+            if (data.status) {
+            	var map={
+            		    "creditInfo":{
+            		        "realEstateInfo":[
+            		            
+            		        ],
+            		        "equityInfo":[
+            		           
+            		        ],
+            		        "usufructInfo":[
+            		           
+            		        ],
+            		        "landUseRightinfo":[
+            		           
+            		        ],
+            		        "receivablesInfo":[
+            		            
+            		        ]
+            		    },
+            		    "DL_FXCK":'',
+            		}
+            	$.ajax({
+                    async: false,
+                    type: "GET",
+                    url: "/irs/creditRating/startModel",
+                    data:{
+                   	 "map":JSON.stringify(map),
+                   	 "type":'ZXBZBS',
+                   	 "mainId":mainId3,
+                    },
+            		 dataType:'json',
+                     success: function (data) {
+                   	    console.log(222,data);
+                   		DL_ZX_BZBS=data.finalPd;
+                   		$.ajax({
+               	            async: false,
+               	            type: "GET",
+               	            url: "/irs/facilityRating/creatFacilityRating",
+               	            data:{
+               	           	 "bpCode":csCode,
+               	           	 "proCode":prCode,
+               	           	 "mainId":mainId,
+               	           	 "assetsId":assetsId,
+               	           	 "creditId":mainId3,
+               	            },
+               	    		dataType:'json',
+               	           success: function (data) {
+               	           	
+               	           	if(data.status){
+               	           		var map2={};
+               	           		if(rs=='ZXAQPJ_LRX'){
+               	           			map2.DL_ZT_SRLRX=DL_ZT_SRLRX;	                                     			
+               	           		}else if(rs=='ZXAQPJ_SZX'){
+               	           			map2.DL_ZT_SRSZX=DL_ZT_SRLRX;	                                     			
+               	           		}else if(rs=='ZXAQPJ_ZSX'){	                                     			
+               	           			map2.DL_ZT_SRZSX=DL_ZT_SRLRX;
+               	           		}
+               	             	map2.DL_ZC_BZBS=DL_ZC_BZBS;
+               	             	map2.DL_ZX_BZBS=DL_ZX_BZBS;
+               	           		 $.ajax({
+               	                       async: false,
+               	                       type: "GET",
+               	                       url: "/irs/facilityRating/startFacilityModel",
+               	                       data:{
+               	                      	 "map":JSON.stringify(map2),
+               	                      	 "type":rs,
+               	                      	 "facilityId":data.data,
+               	                       },
+               	                   		 dataType:'json',
+               	                          success: function (data) {
+               	                         	 console.log(555,data.finalSco);
+               	                         	$("#myModal").modal("hide");
+               	                             
+               	                          postOpenWindow('/irs/DebtRatingResults/debtReport',{custNo:data.id},"_self") ;
+	               	                         	/*  swal({
+	                                   				title: "评级得分",
+	                                   	            text: data.finalSco,
+	                                   	            type: "success",
+	                                   	           
+	                                   	        }); */
+               	                             
+               	                          }
+               	                   });
+               	           	   }
+               	              
+               	            }
+               	        });
+						  
+                    }
+                });
+		     
+            }
+        }
+    }); 
+}
+function postOpenWindow(URL, PARAMS, target) {
+    if(target == null) target = "_blank";
+    var temp_form = document.createElement("form");
+    temp_form.action = URL;
+    temp_form.target = target;
+    temp_form.method = "post";
+    temp_form.style.display = "none";
+    for(var x in PARAMS) {
+        var opt = document.createElement("textarea");
+        opt.name = x;
+        opt.value = PARAMS[x];
+        temp_form.appendChild(opt);
+    }
+    document.body.appendChild(temp_form);
+    temp_form.submit();
+    document.body.removeChild(temp_form);
+}
+
+var DL_FXCK='';
+var assetsId='';
+var mainId='';
+var DL_ZT_SRLRX=0;
+var DL_ZC_BZBS=0;
+$("#refresh").click(function(){
+
+	 showHistoryModal(csName,prName,csCode,prCode);
+	
+});
+$("#refresh2").click(function(){
+
+	showHistoryModal(csName,prName,csCode,prCode);
+	
+})
+function showHistoryModal(custName,proName,custCode,proCode){
+	
+	 $.ajax({
+	        async: false,
+	        type: "GET",
+	        url: "/irs/creditRating/isExitCredit",
+	        data: {
+	        	custCode:custCode,
+	        	proCode:proCode,
+	        },
+	        success: function (data) {
+	        	 var res=data;
+	        	 console.log(1111,data);
+	             if(res.isNext=='1'){   
+	            	 $.ajax({
+	         	        async: false,
+	         	        type: "GET",
+	         	        url: "/irs/facilityRating/isExitFacility",
+	         	        data: {
+	         	        	custCode:custCode,
+	         	        	proCode:proCode,
+	         	        },
+	         	        success: function (data) {
+	         	        	 console.log(2222,data);
+	         	        	 var res2=data;
+	         	            if(res2.isNext=='1'){   
+	         	            csName=custName;
+	         	       		prName=proName;
+	         	       		csCode=custCode;
+	         	       		prCode=proCode;
+	         	       	    $("#myModal").modal("show");
+	         	       	    $.ajax({
+	         	       			url : "/irs/ratingDebtIndex/findCustRating",
+	         	       			data : {
+	         	       				custCode : csCode,
+	         	       				proCode: proCode,
+	         	       			},
+	         	       			async : false,
+	         	       			cache: false,
+	         	       			success : function(ratingIdRe) { 
+	         	       				 $("#id").val(ratingIdRe.id);
+	         	       				   console.log(ratingIdRe);
+	         	       				   DL_ZT_SRLRX=ratingIdRe.mainSco?ratingIdRe.mainSco:0;
+	         	       				   DL_ZC_BZBS=ratingIdRe.assetsPd?ratingIdRe.assetsPd:0;
+	         	       				 if(ratingIdRe.mainLevel){
+	         	       					 $("#ratingLevel").val(ratingIdRe.mainLevel);
+	         	       					 $("#ratingLevelSpan").text(ratingIdRe.mainLevel+"(点击此处重新评级！)");
+	         	       				 }else{
+	         	       					 $("#ratingLevel").val("");
+	         	       					 $("#ratingLevelSpan").text("点击此处进行主体评级！");  
+	         	       				 }
+	         	       				 if(ratingIdRe.assetsLevel){
+	         	       					 $("#assetsLevel").val(ratingIdRe.assetsLevel);
+	         	       					 $("#assetsLevelSpan").text(ratingIdRe.assetsLevel+"点击此处重新评级！");
+	         	       				 }else{
+	         	       					 $("#assetsLevel").val("");
+	         	       					 $("#assetsLevelSpan").text("点击此处进行资产评级！");  
+	         	       				 }
+	         	       				
+	         	       				 if(ratingIdRe.assetsSco){
+	         	       					 $("#assetsSco").text(ratingIdRe.assetsSco);
+	         	       					 $("#assetsSco1").val(ratingIdRe.assetsSco);
+	         	       				 } else{
+	         	       					 $("#assetsSco").text('');
+	         	       					 $("#assetsSco1").val(ratingIdRe.assetsSco);
+	         	       				 }
+	         	       				 if(ratingIdRe.mainSco){
+	         	       					 $("#mainSco").text(ratingIdRe.mainSco);
+	         	       					 $("#mainSco1").val(ratingIdRe.mainSco);
+	         	       				 } else{
+	         	       					 $("#mainSco").text('');
+	         	       					 $("#mainSco1").val(ratingIdRe.mainSco);
+	         	       				 }
+	         	       				 if(ratingIdRe.DL_FXCK){
+	         	       					 DL_FXCK=ratingIdRe.DL_FXCK;
+	         	       				 }else{
+	         	       					 DL_FXCK='';
+	         	       				 }
+	         	       	             if(ratingIdRe.mainType){
+	         	       	            	 $("#modelType1").val(ratingIdRe.mainType);
+	         	       	    			 $("#modelType1").trigger("chosen:updated");
+	         	       	    			 rs=ratingIdRe.mainType;
+	         	       	             }else{
+	         	       	            	 $("#modelType1").val('');
+	         	       	    			 
+	         	       	             }
+	         	       	             console.log('assetsId',ratingIdRe.assetsId);
+	         	       	             if(ratingIdRe.assetsId){
+	         	       	            	assetsId=ratingIdRe.assetsId;
+	         	       	             }else{
+	         	       	            	assetsId='';
+	         	       	             }
+	         	       	             if(ratingIdRe.mainId){
+	         	       	            	mainId=ratingIdRe.mainId;
+	         	       	             }else{
+	         	       	            	mainId='';
+	         	       	             }
+	         	       			}})
+	         	       			
+	         	       			
+	         	       		$("#proName1").val(prName);
+	         	       		$("#custName1").val(csName);
+	         	       	    $("#proName").text(prName);
+	         	       	    $("#custName").text(csName);
+	         	       	    $("#proCode").val(prCode);
+	         	       	    $("#custCode").val(csCode);
+	         	             }else{
+	         	            	 swal({
+	         	     	            title: "提示",
+	         	     	            text: "该项目存在业务系统发起-初评的记录，暂不能进行评级测算！",
+	         	     	            type: "info"
+	         	     	         });
+	         	         	     return;
+	         	             }
+	         	        }
+	         		});
+	             }else{
+	            	 swal({
+	     	            title: "提示",
+	     	            text: "该项目存在业务系统发起-初评的记录，暂不能进行评级测算！",
+	     	            type: "info"
+	     	         });
+	         	     return;
+	             }
+	        }
+		});
+	
+	
+		
+}
+$("#ratingLevelSpan").click(function(){
+	var id =$("#id").val();
+	var cust = $("#custCode").val();
+	var custName=$("#custName1").val();
+	 $.ajax({
+	    async: false,
+	    type: "GET",
+	    url: "/irs/mainRating/isExitMainRating",
+	    data: {
+	    	custCode:cust,
+	    },
+	    success: function (data) {
+	    	 var res=data;
+	         if(res.isNext=='1'){   
+	        	 window.open("/irs/mainRating/mainRatingTrial.html"+
+	        				"?id="+id+"&cust="+cust+"&custName="+custName);
+	         }else{
+	        	 swal({
+	 	            title: "提示",
+	 	            text: "该客户存在业务系统发起-初评的记录，暂不能进行评级测算！",
+	 	            type: "info"
+	 	         });
+	     	     return;
+	         }
+	    }
+     }); 
+	
+})
+$("#assetsLevelSpan").click(function(){
+	 var id =$("#id").val();
+	 var proCode=$("#proCode").val();
+	 var cust = $("#custCode").val();
+	 var proName=$("#proName1").val();
+	 var custName=$("#custName1").val();
+	 $.ajax({
+	     async: false,
+	     type: "GET",
+	     url: "/irs/assetsRating/isExitAssets",
+	     data: {
+	     	custCode:cust,
+	     	proCode:proCode,
+	     },
+	     success: function (data) {
+	     	 var res=data;
+	          if(res.isNext=='1'){   
+	        	  window.open("/irs/assetsRating/assetsRatingLaunch.html"+
+	        				"?id="+id+"&proCode="+proCode+"&cust="+cust+"&proName="+proName+"&custName="+custName); 
+	          }else{
+	         	 swal({
+	  	            title: "提示",
+	  	            text: "该项目存在业务系统发起-初评的记录，暂不能进行评级测算！",
+	  	            type: "info"
+	  	         });
+	      	     return;
+	          }
+	     }
+	}); 
+	
+})
+$("#modelType1").change(function(){
+	  rs=$(this).find("option:selected").val();
+	 console.log(rs);
+});
+
+var form="";
+	$('#btn-query').click(function(){
+		form = $('#formSearch').serializeObject();
+	    $("#table_list").jqGrid('setGridParam', {postData:form,page:1}).trigger("reloadGrid");
+	});
+	//重置按钮
+	$("#btn-reset").click(function(){
+		$("#formSearch input").val("");
+		$("#formSearch select").val("");
+		$("#formSearch select").trigger("chosen:updated");
+		$('#date2').datepicker('setEndDate', new Date());
+		$('#date1').datepicker('setEndDate', new Date());  
+		$('#date1').datepicker('setStartDate', null);
+	});
+var custNo="";
+var tempType="";
+$(document).ready(function(){
+	$("#table_list").jqGrid({
+		url : "/irs/DebtRatingResults/parameterQuery",
+		recordtext: "显示：{0} - {1}，总数：{2} ",
+	    emptyrecords: "本次查询无数据！",
+	    loadtext: "读取中...",
+	    postData:{'vailds':'1'},
+	    pgtext : "第 {0}页， 共{1}页",
+		mtype : "GET",
+	    datatype: "json",
+        height: ($(window).height()-$(".float-e-margins").height()-140),//屏幕高度-查询框高度-140的偏差值
+        //scrollOffset : 0,
+        autowidth: true,
+        shrinkToFit: true,
+        prmNames: {
+            page: "page"   // 表示请求页码的参数名称
+        },
+        rowNum: 20,
+        rowList: [20, 30, 40],
+        //colNames:['','项目编号','项目名称','承租人名称','初评等级','初评保障倍数','复核等级','复核保障倍数','业务部',"业务经理",'项目经理','评审经理','资产经理','评级类型','评级日期','操作'],
+        colNames:['','项目编号','项目名称','客户名称','客户编号','所属部门',"业务经理",'评审经理','资产经理','操作'],
+        //colNames:['评级编号','项目编号','项目名称','项目状态','承租人编号','承租人名称','评级模板','业务部','业务类别','业务类型','初评等级','复核等级','总体保障倍数','评级类型','评级生效日期','操作'],
+        colModel:[
+        	{name:'id',index:'id', editable: true,hidden:true,sortable:false},
+        	//项目编号
+        	{name:'proCode',index:'proCode', editable: true,sortable:false,align: 'center', width: 85},
+        	//项目名称
+        	{name:'proName',index:'proName', editable: true,sortable:false, align: 'center',width: 180},
+        	//客户名称
+            {name:'custname',index:'custName', editable: true,sortable:false, align: 'center',width: 150},
+            //客户编号
+            {name:'custcode',index:'custcode', editable: true,sortable:false, align: 'center',width: 85},
+            /* {name:'internlevel',index:'internlevel', editable: true,sortable:false,align: 'center', width: 50},
+            {name:'internBs',index:'internBs', editable: true,sortable:false,align: 'center', width: 70,formatter:function(value,row,index){
+            	if(value){
+            		value=value*1;
+            		return value.toFixed(2);
+            	}else{
+            		return "";
+            	}
+            }},
+            {name:'finallevel',index:'finallevel', editable: true,sortable:false,align: 'center', width: 50},
+            {name:'finalBs',index:'finalBs', editable: true,sortable:false,align: 'center', width: 70,formatter:function(value,row,index){
+            	if(value){
+            		value=value*1;
+            		return value.toFixed(2);
+            	}else{
+            		return "";
+            	}
+            }}, */
+            //所属部门
+            {name:'orgName',index:'sales', editable: true,sortable:false,align: 'center', width: 70},
+            //业务经理
+            {name:'employeeId',index:'sales', editable: true,sortable:false,align: 'center', width: 50,
+            	formatter:function(value,row,index){
+            		if([(${@clockDictionary.fuzzySearchUser('')})][value]){
+            			return 	[(${@clockDictionary.fuzzySearchUser('')})][value]; 
+            		}else{
+            			return "";
+            		}
+            	}},
+            /* {name:'internName',index:'internName', editable: true,sortable:false,align: 'center',hidden:true, width: 50},*/
+            //评审经理
+            {name:'finalName',index:'finalName', editable: true,sortable:false,align: 'center', width: 50}, 
+            //资产经理
+            {name:'assetReview',index:'assetManager', editable: true,sortable:false,align: 'center', width: 50},
+             /* {name:'ratingstatus',index:'ratingstatus', editable: true,sortable:false,align: 'center', width: 80,
+            	formatter:function(value,row,index){
+            	if([(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingMethods','')})][value]){
+                	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingMethods','')})][value];
+            	}else{
+            		return "";
+            	}
+            }}, 
+            {name:'finaldate',index:'finaldate', editable: true,sortable:false,align: 'center', width: 70}, */
+            {name:'id',index:'id', editable: true,align: 'center',sortable:false, width: 60,
+            	formatter:function(value,index,row){
+            	custNo=row.proCode;
+            	tempType=row.type;
+            	//return "<span style='color: #199fff;text-decoration: underline;cursor: pointer;' onclick='showHistoryModal(\""+row.proCode+"\")'>"+value+"</span>";
+/* custname" : "天津新能再生资源有限公司",
+      "custcode" : "BP000626",
+      "proCode" : "PJ2016040017",
+      "proName" : "天津新能再生资源有限公司回租项目", */
+            	return "<button class='btn btn-success btn-small' "+
+            	"onclick='showHistoryModal(\""+row.custname+"\",\""+row.proName+"\",\""+row.custcode+"\",\""+row.proCode+"\");'>评级发起</button>";
+            }}
+        ],
+        pager: "#pager_list",
+        viewrecords: true,
+        caption: "",
+        add: true,
+        edit: true,
+        addtext: 'Add',
+        edittext: 'Edit',
+        rownumbers: true,
+        rownumWidth: 60,
+        hidegrid: false,
+        jsonReader: {
+        	root: "response.data",
+        	records: "response.totalRows",
+        	//page: "response.currPage", // 当前第几页
+            total: "response.totalPages", // 总共多少页
+        	repeatitems: false,
+        	id: "0"
+        }
+    });	
+	$("#table_list").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+	// Setup buttons
+    $("#table_list").jqGrid('navGrid', '#pager_list',
+            {edit: false, add: false, del: false, search: false},
+            {height: 200, reloadAfterSubmit: true}
+    );
+});
+$(function(){
+	   $(window).resize(function(){   
+	      $("#table_list").setGridWidth($(window).width());
+	   });
+	});
+
+$("#closeModal").click(function(){
+	var form="";
+		form = $('#formSearch').serializeObject();
+	    $("#table_list").jqGrid('setGridParam', {postData:form,page:1,'vailds':'1'}).trigger("reloadGrid");
+})
+$.fn.serializeObject = function() {  
+    var o = {};  
+    var a = this.serializeArray();  
+    $.each(a, function() {  
+        if (o[this.name]) {  
+            if (!o[this.name].push) {  
+                o[this.name] = [ o[this.name] ];  
+            }  
+            o[this.name].push(this.value.replace(new RegExp(",","gm"),"") || '');  
+        } else {  
+            o[this.name] = this.value.replace(new RegExp(",","gm"),"") || '';  
+        }  
+    });  
+    return o;  
+}
+
+</script>
+
+</html>

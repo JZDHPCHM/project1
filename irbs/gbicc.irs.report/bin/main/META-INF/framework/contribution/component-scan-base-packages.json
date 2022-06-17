@@ -1,0 +1,6 @@
+{
+  "includes": [
+    "gbicc.irs.report.controller",
+    "gbicc.irs.report.service.impl"
+  ]
+}

@@ -1,0 +1,32 @@
+<!--/* 页面信息对话框 */-->
+<div class="modal fade" id="pageInfoModalDialog" tabindex="-1" role="dialog" aria-labelledby="pageInfoModalDialogLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="pageInfoModalDialogLabel" th:text="#{current_page_info}">确认</h4>
+			</div>
+			<table class="table table-condensed">
+				<tr>
+					<td>URI:</td>
+					<td th:text="${#request.getRequestURI()}"></td>
+				</tr>
+				<tr>
+					<td>Thymeleaf Template:</td>
+					<td th:utext="|${@frSpringApplicationContextService.getProperty('spring.thymeleaf.prefix')}${#execInfo.getProcessedTemplateName()}${@frSpringApplicationContextService.getProperty('spring.thymeleaf.suffix')}|"></td>
+				</tr>
+				<tr>
+					<td>Spring MVC Controller:</td>
+					<td th:utext="${@frSpringApplicationContextService.getHandlerExecutionChain(#request).getHandler().toString()}"></td>
+				</tr>
+				<tr>
+					<td>Spring MVC Interceptors:</td>
+					<td th:utext="${@frSpringApplicationContextService.getHandlerExecutionChainDescription(#httpServletRequest)}"></td>
+				</tr>
+			</table>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#pageInfoModalDialog').modal('hide');" th:text="#{ok}">确认</button>
+			</div>
+		</div>
+	</div>
+</div>

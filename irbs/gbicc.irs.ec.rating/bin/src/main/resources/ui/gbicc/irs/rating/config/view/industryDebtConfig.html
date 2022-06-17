@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+// 模型列表
+var modelList = [(${@frSystemDictionaryService.getDictionaryMapJsonString('MODEL_TYPE',#locale)})];
+//字段定义
+var industryDebtFields ={
+		query: [
+			{
+				width:200,		
+				name:'modelType',		
+				title:'模型行业',
+				require:true,
+				type: 'select',
+				valueMap:modelList,
+				allowEmptyValue:true,
+				autoFetchData:false,	
+				operator:'equals'}
+		],
+		grid: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{width:200,name:'modelType',	title:'模型行业'	 ,required:true,type: 'select',valueMap:modelList},
+			    {width:200,name:'debtValue',	title:'债务结构值',required:true}
+		],
+		edit: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{width:200,name:'modelType',	title:'模型行业'	 ,required:true,type: 'select',valueMap:modelList},
+			    {width:200,name:'debtValue',	title:'债务结构值',required:true}
+		]
+};
+
+// 杠杆系数行业平均值数据源
+isc.FwRestDataSource.create({
+	 ID: 'industryDebtDS',
+ 	 fields: industryDebtFields.grid,
+ 	 dataURL: '[(@{/irs/industryDebt/isc})]'
+});
+
+
+isc.FwListGrid.create({
+	ID: 'industryDebtId',
+	title: '<b>行业债务结构系数T列表</b>',
+	dataSource: industryDebtDS,
+	sortField: 'industryNo',
+	canHover:true,
+	fields: industryDebtFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: industryDebtFields.query
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+      form: {
+      	numCols:4,
+      	titleWidth:150,
+      	colWidths: [190, "*"],
+          dataSource: industryDebtDS,
+          fields: industryDebtFields.edit
+      },
+      afterShow: function(action){
+     	
+      },
+      actionMembers:[
+             		'ok','close'
+      ]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+  },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				industryDebtId
+			]
+		})
+	}
+});
+
+</script>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>生产评级明细</title>
+<style type="text/css">
+ 	.top-navigation{
+		display: none;
+	}
+	.ui-state-default, .ui-widget-content .ui-state-default {
+    	font-weight: normal;
+    	font-size: 12px;
+	}
+	.row{
+		padding-bottom: 25px;
+	}
+</style>
+</head>
+<body>
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+			    <div class="row">
+	                <div class="col-lg-12">
+	                	<div class="jqGrid_wrapper">
+                           	<table id="table_list_1"></table>
+                       	</div>	    
+	                </div>
+	            </div>
+	            <div class="row">
+	                <div class="col-lg-12">
+	                	<div class="jqGrid_wrapper">
+                           	<table id="table_list_2"></table>
+                       	</div>	    
+	                </div>
+	            </div>
+	            <div class="row">
+	                <div class="col-lg-12">
+	                	<div class="jqGrid_wrapper">
+                           	<table id="table_list_3"></table>
+                       	</div>	    
+	                </div>
+	            </div>
+	            <div class="row">
+	                <div class="col-lg-12">
+	                	<div class="jqGrid_wrapper">
+                           	<table id="table_list_4"></table>
+                       	</div>	    
+	                </div>
+	            </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var mydata1 = [];
+	var mydata2 = [];
+	var mydata3 = [];
+	var mydata4 = [];
+	
+	 $.ajax({
+		url: "/irs/DebtStep/projectInfo", 
+		async:false,
+		data:{projectNo:"[[${projectNo}]]"},
+		success: function(result){
+			mydata1=result.dxfx[0];
+			mydata2=result.dxfx[1];
+			$.each(mydata2,function(i,row){
+				row.bsName2=row.bsName;
+			})
+			mydata3=result.dxfx[2];
+			$.each(mydata3,function(i,row){
+				row.bsName3=row.bsName;
+			})
+			mydata4=result.dxfx[3];
+			$.each(mydata4,function(i,row){
+				row.bsName4=row.bsName;
+			})
+      }}) 
+	$("#table_list_1").jqGrid({
+		url : "",
+		recordtext: "显示：{0} - {1}，总数：{2} ",
+	    emptyrecords: "本次查询无数据！",
+	    loadtext: "读取中...",
+	    pgtext : "第 {0}页， 共{1}页",
+		mtype : "post",
+        //datatype: "json",
+        data: mydata1,
+        datatype: "local",
+        //height: 250,
+        height: '100%',
+        autowidth: true,
+        shrinkToFit: true,
+        colNames:['','','','档位','档位描述','初评结果','复评结果'],
+        colModel:[
+        	{name:'id',index:'id', sortable: false,hidden:true},
+        	{name:'bsName',index:'bsName', sortable: false,	
+        		cellattr: function(rowId, tv, rawObject, cm, rdata) {
+				//合并单元格（跨行）
+				return 'id=\'bsName' + rowId + "\'";
+			}},
+			{name:'zlName',index:'zlName', sortable: false},
+        	{name:'dwOption',index:'dwOption', sortable: false},
+        	{name:'dwDescribe',index:'dwDescribe', sortable: false},
+        	{name:'initRating',index:'initRating', sortable: false},
+        	{name:'finalRating',index:'finalRating', sortable: false}
+        ],
+        viewrecords: true,
+        caption: "",
+        gridComplete: function() {
+			//在gridComplete调用合并方法
+			var gridName = "table_list_1";
+			MergerRowspan(gridName, 'bsName');//跨行
+		},
+        add: true,
+        edit: true,
+        addtext: 'Add',
+        edittext: 'Edit',
+        rownumbers: false,
+        hidegrid: false
+    });
+	 $("#table_list_2").jqGrid({
+			url : "",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        //datatype: "json",
+	        data: mydata2,
+	        datatype: "local",
+	        //height: 250,
+	        height: '100%',
+	        autowidth: true,
+	        shrinkToFit: true,
+	        colNames:['','','','档位','档位描述','初评结果','复评结果'],
+	        colModel:[
+	        	{name:'id',index:'id', sortable: false,hidden:true},
+	        	{name:'bsName2',index:'bsName2', sortable: false,	
+	        		cellattr: function(rowId, tv, rawObject, cm, rdata) {
+					//合并单元格（跨行）
+					return 'id=\'bsName2' + rowId + "\'";
+				}},
+				{name:'zlName',index:'zlName', sortable: false},
+	        	{name:'dwOption',index:'dwOption', sortable: false},
+	        	{name:'dwDescribe',index:'dwDescribe', sortable: false},
+	        	{name:'initRating',index:'initRating', sortable: false},
+	        	{name:'finalRating',index:'finalRating', sortable: false}
+	        ],
+	        viewrecords: true,
+	        caption: "",
+	        gridComplete: function() {
+				//在gridComplete调用合并方法
+				var gridName = "table_list_2";
+				MergerRowspan(gridName, 'bsName2');//跨行
+			},
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: false,
+	        hidegrid: false
+	    });
+	 $("#table_list_3").jqGrid({
+			url : "",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        //datatype: "json",
+	        data: mydata3,
+	        datatype: "local",
+	        //height: 250,
+	        height: '100%',
+	        autowidth: true,
+	        shrinkToFit: true,
+	        colNames:['','','','档位','档位描述','初评结果','复评结果'],
+	        colModel:[
+	        	{name:'id',index:'id', sortable: false,hidden:true},
+	        	{name:'bsName3',index:'bsName3', sortable: false,	
+	        		cellattr: function(rowId, tv, rawObject, cm, rdata) {
+					//合并单元格（跨行）
+					return 'id=\'bsName3' + rowId + "\'";
+				}},
+				{name:'zlName',index:'zlName', sortable: false},
+	        	{name:'dwOption',index:'dwOption', sortable: false},
+	        	{name:'dwDescribe',index:'dwDescribe', sortable: false},
+	        	{name:'initRating',index:'initRating', sortable: false},
+	        	{name:'finalRating',index:'finalRating', sortable: false}
+	        ],
+	        viewrecords: true,
+	        caption: "",
+	        gridComplete: function() {
+				//在gridComplete调用合并方法
+				var gridName = "table_list_3";
+				MergerRowspan(gridName, 'bsName3');//跨行
+			},
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: false,
+	        hidegrid: false
+	    });
+	 $("#table_list_4").jqGrid({
+			url : "",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        //datatype: "json",
+	        data: mydata4,
+	        datatype: "local",
+	        //height: 250,
+	        height: '100%',
+	        autowidth: true,
+	        shrinkToFit: true,
+	        colNames:['客户信用保障维度','档位','档位描述','初评结果','复评结果'],
+	        colModel:[
+				{name:'zlName',index:'zlName', sortable: false},
+	        	{name:'dwOption',index:'dwOption', sortable: false},
+	        	{name:'dwDescribe',index:'dwDescribe', sortable: false},
+	        	{name:'initRating',index:'initRating', sortable: false},
+	        	{name:'finalRating',index:'finalRating', sortable: false}
+	        ],
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: false,
+	        hidegrid: false
+	    }); 
+	$("#table_list_1").jqGrid('setGroupHeaders', {
+	    useColSpanStyle: true,
+	    groupHeaders:[
+	        {startColumnName:'bsName', numberOfColumns:2, titleText: '现金流维度'}
+	    ]  
+	})
+	$("#table_list_2").jqGrid('setGroupHeaders', {
+	    useColSpanStyle: true,
+	    groupHeaders:[
+	        {startColumnName:'bsName2', numberOfColumns:2, titleText: '租赁物维度'}
+	    ]  
+	})
+	$("#table_list_3").jqGrid('setGroupHeaders', {
+	    useColSpanStyle: true,
+	    groupHeaders:[
+	        {startColumnName:'bsName3', numberOfColumns:2, titleText: '增信措施维度'}
+	    ]  
+	})
+    $(window).bind('resize', function () {
+        var width = $('.jqGrid_wrapper').width();
+        $('#table_list_1').setGridWidth(width);
+        $('#table_list_2').setGridWidth(width);
+        $('#table_list_3').setGridWidth(width);
+        $('#table_list_4').setGridWidth(width);
+    });
+
+    setTimeout(function(){
+        $('.wrapper-content').removeClass('animated fadeInRight');
+    },700);
+</script>
+</html>

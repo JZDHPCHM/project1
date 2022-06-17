@@ -1,0 +1,10 @@
+{
+    "includes":[
+        "gbicc.irs.customer.entity",
+        "gbicc.irs.customer.repository",
+        "gbicc.irs.financialindustry.entity",
+        "gbicc.irs.financialindustry.repository",
+        "gbicc.irs.issueBonds.entity",
+        "gbicc.irs.issueBonds.repository"
+    ]
+}

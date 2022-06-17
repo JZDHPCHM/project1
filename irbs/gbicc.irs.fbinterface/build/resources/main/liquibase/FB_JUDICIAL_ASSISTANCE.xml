@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_JUDICIAL_ASSISTANCE" author="framework">
+
+        <!-- 司法协助结果表 -->
+        <createTable tableName="FB_JUDICIAL_ASSISTANCE" remarks="司法协助">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="PUBLIC_DATE" type="java.sql.Types.VARCHAR(20)" remarks="公式日期"></column>
+            <column name="FREEZE_PERIOD_FROM" type="java.sql.Types.VARCHAR(20)" remarks="冻结期限自"></column>
+            <column name="FREEZE_PERIOD_TO" type="java.sql.Types.VARCHAR(20)" remarks="冻结期限至"></column>
+            <column name="RECEIVE_PARTY" type="java.sql.Types.VARCHAR(100)" remarks="受让人"></column>
+            <column name="EXECUTION_MATTERS" type="java.sql.Types.VARCHAR(300)" remarks="执行事项"></column>
+            <column name="EXECUTION_COURT" type="java.sql.Types.VARCHAR(100)" remarks="执行法院"></column>
+            <column name="EXECUTION_ORDER_NUMBER" type="java.sql.Types.VARCHAR(100)" remarks="执行裁定书文号"></column>
+            <column name="ENFORCEMENT_NOTICE_NUMBER" type="java.sql.Types.VARCHAR(100)" remarks="执行通知书文号"></column>
+            <column name="RENEW_FREEZE_PERIOD_FROM" type="java.sql.Types.VARCHAR(20)" remarks="续行冻结期限自"></column>
+            <column name="RENEW_FREEZE_PERIOD_TO" type="java.sql.Types.VARCHAR(20)" remarks="续行冻结期限至"></column>
+            <column name="EQUITY_ENTERPRISE_NAME" type="java.sql.Types.VARCHAR(100)" remarks="股权所在企业名称"></column>
+            <column name="EQUITY_AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="股权数额"></column>
+            <column name="EXECUTE_PERSON" type="java.sql.Types.VARCHAR(100)" remarks="被执行人"></column>
+            <column name="CERTIFICATE_TYPE" type="java.sql.Types.VARCHAR(30)" remarks="被执行人证件种类"></column>
+            <column name="LIFT_FREEZE_PERIOD" type="java.sql.Types.VARCHAR(20)" remarks="解除冻结期限"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

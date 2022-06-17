@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="RISK_EXPOSURE" name="风险暴露流程图" isExecutable="true">
+    <dataObject id="assignment-strategy" name="任务分配策略" itemSubjectRef="xsd:string">
+      <extensionElements>
+        <flowable:value>{"A2":"riskApproverQueryService"}</flowable:value>
+      </extensionElements>
+    </dataObject>
+    <startEvent id="startevent1" name="Start"/>
+    <userTask id="A1" name="提交申请" default="flow2" flowable:assignee="${assignee}" flowable:candidateGroups="CUSTOMER_MANAGER" flowable:skipExpression="${execution.getVariable('skipFirst')==true}">
+      <extensionElements>
+        <modeler:group-info-name-CUSTOMER_MANAGER xmlns:modeler="http://flowable.org/modeler"><![CDATA[客户经理]]></modeler:group-info-name-CUSTOMER_MANAGER>
+        <modeler:activiti-idm-candidate-group xmlns:modeler="http://flowable.org/modeler"><![CDATA[true]]></modeler:activiti-idm-candidate-group>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+      </extensionElements>
+    </userTask>
+    <endEvent id="endevent1" name="End"/>
+    <userTask id="A2" name="审批" default="sid-F0F5234C-C534-4898-A273-2D63FF7FF8B9" flowable:assignee="${assignee}" flowable:candidateGroups="RISK_APPROVAL">
+      <extensionElements>
+        <flowable:taskListener event="assignment" delegateExpression="${flowableSendMailListener}">
+          <flowable:field name="title">
+            <flowable:string><![CDATA[您有一个 [示例] 流程的 [复核] 任务等待处理]]></flowable:string>
+          </flowable:field>
+          <flowable:field name="content">
+            <flowable:string><![CDATA[${assignee},您好！
+    
+    您有一个 [示例] 流程的 [复核] 任务等待处理，详情参见: http://localhost:8080]]></flowable:string>
+          </flowable:field>
+        </flowable:taskListener>
+        <modeler:group-info-name-RISK_APPROVAL xmlns:modeler="http://flowable.org/modeler"><![CDATA[总行风险部风险暴露分类审批岗]]></modeler:group-info-name-RISK_APPROVAL>
+        <modeler:activiti-idm-candidate-group xmlns:modeler="http://flowable.org/modeler"><![CDATA[true]]></modeler:activiti-idm-candidate-group>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="A1"/>
+    <sequenceFlow id="flow2" sourceRef="A1" targetRef="A2"/>
+    <sequenceFlow id="sid-F0F5234C-C534-4898-A273-2D63FF7FF8B9" sourceRef="A2" targetRef="endevent1"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_RISK_EXPOSURE">
+    <bpmndi:BPMNPlane bpmnElement="RISK_EXPOSURE" id="BPMNPlane_RISK_EXPOSURE">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="32.0" y="169.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="A1" id="BPMNShape_A1">
+        <omgdc:Bounds height="80.0" width="105.0" x="105.0" y="144.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="28.0" width="28.0" x="410.0" y="166.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="A2" id="BPMNShape_A2">
+        <omgdc:Bounds height="80.0" width="105.0" x="255.0" y="144.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-F0F5234C-C534-4898-A273-2D63FF7FF8B9" id="BPMNEdge_sid-F0F5234C-C534-4898-A273-2D63FF7FF8B9">
+        <omgdi:waypoint x="359.95000000000005" y="182.19742489270388"/>
+        <omgdi:waypoint x="410.00808595330153" y="180.47869340345426"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="61.94999850358594" y="184.0"/>
+        <omgdi:waypoint x="104.99999999999784" y="184.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="209.95" y="184.0"/>
+        <omgdi:waypoint x="255.0" y="184.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

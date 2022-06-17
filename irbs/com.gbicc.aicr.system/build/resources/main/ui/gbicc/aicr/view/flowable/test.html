@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<!-- saved from url=(0101)http://localhost:8080/system/flowable/task/deal_task.html?taskId=52add8bf-d5e2-11e8-ace1-4a998735e4c3 -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>风险偏好和限额管理系统</title>
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<link rel="stylesheet" type="text/css"
+	href="./风险偏好和限额管理系统1_files/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="./风险偏好和限额管理系统1_files/font-awesome.css">
+<link rel="stylesheet" type="text/css"
+	href="./风险偏好和限额管理系统1_files/jquery-ui-1.10.4.custom.min.css">
+<link rel="stylesheet" type="text/css"
+	href="./风险偏好和限额管理系统1_files/ui.jqgrid.css">
+<link rel="stylesheet" type="text/css"
+	href="./风险偏好和限额管理系统1_files/bootstrap-chosen.css">
+<link rel="stylesheet" type="text/css"
+	href="./风险偏好和限额管理系统1_files/datepicker3.css">
+<link rel="stylesheet" type="text/css"
+	href="./风险偏好和限额管理系统1_files/ladda-themeless.min.css">
+<link rel="stylesheet" type="text/css"
+	href="./风险偏好和限额管理系统1_files/sweetalert.css">
+<link rel="stylesheet" type="text/css"
+	href="./风险偏好和限额管理系统1_files/animate.css">
+<link rel="stylesheet" type="text/css"
+	href="./风险偏好和限额管理系统1_files/style.css">
+<link rel="stylesheet" type="text/css"
+	href="./风险偏好和限额管理系统1_files/changeSkin.css">
+
+
+
+
+
+
+<!-- Mainly scripts -->
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/jquery-3.1.1.min.js"></script>
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/jquery.metisMenu.js"></script>
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/jquery.slimscroll.min.js"></script>
+<!-- Peity -->
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/jquery.peity.min.js"></script>
+<!-- Custom and plugin javascript -->
+<script type="text/javascript" src="./风险偏好和限额管理系统1_files/inspinia.js"></script>
+<script type="text/javascript" src="./风险偏好和限额管理系统1_files/pace.min.js"></script>
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/jquery-ui.min.js"></script>
+<!-- Flot -->
+<script type="text/javascript" src="./风险偏好和限额管理系统1_files/jquery.flot.js"></script>
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/jquery.flot.tooltip.min.js"></script>
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/jquery.flot.resize.js"></script>
+<!-- ladda -->
+<script type="text/javascript" src="./风险偏好和限额管理系统1_files/spin.min.js"></script>
+<style type="text/css"></style>
+<script type="text/javascript" src="./风险偏好和限额管理系统1_files/ladda.min.js"></script>
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/ladda.jquery.min.js"></script>
+<!-- Nestable List -->
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/jquery.nestable.js"></script>
+<!-- jqGrid -->
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/grid.locale-en.js"></script>
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/jquery.jqGrid.min.js"></script>
+<!-- bootstrap-table -->
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/bootstrap-table.min.js"></script>
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/sweetalert.min.js"></script>
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/chosen.jquery.js"></script>
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/bootstrap-datepicker.js"></script>
+
+<!-- echarts -->
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/echarts.common.min.js"></script>
+
+
+
+
+<!--[if lte IE 9]>
+	<script src="/webjars/response/js/response.js"></script>
+	<script src="/webjars/html5shiv/3.7.3/js/html5shiv.js"></script>
+	<![endif]-->
+<script type="text/javascript" src="./风险偏好和限额管理系统1_files/jquery.json.js"></script>
+<script type="text/javascript"
+	src="./风险偏好和限额管理系统1_files/bootstrap-submenu.js"></script>
+<script type="text/javascript">
+		$(document).ready(function(){
+			//开启 bootstrap-submenu 功能
+			$('[data-submenu]').submenupicker();
+	    });  
+	</script>
+
+
+
+<script>
+	var FrameworkUiInterface ={
+		/*[- 属性============================================================================================= -]*/
+		webContextPath		: '',
+		csrf: {
+			enable         : 'false',
+			'X-CSRF-TOKEN' : ''
+		},
+		/*[- 方法============================================================================================= -]*/
+		/*[- 切换语言 -]*/
+		lang: function(lang){
+			$.ajax({
+				async: false,
+				url: '/system/i18n/changeLanguage?locale=' + lang,
+			    type: "GET"
+			}).done(function(json) {
+				
+			}).fail(function(xhr, status, errorThrown){
+				
+			}).always(function(xhr, status){
+				window.location.reload(true);
+			});
+		},
+		/*[- 当会话过期后，重新登录 -]*/
+		login: function(){
+			
+		},
+		/*[- 退出系统 -]*/
+		logout: function(){
+			window.location.href=FrameworkUiInterface.webContextPath + '/logout';
+		},
+		/*[- 显示当前页面信息 -]*/
+		showPageInfoWindow: function(){
+			$('#pageInfoModalDialog').modal();
+		},
+		/*[- 修改用户登录密码 -]*/
+		changePassword: function(){
+			
+		},
+		/*[- 切换角色 -]*/
+		changeRole: function(){
+			
+		}
+	};
+</script>
+
+</head>
+
+
+<body class="top-navigation pace-done">
+	<div class="pace  pace-inactive">
+		<div class="pace-progress" data-progress-text="100%"
+			data-progress="99" style="transform: translate3d(100%, 0px, 0px);">
+			<div class="pace-progress-inner"></div>
+		</div>
+		<div class="pace-activity"></div>
+	</div>
+	<div id="wrapper">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="row wrapper border-bottom white-bg page-heading">
+				<div class="col-lg-10">
+					<h2>信用风险限额/提交申请</h2>
+					<ol class="breadcrumb">
+						<li>发起人：admin</li>
+						<li>当前操作人：admin</li>
+					</ol>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="ibox">
+						<div class="ibox-content">
+							<div class="embed-responsive embed-responsive-16by9">
+								<iframe class="embed-responsive-item"
+									src="./风险偏好和限额管理系统1_files/index3.html"></iframe>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="ibox">
+						<div class="ibox-title">
+							<h5>审批意见历史</h5>
+							<div class="ibox-tools">
+								<a class="collapse-link"> <i class="fa fa-chevron-down"></i>
+								</a>
+							</div>
+						</div>
+						<div class="ibox-content">
+							<div id="vertical-timeline"
+								class="vertical-container dark-timeline">
+								<div class="vertical-timeline-block">
+									<div class="vertical-timeline-icon navy-bg">
+										<i class="fa fa-check"></i>
+									</div>
+
+									<div class="vertical-timeline-content">
+										<h3>提交申请</h3>
+										<span class="vertical-date"><small>赵小刚/2018-12-12
+												09:09:09</small> </span>
+									</div>
+								</div>
+								<div class="vertical-timeline-block">
+									<div class="vertical-timeline-icon navy-bg">
+										<i class="fa fa-check"></i>
+									</div>
+
+									<div class="vertical-timeline-content">
+										<h3>审核</h3>
+										<p>同意胜多负少东方闪电</p>
+										<span class="vertical-date"><small>赵小刚/2018-12-12
+												09:09:09</small> </span>
+									</div>
+								</div>
+								<div class="vertical-timeline-block">
+									<div class="vertical-timeline-icon navy-bg">
+										<i class="fa fa-close"></i>
+									</div>
+									<div class="vertical-timeline-content">
+										<h3>审批</h3>
+										<p>退回水电费等所发生的方式的</p>
+										<span class="vertical-date"><small>赵小刚/2018-12-12
+												09:09:09</small> </span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="ibox">
+						<div class="ibox-title">
+							<h5>审批意见</h5>
+						</div>
+						<div class="ibox-content">
+							<form id="formTask1" class="form-horizontal" method="post"
+								action="http://localhost:8080/system/flowable/task/completeTask.action">
+								<div class="form-group" id="data_4">
+
+									<div class="col-sm-11">
+										<input type="hidden" name="id" id="id"
+											value="52add8bf-d5e2-11e8-ace1-4a998735e4c3"> <input
+											type="hidden" name="path" id="path">
+										<textarea class="form-control message-input" name="comment"
+											placeholder="请输入审批意见"></textarea>
+									</div>
+								</div>
+								<div class="form-group" id="data_5">
+									<div class="col-sm-2"></div>
+									<div class="col-sm-2"></div>
+									<div class="col-sm-1"></div>
+									<div class="col-sm-2">
+										<button id="taskSubmit1" class="btn btn-primary ">
+											<i class="fa fa-check"></i>&nbsp;通过
+										</button>
+										<button id="taskBack" class="btn btn-primary ">
+											<i class="fa fa-times"></i>&nbsp;退回
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="pageInfoModalDialog" tabindex="-1"
+		role="dialog" aria-labelledby="pageInfoModalDialogLabel">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+					<h4 class="modal-title" id="pageInfoModalDialogLabel">当前页面基本信息</h4>
+				</div>
+				<table class="table table-condensed">
+					<tbody>
+						<tr>
+							<td>URI:</td>
+							<td>/system/flowable/task/deal_task.html</td>
+						</tr>
+						<tr>
+							<td>Thymeleaf Template:</td>
+							<td>classpath:/ui/gbicc/aicr/view/flowable/app_deal.htmlnull</td>
+						</tr>
+						<tr>
+							<td>Spring MVC Controller:</td>
+							<td>public org.springframework.web.servlet.ModelAndView
+								com.gbicc.aicr.system.flowable.controller.FlowableTaskController.dealTask(java.lang.String)
+								throws java.lang.Exception</td>
+						</tr>
+						<tr>
+							<td>Spring MVC Interceptors:</td>
+							<td>org.springframework.web.servlet.handler.WebRequestHandlerInterceptorAdapter<br>org.springframework.web.servlet.i18n.LocaleChangeInterceptor<br>org.springframework.web.servlet.theme.ThemeChangeInterceptor<br>org.wsp.framework.mvc.interceptor.ModelAndViewInterceptor<br>org.springframework.web.servlet.handler.ConversionServiceExposingInterceptor<br>org.springframework.web.servlet.resource.ResourceUrlProviderExposingInterceptor<br></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"
+						onclick="$(&#39;#pageInfoModalDialog&#39;).modal(&#39;hide&#39;);">确认</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script>
+$(function () {
+    $("#taskSubmit1").click(function () {	
+        $("#path").val('submit');
+        $("#comment").val('');
+        $("#formTask1").attr(action,"/system/flowable/task/completeTask.action");
+       	$("#formTask1").submit();
+       	window.close();
+       	
+    });
+    $("#taskBack").click(function () {	
+		$("#path").val('back');
+		$("#formTask1").attr(action,"/system/flowable/task/completeTask.action");
+		$("#formTask1").submit();
+		window.close();
+});
+})
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+dependencies {
+	compile(
+		project(":gbicc.irs.customer"),
+		project(":gbicc.irs.ec.rating"),
+        "org.wsp:org.wsp.framework.core:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa:${framework_version}",
+        "org.wsp:org.wsp.framework.mvc:${framework_version}",
+        "org.wsp:org.wsp.framework.flowable:${framework_version}",
+		//"javax.servlet:servlet-api:2.5"
+	)
+}

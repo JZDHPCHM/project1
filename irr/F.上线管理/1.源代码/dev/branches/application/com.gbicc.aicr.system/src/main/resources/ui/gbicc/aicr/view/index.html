@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+<style type="text/css">
+.btn.btn-sm.btn-white {
+	outline: none;
+}
+
+#page-wrapper {
+	margin-left: 0 !important;
+}
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="row wrapper border-bottom white-bg page-heading">
+				<div class="col-lg-10">
+					<ol class="breadcrumb">
+						<li><i class="fa fa-home"></i>&nbsp;首页&nbsp;&nbsp;</li>
+					</ol>
+				</div>
+			</div>
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>我的任务</h5>
+							</div>
+							<div class="ibox-content">
+								<div class="pull-right">
+									<div data-toggle="buttons" class="btn-group">
+										<label id="todo" class="btn btn-sm btn-white active">
+											<input type="radio" name="options"> 待办(0)
+										</label> <label id="done" class="btn btn-sm btn-white"> <input
+											type="radio" name="options"><span
+											class="font-bold text-navy"> 已办</span>
+										</label>
+									</div>
+								</div>
+								<div id="taskTable">
+									<table class="table" style="margin-bottom: 10px;">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>流程名称/任务名称</th>
+												<th>上一任务执行人</th>
+												<th>任务开始时间</th>
+												<th>任务截止时间</th>
+												<th>操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td colspan="6"><div class="pull-right">>>更多</div></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+				<!-- 	
+					<div class="col-lg-4">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>常用功能</h5>
+							</div>
+							<div class="ibox-content no-padding">
+
+								<table cellpadding="0"
+									style="margin-top: 30px; margin-bottom: 30px" cellspacing="0"
+									width="100%">
+									<tr>
+										<td align="center" valign="top" width="50%">
+											<div
+												onclick="window.location.href='/SystemManagement/systemmanger'"
+												onMouseOut="changeImgFun('quick_1','q_op_cx')"
+												onMouseMove="changeImgFun('quick_1','q_op_cx_active')"
+												style="border: 1px solid #FFFFFF; background: url(/image/quick_op_1.png); height: 115px; width: 133px; cursor: pointer;">
+												<div id="quick_1"
+													style="background: url(/image/q_op_cx.png); height: 58px; width: 60px; margin-top: 20px;"></div>
+												<div
+													style="border: 0px solid #FF0000; height: 20px; width: 100px; margin-top: 10px;">
+													<font id="quick_1_font" color='#FFFFFF'
+														style='font-family: Microsoft YaHei;' size='3px'>制度库</font>
+												</div>
+											</div>
+										</td>
+										<td align="center" valign="top" width="50%">
+											<div
+												onclick="window.location.href='riskIndex/riskPreMonitor.html'"
+												onMouseOut="changeImgFun('quick_2','q_op_bj')"
+												onMouseMove="changeImgFun('quick_2','q_op_bj_active')"
+												style="border: 1px solid #FFFFFF; background: url(/image/quick_op_2.png); height: 115px; width: 133px; cursor: pointer;">
+												<div id="quick_2"
+													style="background: url(/image/q_op_bj.png); height: 58px; width: 60px; margin-top: 20px;"></div>
+												<div
+													style="border: 0px solid #FF0000; height: 20px; width: 100px; margin-top: 10px;">
+													<font color='#FFFFFF' style='font-family: Microsoft YaHei;'
+														size='3px'>风险偏好监测</font>
+												</div>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td><br /></td>
+									</tr>
+									<tr>
+										<td align="center" valign="bottom" width="50%">
+											<div
+												onclick="window.location.href='/groupIndex/riskDutaIndexMonitor'"
+												onMouseOut="changeImgFun('quick_3','q_op_txl')"
+												onMouseMove="changeImgFun('quick_3','q_op_txl_active')"
+												style="border: 1px solid #FFFFFF; background: url(/image/quick_op_3.png); height: 115px; width: 133px; cursor: pointer;">
+												<div id="quick_3"
+													style="background: url(/image/q_op_txl.png); height: 58px; width: 60px; margin-top: 20px;"></div>
+												<div
+													style="border: 0px solid #FF0000; height: 20px; width: 100px; margin-top: 10px;">
+													<font color='#FFFFFF' style='font-family: Microsoft YaHei;'
+														size='3px'>信用风险限额监测</font>
+												</div>
+											</div>
+										</td>
+										<td align="center" valign="bottom" width="50%">
+											<div
+												onclick="window.location.href='/risk/riskPreference.html'"
+												onMouseOut="changeImgFun('quick_4','q_op_yh')"
+												onMouseMove="changeImgFun('quick_4','q_op_yh_active')"
+												style="border: 1px solid #FFFFFF; background: url(/image/quick_op_4.png); height: 115px; width: 133px; cursor: pointer;">
+												<div id="quick_4"
+													style="background: url(/image/q_op_yh.png); height: 58px; width: 60px; margin-top: 20px;"></div>
+												<div
+													style="border: 0px solid #FF0000; height: 20px; width: 100px; margin-top: 10px;">
+													<font color='#FFFFFF' style='font-family: Microsoft YaHei;'
+														size='3px'>偏好陈述书</font>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				
+				 -->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	$(document).ready(function() {
+		getTodoTaskContents();
+		getWosiRp();
+		distributionRP();
+		getWosiRL();
+		getWosiRT();
+		distributionRL1();
+		distributionRL2();
+		distributionRL3();
+		distributionRL4();
+		$("#rl").hide();
+		$("#rt").hide();
+	});
+	function fillTodoTaskContents(result, totCount) {
+
+		var tableHead = "<table class=\"table\" style=\"margin-bottom: 10px;\">                   "
+				+ "	<thead>                                                             "
+				+ "		<tr>                                                              "
+				+ "			<th>#</th>                                                      "
+				+ "			<th>流程名称/任务名称</th>                                              "
+				+ "			<th>发起人</th>                                                "
+				+ "			<th>任务开始时间</th>                                                 "
+				+ "			<th>任务截止时间</th>                                                 "
+				+ "			<th>操作</th>                                                     "
+				+ "		</tr>                                                             "
+				+ "	</thead> 															" + "	<tbody> ";
+		var tableFoot = "	                                                            "
+				+ "	<tr>                                                                "
+				+ "			<td colspan=\"6\"><div class=\"pull-right\"><a href=\"/system/flowable/task/todo.html\">>>更多</a></div></td>         "
+				+ "		</tr>                                                             "
+				+ "	</tbody>                                                            "
+				+ "</table>                                                             ";
+		var content = "";
+		var tot = 0;
+		$
+				.each(
+						result,
+						function(index) {
+							if (index < 5) {
+								tot = tot + 1;
+								content = content + "<tr>			" + "	<td>"
+										+ (index + 1) + "</td>	" + "	<td>"
+										+ result[index].PDEFNAME + "/"
+										+ result[index].TASKNAME + "</td>";
+								if (result[index].STARTUSER != null) {
+									content = content + "	<td>"
+											+ result[index].STARTUSER + "</td>";
+								} else {
+									content = content + "	<td>系统发起</td>";
+								}
+
+								content = content + "	<td>"
+										+ result[index].TASKCREATETIME
+										+ "</td>";
+								if (result[index].TASKDUEDATE != "null") {
+									content = content + "	<td>"
+											+ result[index].TASKDUEDATE
+											+ "</td>";
+								} else {
+									content = content + "	<td></td>";
+								}
+								content = content
+										+ "	<td><a href=\"/system/flowable/task/deal_task.html?taskId="
+										+ result[index].TASKID
+										+ "\" target=\"_blank\">处理</a></td>"
+										+ "</tr>";
+							}
+						});
+
+		for (var loop = 0; tot < 5 && loop < 5 - tot; loop++) {
+			content = content + "<tr><td colspan=6>&nbsp;</td></tr>";
+		}
+
+		$("#taskTable").html(tableHead + content + tableFoot);
+		var todoContent = "<input type=\"radio\"  name=\"options\"><span class=\"font-bold text-navy\"> 待办("
+				+ totCount + ")</span>";
+		$("#todo").html(todoContent);
+
+	};
+	function fillDoneTaskContents(result) {
+		var tableHead = "<table class=\"table\" style=\"margin-bottom: 10px;\">                   "
+				+ "	<thead>                                                             "
+				+ "		<tr>                                                              "
+				+ "			<th>#</th>                                                      "
+				+ "			<th>流程名称/任务名称</th>                                              "
+				+ "			<th>任务执行人</th>                                                "
+				+ "			<th>任务开始时间</th>                                                 "
+				+ "			<th>任务完成时间</th>                                                 "
+				+ "			<th>操作</th>                                                     "
+				+ "		</tr>                                                             "
+				+ "	</thead> 															" + "	<tbody> ";
+		var tableFoot = "	                                                            "
+				+ "	<tr>                                                                "
+				+ "			<td colspan=\"6\"><div class=\"pull-right\"><a href=\"/system/flowable/task/done.html\">>>更多</a></div></td>         "
+				+ "		</tr>                                                             "
+				+ "	</tbody>                                                            "
+				+ "</table>    ";
+		var content = "";
+		var tot = 0;
+		$
+				.each(
+						result,
+						function(index) {
+							if (index < 5) {
+								tot = tot + 1;
+								content = content
+										+ "<tr>			"
+										+ "	<td>"
+										+ (index + 1)
+										+ "</td>	"
+										+ "	<td>"
+										+ result[index].PDEFNAME
+										+ "/"
+										+ result[index].TASKNAME
+										+ "</td>"
+										+ "	<td>"
+										+ result[index].ASSIGNEE
+										+ "</td>"
+										+ "	<td>"
+										+ result[index].TASKSTARTTIME
+										+ "</td>"
+										+ "	<td>"
+										+ result[index].TASKENDTIME
+										+ "</td>"
+										+ "	<td><a href=\"/system/flowable/task/view_task.html?taskId="
+										+ result[index].TASKID
+										+ "\" target=\"_blank\">查看</a></td>" +
+
+										"</tr>";
+							}
+						});
+
+		for (var loop = 0; tot < 5 && loop < 5 - tot; loop++) {
+			content = content + "<tr><td colspan=6>&nbsp;</td></tr>";
+		}
+		$("#taskTable").html(tableHead + content + tableFoot);
+	}
+	function getTodoTaskContents() {
+		$.ajax({
+			url : "/system/flowable/task/todo",
+			type : "get",
+			dataType : "json",
+			cache : false,
+			success : function(response, textStatus) {
+				var rs = eval(response);
+				fillTodoTaskContents(rs.data, rs.data.length);
+			}
+		});
+	}
+	function getDoneTaskContents() {
+		$.ajax({
+			url : "/system/flowable/task/done",
+			type : "get",
+			dataType : "json",
+			cache : false,
+			success : function(response, textStatus) {
+				var rs = eval(response);
+				fillDoneTaskContents(rs.data);
+			}
+		});
+	}
+	$("#todo").click(function() {
+		getTodoTaskContents();
+
+	});
+	$("#done").click(function() {
+		getDoneTaskContents();
+	});
+	$("#btnRP").click(function() {
+		$("#btnRP").addClass('active');
+		$("#btnRL").removeClass('active');
+		$("#btnRt").removeClass('active');
+		$("#rp").show();
+		$("#rl").hide();
+		$("#rt").hide();
+
+	});
+	$("#btnRL").click(function() {
+		$("#btnRL").addClass('active');
+		$("#btnRP").removeClass('active');
+		$("#btnRt").removeClass('active');
+		$("#rl").show();
+		$("#rp").hide();
+		$("#rt").hide();
+
+	});
+	$("#btnRt").click(function() {
+		$("#btnRt").addClass('active');
+		$("#btnRP").removeClass('active');
+		$("#btnRL").removeClass('active');
+		$("#rt").show();
+		$("#rl").hide();
+		$("#rp").hide();
+
+	});
+
+	//基于准备好的dom，初始化echarts实例
+	var wosiRP = echarts.init(document.getElementById('wosiRP'));
+	function getWosiRp() {
+		$.ajax({
+			url : "/Question/count",
+			type : "post",
+			dataType : "json",
+			cache : false,
+			success : function(response, textStatus) {
+				var rs = eval(response);
+				var finishCounts = new Array();
+				var counts = new Array();
+				var j = 0;
+				for (var i = 0; i < rs.length; i++) {
+					counts[j] = rs[i].count;
+					finishCounts[j] = rs[i].finish;
+					j++
+				}
+				// 指定图表的配置项和数据
+				var optionRP = {
+					title : {
+						text : '风险偏好偏离/处置情况分析',
+						textStyle : {
+							fontSize : 15,
+							color : '#666'
+						},
+						x : 'center'
+					},
+					tooltip : {
+						trigger : 'axis'
+					},
+					legend : {
+						data : [ '偏离数量', '已处置数量' ],
+						bottom : 0
+					},
+					grid : {
+						left : '3%',
+						right : '4%',
+						bottom : '12%',
+						containLabel : true
+					},
+					xAxis : {
+						type : 'category',
+						boundaryGap : false,
+						data : [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+								'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ]
+					},
+					yAxis : {
+						type : 'value'
+					},
+					series : [ {
+						name : '偏离数量',
+						type : 'line',
+						symbol : 'circle',//拐点样式
+						symbolSize : 6,//拐点大小
+						//smooth:true,  //这个是把线变成曲线
+						data : counts
+					}, {
+						name : '已处置数量',
+						type : 'line',
+						symbol : 'circle',//拐点样式
+						symbolSize : 6,//拐点大小
+						//smooth:true,  //这个是把线变成曲线
+						data : finishCounts
+					} ]
+				};
+				//使用刚指定的配置项和数据显示图表。
+				wosiRP.setOption(optionRP);
+			}
+		});
+	}
+	var wosiRL = echarts.init(document.getElementById('wosiRL'));
+	function getWosiRL() {
+		$.ajax({
+			url : "/Question/warnCount",
+			type : "post",
+			dataType : "json",
+			data : {
+				"type" : "credit"
+			},
+			cache : false,
+			success : function(response, textStatus) {
+				var rs = eval(response);
+				var finishCounts = new Array();
+				var counts = new Array();
+				var finishWarnCounts = new Array();
+				var warnCounts = new Array();
+				var j = 0;
+				for (var i = 0; i < rs.length; i++) {
+					counts[j] = rs[i].count;
+					finishCounts[j] = rs[i].finish;
+					finishWarnCounts[j] = rs[i].finishWarnCount;
+					warnCounts[j] = rs[i].warnCount;
+					j++
+				}
+				//指定图表的配置项和数据
+				var optionRL = {
+					title : {
+						text : '信用风险限额超限、预警/处置情况分析',
+						textStyle : {
+							fontSize : 15,
+							color : '#666'
+						},
+						x : 'center'
+					},
+					tooltip : {
+						trigger : 'axis'
+					},
+					legend : {
+						data : [ '超限数量', '超限已处置数量', '预警数量', '预警已处置数量' ],
+						bottom : 0
+					},
+					grid : {
+						left : '3%',
+						right : '4%',
+						bottom : '12%',
+						containLabel : true
+					},
+					xAxis : {
+						type : 'category',
+						boundaryGap : false,
+						data : [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+								'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ]
+					},
+					yAxis : {
+						type : 'value'
+					},
+					series : [ {
+						name : '超限数量',
+						type : 'line',
+						symbol : 'circle',//拐点样式
+						symbolSize : 6,//拐点大小
+						//smooth:true,  //这个是把线变成曲线
+						data : counts
+					//data:[7, 6, 9, 4, 7, 2,3, 3, 2, 4, 1, 2]
+					}, {
+						name : '超限已处置数量',
+						type : 'line',
+						symbol : 'circle',//拐点样式
+						symbolSize : 6,//拐点大小
+						//smooth:true,  //这个是把线变成曲线
+						data : finishCounts
+					//data:[3, 4, 7, 4, 6, 2, 2, 1, 1, 3, 1, 1]
+					}, {
+						name : '预警数量',
+						type : 'line',
+						symbol : 'circle',//拐点样式
+						symbolSize : 6,//拐点大小
+						//smooth:true,  //这个是把线变成曲线
+						data : warnCounts
+					//data:[6, 4, 8, 5, 3,3, 3, 2, 4, 1, 2,1,5]
+					}, {
+						name : '预警已处置数量',
+						type : 'line',
+						symbol : 'circle',//拐点样式
+						symbolSize : 6,//拐点大小
+						//smooth:true,  //这个是把线变成曲线
+						data : finishWarnCounts
+					//data:[3, 4, 7, 4,  2, 2, 1, 1, 3, 1, 1,4]
+					} ]
+				};
+				//使用刚指定的配置项和数据显示图表。
+				wosiRL.setOption(optionRL);
+			}
+		});
+	}
+	var warning_distributionRP = echarts.init(document
+			.getElementById('warning_distributionRP'));
+
+	function distributionRP() {
+		$.ajax({
+			url : "/Question/countForType",
+			type : "post",
+			dataType : "json",
+			data : {
+				"type" : "rp"
+			},
+			cache : false,
+			success : function(response, textStatus) {
+				var rs = eval(response);
+				var finishCounts = new Array();
+				var counts = new Array();
+				var j = 0;
+				for (var i = 0; i < rs.length; i++) {
+					counts[j] = rs[i].count;
+					finishCounts[j] = rs[i].finish;
+					j++
+				}
+				var optionDRP = {
+					title : {
+					// text: '预警分布'
+					},
+					legend : { // 图例组件
+						show : true,
+						icon : 'rect', // 图例项的 icon。ECharts 提供的标记类型包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow'也可以通过 'image://url' 设置为图片，其中 url 为图片的链接，或者 dataURI。可以通过 'path://' 将图标设置为任意的矢量路径。         
+						orient : 'vertical', // 图例列表的布局朝向,'horizontal'为横向,''为纵向.
+						textStyle : { // 图例的公用文本样式。
+							fontSize : 15,
+							color : '#fff'
+						},
+						data : [ { // 图例的数据数组。数组项通常为一个字符串，每一项代表一个系列的 name（如果是饼图，也可以是饼图单个数据的 name）。图例组件会自动根据对应系列的图形标记（symbol）来绘制自己的颜色和标记，特殊字符串 ''（空字符串）或者 '\n'（换行字符串）用于图例的换行。
+							name : '男', // 图例项的名称，应等于某系列的name值（如果是饼图，也可以是饼图单个数据的 name）。                    
+							icon : 'rect' // 图例项的 icon。
+						} ],
+					},
+					radar : [ { // 雷达图坐标系组件，只适用于雷达图。            // 圆中心坐标，数组的第一项是横坐标，第二项是纵坐标。[ default: ['50%', '50%'] ]
+						// 圆的半径，数组的第一项是内半径，第二项是外半径。
+						startAngle : 90, // 坐标系起始角度，也就是第一个指示器轴的角度。[ default: 90 ]
+						name : { // (圆外的标签)雷达图每个指示器名称的配置项。
+							formatter : '{value}',
+							textStyle : {
+								fontSize : 12,
+								color : '#000'
+							}
+						},
+						nameGap : 3, // 指示器名称和指示器轴的距离。[ default: 15 ]
+						splitNumber : 3, // (这里是圆的环数)指示器轴的分割段数。[ default: 5 ]
+						shape : 'polygon', // 雷达图绘制类型，支持 'polygon'(多边形) 和 'circle'(圆)。[ default: 'polygon' ]
+						axisLine : { // (圆内的几条直线)坐标轴轴线相关设置
+							lineStyle : {
+								color : '#fff', // 坐标轴线线的颜色。
+								width : 1, // 坐标轴线线宽。
+								type : 'solid', // 坐标轴线线的类型。
+							}
+						},
+						indicator : [ { // 雷达图的指示器，用来指定雷达图中的多个变量（维度）,跟data中 value 对应
+							name : '信用风险', // 指示器名称   
+							max : 30
+						}, {
+							name : '声誉风险',
+							max : 30
+
+						}, {
+							name : '市场风险',
+							max : 30
+						}, {
+							name : '操作风险',
+							max : 30
+						}, {
+							name : '流动性风险',
+							max : 30
+						}, {
+							name : '银行账户利率风险',
+							max : 30
+						}, {
+							name : '信息科技风险',
+							max : 30
+						}, {
+							name : '总体风险',
+							max : 30
+						}, {
+							name : '合规风险',
+							max : 30
+						}, {
+							name : '规模',
+							max : 30
+						}, {
+							name : '收益',
+							max : 30
+						}, {
+							name : '结构',
+							max : 30
+						}, {
+							name : '资本',
+							max : 30
+						}, {
+							name : '集中度风险',
+							max : 30
+						}, {
+							name : '战略风险',
+							max : 30
+						}, {
+							name : 'MPA',
+							max : 30
+						} ]
+					} ],
+					series : [ {
+						name : '雷达图', // 系列名称,用于tooltip的显示，legend 的图例筛选，在 setOption 更新数据和配置项时用于指定对应的系列。
+						type : 'radar', // 系列类型: 雷达图
+						itemStyle : { // 折线拐点标志的样式。
+							normal : { // 普通状态时的样式
+								color : 'blue',
+								lineStyle : {
+									width : 1
+								},
+								opacity : 1
+							},
+							emphasis : { // 高亮时的样式
+								lineStyle : {
+									width : 5
+								},
+								opacity : 1
+							}
+						},
+						data : [ {
+							name : '已处置数',
+							value : finishCounts,
+							symbol : 'circle',
+							symbolSize : 5,
+							label : {
+								normal : {
+									show : true,
+									position : 'top',
+									distance : 5,
+									color : 'rgba(23,23,20,1)',
+									fontSize : 10,
+									formatter : function(params) {
+										return params.value;
+									}
+								}
+							}
+						}, {
+							name : '超限数',
+							value : counts,
+							symbol : 'circle',
+							symbolSize : 5,
+							label : {
+								normal : {
+									show : true,
+									position : 'top',
+									distance : 5,
+									color : 'rgba(238, 197, 102, 0.5)',
+									fontSize : 10,
+									formatter : function(params) {
+										return params.value;
+									}
+								}
+							}
+						} ]
+					}, ]
+				};
+
+				warning_distributionRP.setOption(optionDRP, true);
+			}
+		});
+	}
+	var warning_distributionRL1 = echarts.init(document
+			.getElementById('warning_distributionRL1'));
+
+	function distributionRL1() {
+		$.ajax({
+			url : "/Question/countForType",
+			type : "post",
+			dataType : "json",
+			data : {
+				"type" : "credit"
+			},
+			cache : false,
+			success : function(response, textStatus) {
+				var rs = eval(response);
+				var finishCounts = new Array();
+				var counts = new Array();
+				var j = 0;
+				for (var i = 0; i < rs.length; i++) {
+					counts[j] = rs[i].count;
+					finishCounts[j] = rs[i].finish;
+					j++
+				}
+				var optionDRL1 = {
+					title : {
+					// text: '预警分布'
+					},
+					legend : { // 图例组件
+						show : true,
+						icon : 'rect', // 图例项的 icon。ECharts 提供的标记类型包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow'也可以通过 'image://url' 设置为图片，其中 url 为图片的链接，或者 dataURI。可以通过 'path://' 将图标设置为任意的矢量路径。         
+						orient : 'vertical', // 图例列表的布局朝向,'horizontal'为横向,''为纵向.
+						textStyle : { // 图例的公用文本样式。
+							fontSize : 15,
+							color : '#fff'
+						},
+						data : [ { // 图例的数据数组。数组项通常为一个字符串，每一项代表一个系列的 name（如果是饼图，也可以是饼图单个数据的 name）。图例组件会自动根据对应系列的图形标记（symbol）来绘制自己的颜色和标记，特殊字符串 ''（空字符串）或者 '\n'（换行字符串）用于图例的换行。
+							name : '男', // 图例项的名称，应等于某系列的name值（如果是饼图，也可以是饼图单个数据的 name）。                    
+							icon : 'rect' // 图例项的 icon。
+						} ],
+					},
+					radar : [ { // 雷达图坐标系组件，只适用于雷达图。            // 圆中心坐标，数组的第一项是横坐标，第二项是纵坐标。[ default: ['50%', '50%'] ]
+						// 圆的半径，数组的第一项是内半径，第二项是外半径。
+						startAngle : 90, // 坐标系起始角度，也就是第一个指示器轴的角度。[ default: 90 ]
+						name : { // (圆外的标签)雷达图每个指示器名称的配置项。
+							formatter : '{value}',
+							textStyle : {
+								fontSize : 12,
+								color : '#000'
+							}
+						},
+						nameGap : 3, // 指示器名称和指示器轴的距离。[ default: 15 ]
+						splitNumber : 3, // (这里是圆的环数)指示器轴的分割段数。[ default: 5 ]
+						shape : 'polygon', // 雷达图绘制类型，支持 'polygon'(多边形) 和 'circle'(圆)。[ default: 'polygon' ]
+						axisLine : { // (圆内的几条直线)坐标轴轴线相关设置
+							lineStyle : {
+								color : '#fff', // 坐标轴线线的颜色。
+								width : 1, // 坐标轴线线宽。
+								type : 'solid', // 坐标轴线线的类型。
+							}
+						},
+						indicator : [ { // 雷达图的指示器，用来指定雷达图中的多个变量（维度）,跟data中 value 对应
+							name : '信用风险', // 指示器名称   
+							max : 30
+						}, {
+							name : '声誉风险',
+							max : 30
+
+						}, {
+							name : '市场风险',
+							max : 30
+						}, {
+							name : '操作风险',
+							max : 30
+						}, {
+							name : '流动性风险',
+							max : 30
+						}, {
+							name : '银行账户利率风险',
+							max : 30
+						}, {
+							name : '信息科技风险',
+							max : 30
+						}, {
+							name : '总体风险',
+							max : 30
+						}, {
+							name : '合规风险',
+							max : 30
+						}, {
+							name : '规模',
+							max : 30
+						}, {
+							name : '收益',
+							max : 30
+						}, {
+							name : '结构',
+							max : 30
+						}, {
+							name : '资本',
+							max : 30
+						}, {
+							name : '集中度风险',
+							max : 30
+						}, {
+							name : '战略风险',
+							max : 30
+						}, {
+							name : 'MPA',
+							max : 30
+						} ]
+					} ],
+					series : [ {
+						name : '雷达图', // 系列名称,用于tooltip的显示，legend 的图例筛选，在 setOption 更新数据和配置项时用于指定对应的系列。
+						type : 'radar', // 系列类型: 雷达图
+						itemStyle : { // 折线拐点标志的样式。
+							normal : { // 普通状态时的样式
+								color : 'blue',
+								lineStyle : {
+									width : 1
+								},
+								opacity : 1
+							},
+							emphasis : { // 高亮时的样式
+								lineStyle : {
+									width : 5
+								},
+								opacity : 1
+							}
+						},
+						data : [ {
+							name : '已处置数',
+							value : finishCounts,
+							symbol : 'circle',
+							symbolSize : 5,
+							label : {
+								normal : {
+									show : true,
+									position : 'top',
+									distance : 5,
+									color : 'rgba(23,23,20,1)',
+									fontSize : 10,
+									formatter : function(params) {
+										return params.value;
+									}
+								}
+							}
+						}, {
+							name : '超限数',
+							value : counts,
+							symbol : 'circle',
+							symbolSize : 5,
+							label : {
+								normal : {
+									show : true,
+									position : 'top',
+									distance : 5,
+									color : 'rgba(238, 197, 102, 0.5)',
+									fontSize : 10,
+									formatter : function(params) {
+										return params.value;
+									}
+								}
+							}
+						} ]
+					}, ]
+				};
+
+				warning_distributionRL1.setOption(optionDRL1, true);
+			}
+		});
+	}
+	var warning_distributionRL2 = echarts.init(document
+			.getElementById('warning_distributionRL2'));
+
+	function distributionRL2() {
+		$.ajax({
+			url : "/Question/countForType",
+			type : "post",
+			dataType : "json",
+			data : {
+				"type" : "creditWarn"
+			},
+			cache : false,
+			success : function(response, textStatus) {
+				var rs = eval(response);
+				var finishCounts = new Array();
+				var counts = new Array();
+				var j = 0;
+				for (var i = 0; i < rs.length; i++) {
+					counts[j] = rs[i].count;
+					finishCounts[j] = rs[i].finish;
+					j++
+				}
+				var optionDRL2 = {
+					title : {
+					// text: '预警分布'
+					},
+					legend : { // 图例组件
+						show : true,
+						icon : 'rect', // 图例项的 icon。ECharts 提供的标记类型包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow'也可以通过 'image://url' 设置为图片，其中 url 为图片的链接，或者 dataURI。可以通过 'path://' 将图标设置为任意的矢量路径。         
+						orient : 'vertical', // 图例列表的布局朝向,'horizontal'为横向,''为纵向.
+						textStyle : { // 图例的公用文本样式。
+							fontSize : 15,
+							color : '#fff'
+						},
+						data : [ { // 图例的数据数组。数组项通常为一个字符串，每一项代表一个系列的 name（如果是饼图，也可以是饼图单个数据的 name）。图例组件会自动根据对应系列的图形标记（symbol）来绘制自己的颜色和标记，特殊字符串 ''（空字符串）或者 '\n'（换行字符串）用于图例的换行。
+							name : '男', // 图例项的名称，应等于某系列的name值（如果是饼图，也可以是饼图单个数据的 name）。                    
+							icon : 'rect' // 图例项的 icon。
+						} ],
+					},
+					radar : [ { // 雷达图坐标系组件，只适用于雷达图。            // 圆中心坐标，数组的第一项是横坐标，第二项是纵坐标。[ default: ['50%', '50%'] ]
+						// 圆的半径，数组的第一项是内半径，第二项是外半径。
+						startAngle : 90, // 坐标系起始角度，也就是第一个指示器轴的角度。[ default: 90 ]
+						name : { // (圆外的标签)雷达图每个指示器名称的配置项。
+							formatter : '{value}',
+							textStyle : {
+								fontSize : 12,
+								color : '#000'
+							}
+						},
+						nameGap : 3, // 指示器名称和指示器轴的距离。[ default: 15 ]
+						splitNumber : 3, // (这里是圆的环数)指示器轴的分割段数。[ default: 5 ]
+						shape : 'polygon', // 雷达图绘制类型，支持 'polygon'(多边形) 和 'circle'(圆)。[ default: 'polygon' ]
+						axisLine : { // (圆内的几条直线)坐标轴轴线相关设置
+							lineStyle : {
+								color : '#fff', // 坐标轴线线的颜色。
+								width : 1, // 坐标轴线线宽。
+								type : 'solid', // 坐标轴线线的类型。
+							}
+						},
+						indicator : [ { // 雷达图的指示器，用来指定雷达图中的多个变量（维度）,跟data中 value 对应
+							name : '信用风险', // 指示器名称   
+							max : 30
+						}, {
+							name : '声誉风险',
+							max : 30
+
+						}, {
+							name : '市场风险',
+							max : 30
+						}, {
+							name : '操作风险',
+							max : 30
+						}, {
+							name : '流动性风险',
+							max : 30
+						}, {
+							name : '银行账户利率风险',
+							max : 30
+						}, {
+							name : '信息科技风险',
+							max : 30
+						}, {
+							name : '总体风险',
+							max : 30
+						}, {
+							name : '合规风险',
+							max : 30
+						}, {
+							name : '规模',
+							max : 30
+						}, {
+							name : '收益',
+							max : 30
+						}, {
+							name : '结构',
+							max : 30
+						}, {
+							name : '资本',
+							max : 30
+						}, {
+							name : '集中度风险',
+							max : 30
+						}, {
+							name : '战略风险',
+							max : 30
+						}, {
+							name : 'MPA',
+							max : 30
+						} ]
+					} ],
+					series : [ {
+						name : '雷达图', // 系列名称,用于tooltip的显示，legend 的图例筛选，在 setOption 更新数据和配置项时用于指定对应的系列。
+						type : 'radar', // 系列类型: 雷达图
+						itemStyle : { // 折线拐点标志的样式。
+							normal : { // 普通状态时的样式
+								color : 'blue',
+								lineStyle : {
+									width : 1
+								},
+								opacity : 1
+							},
+							emphasis : { // 高亮时的样式
+								lineStyle : {
+									width : 5
+								},
+								opacity : 1
+							}
+						},
+						data : [ {
+							name : '已处置数',
+							value : finishCounts,
+							symbol : 'circle',
+							symbolSize : 5,
+							label : {
+								normal : {
+									show : true,
+									position : 'top',
+									distance : 5,
+									color : 'rgba(23,23,20,1)',
+									fontSize : 10,
+									formatter : function(params) {
+										return params.value;
+									}
+								}
+							}
+						}, {
+							name : '预警数',
+							value : counts,
+							symbol : 'circle',
+							symbolSize : 5,
+							label : {
+								normal : {
+									show : true,
+									position : 'top',
+									distance : 5,
+									color : 'rgba(238, 197, 102, 0.5)',
+									fontSize : 10,
+									formatter : function(params) {
+										return params.value;
+									}
+								}
+							}
+						} ]
+					}, ]
+				};
+
+				warning_distributionRL2.setOption(optionDRL2, true);
+			}
+		});
+	}
+	var wosiRT = echarts.init(document.getElementById('wosiRt'));
+	function getWosiRT() {
+		$.ajax({
+			url : "/Question/warnCount",
+			type : "post",
+			dataType : "json",
+			data : {
+				"type" : "fame"
+			},
+			cache : false,
+			success : function(response, textStatus) {
+				var rs = eval(response);
+				var finishCounts = new Array();
+				var counts = new Array();
+				var finishWarnCounts = new Array();
+				var warnCounts = new Array();
+				var j = 0;
+				for (var i = 0; i < rs.length; i++) {
+					counts[j] = rs[i].count;
+					finishCounts[j] = rs[i].finish;
+					finishWarnCounts[j] = rs[i].finishWarnCount;
+					warnCounts[j] = rs[i].warnCount;
+					j++
+				}
+				//指定图表的配置项和数据
+				var optionRT = {
+					title : {
+						text : '声誉风险限额超限、预警/处置情况分析',
+						textStyle : {
+							fontSize : 15,
+							color : '#666'
+						},
+						x : 'center'
+					},
+					tooltip : {
+						trigger : 'axis'
+					},
+					legend : {
+						data : [ '超限数量', '超限已处置数量', '预警数量', '预警已处置数量' ],
+						bottom : 0
+					},
+					grid : {
+						left : '3%',
+						right : '4%',
+						bottom : '12%',
+						containLabel : true
+					},
+					xAxis : {
+						type : 'category',
+						boundaryGap : false,
+						data : [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+								'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ]
+					},
+					yAxis : {
+						type : 'value'
+					},
+					series : [ {
+						name : '超限数量',
+						type : 'line',
+						symbol : 'circle',//拐点样式
+						symbolSize : 6,//拐点大小
+						//smooth:true,  //这个是把线变成曲线
+						data : counts
+					//data:[7, 6, 9, 4, 7, 2,3, 3, 2, 4, 1, 2]
+					}, {
+						name : '超限已处置数量',
+						type : 'line',
+						symbol : 'circle',//拐点样式
+						symbolSize : 6,//拐点大小
+						//smooth:true,  //这个是把线变成曲线
+						data : finishCounts
+					//data:[3, 4, 7, 4, 6, 2, 2, 1, 1, 3, 1, 1]
+					}, {
+						name : '预警数量',
+						type : 'line',
+						symbol : 'circle',//拐点样式
+						symbolSize : 6,//拐点大小
+						//smooth:true,  //这个是把线变成曲线
+						data : warnCounts
+					//data:[6, 4, 8, 5, 3,3, 3, 2, 4, 1, 2,1,5]
+					}, {
+						name : '预警已处置数量',
+						type : 'line',
+						symbol : 'circle',//拐点样式
+						symbolSize : 6,//拐点大小
+						//smooth:true,  //这个是把线变成曲线
+						data : finishWarnCounts
+					//data:[3, 4, 7, 4,  2, 2, 1, 1, 3, 1, 1,4]
+					} ]
+				};
+				//使用刚指定的配置项和数据显示图表。
+				wosiRT.setOption(optionRT);
+			}
+		});
+	}
+	var warning_distributionRL3 = echarts.init(document
+			.getElementById('warning_distributionRL3'));
+	function distributionRL3() {
+		$.ajax({
+			url : "/Question/countForType",
+			type : "post",
+			dataType : "json",
+			data : {
+				"type" : "fame"
+			},
+			cache : false,
+			success : function(response, textStatus) {
+				var rs = eval(response);
+				var finishCounts = new Array();
+				var counts = new Array();
+				var j = 0;
+				for (var i = 0; i < rs.length; i++) {
+					counts[j] = rs[i].count;
+					finishCounts[j] = rs[i].finish;
+					j++
+				}
+				var optionDRL3 = {
+					title : {
+					// text: '预警分布'
+					},
+					legend : { // 图例组件
+						show : true,
+						icon : 'rect', // 图例项的 icon。ECharts 提供的标记类型包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow'也可以通过 'image://url' 设置为图片，其中 url 为图片的链接，或者 dataURI。可以通过 'path://' 将图标设置为任意的矢量路径。         
+						orient : 'vertical', // 图例列表的布局朝向,'horizontal'为横向,''为纵向.
+						textStyle : { // 图例的公用文本样式。
+							fontSize : 15,
+							color : '#fff'
+						},
+						data : [ { // 图例的数据数组。数组项通常为一个字符串，每一项代表一个系列的 name（如果是饼图，也可以是饼图单个数据的 name）。图例组件会自动根据对应系列的图形标记（symbol）来绘制自己的颜色和标记，特殊字符串 ''（空字符串）或者 '\n'（换行字符串）用于图例的换行。
+							name : '男', // 图例项的名称，应等于某系列的name值（如果是饼图，也可以是饼图单个数据的 name）。                    
+							icon : 'rect' // 图例项的 icon。
+						} ],
+					},
+					radar : [ { // 雷达图坐标系组件，只适用于雷达图。            // 圆中心坐标，数组的第一项是横坐标，第二项是纵坐标。[ default: ['50%', '50%'] ]
+						// 圆的半径，数组的第一项是内半径，第二项是外半径。
+						startAngle : 90, // 坐标系起始角度，也就是第一个指示器轴的角度。[ default: 90 ]
+						name : { // (圆外的标签)雷达图每个指示器名称的配置项。
+							formatter : '{value}',
+							textStyle : {
+								fontSize : 12,
+								color : '#000'
+							}
+						},
+						nameGap : 3, // 指示器名称和指示器轴的距离。[ default: 15 ]
+						splitNumber : 3, // (这里是圆的环数)指示器轴的分割段数。[ default: 5 ]
+						shape : 'polygon', // 雷达图绘制类型，支持 'polygon'(多边形) 和 'circle'(圆)。[ default: 'polygon' ]
+						axisLine : { // (圆内的几条直线)坐标轴轴线相关设置
+							lineStyle : {
+								color : '#fff', // 坐标轴线线的颜色。
+								width : 1, // 坐标轴线线宽。
+								type : 'solid', // 坐标轴线线的类型。
+							}
+						},
+						indicator : [ { // 雷达图的指示器，用来指定雷达图中的多个变量（维度）,跟data中 value 对应
+							name : '信用风险', // 指示器名称   
+							max : 30
+						}, {
+							name : '声誉风险',
+							max : 30
+
+						}, {
+							name : '市场风险',
+							max : 30
+						}, {
+							name : '操作风险',
+							max : 30
+						}, {
+							name : '流动性风险',
+							max : 30
+						}, {
+							name : '银行账户利率风险',
+							max : 30
+						}, {
+							name : '信息科技风险',
+							max : 30
+						}, {
+							name : '总体风险',
+							max : 30
+						}, {
+							name : '合规风险',
+							max : 30
+						}, {
+							name : '规模',
+							max : 30
+						}, {
+							name : '收益',
+							max : 30
+						}, {
+							name : '结构',
+							max : 30
+						}, {
+							name : '资本',
+							max : 30
+						}, {
+							name : '集中度风险',
+							max : 30
+						}, {
+							name : '战略风险',
+							max : 30
+						}, {
+							name : 'MPA',
+							max : 30
+						} ]
+					} ],
+					series : [ {
+						name : '雷达图', // 系列名称,用于tooltip的显示，legend 的图例筛选，在 setOption 更新数据和配置项时用于指定对应的系列。
+						type : 'radar', // 系列类型: 雷达图
+						itemStyle : { // 折线拐点标志的样式。
+							normal : { // 普通状态时的样式
+								color : 'blue',
+								lineStyle : {
+									width : 1
+								},
+								opacity : 1
+							},
+							emphasis : { // 高亮时的样式
+								lineStyle : {
+									width : 5
+								},
+								opacity : 1
+							}
+						},
+						data : [ {
+							name : '已处置数',
+							value : finishCounts,
+							symbol : 'circle',
+							symbolSize : 5,
+							label : {
+								normal : {
+									show : true,
+									position : 'top',
+									distance : 5,
+									color : 'rgba(23,23,20,1)',
+									fontSize : 10,
+									formatter : function(params) {
+										return params.value;
+									}
+								}
+							}
+						}, {
+							name : '超限数',
+							value : counts,
+							symbol : 'circle',
+							symbolSize : 5,
+							label : {
+								normal : {
+									show : true,
+									position : 'top',
+									distance : 5,
+									color : 'rgba(238, 197, 102, 0.5)',
+									fontSize : 10,
+									formatter : function(params) {
+										return params.value;
+									}
+								}
+							}
+						} ]
+					}, ]
+				};
+
+				warning_distributionRL3.setOption(optionDRL3, true);
+			}
+		});
+	}
+	var warning_distributionRL4 = echarts.init(document
+			.getElementById('warning_distributionRL4'));
+	function distributionRL4() {
+		$.ajax({
+			url : "/Question/countForType",
+			type : "post",
+			dataType : "json",
+			data : {
+				"type" : "fameWarn"
+			},
+			cache : false,
+			success : function(response, textStatus) {
+				var rs = eval(response);
+				var finishCounts = new Array();
+				var counts = new Array();
+				var j = 0;
+				for (var i = 0; i < rs.length; i++) {
+					counts[j] = rs[i].count;
+					finishCounts[j] = rs[i].finish;
+					j++
+				}
+				var optionDRL4 = {
+					title : {
+					// text: '预警分布'
+					},
+					legend : { // 图例组件
+						show : true,
+						icon : 'rect', // 图例项的 icon。ECharts 提供的标记类型包括 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow'也可以通过 'image://url' 设置为图片，其中 url 为图片的链接，或者 dataURI。可以通过 'path://' 将图标设置为任意的矢量路径。         
+						orient : 'vertical', // 图例列表的布局朝向,'horizontal'为横向,''为纵向.
+						textStyle : { // 图例的公用文本样式。
+							fontSize : 15,
+							color : '#fff'
+						},
+						data : [ { // 图例的数据数组。数组项通常为一个字符串，每一项代表一个系列的 name（如果是饼图，也可以是饼图单个数据的 name）。图例组件会自动根据对应系列的图形标记（symbol）来绘制自己的颜色和标记，特殊字符串 ''（空字符串）或者 '\n'（换行字符串）用于图例的换行。
+							name : '男', // 图例项的名称，应等于某系列的name值（如果是饼图，也可以是饼图单个数据的 name）。                    
+							icon : 'rect' // 图例项的 icon。
+						} ],
+					},
+					radar : [ { // 雷达图坐标系组件，只适用于雷达图。            // 圆中心坐标，数组的第一项是横坐标，第二项是纵坐标。[ default: ['50%', '50%'] ]
+						// 圆的半径，数组的第一项是内半径，第二项是外半径。
+						startAngle : 90, // 坐标系起始角度，也就是第一个指示器轴的角度。[ default: 90 ]
+						name : { // (圆外的标签)雷达图每个指示器名称的配置项。
+							formatter : '{value}',
+							textStyle : {
+								fontSize : 12,
+								color : '#000'
+							}
+						},
+						nameGap : 3, // 指示器名称和指示器轴的距离。[ default: 15 ]
+						splitNumber : 3, // (这里是圆的环数)指示器轴的分割段数。[ default: 5 ]
+						shape : 'polygon', // 雷达图绘制类型，支持 'polygon'(多边形) 和 'circle'(圆)。[ default: 'polygon' ]
+						axisLine : { // (圆内的几条直线)坐标轴轴线相关设置
+							lineStyle : {
+								color : '#fff', // 坐标轴线线的颜色。
+								width : 1, // 坐标轴线线宽。
+								type : 'solid', // 坐标轴线线的类型。
+							}
+						},
+						indicator : [ { // 雷达图的指示器，用来指定雷达图中的多个变量（维度）,跟data中 value 对应
+							name : '信用风险', // 指示器名称   
+							max : 30
+						}, {
+							name : '声誉风险',
+							max : 30
+
+						}, {
+							name : '市场风险',
+							max : 30
+						}, {
+							name : '操作风险',
+							max : 30
+						}, {
+							name : '流动性风险',
+							max : 30
+						}, {
+							name : '银行账户利率风险',
+							max : 30
+						}, {
+							name : '信息科技风险',
+							max : 30
+						}, {
+							name : '总体风险',
+							max : 30
+						}, {
+							name : '合规风险',
+							max : 30
+						}, {
+							name : '规模',
+							max : 30
+						}, {
+							name : '收益',
+							max : 30
+						}, {
+							name : '结构',
+							max : 30
+						}, {
+							name : '资本',
+							max : 30
+						}, {
+							name : '集中度风险',
+							max : 30
+						}, {
+							name : '战略风险',
+							max : 30
+						}, {
+							name : 'MPA',
+							max : 30
+						} ]
+					} ],
+					series : [ {
+						name : '雷达图', // 系列名称,用于tooltip的显示，legend 的图例筛选，在 setOption 更新数据和配置项时用于指定对应的系列。
+						type : 'radar', // 系列类型: 雷达图
+						itemStyle : { // 折线拐点标志的样式。
+							normal : { // 普通状态时的样式
+								color : 'blue',
+								lineStyle : {
+									width : 1
+								},
+								opacity : 1
+							},
+							emphasis : { // 高亮时的样式
+								lineStyle : {
+									width : 5
+								},
+								opacity : 1
+							}
+						},
+						data : [ {
+							name : '已处置数',
+							value : finishCounts,
+							symbol : 'circle',
+							symbolSize : 5,
+							label : {
+								normal : {
+									show : true,
+									position : 'top',
+									distance : 5,
+									color : 'rgba(23,23,20,1)',
+									fontSize : 10,
+									formatter : function(params) {
+										return params.value;
+									}
+								}
+							}
+						}, {
+							name : '预警数',
+							value : counts,
+							symbol : 'circle',
+							symbolSize : 5,
+							label : {
+								normal : {
+									show : true,
+									position : 'top',
+									distance : 5,
+									color : 'rgba(238, 197, 102, 0.5)',
+									fontSize : 10,
+									formatter : function(params) {
+										return params.value;
+									}
+								}
+							}
+						} ]
+					}, ]
+				};
+				warning_distributionRL4.setOption(optionDRL4, true);
+			}
+		});
+	}
+</script>
+</html>

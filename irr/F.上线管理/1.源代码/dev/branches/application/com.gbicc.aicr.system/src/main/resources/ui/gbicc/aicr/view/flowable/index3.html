@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html th:replace="template/simple_inspinia/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+    <style type="text/css"> 
+    	.navbar-brand{
+    		padding-top: 12px !important;
+    	}
+    	.modal-footer{
+    		text-align: center;
+    	}
+		.content-form{
+			padding-top: 15px;
+		}
+		.chosen-container-multi{
+			width: 96% !important;
+		}
+		.wrapper .wrapper-content{
+			left: 0;
+		}
+		.ibox-tools{
+			float: right;
+		}		
+    </style>
+
+<body class="top-navigation">
+	<div id="wrapper">
+		<div id="page-wrapper" class="gray-bg"> 
+			
+			<!-- 页面主体内容start -->
+			<div class="wrapper wrapper-content"> 
+				<!-- 查询区域面板start -->
+				<!-- 查询区域面板end -->
+				
+				<!-- 表格区域面板start -->
+				<div class="row">
+				
+					<div class="ibox ">
+						
+                        <div class="ibox-content content-form">
+							<form id="Warn_Warning_Form" class="form-horizontal">
+								<div class="form-group" id="data_4">
+									<label class="col-sm-1 control-label">偏好代码:</label>
+									<div class="col-sm-2">
+										<input id="queryCode" name="queryCode" disabled="disabled" type="text" class="form-control">
+									</div>
+									<label class="col-sm-1 control-label">偏好名称:</label>
+									<div class="col-sm-2">
+										<input id="queryName" name="queryName" disabled="disabled" type="text" class="form-control">
+									</div>
+									<label class="col-sm-1 control-label">偏好年度:</label>
+									<div class="col-sm-2">
+										<input id="queryYear" name="queryYear" disabled="disabled" type="text" class="form-control">
+									</div>
+									<label class="col-sm-1 control-label">偏好类型:</label>
+									<div class="col-sm-2">
+										<input id="queryType" name="queryType" disabled="disabled" type="text" class="form-control">
+									</div>
+								</div>
+								<div class="form-group" id = "query_group2">
+									<label class="col-sm-1 control-label">版本号:</label>
+									<div class="col-sm-2">
+										<input id="queryVersion" name="queryVersion" disabled="disabled" type="text" class="form-control">
+									</div>
+									<label class="col-sm-1 control-label">总体说明:</label>
+									<div class="col-sm-2">
+										<input id="queryRemark" name="queryRemark" disabled="disabled" type="text" class="form-control">
+									</div>
+									<label class="col-sm-1 control-label">创建人:</label>
+									<div class="col-sm-2">
+										<input id="queryCreateUser" name="queryCreateUser"  disabled="disabled" type="text" class="form-control">
+									</div>
+									<label class="col-sm-1 control-label">更新人人:</label>
+									<div class="col-sm-2">
+										<input id="queryUpdateUser" name="queryUpdateUser"  disabled="disabled" type="text" class="form-control">
+									</div>
+								</div>
+								<div class="form-group" id="data_5">
+									<label class="col-sm-1 control-label">计划开始日期:</label>
+									<div class="col-sm-2">
+										<input type="text" class="input-sm form-control" disabled="disabled" id="startDate1" name="startDate1" />
+									</div>
+									<label class="col-sm-1 control-label">计划结束日期:</label>
+									<div class="col-sm-2">
+										<input type="text" class="input-sm form-control" disabled="disabled" id="endDate1" name="endDate1" />
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="ibox-content">
+
+								<div class="wrapper wrapper-content col-lg-12" style="padding: 10px 0;">
+									<div class="row">
+										<div class="col-lg-12" style="width: 1357px;">
+											<div class="ibox-content">
+
+												<div class="jqGrid_wrapper jqGrid_one">
+													<table id="table_list_1"></table>
+													<div id="pager_list_1"></div>
+												</div>
+
+												<!-- <div class="jqGrid_wrapper">
+													<table id="table_list_2"></table>
+													<div id="pager_list_2"></div>
+												</div> -->
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+					</div>
+				</div>
+				<!-- 表格区域面板end -->
+				
+			</div>
+			<!-- 页面主体内容end -->
+		</div>
+	</div>
+</body> 
+<!-- Mainly scripts -->
+<script src="inspinia/js/jquery-3.1.1.min.js"></script>
+<script src="inspinia/js/bootstrap.min.js"></script>
+<script src="inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="inspinia/js/inspinia.js"></script>
+<script src="inspinia/js/plugins/pace/pace.min.js"></script>
+
+<!-- Peity -->
+<script src="inspinia/js/plugins/peity/jquery.peity.min.js"></script>
+
+<!-- jqGrid -->
+<script src="inspinia/js/plugins/jqGrid/i18n/grid.locale-en.js"></script>
+<script src="inspinia/js/plugins/jqGrid/jquery.jqGrid.min.js"></script>
+
+<script src="inspinia/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<script src="inspinia/js/plugins/ladda/spin.min.js"></script>
+<script src="inspinia/js/plugins/ladda/ladda.min.js"></script>
+<script src="inspinia/js/plugins/ladda/ladda.jquery.min.js"></script>
+
+<script src="inspinia/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<script src="inspinia/js/plugins/chosen/chosen.jquery.js"></script>
+<script src="inspinia/js/plugins/datapicker/bootstrap-datepicker.js"></script> 
+<script>
+        $(document).ready(function () { 
+            //jqGrid表格静态数据
+            var mydata = [
+                {sequence: "1", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "2", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "3", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "4", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "5", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "6", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "7", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "8", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "9", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "10", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "11", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "12", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "13", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "14", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "15", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "16", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "17", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "18", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "19", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "20", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "21", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} ,
+                {sequence: "22", system_code: "S0001", system_classification: "rule1", system_name: "", publish_dept: "风险管理部", version: "V1.1", publish_date: "2018-08-12", effect_date: "2018-08-12", state: "生效", system_download: "", system_instructions: ""} 
+            ];
+
+            // 制度列表
+            $("#table_list_1").jqGrid({
+            	recordtext: "显示{0} - {1}条，共{2} 条", 
+                data: mydata,  
+                pgtext : "第 {0}页， 共{1}页",
+				mtype : "post",
+		        datatype: "local",
+		        height: 250,
+		        autowidth: true,
+		        shrinkToFit: true,
+		        prmNames: {
+		            page: "page"   // 表示请求页码的参数名称
+		        }, 
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                colModel: [
+                    {label :"序号",name: 'sequence', index: 'sequence', width: 60, sorttype: "int"},
+                    {label :"指标代码",name: 'system_code', index: 'system_code', width: 80, sorttype: "text"},
+                    {label :"指标分类",name: 'system_classification', index: 'system_classification', width: 100},
+                    {label :"指标名称",name: 'system_name', index: 'system_name', width: 80, sorttype: "text"},
+                    {label :"发布部门",name: 'publish_dept', index: 'publish_dept', width: 80, sorttype: "float"},
+                    {label :"版本号",name: 'version', index: 'version', width: 80, sorttype: "float"},
+                    {label :"发布日期",name: 'publish_date', index: 'publish_date', width: 80, sortable: "float"},
+                    {label :"上传日期",name: 'effect_date', index: 'effect_date', width: 80, sorttype: "float"},
+                    {label :"状态",name: 'state', index: 'state', width: 80, sorttype: "float"},
+                    {label :"说明",name: 'system_instructions', index: 'system_instructions', width: 100, sorttype: "float"}
+                ],
+                pager: "#pager_list_1",
+                viewrecords: true,
+                caption: "指标列表",
+                hidegrid: false
+            });
+
+            // 制度历史列表
+            $("#table_list_2").jqGrid({
+                recordtext: "显示{0} - {1}条，共{2} 条",  
+                data: mydata,  
+                pgtext : "第 {0}页， 共{1}页",
+				mtype : "post",
+		        datatype: "local",
+		        height: 450,
+		        autowidth: true,
+		        shrinkToFit: true,
+		        prmNames: {
+		            page: "page"   // 表示请求页码的参数名称
+		        }, 
+                rowNum: 20,
+                rowList: [10, 20, 30],
+                colNames: ['序号', '制度代码', '制度分类', '制度名称', '发布部门', '版本号', '发布日期', '生效日期', '状态', '作废日期', '作废说明'],
+                colModel:[
+                    {name: 'sequence', index: 'sequence', width: 60, sorttype: "int"},
+                    {name: 'system_code', index: 'system_code', width: 80, sorttype: "text"},
+                    {name: 'system_classification', index: 'system_classification', width: 100},
+                    {name: 'system_name', index: 'system_name', width: 80, sorttype: "text"},
+                    {name: 'publish_dept', index: 'publish_dept', width: 80, sorttype: "float"},
+                    {name: 'version', index: 'version', width: 80, sorttype: "float"},
+                    {name: 'publish_date', index: 'publish_date', width: 80, sortable: "float"},
+                    {name: 'effect_date', index: 'effect_date', width: 80, sorttype: "float"},
+                    {name: 'state', index: 'state', width: 80, sorttype: "float"},
+                    {name: 'system_download', index: 'system_download', width: 80, sorttype: "float"},
+                    {name: 'system_instructions', index: 'system_instructions', width: 100, sorttype: "float"}
+                ],
+                pager: "#pager_list_2",
+                viewrecords: true,
+                caption: "制度历史列表",
+                add: true,
+                edit: true,
+                addtext: 'Add',
+                edittext: 'Edit',
+                hidegrid: false
+            });  
+            // Add responsive to jqGrid
+            
+        });
+        //作废
+	    $("#button_invalid").click(function() {
+	    	swal({
+	            title: "提示",
+	            text: "这里是提示信息......"
+	        });
+			return;
+	    });
+        //更新
+	    $("#button_update").click(function() {
+	    	swal({
+	            title: "提示",
+	            text: "这里是提示信息......"
+	        });
+			return;
+	    });
+		//下载
+	    $("#button_download").click(function() {
+	    	swal({
+	            title: "提示",
+	            text: "这里是提示信息......"
+	        });
+			return;
+	    });
+   </script>
+<script>
+$(document).ready(function(){
+	$('.chosen-select').chosen({
+		width: "100%",
+		allow_single_deselect:true,
+		no_results_text:"未搜索到",
+		placeholder_text_single:"请选择",
+		placeholder_text_multiple:"请选择"
+	});
+	
+	$('#data_5 .input-group.date').datepicker({
+        todayBtn: "linked",
+        keyboardNavigation: false,
+        forceParse: false,
+        calendarWeeks: true,
+        autoclose: true
+    });
+	
+	$('#data_5 .input-daterange').datepicker({
+	    keyboardNavigation: false,
+	    forceParse: false,
+	    autoclose: true
+	});
+});
+</script>
+<script>
+$(document).ready(function(){
+	$("#queryType").val("稳健型");
+	$("#queryCode").val("1111");
+	$("#queryName").val("月利宝");
+	$("#queryYear").val("2018");
+	$("#queryVersion").val("V0.1");
+	$("#queryRemark").val("");
+	$("#queryCreateUser").val("007");
+	$("#queryUpdateUser").val("997");
+	$("#startDate1").val("2018-10-08");
+	$("#endDate1").val("2018-11-15");
+});
+
+</script>
+
+</html>

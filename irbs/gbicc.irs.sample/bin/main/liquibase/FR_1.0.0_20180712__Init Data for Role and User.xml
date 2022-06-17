@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="CURRENT TIMESTAMP"      dbms="db2"/>
+    <property name="now" value="CURRENT_TIMESTAMP"      dbms="h2"/>
+    <property name="now" value="sysdate"                dbms="oracle"/>
+    <property name="now" value="now()"                  dbms="mysql"/>
+    <property name="now" value="now()"                  dbms="postgresql"/>
+    <property name="now" value="GETDATE()"              dbms="mssql"/>
+
+    <changeSet id="FR_1.0.0_20180227__Init Data for Role" author="framework">
+  
+        <!--角色 -->
+        <insert tableName="FR_AA_ROLE">
+        	<column name="FD_ID"                      value="00000000-0000-0000-3000-000000000001"/>
+            <column name="FD_CODE"                    value="R_ACCOUNT_MANAGER"/>
+            <column name="FD_NAME"            		  value="客户经理"/>
+            <column name="FD_DESCRIPTION"             value="客户经理"/>
+            <column name="FD_ENABLE"                  valueNumeric="1"/>
+            <column name="FD_CREATOR"                 value="system"/>
+            <column name="FD_CREATE_DATE"             valueDate="${now}"/>
+            <column name="FD_LAST_MODIFIER"           value="system"/>
+            <column name="FD_LAST_MODIFYDATE"         valueDate="${now}"/>
+        </insert>
+        <insert tableName="FR_AA_ROLE">
+        	<column name="FD_ID"                      value="00000000-0000-0000-3000-000000000002"/>
+            <column name="FD_CODE"                    value="R_REVIEWING_OFFICER"/>
+            <column name="FD_NAME"            		  value="复核岗"/>
+            <column name="FD_DESCRIPTION"             value="复核岗"/>
+            <column name="FD_ENABLE"                  valueNumeric="1"/>
+            <column name="FD_CREATOR"                 value="system"/>
+            <column name="FD_CREATE_DATE"             valueDate="${now}"/>
+            <column name="FD_LAST_MODIFIER"           value="system"/>
+            <column name="FD_LAST_MODIFYDATE"         valueDate="${now}"/>
+        </insert>
+        <insert tableName="FR_AA_ROLE">
+        	<column name="FD_ID"                      value="00000000-0000-0000-3000-000000000003"/>
+            <column name="FD_CODE"                    value="R_COGNIZANCE"/>
+            <column name="FD_NAME"            		  value="认定岗"/>
+            <column name="FD_DESCRIPTION"             value="认定岗"/>
+            <column name="FD_ENABLE"                  valueNumeric="1"/>
+            <column name="FD_CREATOR"                 value="system"/>
+            <column name="FD_CREATE_DATE"             valueDate="${now}"/>
+            <column name="FD_LAST_MODIFIER"           value="system"/>
+            <column name="FD_LAST_MODIFYDATE"         valueDate="${now}"/>
+        </insert>
+        <insert tableName="FR_AA_ROLE">
+        	<column name="FD_ID"                      value="00000000-0000-0000-3000-000000000004"/>
+            <column name="FD_CODE"                    value="R_FINAL_COGNIZANCE"/>
+            <column name="FD_NAME"            		  value="最终认定岗"/>
+            <column name="FD_DESCRIPTION"             value="最终认定岗"/>
+            <column name="FD_ENABLE"                  valueNumeric="1"/>
+            <column name="FD_CREATOR"                 value="system"/>
+            <column name="FD_CREATE_DATE"             valueDate="${now}"/>
+            <column name="FD_LAST_MODIFIER"           value="system"/>
+            <column name="FD_LAST_MODIFYDATE"         valueDate="${now}"/>
+        </insert>
+       
+        <!-- 用户 -->
+        <insert tableName="FR_AA_USER">
+        	<column name="FD_ID"                      value="00000000-0000-0000-3000-000000000001"/>
+            <column name="FD_LOGINNAME"               value="user001"/>
+            <column name="FD_USERNAME"                value="user 001"/>
+            <column name="FD_PASSWORD"                value="${adminPassword}"/>
+            <column name="FD_ENABLE"                  valueNumeric="1"/>
+            <column name="FD_IS_ACCOUNT_EXPIRED"      valueNumeric="0"/>
+            <column name="FD_IS_ACCOUNT_LOCKED"       valueNumeric="0"/>
+            <column name="FD_IS_CREDENTIALS_EXPIRED"  valueNumeric="0"/>
+            <column name="FD_CREATOR"                 value="system"/>
+            <column name="FD_CREATE_DATE"             valueDate="${now}"/>
+            <column name="FD_LAST_MODIFIER"           value="system"/>
+            <column name="FD_LAST_MODIFYDATE"         valueDate="${now}"/>
+        </insert>
+        <insert tableName="FR_AA_USER">
+        	<column name="FD_ID"                      value="00000000-0000-0000-3000-000000000002"/>
+            <column name="FD_LOGINNAME"               value="user002"/>
+            <column name="FD_USERNAME"                value="user 002"/>
+            <column name="FD_PASSWORD"                value="${adminPassword}"/>
+            <column name="FD_ENABLE"                  valueNumeric="1"/>
+            <column name="FD_IS_ACCOUNT_EXPIRED"      valueNumeric="0"/>
+            <column name="FD_IS_ACCOUNT_LOCKED"       valueNumeric="0"/>
+            <column name="FD_IS_CREDENTIALS_EXPIRED"  valueNumeric="0"/>
+            <column name="FD_CREATOR"                 value="system"/>
+            <column name="FD_CREATE_DATE"             valueDate="${now}"/>
+            <column name="FD_LAST_MODIFIER"           value="system"/>
+            <column name="FD_LAST_MODIFYDATE"         valueDate="${now}"/>
+        </insert>
+        <insert tableName="FR_AA_USER">
+        	<column name="FD_ID"                      value="00000000-0000-0000-3000-000000000003"/>
+            <column name="FD_LOGINNAME"               value="user003"/>
+            <column name="FD_USERNAME"                value="user 003"/>
+            <column name="FD_PASSWORD"                value="${adminPassword}"/>
+            <column name="FD_ENABLE"                  valueNumeric="1"/>
+            <column name="FD_IS_ACCOUNT_EXPIRED"      valueNumeric="0"/>
+            <column name="FD_IS_ACCOUNT_LOCKED"       valueNumeric="0"/>
+            <column name="FD_IS_CREDENTIALS_EXPIRED"  valueNumeric="0"/>
+            <column name="FD_CREATOR"                 value="system"/>
+            <column name="FD_CREATE_DATE"             valueDate="${now}"/>
+            <column name="FD_LAST_MODIFIER"           value="system"/>
+            <column name="FD_LAST_MODIFYDATE"         valueDate="${now}"/>
+        </insert>
+        <insert tableName="FR_AA_USER">
+        	<column name="FD_ID"                      value="00000000-0000-0000-3000-000000000004"/>
+            <column name="FD_LOGINNAME"               value="user004"/>
+            <column name="FD_USERNAME"                value="user 004"/>
+            <column name="FD_PASSWORD"                value="${adminPassword}"/>
+            <column name="FD_ENABLE"                  valueNumeric="1"/>
+            <column name="FD_IS_ACCOUNT_EXPIRED"      valueNumeric="0"/>
+            <column name="FD_IS_ACCOUNT_LOCKED"       valueNumeric="0"/>
+            <column name="FD_IS_CREDENTIALS_EXPIRED"  valueNumeric="0"/>
+            <column name="FD_CREATOR"                 value="system"/>
+            <column name="FD_CREATE_DATE"             valueDate="${now}"/>
+            <column name="FD_LAST_MODIFIER"           value="system"/>
+            <column name="FD_LAST_MODIFYDATE"         valueDate="${now}"/>
+        </insert>
+        
+        <!-- 银行用户和角色关系 -->
+        <insert tableName="FR_AA_USER_ROLE">
+            <column name="FD_USER_ID"          		  value="00000000-0000-0000-3000-000000000001"/>
+            <column name="FD_ROLE_ID"                 value="00000000-0000-0000-3000-000000000001"/>
+        </insert>
+        <insert tableName="FR_AA_USER_ROLE">
+            <column name="FD_USER_ID"          		  value="00000000-0000-0000-3000-000000000002"/>
+            <column name="FD_ROLE_ID"                 value="00000000-0000-0000-3000-000000000002"/>
+        </insert>
+        <insert tableName="FR_AA_USER_ROLE">
+            <column name="FD_USER_ID"          		  value="00000000-0000-0000-3000-000000000003"/>
+            <column name="FD_ROLE_ID"                 value="00000000-0000-0000-3000-000000000003"/>
+        </insert>
+        <insert tableName="FR_AA_USER_ROLE">
+            <column name="FD_USER_ID"          		  value="00000000-0000-0000-3000-000000000004"/>
+            <column name="FD_ROLE_ID"                 value="00000000-0000-0000-3000-000000000004"/>
+        </insert>
+        
+    </changeSet>
+</databaseChangeLog>

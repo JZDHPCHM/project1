@@ -1,0 +1,21 @@
+
+select f.cltnum  from (select app_customerno,add_orgcod from (select a.app_customerno,
+       a.add_orgcod,
+       row_number() over(partition by a.app_customerno order by a.chdrcoy asc) num
+  from (select distinct d.app_customerno,
+                        p.add_orgcod,
+                        p.chdrcoy from (select d.app_customerno, d.inner_polno
+                               from bidw.dw_pol_personer_detail d
+                             union all
+                             select d.iss_customerno, d.inner_polno
+                               from bidw.dw_pol_personer_detail d
+                             union all
+                             select d.bnf_customerno, d.inner_polno
+                               from bidw.dw_pol_personer_detail d
+                             union all
+                             select d.eb_customerno, d.inner_polno
+                               from bidw.dw_pol_personer_detail d)              d,
+                        bidw.la_F_policy p where d.inner_polno = p.inner_polno) a ) c  
+                        where c.num=1) e ,temp_ls_20180705 f 
+                        where e.app_customerno='9'||trim(f.cltnum)
+                       

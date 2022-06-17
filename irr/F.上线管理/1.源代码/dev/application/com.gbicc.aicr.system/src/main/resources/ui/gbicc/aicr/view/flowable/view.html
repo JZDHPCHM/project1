@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html th:replace="template/simple_inspinia/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+
+
+<body class="top-navigation">
+	<div id="wrapper">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="row wrapper border-bottom white-bg page-heading">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+						<li th:text="'流程:'+${processDefinition.name}">&nbsp;&nbsp;流程：风险偏好制定流程&nbsp;&nbsp;&nbsp;</li>
+						<li th:if="${processInstance.startUserId} != null"><span
+							th:text="'发起人：'+${users[processInstance.startUserId]}">&nbsp;&nbsp;发起人：张晓林&nbsp;&nbsp;&nbsp;</span></li>
+						<li th:if="${#strings.isEmpty(processInstance.startUserId)}">发起人：系统发起</li>
+						<li th:text="'当前流程环节：'+${task.name}">&nbsp;&nbsp;当前流程环节：领导复核&nbsp;&nbsp;&nbsp;</li>
+						<li th:text="'当前操作人：'+${users[task.assignee]}">&nbsp;&nbsp;当前操作人：付晓&nbsp;&nbsp;&nbsp;</li>
+						<li th:text="'当前任务创建时间：'+${#dates.format(task.createTime,'yyyy-MM-dd hh:mm:ss')}">&nbsp;&nbsp;&nbsp;5分钟前&nbsp;</li>
+						<li th:text="'当前任务完成时间：'+${#dates.format(task.endTime,'yyyy-MM-dd hh:mm:ss')}">&nbsp;&nbsp;&nbsp;5分钟前&nbsp;</li>
+					</ol>
+				</div>
+			</div>
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="tabs-container">
+							<ul class="nav nav-tabs">
+								<li class="active"><!-- <a data-toggle="tab" href="#tab-1">
+										业务办理</a></li>
+								<li class=""> --><a data-toggle="tab" href="#tab-2">流程跟踪</a></li>
+							</ul>
+							<div class="tab-content">
+								<!-- <div id="tab-1" class="tab-pane active">
+									<div class="panel-body">
+										<div class="row">
+											<div class="ibox">
+												<div class="ibox-content">
+													<div class="embed-responsive embed-responsive-16by9">
+            												<iframe class="embed-responsive-item" src="http://localhost:8080/warn/index3.html?businessId=xxxxx&taskId=xxxxx"></iframe>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+									</div>
+								</div> -->
+								<div id="tab-2" class="tab-pane active">
+									<div class="panel-body">
+									<img th:attr="src='/system/process/query/showProcessDiagramByInstanceId/'+${processInstance.id}" ></img>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+				<div class="row" th:if="${isAudit}" >
+					<div class="col-lg-12">
+						<div class="tabs-container">
+							<div class="ibox">
+								<div class="ibox-title">
+									<h5>审批意见历史</h5>
+									<div class="ibox-tools">
+										<a class="collapse-link"> <i class="fa fa-chevron-down"></i>
+										</a>
+									</div>
+								</div>
+								<div class="ibox-content" >
+									<div id="taskTable">
+										<table class="table" style="margin-bottom: 10px;">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>审批人姓名</th>
+													<th>审批环节</th>
+													<th>操作</th>
+													<th>审批时间</th>
+
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="taskInfo,taskInfoStat : ${finishedTaskInfos}">
+													<td th:text="${taskInfoStat.count}">1</td>
+													<td th:if="${taskInfo.owner} != null"><span
+														th:text="${taskInfo.ownerInfo}">张晓林</span></td><!-- ${users[taskInfo.owner]} -->
+													<td th:if="${#strings.isEmpty(taskInfo.owner)}">系统发起</td>
+													
+													<td th:text="${taskInfo.name}">信贷业务部初审</td>
+													<td th:text="${taskInfo.taskComment}">通过</td>
+													<td th:text="${#dates.format(taskInfo.finishDate,'yyyy-MM-dd HH:mm:ss')}">2018-08-08 12:12:12</td>
+
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" >
+					<div class="col-lg-12">
+						<div class="tabs-container">
+							<div class="ibox">
+								<div class="ibox-content">
+									<form id="formTask1" class="form-horizontal" method="post" action="/system/flowable/task/completeTask.action">
+										
+										<div class="form-group" id="data_5">
+											<div class="col-sm-2"></div>
+											<div class="col-sm-2"></div>
+											<div class="col-sm-1"></div>
+											<div class="col-sm-2" align="center">
+												<button id="close" class="btn btn-primary ">
+													<i class="fa fa-check"></i>&nbsp;关闭
+												</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+			</div>
+</body>
+
+
+
+
+
+<script>
+var isAudit =[(${isAudit})];
+$(function () {
+    $("#close").click(function () {	
+       	window.close();
+       	
+    });
+})
+
+</script>
+</html>

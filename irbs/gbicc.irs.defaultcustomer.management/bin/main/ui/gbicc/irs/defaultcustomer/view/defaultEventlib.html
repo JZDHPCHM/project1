@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+var typeMap = {'MAN': "人工认定事件", 'SYS_RIGIDITY': "系统刚性", 'SYS_FLEXIBILITY': "系统柔性"};
+
+//违约事件认定类型
+var DefaultEventType = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.defaultcustomer.support.DefaultCustomerAffirmMode),#locale)})];
+//字段定义
+var DefaultEventLibFields ={
+	query: [
+			{width:'*',		name:'eventCode',				title:'[[#{eventCode}]]',type: 'text'},
+			{width:'*',		name:'type',					title:'[[#{type}]]',type: 'select',valueMap:typeMap},
+	],
+	grid: [
+			{width:80,		name:'id',						primaryKey:true,hidden:true,canEdit:false},
+			{width:150,		name:'eventCode',				title:'[[#{eventCode}]]'},
+		    {width:'*',		name:'eventDescribe',			title:'[[#{eventDescribe}]]',type:"textArea"},
+		    {width:100,		name:'quietPeriod',				title:'[[#{quietPeriod}]]',type:"text"},
+		    {width:100,		name:'eventRulesExpression',	title:'[[#{eventRulesExpression}]]',type:"text"},
+		    {width:100,		name:'type',					title:'[[#{type}]]',type:'select',valueMap: DefaultEventType,defaultValue:''},
+		    {width:100,		name:'vaild',					title:'[[#{vaild}]]',type:"boolean"}
+	],
+	edit: [
+			{width:80,		name:'id',						primaryKey:true,hidden:true,canEdit:false},
+			{width:150,		name:'eventCode',				title:'[[#{eventCode}]]',required:true},
+			{width:150,		name:'quietPeriod',				title:'[[#{quietPeriod}]]',type:'text'},
+			{
+				width:100,		
+				name:'type',					
+				title:'[[#{type}]]',
+				type:'select',
+				valueMap: DefaultEventType,
+				defaultValue:'',
+				required:true,
+			},
+			{width:400,		name:'eventRulesExpression',	title:'[[#{eventRulesExpression}]]',type:"textArea",colSpan:3},
+		    {width:400,		name:'eventDescribe',			title:'[[#{eventDescribe}]]',type:"textArea",colSpan:3,required:true},
+		    {width:400,		name:'mark',					title:'[[#{mark}]]',type:"textArea",colSpan:3},
+		    {width:100,		name:'valid',					title:'[[#{valid}]]',type:"boolean",defaultValue:true}
+	]
+};
+
+//模型选项数据源
+isc.FwRestDataSource.create({
+	ID: 'defaultEventLibDS',
+    fields: DefaultEventLibFields.grid,
+    dataURL: '[[@{/irs/defaultEventlib/isc}]]'
+});
+
+//模型选项定义列表
+isc.FwListGrid.create({
+	ID: 'defaultEventLibListGrid',
+	title: '<b>违约事件定义列表</b>',
+	dataSource: defaultEventLibDS,
+	sortField: 'eventCode',
+	canHover:true,
+	fields: DefaultEventLibFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: DefaultEventLibFields.query
+	},
+	editWindow: {
+		width:600,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: defaultEventLibDS,
+            fields: DefaultEventLibFields.edit
+        },
+        actionMembers:[
+               		'ok','close'
+         ]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.VLayout.create({
+					showResizeBar: true,
+				    width: '100%',
+				    members: [defaultEventLibListGrid]     
+				})
+			]
+		})
+	}
+});
+</script>
+</html>

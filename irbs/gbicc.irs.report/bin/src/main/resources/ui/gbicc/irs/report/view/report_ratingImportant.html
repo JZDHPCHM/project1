@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+</head>
+<body>
+</body>
+<script>
+	var typeVal = 1;
+    var newData=[];
+tQuery.push({
+	width:'*',		name:'type',		title:'类型',type: 'select',operator:'equals',valueMap: fdType,defaultToFirstOption:true,
+	changed: function(form, item, value){
+		if(value==1){
+			typeName = '客户数目';
+		}
+		if(value==2){
+			typeName = '授信金额';
+		}
+		if(value==3){
+			typeName = '授信余额';
+		}
+        typeVal = value;
+		borrowKeyBussFieldsListGrid.setFieldProperties(1, {title:typeName})
+		borrowKeyBussFieldsListGrid.setFieldProperties(3, {title:typeName})
+		borrowKeyBussFieldsListGrid.setFieldProperties(5, {title:typeName})
+		borrowKeyBussFieldsListGrid.setFieldProperties(7, {title:typeName})
+		borrowKeyBussFieldsListGrid.setFieldProperties(9, {title:typeName})
+		// form.submit();
+	}
+});
+	
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQuery,
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{
+				name:'guestGr',					
+				title:'客户评级',
+				getGridSummary:function (records, summaryField) {
+					return "合计";
+	            }
+			},
+			{name:'customerNum1',			title:'客户数目',summaryFunction:  function() {return sumData['customerNum1'];}},//客户数目
+		    {name:'percent1',			title:'占比',summaryFunction: function() {return formatPer(sumData['percent1']);}},//占比
+			{name:'customerNum2',			title:'客户数目',summaryFunction: function() {return sumData['customerNum2'];}},//客户数目
+		    {name:'percent2',			title:'占比',summaryFunction: function() {return formatPer(sumData['percent2']);}},//占比
+			{name:'customerNum3',			title:'客户数目',summaryFunction: function() {return sumData['customerNum3'];}},//客户数目
+		    {name:'percent3',			title:'占比',summaryFunction: function() {return formatPer(sumData['percent3']);}},//占比
+			{name:'customerNum4',			title:'客户数目',summaryFunction: function() {return sumData['customerNum4'];}},//客户数目
+		    {name:'percent4',			title:'占比',summaryFunction: function() {return formatPer(sumData['percent4']);}},//占比
+			{name:'customerNum5',			title:'客户数目',summaryFunction: function() {return sumData['customerNum5'];}},//客户数目
+		    {name:'percent5',			title:'占比',summaryFunction: function() {return formatPer(sumData['percent5']);}}//占比
+		   
+	]
+};
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields: BorrowKeyBussFields.grid,
+    fetchDataURL: '[[@{/irs/report_ratingImportant/isc/fetchData}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>整体借款人评级分布--重点行业</b>',
+	dataSource: report_borrowKeyBussDS,
+	//sortField: 'guestGr',
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	canPageable: false,
+	fields: BorrowKeyBussFields.grid,
+	headerSpans: [
+        {
+            fields: ["customerNum1", "percent1"], 
+            title: "房地产业"        
+        },
+        {
+            fields: ["customerNum2", "percent2"], 
+            title: "建筑业"
+        },
+        {
+            fields: ["customerNum3", "percent3"], 
+            title: "批发零售业"
+        },
+        {
+            fields: ["customerNum4", "percent4"], 
+            title: "制造业"
+        },
+        {
+            fields: ["customerNum5", "percent5"], 
+            title: "租赁、商务服务业"
+        }
+    ],
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	actionMembers:[
+		'query','reset',
+        {
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+                    url:"[(@{/irs/report_ratingImportant/isc/fetchData/Results.csv})]",
+                    "year":year,"month":month,"type":typeVal,
+                    fileName:  "整体借款人评级分布--重点行业",
+                    sortBy: "guestGr"
+                });
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+	afterQuery:function(dsResponse,data,dsRequest){
+        borrowKeyBussFieldsListGrid.setData(newData);
+        this.Super('afterQuery',arguments);
+	},
+	query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_ratingImportant/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year,"month":month,"type":typeVal},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                 newData=[];
+                sumData = [];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.guestGr==='合计'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                borrowKeyBussFieldsListGrid.setData(newData);
+            }
+        });
+    },
+	formatCellValue:function(value, record, rowNum, colNum){
+		var formatVal = value;
+		var fieldName = borrowKeyBussFieldsListGrid.getField(colNum).title;
+		if( fieldName === "占比"){
+			formatVal = formatPer(value);
+		}
+		return formatVal;
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+
+</script>
+</html>

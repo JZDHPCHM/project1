@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>评级步骤</title>
+</head>
+<body>
+  
+		     <!-- 模态窗口 -->
+            <div class="modal inmodal fade modal-grade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content" style="height: 100%;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+                        <div class="modal-body">
+							<div class="progress-left">
+								<div class='progress-left-head'>评级步骤</div>
+								<!-- <div id="dlTxt" class="progress-name">定量分析</div> -->
+								<div id="dxTxt" class="progress-name">定性分析</div>
+                                <div class="filter-box" style="display: none;">
+                                    <p>点击下方选项增/删条目</p>
+                                    <div class="filter-content" id="filter-content">
+                                    </div>
+                                </div>
+								<div id="reportTxt" class="progress-name">评级报告</div>
+							</div>
+							<div class="progress-right">
+								<form id="dxDl" class="width-100">
+									<!-- <div id="dingliang" class="width-100">
+										<div class="progress-head" id="dlAnalysis"><h5 class="progress-title">定量分析</h5></div>
+										<table class="progress-table" id="dlListof">
+										</table>
+									</div> -->
+									<!-- <div id="dingxing" class="width-100" style="display: none;"> -->
+									<div id="dingxing" class="width-100">
+										<div class="progress-head" id="dxAnalysis"><h5 class="progress-title">定性分析</h5></div>
+									</div>
+								</form>
+								<div id="report" class="col-lg-10 col-sm-10 col-sm-10 .col-xs-12" style="display: none;">
+									<div class="progress-head"><h5 class="progress-title">评级报告</h5></div>
+									<div class="tabs-container" style="padding-top: 15px;">
+										<ul class="nav nav-tabs">
+											<li class="active"><a data-toggle="tab" href="#tab-1">评级报告</a></li>
+											<li class=""><a data-toggle="tab" href="#tab-2">评级明细</a></li>
+										</ul>
+										<div class="tab-content">
+											<div id="tab-1" class="tab-pane active">
+												<iframe id="tab_sheet_1"
+														style="min-width: 1118px;height:1000px;overflow: auto !important;"
+														frameborder="no" border="0" marginwidth="0" marginheight="0"
+														scrolling="no" allowtransparency="yes"></iframe>
+											</div>
+											<div id="tab-2" class="tab-pane">
+												<iframe id="tab_sheet_2" style="width:100%;height:1300px"
+														frameborder="no" border="0" marginwidth="0" marginheight="0"
+														scrolling="no" allowtransparency="yes"></iframe>
+											</div>
+											
+										</div>
+									</div>
+									<!-- <div class="score">定量得分：<span id="">35.25</span></div> -->
+								</div>
+							</div>
+                        </div>
+                       <!--  <div class="modal-footer" id="footer1">
+                            <button type="button" class="btn btn-success" id="btn_next1">下一步</button>
+                        </div> -->
+                       <!--  <div class="modal-footer" id="footer2" style="display: none;"> -->
+                       <div class="modal-footer" id="footer2" >
+                            <div id="scoreInfo" style="padding-right: 40px;font-size: 16px;display: none;">
+                                <span>定量得分：</span><span class="cale-score" id="dlScore"></span>
+                                <span>定性得分：</span><span class="cale-score" id="dxScore"></span>
+                                <span>总得分：</span><span class="cale-score" id="sumScore"></span>
+                            </div>
+                           
+                           <!--  <button type="button" class="btn btn-success" id="btn_prev1">上一步</button> -->
+                            <button type="button" class="btn btn-success" id="btn_next2">下一步</button>
+                        </div>
+                        <div class="modal-footer" id="footer3" style="display: none;">
+                           
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeModal">关闭
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+</body>
+</html>

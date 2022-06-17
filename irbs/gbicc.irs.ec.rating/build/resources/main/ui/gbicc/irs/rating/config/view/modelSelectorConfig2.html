@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script type="text/javascript">
+	//设置mxgraph库路径
+	mxBasePath = '[[@{/webjars/mxgraph}]]';
+</script>
+<script type="text/javascript" th:src="@{/webjars/mxgraph/js/mxClient.js}"></script>
+
+<script th:inline="javascript">
+
+//模型列表(从模型系统获取)
+var ModelList = [(${@frSystemDictionaryService.getDictionaryMapJsonString('MODEL_TYPE',#locale)})];
+//选择路径状态
+var selectorStatus = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.CommonVersionStatus),#locale)})];
+
+var selectorCanvas = null; //画布对象
+
+//模型选择路径画布对象
+function SelectorCanvas(tbContainer,graphContainer,canDraw,selectorData){
+	this.tbContainer = tbContainer;			//工具栏容器
+	this.graphContainer = graphContainer;	//画板容器
+	this.selectorData = selectorData;		//选择路径XML数据
+	this.XmlDocument = mxUtils.createXmlDocument();	//空XML文档对象
+	this.canDraw = canDraw;					//是否可编辑
+	this.myGraph = null;					//mxGraph对象
+	this.myToolbar = null;					//工具栏
+	this.oldMxConnectionHandlerInsertEdge = mxConnectionHandler.prototype.insertEdge;   //存储原始插入边方法
+	this.createTextField = function(form, cell, attribute,editable){					//根据属性创建文本框并绑定键盘事件
+		var thisObject = this;
+		var input = null;
+		//判断是否为边
+		if(thisObject.myGraph.getModel().isVertex(cell)){//顶点
+						
+			//判断顶点类型
+			if(attribute.nodeName == "modelCode"){
+				input = form.addCombo("模型名称:");
+				//添加选项
+				for(var mocelCode in ModelList){
+					form.addOption(input,ModelList[mocelCode],mocelCode,false);
+				}
+				if(attribute.nodeName == "modelCode"){
+					input.value = attribute.nodeValue;
+				}
+							
+			}else if(attribute.nodeName == "expression"){  //判断条件
+				input = form.addTextarea('表达式:', attribute.nodeValue,8);
+			}else{
+				input = form.addText('节点名称:', attribute.nodeValue);
+			}
+		}else {	//边
+			//为边的表单式 创建文本域组件
+			if(attribute.nodeName == "expression"){
+				input = form.addTextarea('表达式:', attribute.nodeValue,8);
+			}else{
+				input = form.addText('名称:', attribute.nodeValue);
+			}
+		}
+		input.readOnly = !editable;
+		input.disabled = !editable;
+		var applyHandler = function(){
+			var newValue = input.value || '';
+			var oldValue = cell.getAttribute(attribute.nodeName, '');
+			if (newValue != oldValue){
+				thisObject.myGraph.getModel().beginUpdate();
+		        try{
+		        	var edit = new mxCellAttributeChange(cell,attribute.nodeName,newValue);
+		        	thisObject.myGraph.getModel().execute(edit);
+		        	if(cell.value.nodeName.toLowerCase() == 'model'){  //模型元素
+		        		if(input.tagName == "SELECT"){  //判断是否为下拉框
+							var selectedIndex = input.selectedIndex
+							var modelName = input.options[selectedIndex].text;
+							var edit1 = new mxCellAttributeChange(cell,"modelName",modelName);
+		        			thisObject.myGraph.getModel().execute(edit1);
+						}
+		        	}
+		        }finally{
+		            thisObject.myGraph.getModel().endUpdate();
+		        }
+			}
+		}; 
+		//键盘事件
+		mxEvent.addListener(input, 'keypress', function (evt){
+			if (evt.keyCode == /*enter*/13 && !mxEvent.isShiftDown(evt)){
+				input.blur();
+			}
+		});
+		//解决兼容性问题
+		if (mxClient.IS_IE){
+			mxEvent.addListener(input, 'focusout', applyHandler);
+		}else{
+			mxEvent.addListener(input, 'blur', applyHandler);
+		}
+		
+	};
+	this.selectionChanged = function(editable){ //编辑属性窗口
+		var thisObject = this;
+		var div = document.getElementById('properties');
+		//在IE下获取焦点
+		thisObject.myGraph.container.focus();
+		//将div中的元素清除
+		div.display = 'block';
+		div.innerHTML = '';
+		//获取选中的元素
+		var cell = thisObject.myGraph.getSelectionCell();
+		if (cell){
+			mxUtils.br(div);
+			//根据用户对象属性创建表单
+			var form = new mxForm();
+			var attrs = cell.value.attributes;
+			for (var i = 0; i < attrs.length; i++){
+				if(attrs[i].nodeName != "modelName"){
+					thisObject.createTextField(form, cell, attrs[i],editable);
+				}
+			}
+			div.appendChild(form.getTable());
+			//添加备注
+			var cellType = cell.value.nodeName.toLowerCase();
+			if(cellType == 'condition' || cellType == 'edge' ){
+				var remarkDiv=document.createElement('div'); //创建一个div元素。
+				remarkDiv.id='remarkDiv'; 
+				remarkDiv.innerHTML='<a href="'+FrameworkUiInterface.webContextPath+'/html/AviatorHelp.html" target="_blank" >语法帮助</a><span><br/>&emsp;<font size=3 color="red"><b>备注：</b>如果给定表达式的变量在计算时未传入，则此节点返回False！</font></span>';
+				div.appendChild(remarkDiv);
+			}
+			mxUtils.br(div);
+		}
+	};
+	this.addVertex = function(icon, w, h, style,title,userData){	//添加顶点方法
+		var thisObject = this;
+		var vertex = new mxCell(userData, new mxGeometry(0, 0, w, h), style);
+		vertex.setVertex(true);
+		//向工具栏添加组件，并注册拖拽事件
+		thisObject.addToolbarItem(vertex, icon,title);
+	};
+	this.addToolbarItem = function(prototype, image,title){ //向工具栏添加组件并注册拖拽事件
+		var thisObject = this;
+		//当拖拽时使用的函数
+		var funct = function(graph, evt, cell){
+			graph.stopEditing(false);
+			var pt = graph.getPointForEvent(evt);
+			var vertex = graph.getModel().cloneCell(prototype);
+			var cells = graph.getSelectionCells();
+			for(var i=0;i<cells.length; i++){
+				if(cells[i].value.nodeName.toLowerCase() == 'startpoint'){
+					if(cells[i].value.nodeName.toLowerCase() == prototype.value.nodeName.toLowerCase()){
+						isc.say("已经有开始节点，无法重复添加开始节点！");
+						return null; 
+					}
+				}
+			}
+			vertex.geometry.x = pt.x;
+			vertex.geometry.y = pt.y;
+			graph.setSelectionCells(graph.importCells([vertex], 0, 0, cell));
+		}
+		//给工具栏添加应组件，并且给组件注册拖拽事件
+		var img = thisObject.myToolbar.addMode(title, image, funct);
+		mxUtils.makeDraggable(img, thisObject.myGraph, funct);
+	};
+	this.mxIconSet = function(state){
+		this.images = [];
+		var graph = state.view.graph;
+		// Delete
+		var img = mxUtils.createImage('[(@{/modelSelectorImages/delete.png})]');
+		img.setAttribute('title', '删除');
+		img.style.position = 'absolute';
+		img.style.cursor = 'pointer';
+		img.style.width = '16px';
+		img.style.height = '16px';
+		img.style.left = (state.x + state.width) + 'px';
+		img.style.top = (state.y - 16) + 'px';
+		mxEvent.addGestureListeners(img,
+			mxUtils.bind(this, function(evt)
+			{
+				mxEvent.consume(evt);
+			})
+		);
+		mxEvent.addListener(img, 'click',
+			mxUtils.bind(this, function(evt)
+			{
+				graph.removeCells([state.cell]);
+				mxEvent.consume(evt);
+				this.destroy();
+			})
+		);
+		state.view.graph.container.appendChild(img);
+		this.images.push(img);
+	};
+	this.initGraphAndToolBar = function(){
+		//在传入组件上创建一个图
+		this.myGraph = new mxGraph(this.graphContainer);
+		this.myGraph.dropEnabled = true;
+		//禁止用户调整元素大小
+		this.myGraph.setCellsResizable(false);
+		//设置可以顶点之间可以连接
+		this.myGraph.setConnectable(this.canDraw);
+		//图中选择框(点击鼠标左键拖动多选和功能),如不写默认不可拖拽多选
+		var rubberband = new mxRubberband(this.myGraph);
+		//设置相同的两个顶点只能连接一次
+		this.myGraph.setMultigraph(false);
+		//覆盖方法不允许标签编辑(双击修改内容)
+		this.myGraph.isCellEditable = function(cell){
+			return false;
+		};
+		if(this.selectorData){
+			var selectorData = mxUtils.parseXml(this.selectorData.selectorConent);
+			var decoder = new mxCodec(selectorData);
+			var node = selectorData.documentElement;
+			decoder.decode(node, this.myGraph.getModel());
+		}
+		//覆盖顶点显示值的方法
+		this.myGraph.convertValueToString = function(cell){
+			if (mxUtils.isNode(cell.value)){
+				if (cell.value.nodeName.toLowerCase() == 'model'){
+					var modelName = cell.getAttribute('modelName', '');
+					return modelName;
+				}else if (cell.value.nodeName.toLowerCase() == 'startpoint'){
+					var startName = cell.getAttribute('startName', '');
+					return startName;
+				}else if(cell.value.nodeName.toLowerCase() == 'condition'){
+					var displayName = cell.getAttribute('displayName', '');
+					return displayName;
+				}else if(cell.value.nodeName.toLowerCase() == 'edge'){
+					var displayName = cell.getAttribute('displayName', '');
+					return displayName;
+				}
+				
+			}
+			return ''; 
+		};
+		var thisObject = this;
+		
+		if(this.canDraw){
+			//删除图标销毁方法		
+			thisObject.mxIconSet.prototype.destroy = function(){
+				if (this.images != null){
+					for (var i = 0; i < this.images.length; i++){
+						var img = this.images[i];
+						img.parentNode.removeChild(img);
+					}
+				}
+				this.images = null;
+			};
+			//添加鼠标监听事件(当鼠标悬浮单元格的话显示删除图标)
+			this.myGraph.addMouseListener({
+			    currentState: null,
+			    currentIconSet: null,
+			    mouseDown: function(sender, me){
+			    	//隐藏图标
+		        	if (this.currentState != null){
+		          		this.dragLeave(me.getEvent(), this.currentState);
+		          		this.currentState = null;
+		        	}
+			    },
+			    mouseMove: function(sender, me){
+			    	if (this.currentState != null && (me.getState() == this.currentState ||
+			    		me.getState() == null)){
+			    		var tol = 20;
+			    		var tmp = new mxRectangle(me.getGraphX() - tol,
+			    			me.getGraphY() - tol, 2 * tol, 2 * tol);
+			    		if (mxUtils.intersects(tmp, this.currentState)){
+			    			return;
+			    		}
+			    	}
+					var tmp = thisObject.myGraph.view.getState(me.getCell());
+					if (thisObject.myGraph.isMouseDown ){
+						tmp = null;
+					}
+			      	if (tmp != this.currentState){
+			        	if (this.currentState != null){
+			          		this.dragLeave(me.getEvent(), this.currentState);
+			        	}
+		        		this.currentState = tmp;
+			        	if (this.currentState != null){
+			          		this.dragEnter(me.getEvent(), this.currentState);
+			        	}
+			      	}
+			    },
+			    mouseUp: function(sender, me) { },
+			    dragEnter: function(evt, state){
+			    	if (this.currentIconSet == null){
+		    			this.currentIconSet = new thisObject.mxIconSet(state);
+			    	}
+			    },
+			    dragLeave: function(evt, state){
+			    	if (this.currentIconSet != null){
+		    			this.currentIconSet.destroy();
+		    			this.currentIconSet = null;
+			    	}
+			    }
+			});
+			//在传入组件中创建一个工具栏
+			thisObject.graphContainer.style.left = "50px";
+			thisObject.graphContainer.style.width = "96%";
+			thisObject.tbContainer.style.display = "block";
+			//初始化 工具栏
+			this.myToolbar = new mxToolbar(this.tbContainer);
+			this.myToolbar.enabled = false
+			
+			//添加显示图XML数据的按钮
+			thisObject.tbContainer.appendChild(mxUtils.button('显示XML', function(){
+				var encoder = new mxCodec();
+				var node = encoder.encode(thisObject.myGraph.getModel());
+				mxUtils.alert(mxUtils.getPrettyXml(node));
+			}));
+			//添加保存数据按钮
+			thisObject.tbContainer.appendChild(mxUtils.button('保存   ', function(){
+				var encoder = new mxCodec();
+				var node = encoder.encode(thisObject.myGraph.getModel());
+				//将XML数据赋值表单
+				saveSelectorDataForm.setValue("selectorConent",mxUtils.getPrettyXml(node));
+				saveSelectorDataWindow.show();
+			}));
+			//模型对象
+			var model = thisObject.XmlDocument.createElement('Model');
+			model.setAttribute('modelCode', '');
+			model.setAttribute('modelName', '请选择模型');
+			//开始对象
+			var start = thisObject.XmlDocument.createElement('StartPoint');
+			start.setAttribute('startName', '开始');		
+			
+			//判断对象
+			var condition = thisObject.XmlDocument.createElement('Condition');
+			condition.setAttribute('displayName', '判断条件');
+			condition.setAttribute('expression', 'true');	
+			
+			//添加工具栏项
+			thisObject.addVertex('[(@{/modelSelectorImages/ellipse.gif})]', 40, 40, 'shape=ellipse','开始',start);
+			thisObject.addVertex('[(@{/modelSelectorImages/rectangle.gif})]', 100, 40, 'shape=rectangle','模型',model);
+			thisObject.addVertex('[(@{/modelSelectorImages/rhombus.gif})]', 100, 40, 'shape=rhombus','条件',condition);
+			
+			
+		}else{  //如果为不可编辑状态则 不显示工具栏
+			this.tbContainer.innerHTML = '';
+			this.tbContainer.style.display = "none";
+			this.graphContainer.style.left = "0px";
+			this.graphContainer.style.width = "100%";
+		}
+		
+	};
+	this.initCanvas = function(){
+		//检查浏览器是否支持
+		if (!mxClient.isBrowserSupported()){
+			mxUtils.error('您的浏览器不支持此功能！', 200, false);
+			return;
+		}
+		var thisObject = this;
+		//初始化 图组件
+		thisObject.initGraphAndToolBar();
+		//设置连接线图标，如果不设置默认没有连接线图标
+		mxConnectionHandler.prototype.connectImage = new mxImage('[(@{/modelSelectorImages/connector.gif})]', 16, 16);
+		//重写插入边方法，加入自定义对象
+		mxConnectionHandler.prototype.insertEdge = function(parent, id, value, source, target, style){
+			var edge = thisObject.XmlDocument.createElement('Edge');
+			edge.setAttribute('displayName', '条件');
+			edge.setAttribute('expression', 'true');
+		  	value = edge;
+		  	var sourceNode = source.value.nodeName.toLowerCase();
+		  	var targetNode = target.value.nodeName.toLowerCase();
+		  	if(sourceNode == 'model' && targetNode == "model"){
+		  		isc.say("模型节点间无法连接！");
+		  		return null;
+		  	}
+		  	return thisObject.oldMxConnectionHandlerInsertEdge.apply(this, arguments);
+		};
+		//绑定选中元素事件，显示属性编辑面板
+		thisObject.myGraph.getSelectionModel().addListener(mxEvent.CHANGE, function(sender, evt){
+			//获取选中的元素
+			var cell = thisObject.myGraph.getSelectionCell();
+			if(cell){
+				thisObject.selectionChanged(thisObject.canDraw);
+			}
+		});
+		thisObject.selectionChanged();
+	}
+};
+
+var innerHtml = "<div id=\"tbContainer\"style=\"overflow:auto;position:absolute;width:50px;height:100%;background:lightyellow;cursor:default\"></div>" +
+				"<div id=\"graphContainer\"style=\"overflow:auto;position:absolute;left:50px;width:96%;height:100%;cursor:default;background:url('[(@{/modelSelectorImages/grid.gif})]')\"></div>";
+
+//编辑属性panel		
+isc.HTMLPane.create({
+	ID:"propertiesPanelHtml",
+    width:"20%",
+    height:"100%",		
+    //autoDraw:true,																											
+    contents:"<div id=\"properties\"style=\"overflow:hidden;width:100%;height:100%;float:right;background:lightyellow;cursor:default\"></div>"
+});
+
+//画布panel		
+isc.HTMLPane.create({
+	ID:"mxgraphPanelHtml",
+    width:"80%",
+    height:"100%",																													
+    contents:innerHtml
+});
+
+//画布窗口
+isc.Window.create({
+    ID:"mxgraphPanelWindow",
+    placement: "fillScreen",
+    title: "模型选择路径",
+    contentLayout :"horizontal",
+    showMinimizeButton:false,
+    canDragReposition: true,
+    canDragResize: true,
+    items: [
+           mxgraphPanelHtml,
+           propertiesPanelHtml
+    ],
+    closeClick:function(){
+    	//清除画布内容
+    	var tbContainer = document.getElementById('tbContainer');
+    	var graphContainer = document.getElementById('graphContainer');
+    	tbContainer.innerHTML = '';
+    	graphContainer.innerHTML = '';
+    	if(selectorCanvas){
+    		mxConnectionHandler.prototype.insertEdge = selectorCanvas.oldMxConnectionHandlerInsertEdge;	
+    	}
+    	this.close();
+    }
+});
+
+//保存模型表单
+isc.DynamicForm.create({
+	ID:"saveSelectorDataForm",
+    fields: [
+    	{
+	         name: "id",
+	         type: "text",
+	         hidden:true,
+        },
+        {
+	         name: "selectorName",
+	         type: "text",
+	         required:true,
+	         widht:200,
+	         title: "[(#{selectorName})]"
+        },
+        {
+	         name: "selectorConent",
+	         type: "text",
+	         hidden:true,
+        },
+        {
+	         name: "selectorDescribe",
+	         type: "textArea",
+	          title: "[(#{selectorDescribe})]"
+        },
+        {
+	         name: "save",
+	         type: "button",
+	         title: "保存",
+	         align:"center",
+	         width:70,
+	         left:150,
+	         colSpan:1,
+	         startRow:true,
+	         endRow:false,
+	         click:function(){
+	         	if(saveSelectorDataForm.validate()){
+	         		var id = saveSelectorDataForm.getValue("id");
+	         		var selectorName = saveSelectorDataForm.getValue("selectorName");
+	         		var selectorConent = saveSelectorDataForm.getValue("selectorConent");
+	         		var selectorDescribe = saveSelectorDataForm.getValue("selectorDescribe");
+	         		if(selectorDescribe == null){
+	         			selectorDescribe = "";
+	         		}
+	         		//参数
+	         		var modelSelector = {
+	         					"id":null,
+	         					"selectorName":selectorName,
+  				                "selectorConent":selectorConent,
+  				                "selectorDescribe":selectorDescribe
+	         		};
+	         		var requestUrl = "[(@{/irs/modelSelector/addModelSelector})]";
+	         		if(id && id != null && id != ""){  //更新操作
+	         			requestUrl = "[(@{/irs/modelSelector/isc/modifSelector})]";
+	         			modelSelector["id"] = id;
+	         		}
+	         		//保存选择路径
+	         		isc.RPCManager.sendRequest({
+  				            containsCredentials: true,
+  				            actionURL: requestUrl,
+  				            httpMethod : "POST",
+  				            showPrompt: false,
+  				            willHandleError:true,  //指定由回调函数处理服务器500错误
+  				            params : modelSelector,
+  				            callback : function (rpcResponse, data, rpcRequest) { 
+  				            	if(rpcResponse.httpResponseCode == 500){
+  				            		isc.warn("保存失败，服务器内部错误!");
+  				            	}else if(rpcResponse.httpResponseCode == 200){
+  				            		//关闭保存窗口 刷新列表
+  				            		saveSelectorDataWindow.close();
+  				            		modelSelectorConfigListGrid.invalidateCache();
+  				            		isc.say("保存模型选择路径成功!");
+  				            	}
+  				            }
+  				     });
+	         	}
+	         }
+        },
+        {
+	         name: "cancel",
+	         type: "button",
+	         title: "取消",
+	         width:70,
+	         colSpan:1,
+			 startRow:false,
+	         click:function(){
+	         		saveSelectorDataWindow.close();
+	         }
+        }
+    ]
+});
+
+//保存模型选择路径窗口
+isc.Window.create({
+    ID:"saveSelectorDataWindow",
+    title: "保存模型选择路径",
+    width:380,
+    height:220,
+    showMinimizeButton:false,
+    isModal:true,
+    autoCenter:true,
+    canDragReposition: true,
+    canDragResize: true,
+    items: [
+           saveSelectorDataForm
+    ]
+});
+
+
+//绘图组件、方法定义结束------------------------------------------------------------------------
+            	
+            	
+//字段定义
+var ModelSelectorConfigFields ={
+	grid: [
+			{width:80,		name:'id',							title:'[(#{id})]',type: 'text',primaryKey:true,hidden:true},
+			{width:200,		name:'selectorName',				title:'[(#{selectorName})]'},
+		    {width:200,		name:'selectorVersion',				title:'[(#{selectorVersion})]'},
+		    {
+		    	width:200,	
+		    	name:'selectorStatus',				
+		    	title:'[(#{selectorStatus})]',
+		    	type:'select',
+		    	valueMap:selectorStatus
+		    },
+		    {width:'*',		name:'selectorDescribe',				title:'[(#{selectorDescribe})]'},
+	],
+	edit:[
+			{width:80,		name:'id',							title:'[(#{id})]',type: 'text',primaryKey:true,hidden:true},
+			{width:150,		name:'selectorName',				title:'[(#{selectorName})]'},
+	]
+};
+
+//模型选择路径数据源
+isc.FwRestDataSource.create({
+	ID: 'modelSelectorConfigDS',
+    fields: ModelSelectorConfigFields.grid,
+    dataURL: '[(@{/irs/modelSelector/isc})]'
+});
+
+//模型选择路径列表
+isc.FwListGrid.create({
+	ID: 'modelSelectorConfigListGrid',
+	title: '<b>模型选择路径列表</b>',
+	dataSource: modelSelectorConfigDS,
+	sortField: 'selectorVersion',
+	fields: ModelSelectorConfigFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	editWindow: {
+		width:800,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: modelSelectorConfigDS,
+            fields: ModelSelectorConfigFields.edit
+        },
+        afterShow: function(action){
+        	this.Super('afterShow',arguments);
+        },
+        actionMembers:[
+               		'ok','close'
+               	]
+	},
+	actionMembers:[
+		'refresh',
+		{
+			title:'<span class="fa fa-newspaper-o"></span> 查看',
+			name:"DETAIL_SELECTOR",
+			click:function(){
+				var selectorRecord = modelSelectorConfigListGrid.getSelectedRecord();
+				if(selectorRecord){
+					mxgraphPanelWindow.show();
+					var tbContainer = document.getElementById('tbContainer');
+					var graphContainer = document.getElementById('graphContainer');
+					selectorCanvas = new SelectorCanvas(tbContainer,graphContainer,false,selectorRecord);
+					selectorCanvas.initCanvas();
+				}else{
+					isc.say("请先选择要查看的数据!");
+				}	
+			}
+			
+		},
+		{
+			title:'<span class="fa fa-plus-square"></span> 新增',
+			name:"ADD_SELECTOR",
+			click:function(){
+				mxgraphPanelWindow.show();
+				var tbContainer = document.getElementById('tbContainer');
+				var graphContainer = document.getElementById('graphContainer');
+				selectorCanvas = new SelectorCanvas(tbContainer,graphContainer,true,null);
+				selectorCanvas.initCanvas();
+			}
+		},
+		{
+			title:'<span class="fa fa-files-o"></span> 复制',
+			name:"COPY_SELECTOR",
+			click:function(){
+				var selectorRecord = modelSelectorConfigListGrid.getSelectedRecord();
+				if(selectorRecord){
+					//复制模型选择路径
+	         		isc.RPCManager.sendRequest({
+  				            containsCredentials: true,
+  				            actionURL: "[(@{/irs/modelSelector/isc/copySelector})]",
+  				            httpMethod : "POST",
+  				            showPrompt: false,
+  				            willHandleError:true,  //指定由回调函数处理服务器500错误
+  				            params : {
+  				            	"id":selectorRecord.id
+  				            },
+  				            callback : function (rpcResponse, data, rpcRequest) { 
+  				            	if(rpcResponse.httpResponseCode == 500){
+  				            		isc.warn("保存失败，服务器内部错误!");
+  				            	}else if(rpcResponse.httpResponseCode == 200){
+  				            		// 刷新列表
+  				            		modelSelectorConfigListGrid.invalidateCache();
+  				            		isc.say("复制模型选择路径成功!");
+  				            	}
+  				            }
+  				        });
+				}else{
+					isc.say("请先选择要修改的数据!");
+				}				
+				
+			}
+			
+		},
+		{
+			title:'<span class="fa fa-pencil-square-o"></span> 修改',
+			name:"EDIT_SELECTOR",
+			click:function(){
+				var selectorRecord = modelSelectorConfigListGrid.getSelectedRecord();
+				if(selectorRecord){
+					mxgraphPanelWindow.show();
+					var tbContainer = document.getElementById('tbContainer');
+					var graphContainer = document.getElementById('graphContainer');
+					saveSelectorDataForm.setValue("id",selectorRecord.id);
+					saveSelectorDataForm.setValue("selectorName",selectorRecord.selectorName);
+					saveSelectorDataForm.setValue("selectorDescribe",selectorRecord.selectorDescribe);
+					
+					selectorCanvas = new SelectorCanvas(tbContainer,graphContainer,true,selectorRecord);
+					selectorCanvas.initCanvas();
+					
+				}else{
+					isc.say("请先选择要修改的数据!");
+				}				
+				
+			}
+			
+		},
+		{
+			title:'<span class="fa fa-check-square"></span> 发布',
+			name:"RELEASE_SELECTOR",
+			click:function(){
+				var selectorRecord = modelSelectorConfigListGrid.getSelectedRecord();
+				if(selectorRecord){
+    	    		//发布模型选择路径
+	         		isc.RPCManager.sendRequest({
+  				            containsCredentials: true,
+  				            actionURL: "[(@{/irs/modelSelector/isc/releaseSelector})]",
+  				            httpMethod : "POST",
+  				            showPrompt: false,
+  				            willHandleError:true,  //指定由回调函数处理服务器500错误
+  				            params : {
+  				            	"id":selectorRecord.id
+  				            },
+  				            callback : function (rpcResponse, data, rpcRequest) { 
+  				            	if(rpcResponse.httpResponseCode == 500){
+  				            		isc.warn("保存失败，服务器内部错误!");
+  				            	}else if(rpcResponse.httpResponseCode == 200){
+  				            		// 刷新列表
+  				            		modelSelectorConfigListGrid.invalidateCache();
+  				            		isc.say("发布模型选择路径成功!");
+  				            	}
+  				            }
+  				        });
+				}
+			}
+		},
+		{
+			title:'测试模型选择',
+			name:"TEST_SELECTOR",
+			click:function(){
+				
+	    		//发布模型选择路径
+         		isc.RPCManager.sendRequest({
+			            containsCredentials: true,
+			            actionURL: "[(@{/irs/modelSelector/isc/testSelector})]",
+			            httpMethod : "POST",
+			            showPrompt: false,
+			            willHandleError:true,  //指定由回调函数处理服务器500错误
+			            callback : function (rpcResponse, data, rpcRequest) { 
+			            	if(rpcResponse.httpResponseCode == 500){
+			            		isc.warn("测试失败，服务器内部错误!");
+			            	}else if(rpcResponse.httpResponseCode == 200){
+			            		// 刷新列表
+			            		modelSelectorConfigListGrid.invalidateCache();
+			            		isc.say("测试模型选择路径成功!");
+			            	}
+			            }
+			        });
+				
+			}
+		},'remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		var status =FwUtil.isNull(record)?'disable':'enable';
+		var editStatus = 'disable';
+		var releaseStatus = 'disable';
+		if(!FwUtil.isNull(record)){
+			if(record.selectorStatus == "DRAFT"){
+				releaseStatus = 'enable';
+				editStatus = 'enable';
+			}
+		}
+		this.setActionMemberButtonStatus(editStatus,['EDIT_SELECTOR']);
+		this.setActionMemberButtonStatus(releaseStatus,['RELEASE_SELECTOR']);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				modelSelectorConfigListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

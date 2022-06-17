@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+<style>
+	.formMargin{
+		margin : 0 0 0 5px
+	}
+	.form-group{
+		margin-top : 3px 
+	}
+</style>
+</head>
+<body style='background-color:white'>
+	<div class="wrapper">
+		<div class="row">
+     		<div class="col-lg-12">
+                 <div class="float-e-margins">
+                     <div class="ibox-content">
+                     	<div class="row">
+	                     	<div class="col-lg-12">
+	                     		<div class="row">
+	                     			<form role="form" class="form-inline" id="searchForm">
+	                     				 <div class="form-group" style='margin:0 0 0 5px;'>
+			                                 <label class="control-label" for="searchProjTypeId">评估项目</label>
+		                                	 <select class="form-control" name="projTypeId" id="searchProjTypeId">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@irrProjTypeServiceImpl.projTypeSelect(4)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label for="searchIndexCode" class="control-label">指标编码</label>
+			                                 <input type="text" placeholder="模糊查询" id="searchIndexCode" name="splitCode" class="form-control">
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label for="searchIndexName" class="control-label">指标名称</label>
+			                                 <input type="text" placeholder="模糊查询" id="searchIndexName" name="splitName" class="form-control">
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label class="control-label" for="searchCollectionWay">采集方式</label>
+		                                	 <select class="form-control" name="collWay" id="searchCollectionWay">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('collWay',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label class="control-label" for="searchIndexLevel">分配层级</label>
+		                                	 <select class="form-control" name="splitLevel" id="searchIndexLevel">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('splitLevel',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label class="control-label" for="searchIsUse">是否启用</label>
+		                                	 <select class="form-control" name="isUse" id="searchIsUse">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('isUse',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                         </form>
+	                     		</div>
+	                     		<div class="row" style='margin:5px 0 0 0;'>
+	                     			<button class="btn btn-primary btn-sm" id="searchBtn">查询</button>
+			                        <button class="btn btn-primary btn-sm" id="searchClear">重置</button>
+	                     			<button class="btn btn-primary btn-sm" id="useBtn">启用/禁用</button>
+	                     			<!-- 表格 -->
+		                     		<div class="jqGrid_wrapper">
+					                    <table id="splitIndexTable"></table>
+					                    <div id="splitIndexPage"></div>
+					                </div>
+	                     		</div>
+	                     	</div>
+                     	</div>
+                     </div>
+                 </div>
+             </div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	/*获取评估项目ID*/
+	function getProjId(){
+		return $('#searchProjTypeId').val();
+	}
+	/*查询函数*/
+	function splitIndexSearch(){
+		var formJson = $('#searchForm').getNotNullJson();
+    	formJson.operationType = 'fetch';
+    	formJson.textMatchStyle = 'substring';
+    	var projId = getProjId();
+    	if(isNotEmpty(projId)){
+    		formJson.sourceProjId = projId;
+    	}
+    	$("#splitIndexTable").jqGrid('clearGridData');//清空表格
+		$("#splitIndexTable").jqGrid('setGridParam',{//重新加载数据
+			datatype : 'json',
+			postData : {
+				data : JSON.stringify(formJson)
+			},
+			page : 1
+		},true).trigger("reloadGrid");
+	}	
+	$(document).ready(function(){
+		/*查询采集人、审核人、复核人*/
+		var collUsers = '[(${@irrSplitIndexServiceImpl.getUserMapJsonString('irrProcessColl','',1)})]';
+		var examUsers = '[(${@irrSplitIndexServiceImpl.getUserMapJsonString('irrProcessExam','',1)})]';
+		var reviewUsers = '[(${@irrSplitIndexServiceImpl.getUserMapJsonString('irrProcessReview','',1)})]';
+		$("#splitIndexTable").jqGrid({
+			url:"[(@{/irr/splitIndex/findSplitIndex.action})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        cellEdit : false,
+    	    cellsubmit : 'remote',
+    	    cellurl : '[(@{/irr/splitIndex/saveSplitUser.action})]',
+	        height: 350,
+	        autowidth: true,
+	        shrinkToFit: false,
+	        multiselect : true, //支持多选
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 1,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['id','分配指标编码','分配指标名称','分配层级','源指标ID','源指标名称','评估项目名称','评估项目ID','分配指标公式',
+	        		  '分配指标公式编码','分配指标可执行公式','是否启用','采集方式','所属机构ID','所属机构编码','所属机构名称','渠道名称',
+	        		  '采集人','采集人名称','审核人','审核人名称','复核人','复核人名称'],
+	        colModel:[{
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'splitCode',
+	        	index:'splitCode',
+	        	hidden : false,
+	        	sortable : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name:'splitName',
+	        	index:'splitName',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'splitLevel',
+	        	index:'splitLevel',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('splitLevel',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'sourceIndexId',
+	        	index:'sourceIndexId',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        },{
+	        	name:'sourceIndexName',
+	        	index:'sourceIndexName',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'sourceProjName',
+	        	index:'sourceProjName',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'sourceProjId',
+	        	index:'sourceProjId',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'splitFormula',
+	        	index:'splitFormula',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        },{
+	        	name:'splitFormulaCode',
+	        	index:'splitFormulaCode',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'splitEvalForm',
+	        	index:'splitEvalForm',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        },{
+	        	name:'isUse',
+	        	index:'isUse',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('isUse',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'collWay',
+	        	index:'collWay',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('collWay',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'orgId',
+	        	index:'orgId',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        },{
+	        	name:'orgCode',
+	        	index:'orgCode',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        },{
+	        	name:'orgName',
+	        	index:'orgName',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'channelFlag',
+	        	index:'channelFlag',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('channelFlag',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'collUserId',
+	        	index:'collUserId',
+	        	editable: false,
+	        	search:true,
+	        	hidden:true,
+	        	formatter:'select', 
+	        	formatoptions:{value:collUsers},
+	        	edittype:'select',
+	        	editoptions:{value:collUsers}
+	        },{
+	        	name:'collUserName',
+	        	index:'collUserName',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        },{
+	        	name:'examUserId',
+	        	index:'examUserId',
+	        	sortable : false,
+	        	editable: true,
+	        	search:true,
+	        	hidden:true,
+	        	formatter:'select', 
+	        	formatoptions:{value:examUsers},
+	        	edittype:'select',
+	        	editoptions:{value:examUsers}
+	        },{
+	        	name:'examUserName',
+	        	index:'examUserName',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        },{
+	        	name:'reviewUserId',
+	        	index:'reviewUserId',
+	        	editable: false,
+	        	search:true,
+	        	hidden:true,
+	        	formatter:'select', 
+	        	formatoptions:{value:reviewUsers},
+	        	edittype:'select',
+	        	editoptions:{value:reviewUsers}
+	        },{
+	        	name:'reviewUserName',
+	        	index:'reviewUserName',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        }],
+	        pager: "#splitIndexPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }
+	    });
+	    $("#splitIndexTable").jqGrid('navGrid', '#splitIndexPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#splitIndexTable').setGridWidth(width);
+	    });
+	    setTimeout(function(){
+	        $('.wrapper-content').removeClass('animated fadeInRight');
+	    },700);
+	    
+	    /*主页面查询中的重置按钮*/
+	    $('#searchClear').click(function(){
+	    	$('#searchForm')[0].reset();
+	    });
+	    
+	    /*主页面查询中的查询按钮*/
+	    $('#searchBtn').click(function(){
+	    	splitIndexSearch();
+	    });
+	    
+	    /*启用或禁用*/
+	    $('#useBtn').click(function(){
+	    	var ids = $("#splitIndexTable").jqGrid('getGridParam', 'selarrrow');
+	    	if(isEmpty(ids)){
+	    		swal('提示','请至少选择一条记录！','warning');
+	    		return false;
+	    	}
+	    	$.ajax({
+        		url : '[(@{/irr/splitIndex/updateSplitUse.action})]',
+        		type : "post",
+        		dataType : "json",
+        		data : {
+            		ids : ids.join(',')
+            	},
+        		success : function(data,textStatus) {
+        			if(data.flag == true){
+        				swal('提示',data.data,'success');
+        			}else{
+        				swal('提示',data.data,'error');
+        			}
+        			splitIndexSearch();
+        		},
+        		error : function(data, textStatus){
+        			swal('提示','请求失败！','error');
+        		}
+        	});
+	    });
+	    
+	});
+</script>
+</html>

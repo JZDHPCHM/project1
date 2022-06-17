@@ -1,0 +1,6 @@
+
+生产接口地址，
+http://oa.hengansl.com/services/WorkflowPlusService?wsdl
+
+生产 workflowid：8321 这是in0标签传的固定值
+

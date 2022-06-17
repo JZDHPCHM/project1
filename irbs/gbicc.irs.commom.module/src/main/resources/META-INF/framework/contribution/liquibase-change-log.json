@@ -1,0 +1,32 @@
+/*
+ * 数据库建表 Liquibase ChangeLog XML 贡献项配置示例
+ * 功能: 该贡献项配置为框架提供数据库无关的建表脚本
+ * 使用说明:
+ * category: 建表脚本分类,可能的值包括: 
+ * 		install : 系统安装时自动执行
+ *		manual  : 系统安装时不自动执行,可通过 '开发者工具'-->'导入示例数据' 功能菜单执行
+ * order: 执行顺序
+ * description: 描述信息
+ * locations: 建表 liquibase changelog xml 文件位置
+ */
+ 
+
+[
+    {
+        "category" : "install",
+        "order"    : 10,
+        "description":"汉口银行系统数据初始化",
+        "locations":[
+        	//系统角色
+            "classpath:/liquibase/LIQUIBASE_2019.04.09_20.28.53__FR_AA_ROLE.xml",
+            "classpath:/liquibase/MV_1.0.0_20190418__NS_PROFIT_RATE Database Schema DDL.xml",
+            "classpath:/liquibase/LIQUIBASE_2019.04.28_15.21.23__DEVIATING_VALUE.xml",
+            "classpath:/liquibase/LIQUIBASE_2019.06.18_18.33.58__NS_DEVIATE_INDEX.xml",
+            "classpath:/liquibase/LIQUIBASE_2019.07.31_15.45.45__FR_SYS_ANNO_USER_DDL.xml",
+            //"classpath:/liquibase/LIQUIBASE_2019.07.15_16.12.56__MV_CFG_DATA_EXTRACTOR.xml",
+            //"classpath:/liquibase/LIQUIBASE_2019.07.15_16.16.27__MV_CFG_SCALE.xml",
+            //"classpath:/liquibase/LIQUIBASE_2019.07.15_16.56.47__MV_CFG_MODEL.xml"
+           
+        ]
+    }
+]

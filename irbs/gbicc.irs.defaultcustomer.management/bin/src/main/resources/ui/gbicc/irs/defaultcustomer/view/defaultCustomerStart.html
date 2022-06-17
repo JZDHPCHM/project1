@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script th:src="@{/portlet/js/jquery-3.1.1.min.js}"></script>
+</head>
+<body>
+</body>
+<script>
+//客户分类
+var ctmTyps =[(${@CodeLibraryService.findByItemCode("CustomerType")})];
+//当前登录人账号
+var userAccout = "[(${T(org.wsp.framework.security.util.SecurityUtil).getLoginName()})]";
+//获取登陆用户角色
+var roleCode = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+//违约客户认定状态
+var DefaultCustomerProcessStatus =[(${@frJsonObjectMapper.enumerate(T(gbicc.irs.defaultcustomer.support.DefaultCustomerProcessStatus),#locale)})];
+//违约客户发起方式
+var DefaultCustomerAffirmMode =[(${@frJsonObjectMapper.enumerate(T(gbicc.irs.defaultcustomer.support.DefaultCustomerAffirmMode),#locale)})];
+//违约事件列表
+var defaultEvent =[(${@jacksonObjectMapper.writeValueAsString(@defaultEventLibController.findAllDefaultEvent())})];
+var roleShow=0;
+var ishide = false;
+var test = true;
+var validStatus = {"0":"否决","1":"同意","":"终止",null:"终止"};
+var orgs = [(${@ProcessDataService.findOrgs()})];
+if(roleCode=="CUSTOMER_MANAGER"){
+	userAccout="";
+	ishide = true;
+}else{
+	//userAccout="admin";
+}
+//违约流程状态
+var DefaultCustomerContractStatus = [(${@frSystemDictionaryService.getDictionaryMapJsonString('DEFAULT_PROCESS_STATE',#locale)})];
+
+//国标行业
+var GBindustrys=[(${@CodeLibraryService.findByItemCode("IndustryType")})];
+
+var users=[(${@DefaultCustomerService.findUserNames()})];
+//验证表单值空方法
+function isBlank(val){
+	if(val==""){
+		return true;
+	}
+	if(val==null){
+		return true;
+	}
+	if(typeof val=="undefined"){
+		return true;
+	}
+	return false;
+}
+//================================================发起违约客户页面定义===========================================================
+//企业规模
+var EnterpriseScales ={"2":"大型企业","3":"中型企业","4":"小型企业","5":"微型企业"};
+//客户基本信息字段定义
+var EnterpriseCustomerFieldsToShow ={
+		edit: [
+			{width:'100%',		name:'defaultId',           		primaryKey:true,hidden:true},//,hidden:true,hidden:true
+			{width:'100%',		name:'custNo',              title:'信贷客户号',	required:true},
+			{width:'100%',		name:'unCustNo',            title:'统一客户号',	required:true},
+			{width:'100%',		name:'custName',            title:'客户中文名',	required:true},
+			{width:'100%',		name:'regAmount',     		title:'注册金额'},//countryAreaDs
+			{width:'100%',		name:'ctmType',     title:'企业分类',type: 'select',valueMap:ctmTyps},
+			{width:'100%',		name:'businessLicense',     title:'营业执照号'},
+			{width:'100%',		name:'empCount',     		title:'员工数量'},
+			{width:'100%',		name:'legalRep',     		title:'法人代表名称'},
+			{width:'100%',		name:'managerName',     	title:'客户经理名称'},
+			{width:'100%',		name:'managerUser',     	title:'客户经理编号'},
+			{width:'100%',		name:'offcAddrZipCode',     title:'办公地址邮编',	length:6},
+			{width:'100%',		name:'enterpriseScale',    	title:'企业规模',		type: 'select',valueMap:EnterpriseScales,allowEmptyValue:true,autoFetchData:false},
+			{width:'100%',		name:'crdtAmt',    	 		title:'授信金额',type:'float', format:'0.00'},
+			{width:'100%',		name:'regAddress',     		title:'注册地址描述',		type:"textArea"	,rowspan:5},
+			{width:'100%',		name:'offcAddress',     	title:'办公地址',		type:"textArea"	,rowspan:5},
+			{width:'100%',		name:'busScope',     		title:'经营范围',		type:"textArea",	rowspan:5},
+			{width:'100%',		name:'abnormalOperation',   title:'经营异常',	type:'boolean'},
+			{width:'100%',		name:'blankBlackList',   title:'联合惩戒',	type:'boolean'},
+			{width:'100%',		name:'isLitigation',   title:'重大涉诉',	type:'boolean'},
+			{width:'100%',		name:'isNewMark',   title:'新建企业标识',	type:'boolean'}
+		]
+};
+
+isc.FwReadOnlyDynamicForm.create({
+	ID : "customerVieweForm",
+	numCols : 4,
+	width:'50%',
+	height:'100%',
+	autoDraw : false,
+	overflow : "auto",
+	autoFocus : false,
+	fields : EnterpriseCustomerFieldsToShow.edit
+});
+
+var startTime = '';
+var endTime = '';
+
+//违约事件字段定义	
+var DefaultCustomerEventItemFields ={
+	comment: [
+			{name:'id',					    	title:'主键',		primaryKey:true,	hidden:true},
+			{name:'custNo',						title:'客户编号', 	hidden:true},	
+		    {name:'rolename',		width:150,	title:'处理角色'},
+		    {name:'remark',			title:'意见说明',		width:'30%', hidden:ishide},	
+		    {name:'isValid',				width:'20%',	title:'认定结果', valueMap:validStatus},
+		    {name:'creator',		title:'处理人',	width:'30%',type: 'select',	valueMap:users },
+		    {name:'org',		title:'所属机构',	width:'30%',type: 'select',	valueMap:orgs },
+		    {name:'createDate',		title:'处理时间',	width:'30%'}
+	],
+	grid: [
+			{name:'id',					    	title:'主键',		primaryKey:true,	hidden:true},
+			{name:'custNo',						title:'客户编号', 	hidden:true},	
+		    {name:'defaultEventCode',			title:'违约事件',		width:250,			type: 'select',	valueMap:defaultEvent},	
+		    {name:'eventStartTime',				title:'事件开始时间',	width:250,			showHover:false,type:'date'},
+		    {name:'defaultEventName',		title:'违约事件说明',	width:'*'}
+	],
+	edit: [
+			{width:'100%',		name:'id',						title:'[[#{id}]]',		primaryKey:true,hidden:true,canEdit:false},
+			{width:'100%',		name:'defaultEventCode',    	title:'违约事件',			type: 'select',	valueMap:defaultEvent,allowEmptyValue:true,autoFetchData:false},
+			{width:'100%',		name:'eventStartTime',          title:'事件开始时间',		type:'date',		useTextField:true,textFieldProperties:{canEdit:false},
+				changed : function(form, item, value) {
+					startTime = value;
+					if(new Date(startTime) > new Date()){
+						isc.say("开始时间不能大于当前日期");
+						item.setValue('');
+					}
+				}
+			},
+			{width:'100%',		name:'defaultEventName',    title:'违约事件说明',		type:'textArea', 	height:60,validators:[{type:'lengthRangeB',max:100}]}
+		]		    
+};
+//违约事件列表数据源
+isc.FwRestDataSource.create({
+	ID: 'defaultCustEventItemDS',
+	autoFetchData:false,
+	initialCriteria : {
+		"defaultCustId" : ""
+	},
+  fields: DefaultCustomerEventItemFields.grid,
+  dataURL: '[[@{/irs/defaultCustomerEventItem/isc}]]',
+  fetchDataURL: '[[@{/irs/defaultCustomerEventItem/findCurrEventByCustNo}]]', 
+  addDataURL: '[[@{/irs/defaultCustomerEventItem/addDefaultCustAndEventItem}]]'    
+});
+//违约事件列表 
+isc.FwListGrid.create({
+	ID: 'eventList',
+	title: '<b>违约事件</b>',
+	dataSource: defaultCustEventItemDS,
+	canPageable:false,	  
+	canSort:false,
+	autoDraw:false,
+	canHover:true,
+	autoFetchData:false,
+	fields: DefaultCustomerEventItemFields.grid,
+	initialCriteria:{
+		enable: true
+	},	
+	editWindow: {
+		ID: 'popWin',
+		width:500,
+		showOperateSuccessMessage: true,
+      form: {
+      	ID: 'popFrm',
+      	numCols:2,
+      	titleWidth:150,
+          dataSource: defaultCustEventItemDS,
+          fields: DefaultCustomerEventItemFields.edit
+      },
+      actionMembers:[
+  		{
+     			title:"确定",
+     		    click: function () {
+     		    	if(isBlank(popFrm.getValue("defaultEventCode"))||isBlank(popFrm.getValue("eventStartTime"))){
+     		    		isc.say("违约事件和事件开始时间都不能为空!");
+     		    		return;
+     		    	}
+     		  		isc.FwRPCManager.post({    		
+     			       	url:"[(@{/irs/defaultCustomerEventItem/addDefaultCustAndEventItem})]",//defaultId
+     			       	urlParameters:{defaultId:customerVieweForm.getValue("defaultId")==null?"":customerVieweForm.getValue("defaultId"),custNo:customerVieweForm.getValue("custNo")},
+     			        data:popFrm.getValues(),
+     			        callback: function(response,rawData,request){ 
+     			        	customerVieweForm.setValue("defaultId",rawData.response.data[0].defaultCustomer.id);   
+     			     		eventList.fetchData({defaultId:customerVieweForm.getValue("defaultId")});
+     			     	    custList.refresh();
+     			     		popWin.close();
+     			     		test = false;
+     			        }
+     		    	}); 
+     		    }
+     		     },'close'
+             	]
+	},
+	actionMembers:['add','update','remove']
+});
+//违约历史事件字段定义	
+var HisEventItemFields ={
+	grid: [
+			{name:'id',					    	title:'主键',	primaryKey:true,hidden:true},
+			{name:'custNo',						hidden:true},	
+		    {name:'defaultEventCode',			width:250,	title:'违约事件',		valueMap:defaultEvent},	
+		    {name:'eventStartTime',				width:100,	showHover:false,	title:'违约日期',	type:'date'},
+		    {name:'defaultEventName',		width:'*',	title:'违约事件说明'}
+	]
+};
+//违约事件列表数据源
+isc.FwRestDataSource.create({
+	ID: 'hisEventDS',
+	autoFetchData:false,
+  fields: HisEventItemFields.grid,
+  fetchDataURL: '[[@{/irs/defaultCustomerEventItem/findHisEventByCustNo}]]'
+});
+//违约事件列表 
+isc.FwListGrid.create({
+	ID: 'hisEventGrid',
+	title: '<b>历史违约事件</b>',
+	dataSource: hisEventDS,	
+	autoFetchData:false,
+	canHover:true,
+	autoDraw:false,
+	canPageable:false,
+	fields: HisEventItemFields.grid
+});
+//表单
+isc.DynamicForm.create({
+	width:'100%',
+	ID : "customerRemarkForm",
+	fields:[
+		   {
+		        name: "havePhoneNumber",
+		        title: "认定结果",
+		        wrapTitle: false,
+		        editorType: "RadioGroupItem",
+		        vertical: false,
+		        valueMap: {
+		            "true": "违约",
+		            "false": "非违约"
+		        }, defaultValue: true,required:true},
+		    {width:'100%',		name:'remark',     		title:'意见说明',		type:"textArea",	colSpan:9,required:true}
+	]
+});
+//上传文件表单
+isc.FwDynamicForm.create({
+	ID : "customerFileUploadForm",
+	width:'100%',
+	canSubmit:true,
+	action: '[[@{/irs/defaultCustomerMan/fileUpload}]]',
+	method:'POST',
+	encoding:'multipart',
+	target: 'uploadIframe',
+	numCols:2,
+	colWidths:[150,'*'],
+	fields:[
+		{width:'100%',		name:'defaultId',           		primaryKey:true,hidden:true},//,hidden:true
+		{
+			width:300,
+			name: 'file',
+			title: '附件上传',
+			type:'upload',
+			required:false
+		}
+	]
+});
+isc.FwRestDataSource.create({
+	ID: 'findComments',
+	autoFetchData:false,
+    fields: DefaultCustomerEventItemFields.comment,
+    fetchDataURL: '[[@{/irs/defaultCustomer/findComments}]]'
+});
+
+isc.FwListGrid.create({
+	ID : "commentDetail",
+	numCols : 4,
+	width:'100%',
+	height:'100%',
+	autoDraw : false,
+	overflow : "auto",
+	autoFocus : false,
+	fields : DefaultCustomerEventItemFields.comment,
+	dataSource: findComments,
+	showRecordComponents: true,
+    showRecordComponentsByCell: true,
+    recordComponentPoolingMode: "recycle",
+	initialCriteria:{
+		enable: true
+	}
+});
+
+isc.Window.create({
+	ID:"viewComment",
+	title: "意见列表",
+	width: '50%',						//窗口默认宽度
+	height:'50%',
+	autoCenter: true,
+	items: [
+  		isc.HLayout.create({
+  			/* width:'50%',
+  			height:'50%', */
+  			members:[
+  				isc.HLayout.create({
+  					/* width:'50%',
+  		  			height:'50%', */
+  					members:[
+  						commentDetail
+  					]
+  				})
+  			]
+  		})
+  	]
+});
+//================================================发起违约客户页面定义——结束===========================================================
+
+//==========================================================违约客户列表页面开始===============================================
+//字段定义
+var DefaultCustomerFields ={
+	query:[
+		{width:200,		name:'custNo',				title:'客户编号'},	
+		{width:200,		name:'custName',			title:'客户名称'},
+		{width:200,		name:'status',			title:'流程状态',type: 'select',valueMap:DefaultCustomerContractStatus }
+	],
+	grid:[
+		{width:100,		name:'defaultId',			title:'违约主键',hidden:true},
+		{width:100,		name:'taskId',			hidden:true	},	//hidden:true
+	    {width:150,		name:'custNo',				title:'客户编号'},	
+	    {width:150,	    name:'custName',			title:'客户名称'},
+	    {width:150,		name:'currentRate',			title:'当前评级等级'},	
+	    {width:300,		name:'effectiveDate',			title:'评级生效日'},	
+	    {width:100,		name:'deadDate',			title:'评级失效日'},	
+	    {width:250,		name:'valid',			title:'评级是否有效'},	
+	    {width:100,		name:'sfwy',			title:'是否违约',	hidden:true},	
+	    {width:300,		name:'wyrq',			title:'违约日期'},
+	    {width:300,		name:'startDate',			title:'发起时间'},
+		{width:100,		name:'initiationMode',		title:'发起方式',		type:'select',	valueMap:DefaultCustomerAffirmMode},
+		{width:100,		name:'startUser',			title:'发起人',type:'select', valueMap:users},
+		{width:150,		name:'status',				title:'流程状态',		type:'select',	valueMap:DefaultCustomerContractStatus},		
+		{width:300,		name:'endDate',				title:'完成时间'},	
+		{width:100,		name:'assignee',			title:'当前任务人',type: 'select',	valueMap:users},		
+		{width:250,		name:'btn',					title:'操作'}
+	]
+};
+
+//客户数据源
+isc.FwRestDataSource.create({
+	ID: 'defaultCustomerDS',
+    fields: DefaultCustomerFields.grid,
+    fetchDataURL: '[[@{/irs/defaultCustomerMan/fetchDefaultCustomer}]]'
+});
+
+//客户列表
+isc.FwListGrid.create({
+	ID: 'custList',
+	title: '<b>违约认定列表</b>',
+	dataSource: defaultCustomerDS,
+	fields: DefaultCustomerFields.grid,
+    showRecordComponents: true,
+    showRecordComponentsByCell: true,
+    recordComponentPoolingMode: "recycle",
+    canHover:true,
+    cellHeight: 30,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: DefaultCustomerFields.query
+	},
+	actionMembers:[	{
+		title:'<span class="fa fa-plus"></span> 人工终止',
+		name:"CUSTOMER_BREAK",
+	click:function(){
+			var cusRecord = custList.getSelectedRecord();
+			if(cusRecord){
+				if(roleCode=="admin"){//只有系统管理员才能做终止操作
+				if(cusRecord["taskId"]!=null){
+					isc.ask("当前任务将被终止",function(e){
+						if(e){
+						   //人工终止
+				        	isc.FwRPCManager.get({
+				        		url: "[[@{peopleDone}]]" ,
+				        		urlParameters:{pkId:cusRecord.defaultId,taskId:cusRecord.taskId,doneType:"01"},
+				        		callback: function(response, rawData, request){
+				        		    custList.refresh();
+	  						     	isc.say('操作成功！');
+				        		}
+				        	});
+						}
+					});
+				}else{
+					isc.say("该流程尚未发起或者已经结束,人工终止无效！");
+				}
+			}else{
+				isc.say("只有系统管理员才能做终止操作！");
+			}
+		}else{
+			isc.say("请选择一条违约客户数据！");
+		}
+		
+	}
+},{
+			title:'<span class="fa fa-plus"></span> 新增申请',
+				name:"CUSTOMER_DETAIL_INFO",
+			click:function(){
+				if(roleCode!="admin"){
+					if(roleCode=="CUSTOMER_MANAGER" || roleCode=="DETERMINATION_COGNIZANCEP_APPLY"){//客户经理,违约认定申请岗
+					   CustomerInfoDetailPlan.show();
+					}else{
+						isc.say("请切换到客户经理或者违约认定申请岗的角色后再做新增申请操作!");
+					}
+				}else{
+					isc.say("系统管理员不能新增申请！");
+				}
+			}
+	    },
+	'query','reset','refresh',{
+		title:'<span class="fa fa-sitemap"></span> [(#{org.wsp.framework.flowable.action.showWorkflowDiagram})]',
+		name:'diagram',
+		click: function(){
+			if(custList.getSelectedRecord().taskId!=null){
+				isc.FwWindow.create({
+					title: '[(#{org.wsp.framework.flowable.window.workflowDiagram.title})]',
+					autoSize: false,
+					width: 800,
+					height: 500,
+					showActionBar: false,
+					members:[
+						isc.HTMLPane.create({
+						    width:'100%', 
+						    height:'100%', 
+						    styleName:"exampleTextBlock",
+						    contents:"<div style='background-color:white;width:100%;height:100%;overflow:auto;'><img src='[(@{/system/process/query/showProcessDiagramByTaskId})]/" + custList.getSelectedRecord().taskId + "'></img></div>",
+						    selectContentOnSelectAll:true
+						})
+					]
+				}).show();
+			}else{
+				isc.say('该流程尚未发起或该流程已经结束！');
+			}
+		}
+	}
+	],
+	createRecordComponent : function (record, colNum) {
+	    	return createOperationButton(record, colNum);
+	 },
+	updateRecordComponent: function (record, colNum, component, recordChanged) {
+    	return createOperationButton(record, colNum);
+    },
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[custList]
+		})
+	}
+});
+//==========================================================违约客户列表页面结束===============================================
+
+//====================================================违约客户列表页面发起按钮定义开始=====================================================================
+function createOperationButton(record, colNum){
+	//alert("2");
+    var fieldName = custList.getFieldName(colNum);  	
+    if (fieldName == "btn") {
+	    	 var recordCanvas = isc.HLayout.create({
+	             height: 22,
+	             width: "100%",
+	             align: "left"
+	         });
+	    	 
+	    	 
+
+    		 var viewComments = isc.IButton.create({
+    	        	name:"viewComments",
+    	            title: "查看意见",
+    	            grid: this,
+    	            click : function () {
+    	            	commentDetail.fetchData({'defaultId':record.defaultId});
+    	            	commentDetail.setActionMemberButtonStatus("enable",null);
+    	            	viewComment.show();
+    	            }
+    	        });	
+    	
+    		 var button = isc.IButton.create({
+			    	            layoutAlign: "center",
+			    	            title: "发起",
+			    	            grid: this,
+			    	            click : function () {
+			    	        		customerVieweForm.getItem("custNo").setValue(record.custNo);
+			    	        		customerVieweForm.setValue("defaultId",record.defaultId);
+			    	        		eventList.fetchData({'defaultId':record.defaultId});
+			    	        		hisEventGrid.fetchData({'custNo':record.custNo});
+			    	        	    eventList.setActionMemberButtonStatus("enable",null);
+			    	        	    customerRemarkForm.setValue("remark","");
+
+			    	        isc.FwRPCManager.get({
+	    		        		url: "[[@{/irs/companyCustomer/findByCustNo}]]" ,
+	    		        		urlParameters:{custNo:record.custNo},
+	    		        		callback: function(response, rawData, request){
+	    		        		
+	    		        			customerVieweForm.setValues(rawData);  
+	    		        			//customerVieweForm.setValue("managerUser",rawData.managerUser.loginName);
+	    		        		}
+	    		        	});
+	    		        	
+	    		      
+	    		        	customerVieweForm.getItem("custNo").setValue(record.custNo);
+			    	        		  
+			    	        		  
+			    	        		//定义新增违约事件页面
+			    	        	isc.Window.create({
+			    	        		   	ID:"newDefaultWin",
+			    	        				title: "认定违约客户",
+			    	        				width: '80%',						//窗口默认宽度
+			    	        				height:'100%',
+			    	        				canDragResize: false,				//用户不能通过拖拽调整窗口大小
+			    	        				autoCenter: true,					//自动将窗口定位于页面中央
+			    	        				showMaximizeButton: false,			//在窗口标题栏中不显示最大化按钮
+			    	        				showMinimizeButton: false,			//在窗口标题栏中不显示最小化按钮
+			    	        				isModal: true,						//模式窗口
+			    	        				showModalMask: true,				//显示遮罩
+			    	        				autoSize:false,						
+			    	        				canFocus: true,						//窗口可以获得焦点
+			    	        				contentLayout:'hertical',			//窗口采用水平布局
+			    	        				bodyStyle: 'fwWindowBody',			//窗口 body 样式名称
+			    	        				dismissOnEscape: true,				//按 ESC 键后窗口关闭(会调用 close() 方法)
+			    	        				bodyDefaults:{
+			    	        				   		padding:0
+			    	        				},
+			    	        				closeAndDestroy: false,				//关闭按钮点击时是否关闭并摧毁窗口
+			    	        			  	items: [
+			    	        			  		isc.VLayout.create({
+			    	        			  			width:'100%',
+			    	        			  			height:'100%',
+			    	        			  			members:[
+			    	        			  				isc.HLayout.create({
+			    	        			  					width:'100%',
+			    	        			  		  			height:'90%',
+			    	        			  					members:[
+			    	        			  						customerVieweForm,
+			    	        			  						isc.VLayout.create({
+			    	        			  							widht:"50%",
+			    	        			  							height:"100%",
+			    	        			  							members:[
+			    	        			  								hisEventGrid,
+			    	        			  								isc.LayoutSpacer.create({height:'10'}),  //间距
+			    	        			  								eventList,
+			    	        			  								customerRemarkForm,
+			    	        			  								customerFileUploadForm,
+			    	        			  								isc.HTMLFlow.create({
+			    	        			  		        		    		contents:'<iframe name="uploadIframe" id="approvalRatinguploadIframe" style="width:0px;height:0px;border:0px;"></iframe>'
+			    	        			  		        		    	})
+			    	        			  							]
+			    	        			  						})
+			    	        			  					]
+			    	        			  				}),
+			    	        			  				isc.LayoutSpacer.create({height:'30'}),  //间距
+			    	        			  				isc.HLayout.create({
+			    	        			  					width:'100%',
+			    	        			  		  			height:'10%',
+			    	        			  					members:[
+			    	        			  						isc.LayoutSpacer.create({width:'100%'}),  //间距
+			    	        			  						isc.FwWorkflowAction.create({
+			    	        			  							ID:"process_action",
+			    	        			  							taskId:"",
+			    	        			  				    		actionUrl: "[(@{/irs/defaultCustomerMan/startDefaultCustProcess})]",
+			    	        			  				    		getData: function(){
+			    	        			  				    			return {
+			    	        			  				    				bussinessKey: customerVieweForm.getValue("defaultId")==null?"":customerVieweForm.getValue("defaultId"),
+			    	        			  				    		    	transientVariables	: {
+			    	        			  				    		    		taskId:record["taskId"],
+			    	        			  				    		    		defaultId:record["defaultId"],
+			    	        			  				    		  	        confirmStatus:customerRemarkForm.getValue("havePhoneNumber")==null?"":customerRemarkForm.getValue("havePhoneNumber"),
+			    	        				  				    	        	remark:customerRemarkForm.getValue("remark")==null?"":customerRemarkForm.getValue("remark"),
+			    	        			  				    	        	    file:customerFileUploadForm.getValue("file"),
+			    	        			  				    	        	    flag:"0",
+			    	        			  				    	        	    roleName:roleCode,
+			    	        			  				    	        		first_task_assignee:userAccout
+			    	        			  				    	        	},
+			    	        			  				    	        	autoCompleteFirstTask:false
+			    	        			  				    			}
+			    	        			  				    		},doSubmit:function(){
+			    	        			  				    			if(customerRemarkForm.getValue("remark")==null || customerRemarkForm.getValue("remark")==""){
+			    	        			  				    				isc.say('意见说明不能为空');
+			    	        			  				    			}else{
+			    	        							    				this.Super('doSubmit',arguments);
+			    	        			  				    			}
+			    	        							    		},
+			    	        							    		successCallback: function(response,rawData,request){
+			    	        							    			console.log(rawData.strCode);
+			    	        							    			customerFileUploadForm.setValue("defaultId",rawData.strCode);   
+			    	        							    			customerFileUploadForm.submit();
+			    	        			  				        	    custList.refresh();
+			    	        			  						     	newDefaultWin.close();
+			    	        			  						     	isc.say('违约认定提交成功！');
+			    	        			  						     	recordCanvas.removeMember(button);
+			    	        			  						     	recordCanvas.removeMember(isc.LayoutSpacer.create({width:10}));
+			    	        			  						     	recordCanvas.removeMember(isc.LayoutSpacer.create({width:10}));
+			    	        			  				    		}
+			    	        			  				    	}),
+			    	        			  						isc.LayoutSpacer.create({width:'100%'})  //间距
+			    	        			  					]
+			    	        			  				})
+			    	        			  			]
+			    	        			  		})
+			    	        			  	]
+			    	        		}).show();
+			    	    		 custList.refresh();
+		    	        		 customerRemarkForm.getItem("havePhoneNumber").show();
+			    	            }
+		    	            });
+    	
+    		 if(record["status"] == null || record["status"] == "TO_BE_CONFIRMED" ){//待确认
+    			 if(roleCode=="CUSTOMER_MANAGER"){//客户经理对待确认的违约客户做发起操作
+    			 	recordCanvas.addMember(button);
+ 	            	//recordCanvas.addMember(isc.LayoutSpacer.create({width:10}));
+    			 }
+    		 }
+    		recordCanvas.addMember(viewComments);
+          	//recordCanvas.addMember(isc.LayoutSpacer.create({width:10}));
+    } 
+    
+    return recordCanvas;  
+}
+//====================================================违约客户列表页面发起按钮定义结束=====================================================================
+
+	
+//==============================================================新增申请开始==================================================
+//字段定义
+var CustomerEarlyWarningFieldsToShow ={
+		grid: [
+			    {width:100,		name:'accountManagerCode',hidden:true	},	//hidden:true
+			    {width:200,		name:'custNo',				title:'客户编号'},	
+			    {width:200,	    name:'custName',			title:'客户名称'},
+			    //{width:200,		name:'finalLevel',			title:'当前评级等级'},	
+			    {width:250,		name:'registrationAmount',			title:'注册金额'},	
+			    {width:250,		name:'industryCategoryA',			title:'行业类型',valueMap:GBindustrys},	
+			    {width:200,		name:'enterpriseScale',			title:'企业规模',valueMap:EnterpriseScales},	
+			    {width:'*',		name:'crdtAmt',			title:'授信金额', type:'float', format:'0.00'}
+		],
+		query: [
+		    {width:150,		name:'custNo',				title:'客户编号'},	
+		    {width:150,	    name:'custName',			title:'客户名称'}
+			]
+};
+
+
+
+//公司客户列表数据源
+isc.FwRestDataSource.create({
+	ID: 'CustomerEarlyWarningDS',
+    fields: CustomerEarlyWarningFieldsToShow.grid,
+    fetchDataURL: '[[@{/irs/defaultCustomerMan/queryCustomers}]]'
+});
+isc.FwListGrid.create({
+	ID : "CustomerEarlyWarningForm",
+	width:'100%',
+	overflow : "auto",
+	autoFocus : false,
+    canHover:true,
+	bodyDefaults:{padding:0},
+	dataSource:CustomerEarlyWarningDS,
+	fields : CustomerEarlyWarningFieldsToShow.grid,
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: CustomerEarlyWarningFieldsToShow.query
+	},
+	actionMembers:[
+	       		'query','refresh','reset',{
+	    			title:'<span class="fa fa-plus"></span> 下一步',
+	     			name:"CUSTOMER_DETAIL_INFO_NEXT",
+	    			click:function(){ 
+	    				test = true;
+	    				var flag = true;
+	    				var flag1 = true;
+	    				var flag2 = true;
+	    				var cusRecord = CustomerEarlyWarningForm.getSelectedRecord();
+	    			    if(cusRecord){
+		    				customerVieweForm.setValue("defaultId",cusRecord.defaultId);
+		    				eventList.fetchData({defaultId:"111"});
+		    				hisEventGrid.fetchData({'custNo':cusRecord.custNo});
+		    				//管理员
+		    				if(roleCode=="DETERMINATION_COGNIZANCEP_APPLY"){//管理人员  ，违约认定申请岗默认客户经理发起
+		    					if(cusRecord.accountManagerCode==null || cusRecord.accountManagerCode==""){
+		    						isc.say('客户对应的客户经理不能为空,请重新选择客户');
+		    						return false;
+		    					}else{
+		    						userAccout = cusRecord.accountManagerCode;
+		    					}
+		    				}
+	    				
+	    		         isc.FwRPCManager.get({
+	    		        		url: "[[@{/irs/companyCustomer/findByCustNo}]]" ,
+	    		        		urlParameters:{custNo:cusRecord.custNo},
+	    		        		callback: function(response, rawData, request){
+	    		        			
+	    		        			customerVieweForm.setValues(rawData);  
+	    		        			//customerVieweForm.setValue("managerUser",rawData.managerUser.loginName);
+	    		        			
+	    		        		}
+	    		        	}); 
+	    		        	
+	    		      
+	    		        	customerVieweForm.getItem("custNo").setValue(cusRecord.custNo);
+	    		        	
+	    		        	isc.Window.create({
+			    	        		   	ID:"newDefaultWin",
+			    	        				title: "认定违约客户",
+			    	        				width: '80%',						//窗口默认宽度
+			    	        				height:'100%',
+			    	        				canDragResize: false,				//用户不能通过拖拽调整窗口大小
+			    	        				autoCenter: true,					//自动将窗口定位于页面中央
+			    	        				showMaximizeButton: false,			//在窗口标题栏中不显示最大化按钮
+			    	        				showMinimizeButton: false,			//在窗口标题栏中不显示最小化按钮
+			    	        				isModal: true,						//模式窗口
+			    	        				showModalMask: true,				//显示遮罩
+			    	        				autoSize:false,						
+			    	        				canFocus: true,						//窗口可以获得焦点
+			    	        				contentLayout:'hertical',			//窗口采用水平布局
+			    	        				bodyStyle: 'fwWindowBody',			//窗口 body 样式名称
+			    	        				dismissOnEscape: true,				//按 ESC 键后窗口关闭(会调用 close() 方法)
+			    	        				bodyDefaults:{
+			    	        				   		padding:0
+			    	        				},
+			    	        				closeAndDestroy: false,				//关闭按钮点击时是否关闭并摧毁窗口
+			    	        			  	items: [
+			    	        			  		isc.VLayout.create({
+			    	        			  			width:'100%',
+			    	        			  			height:'100%',
+			    	        			  			members:[
+			    	        			  				isc.HLayout.create({
+			    	        			  					width:'100%',
+			    	        			  		  			height:'90%',
+			    	        			  					members:[
+			    	        			  						customerVieweForm,
+			    	        			  						isc.VLayout.create({
+			    	        			  							widht:"50%",
+			    	        			  							height:"100%",
+			    	        			  							members:[
+			    	        			  								hisEventGrid,
+			    	        			  								isc.LayoutSpacer.create({height:'10'}),  //间距
+			    	        			  								eventList,
+			    	        			  								customerRemarkForm,
+			    	        			  								customerFileUploadForm,
+			    	        			  								isc.HTMLFlow.create({
+			    	        			  		        		    		contents:'<iframe name="uploadIframe" id="approvalRatinguploadIframe" style="width:0px;height:0px;border:0px;"></iframe>'
+			    	        			  		        		    	})
+			    	        			  							]
+			    	        			  						})
+			    	        			  					]
+			    	        			  				}),
+			    	        			  				isc.LayoutSpacer.create({height:'30'}),  //间距
+			    	        			  				isc.HLayout.create({
+			    	        			  					width:'100%',
+			    	        			  		  			height:'10%',
+			    	        			  					members:[
+			    	        			  						isc.LayoutSpacer.create({width:'100%'}),  //间距
+			    	        			  						isc.FwWorkflowAction.create({
+			    	        			  							ID:"process_action",
+			    	        			  							taskId:"",
+			    	        			  				    		actionUrl: "[(@{/irs/defaultCustomerMan/startDefaultCustProcess})]",
+			    	        			  				    		getData: function(){
+			    	        			  				    			return {
+			    	        			  				    				bussinessKey: customerVieweForm.getValue("defaultId")==null?"":customerVieweForm.getValue("defaultId"),
+			    	        			  				    		    	transientVariables	: {
+		    	        			  				    		  		        taskId:customerVieweForm.getValue("taskId")==null?"":customerVieweForm.getValue("taskId"),
+		    	        				  				    	        		defaultId:customerVieweForm.getValue("defaultId")==null?console.log(eventList.getCellRecord()):customerVieweForm.getValue("defaultId"),
+		    	        				  				    	        	    confirmStatus:customerRemarkForm.getValue("havePhoneNumber")==null?"":customerRemarkForm.getValue("havePhoneNumber"),
+		    	        				  				    	        	    remark:customerRemarkForm.getValue("remark")==null?"":customerRemarkForm.getValue("remark"),
+		    	        				  				    	        	    file:customerFileUploadForm.getValue("file"),
+		    	        				  				    	        	    flag:"0",
+		    	        				  				    	        	    roleName:roleCode,
+		    	        				  				    	        		first_task_assignee:userAccout,
+		    	        				  				    	        		assignee:userAccout
+			    	        			  				    	        	},
+			    	        			  				    	        	autoCompleteFirstTask:false
+			    	        			  				    			}
+			    	        			  				    		},doSubmit:function(){
+			    	        			  				    			if(test){
+			    	        			  				    				isc.say('违约事件列表不能为空');
+			    	        			  				    			}else if(customerRemarkForm.getValue("remark")==null || customerRemarkForm.getValue("remark")==""){
+			    	        			  				    				isc.say('意见说明不能为空');
+			    	        			  				    			}else{
+			    	        							    				this.Super('doSubmit',arguments);
+			    	        					
+			    	        			  				    			}
+			    	        							    		},	    	        			  				 
+			    	        							    		successCallback: function(response,rawData,request){
+			    	        							    			
+			    	        							    			customerFileUploadForm.setValue("defaultId",rawData.strCode);   
+			    	        							    			customerFileUploadForm.submit();
+			    	        			  				        	    custList.refresh();
+			    	        			  						     	newDefaultWin.close();
+			    	        			  						     	CustomerInfoDetailPlan.close();
+			    	        			  						     	isc.say('违约认定提交成功！');
+			    	        			  				    		}
+			    	        			  				    	}),
+			    	        			  						isc.LayoutSpacer.create({width:'100%'})  //间距
+			    	        			  					]
+			    	        			  				})
+			    	        			  			]
+			    	        			  		})
+			    	        			  	]
+			    	        		});    	
+	    		        	
+	    		        	//是否存在在途违约认定流程,客户状态是否为违约,是否存在在途评级流程
+	    		        	isc.FwRPCManager.get({
+	    		        		url: "[[@{validateQueryCustomerByCustNo}]]" ,
+	    		        		urlParameters:{customerNo:cusRecord.custNo},
+	    		        		callback: function(response, rawData, request){
+	    		        			//是否存在在途违约认定流程
+	    		        			if(rawData && rawData.transitRs>0 && rawData.transitRs!=""){
+	    		        				flag = false;
+ 	    		        				//加载图标数据
+	    		        				isc.say("当前存在在途违约认定流程，无法发起违约认定申请");
+	    		        			} 
+	    		        			//客户状态是否为违约
+	    		        			else if(rawData && rawData.defaultRs>0 && rawData.defaultRs!=""){
+	    		        				flag1 = false;
+// 	    		        				//加载图标数据
+	    		        				isc.say("当前客户为违约客户，无法发起违约认定申请");
+	    		        			}
+	    		        			//是否存在在途评级流程
+	    		        			else if(rawData && rawData.ratingRs>0 && rawData.ratingRs!=""){
+	    		        				flag2 = false;
+// 	    		        				//加载图标数据
+	    		        				isc.say("当前存在在途评级流程，已终止评级流程，请重新发起");
+	    		        				
+	    		        				$.ajax({
+	    		        			        type:"GET",
+	    		        			        url: "[(@{/irs/defaultCustomerMan/ratingDone?custno=" + cusRecord.custNo + "})]",
+	    		        			        contentType: "application/json",   
+	    		        			        success: function (jsonResult) {  
+	    		        						//更新条数
+	    		        			       		/* $.post('[(@{/commom/index/queryMsgCnt})]', {
+	    		        			       		}, function(data) {
+	    		        			       			if(data==0)
+	    		        			       				$("#myMsgCnt").html("");
+	    		        			       			else
+	    		        			       			$("#myMsgCnt").html(data);
+	    		        			       		}); */
+
+	    		        			        }
+	    		        			    
+	    		        			    });
+	    		        				
+	    		        				
+	    		        				
+	    		        			} else{
+	    		        				newDefaultWin.show();
+	    		        			}
+	    		        		}
+	    		        	});
+	    		            customerRemarkForm.getItem("havePhoneNumber").hide();
+	    		            customerRemarkForm.getItem("remark").setValue("");
+	    				}else{
+	    					isc.say("请选择一条客户数据！");
+	    				}
+                       
+	    			}
+	    		}
+	     ]
+});
+
+isc.Window.create({
+	ID:"CustomerInfoDetailPlan",
+	title: "违约认定申请发起",
+	width: '100%',						//窗口默认宽度
+	height:'100%',
+	dismissOnEscape: true,				//按 ESC 键后窗口关闭(会调用 close() 方法)
+	bodyDefaults:{padding:0},
+  	items: [
+		isc.TabSet.create({
+		    ID: "theTabs",
+		    height: '100%',
+		    width: '100%', 
+		    tabs: [
+		        {title:"新增申请", 
+			         pane:isc.HLayout.create({
+				  			width:'100%',
+				  			height:'100%',
+				  			members:[
+								CustomerEarlyWarningForm
+			         		]
+  			         })
+			        }
+		    ]
+		})
+ 	]
+});
+
+//保存建议等级
+function doFileAfter(url,filename){
+	var values = customerFileUploadForm.getValues();
+	values["fileUrl"]=url;
+	values["fileName"]=filename;
+	delete values["file"];
+	isc.FwRPCManager.post({
+       	url:FrameworkUiInterface.webContextPath + "/irs/defaultCustomerMan/updateDefaultCustomerStatus",
+    	urlParameters:values, 
+        callback: function(response,rawData,request){
+        	
+        }
+	});
+}
+//==============================================================新增申请结束==================================================	
+
+//================================================发起违约客户页面定义——结束===========================================================
+
+
+//================================================发起违约客户页面定义——结束===========================================================
+	
+
+	//=====================================================单选按钮定义开始=================================
+
+//===============================================单选按钮定义结束=============================================
+
+	
+</script>
+</html>

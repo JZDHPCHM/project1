@@ -1,0 +1,89 @@
+:doctype: book
+:backend: pdf
+:toc: right
+:toc-title: 目录
+:toclevels: 5
+:sectnums:
+:sectnumlevels: 5
+:icons: font
+:sectanchors:
+:source-highlighter: highlightjs
+:imagesdir: ./resources/images
+:iconsdir: ./resources/icons
+:stylesdir: ./resources/styles
+:scriptsdir: ./resources/js
+
+= 山东城商联盟非零售内部评级系统 POC 使用指南
+
+:imagesdir: asciidoctor
+:toc: left
+:toc-title: 目录
+:toclevels: 3
+:stylesdir: asciidoctor/stylesheets
+:stylesheet: font-awesome.css
+
+[TIP]
+====
+本 POC 系统在 Chrome 浏览器中使用效果最佳。
+
+Chrome 浏览器下载地址: link:../../anonymous-download/chrome.zip[],安装步骤如下:
+
+. 下载 chrome.zip 文件
+. 解压缩 chrome.zip 文件
+. 执行 Chrome.exe
+====
+
+== 单实例多法人系统使用说明
+
+本次 POC 系统为*多法人系统*，系统会事先会根据订好的规则配置好不同 IP 地址对应的所属法人，用户在相应的 IP 地址的计算机上登录时，
+系统会判断所属法人，并显示所属法人的登录页面，同时也会在登录页面显示当前所属法人的名称信息。如下:
+
+.A 银行登录页面 
+image::images/login_a.png[]
+
+== 系统用户列表
+
+=== 超级管理员用户
+[width="100%",cols="1,1,2,5"]
+|====================
+|登录用户名|登录密码|所属角色|主要功能
+
+|admin 			|admin		|系统超级管理员	|所有系统管理功能，设置法人等
+|====================
+
+=== A 银行
+
+[width="100%",cols="1,1,1,5"]
+|====================
+|登录用户名|登录密码|所属角色|主要功能
+
+|A          	|password	|系统管理员	|系统管理(定义评级步骤，定义财报选择规则，定义调整项，定义标尺，定义模型选择路径，设计评级流程，定义违约事件，配置参数等)，系统资源查看，系统批量评级等
+|A001		    |password	|客户经理		|发起评级，查看客户信息，发起违约认定，发起违约重生，人工批量评级
+|A002		    |password	|复核岗		|复核评级，审批违约认定，审批违约重生
+|A003		    |password	|认定岗		|认定评级，认定违约认定，认定违约重生
+|A004		    |password	|最终认定岗	|最终认定评级
+|====================
+
+=== B 银行
+
+[width="100%",cols="1,1,1,5"]
+|====================
+|登录用户名|登录密码|所属角色|主要功能
+
+|B				|password	|系统管理员	|系统管理(定义评级步骤，定义财报选择规则，定义调整项，定义标尺，定义模型选择路径，设计评级流程，定义违约事件，配置参数等)，系统资源查看，系统批量评级等
+|B001		    |password	|客户经理		|发起评级，查看客户信息，发起违约认定，发起违约重生，人工批量评级
+|B002		    |password	|复核岗		|复核评级，审批违约认定，审批违约重生
+|B003		    |password	|认定岗		|认定评级，认定违约认定，认定违约重生
+|b004		    |password	|最终认定岗	|最终认定评级
+|====================
+
+[appendix]
+== 常用软件下载
+
+POC 汇报 PPT			link:../../anonymous-download/POC.pptx[]
+
+Chrome 浏览器 	link:../../anonymous-download/chrome.zip[]
+
+Putty  			link:../../anonymous-download/putty.zip[]
+
+WinSCP			link:../../anonymous-download/winscp.zip[]

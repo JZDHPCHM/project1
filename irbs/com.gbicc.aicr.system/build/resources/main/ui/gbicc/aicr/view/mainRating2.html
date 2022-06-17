@@ -1,0 +1,202 @@
+<html><head>
+	<title>主体评级报告</title>
+	<script type="text/javascript" src="/webjars/inspinia/2.7.0/js/jquery-3.1.1.min.js"></script>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+			box-sizing:border-box;
+			outline:0;
+			-webkit-tap-highlight-color:transparent
+		}
+		html{-webkit-text-size-adjust:none;-webkit-font-smoothing:antialiased}
+		body,html{height:100%;background-color:#d8e1fe}
+		a{text-decoration:none}
+		.report-covers{
+			position: relative;
+		}
+		.report-date{
+			position: absolute;
+		    color: #fff;
+		    top: 18.5rem;
+		    left: 19.5rem;
+		    font-size: 1.5rem;
+		    font-weight: bolder;
+		}
+		.report-block{
+			background: #fff;
+		    margin: 0 2rem;
+    		border-radius: 1.5rem;
+    		margin-top: -5px;
+    		margin-bottom: 2.5rem;
+    		padding-bottom: 2rem;
+		}
+		.border-img{
+			background: url(/images/border_img_mobile.png) top left no-repeat;
+		    background-size: 100% 100%;
+		    width: 100%;
+		    height: 17rem;
+		    position: relative;
+    		top: 2rem;
+		}
+		.info-div{
+			float: left;
+		    font-size: 20px;
+		    color: #666;
+		    position: relative;
+		    top: 4rem;
+		}
+		.top-div{
+			padding-bottom: 1.5rem;
+		}
+		.top-strong{
+			font-size: 54px;
+		    color: #4d4d4d;
+		    display: inline-block;
+		    min-width: 15rem;
+		    text-align: right;
+		    margin-right: 1rem;
+		}
+		.title-head{
+			text-align: center;
+			padding-top: 3rem;
+		}
+		.line-div{
+			display: inline-block;
+		    width: 2rem;
+		    height: 3px;
+		    background: #447cf3;
+		    position: relative;
+		    top: -6px;
+		}
+		.echarts-title{
+			color: #447cf3;
+		    font-size: 28px;
+		    font-weight: bolder;
+		    display: inline-block;
+		    padding: 0 10px;
+		}
+		.dotted-line{
+			width: 90%;
+		    border-bottom: 2px dotted #b7bae0;
+		    margin: 4rem 5% 2rem;
+		    display: inline-block;
+		}
+		.detailed-information{
+			color: #666;
+		    font-size: 1.8rem;
+		    margin: 0 2rem 0 8rem;
+		    font-weight: bolder;
+		}
+		ul li{
+			line-height: 60px;
+		}
+		.numerical{
+			font-size: 2.5rem;
+    		padding: 0 10px;
+		}
+	</style>
+	</head>
+
+	<body>
+		<div class="report-covers">
+			<img src="/images/main_rating_img.png" width="100%">
+			<div class="report-date">——<span id="currentYear">2020年1月</span></div>
+		</div>
+		<div class="report-block">
+			<div class="border-img">
+				<div class="info-div">
+					<div class="top-div"><strong id="moAll" class="top-strong">6</strong><span>当月评级</span></div>
+					<div><strong id="avgAll" class="top-strong" style="font-size: 32px;">57.60</strong><span>平均得分</span></div>
+				</div>
+				<div class="info-div" style="left: 7rem;">
+					<div class="top-div"><strong id="sumAll" class="top-strong">274</strong><span>所有评级</span></div>
+					<div><strong id="previous" class="top-strong" style="font-size: 32px;">66.09</strong><span>平均得分</span></div>
+				</div>
+			</div>
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体评级变化趋势</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状混合图 -->
+			<div id="mixlinebar3" style="width: 100%; height: 520px; margin: 0px auto; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1578045674113"><div style="position: relative; overflow: hidden; width: 1455px; height: 520px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1818" height="650" style="position: absolute; left: 0px; top: 0px; width: 1455px; height: 520px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 5px; left: 328px; top: 396px; pointer-events: none;">201904<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#447cf3;"></span>数量: 27<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#f4ac59;"></span>平均分: 66.97</div></div>
+			<div class="dotted-line"></div>
+			<div class="detailed-information">
+				<ul>
+					<li id="benyueBL">本月有6个客户进行主体评级，环比增加100%</li>
+					<li id="benyueAvg">评级平均分为57.60，比所有评级平均分低13%</li>
+				</ul>
+			</div>
+		</div>
+		<div class="report-block">
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体评级等级分布</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+			<div id="columnar" style="width: 100%; height: 520px; margin: 0px auto; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1578045674111"><div style="position: relative; overflow: hidden; width: 1455px; height: 520px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="1818" height="650" style="position: absolute; left: 0px; top: 0px; width: 1455px; height: 520px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 5px; left: 540px; top: 97px; pointer-events: none;">C : 34</div></div>
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体评级行业分布</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 圆饼图 -->
+			<div id="pie1" style="width: 100%; height: 750px; margin: -8% auto 0px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1578045674114"><div style="position: relative; overflow: hidden; width: 1455px; height: 750px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1818" height="937" style="position: absolute; left: 0px; top: 0px; width: 1455px; height: 750px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+			<div class="dotted-line"></div>
+			<div class="detailed-information">
+				<ul>
+					<li id="blfenB">本月主体评级集中分布在E级（2条,33%）、F级（1条,17%）、和G级（1条,17%）</li>
+					<li id="hangye">截止本月行业排在前几位的是卫生和社会工作（27条,10%）、文化、体育和娱乐业（24条,9%）、电力、热力、燃气及水生产和供应业（35条,13%）、制造业（69条,25%）、科学研究和技术服务业（48条,18%）</li>
+				</ul>
+			</div>
+		</div>
+		<div class="report-block">
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体评级事业部分布</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状混合图 -->
+			<div id="mixlinebar1" style="width: 100%; height: 520px; margin: 0px auto; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1578045674112"><div style="position: relative; overflow: hidden; width: 1455px; height: 520px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1818" height="650" style="position: absolute; left: 0px; top: 0px; width: 1455px; height: 520px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体新建2.0模型指标得分</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+			<div id="radarMap1" style="width: 100%; height: 600px; margin: 0px auto; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1578045674115"><div style="position: relative; overflow: hidden; width: 1455px; height: 600px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1818" height="750" style="position: absolute; left: 0px; top: 0px; width: 1455px; height: 600px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体通用2.0模型指标得分</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+			<div id="radarMap2" style="width: 100%; height: 600px; margin: 0px auto; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1578045674116"><div style="position: relative; overflow: hidden; width: 1455px; height: 600px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1818" height="750" style="position: absolute; left: 0px; top: 0px; width: 1455px; height: 600px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体新建1.0模型指标得分</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+			<div id="radarMap3" style="width: 100%; height: 600px; margin: 0px auto; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1578045674117"><div style="position: relative; overflow: hidden; width: 1455px; height: 600px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1818" height="750" style="position: absolute; left: 0px; top: 0px; width: 1455px; height: 600px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体通用1.0模型指标得分</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+			<div id="radarMap4" style="width: 100%; height: 600px; margin: 0px auto; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1578045674118"><div style="position: relative; overflow: hidden; width: 1455px; height: 600px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="1818" height="750" style="position: absolute; left: 0px; top: 0px; width: 1455px; height: 600px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+			<div class="dotted-line"></div>
+			<div class="detailed-information">
+				<ul>
+					<li id="mainDes">本月评级客户最多的是大数据事业部（1个），平均分得分最高的是大健康事业部（68.39分），平均分最低的是大数据事业部（59.87分）</li>
+				</ul>
+			</div>
+		</div>
+		<script src="js/echarts.js"></script>
+		
+	
+
+</body></html>

@@ -1,0 +1,20 @@
+--退保金 
+SELECT SUBSTR(A.APPLYENTITY, 1, 1) 机构,
+       SUM(A.AMOUNT) 金额,
+       COUNT(A.TRANSSEQ) 笔数
+  FROM ATS_CHOUDAN_TMP A
+ WHERE A.TRANSCODE = '1988' --付款
+      
+   AND A.TRANSSTATE = '2' --支付成功
+   AND A.TRANSSOURCE = 'CUSTOMER SERVICE'
+   AND A.REQRESERVED18 IN ('301', -- 正常退保
+                           '302', -- 通融退保
+                           '304', --  附加险退保 
+                           '305', --  犹豫期内退保  
+                           '306', --  银行在线CFI 
+                           '307' -- 银行在线退保
+                           )
+   AND (TO_CHAR(A.PAYMADEDATE, 'yyyy-mm-dd') BETWEEN '2018-04-01' AND
+       '2018-06-30') --月份
+ GROUP BY SUBSTR(A.APPLYENTITY, 1, 1)
+ ORDER BY SUBSTR(A.APPLYENTITY, 1, 1)

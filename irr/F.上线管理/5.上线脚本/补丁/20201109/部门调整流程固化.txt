@@ -1,0 +1,49 @@
+merge into ACT_HI_COMMENT aco
+using(SELECT
+	c.ID_,
+	CONCAT(concat(c.MESSAGE_,nvl2(o.fd_name,'*','')), o.fd_name)	as sub
+FROM
+	ACT_HI_COMMENT c
+	LEFT JOIN ACT_HI_TASKINST t ON t.ID_ = c.TASK_ID_
+	LEFT JOIN FR_AA_USER u ON t.ASSIGNEE_ = u.FD_LOGINNAME
+	LEFT JOIN FR_AA_USER_ORG uo ON u.FD_ID = uo.fd_user_id
+	LEFT JOIN FR_AA_ORG o ON uo.fd_org_id = o.fd_id 
+WHERE
+	t.END_TIME_ >= TO_DATE('2020-10-01', 'yyyy-MM-dd')) tt
+	on (aco.ID_ = tt.ID_)
+	
+	when matched then
+update set aco.MESSAGE_=tt.sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------
+
+
+
+merge into ACT_HI_COMMENT aco
+using(SELECT
+	c.ID_,
+	CONCAT(concat(c.MESSAGE_,nvl2(o.fd_name,'*','')), o.fd_name)	as sub
+FROM
+	ACT_HI_COMMENT c
+	LEFT JOIN ACT_HI_TASKINST t ON t.ID_ = c.TASK_ID_
+	LEFT JOIN FR_AA_USER u ON t.ASSIGNEE_ = u.FD_LOGINNAME
+	LEFT JOIN FR_AA_USER_ORG_0915 uo ON u.FD_ID = uo.fd_user_id
+	LEFT JOIN FR_AA_ORG o ON uo.fd_org_id = o.fd_id 
+WHERE
+	t.END_TIME_ < TO_DATE('2020-10-01', 'yyyy-MM-dd')) tt
+	on (aco.ID_ = tt.ID_)
+	
+	when matched then
+update set aco.MESSAGE_=tt.sub

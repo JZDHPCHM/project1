@@ -1,0 +1,15 @@
+<cre:in1><?xml version="1.0" encoding="GBK"?>
+<ROOT>
+<workflow requestname="IRR风险评级任务提醒测试" 
+creatorname="PE0757" 
+requestlevel="0">
+<field name="rwqc">2019Q3</field>
+<field name="cjr">PE0757</field>
+<field name="sqbm">信息技术部-总部</field>
+<field name="startdate">2019-11-04</field>
+<field name="enddate">2019-11-14</field>
+<field name="gzsm">您有新的待办任务等待处理，请前往“OA首页-系统导航模块-单点登录：IRR风险综合评级”或点击页面URL链接进行操作，谢谢！</field>
+<field name="url">http://172.19.50.134:8080/system/flowable/task/todo.html</field>
+</workflow>
+</ROOT>
+</cre:in1>

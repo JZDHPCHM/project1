@@ -1,0 +1,37 @@
+﻿-- 定期结算
+SELECT
+        a.PolicyNo,
+        b.GrpName,
+        b.ManageCom,
+        a.OtherNo,
+        a.MakeDate,
+        a.SumduepayMoney 收费金额
+FROM
+        ljspay a,
+        lcgrpappnt b
+WHERE
+        a.othernotype = '03'
+AND a.BalanceOnTime = '1'
+AND A.OtherNo LIKE 'S%'
+AND a.policyno = b.grpcontno;
+
+SELECT distinct
+        a.PolicyNo,
+        b.GrpName,
+        b.ManageCom,
+        a.OtherNo,
+        a.PayDate,
+        a.SumduepayMoney 收费金额,
+          --                      e.FinaConfDate 财务确认日
+FROM
+        ljapay a,
+        lcgrpappnt b,lpgrpedormain c,lpbalancerela d,lpbalanceapp e
+WHERE a.othernotype = '03'
+AND a.BalanceOnTime = '1'
+and d.BalanceAllNo=e.BalanceAllNo
+and a.OtherNo=d.EdorAppNo
+and a.PolicyNo=e.GrpContNo
+and a.OtherNo=c.edorappno
+and e.finaConfDate>='2018-11-01'
+and a.otherno like 'S%'
+AND a.policyno = b.grpcontno;

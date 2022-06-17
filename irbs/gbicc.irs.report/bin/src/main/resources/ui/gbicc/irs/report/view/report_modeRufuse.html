@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery/1.12.4/js/jquery.js}"></script>
+</head>
+
+<body>
+</body>
+<script>
+    var newData=[];
+var areaObj = {};
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQueryQuarter,
+	grid: [
+			{width:100, name:'id',		primaryKey:true,hidden:true},
+			{
+				width:120,
+				name:'fdGuestGr',					
+				title:'模型类别',
+				getGridSummary:function (records, summaryField) {
+					return "合计";
+	            }
+			},
+ 			{width:100, name:'fdCustomNum', title:'客户数目',summaryFunction:function() {return sumData['fdCustomNum'];}},//本月 AAA
+ 			{width:100, name:'fdJudgeTimes', title:'评级认定次数',summaryFunction:function() {return sumData['fdJudgeTimes'];}},//本月 AA+
+ 			{width:100, name:'fdJudgeRefuseTimes', title:'评级推翻次数',summaryFunction:function() {return sumData['fdJudgeRefuseTimes'];}},//本月 AA
+ 			{width:100, name:'fdUpOnePer', title:'一级',summaryFunction:function() {return formatPer(sumData['fdUpOnePer']);}},//评级上调占比 一级
+ 			{width:100, name:'fdUpTwoPer', title:'二级',summaryFunction:function() {return formatPer(sumData['fdUpTwoPer']);}},//本月 A+
+ 			{width:100, name:'fdUpGreatTwoPer', title:'二级以上',summaryFunction:function() {return formatPer(sumData['fdUpGreatTwoPer']);}},//本月 A
+ 			{width:100, name:'fdUpToatalPer', title:'合计',summaryFunction:function() {return formatPer(sumData['fdUpToatalPer']);}},//评级上调占比 合计
+ 			
+ 			{width:100, name:'fdDownOnePer', title:'一级',summaryFunction:function() {return formatPer(sumData['fdDownOnePer']);}},//评级上调占比 一级
+ 			{width:100, name:'fdDownTwoPer', title:'二级',summaryFunction:function() {return formatPer(sumData['fdDownTwoPer']);}},//本月 A+
+ 			{width:100, name:'fdDownThreePer', title:'三级',summaryFunction:function() {return formatPer(sumData['fdDownThreePer']);}},//本月 A
+ 			{width:100, name:'fdDownLessThreePer', title:'三级以上',summaryFunction:function() {return formatPer(sumData['fdDownLessThreePer']);}},//本月 A
+ 			{width:100, name:'fdDownToatalPer', title:'合计',summaryFunction:function() {return formatPer(sumData['fdDownToatalPer']);}},//评级上调占比 合计
+ 			
+ 			{width:100, name:'fdJudgeRefusePer', title:'评级推翻率',summaryFunction:function() {return formatPer(sumData['fdJudgeRefusePer']);}},//本月 C
+	]
+};
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields:BorrowKeyBussFields.grid,
+    fetchDataURL:'[[@{/irs/report_modeRufuse/isc/fetchData}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>评级模型推翻报告</b>',
+	dataSource: report_borrowKeyBussDS,
+	//sortField: 'fdGuestGr',
+	canPageable: false,
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	allowRowSpanning:true,
+	fields: BorrowKeyBussFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	exportFilename:'整体借款人评级分布_门类行业',
+	//exportActionMembers:['export2Excel','exportAll2Excel'],
+	actionMembers:[
+		'query','reset',
+		{
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+					url:"[(@{/irs/report_modeRufuse/isc/fetchData/Results.csv})]",
+                    "year":year,"quarter":quarter,
+					fileName:  "评级模型推翻报告",
+                    sortBy: "fdGuestGr"
+				});
+            }
+        }
+	],
+	headerSpans: [
+         {
+        	 fields:["fdUpOnePer","fdUpTwoPer","fdUpGreatTwoPer","fdUpToatalPer"],
+        	 title: "评级上调占比"
+         },
+         {
+        	 fields:["fdDownOnePer","fdDownTwoPer","fdDownThreePer","fdDownLessThreePer","fdDownToatalPer"],
+        	 title: "评级下调占比"
+         }
+     ],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+
+	formatCellValue:function(value, record, rowNum, colNum){
+		
+		var formatVal = value;
+		var fieldName = borrowKeyBussFieldsListGrid.getField(colNum).title;
+		if( colNum!=0){
+			formatVal = formatPer(value);
+		}
+		return formatVal;
+	},
+    query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_modeRufuse/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year,"quarter":quarter},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                sumData = [];
+                newData=[];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.fdGuestGr==='合计'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                borrowKeyBussFieldsListGrid.setData(newData);
+            }
+        });
+    },
+	afterQuery:function(dsResponse,data,dsRequest){
+		borrowKeyBussFieldsListGrid.setData(newData);
+	}  
+	
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+
+</script>
+</html>

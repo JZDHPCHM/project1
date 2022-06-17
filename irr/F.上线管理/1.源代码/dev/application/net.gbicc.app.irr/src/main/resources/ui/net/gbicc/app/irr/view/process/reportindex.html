@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html th:replace="template/simple_inspinia/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+<style type="text/css">
+.btn {
+	margin: 0 0 0 3px
+}
+</style>
+</head>
+<body style='background-color: white'>
+	<div class="wrapper">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<div class="row" style="margin: 5px 0 0 10px">
+							<div class='row'>
+								<div class='col-md-12'>
+									<div class='row' style='padding-right: 20px'>
+										<form class='form-inline' id='indexSearchForm'>
+											<div class="form-group">
+												<label for="searchIndexCode" class="control-label">指标编码</label>
+												<input type="text" placeholder="模糊查询" id="searchIndexCode"
+													name="indexCode" class="form-control">
+											</div>
+											<div class="form-group formMargin">
+												<label for="searchIndexName" class="control-label">指标名称</label>
+												<input type="text" placeholder="模糊查询" id="searchIndexName"
+													name="indexName" class="form-control">
+											</div>
+											<div class="form-group">
+												<label class="control-label" for="orgId">部门/机构</label> <select
+													class="form-control" name="orgId" id="orgId">
+													<option value=''>请选择</option>
+													<option
+														th:each="option: ${@irrTaskServiceImpl.getOrgMapByName('公司')}"
+														th:value="${option.key}" th:text="${option.value}"></option>
+												</select>
+											</div>
+											<div class="form-group formMargin">
+				                                 <label class="control-label" for="projTypeId">评估项目</label>
+			                                	 <select class="form-control" name="projTypeId" id="projTypeId">
+			                                     	<option value=''>请选择</option>
+					                             	<option th:each="option: ${@irrProjTypeServiceImpl.projTypeSelect(4)}" th:value="${option.key}" th:text="${option.value}"></option>
+			                                	 </select>
+				                             </div>
+										</form>
+									</div>
+									<div class='row' style='padding:5px 0 0 0;'>
+										<button type='button' class="btn btn-primary btn-sm" id="searchBtn">查询</button>
+										<button type='button' class="btn btn-primary btn-sm" id="searchClear">重置</button>
+										<button type='button' class='btn btn-primary btn-sm' id='submitBtn'>提交</button>
+										<button type='button' class='btn btn-primary btn-sm' id='exportBtn'>导出</button>
+										<button type='button' class='btn btn-primary btn-sm' id='createXBRL'>生成XBRL</button>
+										<button type='button' class='btn btn-primary btn-sm' id='lookXBRL'>查看XBRL</button>
+									</div>
+									<div class='row'>
+										<div class='form-inline'>
+											<label for="comment" class="control-label"><font size=3 color=red>审批意见</font></label>
+											<div class="form-group">
+												<input class="form-control" placeholder="请填写审批意见(必填项)"
+													style="width:400%" id="comment" name="comment">
+											</div>
+										</div>
+									</div>
+									<div class='row' style='margin: 5px 0 0 -15px;'>
+										<div class='jqGrid_wrapper'>
+											<table id="orgResultTable"></table>
+											<div id="orgResultPage"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var taskId = '[(${taskId})]';
+	var id = '[(${id})]';
+	/*指标tab查询*/
+	function indexSearch(){
+		var formJson = $('#indexSearchForm').getNotNullJson();
+    	formJson.taskId = id;
+    	$("#orgResultTable").jqGrid('clearGridData');//清空表格
+		$("#orgResultTable").jqGrid('setGridParam',{//重新加载数据
+			url : '[(@{/irr/orgResult/findOrgResult.action})]',
+			datatype : 'json',
+			postData : formJson,
+			page : 1
+		},true).trigger("reloadGrid");
+	}
+	
+	$(document).ready(function(){
+		/*指标结果表格*/
+		$("#orgResultTable").jqGrid({
+			url:"[(@{/irr/orgResult/isc/fetch?isc_dataFormat=json})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+			postData : {
+				operationType : 'fetch',
+				textMatchStyle : 'substring',
+				taskId : id,
+				sortBy : 'indexCode'
+			},
+	        datatype: "json",
+	        height: 340,
+	        autowidth: true,
+	        shrinkToFit: false,
+	        autoScroll: true,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['id','指标ID','指标名称','指标编码','上期指标结果','上期指标得分','本期指标结果','本期指标得分','数据验证','数据说明',
+	        	'任务ID','任务期次','机构ID','机构编码','机构名称'],
+	        colModel:[{
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexId',
+	        	index:'indexId',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexName',
+	        	index:'indexName',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexCode',
+	        	index:'indexCode',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexResultQ1',
+	        	index:'indexResultQ1',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexScoreQ1',
+	        	index:'indexScoreQ1',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexResultQ2',
+	        	index:'indexResultQ2',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexScoreQ2',
+	        	index:'indexScoreQ2',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'dataVali',
+	        	index:'dataVali',
+	        	sortable : false,
+	        	hidden : true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'dataDesc',
+	        	index:'dataDesc',
+	        	sortable : false,
+	        	hidden : true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'taskId',
+	        	index:'taskId',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'taskBatch',
+	        	index:'taskBatch',
+	        	hidden : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'orgId',
+	        	index:'orgId',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'orgCode',
+	        	index:'orgCode',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'orgName',
+	        	index:'orgName',
+	        	hidden : true,
+	        	editable: false,
+	        	search:true
+	        }],
+	        pager: "#orgResultPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }
+	    });
+	    $("#orgResultTable").jqGrid('navGrid', '#orgResultPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#orgResultTable').setGridWidth(width);
+	    });
+	    
+	    /*重置*/
+	    $('#searchClear').click(function(){
+	    	$('#indexSearchForm')[0].reset();
+	    });
+	    
+	    /*查询*/
+	    $('#searchBtn').click(function(){
+	    	indexSearch();
+	    });
+	    
+	    /*提交按钮*/
+	    $('#submitBtn').click(function(){
+	    	var comment = $('#comment').val();
+			if(isEmpty(comment)){
+	    		swal('提示','请您先填写审核意见!','warning');
+	    		return false;
+	    	}
+			swal({
+                title: "确定提交?",
+                text: "您正在执行提交操作，请确定是否提交？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "提交",
+                confirmButtonClass : "ladda-button",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            }, function () {
+            	var param = {
+    					id : taskId,
+    					path : 'submit',
+    					comment : comment
+    			};
+    			processAjaxHandleJson('/system/flowable/task/completeTask',param);
+            });
+	    });
+	    
+	    /*导出*/
+	    $('#exportBtn').click(function(){
+	    	window.location.href = '[(@{/irr/orgResult/exportExcelReport.action?id='+id+'})]';
+	    });
+	    
+	    /*生成XBRL*/
+	    $('#createXBRL').click(function(){
+			var orgId = $('#orgId').val();
+			if(isEmpty(id) || isEmpty(orgId)){
+				swal('提示','请先选择机构！','warning');
+				return false;
+			}
+			$.ajax({
+				url : '[(@{/irr/task/findXbrlRequestInfo.action})]',
+				type : "post",
+				dataType : "json",
+				data : {
+					taskId : id,
+					orgId : orgId
+				},
+				success : function(data,textStatus) {
+					if(data.flag == true){
+						$.ajax({
+							url : '[(@{/xbrl/irr/initReport.action})]',
+							type : "post",
+							dataType : "json",
+							data : {
+								companyCode : data.org.code,
+								taskBatch : data.task.taskBatch
+							},
+							success : function(data,textStatus) {
+								if(data.flag == true){
+									window.open(data.xbrlUrl);
+								}else{
+									swal('提示',data.data,'error');
+								}
+							},
+							error : function(data, textStatus){
+								swal('提示','请求失败！','error');
+							}
+						});
+					}else{
+						swal('提示',data.data,'error');
+					}
+				},
+				error : function(data, textStatus){
+					swal('提示','请求失败！','error');
+				}
+			});
+	    });
+	    
+	    /*查看XBRL*/
+	    $('#lookXBRL').click(function(){
+			var orgId = $('#orgId').val();
+			if(isEmpty(id) || isEmpty(orgId)){
+				swal('提示','请先选择机构！','warning');
+				return false;
+			}
+			$.ajax({
+				url : '[(@{/irr/task/findXbrlRequestInfo.action})]',
+				type : "post",
+				dataType : "json",
+				data : {
+					taskId : id,
+					orgId : orgId
+				},
+				success : function(data,textStatus) {
+					if(data.flag == true){
+						$.ajax({
+							url : '[(@{/xbrl/irr/viewReport.action})]',
+							type : "post",
+							dataType : "json",
+							data : {
+								companyCode : data.org.code,
+								taskBatch : data.task.taskBatch
+							},
+							success : function(data,textStatus) {
+								if(data.flag == true){
+									window.open(data.xbrlUrl);
+								}else{
+									swal('提示',data.data,'error');
+								}
+							},
+							error : function(data, textStatus){
+								swal('提示','请求失败！','error');
+							}
+						});
+					}else{
+						swal('提示',data.data,'error');
+					}
+				},
+				error : function(data, textStatus){
+					swal('提示','请求失败！','error');
+				}
+			});
+	    });
+	    
+	});
+</script>
+</html>

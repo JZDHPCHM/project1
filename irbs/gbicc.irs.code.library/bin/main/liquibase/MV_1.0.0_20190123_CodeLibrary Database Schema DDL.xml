@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="MV_1.0.0_20190123_CodeLibrary Database Schema DDL" author="framework">
+        
+        <!-- 公共码值表 -->
+        <createTable tableName="FR_SYS_FIX_CODE" remarks="公共码值表">
+        <column name="FD_ID"						type="java.sql.Types.VARCHAR(36)"		remarks="代码编号">
+				<constraints primaryKey="true"/>
+			</column>
+       		<column name="FD_CODE_NO"					type="java.sql.Types.VARCHAR(36)"		remarks="代码编号"></column>
+			<column name="FD_CODE_NAME"					type="java.sql.Types.VARCHAR(350)"		remarks="中文注释"></column>
+			<column name="FD_ITEM_CODE"					type="java.sql.Types.VARCHAR(36)"		remarks="项目编号"></column>
+			<column name="FD_ITEM_NAME"					type="java.sql.Types.VARCHAR(350)"		remarks="项目名称"></column>
+			<column name="FD_SORT_NO"					type="java.sql.Types.VARCHAR(36)"		remarks="排序"></column>
+			<column name="FD_IS_INUSE"					type="java.sql.Types.VARCHAR(18)"		remarks="是否可用"></column>
+			<column name="FD_CREATOR"					type="java.sql.Types.VARCHAR(255)"		remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"				type="DATETIME" 						remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"				type="java.sql.Types.VARCHAR(255)"		remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"			type="DATETIME" 						remarks="最后修改日期"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

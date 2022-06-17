@@ -1,0 +1,4 @@
+select * from ladb.movement   select * from ladb.snapshot  
+
+
+select sum(sumassured) from ladb.movement where filenamedate>='20180101' and filenamedate<='20180331' and transactioncode='B522' and sourceofbusiness='AD' and contractcompany='1'  这个是DW的sql，数据可以与2018Q2.xlsx的数据对应上

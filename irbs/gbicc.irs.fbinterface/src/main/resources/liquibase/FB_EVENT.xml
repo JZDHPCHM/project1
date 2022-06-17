@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_EVENT" author="framework">
+
+        <!-- 事件检索公司信息 -->
+        <createTable tableName="FB_EVENT_COMPANY" remarks="公司简称">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="公司名称"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 事件检索公司简称列表 -->
+        <createTable tableName="FB_EVENT_COMPANY_KEYWORD" remarks="公司简称列表">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="EVENT_COMPANY_ID" type="java.sql.Types.VARCHAR(36)" remarks="事件检索公司ID"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="公司简称"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 事件检索公司实体统计 -->
+        <createTable tableName="FB_EVENT_COMPANY_DETAIL" remarks="公司实体统计">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="EVENT_COMPANY_ID" type="java.sql.Types.VARCHAR(36)" remarks="事件检索公司ID"></column>
+            <column name="COUNT" type="NUMBER(24,4)" remarks="占比(单位为%)"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="公司实体名"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 事件检索组织实体统计 -->
+        <createTable tableName="FB_EVENT_ORGANIZATION_DETAIL" remarks="组织实体统计">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="EVENT_COMPANY_ID" type="java.sql.Types.VARCHAR(36)" remarks="事件检索公司ID"></column>
+            <column name="COUNT" type="NUMBER(24,4)" remarks="占比(单位为%)"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="组织实体名"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 事件检索⼈名实体统计 -->
+        <createTable tableName="FB_EVENT_PERSON_DETAIL" remarks="⼈名实体统计">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="EVENT_COMPANY_ID" type="java.sql.Types.VARCHAR(36)" remarks="事件检索公司ID"></column>
+            <column name="COUNT" type="NUMBER(24,4)" remarks="占比(单位为%)"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="名称"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 事件检索具体事件条⽬-->
+        <createTable tableName="FB_EVENT_PUNISH_DETAIL" remarks="具体事件条⽬">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="EVENT_COMPANY_ID" type="java.sql.Types.VARCHAR(36)" remarks="事件检索公司ID"></column>
+            <column name="SOURCE_ID" type="java.sql.Types.VARCHAR(50)" remarks="事件条目 id，⽤于获取原文接口"></column>
+            <column name="AUTHOR" type="java.sql.Types.VARCHAR(50)" remarks="事件原文发布源"></column>
+            <column name="CATEGORY" type="java.sql.Types.VARCHAR(500)" remarks="事件所属分类"></column>
+            <column name="CONTENT" type="CLOB" remarks="事件正文"></column>
+            <column name="EVENT_TIME" type="NUMBER(10)" remarks="事件时间时间戳"></column>
+            <column name="POST_TIME" type="NUMBER(10)" remarks="发布时间时间戳"></column>
+            <column name="TITLE" type="java.sql.Types.VARCHAR(100)" remarks="事件原文标题"></column>
+            <column name="URL" type="java.sql.Types.VARCHAR(200)" remarks="事件原文链接"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 事件检索具体事件条⽬原文-->
+        <createTable tableName="FB_EVENT_PUNISH_SOURCE" remarks="具体事件条⽬原文">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="EVENT_COMPANY_ID" type="java.sql.Types.VARCHAR(36)" remarks="事件检索公司ID"></column>
+            <column name="EVENT_DETAIL_ID" type="java.sql.Types.VARCHAR(50)" remarks="具体事件条目 id"></column>
+            <column name="SOURCE_ID" type="java.sql.Types.VARCHAR(50)" remarks="原文 id"></column>
+            <column name="AUTHOR" type="java.sql.Types.VARCHAR(50)" remarks="原文发布源"></column>
+            <column name="CONTENT" type="CLOB" remarks="原文文本内容"></column>
+            <column name="POST_TIME" type="NUMBER(10)" remarks="发布时间时间戳"></column>
+            <column name="TITLE" type="java.sql.Types.VARCHAR(100)" remarks="原文标题"></column>
+            <column name="URL" type="java.sql.Types.VARCHAR(200)" remarks="原文链接"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+    </changeSet>
+</databaseChangeLog>

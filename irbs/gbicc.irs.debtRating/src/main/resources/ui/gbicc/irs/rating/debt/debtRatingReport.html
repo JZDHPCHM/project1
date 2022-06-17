@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>中关村租赁债项评级报告</title>
+<style type="text/css">
+	.title{
+		color: #333;
+	    font-size: 18px;
+	    font-weight: normal;
+	    padding-bottom: 10px;
+	    border-bottom: 1px solid #f2f2f2;
+	}
+	.top-navigation{
+ display: none;
+} 
+	table {
+		width: 100%;
+		font-size: 12px;
+		border: 1px solid #DDDDDD;
+		margin-bottom: 20px;
+	}
+	.ordinary tr{
+		height: 30px;
+		background: #D9E5FF;
+	}
+	.ordinary tr td {
+		padding: 6px;
+	}
+	.ordinary tr td.ziduan {
+		font-weight: bolder;
+    	color: #000;
+	}
+	.ui-state-default, .ui-widget-content .ui-state-default {
+    	font-weight: normal;
+    	font-size: 12px;
+	}
+	.ui-state-highlight, .ui-widget-content .ui-state-highlight{
+		background: #fff;
+	}
+	.comp-name{
+		    font-size: 24px;
+	    font-weight: bolder;
+	    display: inline-block;
+	    color: #333;
+	    margin-right: 12px;
+	}
+	.info-head {
+ padding: 34px 0 0;
+ text-align: center;
+}
+	.info-span{
+		padding: 2px 6px;
+	    color: #666;
+	    font-size: 14px;
+	}
+	.info-span.front-three{
+		background: #f0f4fe;
+	}
+	.info-span.behind-two{
+		background: #fef0f0;
+		    color: red;
+	}
+	.ziduan{
+		    width: 121px;
+    display: inline-block;
+	    font-weight: bolder;
+	    color: #333;
+	}
+	.ziduan-txt{
+		    color: #666;
+    font-size: 14px;
+	}
+	.level{
+		    color: #4680ff;
+	    font-size: 50px;
+	    font-weight: bolder;
+	    display: block;
+	    height: 80px;
+	    line-height: 80px;
+	}
+	.dateTime{
+		font-size: 16px;
+	    display: block;
+	    height: 40px;
+	    line-height: 40px;
+	}
+	.score{
+		color: #333;
+	    font-size: 30px;
+	    font-weight: bolder;
+	    display: inline;
+	}
+	.name{
+		    color: #666;
+    font-size: 20px;
+    font-weight: normal;
+	}
+	.right-content{
+		    display: inline-block;
+	    padding: 10px 40px 5px 5px;
+	}
+	.right-content .pointer{
+		margin-left: 32%;
+	    margin-top: -5px;
+	    padding-bottom: 3px;
+	}
+	.info-block, .info-list, .right-info-list, .info-div {
+		display: inline-block;
+	}
+	.info-block1 {
+     width: 9%;
+    float: left;
+    display: block;
+}
+	.info-block2 {
+ width: 90%;
+}
+	.bottom-info-left {
+ display: inline-block;
+ width: 20%;
+ height: 120px;
+ border: 1px solid #d8e0f0;
+ border-radius: 5px;
+     margin-right: 10px;
+}
+	.bottom-info-left .left-txt{
+		display: inline-block;
+    width: 45%;
+    text-align: center;
+    border-right: 1px solid #E6E6E6;
+    padding: 0 0 0 8px;
+	}
+	.bottom-info-left .left-txt .same-txt-top, .bottom-info-left .right-txt .same-txt-top {
+		height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #e6e6e6;
+	}
+	.bottom-info-left .left-txt .same-txt-bottom, .bottom-info-left .right-txt .same-txt-bottom {
+		height: 80px;
+    line-height: 80px;
+	}
+	.bottom-info-left .right-txt{
+		display: inline-block;
+    width: 55%;
+    text-align: center;
+    margin-left: -4px;
+        vertical-align: top;
+	}
+	/* 中间 */
+	.bottom-info-middle {
+ display: inline-block;
+ width: 35%;
+ height: 120px;
+ border: 1px solid #d8e0f0;
+ border-radius: 5px;
+     margin-right: 10px;
+}
+	.bottom-info-middle .left-txt{
+		display: inline-block;
+    width: 45%;
+    text-align: center;
+    border-right: 1px solid #E6E6E6;
+    padding: 0 0 0 8px;
+	}
+	.bottom-info-middle .left-txt .same-txt-top, .bottom-info-middle .right-txt .same-txt-top {
+		height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #e6e6e6;
+	}
+	.bottom-info-middle .left-txt .same-txt-bottom, .bottom-info-middle .right-txt .same-txt-bottom {
+		height: 80px;
+    line-height: 80px;
+	}
+	.bottom-info-middle .right-txt{
+		display: inline-block;
+    width: 55%;
+    text-align: center;
+    margin-left: -4px;
+	}
+	/* 右边 */
+	.bottom-info-right {
+ display: inline-block;
+ width: 38%;
+ height: 120px;
+ border: 1px solid #d8e0f0;
+ border-radius: 5px;
+     position: relative;
+    top: 20px;
+}
+	.bottom-info-right .left-txt{
+		display: inline-block;
+    width: 55%;
+    text-align: center;
+    border-right: 1px solid #E6E6E6;
+    padding: 0 0 0 8px;
+	}
+	.bottom-info-right .left-txt .same-txt-top, .bottom-info-right .right-txt .same-txt-top {
+		height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #e6e6e6;
+	}
+	.bottom-info-right .left-txt .same-txt-bottom, .bottom-info-right .right-txt .same-txt-bottom {
+		height: 80px;
+    line-height: 80px;
+	}
+	.bottom-info-right .right-txt{
+		display: inline-block;
+    width: 45%;
+    text-align: left;
+    margin-left: -4px;
+	}
+	.inner-info-left{
+		        display: inline-block;
+    padding: 0 10px;
+    border-right: 1px solid #e6e6e6;
+    height: 80px;
+    line-height: 80px;
+    position: relative;
+    top: -23px;
+	}
+	.info-detailed{
+		    height: 40px;
+    line-height: 40px;
+        padding-left: 10px;
+	}
+	.inner-info-right {
+ display: inline-block;
+ width: 165px;
+}
+	.bottom-info-right .info-inner-left {
+ display: inline-block;
+ width: 175px;
+ border-right: 1px solid #e6e6e6;
+ padding: 0 10px;
+}
+	.bottom-info-right .info-inner-right{
+		    display: inline-block;
+    width: 54px;
+    text-align: center;
+	}
+	.kailong{
+	    width: 0;
+	    height: 0;
+	    border-right: 8px solid transparent;
+	    border-left: 8px solid transparent;
+	    border-bottom: 8px solid #666;
+	    position: absolute;
+    	top: 45px;
+	    display: inline-block;
+	}
+	.info-block .left-info {
+ text-align: center;
+}
+	.info-block .right-info{
+		    display: inline-block;
+	    color: #333;
+	    font-weight: 700;
+	    padding: 0 15px;
+	    margin-right: 10px;
+	    position: relative;
+	    float: left;
+	}
+	.info-level {
+		padding-right: 10px;
+    	font-size: 16px;
+	}
+	.info-txt{
+		    font-size: 16px;
+    letter-spacing: 2px;
+	}
+	.progress-line{
+	    width: 2px;
+	    height: 25px;
+	    background-color: #fff;
+	    display: inline-block;
+	    position: absolute;
+	}
+	.info-inner-txt{
+		    height: 40px;
+    line-height: 40px;
+	}
+	.sort-progress{
+		width: 100px;
+		height: 25px;
+		background: -moz-linear-gradient(left, #6ee802, #6ae100, #67d902, #61cd00, #5abf00,#55b400,#50aa01,#4a9c00,#479501,#418a00);
+		background: -webkit-linear-gradient(left, #6ee802, #6ae100, #67d902, #61cd00, #5abf00,#55b400,#50aa01,#4a9c00,#479501,#418a00);
+		background: -o-linear-gradient(left, #6ee802, #6ae100, #67d902, #61cd00, #5abf00,#55b400,#50aa01,#4a9c00,#479501,#418a00);
+	}
+	.query-data{
+		padding-left: 15px;
+	}
+	.right-txt{
+		    height: 40px;
+    line-height: 40px;
+	}
+	.diff-list{
+		font-size: 12px;
+	}
+	.diff-list .diff-txt{
+		display: inline-block;
+	}
+	.right-info-list .diff-count{
+		display: inline-block;
+	    position: relative;
+	    top: -7px;
+	}
+	.score-table{
+		margin-bottom: -1px;
+	}
+	.score-table tr{
+		height: 33px;
+		background: #1b62fe;
+    	color: #fff;
+	}
+	.jqgrid_table_score .ui-widget-content .ui-state-default {
+		background: #e3ecff;
+	}
+	.span-txt{
+		display: inline-block;
+    	width: 55px;
+	}
+</style>
+</head>
+<body>
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+	                <div class="col-lg-12">
+	            		<div class="title">中关村租赁债项评级报告</div>
+	            		<div class="info-head">
+	            			<div class="comp-name" id="title"></div>
+	            			<div class="info-div">
+	            				<span class="info-span front-three" id="">项目类型</span>
+	            				<span class="info-span front-three" id="">评级类型</span>
+	            				<span class="info-span behind-two" id="fwsBq">排序分位数较低</span>
+	            			</div>
+	            		</div>
+	            		<div class="row" style="padding-bottom: 10px;">
+	                		<div>
+	                			<div class="info-block info-block1">
+	                				<div class="left-info">
+	                					<div class="level" id="level"></div>
+	                					<div class="dateTime" id="date"></div>
+	                				</div>
+	                			</div>
+	                			<div class="info-block info-block2">
+	                				<div class="bottom-info-left">
+		                					<div class="left-txt">
+		                						<div class="same-txt-top">租赁本金</div>
+		                						<div class="same-txt-bottom">租赁期限</div>
+		                					</div>
+		                					<div class="right-txt">
+		                						<div class="same-txt-top"><span id='zlbj'></span>元</div>
+		                						<div class="same-txt-bottom"><span id='zlqx'></span>年</div>
+		                					</div>	
+		                				</div>
+		                				<div class="bottom-info-middle">
+		                					<div class="left-txt">
+		                						<div class="same-txt-top" style="text-align: left;">风险等级描述</div>
+		                						<div class="same-txt-bottom" style="text-align: left;">总保障倍数分位数</div>
+		                					</div>
+		                					<div class="right-txt">
+		                						<div class="same-txt-top" id="">极强保障能力</div>
+		                						<div class="same-txt-bottom" style="position: relative; top: 8px;" >
+		                							<div style="display: inline-flex;">
+				                						<div class="sort-progress"></div><span style="color: red; position: relative; top: -27px; left: 5px;" id='fws'></span>
+				                						<div class="progress-line" id="quantileLine"></div>
+				                						<div class="kailong"  id="differencesTriangle"></div>
+				                					</div>
+				                				
+		                						</div>
+		                					</div>	
+		                				</div>
+		                				<div class="bottom-info-right">
+		                					<div class="left-txt" style="position: relative; top: -20px;">
+		                						<div class="same-txt-top" style="text-align: left;">初评保障倍数<span id="int" class="query-data"></span></div>
+		                						<div class="same-txt-bottom" style="text-align: left;">复核保障倍数<span id="fin" class="query-data"></span></div>
+		                					</div>
+		                					<div class="right-txt">
+		                						<div class="same-txt-top" style="padding-left: 8px;"><span class="span-txt">初评人</span><span id="iniName" class="query-data"></span></div>
+		                						<div class="same-txt-bottom" style="height: 40px; line-height: 40px; padding-left: 8px;"><span class="span-txt">评审复核</span><span id="rFinName" class="query-data"></span></div>
+		                						<div class="same-txt-bottom" style="height: 40px; line-height: 40px; padding-left: 8px;"><span class="span-txt">资产复核</span><span id="zfinName" class="query-data"></span></div>
+		                					</div>	
+		                				</div>
+	                			</div>	
+	                		</div>
+	                	</div>
+						<div class="jqGrid_wrapper">
+                            <table id="table_list"></table>
+                            <div id="pager_list"></div>
+                        </div>
+                        <!-- 模态窗口 -->
+                        <div class="modal inmodal fade" id="modalScoringDetails" tabindex="-1" role="dialog"  aria-hidden="true">
+                             <div class="modal-dialog modal-lg">
+                                 <div class="modal-content" style="height: 100%;">
+                                     <div class="modal-header">
+                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                         <h4 class="modal-title"></h4>
+                                     </div>
+                                     <div class="modal-body">
+										<table border="1" class="score-table">
+											<tbody>
+												<tr>
+													<td align="center" id="tatileBs"></td>
+												</tr>
+											</tbody>
+										</table>
+										<!-- <div class="jqGrid_wrapper jqgrid_table_score"><table id="score_table"></table><table id="score_table_1"></table></div> -->
+										<div class="jqGrid_wrapper jqgrid_table_score"><table id="score_table_1"></table></div>                                   		    
+                                     </div>
+                                     <div class="modal-footer">
+                                         <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>    	    
+	                </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var mydata = [];
+		  $.ajax({
+			url: "/irs/DebtStep/projectInfo", 
+			data:{projectNo:"[[${projectNo}]]"},
+			async:false,
+			success: function(result){
+				$("#fwsBq").hide();
+				$("#title").text(result.proName);
+				$("#int").text(result.internBs);
+				$("#fin").text(result.finalBs);
+				var bsFws = result.bsFws*1.0;
+				if(result.bsFws>50){
+					$("#fwsBq").show();
+				}
+				$("#assu").text(result.suggest);
+				$("#fws").text(bsFws.toFixed(2)+"%");
+				$("#zlbj").text(result.zlbj);
+				$("#level").text(result.levelBs);
+				$("#zlqx").text(result.zlqx);
+				$("#iniName").text(result.internName);
+				$("#rFinName").text(result.finalName);
+				$("#zFinName").text(result.assetReview);
+				$("#date").text(result.ratingDate);
+				var bsFws = result.bsFws;
+				$("#differencesTriangle").css("margin-left",(100*(bsFws/100))-7+"px");
+			    $("#quantileLine").css("margin-left",(100*(bsFws/100))+"px");
+				mydata=result.zbfx;
+	      }})
+		$("#table_list").jqGrid({
+			url : "/irs/ratingMainStep/custInfo",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        //datatype: "json",
+	        data: mydata,
+	        datatype: "local",
+	        height: "100%",
+	        autowidth: true,
+	        shrinkToFit: true,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['一级指标','保障倍数','一级指标分位数','二级指标','调整前保障倍数','调整系数','调整后保障倍数', '得分明细'],
+	        colModel:[
+	        	{name:'a',index:'a', sortable: false,
+					cellattr: function(rowId, tv, rawObject, cm, rdata) {
+					//合并单元格（跨行）
+					return 'id=\'a' + rowId + "\'";
+				}},
+				{name:'b',index:'b', sortable: false,
+					cellattr: function(rowId, tv, rawObject, cm, rdata) {
+					//合并单元格（跨行）
+					return 'id=\'b' + rowId + "\'";
+				},formatter:function(rowId, index, rowObject){
+					var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}},
+	            {name:'c',index:'c', sortable: false,
+					cellattr: function(rowId, tv, rawObject, cm, rdata) {
+					//合并单元格（跨行）
+					return 'id=\'c' + rowId + "\'";
+				},formatter:function(rowId, index, rowObject){
+					var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					if(rowId>40){
+						return "<span style='color:red;'>"+cover+"%</span>";
+					}else{
+						return "<span>"+cover+"%</span>";
+					}
+				}},
+	            {name:'d',index:'d', sortable: false},
+	            {name:'e',index:'e', sortable: false,formatter:function(rowId, index, rowObject){
+	            	if(rowObject.a=="客户信用"){
+						return "-";
+					}
+					var beforecover = rowId*1.0;
+					beforecover = beforecover.toFixed(2);
+					return beforecover;
+				}},
+	            {name:'f',index:'f', sortable: false,formatter:function(rowId, index, rowObject){
+	            	if(rowObject.a=="客户信用"){
+						return "-";
+					}
+					var coefficient = rowId*1.0;
+					coefficient = coefficient.toFixed(2);
+					return coefficient;
+				}},
+	            {name:'e',index:'e', sortable: false,formatter:function(rowId, index, rowObject){
+	            	if(rowObject.a=="客户信用"){
+						return "-";
+					}
+					var coefficient = rowId*1.0;
+					coefficient = coefficient.toFixed(2);
+					return coefficient;
+				}},
+	            {name:'d',index:'d', sortable: false,formatter:function(rowId, tv, rawObject, cm, rdata) {
+					//合并单元格（跨行）
+					//rawObject.a
+					
+					if(rawObject.a=="租赁物"){
+						return "<span style='color: #199fff;text-decoration: underline;cursor: pointer;' onclick='showMoreInfoZlw(\""+rawObject.g+"\",\""+rawObject.a+"\")'>"+rawObject.a+"</span>";
+					}else{
+						$("#tatileBs").html(rawObject.d);
+						return "<span style='color: #199fff;text-decoration: underline;cursor: pointer;' onclick='showMoreInfo(\""+rawObject.g+"\",\""+rawObject.d+"\")'>"+rawObject.d+"</span>";
+
+					}
+				}}
+	        ],
+	        //pager: "#pager_list",
+	        sortable: false,
+	        viewrecords: true,
+	        caption: "",
+	        gridComplete: function() {
+				//在gridComplete调用合并方法
+				var gridName = "table_list";
+				MergerRowspan(gridName, 'a');//跨行
+				MergerRowspan(gridName, 'h');//跨行
+				
+				
+				$("#b1").attr("rowspan","2");
+				$("#b2").css("display","none");
+				$("#b4").attr("rowspan","5");
+				$("#b5").css("display","none");
+				$("#b6").css("display","none");
+				$("#b7").css("display","none");
+				$("#b8").css("display","none");
+				
+				
+				$("#c1").attr("rowspan","2");
+				$("#c2").css("display","none");
+				$("#c4").attr("rowspan","5");
+				$("#c5").css("display","none");
+				$("#c6").css("display","none");
+				$("#c7").css("display","none");
+				$("#c8").css("display","none");
+			},
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        //rownumbers: true,
+	        //rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	records: "recordsTotal",
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		  /* var mydata2 = [];
+		  $("#score_table").jqGrid({
+				url : "/irs/DebtStep/bigType",
+				recordtext: "显示：{0} - {1}，总数：{2} ",
+			    emptyrecords: "本次查询无数据！",
+			    loadtext: "读取中...",
+			    pgtext : "第 {0}页， 共{1}页",
+		        datatype: "json",
+				mtype : "get",
+		        width: 836,
+		        height: "100%",
+		        autowidth: false,
+		        shrinkToFit: true,
+		        prmNames: {
+		            page: "page"   // 表示请求页码的参数名称
+		        },
+		        rowNum: 20,
+		        rowList: [10, 20, 30],
+		        colNames:['时间','历史经营性现金流金额','时间','预测经营性现金流增速'],
+		        colModel:[
+		        	{name:'FD_INDEXNAME',index:'FD_INDEXCATEGORY', sortable: false, sortable: false},
+					{name:'FD_INDEXVALUE',index:'FD_INDEXVALUE', editable: true, sortable: false,formatter:function(value,row,index){
+						if(!isNaN(value)){　　　
+							var result=value*1.0;
+			            	result=result.toFixed(2); 
+		            		return result;
+							}else{
+								 return value; 
+							}
+
+					}},
+		            {name:'FD_SCORE',index:'FD_SCORE', editable: true, sortable: false,formatter:function(value,row,index){
+		            	if(!isNaN(value)){　　　
+							var result=value*1.0;
+			            	result=result.toFixed(2); 
+		            		return result;
+							}else{
+								 return value; 
+							}
+		            }},
+		            {name:'FD_QUALITATIVE_OPTIONS',index:'FD_QUALITATIVE_OPTIONS', editable: true, sortable: false}
+		        ],
+		        viewrecords: true,
+		        caption: "",
+		        add: true,
+		        edit: true,
+		        addtext: 'Add',
+		        edittext: 'Edit',
+		        rownumbers: true,
+		        rownumWidth: 60,
+		        hidegrid: false,
+		        jsonReader: {
+		        	root: "response.data",
+		        	records: "recordsTotal",
+		        	repeatitems: false,
+		        	id: "0"
+		        }
+		    }); */
+		  var mydata3 = [];
+		  $("#score_table_1").jqGrid({
+				url : "/irs/DebtStep/bigType",
+				recordtext: "显示：{0} - {1}，总数：{2} ",
+			    emptyrecords: "本次查询无数据！",
+			    loadtext: "读取中...",
+			    pgtext : "第 {0}页， 共{1}页",
+				mtype : "get",
+		        datatype: "json",
+		        width: 836,
+		        height: "100%",
+		        autowidth: false,
+		        shrinkToFit: true,
+		        prmNames: {
+		            page: "page"   // 表示请求页码的参数名称
+		        },
+		        rowNum: 20,
+		        rowList: [10, 20, 30],
+		        colNames:['指标名称','指标值','调整系数','指标描述'],
+		        colModel:[
+		        	{name:'FD_INDEXNAME',index:'FD_INDEXCATEGORY', sortable: false, sortable: false},
+					{name:'FD_INDEXVALUE',index:'FD_INDEXVALUE', editable: true, sortable: false},
+		            {name:'FD_SCORE',index:'FD_SCORE', editable: true, sortable: false,formatter:function(value,row,object){
+		            	var result=value*1.0;
+		            	result=result.toFixed(2); 
+	            		return result;
+		            }},
+		            {name:'FD_QUALITATIVE_OPTIONS',index:'FD_QUALITATIVE_OPTIONS', editable: true, sortable: false}
+		        ],
+		        viewrecords: true,
+		        caption: "",
+		        add: true,
+		        edit: true,
+		        addtext: 'Add',
+		        edittext: 'Edit',
+		        rownumbers: true,
+		        rownumWidth: 60,
+		        hidegrid: false,
+		        jsonReader: {
+		        	root: "response.data",
+		        	records: "recordsTotal",
+		        	repeatitems: false,
+		        	id: "0"
+		        }
+		    });  
+		$("#score_table_1").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+		// Setup buttons
+        $("#table_list").jqGrid('navGrid', '#pager_list',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        // Add responsive to jqGrid
+        $(window).bind('resize', function () {
+            var width = $('.jqGrid_wrapper').width();
+            $('#table_list').setGridWidth(width);
+        });
+	});
+	
+/* 	function showMoreInfo(){
+		/* $("body",window.parent.document).find('#tab_sheet_3_Title').trigger("click");
+		debugger 
+		$("#modalScoringDetails").modal();
+	}  */
+	
+	
+	function showMoreInfo(indexP,name){
+		$("#tatileBs").text(name);
+		  $("#score_table_1").jqGrid('setGridParam', 
+		    		{postData:{"id":indexP}}
+		    ).trigger("reloadGrid");
+		  $("#modalScoringDetails").modal();
+}
+	
+	function showMoreInfoZlw(indexP,name){
+		$("#tatileBs").text(name);
+		  $("#score_table_1").jqGrid('setGridParam', 
+		    		{postData:{"id":indexP,"type":"zlw"}}
+		    ).trigger("reloadGrid");
+		  $("#modalScoringDetails").modal();
+}
+
+	
+</script>
+</html>

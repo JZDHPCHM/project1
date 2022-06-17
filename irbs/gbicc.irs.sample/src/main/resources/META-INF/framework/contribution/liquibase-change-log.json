@@ -1,0 +1,21 @@
+/*
+ * 数据库建表 Liquibase ChangeLog XML 贡献项配置示例
+ * 功能: 该贡献项配置为框架提供数据库无关的建表脚本
+ * 使用说明:
+ * category: 建表脚本分类,可能的值包括: 
+ * 		system : 系统安装时自动执行
+ *		example: 系统安装时不自动执行,可通过 '开发者工具'-->'导入示例数据' 功能菜单执行
+ * order: 执行顺序
+ * description: 描述信息
+ * locations: 建表 liquibase changelog xml 文件位置
+ */
+[
+    {
+        "category" : "install",
+        "order"    : 26000,
+        "description":"框架数据源配置模块表结构",
+        "locations":[
+            ]
+    }
+]
+

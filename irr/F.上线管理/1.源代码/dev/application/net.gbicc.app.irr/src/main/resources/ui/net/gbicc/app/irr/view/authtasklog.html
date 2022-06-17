@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+<body style='background-color:white'>
+	<div class="wrapper"  style="margin:10px 0 0 0">
+		<div class="row">
+     		<div class="col-lg-12">
+                 <div class="float-e-margins">
+                     <div class="ibox-content">
+                         <form role="form" class="form-inline" id='searchForm'>
+                             <div class="form-group">
+                                 <label for="taskCode" class="control-label">任务编码</label>
+                                 <input type="text" placeholder="模糊查询" name="taskCode" id="taskCode" class="form-control">
+                             </div>
+                             <div class="form-group">
+                                 <label for="taskName" class="control-label">任务名称</label>
+                                 <input type="text" placeholder="模糊查询" name="taskName" id="taskName" class="form-control">
+                             </div>
+                             <div class="form-group">
+                                 <label for="userName" class="control-label">授权人姓名</label>
+                                 <input type="text" placeholder="模糊查询" name="userName" id="userName" class="form-control">
+                             </div>
+                             <div class="form-group">
+                                 <label for="authName" class="control-label">被授权人姓名</label>
+                                 <input type="text" placeholder="模糊查询" name="authName" id="authName" class="form-control">
+                             </div>
+                             <div class="form-group">
+                                 <label for="dealResult" class="control-label">描述</label>
+                                 <input type="text" placeholder="模糊查询" name="dealResult" id="dealResult" class="form-control">
+                             </div>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+		</div>
+		
+		<div class="row" style="margin:0px 0px 10px 0px">
+			<button class="btn btn-primary btn-sm" id="searchBtn">查询</button>
+            <button class="btn btn-primary btn-sm" id="searchClear">重置</button>
+		</div>
+		
+		<div class="row">
+	        <div class="col-lg-12">
+	        	<div class="jqGrid_wrapper">
+                    <table id="logTable"></table>
+                    <div id="logPager"></div>
+                </div>
+	        </div>		
+		</div>
+		
+	</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		/*评估计划*/
+		$("#logTable").jqGrid({
+			url:"[(@{/irr/authTaskLog/findAuthTaskLog.action})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 350,
+	        autowidth: true,
+	        shrinkToFit: true,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['任务编码','任务名称','授权人姓名','被授权人姓名','描述','时间'],
+	        colModel:[{
+	        	name:'taskCode',
+	        	index:'taskCode',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'taskName',
+	        	index:'taskName',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'userName',
+	        	index:'userName',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'authName',
+	        	index:'authName',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'dealResult',
+	        	index:'dealResult',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'createDate',
+	        	index:'createDate',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        }],
+	        pager: "#logPager",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }
+	    });
+	    $("#logTable").jqGrid('navGrid', '#logPager',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#logTable').setGridWidth(width);
+	    });
+	    
+		
+		/*主页面查询按钮*/
+		$('#searchBtn').click(function(){
+			var info = $('#searchForm').getNotNullJson();
+			console.log(info);
+			$("#logTable").jqGrid('clearGridData');//清空表格
+			$("#logTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : {
+					info : JSON.stringify(info)
+				},
+				page : 0
+			},true).trigger("reloadGrid");
+		});	
+		
+		/*主页面重置按钮*/
+		$('#searchClear').click(function(){
+			defineResetForm('#searchForm');
+		});
+		
+	});
+</script>
+</html>

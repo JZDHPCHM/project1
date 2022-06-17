@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">	
+//选择补录项数据源
+isc.FwRestDataSource.create({
+	ID: 'additItemsForSelectDS',
+	autoFetchData:true,
+    fields:[
+    	{width:80,		name:'id'},
+    	{width:120,		name:'fieldTitle',				title:'[(#{fieldTitle})]'},
+		{width:150,		name:'fieldName',				title:'[(#{fieldName})]'}
+    ],
+    fetchDataURL:'[(@{/irs/ratingAdditItemConfig/getAllAdditemsSelectList})]'
+});
+
+var RatingSelectValuesConfigFields = {
+		dataSourceGrid: [
+				{width:80,		name:'id',					title:'[(#{id})]',primaryKey:true,type: 'text',hidden:true},
+				{width:80,		name:'defId',				title:'[(#{defId})]'},
+				{width:150,		name:'defCode',				title:'[(#{defCode})]'},
+				{width:'*',		name:'orderNum',			title:'[(#{orderNum})]'},
+			    {width:'*',		name:'displayValue',		title:'[(#{displayValue})]'},
+			    {width:'*',		name:'realValue',			title:'[(#{realValue})]'},
+			    {width:'*',		name:'weight',				title:'[(#{weight})]'},
+			    {width:'*',		name:'additID',				title:'[(#{additID})]'},
+			    {width:'*',		name:'reMarks',				title:'[(#{reMarks})]'},
+			    {width:300,		name:'isHis',				title:'[(#{isHis})]',type:"boolean"}
+			  ],
+		 showGrid:[
+			 	{width:80,		name:'id',					title:'[(#{id})]',type: 'text',primaryKey:true,hidden:true},
+			 	{width:50,		name:'orderNum',			title:'[(#{orderNum})]',type:"integer"},
+			 	{width:80,		name:'displayValue',		title:'[(#{displayValue})]'},
+			    {width:80,		name:'realValue',			title:'[(#{realValue})]'},
+			    {width:50,		name:'weight',				title:'[(#{weight})]',type:"float"},
+			    {
+			    	width:170,		
+			    	name:'additID',				
+			    	title:'[(#{additID})]',
+			    	type: "select",
+			    	displayField:'fieldTitle',
+					valueField:'id',
+					allowEmptyValue:true,
+					optionDataSource: additItemsForSelectDS,
+					pickListFields: [
+			              { name:"fieldName",width:'*'},
+			              { name:"fieldTitle",width:'*'}
+			        ]
+			    },
+			    {width:'*',		name:'reMarks',				title:'[(#{reMarks})]'}
+		 ],
+		 edit:[
+			 	{width:80,		name:'id',					title:'[(#{id})]',type: 'text',hidden:true},
+			 	{width:'*',		name:'defId',				hidden:true},
+			 	{width:'*',		name:'orderNum',			title:'[(#{orderNum})]',type:"integer"},
+			 	{width:'*',		name:'realValue',			title:'[(#{realValue})]'},
+			 	{width:'*',		name:'displayValue',		title:'[(#{displayValue})]'},
+			    {width:'*',		name:'weight',				title:'[(#{weight})]'},
+			    {
+			    	width:'*',		
+			    	name:'additID',				
+			    	title:'[(#{additID})]',
+			    	type: "select",
+			    	optionDataSource: additItemsForSelectDS,
+			    	displayField:'fieldTitle',
+					valueField:'id',
+					pickListFields: [
+			              { name:"fieldName",width:'50%'},
+			              { name:"fieldTitle",width:'50%'}
+			        ]
+			    }, 
+			    {width:'*',		name:'reMarks',				title:'[(#{reMarks})]'}
+		 ]
+}
+
+//问题选项列表数据源
+isc.FwRestDataSource.create({
+	ID: 'ratingSelectValuesConfigDS',
+	autoFetchData:false,
+    fields:RatingSelectValuesConfigFields.dataSourceGrid,
+    dataURL: '[(@{/irs/ratingSelectValuesConfig/isc})]'
+});
+
+//字段定义
+var RatingSuppItemConfigFields ={
+	query: [
+			{width:'*',		name:'suppItemCode',				title:'[(#{suppItemCode})]',type: 'text'},
+			{width:'*',		name:'suppItemName',				title:'[(#{suppItemName})]',type: 'text',	operator:'equals'},
+	],
+	grid: [
+			{width:80,		name:'id',							title:'[(#{id})]',type: 'text',primaryKey:true,hidden:true},
+			{width:120,		name:'suppItemCode',					title:'[(#{suppItemCode})]'},
+			{width:150,		name:'suppItemName',					title:'[(#{suppItemName})]'},
+		    {width:'*',		name:'suppItemDescribe',				title:'[(#{suppItemDescribe})]'},
+		    {width:300,		name:'isHis',							title:'[(#{isHis})]',type:"boolean"}
+		  ],
+	edit: [
+			{name:'id',						primaryKey:true,hidden:true},
+			{width:'*',		name:'suppItemCode',					title:'[(#{suppItemCode})]',		type:'text'},
+			{width:'*',		name:'suppItemName',					title:'[(#{suppItemName})]',		type:'text'},
+		    {width:'*',		name:'suppItemDescribe',				title:'[(#{suppItemDescribe})]',	type:'textArea',		colSpan:3},
+		    {
+				width:'*', 
+				name:'options',					
+				title:'<b>选项值列表</b>',								
+				type:'editGrid',
+				colSpan:4,
+				editGridProperties:{
+					height: 200,
+					filterPropertyName:'defId',
+					autoFetchData:false,
+					dataSource: ratingSelectValuesConfigDS,
+					defaultFields:RatingSelectValuesConfigFields.showGrid,
+					actionMembers:[
+			    		'refresh','add','remove'
+			    	],
+					editWindow: {
+						titleSuffix: '值',
+				        form: {
+				            dataSource: ratingSelectValuesConfigDS,
+				            fields: RatingSelectValuesConfigFields.edit
+				        },
+						afterShow:function(action){
+							this.Super("afterShow",arguments);
+				        	this.getForm().setValue("defId",suppItemConfigGrid.getSelectedRecord().id);
+				        }
+					}
+				}
+			}
+	]
+};
+
+//外部支持数据源
+isc.FwRestDataSource.create({
+	ID: 'RatingSuppItemConfigDS',
+    fields: RatingSuppItemConfigFields.grid,
+    dataURL: '[(@{/irs/ratingSuppItemConfig/isc})]'
+});
+
+//外部支持列表
+isc.FwListGrid.create({
+	ID: 'suppItemConfigGrid',
+	title: '<b>外部支持定义列表</b>',
+	dataSource: RatingSuppItemConfigDS,
+	sortField: 'suppItemCode',
+	canHover:true,
+	fields: RatingSuppItemConfigFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: RatingSuppItemConfigFields.query
+	},
+	editWindow: {
+		width:800,
+		height:600,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: RatingSuppItemConfigDS,
+            fields: RatingSuppItemConfigFields.edit
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				suppItemConfigGrid
+			]
+		})
+	}
+});
+</script>
+</html>

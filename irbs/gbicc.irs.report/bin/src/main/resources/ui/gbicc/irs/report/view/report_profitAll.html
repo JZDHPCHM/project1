@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<style>
+		.ss{
+			padding:50px;
+		}
+	</style>
+	<script type="text/javascript" th:src="@{/webjars/echarts/js/echarts.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+</head>
+<body>
+</body>
+<script>
+    var newData=[];
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQuery,
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{
+				name:'guestGr',					
+				title:'客户评级',
+				getGridSummary:function (records, summaryField) {
+					return "平均收益率";
+	            }
+			},
+			{name:'monthRate',			title:'本月',summaryFunction:function() {return formatPer(sumData['monthRate']);}},//本月
+		    {name:'lastMonthRate',			title:'上月',summaryFunction:function() {return formatPer(sumData['lastMonthRate']);}},//上月
+			{name:'lastYearRate',			title:'上年同期',summaryFunction:function() {return formatPer(sumData['lastYearRate']);}},//上年同期
+		    {name:'compareMonthRate',			title:'较上月变动',summaryFunction:function() {return sumData['compareMonthRate'];}},//较上月变动
+		    {name:'compareYearRate',			title:'较上年同期变动',summaryFunction:function() {return sumData['compareYearRate'];}},//较上年同期变动
+	]
+};
+
+
+//图表展示区域	
+isc.HTMLPane.create({
+	ID:"chartPanel",
+    width:"100%",
+    height:"100%",		
+    contents:"<div id=\"chartDiv\"style=\"width:100%;height:100%;\">chart!</div>"
+});
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields: BorrowKeyBussFields.grid,
+    fetchDataURL: '[[@{/irs/report_profitAll/isc/fetchData}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>借款人评级与风险调整收益率总体情况</b>',
+	dataSource: report_borrowKeyBussDS,
+	//sortField: 'guestGr',
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	canPageable: false,
+	fields: BorrowKeyBussFields.grid,
+	headerSpans: [
+    ],
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	actionMembers:[
+		'query','reset',
+        {
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+                    url:"[(@{/irs/report_profitAll/isc/fetchData/Results.csv})]",
+                    "year":year,"month":month,
+                    fileName:  "借款人评级与风险调整收益率总体情况",
+                    sortBy: "guestGr"
+                });
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+	formatCellValue:function(value, record, rowNum, colNum){
+		var formatVal = value;
+		var fieldName = borrowKeyBussFieldsListGrid.getField(colNum).title;
+		if( fieldName === "本月" || fieldName === "上月" || fieldName === "上年同期"){
+			formatVal = formatPer(value);
+		}
+		return formatVal;
+	},
+    query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_profitAll/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year,"month":month},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                sumData = [];
+                newData=[];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.guestGr==='平均收益率'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                console.log(newData);
+                borrowKeyBussFieldsListGrid.setData(newData);
+                draw(newData);
+            }
+        });
+    },
+	afterQuery:function(dsResponse,data,dsRequest){
+		borrowKeyBussFieldsListGrid.setData(newData);
+		draw(newData);
+	}
+});
+
+function draw(data){
+    var xNames = [];
+    var monthRates = [];
+    var lastMonthRates = [];
+    var lastYearRates = [];
+    for(var i =0 ;i<data.length;i++){
+
+        var record = data[i];
+        var name = record.guestGr;
+        xNames.push(name);
+
+        monthRates.push(formatNum(record.monthRate));
+        lastMonthRates.push(formatNum(record.lastMonthRate));
+        lastYearRates.push(formatNum(record.lastYearRate));
+    }
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chartDiv'));
+
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: year+'年'+month+'月风险调整收益率总体情况'
+        },
+        tooltip: {formatter: '{a}{b} {c}%'},
+        legend: {
+            bottom:2,
+            data:['本月','上月','上年同期']
+        },
+        xAxis: {
+            data: xNames,
+            axisLabel: {  //文字斜向显示
+                interval:0,
+                rotate:40
+            }
+        },
+        yAxis: [
+            {
+                type: 'value',
+                name: '',
+                axisLabel: {
+                    formatter: '{value}%'
+                }
+            }
+        ],
+        series: [
+            {
+                name: '本月',
+                type:'bar',
+                data: monthRates
+            },
+            {
+                name: '上月',
+                type:'bar',
+                data: lastMonthRates
+            },
+            {
+                name: '上年同期',
+                type:'bar',
+                data: lastYearRates
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+}
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.VLayout.create({
+					showResizeBar: false,
+					height:800,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid,chartPanel]     
+				})
+			]
+		})
+	}
+});
+
+//加载表格数据并初始化图表
+borrowKeyBussFieldsListGrid.query();
+
+</script>
+</html>

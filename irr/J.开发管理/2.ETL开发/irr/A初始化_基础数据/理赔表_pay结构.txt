@@ -1,0 +1,44 @@
+-- Create table
+create table HASLCLAIMS.TC_FINANCIAL_PAY
+(
+  SERNO         VARCHAR2(40) not null,
+  PAY_NO        VARCHAR2(40),
+  PAY_RTN_DATE  DATE,
+  PAY_SEND_TIME DATE,
+  PAY_RTN_TIME  DATE
+)
+tablespace SPC_CLAIMS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column HASLCLAIMS.TC_FINANCIAL_PAY.PAY_NO
+  is '支付号 ';
+comment on column HASLCLAIMS.TC_FINANCIAL_PAY.PAY_RTN_DATE
+  is '支付成功银行返回日期';
+comment on column HASLCLAIMS.TC_FINANCIAL_PAY.PAY_SEND_TIME
+  is '首次支付成功发起时间';
+comment on column HASLCLAIMS.TC_FINANCIAL_PAY.PAY_RTN_TIME
+  is '支付成功银行返回时间';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table HASLCLAIMS.TC_FINANCIAL_PAY
+  add primary key (SERNO)
+  using index 
+  tablespace SPC_CLAIMS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );

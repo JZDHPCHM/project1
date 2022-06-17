@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>主体评级报告</title>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/jquery-3.1.1.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/echarts.js}"></script>
+	  <!-- html2canvas -->
+	<script src="/js/html2canvas-1.0.0.js"></script>
+	<!-- jspdf -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+	<script type="text/javascript" src="/js/rem.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/mainRatingReport.css?t=2">
+</head>
+<body>
+	 <!-- 分界线 -->
+								  <div class="container"   id="export_content">
+									   <div class="container_title">
+									     <div class="container_title_left">
+									        主体信用评级报告
+									     </div>
+									      <div class="container_title2" id="company">
+									   <label></label><span>（客户编号：）</span>
+									  </div>
+									   </div>
+									  
+									  <div class="content1 mb10">
+									    <div class="grade bgw">
+									       <div id="grade">
+									
+									       </div>
+									       <div class="list1">
+									    <li>
+								            <span></span><span id="list_sp2"></span>
+								          </li>
+								          <li>
+								            <span></span><span id="list_sp3"></span>
+								          </li>
+									            <div class="time" id="time1">
+								            评级生效日期：<span id="time1_1"></span>
+								          </div>
+									       </div>
+									    </div>
+									    <div class="content1_right" >
+									       <div class="content1_right1 bgw">
+									           <label>
+									            <!-- 标签名称 -->
+									           </label>
+									           <ul class="list2">
+									              <li  id="li1">
+									               初复评有差异
+									              </li>
+									              <li  id="li2">
+									               重大潜在风险较多
+									              </li>
+									              <li  id="li3">
+									                全量评级排名前十
+									              </li>
+									              <li  id="li4">
+									        同赛道评级排名前五
+									              </li>
+									               <li  id="li5">
+									            同部门评级排名前三
+									              </li>
+									            </ul>
+									       </div>
+									       <div class="content1_right2 bgw">
+									             <div class="content1_right2_1">
+									                 <div class="title">
+									                   <strong>评级得分</strong>  
+									                 </div>
+									                 <div class="content1_1">
+									                    <label></label>
+									                 </div>
+									             </div>
+									             <div class="content1_right2_2">
+									                <div class="title">
+									                    <strong>初评复核差异</strong>
+									                 </div>
+									                 <div class="content1_2">
+									                    <div class="content1_2_1">
+									                        <span></span>（初评人：<label></label>）
+									                    </div>
+									                    <div class="content1_2_2">
+									                        <span></span>（复评人：<label></label>）
+									                    </div>
+									                 </div>
+									            </div>
+									            <div class="content1_right2_3">
+									                <div class="title">
+									                   <strong>其他信息</strong>
+									                 </div>
+									                 <div class="content1_right1_3">
+									                     <div class="content1_right1_3_top">
+									                           <div class="content1_right1_3_top1">
+									                            <span></span> (<label>收入规模</label>）
+									                           </div>
+									                           <div class="content1_right1_3_top2">
+									                            <span></span> (<label></label>)
+									                        </div>
+									                     </div>
+									                     <div class="content1_right1_3_bottom">
+									                         <div class="content1_right1_3_bottom1" id="content1_right1_3_bottom_1">
+									                         
+									                         </div>
+									                         <div class="content1_right1_3_bottom1" id="content1_right1_3_bottom_2">
+									                    
+									                         </div>
+									                         <div class="content1_right1_3_bottom1" id="content1_right1_3_bottom_3">
+									                           
+									                         </div>
+									                    </div>
+									                 </div>
+									            </div>
+									       </div>
+									       <div class="content1_right3 bgw">
+									            <label>
+									                <strong>等级描述</strong>
+									            </label>
+									            <div class="content1_right3_1">
+									         
+									            </div>
+									       </div>
+									    </div>
+									  </div>
+									  <div class="content2">
+									     <div class="content2_left bgw mr10">
+									       <label>
+									        指标评价
+									       </label>
+									       <div class="content2_left2">
+									            <div id='quota'>
+									            
+									            </div>
+									            <div class="content2_left2_select">
+									               <select id="select1">
+									                   <option value='1'>
+									                    跟公司所有全量客户对比
+									                   </option>
+									                    <option value='2'>
+									                   跟公司所在部门资产对比
+									                   </option>
+									                     <option value='3'>
+									                    跟公司相同赛道资产对比
+									                   </option>
+									               </select>
+									            </div>
+									       </div>
+									     </div>
+									     <div class="content2_right bgw">
+									        <label>
+									        得分分位数
+									        </label>
+									        <div class="content2_right2 mb10">
+									            <div class="content2_right2_title">
+									               <span>全量评级中的位置</span>(超过全量客户的百分比)
+									            </div>
+									            <div id="progress1">
+									
+									            </div>
+									        </div>
+									        <div class="content2_right3 mt10">
+									            <div class="content2_right3_title">
+									               <span>在同赛道中的位置</span>(超过同赛道客户的百分比)
+									            </div>
+									            <div id="progress2">
+									
+									            </div>
+									        </div>
+									    </div>
+									  </div>
+									  <div class="content3 bgw mt10">
+									     <div class="content3_1">
+									        <div class="content3_1_title">
+									            经营质量
+									        </div>
+									        <ul id="title3">
+										       
+									        </ul>
+									        
+									        <div class="content3_1_content2" id='manage'>
+									           
+									        </div>
+									     </div>
+									     <div class="content3_2">
+									        <div class="content3_2_title">
+									            管理能力
+									        </div>
+									        <ul id="title4">
+									        
+									        
+									        </ul>
+									       <div class="content3_2_content2" id='ability'>
+									           
+									        </div>
+									     </div>
+									     <div class="content3_3">
+									        <div class="content3_3_title">
+									            产业环境
+									        </div>
+									        <ul id="title5">
+									       
+									        </ul>
+									        
+									        
+									        <div class="content3_3_content2" id='industry'>
+									           
+									        </div>
+									     </div>
+									  </div>
+									  <div class="content4 bgw mt10">
+									    <div class="content4_1">
+									       <div class="content4_1_title">
+									        产品品质
+									       </div>
+									        <ul id="title6">
+									        
+									        </ul>
+									      
+									       <div class="content4_1_content2" id='productQuality'>
+									          
+									       </div>
+									    </div>
+									    <div class="content4_2">
+									        <div class="content4_2_title">
+									          市场地位
+									        </div>
+									        <ul id="title7">
+										         
+									        </ul>
+									       
+									      
+									        <div class="content4_2_content2" id='marketPosition'>
+									           
+									        </div>
+									     </div>
+									    <div class="content4_3">
+									        <div class="content4_3_title">
+									            商业模式
+									        </div>
+									        <ul id="title8">
+									        
+									        </ul>
+									       
+									        <div class="content4_3_content2" id='businessModel'>
+									           
+									        </div>
+									     </div>
+									 
+									    </div>
+									  <div class="content5 mt10 bgw" id="riskTips">
+									     <div class="content5_1">
+									        重大潜在风险提示
+									     </div>
+									     <div class="content5_2">
+									        <div class="content5_2_left">
+									           <div class="content5_2_left1" id="COUN">
+									           
+									           </div>
+									           <div class="content5_2_left2">
+									            重大潜在风险数量
+									           </div>
+									        </div>
+									        <div class="content5_2_right">
+									            <div class="content5_2_right1" >
+									                风险点描述
+									            </div>
+									            <div class="content5_2_right2" id="lists2">
+									               
+									            </div>
+									        </div>
+									    </div>
+									  </div>
+		                                <div class="content5 bgw mt10" id="riskTips3">
+		                                   <div class="content5_1">
+									        重大潜在风险提示
+									     </div>
+	<div class="content5_2  content5_2_3 ">
+	 <div class="content5_2_left">无</div>
+	</div>
+    
+  </div>
+								</div>
+
+						     <!-- 分界线 -->
+     <div  class="content6  mt10" >
+                 <div class="btn" id="btn">下载PDF报告</div>
+     </div> 
+</body>
+<script th:inline="javascript">
+     function getCustNo(){
+          return [[${custNo}]];
+     }
+ </script>
+<script type="text/javascript" src="/js/mainRatingReport.js?t=3"></script>
+
+
+
+
+
+</html>

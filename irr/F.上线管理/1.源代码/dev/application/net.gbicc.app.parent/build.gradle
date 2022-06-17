@@ -1,0 +1,16 @@
+group='net.gbicc'
+
+eclipse {
+	project {
+		comment = '此工程是为了方便查看和修改父 gradle 配置文件,将这些父 gradle 配置文件以 link 方式连接到工程中'
+    	referencedProjects = [] as Set
+    	natures 'org.eclipse.jdt.core.javanature'
+    	buildCommand 'org.eclipse.jdt.core.javabuilder'
+    	linkedResource name: 'links/gradle.properties', 	type: '1', locationUri: 'PARENT-1-PROJECT_LOC/gradle.properties'
+    	linkedResource name: 'links/build.gradle', 			type: '1', locationUri: 'PARENT-1-PROJECT_LOC/build.gradle'
+    	linkedResource name: 'links/settings.gradle', 		type: '1', locationUri: 'PARENT-1-PROJECT_LOC/settings.gradle'
+    	linkedResource name: 'links/README.adoc', 			type: '1', locationUri: 'PARENT-1-PROJECT_LOC/README.adoc'
+    	linkedResource name: 'links/CHANGELOG', 			type: '1', locationUri: 'PARENT-1-PROJECT_LOC/CHANGELOG'
+    	linkedResource name: 'links/gitignore', 			type: '1', locationUri: 'PARENT-1-PROJECT_LOC/.gitignore'
+	}
+}

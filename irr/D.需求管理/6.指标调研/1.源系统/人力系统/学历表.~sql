@@ -1,0 +1,21 @@
+select (select name from e_bds_hrm_org g where g.orgcode = t.orgcode2) as "二级机构",
+       (select o.C_name
+          from e_bds_hrm_organization o
+         where o.typeid = 4
+           and o.code = t.orgcode4
+           and rownum < 2) as "渠道"
+       
+       ,
+       (case
+         when (t.payrid = '17') then
+          '内勤薪酬'
+         when (t.payrid = '30') then
+          '销售薪酬'
+       
+         else
+          '未知'
+       end) as "薪酬体系",
+       t.data_date,
+       t.a as "统计大专学历以上的在职员工"
+  from e_bds_hrm_employeedegree t
+ where t.data_date = '201906'

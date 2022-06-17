@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FR_2019.02.27_15.37.15__FR_SYS_PROCESS.xml -->
+<export>
+  <summary>
+    <t name="FR_SYS_PROCESS">select * from FR_SYS_PROCESS</t>
+  </summary>
+  <table name="FR_SYS_PROCESS">
+    <sql>select * from FR_SYS_PROCESS</sql>
+      <fields>
+        <field name="FD_ID"                        type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CATEGORY"                  type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_KEY"                       type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_NAME"                      type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_DESCRIPTION"               type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_VERSION"                   type="2"                  typeName="java.sql.Types.NUMERIC"/>
+        <field name="FD_DEPLOYED_ID"               type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_XML"                       type="2005"               typeName="java.sql.Types.CLOB"/>
+        <field name="FD_STATUS"                    type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CAN_CLAIM_TASK"            type="2"                  typeName="java.sql.Types.NUMERIC"/>
+        <field name="FD_CREATOR"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATE_DATE"               type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+        <field name="FD_LAST_MODIFIER"             type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_LAST_MODIFYDATE"           type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+      </fields>
+    <resultset>
+      <row>
+        <f>49ccedf9-c433-4848-8150-3b783d21591e</f>
+        <f>RISK_EXPOSURE</f>
+        <f>RISK_EXPOSURE</f>
+        <f>风险暴露流程</f>
+        <f>风险暴露流程</f>
+        <f/>
+        <f/>
+        <f>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;
+&lt;definitions xmlns=&quot;http://www.omg.org/spec/BPMN/20100524/MODEL&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:flowable=&quot;http://flowable.org/bpmn&quot; xmlns:bpmndi=&quot;http://www.omg.org/spec/BPMN/20100524/DI&quot; xmlns:omgdc=&quot;http://www.omg.org/spec/DD/20100524/DC&quot; xmlns:omgdi=&quot;http://www.omg.org/spec/DD/20100524/DI&quot; typeLanguage=&quot;http://www.w3.org/2001/XMLSchema&quot; expressionLanguage=&quot;http://www.w3.org/1999/XPath&quot; targetNamespace=&quot;http://www.activiti.org/test&quot;&gt;
+  &lt;process id=&quot;RISK_EXPOSURE&quot; name=&quot;风险暴露流程&quot; isExecutable=&quot;true&quot;&gt;
+    &lt;dataObject id=&quot;assignment-strategy&quot; name=&quot;任务分配策略&quot; itemSubjectRef=&quot;xsd:string&quot;&gt;
+      &lt;extensionElements&gt;
+        &lt;flowable:value&gt;{&quot;A2&quot;:&quot;frAssigneeQueryService&quot;}&lt;/flowable:value&gt;
+      &lt;/extensionElements&gt;
+    &lt;/dataObject&gt;
+    &lt;startEvent id=&quot;startevent1&quot; name=&quot;Start&quot;/&gt;
+    &lt;userTask id=&quot;A1&quot; name=&quot;提交申请&quot; flowable:assignee=&quot;${assignee}&quot; flowable:candidateGroups=&quot;admin&quot; flowable:skipExpression=&quot;${execution.getVariable(&apos;skipFirst&apos;)==true}&quot;&gt;
+      &lt;extensionElements&gt;
+        &lt;modeler:group-info-name-admin xmlns:modeler=&quot;http://flowable.org/modeler&quot;&gt;&lt;![CDATA[系统管理员]]&gt;&lt;/modeler:group-info-name-admin&gt;
+        &lt;modeler:activiti-idm-candidate-group xmlns:modeler=&quot;http://flowable.org/modeler&quot;&gt;&lt;![CDATA[true]]&gt;&lt;/modeler:activiti-idm-candidate-group&gt;
+        &lt;modeler:initiator-can-complete xmlns:modeler=&quot;http://flowable.org/modeler&quot;&gt;&lt;![CDATA[false]]&gt;&lt;/modeler:initiator-can-complete&gt;
+      &lt;/extensionElements&gt;
+    &lt;/userTask&gt;
+    &lt;endEvent id=&quot;endevent1&quot; name=&quot;End&quot;/&gt;
+    &lt;userTask id=&quot;A2&quot; name=&quot;复核&quot; flowable:assignee=&quot;${assignee}&quot; flowable:candidateGroups=&quot;admin&quot;&gt;
+      &lt;extensionElements&gt;
+        &lt;flowable:taskListener event=&quot;assignment&quot; delegateExpression=&quot;${flowableSendMailListener}&quot;&gt;
+          &lt;flowable:field name=&quot;title&quot;&gt;
+            &lt;flowable:string&gt;&lt;![CDATA[您有一个 [示例] 流程的 [复核] 任务等待处理]]&gt;&lt;/flowable:string&gt;
+          &lt;/flowable:field&gt;
+          &lt;flowable:field name=&quot;content&quot;&gt;
+            &lt;flowable:string&gt;&lt;![CDATA[${assignee},您好！
+    
+    您有一个 [示例] 流程的 [复核] 任务等待处理，详情参见: http://localhost:8080]]&gt;&lt;/flowable:string&gt;
+          &lt;/flowable:field&gt;
+        &lt;/flowable:taskListener&gt;
+        &lt;modeler:group-info-name-admin xmlns:modeler=&quot;http://flowable.org/modeler&quot;&gt;&lt;![CDATA[系统管理员]]&gt;&lt;/modeler:group-info-name-admin&gt;
+        &lt;modeler:activiti-idm-candidate-group xmlns:modeler=&quot;http://flowable.org/modeler&quot;&gt;&lt;![CDATA[true]]&gt;&lt;/modeler:activiti-idm-candidate-group&gt;
+        &lt;modeler:initiator-can-complete xmlns:modeler=&quot;http://flowable.org/modeler&quot;&gt;&lt;![CDATA[false]]&gt;&lt;/modeler:initiator-can-complete&gt;
+      &lt;/extensionElements&gt;
+    &lt;/userTask&gt;
+    &lt;userTask id=&quot;A3&quot; name=&quot;认定&quot; default=&quot;flow4&quot; flowable:assignee=&quot;${assignee}&quot; flowable:candidateGroups=&quot;admin&quot;&gt;
+      &lt;extensionElements&gt;
+        &lt;modeler:group-info-name-admin xmlns:modeler=&quot;http://flowable.org/modeler&quot;&gt;&lt;![CDATA[系统管理员]]&gt;&lt;/modeler:group-info-name-admin&gt;
+        &lt;modeler:activiti-idm-candidate-group xmlns:modeler=&quot;http://flowable.org/modeler&quot;&gt;&lt;![CDATA[true]]&gt;&lt;/modeler:activiti-idm-candidate-group&gt;
+        &lt;modeler:initiator-can-complete xmlns:modeler=&quot;http://flowable.org/modeler&quot;&gt;&lt;![CDATA[false]]&gt;&lt;/modeler:initiator-can-complete&gt;
+      &lt;/extensionElements&gt;
+    &lt;/userTask&gt;
+    &lt;userTask id=&quot;A4&quot; name=&quot;最终认定&quot; flowable:assignee=&quot;${assignee}&quot; flowable:candidateGroups=&quot;admin&quot;&gt;
+      &lt;extensionElements&gt;
+        &lt;modeler:group-info-name-admin xmlns:modeler=&quot;http://flowable.org/modeler&quot;&gt;&lt;![CDATA[系统管理员]]&gt;&lt;/modeler:group-info-name-admin&gt;
+        &lt;modeler:activiti-idm-candidate-group xmlns:modeler=&quot;http://flowable.org/modeler&quot;&gt;&lt;![CDATA[true]]&gt;&lt;/modeler:activiti-idm-candidate-group&gt;
+        &lt;modeler:initiator-can-complete xmlns:modeler=&quot;http://flowable.org/modeler&quot;&gt;&lt;![CDATA[false]]&gt;&lt;/modeler:initiator-can-complete&gt;
+      &lt;/extensionElements&gt;
+    &lt;/userTask&gt;
+    &lt;sequenceFlow id=&quot;flow1&quot; sourceRef=&quot;startevent1&quot; targetRef=&quot;A1&quot;/&gt;
+    &lt;sequenceFlow id=&quot;flow2&quot; sourceRef=&quot;A1&quot; targetRef=&quot;A2&quot;/&gt;
+    &lt;sequenceFlow id=&quot;flow3&quot; sourceRef=&quot;A2&quot; targetRef=&quot;A3&quot;/&gt;
+    &lt;sequenceFlow id=&quot;flow5&quot; sourceRef=&quot;A4&quot; targetRef=&quot;endevent1&quot;/&gt;
+    &lt;sequenceFlow id=&quot;flow4&quot; sourceRef=&quot;A3&quot; targetRef=&quot;A4&quot;/&gt;
+    &lt;sequenceFlow id=&quot;sid-71C0BD38-526F-4553-817A-74FEEA681839&quot; name=&quot;回退给申请者&quot; sourceRef=&quot;A3&quot; targetRef=&quot;A1&quot;&gt;
+      &lt;conditionExpression xsi:type=&quot;tFormalExpression&quot;&gt;&lt;![CDATA[${goback==-2}]]&gt;&lt;/conditionExpression&gt;
+    &lt;/sequenceFlow&gt;
+    &lt;sequenceFlow id=&quot;sid-68F8FEAE-F90F-4FE8-A63C-C83940F926B7&quot; name=&quot;回退给复核岗&quot; sourceRef=&quot;A3&quot; targetRef=&quot;A2&quot;&gt;
+      &lt;conditionExpression xsi:type=&quot;tFormalExpression&quot;&gt;&lt;![CDATA[${goback==-1}]]&gt;&lt;/conditionExpression&gt;
+    &lt;/sequenceFlow&gt;
+  &lt;/process&gt;
+  &lt;bpmndi:BPMNDiagram id=&quot;BPMNDiagram_RISK_EXPOSURE&quot;&gt;
+    &lt;bpmndi:BPMNPlane bpmnElement=&quot;RISK_EXPOSURE&quot; id=&quot;BPMNPlane_RISK_EXPOSURE&quot;&gt;
+      &lt;bpmndi:BPMNShape bpmnElement=&quot;startevent1&quot; id=&quot;BPMNShape_startevent1&quot;&gt;
+        &lt;omgdc:Bounds height=&quot;30.0&quot; width=&quot;30.0&quot; x=&quot;32.02187570282153&quot; y=&quot;169.09844066269687&quot;/&gt;
+      &lt;/bpmndi:BPMNShape&gt;
+      &lt;bpmndi:BPMNShape bpmnElement=&quot;A1&quot; id=&quot;BPMNShape_A1&quot;&gt;
+        &lt;omgdc:Bounds height=&quot;80.0&quot; width=&quot;105.0&quot; x=&quot;105.0&quot; y=&quot;144.09844066269687&quot;/&gt;
+      &lt;/bpmndi:BPMNShape&gt;
+      &lt;bpmndi:BPMNShape bpmnElement=&quot;endevent1&quot; id=&quot;BPMNShape_endevent1&quot;&gt;
+        &lt;omgdc:Bounds height=&quot;28.0&quot; width=&quot;28.0&quot; x=&quot;737.0218757028215&quot; y=&quot;170.09844066269687&quot;/&gt;
+      &lt;/bpmndi:BPMNShape&gt;
+      &lt;bpmndi:BPMNShape bpmnElement=&quot;A2&quot; id=&quot;BPMNShape_A2&quot;&gt;
+        &lt;omgdc:Bounds height=&quot;80.0&quot; width=&quot;105.0&quot; x=&quot;240.0&quot; y=&quot;144.09844066269687&quot;/&gt;
+      &lt;/bpmndi:BPMNShape&gt;
+      &lt;bpmndi:BPMNShape bpmnElement=&quot;A3&quot; id=&quot;BPMNShape_A3&quot;&gt;
+        &lt;omgdc:Bounds height=&quot;80.0&quot; width=&quot;104.99999999999994&quot; x=&quot;407.02187570282155&quot; y=&quot;144.09844066269687&quot;/&gt;
+      &lt;/bpmndi:BPMNShape&gt;
+      &lt;bpmndi:BPMNShape bpmnElement=&quot;A4&quot; id=&quot;BPMNShape_A4&quot;&gt;
+        &lt;omgdc:Bounds height=&quot;80.0&quot; width=&quot;105.0&quot; x=&quot;584.5218757028215&quot; y=&quot;144.09844066269687&quot;/&gt;
+      &lt;/bpmndi:BPMNShape&gt;
+      &lt;bpmndi:BPMNEdge bpmnElement=&quot;sid-71C0BD38-526F-4553-817A-74FEEA681839&quot; id=&quot;BPMNEdge_sid-71C0BD38-526F-4553-817A-74FEEA681839&quot;&gt;
+        &lt;omgdi:waypoint x=&quot;459.0&quot; y=&quot;224.0&quot;/&gt;
+        &lt;omgdi:waypoint x=&quot;459.0&quot; y=&quot;262.0&quot;/&gt;
+        &lt;omgdi:waypoint x=&quot;157.0&quot; y=&quot;262.0&quot;/&gt;
+        &lt;omgdi:waypoint x=&quot;157.0&quot; y=&quot;224.0&quot;/&gt;
+      &lt;/bpmndi:BPMNEdge&gt;
+      &lt;bpmndi:BPMNEdge bpmnElement=&quot;flow1&quot; id=&quot;BPMNEdge_flow1&quot;&gt;
+        &lt;omgdi:waypoint x=&quot;61.0&quot; y=&quot;184.0&quot;/&gt;
+        &lt;omgdi:waypoint x=&quot;105.0&quot; y=&quot;184.0&quot;/&gt;
+      &lt;/bpmndi:BPMNEdge&gt;
+      &lt;bpmndi:BPMNEdge bpmnElement=&quot;flow2&quot; id=&quot;BPMNEdge_flow2&quot;&gt;
+        &lt;omgdi:waypoint x=&quot;209.0&quot; y=&quot;184.0&quot;/&gt;
+        &lt;omgdi:waypoint x=&quot;240.0&quot; y=&quot;184.0&quot;/&gt;
+      &lt;/bpmndi:BPMNEdge&gt;
+      &lt;bpmndi:BPMNEdge bpmnElement=&quot;flow3&quot; id=&quot;BPMNEdge_flow3&quot;&gt;
+        &lt;omgdi:waypoint x=&quot;344.0&quot; y=&quot;184.0&quot;/&gt;
+        &lt;omgdi:waypoint x=&quot;407.0&quot; y=&quot;184.0&quot;/&gt;
+      &lt;/bpmndi:BPMNEdge&gt;
+      &lt;bpmndi:BPMNEdge bpmnElement=&quot;flow4&quot; id=&quot;BPMNEdge_flow4&quot;&gt;
+        &lt;omgdi:waypoint x=&quot;511.0&quot; y=&quot;184.0&quot;/&gt;
+        &lt;omgdi:waypoint x=&quot;584.0&quot; y=&quot;184.0&quot;/&gt;
+      &lt;/bpmndi:BPMNEdge&gt;
+      &lt;bpmndi:BPMNEdge bpmnElement=&quot;flow5&quot; id=&quot;BPMNEdge_flow5&quot;&gt;
+        &lt;omgdi:waypoint x=&quot;689.0&quot; y=&quot;184.0&quot;/&gt;
+        &lt;omgdi:waypoint x=&quot;737.0&quot; y=&quot;184.0&quot;/&gt;
+      &lt;/bpmndi:BPMNEdge&gt;
+      &lt;bpmndi:BPMNEdge bpmnElement=&quot;sid-68F8FEAE-F90F-4FE8-A63C-C83940F926B7&quot; id=&quot;BPMNEdge_sid-68F8FEAE-F90F-4FE8-A63C-C83940F926B7&quot;&gt;
+        &lt;omgdi:waypoint x=&quot;459.0&quot; y=&quot;144.0&quot;/&gt;
+        &lt;omgdi:waypoint x=&quot;459.0&quot; y=&quot;97.0&quot;/&gt;
+        &lt;omgdi:waypoint x=&quot;292.0&quot; y=&quot;97.0&quot;/&gt;
+        &lt;omgdi:waypoint x=&quot;292.0&quot; y=&quot;144.0&quot;/&gt;
+      &lt;/bpmndi:BPMNEdge&gt;
+    &lt;/bpmndi:BPMNPlane&gt;
+  &lt;/bpmndi:BPMNDiagram&gt;
+&lt;/definitions&gt;</f>
+        <f>SKETCH</f>
+        <f>0</f>
+        <f>admin</f>
+        <f>2019-02-27 15:26:21.472</f>
+        <f>admin</f>
+        <f>2019-02-27 15:26:21.472</f>
+      </row>
+    </resultset>
+  </table>
+</export>

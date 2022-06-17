@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Implementation-Title: jar
+Implementation-Version: 3.6.0
+Implementation-Vendor: build
+

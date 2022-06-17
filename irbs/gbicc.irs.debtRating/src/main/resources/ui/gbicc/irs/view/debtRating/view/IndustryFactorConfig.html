@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+//字段定义
+var DebtRatingBHSXSParamFields ={
+	grid: [
+		{width:'*',		name:'id',	primaryKey:true,	hidden:true},
+		{width:'*',		name:'industryCode',	 title:'行业code'},
+		{width:'*',		name:'configRules',	 	 title:'配置规则'},
+		{width:'*',		name:'industryName',	 title:'行业名称'},
+		{width:'*',		name:'guarantorFactor',	 title:'保证人'},
+		{width:'*',		name:'borrowerGuarantor',title:'借款人'}
+	],
+	edit: [
+		{width:'*',		name:'id',	 primaryKey:true,	hidden:true,canEdit:false,required:true},
+		{width:200,		name:'industryCode',	 		title:'行业code',canEdit:false,},
+		{width:200,		name:'industryName',	 		title:'行业名称',required:true},
+		{width:200,		name:'guarantorFactor',	 		title:'保证人',required:true},
+		{width:200,		name:'borrowerGuarantor',	    title:'借款人',required:true},
+		{width:300,		name:'configRules',	 	 		title:'配置规则',hidden:true,type:'textarea',rowSpan:4},
+		
+	]
+};
+
+//保证人回收调整系数数据源
+isc.FwRestDataSource.create({
+	ID: 'debtRatingBHSXSParamDS',
+    fields: DebtRatingBHSXSParamFields.grid,
+    dataURL: '[[@{/irs/config/industryfactor/isc}]]'
+});
+
+//保证人回收调整系数列表
+isc.FwListGrid.create({
+	ID: 'debtRatingBHSXSParamListGrid',
+	title: '<b>行业调整因素</b>',
+	dataSource: debtRatingBHSXSParamDS,
+	sortField:"bzTypeCode",
+	fields: DebtRatingBHSXSParamFields.grid,
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: debtRatingBHSXSParamDS,
+            fields: DebtRatingBHSXSParamFields.edit
+        },
+        afterShow: function(action){
+        	var value=debtRatingBHSXSParamListGrid.getSelectedRecord();
+        	if(value.industryCode=="C"){
+        		this.getForm().getField("configRules").show();
+        	}
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh','update','remove','add'
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				debtRatingBHSXSParamListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

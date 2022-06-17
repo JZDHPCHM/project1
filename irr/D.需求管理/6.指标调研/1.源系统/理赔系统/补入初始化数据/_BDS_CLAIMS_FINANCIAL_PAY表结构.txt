@@ -1,0 +1,27 @@
+create table E_BDS_CLAIMS_FINANCIAL_PAY
+(
+  serno         VARCHAR2(40) not null,
+  pay_no        VARCHAR2(40),
+  pay_rtn_date  DATE,
+  pay_send_time DATE,
+  pay_rtn_time  DATE
+)
+tablespace SPC_DW
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column E_BDS_CLAIMS_FINANCIAL_PAY.pay_no
+  is '支付号 ';
+comment on column E_BDS_CLAIMS_FINANCIAL_PAY.pay_rtn_date
+  is '支付成功银行返回日期';
+comment on column E_BDS_CLAIMS_FINANCIAL_PAY.pay_send_time
+  is '首次支付成功发起时间';
+comment on column E_BDS_CLAIMS_FINANCIAL_PAY.pay_rtn_time
+  is '支付成功银行返回时间';

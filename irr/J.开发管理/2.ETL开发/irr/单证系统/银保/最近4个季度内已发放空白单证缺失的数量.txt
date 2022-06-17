@@ -1,0 +1,50 @@
+SELECT
+COUNT(DISTINCT ID) FROM AFMS_AFMSAAUDIT_HISTORY A
+WHERE 
+status IN ('9','T2','T3')
+AND NOT EXISTS (SELECT 1 FROM
+(SELECT * FROM
+(SELECT ID,MAX(UPDATETIME) HTTIME
+  FROM AFMS_AFMSAAUDIT_HISTORY
+ WHERE STATUS IN ('11', '12') --空白退回(T2) 空白退回(T3)
+ GROUP BY ID)A
+INNER JOIN
+(
+SELECT ID,MAX(UPDATETIME) FFTIME
+  FROM AFMS_AFMSAAUDIT_HISTORY
+ WHERE STATUS IN ('2', '3') --状态:T2，T3发放
+               GROUP BY ID
+)B
+ON A.ID=B.ID
+WHERE HTTIME<FFTIME
+)B  WHERE A.ID=ID )
+AND UPDATETIME BETWEEN --更新时间在评估期
+       TO_CHAR(ADD_MONTHS(TO_DATE('20150630', 'yyyymmddhh24miss'), -12),
+               'yyyymmddhh24miss') AND
+       TO_CHAR(TO_DATE('20150630235959', 'yyyymmddhh24miss'),
+               'yyyymmddhh24miss')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

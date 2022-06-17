@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+
+//补录组件类型
+var AdditFieldTypes =[(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.AdditFieldType),#locale)})];
+//补录值类型
+var AdditValueTypes =[(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.AdditValueType),#locale)})];
+
+//选择补录项数据源
+isc.FwRestDataSource.create({
+	ID: 'additItemsForSelectDS',
+	autoFetchData:true,
+    fields:[
+    	{width:80,		name:'id'},
+    	{width:120,		name:'fieldTitle',				title:'[(#{fieldTitle})]'},
+		{width:150,		name:'fieldName',				title:'[(#{fieldName})]'}
+    ],
+    fetchDataURL:'[(@{/irs/ratingAdditItemConfig/getAllAdditemsSelectList})]'
+});
+
+var RatingSelectValuesConfigFields = {
+	dataSourceGrid: [
+			{width:80,		name:'id',					title:'[(#{id})]',type: 'text',primaryKey:true},
+			{width:80,		name:'defId',				title:'[(#{defId})]'},
+			{width:150,		name:'defCode',				title:'[(#{defCode})]'},
+			{width:'*',		name:'orderNum',			title:'[(#{orderNum})]'},
+		    {width:'*',		name:'displayValue',		title:'[(#{displayValue})]'},
+		    {width:'*',		name:'realValue',			title:'[(#{realValue})]'},
+		    {width:'*',		name:'weight',				title:'[(#{weight})]'},
+		    {width:'*',		name:'additID',				title:'[(#{additID})]'},
+		    {width:'*',		name:'reMarks',				title:'[(#{reMarks})]'},
+		    {width:300,		name:'isHis',				title:'[(#{isHis})]',type:"boolean"}
+	 ],
+	 showGrid:[
+		 	{width:80,		name:'id',					title:'[(#{id})]',type: 'text',hidden:true},
+		 	{width:50,		name:'orderNum',			title:'[(#{orderNum})]',type:"integer"},
+		 	{width:80,		name:'realValue',			title:'[(#{realValue})]'},
+		 	{width:80,		name:'displayValue',		title:'[(#{displayValue})]'},
+		    {width:50,		name:'weight',				title:'[(#{weight})]'},
+		    {
+		    	width:170,		
+		    	name:'additID',				
+		    	title:'[(#{additID})]',
+		    	type: "select",
+		    	optionDataSource: additItemsForSelectDS,
+		    	displayField:'fieldTitle',
+				valueField:'id',
+				pickListFields: [
+		              { name:"fieldName",width:80},
+		              { name:"fieldTitle",width:80}
+		        ]
+		    }, 
+		    {width:'*',		name:'reMarks',				title:'[(#{reMarks})]'}
+	 ],
+	 edit:[
+		 	{width:80,		name:'id',					title:'[(#{id})]',type: 'text',hidden:true},
+		 	{width:'*',		name:'defId',				hidden:true},
+		 	{width:'*',		name:'orderNum',			title:'[(#{orderNum})]',type:"integer"},
+		 	{width:'*',		name:'realValue',			title:'[(#{realValue})]'},
+		 	{width:'*',		name:'displayValue',		title:'[(#{displayValue})]'},
+		    {width:'*',		name:'weight',				title:'[(#{weight})]'},
+		    {
+		    	width:'*',		
+		    	name:'additID',				
+		    	title:'[(#{additID})]',
+		    	type: "select",
+		    	optionDataSource: additItemsForSelectDS,
+		    	displayField:'fieldTitle',
+				valueField:'id',
+				pickListFields: [
+		              { name:"fieldName",width:'50%'},
+		              { name:"fieldTitle",width:'50%'}
+		        ]
+		    }, 
+		    {width:'*',		name:'reMarks',				title:'[(#{reMarks})]'}
+	 ]
+}
+
+//问题选项列表数据源
+isc.FwRestDataSource.create({
+	ID: 'ratingSelectValuesConfigDS',
+	autoFetchData:false,
+    fields:RatingSelectValuesConfigFields.dataSourceGrid,
+    dataURL: '[(@{/irs/ratingSelectValuesConfig/isc})]'
+});
+
+//字段定义
+var RatingAdditItemConfigFields ={
+	query: [
+			{width:'*',		name:'fieldTitle',				title:'[(#{fieldTitle})]',type: 'text'},
+			{width:'*',		name:'fieldName',				title:'[(#{fieldName})]',type: 'text',	operator:'equals'},
+	],
+	grid: [
+			{width:80,		name:'id',						title:'[(#{id})]',type: 'text',primaryKey:true,hidden:true},
+			{width:120,		name:'fieldTitle',				title:'[(#{fieldTitle})]'},
+			{width:150,		name:'fieldName',				title:'[(#{fieldName})]'},
+		    {width:'*',		name:'fieldType',				title:'[(#{fieldType})]',type: 'select',valueMap:AdditFieldTypes,allowEmptyValue:true,autoFetchData:false},
+		    {width:'*',		name:'valueType',				title:'[(#{valueType})]',type: 'select',valueMap:AdditValueTypes,allowEmptyValue:true,autoFetchData:false},
+		    {width:'*',		name:'defaultValue',			title:'[(#{defaultValue})]'},
+		    {width:'*',		name:'fieldColSpan',			title:'[(#{fieldColSpan})]'},
+		    {width:'*',		name:'isEnabled',				title:'[(#{isEnabled})]',type:"boolean"},
+		    {width:300,		name:'isHis',					title:'[(#{isHis})]',type:"boolean"}
+	],
+	edit: [
+			{name:'id',						primaryKey:true,hidden:true},
+			{width:'*',		name:'fieldTitle',				title:'[(#{fieldTitle})]',required:true},
+			{width:'*',		name:'fieldName',				title:'[(#{fieldName})]',required:true},
+		    {width:'*',		name:'fieldType',				title:'[(#{fieldType})]',required:true,type: 'select',valueMap:AdditFieldTypes,allowEmptyValue:true,autoFetchData:false},
+		    {width:'*',		name:'valueType',				title:'[(#{valueType})]',required:true,type: 'select',valueMap:AdditValueTypes,allowEmptyValue:true,autoFetchData:false},
+		    {width:'*',		name:'defaultValue',			title:'[(#{defaultValue})]'},
+		    {width:'*',		name:'fieldColSpan',			title:'[(#{fieldColSpan})]'},
+		    {width:'*',		name:'isEnabled',				title:'[(#{isEnabled})]',type:"boolean",defaultValue:true},
+		    {
+				width:'*', 
+				name:'options',					
+				title:'<b>选项值列表</b>',								
+				type:'editGrid',
+				colSpan:4,
+				editGridProperties:{
+					height: 200,
+					filterPropertyName:'defId',
+					autoFetchData:false,
+					dataSource: ratingSelectValuesConfigDS,
+					defaultFields:RatingSelectValuesConfigFields.showGrid,
+					actionMembers:[
+			    		'refresh','add','remove'
+			    	],
+					editWindow: {
+						titleSuffix: '值',
+				        form: {
+				            dataSource: ratingSelectValuesConfigDS,
+				            fields: RatingSelectValuesConfigFields.edit
+				        },
+						afterShow:function(action){
+							this.Super("afterShow",arguments);
+							var record = additItemConfigGrid.getSelectedRecord();
+							if(record){
+								this.getForm().setValue("defId",record.id);
+							}
+				        }
+					}
+				}
+			}
+	]
+};
+
+//补录项定义数据源
+isc.FwRestDataSource.create({
+	ID: 'RatingAdditItemConfigDS',
+    fields: RatingAdditItemConfigFields.grid,
+    dataURL: '[(@{/irs/ratingAdditItemConfig/isc})]'
+});
+
+//补录项定义列表
+isc.FwListGrid.create({
+	ID: 'additItemConfigGrid',
+	title: '<b>外部支持定义列表</b>',
+	dataSource: RatingAdditItemConfigDS,
+	sortField: 'suppItemCode',
+	canHover:true,
+	fields: RatingAdditItemConfigFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: RatingAdditItemConfigFields.query
+	},
+	editWindow: {
+		width:900,
+		height:600,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: RatingAdditItemConfigDS,
+            fields: RatingAdditItemConfigFields.edit
+        },
+        actionMembers:[
+               		'ok','close'
+               	]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				additItemConfigGrid
+			]
+		})
+	}
+});
+</script>
+</html>

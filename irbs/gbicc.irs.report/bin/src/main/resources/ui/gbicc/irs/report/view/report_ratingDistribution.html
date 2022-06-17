@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/webjars/echarts/js/echarts.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+</head>
+<body>
+</body>
+<script>
+    var typeVal = 1;
+    var newData=[];
+	 tQuery.push(
+				{width:'*',		name:'type',		title:'类型',type: 'select',operator:'equals',valueMap: fdType,defaultToFirstOption:true,
+				changed: function(form, item, value){
+					if(value==1){
+						typeName = '客户数目';
+					}
+					if(value==2){
+						typeName = '授信金额';
+					}
+					if(value==3){
+						typeName = '授信余额';
+					}
+                    typeVal = value;
+					ratingDistributionFieldsListGrid.setFieldProperties(1, {title:typeName})
+					ratingDistributionFieldsListGrid.setHeaderSpanTitle('myspan', typeName)
+				}
+			});
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQuery,
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{
+				name:'guestGr',					
+				title:'客户评级',
+				getGridSummary:function (records, summaryField) {
+					return "合计";
+	            }
+			},
+			{name:'customerNum',			title:'客户数目',summaryFunction: function() {return sumData['customerNum'];} },//客户数目
+		    {name:'lastMonthMinus',			title:'较上月增<br>减额',summaryFunction: function() {return sumData['lastMonthMinus'];} },//较上月增减额
+		    {name:'beginYearMinus',			title:'比年初增<br>减额',summaryFunction:function() {return sumData['beginYearMinus'];}  },//比年初增减额
+		    {name:'customerNumPercent',		title:'客户数目<br>占比',summaryFunction:function() {return formatPer(sumData['customerNumPercent']);} },//客户数目占比
+		    {name:'lastMonthChange',			title:'占比较上<br>月变动',summaryFunction:function() {return formatPer(sumData['lastMonthChange']);} },//占比较上月变动
+		    {name:'beginYearChange',		title:'占比比年<br>初变动',summaryFunction:function() {return formatPer(sumData['beginYearChange']);} },//占比比年初变动
+		   
+	]
+};
+
+
+
+//图表展示区域	
+isc.HTMLPane.create({
+	ID:"chartPanel",
+    width:"100%",
+    height:"100%",		
+    contents:"<div id=\"chartDiv\"style=\"width:100%;height:100%;\">chart!</div>"
+});
+
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_ratingDistributionDS',
+    fields: BorrowKeyBussFields.grid,
+    fetchDataURL: '[[@{/irs/report_ratingDistribution/isc/fetchData}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'ratingDistributionFieldsListGrid',
+	title: '<b>整体借款人评级分布</b>',
+	dataSource: report_ratingDistributionDS,
+	//sortField: 'guestGr',
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	canPageable: false,
+	fields: BorrowKeyBussFields.grid,
+	headerSpans: [
+        {
+            fields: ["customerNum", "lastMonthMinus","beginYearMinus","customerNumPercent","lastMonthChange","beginYearChange"], 
+            title: "客户数目",          
+       		name: 'myspan'
+        }
+    ],
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	actionMembers:[
+		'query','reset',
+        {
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+					url:"[(@{/irs/report_ratingDistribution/isc/fetchData/Results.csv})]",
+                    "year":year,"month":month,"type":typeVal,
+					fileName:  "整体借款人评级分布",
+                    sortBy: "guestGr"
+				});
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+	afterQuery:function(dsResponse,data,dsRequest){
+		ratingDistributionFieldsListGrid.setData(newData)
+		drawChart(newData);
+	},
+    query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_ratingDistribution/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year,"month":month,"type":typeVal},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                sumData = [];
+				newData=[];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.guestGr==='合计'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                ratingDistributionFieldsListGrid.setData(newData);
+                drawChart(newData);
+            }
+        });
+    },
+	formatCellValue:function(value, record, rowNum, colNum){
+		var formatVal = value;
+		var fieldName = ratingDistributionFieldsListGrid.getField(colNum).title;
+
+		if( fieldName === "客户数目<br>占比" || fieldName === "占比较上<br>月变动"
+			|| fieldName === "占比比年<br>初变动"){
+			formatVal = formatPer(value);
+		}
+		return formatVal;
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [ratingDistributionFieldsListGrid,chartPanel]     
+				})
+			]
+		})
+	}
+});
+
+ratingDistributionFieldsListGrid.query();
+// 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById('chartDiv'));
+
+function drawChart(data){
+	var ydata =[];
+	for(var i =0 ;i<data.length;i++){
+		var record = data[i];
+
+		ydata.push({value:record.customerNum, name: record.guestGr+','+record.customerNum+','+formatPer(record.customerNumPercent)});
+	}
+	option = {
+		    title : {
+		        text: year+'年'+month+'月 客户评级分布('+typeName+')',
+		        x:'center'
+		    },
+		    tooltip : {
+		        trigger: 'item',
+		        formatter: "<br/>客户评级：{b} <br> "+typeName+"：{c} (占比：{d})"
+		    },
+
+		    calculable : false,
+		    series : [
+		        {
+		            name:'数目',
+		            type:'pie',
+		            radius : '70%',
+		            center: ['55%', '46%'],
+		            data: ydata
+		        }
+		    ]
+		};
+		                    
+	                    
+	// 使用刚指定的配置项和数据显示图表。
+	myChart.setOption(option);
+}
+
+
+</script>
+</html>

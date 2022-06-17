@@ -1,0 +1,5 @@
+select m.provincechnname, sum(t.amount)*-1
+  from dm_la_f_business t,d_managecompany m
+ where t.transtyp = 'P004' and t.edortypecode='T646'
+   and t.innerorgcode=m.laorigorgcode
+   and t.statdate between '20180401' and '20180630'  group by m.provincechnname

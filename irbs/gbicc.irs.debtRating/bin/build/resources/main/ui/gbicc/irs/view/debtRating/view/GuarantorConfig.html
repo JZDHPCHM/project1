@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+
+//字段定义
+var DebtRatingBHSXSParamFields ={
+	grid: [
+			{width:'*',		name:'id',	primaryKey:true,	hidden:true},
+			{width:'*',		name:'type',hidden:true},
+			{width:120,		name:'code',	title:'借款人信用等级'},
+			{width:'*',		name:'aaa',	 	title:'AAA',
+				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  			}	},
+  			{width:'*',		name:'aaUpper',	title:'AA+',
+				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  			}	},
+  			{width:'*',		name:'aaUpper',	 title:'AA+',
+				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  			}	},
+			{width:'*',		name:'aa',		 title:'AA',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+  		    {width:'*',		name:'aaLower',	  title:'AA-',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+  		  	{width:'*',		name:'aUpper',	  title:'A+',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+  		  	{width:'*',		name:'a',		  title:'A',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+  		 	{width:'*',		name:'aLower',	  title:'A-',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+  		    {width:'*',		name:'bbbUpper',  title:'BBB+',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+  		  	{width:'*',		name:'bbb',		  title:'BBB',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+  		  	{width:'*',		name:'bbbLower',  title:'BBB-',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+  		  	{width:'*',		name:'bbUpper',	  title:'BB+',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+  		  	{width:'*',		name:'bb',		  title:'BB',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+  		   {width:'*',		name:'bbLower',	  title:'BB-',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+  		   {width:'*',		name:'b',		  title:'B',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+  		  	{width:'*',		name:'c',		  title:'c',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+  		    {width:'*',		name:'d',		  title:'D',
+  				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100).toFixed(2)+"%";
+  		   	}	},
+			{width:'*',		name:'naked',	  title:'无保证',
+			 	formatCellValue : function(value, record, rowNum, colNum){
+			       return (value*100).toFixed(2)+"%";
+		}	}
+			
+	],
+	edit: [
+		{width:'*',		name:'id',		primaryKey:true,	hidden:true,canEdit:false,required:true},
+		{width:'*',		name:'type',	hidden:true,canEdit:false,required:true,},
+		{width:'*',		name:'code',	title:'借款人信用等级',required:true},
+		{width:'*',		name:'aaa',	 	title:'AAA',required:true},
+		{width:'*',		name:'aaUpper',	title:'AA+',required:true},
+		{width:'*',		name:'aaUpper',	title:'AA+',required:true},
+		{width:'*',		name:'aa',		title:'AA',required:true},
+	    {width:'*',		name:'aaLower', title:'AA-',required:true},
+	  	{width:'*',		name:'aUpper',	title:'A+',required:true},
+	  	{width:'*',		name:'a',		title:'A',required:true},
+	 	{width:'*',		name:'aLower',	title:'A-',required:true},
+	    {width:'*',		name:'bbbUpper',title:'BBB+',required:true},
+	  	{width:'*',		name:'bbb',		title:'BBB',required:true},
+	  	{width:'*',		name:'bbbLower',title:'BBB-',required:true},
+	  	{width:'*',		name:'bbUpper',	title:'BB+',required:true},
+	  	{width:'*',		name:'bb',		title:'BB',required:true},
+	    {width:'*',		name:'bbLower',	title:'BB-',required:true},
+	    {width:'*',		name:'b',		title:'B',required:true},
+	  	{width:'*',		name:'c',		title:'c',required:true},
+	    {width:'*',		name:'d',		title:'D',required:true},
+		{width:'*',		name:'naked',	title:'无保证',required:true}
+	]
+};
+
+
+//保证人回收调整系数数据源
+isc.FwRestDataSource.create({
+	ID: 'debtRatingBHSXSParamDS',
+    fields: DebtRatingBHSXSParamFields.grid,
+    fetchDataURL: '[[@{/irs/config/borrowerguarantor/isc/fetch?type=2}]]',
+    dataURL: '[[@{/irs/config/borrowerguarantor/isc}]]'
+});
+
+//保证人回收调整系数列表
+isc.FwListGrid.create({
+	ID: 'debtRatingBHSXSParamListGrid',
+	title: '<b>借款人&保证人回收贡献率</b>',
+	dataSource: debtRatingBHSXSParamDS,
+	sortField:"bzTypeCode",
+	fields: DebtRatingBHSXSParamFields.grid,
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: debtRatingBHSXSParamDS,
+            fields: DebtRatingBHSXSParamFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:['refresh','update','remove','add']
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				debtRatingBHSXSParamListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

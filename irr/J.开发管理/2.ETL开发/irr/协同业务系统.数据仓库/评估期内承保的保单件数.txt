@@ -1,0 +1,17 @@
+SELECT BASE.COMPANYNO,COUNT(NVL(BASE.POLICYNO,0))-- BASE.POLICYNO -- ,BASE.OCCDATE
+                 FROM CCREPORT_POLICYS_BASE BASE 
+                INNER JOIN CCREPORT_POLICYS_INDICATOR INDI 
+                   ON BASE.POLICYNO = INDI.POLICYNO 
+                INNER JOIN CCREPORT_CRM_CASE3 CASE3 
+                   ON BASE.POLICYNO = CASE3.POLICYNO 
+                WHERE BASE.OCCDATE >= '20180401'  --时间范围
+                  AND BASE.OCCDATE <= '20180630'  --时间范围
+                  AND INDI.ISCFI = '0' 
+                  AND INDI.ISWD = '0' 
+                  AND BASE.ZACKDTE IS NOT NULL 
+                  AND BASE.ZACKDTE != '99999999' 
+                  AND BASE.NEEDCALLBACK = '1' 
+                  AND BASE.CNTTYPE NOT LIKE 'PA%' 
+                  AND CASE3.BACRS NOT IN ('1', '10') 
+                  AND NOT (CASE3.DATIME LIKE '% 0:00AM' OR CASE3.DATIME LIKE '%000000') 
+                  GROUP BY BASE.COMPANYNO

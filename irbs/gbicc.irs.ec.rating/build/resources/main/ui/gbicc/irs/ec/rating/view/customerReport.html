@@ -1,0 +1,2798 @@
+<!DOCTYPE html>
+<html th:replace="template/bootstrap/bootstrap.html::html(removeNavbar=true)">
+<head>
+	<title th:text="评级报告"></title>
+	<script type="text/javascript" th:src="@{/webjars/echarts/js/echarts.min.js}"></script>
+	<script th:src="@{/portlet/js/echarts.js}"></script>
+	<style type="text/css">
+		#noborder>tbody>tr>td{
+		border:0px;
+		}
+		
+	  #nobordered>tbody>tr>td{
+		border:0px;
+		}
+		
+		#bb>tbody>tr>td{
+		border:0px;
+		}
+		 
+		#bordered-red>tbody>tr>td{
+		border:0px;
+		}
+		
+		#w{
+		border:0px;
+		}
+		
+		#ww{
+		border:0px;
+		}
+		
+		#www{
+		border:0px;
+		}
+		
+		#wwww{
+		border:0px;
+		}
+		
+		#w1{
+		border:0px;
+		}
+		
+		#ww1{
+		border:0px;
+		}
+		
+		#www1{
+		border:0px;
+		}
+		
+		#wwww1{
+		border:0px;
+		}
+		
+		#bordernone{
+		border:0px;
+		}
+		
+		#bordernone1{
+		border:0px;
+		}
+	
+		table {
+			margin:25px 50px 75px
+		}
+		
+		#bordered-red{
+			border: 5px solid orange; 
+		}
+		
+		#sizecontrol{
+			margin:0px 0px 0px 0px
+		}
+		
+		#tabled{
+			margin:25px 50px 15px
+		}
+		
+		#text1{
+			margin:5px 0px 5px 0px
+		}
+		
+	</style>
+</head>
+<body>
+	 <div class="container">
+		<h2 class="text-center text-primary">[(${customer.custName})]评级报告</h2>
+		<!-- <h5 class="text-right text-primary">报告生成日期[(${customer.creditDate})]</h5>  -->
+		<h5 class="text-right text-primary">报告生成日期[(${{companyRating.effectiveTime}})]</h5>
+		<hr color="light blue" size="5px"/>
+		
+		<table class="table" id="noborder">
+		<tr>
+			<td class="text-center">管户行：[(${orgName})]</td>
+			<td class="text-center">管户客户经理:[(${customer.managerName})]</td>
+			<td class="text-center" >
+				<img th:if="${customer.isAbnormalOperation}" src="../../image/13.jpg" class="img-rounded"/>
+				<img th:if="${customer.isBlankBlackList}" src="../../image/14.jpg" class="img-rounded"/>
+				<img th:if="${customer.litigation}" src="../../image/15.jpg" class="img-rounded"/>
+			</td>
+		</tr>
+	  </table>
+	  
+	  <h2 class="text-left text-primary">评级结果</h2>
+	  
+	  <table width="50%" class="table table-bordered" >
+		<tbody>
+			<tr>
+			  <td colspan = "3">客户评级（类型：[(${rateType})]）</td>
+			  <td>债项评级（类型：[(${app.FD_APPLICATION_TYPE})]）</td>
+			</tr>
+			<tr>
+			  <td id="bordernone" rowspan = "4"><div id="er" style="width: 200px; height: 400px;"/></td>
+			  <td id="bordernone1" rowspan = "4"><div id="er1" style="width: 200px; height: 400px;"/></td>
+			  <td id="w" class="text-center">机评结果: [(${rats.modelLevel})]</td>
+			  <td class="text-center" id="w1">债项编号: [(${app.FD_APPLICATION_NUMBER})]</td>
+			</tr>
+			
+			<tr>
+				<td class="text-center" id="ww">认定结果: [(${rats.finLevel})]</td>
+				<td class="text-center" id="ww1">LGD:[(${app.FD_LGD})] </td>
+			</tr>
+			<tr>
+				<td class="text-center" id="www">PD: [(${rats.pd})]</td>
+				<td class="text-center" id="www1">EAD: [(${app.FD_EAD})]</td>
+			</tr>
+			
+			<tr>
+				<td class="text-center" id="wwww">生效时间: [(${{rats.effectiveTime}})]</td>
+				<td class="text-center" id="wwww1">生效时间: [(${{app.FD_CREATE_DATE}})]</td>
+			</tr>
+		</tbody>
+	  
+	  
+	  </table>
+	  
+	 <!--  <h2 class="text-left text-primary">评级应用</h2>
+	  
+	  <table id = "nobordered" class="table table-bordered" style="border: 0px">
+		<tbody>
+			<tr><img src="../../image/1.jpg" class="img-rounded"/></tr>
+			<tr colspan ="4">
+			  <td>准入建议：[(${suggestion})]</td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			</tr>
+			<tr colspan ="4">
+			  <td>限额建议：<span th:if="${flag}">[(${riskLimit})]</span><span th:if="${not flag}">--</span></td>
+			  <td>申请额度：[(${quota.applyQuota})]</td>
+			  <td>审批额度：[(${quota.approvalQuota})]</td>
+			  <td>额度生效日期：[(${{quota.quotaEffectivedate}})]</td>
+			</tr>
+			<tr colspan ="4">
+			  <td>已发放合同总金额：[(${quota.providedQuota})]</td>
+			  <td>已签订合同总金额：[(${quota.signedQuota})]</td>
+			  <td>合同业务余额：[(${quota.remainQuota})]</td>
+			  <td></td>
+			</tr>
+		</tbody>
+	  </table>
+	  
+	  <table class="table table-bordered" style="border: 0px">
+		<tbody>
+			<tr><img src="../../image/2.jpg" class="img-rounded"></tr>
+			<tr colspan ="7">
+			  <td class="text-center">业务编号</td>
+			  <td class="text-center">申请类型</td>
+			  <td class="text-center">申请金额</td>
+			  <td class="text-center">目标利率</td>
+			  <td class="text-center">执行利率</td>
+			  <td class="text-center">保本利率</td>
+			  <td class="text-center">定价时间</td>
+			</tr>
+			<tr th:each="loan : ${loans}">
+				      <td th:text="${loan.businessNumber}"></td>
+				      <td th:text="${loan.applyType}"></td>
+				      <td th:text="${loan.applyQuota}"></td>
+				      <td th:text="${loan.targetRate}"></td>
+				      <td th:text="${loan.executeRate}"></td>
+				      <td th:text="${loan.safeRate}"></td>
+				      <td th:text="${{loan.date}}"></td>
+			</tr>
+		</tbody>
+	  </table>
+	  
+	  <table class="table table-bordered">
+		<tbody>
+			<tr><img src="../../image/3.jpg" class="img-rounded"></tr>
+			<tr colspan ="9">
+			  <td class="text-center">业务编号</td>
+			  <td class="text-center">申请类型</td>
+			  <td class="text-center">申请金额</td>
+			  <td class="text-center">RAROC(内评法)</td>
+			  <td class="text-center">经济资本(内评法)</td>
+			  <td class="text-center">EVA(内评法)</td>
+			  <td class="text-center">逾期损失率(内评法)</td>
+			  <td class="text-center">资本占用率(内评法)</td>
+			  <td class="text-center">生成时间</td>
+			</tr>
+			<tr th:each="debt : ${debts}">
+				      <td th:text="${debt.FD_APPLICATION_NUMBER}"></td>
+				      <td th:text="${debt.FD_APPLICATION_TYPE}"></td>
+				      <td th:text="${debt.FD_CONTRACT_AMOUNT}"></td>
+				      <td th:text="${debt.FD_ECONOMIC}"></td>
+				      <td th:text="${debt.economy}"></td>
+				      <td th:text="${debt.FD_EVA}"></td>
+				      <td th:text="${debt.loseRate}"></td>
+				      <td th:text="${debt.FD_COEFFICIENT_K}"></td>
+				      <td th:text="${{debt.FD_CREATE_DATE}}"></td>
+			</tr>
+			<tr colspan ="9">
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			</tr>
+		</tbody>
+	  </table> -->
+	  <h2 class="text-left text-primary">风险评估</h2>
+	   
+	  <table class="table table-bordered" id="bb">
+		<tr colspan ="3">
+			  <td class="text-center"><img src="../../image/4.jpg" class="img-rounded"></td>
+			  <td class="text-center"><img src="../../image/5.jpg" class="img-rounded"></td>
+			  <td class="text-center"><img src="../../image/6.jpg" class="img-rounded"></td>
+		</tr>
+		
+		<tr colspan ="3">
+			  <td class="text-left" style="width:33%;height:300px;">
+					<div id="radar1" style="width:80%;height:80%;"></div>  <!-- 定量 -->
+				</td>
+			  <td class="text-left" style="width:33%;height:300px;">
+					<div id="radar2" style="width:80%;height:80%;"></div>  <!-- 定性 -->
+				</td>
+			  <td class="text-center">[(${earlyWarning})]</td>
+		</tr>
+	  
+	  </table>
+	  
+	  <h2 class="text-left text-primary">本次评级明细</h2>
+	  <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;评级明细包括以下部分：基本信息、评级结果、信用记录分析、生产经营情况、财务分析、预警分析 6
+个部分。</p>
+
+	  <h3 class="text-left">一 &nbsp;基本信息</h3>
+	  
+	  <table class="table table-bordered" id = "bordered-red">
+		<tr colspan ="6">
+			  <td class="text-left" colspan="2"><strong>[(${customer.custName})]</strong></td>
+			  <td></td>
+			  <td></td>
+			  <td></td>
+			  <td>与我行建立信贷关系时间：[(${{customer.creditDate}})]</td>
+		</tr>
+		<tr colspan ="6">
+			  <td>客户类型：[(${customer.ctmType})]</td>
+			  <td>法人代表姓名:[(${customer.legalRep})]</td>
+			  <td>企业规模:[(${customer.enterpriseScale})]</td>
+			  <td>成立日期:[(${customer.establishmentTime})]</td>
+			  <td>国标行业分类:[(${customer.gbIndustry})]</td>
+			  <td>行内行业分类：[(${customer.intraIndustry})]</td>
+		</tr>
+	  </table>
+	  
+	  <table id="tabled">
+		  <tr>
+			 <!--  <td><input type="checkbox" th:checked="${customer.bankShareholders}" ><font class="text-primary">是否上市&nbsp;&nbsp;&nbsp;</font></td> -->
+			  <td><input type="checkbox" th:checked="${customer.bankShareholders}"><font class="text-primary">是否本行股东&nbsp;&nbsp;&nbsp;</font></td>
+			  <td><input type="checkbox" th:checked="${customer.enterpriseScale}=='4'?true:false"><font class="text-primary">是否小企业&nbsp;&nbsp;&nbsp;</font></td>
+			  <td><input type="checkbox" th:checked="${customer.newTechnology}"><font class="text-primary">是否政府认定的高新技术企业&nbsp;&nbsp;&nbsp;</font></td>
+			  <td><input type="checkbox" th:checked="${customer.technology}"><font class="text-primary">是否科技企业&nbsp;&nbsp;&nbsp;</font></td>
+			  <td><input type="checkbox" th:checked="${customer.isFinancingGuarantee}"><font class="text-primary">是否融资性担保机构&nbsp;&nbsp;&nbsp;</font></td>
+			  <td><input type="checkbox" th:checked="${customer.isElseWhere}"><font class="text-primary">是否异地客户</font></td>
+		  </tr>
+		</table>
+	
+		<hr size="1" id = "sizecontrol" color="light blue"/>
+		
+		<table width="100%">
+			  <td width="10%"><font class="text-primary" style="font-size:12px">客户编号：</font></td>
+			  <td><input type="text" style="width:80%" th:value="${customer.custNo}"/></td>
+			  <td width="10%"><font class="text-primary" style="font-size:12px">核心客户编号：</font></td>
+			  <td><input type="text" style="width:80%" th:value="${customer.ctmCoreNo}"/></td>
+			   <td width="11%"><font class="text-primary" style="font-size:12px">登记注册证件类型：</font></td>
+			  <td><input type="text" style="width:80%" th:value="${customer.certType}"/></td>
+			   <td width="11%"><font class="text-primary" style="font-size:12px">登记注册证件号码：</font></td>
+			  <td><input type="text" style="width:80%" th:value="${customer.certidNo}"/></td>
+		  </tr>
+		 
+		  
+		  <tr>
+			  <td width="10%"><font class="text-primary" style="font-size:12px">职工人数：</font></td>
+			   <td><input type="text" style="width:80%"  th:value="${customer.empCount}"/></td>
+			  <td width="10%"><font class="text-primary" style="font-size:12px">营业收入(元)：</font></td>
+			   <td><input type="text" style="width:80%" th:value="${customer.annualIncome}"/></td>
+			  <td width="10%"><font class="text-primary" style="font-size:12px">资产总额(元)：</font></td>
+			   <td><input type="text" style="width:80%" th:value="${customer.totalAssets}"/></td>
+			  <td width="10%"><font class="text-primary" style="font-size:12px">财务报表类型：</font></td>
+			   <td><input type="text" style="width:80%" th:value="${customer.financialStatementsType}"/></td>
+		  </tr>
+		  
+		  <tr id="tr_seprate">
+			  <td width="10%"><font class="text-primary" style="font-size:12px">登记机构：</font></td>
+			   <td><input type="text" style="width:80%" th:value="${orgName}"/></td>
+			  <td width="10%"><font class="text-primary" style="font-size:12px">登记日期：</font></td>
+			   <td><input type="text" style="width:80%" th:value="${{customer.inputDt}}"/></td>
+			  <td width="10%"><font class="text-primary" style="font-size:12px">更新机构：</font></td>
+		   	<td><input type="text" style="width:80%" th:value="${updateOrg.name}"/></td>
+			  <td width="10%"><font class="text-primary" style="font-size:12px">更新日期：</font></td>
+			   <td><input type="text" style="width:80%" th:value="${{customer.updateDt}}"/></td>
+		  </tr>
+		  
+		   
+		  <!-- <tr>
+			  <td width="11%"><font class="text-primary" style="font-size:12px">登记注册证件类型：</font></td>
+			  <td><input type="text" style="width:80%" th:value="${customer.certType}"/></td>
+			  <td width="11%"><font class="text-primary" style="font-size:12px">登记注册证件号码：</font></td>
+			  <td><input type="text" style="width:80%" th:value="${customer.certidNo}"/></td>
+		  </tr> -->
+		  
+		  <tr>
+			  <td><font class="text-primary" style="font-size:12px">注册地址：</font></td>
+			  <td colspan="3"><textarea class="form-control" th:text="${customer.regAddress}"></textarea> </td>
+			  
+			  <td><font class="text-primary" style="font-size:12px">经营范围：</font></td>
+			  <td colspan="3"><textarea class="form-control" th:text="${customer.busScope}"></textarea> </td>
+		  </tr>
+		
+		</table>
+		
+		<h3 class="text-left">二 &nbsp;评级结果</h3>
+		
+		<table class="table table-bordered">
+			<tr><td colspan="12" bgcolor="grey">二、评级结果</td></tr>
+			<tr><td colspan="12" bgcolor="#D4D4D4">（一）客户评级</td></tr>
+			<tr>
+				<td colspan="3">发起类型</td>
+				<td colspan="3">[(${rats.ratingType})]</td>
+				<td colspan="3">评级模型</td>
+				<td colspan="3">[(${rats.modelCode})]</td>
+			</tr>
+		
+			<tr>
+				<td colspan="3">系统评估得分</td>
+				<td colspan="3">[(${rats.score})]</td>
+				<td colspan="3">系统评估等级</td>
+				<td colspan="3">[(${rats.modelLevel})]</td>
+			</tr>
+			<tr>
+				<td colspan="3">特例调整等级</td>
+				<td colspan="3">[(${rats.adjLevel})]</td>
+				<td colspan="3">人工调整等级</td>
+				<td colspan="3">[(${rats.finLevel})]</td>
+			</tr><tr>
+				<td colspan="3">最终审定等级</td>
+				<td colspan="3">[(${rats.finLevel})]</td>
+				<td colspan="3">客户经理</td>
+				<td colspan="3">[(${rats.accountManager})]</td>
+			</tr><tr>
+				<td colspan="3">评级发起日期</td>
+				<td colspan="3">[(${{rats.startTime}})]</td>
+				<td colspan="3">评级生效日期</td>
+				<td colspan="3">[(${{rats.effectiveTime}})]</td>
+			</tr>
+			<tr>
+				<td colspan="3">最终违约概率</td>
+				<td colspan="3">[(${rats.pd})]</td>
+				<td colspan="3">评级失效日期</td>
+				<td colspan="3">[(${{rats.deadTime}})]</td>
+			</tr>
+			<tr bgcolor="#D4D4D4"><td colspan="12">（二）债项评级</td></tr>
+			<tr bgcolor="#D4D4D4">
+				<td colspan="2">评级时间</td>
+				<td colspan="2">债项编号</td>
+				<td colspan="2">债项类型</td>
+				<td colspan="2">债项余额</td>
+				<td colspan="2">违约风险暴露（EAD）</td>
+				<td colspan="2">违约损失率（LGD）</td>
+			</tr>
+			
+			<tr th:each="app : ${appList}">
+				      <td colspan="2" th:text="${{app.FD_CREATE_DATE}}"></td>
+				      <td colspan="2" th:text="${app.FD_APPLICATION_NUMBER}"></td>
+				      <td colspan="2" th:text="${app.FD_APPLICATION_TYPE}"></td>
+				      <td colspan="2" th:text="${app.FD_EXISTING_CONTRACT_BALANCE}"></td>
+				      <td colspan="2" th:text="${app.FD_EAD}"></td>
+				      <td colspan="2" th:text="${app.FD_LGD}"></td>
+			</tr>
+		
+		</table>
+	  
+	
+	
+	<h3 class="text-left">三 &nbsp;信用记录分析</h3>
+		
+		<table class="table table-bordered">
+			<tr bgcolor="grey">
+				<td colspan="5">三、信用记录分析</td>
+			</tr>
+			<tr bgcolor="#D4D4D4">
+				<td colspan="5">（一）客户过往评级记录</td>
+			</tr>
+			<tr>
+				<td style="width:20%">模型名称</td>
+				<td style="width:35%">评级生效时间</td>
+				<td style="width:25%">评级到期日</td>
+				<td style="width:10%">最终级别</td>
+				<td style="width:10%">评级发起人</td>
+			<tr/>
+			<tr th:each="crhi : ${crhis}">
+			      <td th:text="${crhi.modelName}"></td>
+			      <td th:text="${{crhi.effectiveTime}}"></td>
+			      <td th:text="${{crhi.dueTime}}"></td>
+			      <td th:text="${crhi.finLevel}"></td>
+			      <td th:text="${crhi.launchUser}"></td>
+			</tr>
+			<tr bgcolor="#D4D4D4">
+				<td colspan="5">（二）违约认定情况</td>
+			</tr>
+			<tr>
+				<td>违约时间</td>
+				<td>违约事件</td>
+				<td>违约发起方式</td>
+				<td>违约发起人</td>
+				<td>违约认定人</td>
+			<tr/>
+			<tr th:each="dc : ${dclist}">
+				<td th:text="${{dc.lastModifydate}}"></td>
+				<td th:utext="${dc.items}"></td>
+				<td th:text="${dc.initiationMode}"></td>
+				<td th:text="${dc.creator}"></td>
+				<td th:text="${dc.approver}"></td>
+			<tr/>
+			<tr bgcolor="#D4D4D4">
+				<td colspan="5">（三）违约重生情况</td>
+			</tr>
+			<tr>
+				<td >重生时间</td>
+				<td colspan="2">重生原因</td>
+				<td>重生发起人</td>
+				<td>重生认定人</td>
+			<tr/>
+			<tr th:each="rebirth : ${rebirthlist}">
+				<td th:text="${{rebirth.fd_last_modifydate}}"></td>
+				<td colspan="2" th:text="${rebirth.fd_eventitem_rebi_describe}"></td>
+				<td th:text="${rebirth.fd_creator}"></td>
+				<td th:text="${rebirth.fd_approver}"></td>
+			<tr/>
+		</table>
+		
+		<h3 class="text-left">四&nbsp生产经营情况</h3>
+		
+		 <table class="table">
+			<tr>
+				<td><img src="../../image/7.jpg"></td>
+				<td><img src="../../image/8.jpg"></td>
+				<td><img src="../../image/9.jpg"></td>
+			</tr>
+			
+			<tr>
+				<td class="text-left" style="width:33%;height:400px;">	
+					<div id="pie1" style="width:80%;height:80%;"></div>
+				</td>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="bar1" style="width:80%;height:80%;"></div>
+				</td>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="bar2" style="width:80%;height:80%;"></div>
+				</td>
+			</tr>
+		</table> 
+		
+		<h3 class="text-left">五&nbsp财务分析</h3>
+		<h4 class="text-left">（一）盈利能力</h4>
+		<table class="table">	
+			<tr>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="line1" style="width:80%;height:80%;"></div>
+				</td>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="bar3" style="width:80%;height:80%;"></div>
+				</td>
+			</tr>
+			<tr>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="line2" style="width:80%;height:80%;"></div>
+				</td>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="bar4" style="width:80%;height:80%;"></div>
+				</td>
+			</tr>
+		</table>
+		
+		<h4 class="text-left">（二）偿债能力</h4>
+		<table class="table">	
+			<tr>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="line3" style="width:80%;height:80%;"></div>
+				</td>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="bar5" style="width:80%;height:80%;"></div>
+				</td>
+			</tr>
+			<tr>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="line4" style="width:80%;height:80%;"></div>
+				</td>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="bar6" style="width:80%;height:80%;"></div>
+				</td>
+			</tr>
+		</table>
+		
+		<h4 class="text-left">（三）运营效率</h4>
+		
+		<table class="table">	
+			<tr>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="line5" style="width:80%;height:80%;"></div>
+				</td>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="bar7" style="width:80%;height:80%;"></div>
+				</td>
+			</tr>
+			<tr>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="line6" style="width:80%;height:80%;"></div>
+				</td>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="bar8" style="width:80%;height:80%;"></div>
+				</td>
+			</tr>
+		</table>
+		
+		<h4 class="text-left">（四）规模成长性</h4>
+		
+		<table class="table">	
+			<tr>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="line7" style="width:80%;height:80%;"></div>
+				</td>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="bar9" style="width:80%;height:80%;"></div>
+				</td>
+			</tr>
+			<tr>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="line8" style="width:80%;height:80%;"></div>
+				</td>
+				<td class="text-left" style="width:33%;height:400px;">
+					<div id="bar10" style="width:80%;height:80%;"></div>
+				</td>
+			</tr>
+		</table>
+		
+		
+		<h3 class="text-left">六&nbsp预警分析</h3>
+		
+		<table class="table table-bordered">
+			<tr bgcolor="grey">
+				<td colspan="4" color="white">六、预警分析</td>
+			</tr>
+			
+			<tr bgcolor="#D4D4D4">
+				<td colspan="4">（一）财务风险</td>
+			</tr>
+			
+			<tr>
+				<td>预警时间</td>
+				<td>信号标签</td>
+				<td>信号等级</td>
+				<td>预警描述</td>
+			</tr>
+			<tr th:each="cwa : ${cwas0}" >
+			      <td th:text="${{cwa.earlyDt}}"></td>
+			      <td th:text="${cwa.earlyDesc}"></td>
+			      <td th:text="${cwa。signalLevel}"></td>
+			      <td th:text="${cwa.warningDescription}"></td>
+			</tr>
+			<tr bgcolor="#D4D4D4">
+				<td colspan="4">（二）公司治理</td>
+			</tr>
+			
+			<tr>
+				<td>预警时间</td>
+				<td>信号标签</td>
+				<td>信号等级</td>
+				<td>预警描述</td>
+			</tr>
+			<tr th:each="cwa : ${cwas1}" >
+			      <td th:text="${{cwa.earlyDt}}"></td>
+			      <td th:text="${cwa.earlyDesc}"></td>
+			      <td th:text="${cwa。signalLevel}"></td>
+			      <td th:text="${cwa.warningDescription}"></td>
+			</tr>
+			
+			<tr bgcolor="#D4D4D4">
+				<td colspan="4">（三）关联风险</td>
+			</tr>
+			
+			<tr>
+				<td>预警时间</td>
+				<td>信号标签</td>
+				<td>信号等级</td>
+				<td>预警描述</td>
+			</tr>
+			<tr th:each="cwa : ${cwas2}" >
+			      <td th:text="${{cwa.earlyDt}}"></td>
+			      <td th:text="${cwa.earlyDesc}"></td>
+			      <td th:text="${cwa。signalLevel}"></td>
+			      <td th:text="${cwa.warningDescription}"></td>
+			</tr>
+			<tr bgcolor="#D4D4D4">
+				<td colspan="4">（四）缓释风险</td>
+			</tr>
+			
+			<tr>
+				<td>预警时间</td>
+				<td>信号标签</td>
+				<td>信号等级</td>
+				<td>预警描述</td>
+			</tr>
+			<tr th:each="cwa : ${cwas3}" >
+			      <td th:text="${{cwa.earlyDt}}"></td>
+			      <td th:text="${cwa.earlyDesc}"></td>
+			      <td th:text="${cwa。signalLevel}"></td>
+			      <td th:text="${cwa.warningDescription}"></td>
+			</tr>
+			
+			<tr bgcolor="#D4D4D4">
+				<td colspan="4">（五）经营管理</td>
+			</tr>
+			
+			<tr>
+				<td>预警时间</td>
+				<td>信号标签</td>
+				<td>信号等级</td>
+				<td>预警描述</td>
+			</tr>
+			<tr th:each="cwa : ${cwas4}" >
+			      <td th:text="${{cwa.earlyDt}}"></td>
+			      <td th:text="${cwa.earlyDesc}"></td>
+			      <td th:text="${cwa。signalLevel}"></td>
+			      <td th:text="${cwa.warningDescription}"></td>
+			</tr>
+			<tr bgcolor="#D4D4D4">
+				<td colspan="4">（六）声誉风险</td>
+			</tr>
+			
+			<tr>
+				<td>预警时间</td>
+				<td>信号标签</td>
+				<td>信号等级</td>
+				<td>预警描述</td>
+			</tr>
+			<tr th:each="cwa : ${cwas5}" >
+			      <td th:text="${{cwa.earlyDt}}"></td>
+			      <td th:text="${cwa.earlyDesc}"></td>
+			      <td th:text="${cwa。signalLevel}"></td>
+			      <td th:text="${cwa.warningDescription}"></td>
+			</tr>
+			
+			<tr bgcolor="#D4D4D4">
+				<td colspan="4">（七）授信风险</td>
+			</tr>
+			
+			<tr>
+				<td>预警时间</td>
+				<td>信号标签</td>
+				<td>信号等级</td>
+				<td>预警描述</td>
+			</tr>
+			<tr th:each="cwa : ${cwas6}" >
+			      <td th:text="${{cwa.earlyDt}}"></td>
+			      <td th:text="${cwa.earlyDesc}"></td>
+			      <td th:text="${cwa。signalLevel}"></td>
+			      <td th:text="${cwa.warningDescription}"></td>
+			</tr>
+			
+			<tr bgcolor="#D4D4D4">
+				<td colspan="4">（八）行业风险</td>
+			</tr>
+			
+			<tr>
+				<td>预警时间</td>
+				<td>信号标签</td>
+				<td>信号等级</td>
+				<td>预警描述</td>
+			</tr>
+			<tr th:each="cwa : ${cwas7}" >
+			      <td th:text="${{cwa.earlyDt}}"></td>
+			      <td th:text="${cwa.earlyDesc}"></td>
+			      <td th:text="${cwa。signalLevel}"></td>
+			      <td th:text="${cwa.warningDescription}"></td>
+			</tr>
+			
+			<tr bgcolor="#D4D4D4">
+				<td colspan="4">（九）账户风险</td>
+			</tr>
+			
+			<tr>
+				<td>预警时间</td>
+				<td>信号标签</td>
+				<td>信号等级</td>
+				<td>预警描述</td>
+			</tr>
+			<tr th:each="cwa : ${cwas8}" >
+			      <td th:text="${{cwa.earlyDt}}"></td>
+			      <td th:text="${cwa.earlyDesc}"></td>
+			      <td th:text="${cwa。signalLevel}"></td>
+			      <td th:text="${cwa.warningDescription}"></td>
+			</tr>
+		</table>
+	</div>
+	
+</body>
+
+
+<script type="text/javascript">
+		var ydata = [];
+		var aa = [(${pdos})];
+		var bb = [(${pdoss})];
+		
+		for(var i = 0; i < aa.length; i ++){
+			ydata.push({'value':bb[i], 'name':aa[i]});
+		}
+		
+		
+		var myChart1 = echarts.init(document.getElementById('pie1'));
+		console.log(myChart1);
+		option1 = {
+			/**
+			title:{
+				text:'eaff',
+				top:'bottom',
+				left:'center',
+				textStyle:{
+					fontSize: 14,
+					fontWeight: '',
+					color: '#333'
+				},
+			},//标题
+			**/
+			tooltip: {
+				trigger: 'item',
+				formatter: "{a} <br/>{b}: {c} ({d}%)",
+			},
+			legend: {
+				show: true,
+				orient: 'vertical',
+				x: 'right',
+				data: [(${pdos})]
+			},
+			/**
+			graphic:{
+				type:'text',
+				left:'center',
+				top:'center',
+				style:{
+					text:'eee\n'+'100', 
+					textAlign:'center',
+					font:'italic bolder 16px cursive',
+					fill:'#000',
+					width:30,
+					height:30
+				}
+			},
+			**/
+			
+			series: [
+				{
+					name:'用户统计',
+					type: 'pie',
+					//radius: ['35%', '65%'],
+					/**
+					itemStyle: {
+						normal:{
+							label:{
+								show:true,
+								position:center,
+								textStyle:{color:'#3c4858',fontSize:"18"},
+							   // formatter:function(val){   
+								//    return val.name.split("-").join("\n");}
+							}
+						}
+					},
+					*/
+					label:{            //饼图图形上的文本标签
+						normal:{
+							show:true,
+							position:'inner', //标签的位置
+							formatter: '{c}%',
+							textStyle : {
+								fontWeight : 300 ,
+								fontSize : 16    //文字的字体大小
+							}
+						}
+					},
+					data: ydata
+					//color: ['#51CEC6','green','#5FA0FA'],
+				},
+			],
+		};
+		myChart1.setOption(option1);
+    </script>
+	
+    <script type="text/javascript">
+  //冒泡排序
+    function bubbleSort(arr,xs){
+        var len=arr.length,j;
+        var temp,temp2;
+        while(len>1){
+            for(j=0;j<len-1;j++){
+                if(arr[j]>arr[j+1]){
+                    temp=arr[j];
+                    arr[j]=arr[j+1];
+                    arr[j+1]=temp;
+                    
+                    temp2=xs[j];
+                    xs[j]=xs[j+1];
+                    xs[j+1]=temp2;
+                }
+            }
+            len--;
+        }
+        return arr;
+    }   
+    
+    function orderBar(xs, ys){
+    	var res=[];
+    	var otherIndex = 0;
+    	var index=-1;
+    	for(var a of xs){
+    		index++;
+    		if(a=='其他')
+    			break;
+    	}
+    	otherIndex = index;
+    	
+    	var y = ys[otherIndex];
+    	var x = xs[otherIndex];
+    	ys.splice(otherIndex, 1);
+    	xs.splice(otherIndex, 1);
+
+    	bubbleSort(ys,xs);
+		var tmp1 = [];
+		tmp1.push(y);
+		for(var i=0;i<ys.length;i++){
+			tmp1.push(ys[i]);
+		}
+
+    	
+		var tmp2 = [];
+		tmp2.push(x);
+		for( i=0;i<xs.length;i++){
+			tmp2.push(xs[i]);
+		}
+    	res.push(tmp2);
+    	res.push(tmp1);
+    	return res;
+    }
+		var dom = document.getElementById("bar1");
+		var myChart = echarts.init(dom);
+		var app = {};
+		option = null;
+		var bar1Datas = orderBar([(${pdos1})], [(${pdos2})]);
+		option = {
+			title: {
+				text: '采购额占比',
+				x:'center',
+				y:'top',
+				textAlign:'center'
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					
+				}
+			},
+		 
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: {
+				type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+			},
+			yAxis: {
+				type: 'category',
+				data: bar1Datas[0]
+			},
+			series: [
+				{
+					type: 'bar',
+					barWidth : 15,
+					itemStyle: { // 柱子样式
+			  normal: {
+				color: 'blue', // 柱状图颜色
+				label: {
+				  show: true, // 显示文本
+				  position: 'right', // 数据值位置
+				  formatter: '{c}%',
+				  textStyle: {
+					color: '#000'
+				  }
+				}
+			  }
+			},
+			data: bar1Datas[1]	
+				}
+				
+			]
+		};
+
+		if (option && typeof option === "object") {
+			myChart.setOption(option, true);
+		}
+    </script>
+	   
+	
+    <script type="text/javascript">
+		var dom = document.getElementById("bar2");
+		var myChart = echarts.init(dom);
+		var app = {};
+		var bar2Datas = orderBar([(${pdos3})], [(${pdos4})]);
+		option = null;
+		option = {
+			title: {
+				text: '销售额占比',
+				x:'center',
+				y:'top',
+				textAlign:'center'
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					
+				}
+			},
+		 
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: {
+				type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+			},
+			yAxis: {
+				type: 'category',
+				data: bar2Datas[0]
+			},
+			series: [
+				{
+					type: 'bar',
+					barWidth : 15,
+					itemStyle: { // 柱子样式
+			  normal: {
+				color: 'blue', // 柱状图颜色
+				label: {
+				  show: true, // 显示文本
+				  position: 'right', // 数据值位置
+				  formatter: '{c}%',
+				  textStyle: {
+					color: '#000'
+				  }
+				}
+			  }
+			},
+					data: bar2Datas[1]
+				}
+			]
+		};
+		if (option && typeof option === "object") {
+			myChart.setOption(option, true);
+		}
+    </script>
+	   
+	<script type="text/javascript">
+		var dom = document.getElementById("bar3");
+		var myChart = echarts.init(dom);
+		var app = {};
+		option = null;
+
+		option = {
+			title: {
+				text: '毛利率排名',
+				x:'center',
+				y:'top',
+				textAlign:'center'
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					
+				}
+			},
+		 
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: {
+				type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+			},
+			yAxis: {
+				type: 'category',
+				data: [(${companys0})],
+				axisLabel: {  
+					show: true,  
+					interval: 'auto',  
+					formatter: function(val){
+						return val=='null'?' ':val;
+					}
+				}
+			},
+			series: [
+				{
+					type: 'bar',
+					barWidth : 15,
+					itemStyle: { // 柱子样式
+			  normal: {
+				color: 'blue', // 柱状图颜色
+				label: {
+				  show: true, // 显示文本
+				  position: 'right', // 数据值位置
+				  formatter: '{c}%',
+				  textStyle: {
+					color: '#000'
+				  }
+				}
+			  }
+			},
+					data: [(${datas0})]
+				}
+				
+			]
+		};
+		;
+		if (option && typeof option === "object") {
+			myChart.setOption(option, true);
+		}
+	</script>
+	   
+	<script type="text/javascript">
+		var dom = document.getElementById("bar4");
+		var myChart = echarts.init(dom);
+		var app = {};
+		option = null;
+
+		option = {
+			title: {
+				text: '总资产收益率排名',
+				x:'center',
+				y:'top',
+				textAlign:'center'
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					
+				}
+			},
+		 
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: {
+				type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+			},
+			yAxis: {
+				type: 'category',
+				data: [(${companys1})],
+				axisLabel: {  
+					show: true,  
+					interval: 'auto',  
+					formatter: function(val){
+						return val=='null'?' ':val;
+					}
+				}
+			},
+			series: [
+				{
+					type: 'bar',
+					barWidth : 15,
+					itemStyle: { // 柱子样式
+			  normal: {
+				color: 'blue', // 柱状图颜色
+				label: {
+				  show: true, // 显示文本
+				  position: 'right', // 数据值位置
+				  formatter: '{c}%',
+				  textStyle: {
+					color: '#000'
+				  }
+				}
+			  }
+			},
+					data: [(${datas1})]
+				}
+				
+			]
+		};
+		;
+		if (option && typeof option === "object") {
+			myChart.setOption(option, true);
+		}
+    </script>
+	
+	<script type="text/javascript">
+		var dom = document.getElementById("bar5");
+		var myChart = echarts.init(dom);
+		var app = {};
+		option = null;
+
+		option = {
+			title: {
+				text: '资产负债率排名',
+				x:'center',
+				y:'top',
+				textAlign:'center'
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					
+				}
+			},
+		 
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: {
+				type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+			},
+			yAxis: {
+				type: 'category',
+				data: [(${companys2})],
+				axisLabel: {  
+					show: true,  
+					interval: 'auto',  
+					formatter: function(val){
+						return val=='null'?' ':val;
+					}
+				}
+			},
+			series: [
+				{
+					type: 'bar',
+					barWidth : 15,
+					itemStyle: { // 柱子样式
+			  normal: {
+				color: 'blue', // 柱状图颜色
+				label: {
+				  show: true, // 显示文本
+				  position: 'right', // 数据值位置
+				  formatter: '{c}%',
+				  textStyle: {
+					color: '#000'
+				  }
+				}
+			  }
+			},
+					data: [(${datas2})]
+				}
+				
+			]
+		};
+		;
+		if (option && typeof option === "object") {
+			myChart.setOption(option, true);
+		}
+    </script>
+	<script type="text/javascript">
+		var dom = document.getElementById("bar6");
+		var myChart = echarts.init(dom);
+		var app = {};
+		option = null;
+
+		option = {
+			title: {
+				text: '利息保障倍数排名',
+				x:'center',
+				y:'top',
+				textAlign:'center'
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					
+				}
+			},
+		 
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: {
+				type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+			},
+			yAxis: {
+				type: 'category',
+				data: [(${companys3})],
+				axisLabel: {  
+					show: true,  
+					interval: 'auto',  
+					formatter: function(val){
+						return val=='null'?' ':val;
+					}
+				}
+			},
+			series: [
+				{
+					type: 'bar',
+					barWidth : 15,
+					itemStyle: { // 柱子样式
+			  normal: {
+				color: 'blue', // 柱状图颜色
+				label: {
+				  show: true, // 显示文本
+				  position: 'right', // 数据值位置
+				  formatter: '{c}%',
+				  textStyle: {
+					color: '#000'
+				  }
+				}
+			  }
+			},
+					data: [(${datas3})]
+				}
+				
+			]
+		};
+		;
+		if (option && typeof option === "object") {
+			myChart.setOption(option, true);
+		}
+    </script>
+	
+	<script type="text/javascript">
+		var dom = document.getElementById("bar7");
+		var myChart = echarts.init(dom);
+		var app = {};
+		option = null;
+
+		option = {
+			title: {
+				text: '应收账款周转率排名',
+				x:'center',
+				y:'top',
+				textAlign:'center'
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					
+				}
+			},
+		 
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: {
+				type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+			},
+			yAxis: {
+				type: 'category',
+				data: [(${companys4})],
+				axisLabel: {  
+					show: true,  
+					interval: 'auto',  
+					formatter: function(val){
+						return val=='null'?' ':val;
+					}
+				}
+			},
+			series: [
+				{
+					type: 'bar',
+					barWidth : 15,
+					itemStyle: { // 柱子样式
+			  normal: {
+				color: 'blue', // 柱状图颜色
+				label: {
+				  show: true, // 显示文本
+				  position: 'right', // 数据值位置
+				  formatter: '{c}%',
+				  textStyle: {
+					color: '#000'
+				  }
+				}
+			  }
+			},
+					data: [(${datas4})]
+				}
+				
+			]
+		};
+		;
+		if (option && typeof option === "object") {
+			myChart.setOption(option, true);
+		}
+    </script>
+	
+	<script type="text/javascript">
+		var dom = document.getElementById("bar8");
+		var myChart = echarts.init(dom);
+		var app = {};
+		option = null;
+
+		option = {
+			title: {
+				text: '存货周转率排名',
+				x:'center',
+				y:'top',
+				textAlign:'center'
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					
+				}
+			},
+		 
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: {
+				type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+			},
+			yAxis: {
+				type: 'category',
+				data: [(${companys5})],
+				axisLabel: {  
+					show: true,  
+					interval: 'auto',  
+					formatter: function(val){
+						return val=='null'?' ':val;
+					}
+				}
+			},
+			series: [
+				{
+					type: 'bar',
+					barWidth : 15,
+					itemStyle: { // 柱子样式
+			  normal: {
+				color: 'blue', // 柱状图颜色
+				label: {
+				  show: true, // 显示文本
+				  position: 'right', // 数据值位置
+				  formatter: '{c}%',
+				  textStyle: {
+					color: '#000'
+				  }
+				}
+			  }
+			},
+					data: [(${datas5})]
+				}
+				
+			]
+		};
+		;
+		if (option && typeof option === "object") {
+			myChart.setOption(option, true);
+		}
+    </script>
+	
+	<script type="text/javascript">
+		var dom = document.getElementById("bar9");
+		var myChart = echarts.init(dom);
+		var app = {};
+		option = null;
+
+		option = {
+			title: {
+				text: '总资产增长率排名',
+				x:'center',
+				y:'top',
+				textAlign:'center'
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					
+				}
+			},
+		 
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: {
+				type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+			},
+			yAxis: {
+				type: 'category',
+				data: [(${companys6})],
+				axisLabel: {  
+					show: true,  
+					interval: 'auto',  
+					formatter: function(val){
+						return val=='null'?' ':val;
+					}
+				}
+			},
+			series: [
+				{
+					type: 'bar',
+					barWidth : 15,
+					itemStyle: { // 柱子样式
+			  normal: {
+				color: 'blue', // 柱状图颜色
+				label: {
+				  show: true, // 显示文本
+				  position: 'right', // 数据值位置
+				  formatter: '{c}%',
+				  textStyle: {
+					color: '#000'
+				  }
+				}
+			  }
+			},
+					data: [(${datas6})]
+				}
+				
+			]
+		};
+		;
+		if (option && typeof option === "object") {
+			myChart.setOption(option, true);
+		}
+    </script>
+	
+	<script type="text/javascript">
+		var dom = document.getElementById("bar10");
+		var myChart = echarts.init(dom);
+		var app = {};
+		option = null;
+
+		option = {
+			title: {
+				text: '营业收入增长率排名',
+				x:'center',
+				y:'top',
+				textAlign:'center'
+			},
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: {
+					
+				}
+			},
+		 
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: {
+				type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+			},
+			yAxis: {
+				type: 'category',
+				data: [(${companys7})],
+				axisLabel: {  
+					show: true,  
+					interval: 'auto',  
+					formatter: function(val){
+						return val=='null'?' ':val;
+					}
+				}
+			},
+			series: [
+				{
+					type: 'bar',
+					barWidth : 15,
+					itemStyle: { // 柱子样式
+			  normal: {
+				color: 'blue', // 柱状图颜色
+				label: {
+				  show: true, // 显示文本
+				  position: 'right', // 数据值位置
+				  formatter: '{c}%',
+				  textStyle: {
+					color: '#000'
+				  }
+				}
+			  }
+			},
+					data: [(${datas7})]
+				}
+				
+			]
+		};
+		
+		if (option && typeof option === "object") {
+			myChart.setOption(option, true);
+		}
+    </script>	
+	<script type="text/javascript">
+		var dom = document.getElementById("line1");
+		var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			option = {
+				title: {
+					text: '毛利率趋势分布图',
+					x:'center',
+					y:'top'
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data:['本企业','行业均值'],
+					x:'center',
+					y:'bottom'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: true,
+					data: [(${strs0})],
+					axisLabel: {
+						interval:0,
+						rotate:40,
+						formatter: function(val){
+							return val=='null'?' ': val;
+						}
+					},
+				},
+				
+				yAxis: {
+					type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: function(val){
+							return val=='null'?' ': val+' %';
+						}
+					},  
+					show: true  
+				},
+				series: [
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true, 
+						data:[(${zhibiao0})]
+					},
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${yuce0})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						data:[(${averg0})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${avergYuce0})]
+					}
+				]
+			};
+			if (option && typeof option === "object") {
+				myChart.setOption(option, true);
+			}
+    </script>
+    
+    	<script type="text/javascript">
+		var dom = document.getElementById("line2");
+		var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			option = {
+				title: {
+					text: '总资产收益率趋势分布图',
+					x:'center',
+					y:'top'
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data:['本企业','行业均值'],
+					x:'center',
+					y:'bottom'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: true,
+					data: [(${strs1})],
+					axisLabel: {
+						interval:0,
+						rotate:40,
+						formatter: function(val){
+							return val=='null'?' ': val;
+						}
+					},
+				},
+				
+				yAxis: {
+					type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+				},
+				series: [
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true, 
+						data:[(${zhibiao1})]
+					},
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${yuce1})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						data:[(${averg1})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${avergYuce1})]
+					}
+				]
+			};
+			if (option && typeof option === "object") {
+				myChart.setOption(option, true);
+			}
+    </script>
+
+		<script type="text/javascript">
+		var dom = document.getElementById("line3");
+		var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			option = {
+				title: {
+					text: '资产负债率趋势分布图',
+					x:'center',
+					y:'top'
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data:['本企业','行业均值'],
+					x:'center',
+					y:'bottom'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: true,
+					data: [(${strs2})],
+					axisLabel: {
+						interval:0,
+						rotate:40,
+						formatter: function(val){
+							return val=='null'?' ': val;
+						}
+					},
+				},
+				
+				yAxis: {
+					type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+				},
+				series: [
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true, 
+						data:[(${zhibiao2})]
+					},
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${yuce2})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						data:[(${averg2})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${avergYuce2})]
+					}
+				]
+			};
+			if (option && typeof option === "object") {
+				myChart.setOption(option, true);
+			}
+    </script>
+		<script type="text/javascript">
+		var dom = document.getElementById("line4");
+		var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			option = {
+				title: {
+					text: '利息保障倍数趋势分布图',
+					x:'center',
+					y:'top'
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data:['本企业','行业均值'],
+					x:'center',
+					y:'bottom'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: true,
+					data: [(${strs3})],
+					axisLabel: {
+						interval:0,
+						rotate:40,
+						formatter: function(val){
+							return val=='null'?' ': val;
+						}
+					},
+				},
+				
+				yAxis: {
+					type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+				},
+				series: [
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true, 
+						data:[(${zhibiao3})]
+					},
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${yuce3})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						data:[(${averg3})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${avergYuce3})]
+					}
+				]
+			};
+			if (option && typeof option === "object") {
+				myChart.setOption(option, true);
+			}
+    </script>
+    
+    	<script type="text/javascript">
+		var dom = document.getElementById("line5");
+		var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			option = {
+				title: {
+					text: '应收账款周转率趋势分布图',
+					x:'center',
+					y:'top'
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data:['本企业','行业均值'],
+					x:'center',
+					y:'bottom'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: true,
+					data: [(${strs4})],
+					axisLabel: {
+						interval:0,
+						rotate:40,
+						formatter: function(val){
+							return val=='null'?' ': val;
+						}
+					},
+				},
+				
+				yAxis: {
+					type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+				},
+				series: [
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true, 
+						data:[(${zhibiao4})]
+					},
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${yuce4})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						data:[(${averg4})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${avergYuce4})]
+					}
+				]
+			};
+			if (option && typeof option === "object") {
+				myChart.setOption(option, true);
+			}
+    </script>
+    
+    	<script type="text/javascript">
+		var dom = document.getElementById("line6");
+		var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			option = {
+				title: {
+					text: '存货周转率趋势分布图',
+					x:'center',
+					y:'top'
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data:['本企业','行业均值'],
+					x:'center',
+					y:'bottom'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: true,
+					data: [(${strs5})],
+					axisLabel: {
+						interval:0,
+						rotate:40,
+						formatter: function(val){
+							return val=='null'?' ': val;
+						}
+					},
+				},
+				
+				yAxis: {
+					type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+				},
+				series: [
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true, 
+						data:[(${zhibiao5})]
+					},
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${yuce5})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						data:[(${averg5})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${avergYuce5})]
+					}
+				]
+			};
+			if (option && typeof option === "object") {
+				myChart.setOption(option, true);
+			}
+    </script>
+    
+    	<script type="text/javascript">
+		var dom = document.getElementById("line7");
+		var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			option = {
+				title: {
+					text: '总资产增长率趋势分布图',
+					x:'center',
+					y:'top'
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data:['本企业','行业均值'],
+					x:'center',
+					y:'bottom'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: true,
+					data: [(${strs6})],
+					axisLabel: {
+						interval:0,
+						rotate:40,
+						formatter: function(val){
+							return val=='null'?' ': val;
+						}
+					},
+				},
+				
+				yAxis: {
+					type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+				},
+				series: [
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true, 
+						data:[(${zhibiao6})]
+					},
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${yuce6})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						data:[(${averg6})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${avergYuce6})]
+					}
+				]
+			};
+			if (option && typeof option === "object") {
+				myChart.setOption(option, true);
+			}
+    </script>
+	
+		<script type="text/javascript">
+		var dom = document.getElementById("line7");
+		var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			option = {
+				title: {
+					text: '毛利率趋势分布图',
+					x:'center',
+					y:'top'
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data:['本企业','行业均值'],
+					x:'center',
+					y:'bottom'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: true,
+					data: [(${strs6})],
+					axisLabel: {
+						interval:0,
+						rotate:40,
+						formatter: function(val){
+							return val=='null'?' ': val;
+						}
+					},
+				},
+				
+				yAxis: {
+					type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+				},
+				series: [
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true, 
+						data:[(${zhibiao6})]
+					},
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${yuce6})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						data:[(${averg6})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${avergYuce6})]
+					}
+				]
+			};
+			if (option && typeof option === "object") {
+				myChart.setOption(option, true);
+			}
+    </script>
+    	<script type="text/javascript">
+		var dom = document.getElementById("line8");
+		var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			option = {
+				title: {
+					text: '营业收入增长率趋势分布图',
+					x:'center',
+					y:'top'
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data:['本企业','行业均值'],
+					x:'center',
+					y:'bottom'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: true,
+					data: [(${strs7})],
+					axisLabel: {
+						interval:0,
+						rotate:40,
+						formatter: function(val){
+							return val=='null'?' ': val;
+						}
+					},
+				},
+				
+				yAxis: {
+					type: 'value',  
+					axisLabel: {  
+						show: true,  
+						interval: 'auto',  
+						formatter: '{value} %'  
+					},  
+					show: true  
+				},
+				series: [
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true, 
+						data:[(${zhibiao7})]
+					},
+					{
+						name:'本企业',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${yuce7})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						data:[(${averg7})]
+					},
+					{
+						name:'行业均值',
+						type:'line',
+						smooth: true,
+						itemStyle:{
+							normal:{
+								lineStyle:{
+								   width:2,
+								   type:'dotted'  //'dotted'虚线 'solid'实线
+								}
+							}
+						},
+						data:[(${avergYuce7})]
+					}
+				]
+			};
+			if (option && typeof option === "object") {
+				myChart.setOption(option, true);
+			}
+    </script>
+    
+    <script th:inline="javascript">
+	    //用于雷达图的客户编号 和 评级ID
+	    var radarCustNo = [[${customer.custNo}]]
+	    var radarRatingId =[[${rats.id}]];
+	</script>
+	
+	<script type="text/javascript">
+	    
+		$.post('[(@{/commom/index/custScore2})]', {
+			ratingId: radarRatingId, custNo:radarCustNo
+		}, function(data) {
+			console.log(data);
+			var DLIndexOption ;
+			if(data.dl.indexNames.length!=0)
+				DLIndexOption= 
+			{
+					tooltip: {},
+					legend: {
+						data: ['目标企业', '行业中位值'],
+						bottom: 0
+					},
+					radar: {
+						name: {
+							textStyle: {
+								color: '#333',
+								fontSize:10
+						   }
+						},
+						indicator: splitTitle(data.dl),
+						radius: 45
+					},
+					series: [{
+						name: '',
+						type: 'radar',
+						data : [ {
+							value : data.dl.custScore,
+							name : '目标企业'
+						}, {
+							value : data.dl.insScore,
+							name : '行业中位值'
+						} ]
+					}]
+				};
+			else
+				DLIndexOption = {};
+
+			var DLIndex = echarts.init(document.getElementById('radar1'),
+					'light');
+			DLIndex.setOption(DLIndexOption,true);
+			
+			var DXIndexOption ;
+			if(data.dx.indexNames.length !=0)
+			 DXIndexOption = {
+				tooltip: {},
+				legend: {
+					data: ['目标企业', '行业均值'],
+					bottom: 0
+				},
+				radar: {
+					name: {
+						textStyle: {
+							color: '#333',
+							fontSize:10
+					   }
+					},
+					indicator: splitTitle(data.dx),
+					radius: 45
+				},
+				series: [{
+					name: '',
+					type: 'radar',
+					data : [ {
+						value : data.dx.custScore,
+						name : '目标企业'
+					}, {
+						value : data.dx.insScore,
+						name : '行业均值'
+					} ]
+				}]
+			};
+			else
+				DXIndexOption = {};
+			var DXIndex = echarts.init(document.getElementById('radar2'),
+					'light');
+			DXIndex.setOption(DXIndexOption,true);
+
+		});
+	
+		function splitTitle(data){
+			if(data.length==0)
+				return [""];
+			var arr=[];
+			var mx=0;
+			for(var i=0;i<data.indexNames.length;i++){
+				var obj = {};
+				var tmp;
+				var t = data.indexNames[i];
+				var name ='';
+				while(t.name.length>4){
+					name+= t.name.substring(0,4)+"\n";
+					t.name = t.name.substring(4);
+				}
+				name +=t.name;
+				var a = typeof data.custScore[i]=='undefined'?0:Number(data.custScore[i]);
+				var b = typeof data.insScore[i]=='undefined'?0:Number(data.insScore[i]);
+				tmp = a>b?a:b;
+				mx = mx > tmp?mx:tmp;
+				obj={"name":name,"max":tmp};
+				arr.push(obj);
+			}
+			for(var i=0;i<arr.length;i++){
+				arr[i].max = mx+1;
+			}
+			return arr;
+		}
+		
+       </script>
+       
+		<script>
+            var myChart = echarts.init(document.getElementById("er1"));
+            var data = [50];
+            var xMax = 100;
+            var axisColor = '#fff';
+            option = {
+           		title: {
+      					text: '行业客户排序结果',
+      					x:'center',
+      					y:'top'
+      			},
+                tooltip: {
+                    show: true,
+                    formatter: '{b} <br> {c}'
+
+                },
+                yAxis: [{
+                    min:0,
+                    max:100,
+                    position:'left',
+                    offset:-140,
+                    axisTick: {
+                        show: true,
+                        // color:'#fff',
+                    },
+                    axisLine: {
+                        show: false,
+                    },
+                    axisLabel: {
+                        show: true,
+                        formatter:function(value,index){
+                            return value+"%";
+                        }
+                        //color:'#fff',
+                    },
+                    splitLine: {
+                        show: false,
+                        // color:'#fff',
+                    },
+                    splitNumber :10,
+                }],
+                xAxis: [{
+                    type: 'category',
+                    data: ['行业排名'],
+                    axisTick: {
+                        // color:'#fff',
+                        show: false,
+                    },
+                    axisLine: {
+                        //  color:'#fff',
+                        show: false,
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fff',
+                        }
+                    }
+
+                }],
+                series: [{
+                    name: ' ',
+                    type: 'bar',
+                    barWidth: 40,
+                    silent: true,
+                    
+                    itemStyle: {
+                        normal: {
+                            color: '#fdd',
+                            barBorderRadius: [0, 0, 0, 0],
+
+                        }
+
+                    },
+                    barGap: '-100%',
+                    
+                    //barCategoryGap: '60%',
+                    data: data.map(function(d) {
+                        return xMax
+                    }),
+                }, {
+                    name: ' ',
+                    type: 'bar',
+                    barWidth: 40,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                            formatter: function(o){
+                                return o.value+'%';
+                            },
+                        }
+                    },
+                    data: [{
+                        value: [(${rmod})],
+                        itemStyle: {
+                            normal: {
+                                barBorderRadius: [0, 0, 0, 0],
+                                color: {
+                                    type: 'bar',
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: 'rgba(225,42,84,.3)' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#ffa800' // 100% 处的颜色
+                                    }],
+                                    globalCoord: false, // 缺省为 false
+
+                                }
+                            }
+                        }
+                    } ],
+                }]
+            };
+
+            myChart.setOption(option);
+        </script>
+        
+        <script>
+            var myChart = echarts.init(document.getElementById("er"));
+            var data = [50];
+            var xMax = 100;
+            var axisColor = '#fff';
+            option = {
+           		title: {
+   					text:'全行客户排序结果',
+   					x:'center',
+   					y:'top'
+   				},
+                tooltip: {
+                    show: true,
+                    formatter: '{b} <br> {c}'
+                },
+                yAxis: [{
+                    min:0,
+                    max:100,
+                    position:'left',
+                    offset:-140,
+                    axisTick: {
+                        show: true,
+                        // color:'#fff',
+                    },
+                    axisLine: {
+                        show: false,
+                    },
+                    axisLabel: {
+                        show: true,
+                        formatter:function(value,index){
+                            return value+"%";
+                        }
+                        //color:'#fff',
+                    },
+                    splitLine: {
+                        show: false,
+                        // color:'#fff',
+                    },
+                    splitNumber :10,
+                }],
+                xAxis: [{
+                    type: 'category',
+                    data: ['全行排名'],
+                    axisTick: {
+                        // color:'#fff',
+                        show: false,
+                    },
+                    axisLine: {
+                        //  color:'#fff',
+                        show: false,
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: '#fff',
+                        }
+                    }
+
+                }],
+                series: [{
+                    name: ' ',
+                    type: 'bar',
+                    barWidth: 40,
+                    silent: true,
+                    
+                    itemStyle: {
+                        normal: {
+                            color: '#fdd',
+                            barBorderRadius: [0, 0, 0, 0],
+
+                        }
+
+                    },
+                    barGap: '-100%',
+                    
+                    //barCategoryGap: '60%',
+                    data: data.map(function(d) {
+                        return xMax
+                    }),
+                }, {
+                    name: ' ',
+                    type: 'bar',
+                    barWidth: 40,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top',
+                            formatter: function(o){
+                                return o.value+'%';
+                            },
+                        }
+                    },
+                    data: [{
+                        value: [(${rall})],
+                        itemStyle: {
+                            normal: {
+                                barBorderRadius: [0, 0, 0, 0],
+                                color: {
+                                    type: 'bar',
+                                    colorStops: [{
+                                        offset: 0,
+                                        color: 'rgba(225,42,84,.3)' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: '#ffa800' // 100% 处的颜色
+                                    }],
+                                    globalCoord: false, // 缺省为 false
+
+                                }
+                            }
+                        }
+                    } ],
+                }]
+            };
+
+            myChart.setOption(option);
+        </script>
+        
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+// 信用等级列表
+var pdLevelList = [(${@jacksonObjectMapper.writeValueAsString(@modelScaleDetailConfigServiceImpl.findALlPdLevel())})];
+
+// 字段定义
+var customerRiskFields ={
+		query: [
+			{
+				width:200,		
+				name:'creditLevel',		
+				title:'信用等级',
+				require:true,
+				type: 'select',
+				valueMap:pdLevelList,
+				allowEmptyValue:true,
+				autoFetchData:false}
+		],
+		grid: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{width:200,name:'creditLevel',	title:'信用等级'	 ,required:true,type: 'select',valueMap:pdLevelList},
+			    {width:200,name:'riskFactor',	title:'风险系数'	 ,required:true},
+			    {width:200,name:'upperLimit',	title:'同业占比上限' ,required:true}
+		],
+		edit: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{width:200,name:'creditLevel',	title:'信用等级'	 ,required:true,type: 'select',valueMap:pdLevelList},
+				{width:200,name:'riskFactor',	title:'风险系数'	 ,required:true},
+			    {width:200,name:'upperLimit',	title:'同业占比上限' ,required:true}
+		]
+};
+
+// 客户风险占比数据源
+isc.FwRestDataSource.create({
+	 ID: 'customerRiskFieldsDS',
+ 	 fields: customerRiskFields.grid,
+ 	 dataURL: '[(@{/irs/customerRisk/isc})]'
+});
+
+
+isc.FwListGrid.create({
+	ID: 'customerRiskFieldsId',
+	title: '<b>客户风险占比列表</b>',
+	dataSource: customerRiskFieldsDS,
+	sortField: 'creditLevel',
+	canHover:true,
+	fields: customerRiskFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: customerRiskFields.query
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+      form: {
+      	numCols:4,
+      	titleWidth:150,
+      	colWidths: [190, "*"],
+          dataSource: customerRiskFieldsDS,
+          fields: customerRiskFields.edit
+      },
+      afterShow: function(action){
+     	
+      },
+      actionMembers:[
+             		'ok','close'
+      ]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+  },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				customerRiskFieldsId
+			]
+		})
+	}
+});
+
+</script>
+</html>

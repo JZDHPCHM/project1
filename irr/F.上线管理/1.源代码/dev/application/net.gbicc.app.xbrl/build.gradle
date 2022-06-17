@@ -1,0 +1,12 @@
+group='org.wsp'
+
+dependencies {
+    compile(
+        "org.wsp:org.wsp.framework.core:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa:${framework_version}",
+        "org.wsp:org.wsp.framework.mvc:${framework_version}",
+        "net.sf.json-lib:json-lib:${json_lib_version}:${json_lib_jdk}",
+        "org.apache.httpcomponents:httpclient:${httpclient_version}",
+        project(":com.gbicc.aicr.system")
+	)
+}

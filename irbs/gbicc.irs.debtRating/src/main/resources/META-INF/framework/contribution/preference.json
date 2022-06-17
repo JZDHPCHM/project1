@@ -1,0 +1,129 @@
+/*
+ * 首选项(系统配置)贡献项配置示例
+ * 功能: 该贡献项配置为框架提供系统配置
+ * 使用说明:
+ * id		: 配置项 ID
+ * parentId	: 父配置项 ID
+ * order	: 顺序，同层下的顺序
+ * urlType	: URL 类型，可能选项
+ * 				HTML		: 该配置功能由独立的 HTML 页面提供
+ *				JAVASCRIPT	: 该配置功能由执行指定的 javascript 功能提供
+ */
+
+[
+	{"id":"gbicc.irs.debtRating.dictonary","order":700},
+	{
+		"id"		:"gbicc.irs.debtRating.dictonary.ccf",
+		"parentId"	:"gbicc.irs.debtRating.dictonary",
+		"order"		:1,
+		"urlType"	:"HTML",
+		"url"		:"/irs/config/ccf/config.html?removeNavbar=true&removeTab=true"
+	},
+	{
+		"id"		:"gbicc.irs.debtRating.dictonary.productthurdlerate",
+		"parentId"	:"gbicc.irs.debtRating.dictonary",
+		"order"		:2,
+		"urlType"	:"HTML",
+		"url"		:"/irs/config/productthurdlerate/config.html?removeNavbar=true&removeTab=true"
+	},
+	{
+		"id"		:"gbicc.irs.debtRating.dictonary.pledgethurdlerate",
+		"parentId"	:"gbicc.irs.debtRating.dictonary",
+		"order"		:3,
+		"urlType"	:"HTML",
+		"url"		:"/irs/config/pledgethurdlerate/config.html?removeNavbar=true&removeTab=true"
+	},
+	{
+		"id"		:"gbicc.irs.debtRating.dictonary.BorrowerGuarantor",
+		"parentId"	:"gbicc.irs.debtRating.dictonary",
+		"order"		:4,
+	},
+	{
+		"id"		:"gbicc.irs.debtRating.dictonary.Borrower",
+		"parentId"	:"gbicc.irs.debtRating.dictonary.BorrowerGuarantor",
+		"order"		:5,
+		"urlType"	:"HTML",
+		"url"		:"/irs/config/borrowerguarantor/borrower.html?removeNavbar=true&removeTab=true"
+	},
+	{
+		"id"		:"gbicc.irs.debtRating.dictonary.Guarantor",
+		"parentId"	:"gbicc.irs.debtRating.dictonary.BorrowerGuarantor",
+		"order"		:6,
+		"urlType"	:"HTML",
+		"url"		:"/irs/config/borrowerguarantor/guarantor.html?removeNavbar=true&removeTab=true"
+	},
+	{
+		"id"		:"gbicc.irs.debtRating.dictonary.Gebtfactor",
+		"parentId"	:"gbicc.irs.debtRating.dictonary",
+		"order"		:7,
+		"urlType"	:"HTML",
+		"url"		:"/irs/config/debtfactor/config.html?removeNavbar=true&removeTab=true"
+	},{
+		"id"		:"gbicc.irs.debtRating.dictonary.PledgeFactor",
+		"parentId"	:"gbicc.irs.debtRating.dictonary",
+		"order"		:8,
+		"urlType"	:"HTML",
+		"url"		:"/irs/config/pledgefactor/config.html?removeNavbar=true&removeTab=true"
+	},{
+		"id"		:"gbicc.irs.debtRating.dictonary.BorrowerGuarantorjust",
+		"parentId"	:"gbicc.irs.debtRating.dictonary",
+		"order"		:9,
+	},{
+		"id"		:"gbicc.irs.debtRating.dictonary.BorrowerFactor",
+		"parentId"	:"gbicc.irs.debtRating.dictonary.BorrowerGuarantorjust",
+		"order"		:10,
+		"urlType"	:"HTML",
+		"url"		:"/irs/config/borrowerfactor/config.html?removeNavbar=true&removeTab=true"
+	},{
+		"id"		:"gbicc.irs.debtRating.dictonary.GuarantorFactor",
+		"parentId"	:"gbicc.irs.debtRating.dictonary.BorrowerGuarantorjust",
+		"order"		:12,
+		"urlType"	:"HTML",
+		"url"		:"/irs/config/guarantorfactor/config.html?removeNavbar=true&removeTab=true"
+	},
+	{
+		"id"		:"gbicc.irs.debtRating.dictonary.IndustryFactor",
+		"parentId"	:"gbicc.irs.debtRating.dictonary.BorrowerGuarantorjust",
+		"order"		:13,
+		"urlType"	:"HTML",
+		"url"		:"/irs/config/industryfactor/config.html?removeNavbar=true&removeTab=true"
+	},
+	{
+		"id"		:"gbicc.irs.debtRating.dictonary.AreaFactor",
+		"parentId"	:"gbicc.irs.debtRating.dictonary.BorrowerGuarantorjust",
+		"order"		:14,
+		"urlType"	:"HTML",
+		"url"		:"/irs/config/areafactor/config.html?removeNavbar=true&removeTab=true"
+	},
+	{
+		"id"		:"gbicc.irs.debtRating.dictonary.LgdLevel",
+		"parentId"	:"gbicc.irs.debtRating.dictonary",
+		"order"		:15,
+		"urlType"	:"HTML",
+		"url"		:"/irs/config/lgdlevel/config.html?removeNavbar=true&removeTab=true"
+	},{
+		"id"		:"gbicc.irs.debtRating.dictonary.pricing",
+		"parentId"	:"gbicc.irs.debtRating.dictonary",
+		"order"		:17,
+	},{
+		"id"		:"gbicc.irs.debtRating.dictonary.costOfCapital",
+		"parentId"	:"gbicc.irs.debtRating.dictonary.pricing",
+		"order"		:18,
+		"urlType"	:"HTML",
+		"url"		:"/irs/RpmParOc/config.html?removeNavbar=true&removeTab=true"
+	},{
+		"id"		:"gbicc.irs.debtRating.dictonary.operating",
+		"parentId"	:"gbicc.irs.debtRating.dictonary.pricing",
+		"order"		:19,
+		"urlType"	:"HTML",
+		"url"		:"/irs/RpmParFTP/config.html?removeNavbar=true&removeTab=true"
+	}
+	,{
+		"id"		:"gbicc.irs.debtRating.dictonary.operatingOcdj",
+		"parentId"	:"gbicc.irs.debtRating.dictonary.pricing",
+		"order"		:19,
+		"urlType"	:"HTML",
+		"url"		:"/irs/RpmParOcAdj/config.html?removeNavbar=true&removeTab=true"
+	}
+]
+

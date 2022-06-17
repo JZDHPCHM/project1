@@ -1,0 +1,124 @@
+--评估期期末公司与销售人员签订有效的劳动合同、代理合同份数
+SELECT c.code,b.code,b.c_name,SUM(R1)
+FROM E_BDS_HRM_EMPLOYEESTATE a 
+INNER  JOIN   E_BDS_HRM_ORGANIZATION b 
+ON a.orgcode4=b.code
+AND a.orgcode2 <> 'HO'
+AND B.CODE IN ('PR','AD','BD','GD')
+AND b.typeid='4'
+LEFT JOIN E_BDS_HRM_ORG C
+ON A.ORGCODE2 = C.ORGCODE
+GROUP BY b.CODE,c.code,b.c_name
+ORDER BY c.code
+--销售人员总人数
+SELECT c.code,b.code,b.c_name,SUM(R1)
+FROM E_BDS_HRM_EMPLOYEESTATE a 
+INNER  JOIN   E_BDS_HRM_ORGANIZATION b 
+ON a.orgcode4=b.code
+AND a.orgcode2 <> 'HO'
+AND B.CODE IN ('PR','AD','BD','GD')
+AND b.typeid='4'
+LEFT JOIN E_BDS_HRM_ORG C
+ON A.ORGCODE2 = C.ORGCODE
+GROUP BY b.CODE,c.code,b.c_name
+ORDER BY c.code
+--评估期内离职的销售人员数量
+SELECT b.CODE ,SUM(P3+Q3+R3)
+FROM E_BDS_HRM_EMPLOYEESTATE a 
+INNER  JOIN E_BDS_HRM_ORGANIZATION b 
+ON a.orgcode4=b.code
+AND b.typeid='4'
+and B.CODE IN ('PR','AD','BD','GD')
+GROUP BY b.CODE 
+--评估期初销售人员数量
+SELECT b.code,SUM(p)
+FROM E_BDS_HRM_EMPLOYEESTATE a 
+INNER  JOIN   E_BDS_HRM_ORGANIZATION b 
+ON a.orgcode4=b.code
+AND a.payrid='30'--销售体系
+AND B.CODE IN ('PR','AD','BD','GD')
+AND b.typeid='4'
+LEFT JOIN E_BDS_HRM_ORG C
+ON A.ORGCODE2 = C.ORGCODE
+GROUP BY b.code
+ORDER BY b.code
+--评估期末销售人员数量
+SELECT b.code,SUM(R)
+FROM E_BDS_HRM_EMPLOYEESTATE a 
+INNER  JOIN   E_BDS_HRM_ORGANIZATION b 
+ON a.orgcode4=b.code
+AND a.payrid='30'--销售体系
+AND B.CODE IN ('PR','AD','BD','GD')
+AND b.typeid='4'
+LEFT JOIN E_BDS_HRM_ORG C
+ON A.ORGCODE2 = C.ORGCODE
+GROUP BY b.code
+ORDER BY b.code
+--评估期末，销售人员中大专以上学历人员数量
+SELECT b.code,SUM(R)
+FROM E_BDS_HRM_EMPLOYEEDEGREE a 
+INNER  JOIN   E_BDS_HRM_ORGANIZATION b 
+ON a.orgcode4=b.code
+AND a.payrid='30'--销售体系
+AND B.CODE IN ('PR','AD','BD','GD')
+AND b.typeid='4'
+LEFT JOIN E_BDS_HRM_ORG C
+ON A.ORGCODE2 = C.ORGCODE
+GROUP BY b.code
+ORDER BY b.code
+--最近4个季度省级分公司总经理室成员及中心支公司主要负责人离职人数
+SELECT b.code ,SUM(G3+H3+I3+J3+K3+L3+M3+N3+O3+P3+Q3+R3) 
+FROM E_BDS_HRM_MANAGESTATE A 
+INNER  JOIN E_BDS_HRM_ORG b 
+ON a.orgcode2=b.orgcode
+AND a.orgcode2 <> 'HO'
+GROUP BY b.code
+ORDER BY b.code
+--评估期期末省级分公司总经理室成员及中心支公司主要负责人在职人数
+SELECT b.code ,SUM(R1)
+ FROM E_BDS_HRM_MANAGESTATE A 
+INNER  JOIN E_BDS_HRM_ORG b 
+ON a.orgcode2=b.orgcode
+AND a.orgcode2 <> 'HO'
+GROUP BY b.code
+ORDER BY b.code
+--最近4个季度省级分公司及以下分支机构销售、承保、保全部门离职员工人数
+SELECT  C.CODE,/*B.CODE,*/SUM(G3+H3+I3+J3+K3+L3+M3+N3+O3+P3+Q3+R3)
+ FROM E_BDS_HRM_EMPLOYEESTATE A
+  JOIN E_BDS_HRM_ORGANIZATION B
+    ON A.ORGCODE4 = B.CODE
+/*    AND B.CODE IN ('PR','AD','BD','GD')*/
+  LEFT JOIN E_BDS_HRM_ORG C
+    ON A.ORGCODE2 = C.ORGCODE
+   AND B.C_NAME IS NOT NULL
+ WHERE  TYPEID='4'
+  AND  a.orgcode2 <> 'HO'
+ GROUP BY C.CODE/*,B.CODE*/
+ ORDER BY C.CODE
+--前4个季度初省级分公司及以下分支机构销售、承保、保全部门员工人数
+SELECT C.CODE,B.CODE,
+       SUM(G)
+  FROM E_BDS_HRM_EMPLOYEESTATE A
+  JOIN E_BDS_HRM_ORGANIZATION B
+    ON A.ORGCODE4 = B.CODE
+    AND B.CODE IN ('PR','AD','BD','GD')
+  LEFT JOIN E_BDS_HRM_ORG C
+    ON A.ORGCODE2 = C.ORGCODE
+ WHERE TYPEID = '4'
+AND  a.orgcode2 <> 'HO'
+ GROUP BY C.CODE,B.CODE
+ ORDER BY C.CODE
+--最近4个季度省级分公司及以下分支机构销售、承保、保全部门增加员工人数
+SELECT C.CODE,B.CODE,
+       SUM(G2 + H2 + I2 + J2 + K2 + L2 + M2 + N2 + O2 + P2 + Q2 + R2)
+  FROM E_BDS_HRM_EMPLOYEESTATE A
+  JOIN E_BDS_HRM_ORGANIZATION B
+    ON A.ORGCODE4 = B.CODE
+    AND B.CODE IN ('PR','AD','BD','GD')
+  LEFT JOIN E_BDS_HRM_ORG C
+    ON A.ORGCODE2 = C.ORGCODE
+   AND B.C_NAME IS NOT NULL
+ WHERE  TYPEID='4'
+ AND  a.orgcode2 <> 'HO'
+ GROUP BY C.CODE,B.CODE
+ ORDER BY C.CODE

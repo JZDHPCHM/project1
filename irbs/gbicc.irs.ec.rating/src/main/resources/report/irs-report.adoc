@@ -1,0 +1,297 @@
+= [(${report.customer.custName})]([(${report.customer.custNo})])评级报告
+XXXXXX 银行风险管理部 <risk@bankofxxx.com>
+
+:showtitle: true
+:icons: font
+:doctype: book
+:revdate: 10-02-2013
+:toc: macro
+:toc-title: 目录
+:toclevels: 3
+:sectnums:
+:header_footer: true
+
+****
+[big]##
+该企业业绩表现一般，经营管理状况一般，从当前情况看，企业能够为信贷业务提供相应的财务保障，
+信贷基本面尚可，但企业在短期内有可能面对一些影响其偿债能力和履约意愿。
+##
+****
+
+== 评级结果
+
+=== 评级结果
+[width="100%",cols="5h,6m,4h,6m,4h,6m"]
+|====================
+| 客户名称       | [[${report.customer.custName}]]
+| 客户类型       | [(#{'gbicc.irs.customer.support.EnterpriseType.'+${report.customer.enterpriseType}})] 
+| 风险划分       |  [[${report.rating.riskType}]]  
+
+| 所属行业       | [[${report.customer.busScope}]] 
+| 所属区域      | [[${report.customer.offcAddress}]]      
+| 所属分支机构    | 无
+
+| 基准报表       | 2017年12月           
+| 报表口径      | 本部               
+ | 是否审计       | 是
+ 
+| 发起类型       | [(#{'gbicc.irs.ec.rating.support.RatingType.'+${report.rating.ratingType}})]        
+| 评级模型      | [[${report.rating.modelCode}]]             
+| 评级发起日期    | [[${report.rating.createDate}]]
+
+| 客户经理       | [[${report.customer.managerName}]]       
+| 评级得分      | [[${report.rating.score}]]               
+| 模型级别       | [[${report.rating.modelLevel}]]   
+
+| 定性得分       | [[${report.rating.qualitativeScore}]]       
+| 定量得分      | [[${report.rating.quantifyScore}]]               
+| /      	|   /
+
+| 最终级别  | [[${report.rating.finLevel}]]                    
+| 标普评级级别 | [[${report.rating.spLevel}]]                   
+| 最终违约概率  | [[${report.rating.pd}]] 
+
+| 评级完成日期    | [[${report.rating.completionTime}]]                                
+| 评级生效日期     | [[${report.rating.effectiveTime}]] 
+| 评级到期日     | [[${report.rating.dueTime}]]    
+
+|====================
+
+=== 审批意见
+[width="100%",cols="2,2,1,4"]
+|====================
+
+| *角色*
+| *人员*
+| *建议等级*
+| *意见*
+
+[# th:each="overTurn : ${report.overTurns}"]
+|[[${overTurn.roleName}]]
+|[[${overTurn.userName}]]
+|[[${overTurn.suggLevel}]]
+|[[${overTurn.adjReason}]]
+[/]
+
+|====================
+
+=== 事项调整
+
+==== 风险调整
+[width="100%",cols="4,1"]
+|====================
+
+| *调整项*
+| *选项*
+
+[# th:each="adjIndex : ${report.adjIndexs}"]
+|[[${adjIndex.indexName}]]
+|[[${adjIndex.indexValue}]]
+[/]
+
+|====================
+
+==== 业务调整
+[width="100%",cols="1h,4,1h,1"]
+|====================
+| 是否业务调整       
+| 否           
+| 业务调整后等级       
+|
+ 
+| 业务调整事项
+3+a|
+. 客户收益高
+. 客户的发展潜力很强，而在评级设定方法体系中为予以充分反映
+|====================
+
+=== 评级应用
+
+==== 客户限额
+[width="100%",options="header",cols="9*>.^"]
+|====================
+| 表内授信业务余额之和  | 授信申请金额  | 审批在途业务金额   | 单一客户限额  | <<a1>>       |  <<a2>>	    | 测算结果生成时间 	| 限额测算触发原因 	| 限额测算历史
+
+|                   |             |                 |             |              |              |                   |                   |   
+|====================
+
+==== 贷款定价
+[width="100%",options="header",cols="17*>.^"]
+|====================
+| 授信分项编号  | 授信申请编号  | 违约损失率   | 违约风险暴露 EAD  | 风险加权资产   | 内部净收入 | 资金成本率 | 风险成本率 | 税务成本率 | 经济资本   |<<b1>>  |<<b2>> | <<b3>>  | <<b4>> | <<b5>> | 定价测算时间 | 审批通过时间
+
+|            |             |            |                 |              |          |           |         |           |          |        |       |          |                 |                 |           |
+|====================
+
+== 基本信息
+[width="100%",cols="1h,2m,1h,2m"]
+|====================
+| 客户编号       		| [(${report.customer.custNo})]
+| 客户名称       		| [(${report.customer.custName})]
+
+| 客户类型       		| [(#{'gbicc.irs.customer.support.EnterpriseType.'+${report.customer.enterpriseType}})] 
+| 所属行业       		| [[${report.customer.busScope}]] 
+
+| 主管客户经理    	| [[${report.customer.managerName}]]  
+| 工商营业执照号码 	| [[${report.customer.businessLicense}]] 
+
+| 企业规模(四部委)  | [(#{'gbicc.irs.customer.support.EnterpriseScale.'+${report.customer.enterpriseScale}})] 
+| 成立时间       		| [[${report.customer.establishmentTime}]]
+
+| 所有制类型      		| [(#{'gbicc.irs.customer.support.EnterpriseType.'+${report.customer.enterpriseType}})]           
+| 注册资本(万元)   | [[${report.customer.regAmount}]] 
+
+| 营业执照号    		| [[${report.customer.businessLicense}]]     
+| 地税登记证号   	| / 
+
+| 注册地址       		| [[${report.customer.regAddress}]]       
+| 经营范围      		| [[${report.customer.busScope}]]
+
+| 境外客户      		| [[${report.customer.remoteCorpMark}]]        
+|实际办公地址   		| [[${report.customer.offcAddress}]] 
+
+|====================
+
+== 定量指标
+=== 财报信息
+[width="50%",cols="^.^,^.^,^.^"]
+|====================
+| *基准报表*       | *报表口径*        | *是否审计*
+
+[# th:each="finstatems : ${report.customer.statems}"]
+
+|[[${finstatems.reportBussDate}]]
+|[(#{'gbicc.irs.customer.support.ReportSpecifications.'+${finstatems.reportSpecifications}})]
+|[[${finstatems.isAudit}]]
+[/]
+
+|====================
+
+=== 定量分析结果
+[width="60%",cols="<.^3,>.^1"]
+|====================
+| *指标名称*       | *得分*
+
+[# th:each="quanItem : ${report.quanIndexs}"]
+|[[${quanItem.indexName}]]
+|[[${quanItem.indexScore}]]
+[/]
+
+|====================
+
+== 定性指标
+[width="100%",cols="<.^1,<.^4,>.^1"]
+|====================
+| *指标名称*    | *指标值*      | *得分*
+
+[# th:each="qualItem : ${report.qualIndexs}"]
+|[[${qualItem.indexName}]]
+|[[${qualItem.indexValue}]]
+|[[${qualItem.indexScore}]]
+[/]
+
+|====================
+
+== 信用记录分析
+=== 客户过往评级记录
+[width="100%",cols="3,2,2,1,2"]
+|====================
+| 模型名称          | 评级生效时间      | 评级到期时间         | 最终级别      | 评级发起人
+| ...          | ...      | ...         | ...       	 | ...
+|====================
+=== 客户信用记录评级
+中风险: 企业业绩表现一般，经营管理状况一般，从当前情况看，企业能够为信贷业务提供相应的财务保障，信贷基本面尚可，
+但企业在短期内有可能面临对一些影响其偿债能力和履约意愿的不利因素。
+
+=== 违约认定情况
+[width="80%",cols="1,2,1,1,1"]
+|====================
+| 违约时间          | 违约事件      | 违约发起方式          | 违约发起人    | 违约认定人
+
+| 2016-10-10      | 逾期90天      | 系统自动             | 系统         | 张三
+|====================
+
+=== 违约重生情况
+[width="80%",cols="1,2,1,1,1"]
+|====================
+| 重生时间          | 重生原因    | 重生发起方式          | 重生发起人      | 重生认定人
+
+| 2016-10-10      | 已还款      | 系统自动             | 系统           | 张三
+|====================
+
+== 预警分析
+=== 财务预警
+[width="100%",cols="1,1,1,1,1,1,1,2"]
+|====================
+| 基准财报     | 财报类型   | 指标类型     | 指标名称  | 指标值 | 预警等级 | 预警时间    | 预警提示
+
+| 2017年3月   | 季报      | 财务杠杆     | 净利润    |       |        | 2017-07-09 |与行内该行业50%分位数相比正偏离超过10%
+|====================
+
+=== 季评结果
+[width="100%",cols="1,1,1,1,3"]
+|====================
+| 基准财报        | 财报口径   | 季评结果     | 评级时间        | 建议
+
+| 2017年3月      | 本部      | B           | 2017-04-01    | 该评级结果与当前有效评级相比，下浮 2 级,建议重新发起评级
+|====================
+
+=== 外部预警
+==== 人行征信
+[width="100%",cols="8*>.^"]
+|====================
+2+^.^h| 欠息              2+^.^h| 不良              2+^.^h| 关注               .2+^.^h| 所担保关注余额      .2+^.^h| 所担保不良余额
+^.^h| 笔数   ^.^h| 余额      ^.^h| 笔数  ^.^h| 余额     ^.^h| 笔数  ^.^h| 余额
+
+|   |           |               |          |             |          |               |                         |
+|====================
+
+==== 外部征信
+[width="100%",cols="1,1,5"]
+|====================
+| 数据源           | 预警时间      | 预警提示
+
+| 法海            | 2017-04-05   |借款人裁判文书记录数为 3 条
+| 鹏元            | 2017-04-05   |借款人对外投资记录数位 2 条， 对外投资标的公司涉诉记录为 3 条
+|====================
+
+==== 新闻舆情
+[width="100%",cols="2,2,1,1,1,1,1,2"]
+|====================
+| 标题          | 关键词                | 情感色彩     | 主题      |风险类型       | 风险等级     | 发布时间    | 来源
+
+| 标题1         | 高管,离职,财务集体辞职   |负面         |管理层质量  |高管人员变动    |            | 2016-10-10 | 证券时报网->快讯->网站
+|====================
+
+== 法律申明
+
+[WARNING]
+====
+本报告仅限银行内部使用。未经允许，任何企业、机构或个人不得向第三方透漏本报告内容，不得以任何形式复制、转发或公开传播本报告全部或部分内容，不得将报告用于营利或未经允许的其他用途。否则，银行保留追究泄露方相关法律责任的权利。
+====
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

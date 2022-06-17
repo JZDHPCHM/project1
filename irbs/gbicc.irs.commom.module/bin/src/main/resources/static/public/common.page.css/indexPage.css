@@ -1,0 +1,27 @@
+/* logo 条样式 */
+.fr-logobar{
+	background: url(../common.page.images/menu_background.jpg);
+}
+
+.fr-logo{
+	background: url(../images/logo.png);
+	width:100px;
+	height:100px;
+	border:1px solid red;
+}
+
+/* 菜单条样式 */
+.fr-navbar{
+	/*background: url(../images/background.jpg);*/
+	background-color:#EEEEEE;
+}
+
+.fr-application-title{
+	font-size: 16px;
+	padding-top:2px;
+	padding-left:0px;
+	font-style:normal;
+	text-decoration: bold;
+	font-family:"Microsoft Yahei";
+	color: #ffffff;
+}

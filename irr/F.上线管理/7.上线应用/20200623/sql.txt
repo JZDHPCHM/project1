@@ -1,0 +1,2 @@
+-- Add/modify columns 
+alter table FR_AA_MENU add FD_FORCE_DISPLAY NUMBER(5);

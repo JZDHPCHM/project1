@@ -1,0 +1,2 @@
+gbicc.irs.assetsRating   这个是资产相关模块
+gbicc.irs.ec.rating  这个是主体模块

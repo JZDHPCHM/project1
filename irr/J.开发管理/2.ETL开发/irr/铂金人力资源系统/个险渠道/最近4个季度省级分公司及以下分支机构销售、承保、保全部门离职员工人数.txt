@@ -1,0 +1,7 @@
+SELECT COUNT(DISTINCT a.pid) FROM SSA.t_person a 
+INNER JOIN (SELECT DISTINCT pid,CONTRACTTYPENO FROM ssa.t_contract) b
+ON a.pid=b.pid
+AND b.CONTRACTTYPENO='A'
+WHERE a.startdate <= to_date('20180630','yyyymmdd')
+AND a.ENDDATE BETWEEN ADD_MONTHS(TO_DATE('20180630', 'yyyymmdd'), -15) AND
+TO_DATE('20180630', 'yyyymmdd')

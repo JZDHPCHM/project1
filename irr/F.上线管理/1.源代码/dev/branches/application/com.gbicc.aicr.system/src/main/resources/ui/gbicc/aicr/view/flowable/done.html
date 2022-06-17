@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+
+    <style type="text/css"> 
+    	.navbar-brand{
+    		padding-top: 12px !important;
+    	}
+    	.modal-footer{
+    		text-align: center;
+    	}
+		.content-form{
+			padding-top: 15px;
+		}
+		.chosen-container-multi{
+			width: 96% !important;
+		}
+		.wrapper .wrapper-content{
+			left: 0;
+		}
+		.ibox-tools{
+			float: right;
+		}	
+		.ibox-content{
+			padding: 15px;
+		}
+		.ibox-content:after{
+		 	content:"";
+		    height:0;
+		    line-height:0;
+		    display:block;
+		    visibility:hidden;
+		    clear:both;
+		}	
+    </style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper">
+		<div id="page-wrapper" class="gray-bg">
+			<div class="row wrapper border-bottom white-bg page-heading">
+			    <div class="col-lg-10">
+			        <ol class="breadcrumb">
+			            <li>
+			                <i class="fa fa-home"></i>&nbsp;首页&nbsp;&nbsp;>&nbsp;&nbsp;<a href="#">个人中心</a>&nbsp;&nbsp;>&nbsp;&nbsp;已办任务
+			            </li>
+			        </ol>
+			    </div>
+			    <div class="col-lg-2">
+			
+			    </div>
+			</div>
+			<div class="wrapper wrapper-content">
+				<!-- 查询区域面板start -->
+				<div class="row">
+					<div class="ibox">
+						<div class="ibox-title">
+							<h5>查询</h5>
+							<div class="ibox-tools">
+								<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+								</a>
+							</div>
+						</div>
+						<div class="ibox-content">
+							<form id="formSearch" class="form-horizontal">
+								<div class="form-group">
+									<label class="col-sm-1 control-label">流程名称</label>
+									<div class="col-sm-3">									
+										<select class="form-control select2" id="process" name="process">
+										   	<option value=""> -- 请选择 -- </option>  
+  											<option th:each="option : ${@frSystemDictionaryService.getDictionaryMap('WORK_FLOW',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+ 										</select>
+									</div>
+									<!--label class="col-sm-1 control-label">规则细类</label>W
+									<div class="col-sm-3">
+										<select class="chosen-select" name="query_ruleSubType">
+										</select>
+									</div-->
+									<label class="col-sm-1 control-label">开始时间</label>
+									<div class="col-sm-3">
+										<div class="input-daterange input-group" id="datepicker">
+											<input id="createDate1" type="text"
+												class="form-control" name="createDate1" />
+											<span class="input-group-addon">至</span> <input
+												id="createDate2" type="text" class="form-control"
+												name="createDate2" />
+										</div>
+									</div>
+									<label class="col-sm-1 control-label">截止时间</label>
+									<div class="col-sm-3">
+										<div class="input-daterange input-group" id="datepicker">
+											<input id="finishDate1" type="text"
+												class="form-control" name="finishDate1" />
+											<span class="input-group-addon">至</span> <input
+												id="finishDate2" type="text" class="form-control"
+												name="finishDate2" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group" style="margin-bottom: 0;">
+									<div class="col-sm-2 col-sm-offset-4">
+										<b id="task_btn_query" class="btn btn-success "><i
+											class="fa fa-search"></i>查询</b>
+									</div>
+									<div class="col-sm-2">
+										<b id="task_btn_clear"
+											class="btn btn-info "><i class="fa fa-refresh"></i>重置</b>
+									</div>
+								
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!-- 查询区域面板end -->
+
+
+				<!-- 表格区域面板start -->
+				<div class="row">
+					<div class="ibox ">
+						<div class="ibox-title-grid" style="padding-bottom: 0;">
+							<button type="button" id="btn_view" class="btn btn-default btn-increased">
+								<i class="fa fa-plus-circle"></i>&nbsp;&nbsp;查看
+							</button>
+						</div>
+						<div class="ibox-content">
+							<div id="table_zz_div" class="spiner-example"
+								style="display: none;">
+								<div class="sk-spinner sk-spinner-wave">
+									<div class="sk-rect1"></div>
+									<div class="sk-rect2"></div>
+									<div class="sk-rect3"></div>
+									<div class="sk-rect4"></div>
+									<div class="sk-rect5"></div>
+									
+								</div>
+							</div>
+							<div id="table_bg_div">
+								<table id="done_table"></table>
+								<div id="pager_list"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 表格区域面板end -->
+
+			</div>
+			<!-- 页面主体内容end -->
+		</div>
+	</div>
+</body>
+				
+				
+				
+			</div>
+			<!-- 页面主体内容end -->
+		</div>
+	</div>
+</body> 
+<script>
+$(document).ready(function () { 
+    // 查询
+	$("#task_btn_query").click(function() {
+		param= new Object();
+		processKey=$("#formSearch select[name='process']").val();
+		createDate1=$("#formSearch input[name='createDate1']").val();
+		createDate2=$("#formSearch input[name='createDate2']").val();
+		finishDate1=$("#formSearch input[name='finishDate1']").val();
+		finishDate2=$("#formSearch input[name='finishDate2']").val();
+		//console.log(processId);
+		if(!isEmpty(processKey)){
+    			param.processKey=processKey;
+    		}
+		if(!isEmpty(createDate1)){
+			param.createDate1=createDate1;
+		}
+		if(!isEmpty(createDate2)){
+			param.createDate2=createDate2;
+		}
+		if(!isEmpty(finishDate1)){
+			param.finishDate1=finishDate1;
+		}
+		if(!isEmpty(finishDate2)){
+			param.finishDate2=finishDate2;
+		}
+		$("#done_table").jqGrid('setGridParam',{
+			 datatype:'json',  
+		     postData:{"param":JSON.stringify(param)},
+		     page:1
+		}).trigger("reloadGrid"); 
+	});
+	// 清空
+	$("#task_btn_clear").click(function() {
+		$("#formSearch input").val("");
+        $("#formSearch select").val("");
+        $("#formSearch select").trigger("chosen:updated");
+	});
+
+	//待办任务列表
+    $("#done_table").jqGrid({
+        url:"/system/flowable/task/done_list",
+        recordtext: "显示：{0} - {1}，总数：{2} ",
+	    emptyrecords: "本次查询无数据！",
+	    loadtext: "读取中...",
+	    pgtext : "第 {0}页， 共{1}页",
+		mtype : "post",
+		datatype: "json",
+      	height: 250,
+      	autowidth: true,
+      	shrinkToFit: true,
+      	prmNames: {
+          	page: "page"   // 表示请求页码的参数名称
+      	}, 
+        rowNum: 10,
+        rowList: [10, 20, 30],
+        colModel: [
+        		//{label :"#",name: 'sequence', index: 'sequence', width: 60, sorttype: "int"},
+        		{name:'TASKID',index:'TASKID',hidden:true },
+            {label :"流程名称",name: 'PDEFNAME', index: 'PDEFNAME', width: 80, sorttype: "text"},
+            {label :"任务名称",name: 'TASKNAME', index: 'TASKNAME', width: 100},
+            {label :"任务执行人",name: 'ASSIGNEE', index: 'ASSIGNEE', width: 80, sorttype: "text"},
+            {label :"开始时间",name: 'TASKSTARTTIME', index: 'TASKSTARTTIME', width: 80, sorttype: "float"},
+            {label :"完成时间",name: 'TASKENDTIME', index: 'TASKENDTIME', width: 80, sorttype: "float"}           
+        ],
+        pager: "#pager_list",
+        viewrecords: true,
+        rownumbers: true,
+        //caption: "待办任务列表",
+        hidegrid: false,
+        jsonReader : {
+        		root:"data",
+        		records: "recordsTotal",
+        		repeatitems: false,
+        		id: "0"
+        }
+    });
+    $("#done_table").jqGrid('navGrid', '#pager_list',
+            {edit: false, add: false, del: false, search: false},
+            {height: 200, reloadAfterSubmit: true}
+    );
+    $('#formSearch .input-daterange').datepicker({
+	    keyboardNavigation: false,
+	    forceParse: false,
+	    autoclose: true
+	});
+  //任务处理
+    $("#btn_view").click(function(){
+		var selectedRowId = $("#done_table").jqGrid("getGridParam", "selrow");
+		if(!selectedRowId){
+	    		swal({
+	                title: "提示",
+	                text: "请先选择要查看的任务！"
+	            });
+	    		return;
+    		}
+		//获得当前行各项属性
+		var rowData = $("#done_table").jqGrid("getRowData",selectedRowId);
+        window.open("/system/flowable/task/view_task.html?taskId="+rowData.TASKID,"_blank");
+    });
+});
+
+//非空判断
+function isEmpty(obj){
+    if(typeof obj == "undefined" || obj == null || obj == ""){
+        return true;
+    }else{
+        return false;
+    }
+}
+//下拉非空判断
+function isSelect(obj){
+    if(typeof obj == "undefined" || obj == null || obj == "请选择" || obj == "-1"){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+</script>
+<script>
+       // 已办任务列表
+       $(document).ready(function () { 
+            //待办任务列表
+            $("#done_table").jqGrid({
+            		url:"/system/flowable/task/done_list",
+            		recordtext: "显示{0} - {1}条，共{2} 条", 
+                pgtext : "第 {0}页， 共{1}页",
+                mtype : "post",
+                datatype: "json",
+		        height: 250,
+		        autowidth: true,
+		        shrinkToFit: true,
+		        prmNames: {
+		            page: "page"   // 表示请求页码的参数名称
+		        }, 
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                colModel: [
+                    {label :"#",name: 'sequence', index: 'sequence', width: 60, sorttype: "int"},
+                    {label :"流程名称",name: 'PDEFNAME', index: 'PDEFNAME', width: 80, sorttype: "text"},
+                    {label :"任务名称",name: 'TASKNAME', index: 'TASKNAME', width: 100},
+                    {label :"任务执行人",name: 'ASSIGNEE', index: 'ASSIGNEE', width: 80, sorttype: "text"},
+                    {label :"开始时间",name: 'TASKSTARTTIME', index: 'TASKSTARTTIME', width: 80, sorttype: "float"},
+                    {label :"完成时间",name: 'TASKENDTIME', index: 'TASKENDTIME', width: 80, sorttype: "float"}
+                    
+                ],
+                pager: "#pager_list",
+                viewrecords: true,
+                //caption: "已办任务列表",
+                hidegrid: false,
+                jsonReader : {
+                	root:"data",
+                	records: "recordsTotal",
+                	repeatitems: false,
+                	id: "0"
+                }
+            });
+            
+        });
+        //作废
+	    $("#button_invalid").click(function() {
+	    	swal({
+	            title: "提示",
+	            text: "这里是提示信息......"
+	        });
+			return;
+	    });
+        //更新
+	    $("#button_update").click(function() {
+	    	swal({
+	            title: "提示",
+	            text: "这里是提示信息......"
+	        });
+			return;
+	    });
+		//下载
+	    $("#button_download").click(function() {
+	    	swal({
+	            title: "提示",
+	            text: "这里是提示信息......"
+	        });
+			return;
+	    });
+  
+</script>
+
+</html>

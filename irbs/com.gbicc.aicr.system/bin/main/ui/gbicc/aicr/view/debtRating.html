@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>债项评级报告</title>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/jquery-3.1.1.min.js}"></script>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+			box-sizing:border-box;
+			outline:0;
+			-webkit-tap-highlight-color:transparent
+		}
+		html{-webkit-text-size-adjust:none;-webkit-font-smoothing:antialiased}
+		body,html{height:100%;background-color:#beebff}
+		a{text-decoration:none}
+		.report-covers{
+			position: relative;
+		}
+		.report-date{
+			position: absolute;
+		    color: #004598;
+		    top: 17.5rem;
+		    left: 4rem;
+		    font-size: 1.5rem;
+		    font-weight: bolder;
+		    background: #fff;
+		    border-radius: 2rem;
+		    height: 3rem;
+		    line-height: 3rem;
+		    padding: 0 1.2rem;
+		}
+		.report-block{
+			background: #fff;
+		    margin: 0 2rem;
+    		border-radius: 1.5rem;
+    		margin-top: -5px;
+    		margin-bottom: 2.5rem;
+    		padding-bottom: 2rem;
+		}
+		.border-img{
+			background: url(/images/border_img_mobile.png) top left no-repeat;
+		    background-size: 100% 100%;
+		    width: 100%;
+		    height: 17rem;
+		    position: relative;
+    		top: 2rem;
+		}
+		.info-div{
+			float: left;
+		    font-size: 20px;
+		    color: #666;
+		    position: relative;
+		    top: 4rem;
+		}
+		.top-div{
+			padding-bottom: 1.5rem;
+		}
+		.top-strong{
+			font-size: 54px;
+		    color: #4d4d4d;
+		    display: inline-block;
+		    min-width: 15rem;
+		    text-align: right;
+		    margin-right: 1rem;
+		}
+		.title-head{
+			text-align: center;
+			padding-top: 3rem;
+		}
+		.line-div{
+			display: inline-block;
+		    width: 2rem;
+		    height: 3px;
+		    background: #447cf3;
+		    position: relative;
+		    top: -6px;
+		}
+		.echarts-title{
+			color: #447cf3;
+		    font-size: 28px;
+		    font-weight: bolder;
+		    display: inline-block;
+		    padding: 0 10px;
+		}
+		.dotted-line{
+			width: 90%;
+		    border-bottom: 2px dotted #b7bae0;
+		    margin: 4rem 5% 2rem;
+		    display: inline-block;
+		}
+		.detailed-information{
+			color: #666;
+		    font-size: 1.8rem;
+		    margin: 0 2rem 0 8rem;
+		    font-weight: bolder;
+		}
+		ul li{
+			line-height: 60px;
+		}
+		.numerical{
+			font-size: 2.8rem;
+    		padding: 0 10px;
+		}
+	</style>
+	</head>
+
+	<body>
+		<div class="report-covers">
+			<img src="/images/debt_rating_img.png" width="100%" />
+			<div class="report-date"><span id="currentYear"></span></div>
+		</div>
+		<div class="report-block">
+			<div class="border-img">
+				<div class="info-div">
+					<div class="top-div"><strong id="dqMo" class="top-strong"></strong><span>当月评级</span></div>
+					<div><strong id="avgSco" class="top-strong" style="font-size: 32px;"></strong><span>平均倍数</span></div>
+				</div>
+				<div class="info-div" style="left: 7rem;">
+					<div class="top-div"><strong id="allDebt" class="top-strong"></strong><span>累计评级</span></div>
+					<div><strong id="allAvg" class="top-strong" style="font-size: 32px;"></strong><span>平均倍数</span></div>
+				</div>
+			</div>
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">债项评级变化趋势</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状混合图 -->
+			<div id="mixlinebar3" style="width: 100%;height: 520px;margin: 0 auto;"></div>
+			<div class="dotted-line"></div>
+			<div class="detailed-information">
+				<ul>
+					<li id="debtBy"></li>
+					<li id="debtAvg1"></li>
+				</ul>
+			</div>
+		</div>
+		<div class="report-block">
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">债项评级等级分布</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 面积图 -->
+			<div id="area" style="width: 100%;height: 520px;margin: 0 auto;"></div>
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">债项评级事业部分布</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状混合图 -->
+			<div id="mixlinebar2" style="width: 100%;height: 520px;margin: 0 auto;"></div>
+			<div class="dotted-line"></div>
+			<div class="detailed-information">
+				<ul>
+					<li id="blfenB">本月债项评级保障倍数集中分布在<span id=""></span>级（<span id="">0</span>%）、<span id=""></span>级（<span id="">0</span>%）、<span id=""></span>级（<span id="">0</span>%）和<span id=""></span>级（<span id="">0</span>%）</li>
+					<li id="debtWarn"></li>
+					<li>
+						<div id="high">
+							<span ></span>（<span id="">0</span>分）、<span id=""></span>（<span id="">0</span>分），<span id=""></span>（<span id="">0</span>分）是指得分最高的指标
+						</div>
+						<div id="low">
+							<span ></span>（<span id="">0</span>分）、<span id=""></span>（<span id="">0</span>分），<span id=""></span>（<span id="">0</span>分）是指得分最低的指标
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="js/echarts.js"></script>
+		<script>
+		var myDate="[[${sj}]]";
+		$("#currentYear").text(myDate.substring(0,4)+"年"+myDate.substring(4)+"月");
+		
+		
+		 $.ajax({
+				url: "/indexReport/debtShotDeSj", 
+				data:{sj:"[[${sj}]]"},
+				type: "GET",
+				async:false,
+				dataType: "json", //回调函数接收数据的数据格式
+				success: function(result){
+					var fist = result[0].NUM;
+					var html="";
+					if(fist!=0){
+						html+="截止本月债项评级数目最多的部门是";
+					}
+					$.each(result,function(i,row){
+						if(fist==result[i].NUM&&fist!=0){
+							html+=result[i].NAME+","+"平均保障倍数是（"+Number(result[i].SCO).toFixed(2)+"）。";
+						}
+					})
+					var end = result[result.length-1].NUM;
+					if(end != 0){
+						html+="债项评级数目最少的部门是";
+					}
+					$.each(result,function(i,row){
+						if(end==result[result.length-1-i].NUM&&fist!=end){
+							if(end==0){
+								html+=result[result.length-1-i].NAME+"、";
+							}else{
+								html+=result[result.length-1-i].NAME+","+"平均保障倍数是（"+Number(result[result.length-1-i].SCO).toFixed(2)+"）。";
+							}
+						}
+					})
+					if(end==0){
+						html=html.substring(0,html.length-1);
+						html+="本月未进行债项评级";
+					}
+					$("#debtWarn").html(html);
+
+					//$("#debtWarn").html("截止本月债项评级数目最多的部门是"+result[0].NAME+"，平均保障倍数是（"+(result[0].SCO).toFixed(2)+"倍），最少的是"+result[result.length-1].NAME+"，平均保障倍数是（"+(result[result.length-1].SCO).toFixed(2)+"倍）");
+		      }})
+		
+		 $.ajax({
+				url: "/indexReport/debtDesBlSj", 
+				data:{sj:"[[${sj}]]"},
+				type: "GET",
+				async:false,
+				dataType: "json", //回调函数接收数据的数据格式
+				success: function(result){
+					var html ="本月债项评级集中分布在";
+					$.each(result,function(i,row){
+						if(i==result.length-1){
+							html+="和"+row.FD_FINAL_LEVEL+"级"+"（"+Number(row.NUM)+"条,"+Number(row.BL).toFixed(0)+"%）"
+						}else{
+							if(i==result.length-2){
+								html+=row.FD_FINAL_LEVEL+"级"+"（"+(row.NUM)+"条,"+Number(row.BL).toFixed(0)+"%）"
+							}else{
+								html+=row.FD_FINAL_LEVEL+"级"+"（"+(row.NUM)+"条,"+Number(row.BL).toFixed(0)+"%）、"
+							}
+							
+						}
+						$("#blfenB").html(html);
+					})
+					//$("#blfenB").html("本月债项评级保障倍数集中分布在"+result[0].FD_FINAL_LEVEL+"级（"+result[0].BL+"%）、"+result[1].FD_FINAL_LEVEL+"级（"+result[1].BL+"%）、"+result[2].FD_FINAL_LEVEL+"级（"+result[2].BL+"%）和"+result[3].FD_FINAL_LEVEL+"级（"+result[3].BL+"%）");
+				}})
+		
+		 $.ajax({
+				url: "/indexReport/debtScoHighLowSj", 
+				data:{sj:"[[${sj}]]"},
+				type: "GET",
+				async:false,
+				dataType: "json", //回调函数接收数据的数据格式
+				success: function(result){
+					$("#high").html("最高的保障倍数为"+(result[0]).replace("分",""));
+					$("#low").html("最低的保障倍数为"+(result[1]).replace("分",""));
+		      }})
+		 $.ajax({
+				url: "/indexReport/debtReportSj", 
+				data:{sj:"[[${sj}]]"},
+				type: "GET",
+				async:false,
+				dataType: "json", //回调函数接收数据的数据格式
+				success: function(result){
+					if((result.BL*100).toFixed(0)>0){
+						$("#debtBy").html("本月有"+result.SUMNUM+"个项目进行债项评级，环比增加"+(result.BL*100).toFixed(0)+"%");
+					}else if((result.BL*100).toFixed(0)<0){
+						$("#debtBy").html("本月有"+result.SUMNUM+"个项目进行债项评级，环比减少"+(result.BL*100).toFixed(0)+"%");
+					}else{
+						$("#debtBy").html("本月有"+result.SUMNUM+"个项目进行债项评级，与上月持平");
+					}
+					if(result.MOTHCOUNT==0){
+						$("#debtBy").html("本月有"+result.SUMNUM+"个项目进行债项评级，上个月债项评级数量为0");
+					}
+					
+				//	本月有<span id="debtBy" class="numerical"></span>个项目进行债项评级，是上个月同期的<span id="debtBl" class="numerical"></span>
+		      }})
+		
+		
+		 var option5Data0="";
+		 $.ajax({
+				url: "/indexReport/debtDashboardSj", 
+				data:{sj:"[[${sj}]]"},
+				type: "GET",
+				async:false,
+				dataType: "json", //回调函数接收数据的数据格式
+				success: function(result){
+					//option5Data0=result[0];
+					//console.log(result[1]);
+					console.log(result);
+					$("#dqMo").text(result[1]);
+					$("#allDebt").html(result[2]);
+					$("#avgSco").html(result[0]);
+					$("#allAvg").html(result[3]);
+					var ping2 = (((Number(result[0])-Number(result[3]))/Number(result[3]))*100).toFixed(0);
+					if(result[3]>0){
+						$("#debtAvg1").text("平均总保障倍数为"+Number(result[0])+",比累计评级平均保障倍数高"+ping2+"%");
+					}else if(result[3]<0){
+						$("#debtAvg1").text("平均总保障倍数为"+Number(result[0])+",比累计评级平均保障倍数低"+ping2+"%");
+					}else{
+						$("#debtAvg1").text("平均总保障倍数为"+Number(result[0])+",与累计评级平均保障倍数持平");
+					}
+					
+		      }})
+		
+		
+		
+			// 基于准备好的dom，初始化ECharts实例
+			var area = echarts.init(document.getElementById('area'));
+			var mixlinebar2 = echarts.init(document.getElementById('mixlinebar2'));
+			var mixlinebar3 = echarts.init(document.getElementById('mixlinebar3'));
+			
+			var option2Data0=[];
+			var option2Data1=[];
+			$.ajax({
+				url: "/indexReport/queryDebtLevelSj", 
+				data:{sj:"[[${sj}]]"},
+				type: "GET",
+				async:false,
+				dataType: "json", //回调函数接收数据的数据格式
+				success: function(result){
+					option2Data0=result[0];
+					option2Data1=result[1];
+		      }})
+			// 指定图表的配置项和数据
+			var option2 = {
+			    tooltip : {
+			        trigger: 'axis'
+			    },
+			    grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '10%',
+					containLabel: true
+				},
+			    xAxis : [
+			        {
+			            type : 'category',
+			            boundaryGap : false,
+			            axisLabel: { //坐标轴刻度标签的相关设置。
+							textStyle: {
+								color: '#999999', //更改坐标轴文字颜色
+								fontSize: 21 //更改坐标轴文字大小
+							},
+							interval: 0
+						},
+			            axisLine:{
+			                lineStyle:{color:'#999'}    // x轴坐标轴颜色
+			            },
+			            axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+			            data : option2Data0
+			        }
+			    ],
+			    yAxis : [
+			        {
+			            type : 'value',
+			            axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'#999',
+					            width:1
+					        }
+					    },
+			            axisLabel : {
+			            	formatter: function(){
+				                return "";
+				            }
+				        },
+				        axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+			            splitLine: {　　　　
+							show: false
+						}
+			        }
+			    ],
+			    series : [
+			        {
+			            name:'',
+			            type:'line',
+			            smooth: true,
+			            //symbol: 'circle',
+			            itemStyle: {  
+			                normal: { //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+			                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[{
+			                            offset: 0, color: 'rgb(60, 153, 255, 1)' // 0% 处的颜色
+			                        }, {
+			                            offset: 0.4, color: 'rgb(60, 153, 255, .8)' // 40% 处的颜色
+			                        }, {
+			                            offset: 1, color: 'rgb(60, 153, 255, 0)' // 100% 处的颜色
+			                        }]
+			                    ), //背景渐变色    
+			                    lineStyle: {        // 系列级个性化折线样式  
+			                        // width: 3,  
+			                        // type: 'solid',  
+			                        color: "#0180ff" //折线的颜色
+			                    }  
+			                },  
+			                emphasis: {
+			                    color: '#0180ff',   
+			                    lineStyle: {        // 系列级个性化折线样式  
+			                        width: 2,  
+			                        type: 'dotted',  
+			                        color: "#fff" 
+			                    }  
+			                }  
+			            },//线条样式
+			            symbolSize:5, //折线点的大小
+			            stack: '总量',
+			            label: {
+			                normal: {
+			                    show: true,
+			                    color: '#999',
+			                    fontSize: 21,
+			                    position: 'top'
+			                }
+			            },
+			            areaStyle: {normal: {}},
+			            data:option2Data1
+			        }
+			    ]
+			};
+			
+			
+			var option7Data0=[];
+			var option7Data1=[];
+			var option7Data2=[];
+			 $.ajax({
+					url: "/indexReport/queryDebtChangeSj", 
+					data:{sj:"[[${sj}]]"},
+					type: "GET",
+					async:false,
+					dataType: "json", //回调函数接收数据的数据格式
+					success: function(result){
+						option7Data0=result[0];
+						option7Data1=result[1];
+						option7Data2=result[2];
+			      }})
+			
+			var option6 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						//type: 'cross',
+						crossStyle: {
+							color: '#999'
+						}
+					}
+				},
+				legend: {
+		            x: 'center', 
+		            y: 'bottom',
+					data: ['数量', '平均分'],
+					itemWidth: 22, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#999',
+						fontSize: 21
+					}
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '10%',
+					containLabel: true
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#999', //更改坐标轴文字颜色
+							fontSize: 21 //更改坐标轴文字大小
+						},
+						interval: 0,
+						rotate: "30"
+					},
+					axisLine:{
+		                lineStyle:{color:'#999'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: option7Data0,
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'#999999',
+					            width:1
+					        }
+					    },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#999', //更改坐标轴文字颜色
+								fontSize: 21 //更改坐标轴文字大小
+							}
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						splitLine: {
+							show: false
+						}
+						/*name: '水量',
+						min: 0,
+						max: 250,
+						interval: 50,
+						axisLabel: {
+						    formatter: '{value} ml'
+						}*/
+					},
+					{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'#999999',
+					            width:1
+					        }
+					    },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#999', //更改坐标轴文字颜色
+								fontSize: 21 //更改坐标轴文字大小
+							}
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						splitLine: {
+							show: false
+						}
+						/*name: '温度',
+						min: 0,
+						max: 25,
+						interval: 5,
+						axisLabel: {
+						    formatter: '{value} °C'
+						}*/
+					}
+				],
+				series: [{
+						name: '数量',
+						type: 'bar',
+						color: '#447cf3',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 35,
+						data:  option7Data1
+					},
+					{
+						name: '平均分',
+						type: 'line',
+						symbol: 'circle',     //设定为实心点
+						yAxisIndex: 1,
+						itemStyle : { 
+							normal : {
+								color:'#f4ac59', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#f4ac59' //改变折线颜色
+								} 
+							} 
+						},
+						data:  option7Data2
+					}
+				]
+			};
+			 
+			 var option12Data0=[];
+				var option12Data1=[];
+				var option12Data2=[];
+				 $.ajax({
+						url: "/indexReport/debtRatingDepartSj", 
+						data:{sj:"[[${sj}]]"},
+						async:false,
+						success: function(result){
+							option12Data0=result[0];
+							option12Data1=result[1];
+							option12Data2=result[2];
+							
+							//debtWarn
+				      }})
+			var option12 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						//type: 'cross',
+						crossStyle: {
+							color: '#999'
+						}
+					}
+				},
+				legend: {
+		            x: 'center', 
+		            y: 'bottom',    
+					data: ['数量', '平均分'],
+					itemWidth: 22, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#999',
+						fontSize: 21
+					}
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '10%',
+					containLabel: true
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#999', //更改坐标轴文字颜色
+							fontSize: 21 //更改坐标轴文字大小
+						},
+						interval: 0
+					},
+					axisLine:{
+		                lineStyle:{color:'#999'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: option12Data0,
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'#999',
+					            width:1
+					        }
+					    },
+						splitLine: {
+							show: false
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#999', //更改坐标轴文字颜色
+								fontSize: 21 //更改坐标轴文字大小
+							}
+						}
+						/*name: '水量',
+						min: 0,
+						max: 250,
+						interval: 50,
+						axisLabel: {
+						    formatter: '{value} ml'
+						}*/
+					},
+					{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'#999',
+					            width:1
+					        }
+					    },
+						splitLine: {
+							show: false
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#999', //更改坐标轴文字颜色
+								fontSize: 21 //更改坐标轴文字大小
+							}
+						}
+					}
+				],
+				series: [{
+						name: '数量',
+						type: 'bar',
+						color: '#447cf3',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 35,
+						data: option12Data1
+					},
+					{
+						name: '平均分',
+						type: 'line',
+						symbol: 'circle',     //设定为实心点
+						yAxisIndex: 1,
+						itemStyle : { 
+							normal : {
+								color:'#f4ac59', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#f4ac59' //改变折线颜色
+								} 
+							} 
+						},
+						data: option12Data2
+					}
+				]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+			area.setOption(option2);
+			mixlinebar3.setOption(option6);
+			mixlinebar2.setOption(option12);		
+		</script>
+	</body>
+</html>

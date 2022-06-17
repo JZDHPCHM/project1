@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head></head>
+<body>
+</body>
+<script th:inline="javascript">	
+
+var OutlierHandlingType = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.reportTemplate.jpa.support.OutlierHandlingType),#locale)})];
+
+var FinancialKiLibFields = {
+		query:[
+			{name:'kiCode'	,title:"指标编号"},
+			{name:'kiName'	,title:"指标名称"}
+		],
+		dataSourceGrid: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{name:'kiCode'},
+				{name:'kiName'},
+				{name:'kiNumerator'},
+			    {name:'kiDenominator'},
+			    {name:'outlierHandling'}
+		],
+		grid:[
+				{name:'id',		primaryKey:true,hidden:true},
+				{name:'kiCode'	,title:"指标编号"},
+				{name:'kiName'	,title:"指标名称"},
+			    {name:'kiNumerator',title:"分子"},
+			    {name:'kiDenominator',title:"分母"},
+			    {name:"outlierHandling",title:"异常值处理",type:"select",valueMap:OutlierHandlingType}
+		],
+		edit:[
+				{name:'id',		primaryKey:true,hidden:true},
+				{name:'kiCode'	,title:"指标编号",required:true},
+				{name:'kiName'	,title:"指标名称",required:true},
+				{
+					name:"outlierHandling",
+					title:"异常值处理",
+					endRow:true,
+					type:"select",
+					valueMap:OutlierHandlingType,
+					itemHoverHTML : function () {
+			             if (this.isDisabled()) {
+			                 return "";
+			             }
+			             return this.hoverText[this.getValue()];
+			        },
+			        hoverText: {
+			             "DEAL_ONE": "特殊处理1： <br>若分母<0，则指标=“缺失”；<br>若分母=0，则指标=“分子”（分母置为1）；",
+			             "DEAL_TWO": "特殊处理2 ： <br>若分母<=0，则指标=“分子” （分母置为1）；",
+			             "DEAL_THREE": "特殊处理3：<br>若分子>0 且分母<=0，则指标=“分子”；<br> 若分子>0 且分母>0 ，不做特殊处理；<br>若分子<=0 且分母<0，则指标=-1*公式；<br> 若分子<=0且分母>=0，则指标=“分子” ；"
+			        }
+				},
+			    {name:'kiNumerator',title:"分子",type:"textArea",required:true},
+			    {name:'kiDenominator',title:"分母",type:"textArea",required:true}
+		]
+}
+
+//指标数据源
+isc.FwRestDataSource.create({
+	ID: 'financialKiLibDS',
+	autoFetchData:false,
+    fields:FinancialKiLibFields.dataSourceGrid,
+    dataURL: '[(@{/reportTemplate/financialKiLib/isc})]'
+});
+
+//指标列表
+isc.FwListGrid.create({
+	ID: 'financialKiLibGrid',
+	title: '<b>指标列表</b>',
+	dataSource: financialKiLibDS,
+	canPageable:true,
+	fields:FinancialKiLibFields.grid,
+	queryForm: {
+	    fields:FinancialKiLibFields.query
+	},
+	editWindow: {
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	width:700,
+            dataSource: financialKiLibDS,
+            fields: FinancialKiLibFields.edit
+        },
+        actionMembers:[
+            		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove',
+		{
+			title:"测试计算",
+			click:function(){
+				//执行上一步模型计算
+				isc.FwRPCManager.post({
+			       	url:"[(@{/reportTemplate/financialKiLib/testLib})]",
+			        callback: function(response,rawData,request){
+			        	isc.say("已测试！");
+			        }
+		    	});
+			}
+		},
+		{
+			title:"测试模型",
+			click:function(){
+				//执行上一步模型计算
+				isc.FwRPCManager.post({
+			       	url:"[(@{/reportTemplate/financialKiLib/testModels})]",
+			        callback: function(response,rawData,request){
+			        	isc.say("测试模型引擎！");
+			        }
+		    	});
+			}
+		}
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+    }
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				financialKiLibGrid
+			]
+		})
+	}
+});
+</script>
+</html>

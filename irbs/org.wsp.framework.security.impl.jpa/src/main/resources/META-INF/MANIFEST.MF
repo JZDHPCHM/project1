@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Implementation-Vendor: org.wsp
+Implementation-Title: org.wsp.framework.security.impl.jpa
+Implementation-Version: 1.0.0

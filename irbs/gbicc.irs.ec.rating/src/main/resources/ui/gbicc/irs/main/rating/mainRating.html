@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+
+<head>
+</head>
+<body>
+</body>
+<script type="text/javascript"
+	th:src="@{/webjars/jquery/1.12.4/js/jquery.js}"></script>
+<script>
+//当前登录人
+var currUserName = "[(${T(org.wsp.framework.security.util.SecurityUtil).getUserName()})]";
+//当前登录人账号
+var userAccout = "[(${T(org.wsp.framework.security.util.SecurityUtil).getLoginName()})]";
+//当前登录人默认角色
+var defaultRole = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+
+
+
+
+
+
+var isShow=false;
+var roleCode = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+if(roleCode=="FINANCIAL_MARKETS_OPERATOR"){
+	isShow = true;
+}
+
+
+
+isc.ViewLoader.create({
+	ID : "rateWindowLoader",
+	autoDraw : false,
+	loadingMessage : "",
+	redrawOnStateChange : true,
+	overflow : 'auto'
+});
+//自定义窗口，用于保存评级当前步骤以及是否可编辑
+isc.defineClass("RatingWindow", "Window").addProperties({
+	step : new Object,			//当前步骤对象
+	RatingObject : new Object,	//评级对象
+	qualStepId : "",			//定性步骤ID
+	quanStepId : "",			//定量步骤ID
+	editable : false,
+	editable1_3 : false,
+	leftBtnDis : false,
+	stepUri : "",
+	trialObject : new Object, 	// 试算对象
+	headOfficeShow:true,		// 总行定量、定性信息展示
+	riskShow:true,					// 风险定量和定性展示
+	levelFlag:true,					// 审批页面能否操作
+	ProjectLoanRating : new Object,			// 关联评级（S3模型）
+	isProjectLoan : false
+	
+});
+
+isc.RatingWindow.create({
+	ID : "rateWindow",
+	title : "",
+	width : "100%",
+	height : "100%",
+	autoCenter : true,
+	isModal : true,
+	visiable : false,
+	showModalMask : true,
+	autoDraw : false,
+	headerControls : ["headerLabel", "closeButton"],
+	changePage : function(url) {
+		rateWindowLoader.setViewURL(url);
+	},
+	items : [rateWindowLoader],
+	closeClick : function() {
+		isStart = false;
+		noFinStepId = ""; 	// 定性步骤id
+		finStepId = ""; 	// 定量步骤id
+		rateWindow.hide();
+		//刷新评级列表数据
+		//companyRatingListGrid.invalidateCache();
+	}
+});
+
+
+
+
+
+
+
+
+//创建操作按钮 方法
+var fdModelName="";
+var fdSystemEvaluationGrade="";
+function createOperationButton(record, colNum){
+	var fieldName = companyRatingListGrid.getFieldName(colNum); 
+	  fdModelName =  record.fdModelname;
+      fdSystemEvaluationGrade =  record.fdSystemEvaluationGrade;
+    if (fieldName == "operationField") {
+        var recordCanvas = isc.HLayout.create({
+            height: 22,
+            width: "100%",
+            align: "left"
+        });
+        
+        var editImg = isc.IButton.create({
+			name:"editImg",            	
+            title: "评级信息",
+            width:100,
+            grid: this,
+            click : function () {
+            	rateWindow.levelFlag = true;
+            	isc.FwRPCManager.get({ 
+        	       	url:"[(@{/irs/mainRating/getRatingById})]",
+        	       	urlParameters:{ratingId:record.id},
+        	        callback: function(response,rawData,request){
+        	        	rateWindow.show();
+        	        	//展示评级步骤页面
+        	        	rateWindow.editable=true;
+        	        	//rateWindow.userAccoutAndRole=userAccoutAndRole;
+        				rateWindow.RatingObject = rawData;//评级对象
+        				rateWindow.RatingObject.taskId=record.taskId;
+        				//rateWindow.setTitle("客户评级 ："+rawData.custName+" 模型为 ："+ModelList[rawData.modelCode]);
+        				rateWindow.editable=true;		//设置可修改
+        				rateWindow.leftBtnDis= false;	//左侧按钮可用
+        				rateWindow.changePage("[[@{/main/js/rating_Frame.js}]]"); 
+        				companyRatingListGrid.invalidateCache();
+        	        }
+            	});
+            }
+        }); 
+        recordCanvas.addMember(editImg);
+        	
+        return recordCanvas;  
+    }else {  
+        return null;  
+    }  
+}
+
+
+
+//字段定义
+var CompanyRatingFields ={
+	query: [
+			{width:'*',		name:'fdCustid',							title:'客户编号'},
+			{width:'*',		name:'fdCustname',							title:'客户名称'},
+			{width:'*',		name:'fdModelname',							title:'模型名称',type: 'select',allowEmptyValue:true,autoFetchData:false}
+	],
+	grid: [
+			{minWidth:100,		name:'id',		title:'客户编号'},
+			{minWidth:100,	name:'custCode',		title:'客户编号'},
+			{minWidth:100,	name:'custName',		title:'客户名称'},
+			{minWidth:100,	name:'type',		title:'评级类型'},
+			{minWidth:100,	name:'pd',		title:'违约概率'},
+			{minWidth:100,	name:'internCode',		title:'初评人编码'},
+			{minWidth:100,	name:'internName',		title:'初评人名称'},
+			{minWidth:100,	name:'internDate',		title:'初评时间'},
+			{minWidth:100,	name:'internLevel',		title:'初评等级'},
+			{minWidth:100,	name:'finalCode',		title:'复核人编码'},
+			{minWidth:100,	name:'finalName',		title:'复核人名称'},
+			{minWidth:100,	name:'finalLevel',		title:'复核等级'},
+			{minWidth:100,	name:'finalAdvice',		title:'复核人建议'},
+			{minWidth:100,	name:'finalDate',		title:'复核时间'},
+			{minWidth:100,	name:'ratingStatus',		title:'评级状态'},
+			//{minWidth:100,	name:'currentStepId',		title:'评级步骤'},
+			{minWidth:100,	name:'vaild',		title:'生效状态'},
+			{minWidth:100,	name:'creator',		title:'创建人'},
+			{minWidth:100,	name:'createDate',		title:'创建时间'},
+			{minWidth:100,	name:'lastModifier',		title:'最后修改人'},
+			{minWidth:100,	name:'lastModifydate',		title:'最后修改时间'},
+			{width:400,	name:'operationField',	title:'操作',canSort:false}
+	]
+};
+
+//客户评级列表数据源
+isc.FwRestDataSource.create({
+	ID: 'companyRatingDS',
+    fields: CompanyRatingFields.grid,
+    dataURL: '[[@{/irs/mainRating/isc}]]'
+});
+
+//客户评级列表
+isc.FwListGrid.create({
+	ID: 'companyRatingListGrid',
+	title: '<b>主体评级</b>',
+	dataSource: companyRatingDS,
+	//sortField: '',
+	cellHeight: 30,
+	canSort:true,
+	showRecordComponents: true,
+    showRecordComponentsByCell: true,
+    recordComponentPoolingMode: "recycle",
+	fields: CompanyRatingFields.grid,
+	actionMembers:[
+		'query','reset','refresh',{
+			type: 'menu',
+			group: 'exportGroup',
+			menus:['export2Excel' ,'exportAll2Excel' ]
+		}
+	],
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: CompanyRatingFields.query
+	},
+	createRecordComponent : function (record, colNum) {  
+		return createOperationButton(record, colNum);
+    },
+    updateRecordComponent: function (record, colNum, component, recordChanged) {
+    	return createOperationButton(record, colNum);
+    },
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		var status=isShow==true?'enable':'disable';
+    },
+	rowDoubleClick: function(record, recordNum,fieldNum){
+	}
+});
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				companyRatingListGrid
+			]
+		})
+	}
+});
+
+
+
+</script>
+</html>

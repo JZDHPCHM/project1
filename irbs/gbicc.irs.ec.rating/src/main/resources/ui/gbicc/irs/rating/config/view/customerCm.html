@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+// CM类型
+var cmListType = [(${@frSystemDictionaryService.getDictionaryMapJsonString('CM_TYPE',#locale)})];
+var levelList = [(${@frSystemDictionaryService.getDictionaryMapJsonString('CREDIT_RATING_TYPE',#locale)})];
+//字段定义
+var customerCmFields ={
+		query: [
+			{
+				width:200,		
+				name:'type',		
+				title:'类型',
+				//require:true,
+				type: 'select',
+				valueMap:cmListType,
+				allowEmptyValue:true,
+				autoFetchData:false,	
+				operator:'equals'}
+		],
+		grid: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{width:'*',name:'type',				title:'类型',type: 'select',valueMap:cmListType},
+			    {width:'*',name:'creditLevel',		title:'信用等级'},
+				{width:'*',name:'riskCoefficient',	title:'风险系数'},
+				{width:'*',name:'interbankRatio',	title:'目标授信额度同业占比'}
+		],
+		edit: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{width:200,name:'type',				title:'类型',required:true,type: 'select',valueMap:cmListType},
+				{width:200,name:'creditLevel',		title:'信用等级',required:true,type: 'select',valueMap:levelList},
+			    {width:200,name:'riskCoefficient',	title:'债务结构值',required:true},
+				{width:200,name:'interbankRatio',	title:'目标授信额度同业占比',required:true}
+		]
+};
+
+// 杠杆系数行业平均值数据源
+isc.FwRestDataSource.create({
+	 ID: 'customerCmDS',
+ 	 fields: customerCmFields.grid,
+ 	 dataURL: '[(@{/irs/customerCm/isc})]'
+});
+
+
+isc.FwListGrid.create({
+	ID: 'customerCmId',
+	title: '<b>客户CM配置列表</b>',
+	dataSource: customerCmDS,
+	//sortField: 'industryNo',
+	canHover:true,
+	fields: customerCmFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: customerCmFields.query
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+      form: {
+      	numCols:4,
+      	titleWidth:150,
+      	colWidths: [190, "*"],
+          dataSource: customerCmDS,
+          fields: customerCmFields.edit
+      },
+      afterShow: function(action){
+     	
+      },
+      actionMembers:[
+             		'ok','close'
+      ]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+  },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				customerCmId
+			]
+		})
+	}
+});
+
+</script>
+</html>

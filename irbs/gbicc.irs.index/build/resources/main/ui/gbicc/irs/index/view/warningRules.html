@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>预警规则配置管理</title>
+<style type="text/css">
+	.form-group {
+	    margin-bottom: 10px;
+	}
+	.ibox-content{
+		padding: 10px;
+	}
+	.modal-lg {
+	    width: 600px;
+	}
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+	                <div class="col-lg-12">
+	            		<form class="form-horizontal">
+							<div class="form-group">
+								<label class="col-sm-1 control-label">规则编号</label>
+								<div class="col-sm-2">
+									<input type="text" placeholder="" class="form-control">
+								</div>
+								<label class="col-sm-1 control-label">规则名称</label>
+								<div class="col-sm-2">
+									<input type="text" placeholder="" class="form-control">
+								</div>
+								<div class="col-sm-2">
+									<b id="btn-query" class="btn btn-success"><i class="fa"></i>查询</b>
+									<b id="btn-reset" class="btn btn-danger"><i class="fa"></i>重置</b>
+								</div>
+							</div>
+						</form>
+						<div>租后规则列表</div>
+						<div style="padding: 10px 0 15px;">
+							<button class="btn btn-default">修改</button>
+							<button class="btn btn-default">删除</button>
+							<button class="btn btn-default">修改状态</button>
+						</div>
+						<div class="jqGrid_wrapper">
+                            <table id="table_list_1"></table>
+                            <div id="pager_list_1"></div>
+                        </div>    	    
+	                </div>
+		        </div>
+		        <div class="row" style="padding-top: 15px;">
+	                <div class="col-lg-12">
+	                	<form class="form-horizontal">
+							<div class="form-group">
+								<label class="col-sm-1 control-label">参数名称</label>
+								<div class="col-sm-2">
+									<input type="text" placeholder="" class="form-control">
+								</div>
+								<label class="col-sm-1 control-label">值类型</label>
+								<div class="col-sm-2">
+									<input type="text" placeholder="" class="form-control">
+								</div>
+								<label class="col-sm-1 control-label">默认值</label>
+								<div class="col-sm-2">
+									<input type="text" placeholder="" class="form-control">
+								</div>
+							</div>
+						</form>
+						<div>租后规则参数列表</div>
+						<div style="padding: 10px 0 15px;">
+							<button class="btn btn-default">修改</button>
+						</div>
+						<div class="jqGrid_wrapper">
+                            <table id="table_list_2"></table>
+                            <div id="pager_list_2"></div>
+                        </div>    	    
+	                </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$('.chosen-select').chosen({width: "100%"});
+	$(document).ready(function(){
+		//
+		$("#table_list_1").jqGrid({
+			url : "",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        datatype: "json",
+	        height: 280,
+	        autowidth: true,
+	        shrinkToFit: true,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['规则编号','规则名称','规则大类','规则小类','适用关联人', '预警等级', '规则跑批频率', '触发机制描述','是否生效','最后修改人','修改日期'],
+	        colModel:[
+	            {name:'reportName',index:'reportName', editable: true},
+	            {name:'companyType',index:'companyType', editable: true},
+	            {name:'uploadTime',index:'uploadTime', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadHeir',index:'uploadHeir', editable: true}
+	        ],
+	        pager: "#pager_list_1",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "data",
+	        	records: "recordsTotal",
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		$("#table_list_1").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+		// Setup buttons
+        $("#table_list_1").jqGrid('navGrid', '#pager_list_1',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+		//
+        $("#table_list_2").jqGrid({
+			url : "",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        datatype: "json",
+	        height: 280,
+	        autowidth: true,
+	        shrinkToFit: true,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['参数代码','参数名称','参数类型','值类型','默认值'],
+	        colModel:[
+	            {name:'reportName',index:'reportName', editable: true},
+	            {name:'companyType',index:'companyType', editable: true},
+	            {name:'uploadTime',index:'uploadTime', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadHeir',index:'uploadHeir', editable: true}
+	        ],
+	        pager: "#pager_list_2",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "data",
+	        	records: "recordsTotal",
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		$("#table_list_2").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+		// Setup buttons
+        $("#table_list_2").jqGrid('navGrid', '#pager_list_2',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+
+        // Add responsive to jqGrid
+        $(window).bind('resize', function () {
+            var width = $('.jqGrid_wrapper').width();
+            $('#table_list_1').setGridWidth(width);
+            $('#table_list_2').setGridWidth(width);
+        });
+	});
+</script>
+</html>

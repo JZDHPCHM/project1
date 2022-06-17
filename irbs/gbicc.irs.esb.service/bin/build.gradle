@@ -1,0 +1,18 @@
+group='org.wsp'
+
+dependencies {
+    compile(
+    	project(":gbicc.irs.ec.rating"),
+    	project(":gbicc.irs.debtRating"),
+    	//project(":gbicc.irs.ec.assetsRating"),
+    	project(":gbicc.irs.warning"),
+    	project(":gbicc.irs.reportTemplate"),
+        "org.wsp:org.wsp.framework.core:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa:${framework_version}",
+        "org.wsp:org.wsp.framework.mvc:${framework_version}",
+        "com.hkb.esb:com.hkb.esb.client:3.0",
+		"com.hkb.esb:com.hkb.esb.fileclient:3.0",
+		"com.hkb.esb:com.hkb.esb.framework:3.0",
+	)
+}
+

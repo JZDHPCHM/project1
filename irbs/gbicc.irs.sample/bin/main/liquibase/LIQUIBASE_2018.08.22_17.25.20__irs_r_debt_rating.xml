@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- LIQUIBASE_2018.08.22_17.25.20__irs_r_debt_rating.xml -->
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="now" value="CURRENT TIMESTAMP"      dbms="db2"/>
+    <property name="now" value="CURRENT_TIMESTAMP"      dbms="h2"/>
+    <property name="now" value="sysdate"                dbms="oracle"/>
+    <property name="now" value="now()"                  dbms="mysql"/>
+    <property name="now" value="now()"                  dbms="postgresql"/>
+
+  <changeSet id="FR_2018.08.22_17.25.20__irs_r_debt_rating.xml" author="framework">
+    <customChange class="org.wsp.framework.jdbc.data.importer.FrameworkDataImporterTaskChange">
+      <param name="dataFileLocation" value="classpath:/liquibase/FR_2018.08.22_17.25.20__irs_r_debt_rating.xml"/>
+    </customChange>
+  </changeSet>
+</databaseChangeLog>

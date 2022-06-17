@@ -1,0 +1,9 @@
+[
+    {
+        "category" : "install",
+        "order"    : 12500,
+        "description":"违约客户管理数据库表创建并初始化违约事件定义",
+        "locations":[
+        ]
+    }
+]

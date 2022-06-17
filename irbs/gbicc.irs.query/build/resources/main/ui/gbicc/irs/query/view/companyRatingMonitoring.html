@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+<meta charset="UTF-8">
+<title th:text="#{application.title}"></title>
+</head>
+<body>
+
+</body>
+<script>
+
+var RatingMonitFields ={ 
+	ds:[
+		{name:'id',primaryKey:true},
+    	{name:'custNo'},
+		{name:'custName'},
+		{name:'launchName'},
+		{name:'launchNum'},
+		{name:'launchDate'}
+	],
+	query:[
+		{width:'*',			name:'startDt',	title:'发起时间从',	type:'date',startDate:'1700/1/1',	useTextField:true},
+		{width:'*',			name:'endDt',	title:'到',		type:'date',startDate:'1700/1/1',	useTextField:true}
+	],
+	grid:[
+		{width:'*',name:'custNo',title:'客户编号',primaryKey:true,},
+		{width:'*',name:'custName',title:'客户名称'},
+		{width:'*',name:'launchName',title:'发起人',primaryKey:true,},
+		{width:'*',name:'launchNum',title:'发起次数'}
+	]
+}
+
+isc.FwRestDataSource.create({
+	ID: 'RatingMonitDS',
+	width:500, height:224,
+    fields: RatingMonitFields.ds,
+    fetchDataURL: '[(@{/irs/companyRatingQuery/customerRatingMonitoringlist})]'
+});
+
+isc.FwListGrid.create({
+	ID: 'RatingMonitList',
+	title: '<b>公司评级监控列表</b>',
+	dataSource: RatingMonitDS,
+	autoFetchData:false,
+	canPageable:false,
+    loadDataOnDemand:true,
+	fields: RatingMonitFields.grid,
+	sortField:'codeNo',
+	canSort:true,
+	queryForm: {
+	    colWidths:['15%','20%','3%','20%'],
+	    fields: RatingMonitFields.query
+	},
+	actionMembers:[
+		'refresh','query','reset'
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane:RatingMonitList
+	}
+});
+
+</script>
+</html>

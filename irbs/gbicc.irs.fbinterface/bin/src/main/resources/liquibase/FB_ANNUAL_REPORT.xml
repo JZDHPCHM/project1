@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_ANNUAL_REPORT" author="framework">
+
+        <!-- 年报结果表 -->
+        <createTable tableName="FB_ANNUAL_REPORT" remarks="年报">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="PUBLIC_DATE" type="java.sql.Types.VARCHAR(100)" remarks="发布日期"></column>
+            <column name="REPORT_DATE" type="java.sql.Types.VARCHAR(20)" remarks="报送年度"></column>
+            <column name="REGISTE_NUMBER" type="java.sql.Types.VARCHAR(36)" remarks="注册号"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+
+        <!-- 修改记录 -->
+        <createTable tableName="FB_ANNUAL_REPORT_MODIFY_LOG" remarks="修改记录">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ANNUAL_REPORT_ID" type="java.sql.Types.VARCHAR(36)" remarks="年报ID"></column>
+            <column name="MODIFY_DETAIL" type="java.sql.Types.VARCHAR(2000)" remarks="修改事项"></column>
+            <column name="MODIFY_BEFORE" type="java.sql.Types.VARCHAR(2000)" remarks="修改前"></column>
+            <column name="MODIFY_AFTER" type="java.sql.Types.VARCHAR(2000)" remarks="修改后"></column>
+            <column name="MODIFY_DATE" type="java.sql.Types.VARCHAR(20)" remarks="修改日期"></column>
+            <column name="SERIAL_NUMBER" type="java.sql.Types.VARCHAR(36)" remarks="序号"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 分支机构登记信息 -->
+        <createTable tableName="FB_ANNUAL_REPORT_ORG_INFO" remarks="分支机构登记信息">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ANNUAL_REPORT_ID" type="java.sql.Types.VARCHAR(36)" remarks="年报ID"></column>
+            <column name="ADDRESS" type="java.sql.Types.VARCHAR(300)" remarks="住所"></column>
+            <column name="ORG_NAME" type="java.sql.Types.VARCHAR(100)" remarks="分支机构名称"></column>
+            <column name="REGISTE_NUMBER" type="java.sql.Types.VARCHAR(36)" remarks="注册号"></column>
+            <column name="RESPONSE_PERSON" type="java.sql.Types.VARCHAR(36)" remarks="负责人"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 基本信息 -->
+        <createTable tableName="FB_ANNUAL_REPORT_BASE_INFO" remarks="基本信息">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ANNUAL_REPORT_ID" type="java.sql.Types.VARCHAR(36)" remarks="年报ID"></column>
+            <column name="EMPLOYEE_NUMBER" type="java.sql.Types.VARCHAR(36)" remarks="从业人数"></column>
+            <column name="MAIN_ACTIVITIES" type="java.sql.Types.VARCHAR(300)" remarks="企业主营业务活动"></column>
+            <column name="ENTERPRISE_NAME" type="java.sql.Types.VARCHAR(100)" remarks="企业名称"></column>
+            <column name="ENTERPRISE_HOLDING" type="java.sql.Types.VARCHAR(36)" remarks="企业控股情况"></column>
+            <column name="ENTERPRISE_EMAIL" type="java.sql.Types.VARCHAR(100)" remarks="企业电子邮箱"></column>
+            <column name="ENTERPRISE_OPERATE_STATUS" type="java.sql.Types.VARCHAR(36)" remarks="企业经营状态"></column>
+            <column name="ENTERPRISE_TELEPHONE" type="java.sql.Types.VARCHAR(200)" remarks="企业联系电话"></column>
+            <column name="ENTERPRISE_ADDRESS" type="java.sql.Types.VARCHAR(500)" remarks="企业通信地址"></column>
+            <column name="EMPLOYEE_FEMIAL_NUMBER" type="java.sql.Types.VARCHAR(36)" remarks="其中女性从业人数"></column>
+            <column name="EXTERNAL_GUARANTEE" type="java.sql.Types.VARCHAR(10)" remarks="是否有对外提供担保信息"></column>
+            <column name="INVESTMENT" type="java.sql.Types.VARCHAR(10)" remarks="是否有投资信息或购买其他公司股权"></column>
+            <column name="WEBSITE" type="java.sql.Types.VARCHAR(10)" remarks="是否有网站或网店"></column>
+            <column name="EQUITY_TRANSFER" type="java.sql.Types.VARCHAR(10)" remarks="有限责任公司本年度是否发生股东股权转让"></column>
+            <column name="ZIP_CODE" type="java.sql.Types.VARCHAR(10)" remarks="邮政编码"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 对外投资信息 -->
+        <createTable tableName="FB_ANNUAL_REPORT_INVESTMENT" remarks="对外投资信息">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ANNUAL_REPORT_ID" type="java.sql.Types.VARCHAR(36)" remarks="年报ID"></column>
+            <column name="ENTERPRISE_NAME" type="java.sql.Types.VARCHAR(100)" remarks="投资设立企业或购买股权企业名称"></column>
+            <column name="ENTERPRISE_CODE" type="java.sql.Types.VARCHAR(100)" remarks="注册号/统一社会信用代码"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 对外提供保证担保 -->
+        <createTable tableName="FB_ANNUAL_REPORT_GUARANTEE" remarks="对外提供保证担保">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ANNUAL_REPORT_ID" type="java.sql.Types.VARCHAR(36)" remarks="年报ID"></column>
+            <column name="PRINCIPAL_CLAIM_AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="主债权数额"></column>
+            <column name="PRINCIPAL_CLAIM_TYPE" type="java.sql.Types.VARCHAR(30)" remarks="主债权种类"></column>
+            <column name="GUARANTEE_TYPE" type="java.sql.Types.VARCHAR(30)" remarks="保证的方式"></column>
+            <column name="GUARANTEE_DUR_PERIOD" type="java.sql.Types.VARCHAR(50)" remarks="保证的期间"></column>
+            <column name="DEBTOR" type="java.sql.Types.VARCHAR(100)" remarks="债务人"></column>
+            <column name="CREDITORS" type="java.sql.Types.VARCHAR(100)" remarks="债权人"></column>
+            <column name="PERFORMANCE_LIMIT" type="java.sql.Types.VARCHAR(50)" remarks="履行债务的期限"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 社保信息 -->
+        <createTable tableName="FB_ANNUAL_REPORT_SOCIAL_INSUR" remarks="社保信息">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ANNUAL_REPORT_ID" type="java.sql.Types.VARCHAR(36)" remarks="年报ID"></column>
+            <column name="ENDOWMENT_UNPAID_AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="单位参加城镇职工基本养老保险累计欠缴金额"></column>
+            <column name="ENDOWMENT_EXPENDS_BASE" type="java.sql.Types.VARCHAR(36)" remarks="单位参加城镇职工基本养老保险缴费基数"></column>
+            <column name="UNEMPLOY_UNPAID_AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="单位参加失业保险累计欠缴金额"></column>
+            <column name="UNEMPLOY_EXPENDS_BASE" type="java.sql.Types.VARCHAR(36)" remarks="单位参加失业保险缴费基数"></column>
+            <column name="INJURY_UNPAID_AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="单位参加工伤保险累计欠缴金额"></column>
+            <column name="INJURY_EXPENDS_BASE" type="java.sql.Types.VARCHAR(36)" remarks="单位参加工伤保险缴费基数"></column>
+            <column name="BIRTH_UNPAID_AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="单位参加生育保险累计欠缴金额"></column>
+            <column name="BIRTH_EXPENDS_BASE" type="java.sql.Types.VARCHAR(36)" remarks="单位参加生育保险缴费基数"></column>
+            <column name="MEDICAL_UNPAID_AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="单位参加职工基本医疗保险累计欠缴金额"></column>
+            <column name="MEDICAL_EXPENDS_BASE" type="java.sql.Types.VARCHAR(36)" remarks="单位参加职工基本医疗保险缴费基数"></column>
+            <column name="ENDOWMENT_PAYED_BASE" type="java.sql.Types.VARCHAR(36)" remarks="参加城镇职工基本养老保险本期实际缴费基数"></column>
+            <column name="UNEMPLOY_PAYED_BASE" type="java.sql.Types.VARCHAR(36)" remarks="参加失业保险本期实际缴费基数"></column>
+            <column name="INJURY_PAYED_BASE" type="java.sql.Types.VARCHAR(36)" remarks="参加工伤保险本期实际缴费基数"></column>
+            <column name="BIRTH_PAYED_BASE" type="java.sql.Types.VARCHAR(36)" remarks="参加生育保险本期实际缴费基数"></column>
+            <column name="MEDICAL_PAYED_BASE" type="java.sql.Types.VARCHAR(36)" remarks="参加职工基本医疗保险本期实际缴费基数"></column>
+            <column name="ENDOWMENT_INSURANCE" type="java.sql.Types.VARCHAR(36)" remarks="城镇职工基本养老保险"></column>
+            <column name="UNEMPLOY_INSURANCE" type="java.sql.Types.VARCHAR(36)" remarks="失业保险"></column>
+            <column name="INJURY_INSURANCE" type="java.sql.Types.VARCHAR(36)" remarks="工伤保险"></column>
+            <column name="BIRTH_INSURANCE" type="java.sql.Types.VARCHAR(36)" remarks="生育保险"></column>
+            <column name="MEDICAL_INSURANCE" type="java.sql.Types.VARCHAR(36)" remarks="职工基本医疗保险"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 章程信息 -->
+        <createTable tableName="FB_ANNUAL_REPORT_BYLAWS" remarks="章程信息">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ANNUAL_REPORT_ID" type="java.sql.Types.VARCHAR(36)" remarks="年报ID"></column>
+            <column name="NO_CONSITENT_DETAIL" type="java.sql.Types.VARCHAR(300)" remarks="不一致内容"></column>
+            <column name="CONSITENT" type="java.sql.Types.VARCHAR(10)" remarks="是否一致"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 经营范围 -->
+        <createTable tableName="FB_ANNUAL_REPORT_OPERATE_SCOPE" remarks="经营范围">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ANNUAL_REPORT_ID" type="java.sql.Types.VARCHAR(36)" remarks="年报ID"></column>
+            <column name="GENERAL_OPERATE_ITEMS" type="java.sql.Types.VARCHAR(2000)" remarks="一般经营项目"></column>
+            <column name="LICENSE_OPERATE_ITEMS" type="java.sql.Types.VARCHAR(1000)" remarks="许可经营项目"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 网站信息 -->
+        <createTable tableName="FB_ANNUAL_REPORT_WEBSITE" remarks="网站信息">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ANNUAL_REPORT_ID" type="java.sql.Types.VARCHAR(36)" remarks="年报ID"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="名称"></column>
+            <column name="TYPE" type="java.sql.Types.VARCHAR(30)" remarks="类型"></column>
+            <column name="URL" type="java.sql.Types.VARCHAR(500)" remarks="网址"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 股东及出资信息 -->
+        <createTable tableName="FB_ANNUAL_REPORT_SHAREHOLDER" remarks="股东及出资信息">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ANNUAL_REPORT_ID" type="java.sql.Types.VARCHAR(36)" remarks="年报ID"></column>
+            <column name="PAID_TYPE" type="java.sql.Types.VARCHAR(200)" remarks="实缴出资方式"></column>
+            <column name="PAID_TIME" type="java.sql.Types.VARCHAR(20)" remarks="实缴出资时间"></column>
+            <column name="PAID_AMOUNT" type="NUMBER(24,4)" remarks="实缴出资额（万元）"></column>
+            <column name="SERIAL_NUMBER" type="java.sql.Types.VARCHAR(36)" remarks="序号"></column>
+            <column name="SHAREHOLDER" type="java.sql.Types.VARCHAR(100)" remarks="股东"></column>
+            <column name="SUBSCRIBED_TYPE" type="java.sql.Types.VARCHAR(200)" remarks="认缴出资方式"></column>
+            <column name="SUBSCRIBED_TIME" type="java.sql.Types.VARCHAR(20)" remarks="认缴出资时间"></column>
+            <column name="SUBSCRIBED_AMOUNT" type="NUMBER(24,4)" remarks="认缴出资额（万元）"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 股权变更 -->
+        <createTable tableName="FB_ANNUAL_REPORT_EQUITY_CHANGE" remarks="股权变更">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ANNUAL_REPORT_ID" type="java.sql.Types.VARCHAR(36)" remarks="年报ID"></column>
+            <column name="EQUITY_CHANGE_BEFORE" type="java.sql.Types.VARCHAR(20)" remarks="变更前股权比例"></column>
+            <column name="EQUITY_CHANGE_AFTER" type="java.sql.Types.VARCHAR(20)" remarks="变更后股权比例"></column>
+            <column name="SERIAL_NUMBER" type="java.sql.Types.VARCHAR(36)" remarks="序号"></column>
+            <column name="SHAREHOLDER" type="java.sql.Types.VARCHAR(100)" remarks="股东"></column>
+            <column name="CHANGE_DATE" type="java.sql.Types.VARCHAR(20)" remarks="股权变更日期"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 资产状况信息 -->
+        <createTable tableName="FB_ANNUAL_REPORT_ASSETS" remarks="资产状况信息">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ANNUAL_REPORT_ID" type="java.sql.Types.VARCHAR(36)" remarks="年报ID"></column>
+            <column name="NET_PROFIT" type="java.sql.Types.VARCHAR(36)" remarks="净利润"></column>
+            <column name="PROFI_TOTAL" type="java.sql.Types.VARCHAR(36)" remarks="利润总额"></column>
+            <column name="TOTAL_OWNER_EQUITY" type="java.sql.Types.VARCHAR(36)" remarks="所有者权益合计"></column>
+            <column name="TOTAL_TAX_AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="纳税总额"></column>
+            <column name="TOTAL_OPERATE_INCOME" type="java.sql.Types.VARCHAR(36)" remarks="营业总收入"></column>
+            <column name="MAIN_OPERATE_INCOME" type="java.sql.Types.VARCHAR(36)" remarks="营业总收入中主营业务收入"></column>
+            <column name="TOTAL_LIABILITY_AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="负债总额"></column>
+            <column name="TOTAL_ASSETS" type="java.sql.Types.VARCHAR(36)" remarks="资产总额"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+</head>
+<body>
+</body>
+<script>
+    var newData=[];
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQuery,
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{
+				name:'guestGr',					
+				title:'客户评级',
+				getGridSummary:function (records, summaryField) {
+					return "平均收益率";
+	            }
+			},//客户评级
+		    {name:'monthRate1',			title:'本月',summaryFunction:function() {return formatPer(sumData['monthRate1']);}},//房地产业 	 本月
+			{name:'compareMonth1',			title:'较上月变<br>动',summaryFunction:function() {return formatPer(sumData['compareMonth1']);}},//房地产业	较上月变<br>动
+		    {name:'compareYear1',			title:'较上年同<br>期变动',summaryFunction:function() {return formatPer(sumData['compareYear1']);}},//房地产业	较上年同期变动
+		    {name:'monthRate2',			title:'本月',summaryFunction:function() {return formatPer(sumData['monthRate2']);}},//建筑业	 本月
+			{name:'compareMonth2',			title:'较上月变<br>动',summaryFunction:function() {return formatPer(sumData['compareMonth2']);}},//建筑业	较上月变<br>动
+		    {name:'compareYear2',			title:'较上年同<br>期变动',summaryFunction:function() {return formatPer(sumData['compareYear2']);}},//建筑业	较上年同期变动
+		    {name:'monthRate3',			title:'本月',summaryFunction:function() {return formatPer(sumData['monthRate3']);}},//批发零售业 	 本月
+			{name:'compareMonth3',			title:'较上月变<br>动',summaryFunction:function() {return formatPer(sumData['compareMonth3']);}},//批发零售业	较上月变<br>动
+		    {name:'compareYear3',			title:'较上年同<br>期变动',summaryFunction:function() {return formatPer(sumData['compareYear3']);}},//批发零售业	较上年同期变动
+		    {name:'monthRate4',			title:'本月',summaryFunction:function() {return formatPer(sumData['monthRate4']);}},//制造业	 本月
+			{name:'compareMonth4',			title:'较上月变<br>动',summaryFunction:function() {return formatPer(sumData['compareMonth4']);}},//制造业	较上月变<br>动
+		    {name:'compareYear4',			title:'较上年同<br>期变动',summaryFunction:function() {return formatPer(sumData['compareYear4']);}},//制造业	较上年同期变动
+		    {name:'monthRate5',			title:'本月',summaryFunction:function() {return formatPer(sumData['monthRate5']);}},//租赁、商务服务业	 本月
+			{name:'compareMonth5',			title:'较上月变<br>动',summaryFunction:function() {return formatPer(sumData['compareMonth5']);}},//租赁、商务服务业	较上月变<br>动
+		    {name:'compareYear5',			title:'较上年同<br>期变动',summaryFunction:function() {return formatPer(sumData['compareYear5']);}},//租赁、商务服务业	较上年同期变动
+	]
+};
+
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields: BorrowKeyBussFields.grid,
+    fetchDataURL: '[[@{/irs/report_profitImportant/isc/fetchData}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>借款人评级与风险调整收益率分布——重点行业</b>',
+	dataSource: report_borrowKeyBussDS,
+	//sortField: 'guestGr',
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	canPageable: false,
+	fields: BorrowKeyBussFields.grid,
+	headerSpans: [
+        {
+            fields: ["monthRate1", "compareMonth1","compareYear1"], 
+            title: "房地产业 "
+        },
+        {
+            fields: ["monthRate2", "compareMonth2","compareYear2"], 
+            title: "建筑业 "
+        },
+        {
+            fields: ["monthRate3", "compareMonth3","compareYear3"], 
+            title: "批发零售业 "
+        },
+        {
+            fields: ["monthRate4", "compareMonth4","compareYear4"], 
+            title: "制造业"
+        },
+        {
+            fields: ["monthRate5", "compareMonth5","compareYear5"], 
+            title: "租赁、商务服务业"
+        }
+    ],
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	exportFilename:'整体借款人评级分布',
+	exportActionMembers:['export2Excel','exportAll2Excel'],
+	actionMembers:[
+		'query','reset',
+        {
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+                    url:"[(@{/irs/report_profitImportant/isc/fetchData/Results.csv})]",
+                    "year":year,"month":month,
+                    fileName:  "借款人评级与风险调整收益率分布——重点行业",
+                    sortBy: "guestGr"
+                });
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+	formatCellValue:function(value, record, rowNum, colNum){
+		var formatVal = value;
+		var fieldName = borrowKeyBussFieldsListGrid.getField(colNum).title;
+		if( fieldName != "客户评级"){
+			formatVal = formatPer(value);
+		}
+		return formatVal;
+	},
+    query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_profitImportant/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year,"month":month},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                sumData = [];
+                newData=[];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.guestGr==='平均收益率'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                borrowKeyBussFieldsListGrid.setData(newData);
+            }
+        });
+    },
+	afterQuery:function(dsResponse,data,dsRequest){
+		borrowKeyBussFieldsListGrid.setData(newData);
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+</script>
+</html>

@@ -1,0 +1,34 @@
+SELECT
+COUNT (DISTINCT ID) FROM AFMS_AFMSAAUDIT_HISTORY A
+WHERE 
+status IN ('T2','T3')
+AND UPDATETIME BETWEEN --更新时间在评估期
+       TO_CHAR(ADD_MONTHS(TO_DATE('20150630', 'yyyymmddhh24miss'), -12),
+               'yyyymmddhh24miss') AND
+       TO_CHAR(TO_DATE('20150630235959', 'yyyymmddhh24miss'),
+               'yyyymmddhh24miss')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

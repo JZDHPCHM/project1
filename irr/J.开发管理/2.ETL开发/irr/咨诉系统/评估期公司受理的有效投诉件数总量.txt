@@ -1,0 +1,7 @@
+SELECT chdrcoy,COUNT(1)
+  FROM COMPLAINTSRISKREPORT
+ WHERE TO_DATE(CLOSURE_TIME, 'YYYYMMDD') BETWEEN
+       ADD_MONTHS(TO_DATE('20180630', 'yyyymmdd') + 1, -3) AND
+       TO_DATE('20180630', 'yyyymmdd')
+   AND MAIN_STATUSNAME = '投诉件' --案件类型
+   group by chdrcoy

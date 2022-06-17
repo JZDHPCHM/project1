@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 自动扫描本文件，如果发生变化，则重新初始化日志系统，并设置每个5秒钟扫描一次 -->
+<configuration debug="false" scan="true" scanPeriod="5 seconds">
+	<!-- 
+		以下为 logback 的 spring 扩展支持的功能，即支持从 application.properties 文件中获取属性，并在此文件中采用 ${} 方式使用。
+		要使用此功能，必须使用 logback-ext-spring 扩展 jar 包，以 gradle 构建系统，则需要加入以下依赖
+		dependencies {
+			compile(
+				"org.logback-extensions:logback-ext-spring:0.1.2"
+			)
+		}
+	-->
+	<!-- <springProperty name="homedir" source="dir.home"/> -->
+	<property name="homedir" value="E:/workspace_wsp/hairr/application/net.gbicc.app"/>
+	<property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n"/>
+	
+	<!-- 在控制台中输出日志 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder><pattern>${pattern}</pattern></encoder>
+    </appender>
+
+	<!-- 在磁盘文件中输出日志 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<encoder><pattern>${pattern}</pattern></encoder>
+        <file>${homedir}/logs/log.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${homedir}/logs/log.%d.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+    </appender>
+    
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+    <!-- 
+    <logger name="org.wsp" level="info">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </logger>
+    -->
+</configuration>

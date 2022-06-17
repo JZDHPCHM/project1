@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+
+
+<body class="top-navigation">
+	<div id="wrapper">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="row wrapper border-bottom white-bg page-heading">
+				<div class="col-lg-10">
+					<ol class="breadcrumb">
+						<li><i class="fa fa-home"></i>&nbsp;首页&nbsp;&nbsp;</li>
+					</ol>
+				</div>
+			</div>
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-2">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<span class="label label-success pull-right">100</span>
+								<h5>管辖客户</h5>
+							</div>
+							<div class="ibox-content">
+								<h1 class="no-margins">3200万</h1>
+								<div class="stat-percent font-bold text-success">
+									98% <i class="glyphicon glyphicon-flash"></i>
+								</div>
+								<small>授信余额</small>
+
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<span class="label label-info pull-right"
+									style="background: #f8ac59;">40</span>
+								<h5>逾期客户</h5>
+							</div>
+							<div class="ibox-content">
+								<h1 class="no-margins">3600万</h1>
+								<div class="stat-percent font-bold text-info">
+									20% <i class="glyphicon glyphicon-export"></i>
+								</div>
+								<small>逾期金额</small>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<span class="label label-info pull-right">4</span>
+								<h5>不良客户</h5>
+							</div>
+							<div class="ibox-content">
+								<h1 class="no-margins">1600万</h1>
+								<div class="stat-percent font-bold text-info"
+									style="color: #d4716e;">
+									20% <i class="glyphicon glyphicon-export"></i>
+								</div>
+								<small>不良余额</small>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<span class="label label-primary pull-right">当前</span>
+								<h5>预警</h5>
+							</div>
+							<div class="ibox-content">
+
+								<div class="row">
+									<div class="col-md-6">
+										<h1 class="no-margins">20</h1>
+										<div class="font-bold text-navy">
+											<small>待办</small>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<h1 class="no-margins">20</h1>
+										<div class="font-bold text-navy">
+											<small>已办</small>
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<span class="label label-info pull-right">4</span>
+								<h5>不良客户</h5>
+							</div>
+							<div class="ibox-content">
+								<h1 class="no-margins">1600万</h1>
+								<div class="stat-percent font-bold text-info"
+									style="color: #d4716e;">
+									20% <i class="glyphicon glyphicon-export"></i>
+								</div>
+								<small>不良余额</small>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-2">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<span class="label label-primary pull-right">当前</span>
+								<h5>预警</h5>
+							</div>
+							<div class="ibox-content">
+
+								<div class="row">
+									<div class="col-md-6">
+										<h1 class="no-margins">20</h1>
+										<div class="font-bold text-navy">
+											<small>待办</small>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<h1 class="no-margins">20</h1>
+										<div class="font-bold text-navy">
+											<small>已办</small>
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-8">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>我的任务</h5>
+
+							</div>
+							<div class="ibox-content">
+								<div class="pull-right">
+									<div data-toggle="buttons" class="btn-group">
+										<label id="todo"  class="btn btn-sm btn-white active"> <input
+											type="radio" name="options"> 待办(5)
+										</label> <label id="done" class="btn btn-sm btn-white"> <input
+											type="radio"  name="options"> 已办
+										</label>
+									</div>
+								</div>
+								<div id="taskTable">
+								<table class="table" style="margin-bottom: 10px;">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>流程名称/任务名称</th>
+											<th>上一任务执行人</th>
+											<th>任务开始时间</th>
+											<th>任务截止时间</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody>
+									<tr>
+											<td colspan="6"><div class="pull-right">>>更多</div></td>
+										</tr>
+									</tbody>
+								</table>
+									</div>									
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>
+									<i class="glyphicon glyphicon-retweet"></i>常用功能
+								</h5>
+								<div class="ibox-tools delete">
+									<span class="glyphicon glyphicon-edit"></span>
+								</div>
+							</div>
+							<div class="ibox-content no-padding">
+								<div class="flot-chart m-t-lg" style="height: 100px;" id="p2">
+									<ul class="gongneng">
+										<li><a href=""><span class="glyphicon glyphicon-user"></span><br>客户视图查询</a><span
+											class="glyphicon glyphicon-minus-sign btns btns-1"></span></li>
+										<li><a href=""><span
+												class="glyphicon glyphicon-list-alt"></span><br>报告查询</a><span
+											class="glyphicon glyphicon-minus-sign btns btns-2"></span></li>
+										<li><a href=""><span class="glyphicon glyphicon-bell"></span><br>预警查询</a><span
+											class="glyphicon glyphicon-minus-sign btns btns-3"></span></li>
+										<li><a href=""><span
+												class="glyphicon glyphicon-zoom-in"></span><br>黑名单<br>查询</a><span
+											class="glyphicon glyphicon-minus-sign btns btns-4"></span></li>
+										<li class="add"><a href=""><span
+												class="glyphicon glyphicon-zoom-in"></span><br>舆情查询</a><span
+											class="glyphicon glyphicon-minus-sign btns btns-5"></span></li>
+										<li class="add"><a href=""><span
+												class="glyphicon glyphicon-zoom-in"></span><br>中宏观<br>查询</a><span
+											class="glyphicon glyphicon-minus-sign btns btns-6"></span></li>
+										<li class="app"><a href="#"><span
+												class="glyphicon glyphicon-plus"></span></a></li>
+
+									</ul>
+									<!-- <div class="flot-chart-content" id="flot-chart1"></div> -->
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>超限预警</h5>
+								<div class="pull-right">
+									<div class="btn-group">
+										<button type="button" class="btn btn-xs btn-white active">本月</button>
+										<button type="button" class="btn btn-xs btn-white">本季</button>
+										<button type="button" class="btn btn-xs btn-white">本年</button>
+									</div>
+								</div>
+							</div>
+							<div class="ibox-content">
+								<div class="row">
+									<div class="col-lg-9">
+										<div class="flot-chart">
+											<div class="flot-chart-content" id="flot-dashboard-chart"></div>
+										</div>
+									</div>
+									<div class="col-lg-3">
+										<ul class="stat-list">
+											<li>
+												<h2 class="no-margins">2,346</h2> <small>Total
+													orders in period</small>
+												<div class="stat-percent">
+													48% <i class="fa fa-level-up text-navy"></i>
+												</div>
+												<div class="progress progress-mini">
+													<div style="width: 48%;" class="progress-bar"></div>
+												</div>
+											</li>
+											<li>
+												<h2 class="no-margins ">4,422</h2> <small>Orders in
+													last month</small>
+												<div class="stat-percent">
+													60% <i class="fa fa-level-down text-navy"></i>
+												</div>
+												<div class="progress progress-mini">
+													<div style="width: 60%;" class="progress-bar"></div>
+												</div>
+											</li>
+											<li>
+												<h2 class="no-margins ">9,180</h2> <small>Monthly
+													income from orders</small>
+												<div class="stat-percent">
+													22% <i class="fa fa-bolt text-navy"></i>
+												</div>
+												<div class="progress progress-mini">
+													<div style="width: 22%;" class="progress-bar"></div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
+
+
+			</div>
+
+		</div>
+	</div>
+
+
+
+</body>
+
+
+
+
+
+<script>
+$(document).ready(
+		function() {
+			getTodoTaskContents();
+		}
+);
+function fillTodoTaskContents(result,totCount) {
+	
+	var tableHead="<table class=\"table\" style=\"margin-bottom: 10px;\">                   "+
+	"	<thead>                                                             "+
+	"		<tr>                                                              "+
+	"			<th>#</th>                                                      "+
+	"			<th>流程名称/任务名称</th>                                              "+
+	"			<th>发起人</th>                                                "+
+	"			<th>任务开始时间</th>                                                 "+
+	"			<th>任务截止时间</th>                                                 "+
+	"			<th>操作</th>                                                     "+
+	"		</tr>                                                             "+
+	"	</thead> 															"+
+	"	<tbody> ";
+	var tableFoot="	                                                            "+
+	"	<tr>                                                                "+
+	"			<td colspan=\"6\"><div class=\"pull-right\"><a href=\"/system/flowable/task/todo.html\">>>更多</a></div></td>         "+
+	"		</tr>                                                             "+
+	"	</tbody>                                                            "+
+	"</table>                                                             ";
+	var content="";
+	var index=1;
+	$.each(result, function (index) {  
+		if (index<=5){
+			content=content+
+			"<tr>			"+
+			"	<td>"+(index+1)+"</td>	"+
+			"	<td>"+result[index].PDEFNAME+"/"+result[index].TASKNAME+"</td>"+
+			"	<td>"+result[index].STARTUSER+"</td>"+
+			"	<td>"+result[index].TASKCREATETIME+"</td>"+
+			"	<td>"+result[index].TASKDUEDATE+"</td>"+
+			"	<td><a href=\"/system/flowable/task/deal_task.html?taskId="+result[index].TASKID+"\" target=\"_blank\">处理</a></td>"+
+			"</tr>"; 
+		}
+		index=index+1;
+    });  	         
+    $("#taskTable").html(tableHead+content+tableFoot);
+    var todoContent="<input type=\"radio\" name=\"options\"> 待办("+totCount+")";
+    $("#todo").html(todoContent);
+	         
+};
+function fillDoneTaskContents(result) {
+	var tableHead="<table class=\"table\" style=\"margin-bottom: 10px;\">                   "+
+	"	<thead>                                                             "+
+	"		<tr>                                                              "+
+	"			<th>#</th>                                                      "+
+	"			<th>流程名称/任务名称</th>                                              "+
+	"			<th>任务执行人</th>                                                "+
+	"			<th>任务开始时间</th>                                                 "+
+	"			<th>任务完成时间</th>                                                 "+
+	"			<th>操作</th>                                                     "+
+	"		</tr>                                                             "+
+	"	</thead> 															"+
+	"	<tbody> ";
+	var tableFoot="	                                                            "+
+	"	<tr>                                                                "+
+	"			<td colspan=\"6\"><div class=\"pull-right\"><a href=\"/system/flowable/task/done.html\">>>更多</a></div></td>         "+
+	"		</tr>                                                             "+
+	"	</tbody>                                                            "+
+	"</table>    ";
+	var content="";
+	var index=1;
+	$.each(result, function (index) {  
+		if (index<=5){
+			content=content+
+			"<tr>			"+
+			"	<td>"+(index+1)+"</td>	"+
+			"	<td>"+result[index].PDEFNAME+"/"+result[index].TASKNAME+"</td>"+
+			"	<td>"+result[index].ASSIGNEE+"</td>"+
+			"	<td>"+result[index].TASKSTARTTIME+"</td>"+
+			"	<td>"+result[index].TASKENDTIME+"</td>"+
+			"	<td><a href=\"/system/flowable/task/deal_task.html?taskId="+result[index].TASKID+"\" target=\"_blank\">处理</a></td>"+
+			
+			"</tr>"; 
+		}
+		index=index+1;
+
+    }); 
+	$("#taskTable").html(tableHead+content+tableFoot);
+}
+function getTodoTaskContents() {
+	$.ajax({
+	    	url:"/system/flowable/task/todo",
+	    	type:"get",
+	    	dataType : "json",
+	    	cache : false,
+	    success : function(response, textStatus) { 
+	    		var rs = eval(response); 
+	   	 	fillTodoTaskContents(rs.data,rs.data.length);
+	    }
+    });
+}
+function getDoneTaskContents() {
+	$.ajax({
+	    	url:"/system/flowable/task/done",
+	    	type:"get",
+	    	dataType : "json",
+	    	cache : false,
+	    success : function(response, textStatus) { 
+	    		var rs = eval(response); 
+	    		console.log(rs);
+	   	 	fillDoneTaskContents(rs.data);
+	    }
+    });
+}
+$("#todo").click(function(){
+	getTodoTaskContents();
+	
+});
+$("#done").click(function(){
+	getDoneTaskContents();
+});
+
+	/* $(document).ready(
+			function() {
+				$('.chart').easyPieChart({
+					barColor : '#f8ac59',
+					//                scaleColor: false,
+					scaleLength : 5,
+					lineWidth : 4,
+					size : 80
+				});
+
+				$('.chart2').easyPieChart({
+					barColor : '#1c84c6',
+					//                scaleColor: false,
+					scaleLength : 5,
+					lineWidth : 4,
+					size : 80
+				});
+
+				var data2 = [ [ gd(2012, 1, 1), 7 ], [ gd(2012, 1, 2), 6 ],
+						[ gd(2012, 1, 3), 4 ], [ gd(2012, 1, 4), 8 ],
+						[ gd(2012, 1, 5), 9 ], [ gd(2012, 1, 6), 7 ],
+						[ gd(2012, 1, 7), 5 ], [ gd(2012, 1, 8), 4 ],
+						[ gd(2012, 1, 9), 7 ], [ gd(2012, 1, 10), 8 ],
+						[ gd(2012, 1, 11), 9 ], [ gd(2012, 1, 12), 6 ],
+						[ gd(2012, 1, 13), 4 ], [ gd(2012, 1, 14), 5 ],
+						[ gd(2012, 1, 15), 11 ], [ gd(2012, 1, 16), 8 ],
+						[ gd(2012, 1, 17), 8 ], [ gd(2012, 1, 18), 11 ],
+						[ gd(2012, 1, 19), 11 ], [ gd(2012, 1, 20), 6 ],
+						[ gd(2012, 1, 21), 6 ], [ gd(2012, 1, 22), 8 ],
+						[ gd(2012, 1, 23), 11 ], [ gd(2012, 1, 24), 13 ],
+						[ gd(2012, 1, 25), 7 ], [ gd(2012, 1, 26), 9 ],
+						[ gd(2012, 1, 27), 9 ], [ gd(2012, 1, 28), 8 ],
+						[ gd(2012, 1, 29), 5 ], [ gd(2012, 1, 30), 8 ],
+						[ gd(2012, 1, 31), 25 ] ];
+
+				var data3 = [ [ gd(2012, 1, 1), 800 ], [ gd(2012, 1, 2), 500 ],
+						[ gd(2012, 1, 3), 600 ], [ gd(2012, 1, 4), 700 ],
+						[ gd(2012, 1, 5), 500 ], [ gd(2012, 1, 6), 456 ],
+						[ gd(2012, 1, 7), 800 ], [ gd(2012, 1, 8), 589 ],
+						[ gd(2012, 1, 9), 467 ], [ gd(2012, 1, 10), 876 ],
+						[ gd(2012, 1, 11), 689 ], [ gd(2012, 1, 12), 700 ],
+						[ gd(2012, 1, 13), 500 ], [ gd(2012, 1, 14), 600 ],
+						[ gd(2012, 1, 15), 700 ], [ gd(2012, 1, 16), 786 ],
+						[ gd(2012, 1, 17), 345 ], [ gd(2012, 1, 18), 888 ],
+						[ gd(2012, 1, 19), 888 ], [ gd(2012, 1, 20), 888 ],
+						[ gd(2012, 1, 21), 987 ], [ gd(2012, 1, 22), 444 ],
+						[ gd(2012, 1, 23), 999 ], [ gd(2012, 1, 24), 567 ],
+						[ gd(2012, 1, 25), 786 ], [ gd(2012, 1, 26), 666 ],
+						[ gd(2012, 1, 27), 888 ], [ gd(2012, 1, 28), 900 ],
+						[ gd(2012, 1, 29), 178 ], [ gd(2012, 1, 30), 555 ],
+						[ gd(2012, 1, 31), 993 ] ];
+
+				var dataset = [ {
+					label : "Number of orders",
+					data : data3,
+					color : "#1ab394",
+					bars : {
+						show : true,
+						align : "center",
+						barWidth : 24 * 60 * 60 * 600,
+						lineWidth : 0
+					}
+
+				}, {
+					label : "Payments",
+					data : data2,
+					yaxis : 2,
+					color : "#1C84C6",
+					lines : {
+						lineWidth : 1,
+						show : true,
+						fill : true,
+						fillColor : {
+							colors : [ {
+								opacity : 0.2
+							}, {
+								opacity : 0.4
+							} ]
+						}
+					},
+					splines : {
+						show : false,
+						tension : 0.6,
+						lineWidth : 1,
+						fill : 0.1
+					},
+				} ];
+
+				var options = {
+					xaxis : {
+						mode : "time",
+						tickSize : [ 3, "day" ],
+						tickLength : 0,
+						axisLabel : "Date",
+						axisLabelUseCanvas : true,
+						axisLabelFontSizePixels : 12,
+						axisLabelFontFamily : 'Arial',
+						axisLabelPadding : 10,
+						color : "#d5d5d5"
+					},
+					yaxes : [ {
+						position : "left",
+						max : 1070,
+						color : "#d5d5d5",
+						axisLabelUseCanvas : true,
+						axisLabelFontSizePixels : 12,
+						axisLabelFontFamily : 'Arial',
+						axisLabelPadding : 3
+					}, {
+						position : "right",
+						clolor : "#d5d5d5",
+						axisLabelUseCanvas : true,
+						axisLabelFontSizePixels : 12,
+						axisLabelFontFamily : ' Arial',
+						axisLabelPadding : 67
+					} ],
+					legend : {
+						noColumns : 1,
+						labelBoxBorderColor : "#000000",
+						position : "nw"
+					},
+					grid : {
+						hoverable : false,
+						borderWidth : 0
+					}
+				};
+
+				function gd(year, month, day) {
+					return new Date(year, month - 1, day).getTime();
+				}
+
+				var previousPoint = null, previousLabel = null;
+
+				$.plot($("#flot-dashboard-chart"), dataset, options);
+
+				var mapData = {
+					"US" : 298,
+					"SA" : 200,
+					"DE" : 220,
+					"FR" : 540,
+					"CN" : 120,
+					"AU" : 760,
+					"BR" : 550,
+					"IN" : 200,
+					"GB" : 120,
+				};
+
+				$('#world-map').vectorMap({
+					map : 'world_mill_en',
+					backgroundColor : "transparent",
+					regionStyle : {
+						initial : {
+							fill : '#e4e4e4',
+							"fill-opacity" : 0.9,
+							stroke : 'none',
+							"stroke-width" : 0,
+							"stroke-opacity" : 0
+						}
+					},
+
+					series : {
+						regions : [ {
+							values : mapData,
+							scale : [ "#1ab394", "#22d6b1" ],
+							normalizeFunction : 'polynomial'
+						} ]
+					},
+				});
+			}); */
+</script>
+</html>

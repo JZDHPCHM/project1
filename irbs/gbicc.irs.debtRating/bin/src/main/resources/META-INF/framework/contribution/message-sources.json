@@ -1,0 +1,15 @@
+/*
+ * 国际化消息源贡献项配置示例
+ * 功能: 该贡献项配置为框架提供国际化消息资源
+ * 使用说明:
+ * includes: 包含国际化消息资源列表
+ * excludes: 排除国际化消息资源列表
+ * 注意: 当 includes 和 excludes 发生冲突时,排除优先
+ */
+
+{
+    "includes":[
+        "gbicc/irs/debtRating/i18n/messages",
+    ],
+    "excludes":[]
+}

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<body>
+</body>
+<script>
+//当前登录人账号
+var userAccout = "[(${T(org.wsp.framework.security.util.SecurityUtil).getLoginName()})]";
+//获取登陆用户角色
+var roleCode = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+var products =[(${@CodeLibraryService.findByItemCode("BI_LOAN_BUSINESS_TYPE")})];//EnergyType
+//企业规模
+var EnterpriseScales =[(${@CodeLibraryService.findByItemCode("Scope")})];
+//主要担保方式
+var mainGuaranteeMethods =[(${@CodeLibraryService.findByItemCode("VouchType")})];
+//客户分类
+var ctmTyps =[(${@CodeLibraryService.findByItemCode("CustomerType")})];
+//风险分类
+var riskTypeEntitys =[(${@jacksonObjectMapper.writeValueAsString(@RiskTypeService.findByIsStart("true"))})];
+//调整方式
+var regulatingMethodLists =[(${@frSystemDictionaryService.getDictionaryMapJsonString('RISK_REGULATING_METHODS',#locale)})];
+//流程状态
+var processStates  =[(${@frJsonObjectMapper.enumerate(T(gbicc.irs.risk.exposure.support.DefaultRiskProcessStatus),#locale)})];;
+//国标行业
+var GBindustrys=[(${@CodeLibraryService.findByItemCode("IndustryType")})];
+//行内行业
+var industrys=[(${@CodeLibraryService.findByItemCode("IndustryType1")})];
+//贷款投向
+var IndustryType2002=[(${@CodeLibraryService.findByItemCode("IndustryType2")})];
+//币种
+var Currencys =[(${@CodeLibraryService.findByItemCode("Currency")})];//EnergyType
+//发生类型
+var occurrenceTypes =[(${@CodeLibraryService.findByItemCode("OccurType")})];//EnergyType
+var users=[(${@DefaultCustomerService.findUserNames()})];
+var orgLst = [(${@RiskService.findOrgs()})];
+//验证表单值空方法
+function isBlank(val){
+	if(val==""){
+		return true;
+	}
+	if(val==null){
+		return true;
+	}
+	if(typeof val=="undefined"){
+		return true;
+	}
+	return false;
+}
+//字段定义
+var RiskApplyForGridlist ={
+	query:[
+		{width:200,		name:'contractNum',       title:'合同编号'},
+		{width:200,		name:'ctmNum',		      title:'客户编号'},	
+		{width:200,		name:'ctmName',		      title:'客户名称'},
+		{width:200,		name:'gbIndustry',     	  title:'国标行业',type: 'select',valueMap:GBindustrys},
+		{width:200,		name:'scale',			  title:'企业规模',type: 'select',valueMap:EnterpriseScales},
+		{width:200,		name:'processState',	  title:'流程状态',type: 'select',valueMap:processStates},
+		{width:200,		name:'regulatingMethods', title:'调整类型',type: 'select',valueMap:regulatingMethodLists},
+	],
+	grid:[
+		{width:100,		name:'taskId',				hidden:true},
+	    {width:150,		name:'contractNum',			title:'合同编号'},	
+	    {width:150,		name:'contractSum',			title:'合同金额（元）',align:'left', type:"float",format:"0.00"},
+	    {width:150,		name:'productType',			title:'产品类型' ,  type:'select',	valueMap:products},
+	    {width:150,		name:'loansTo',				title:'贷款投向', type:'select',	valueMap:IndustryType2002,hidden:true},
+	    {width:150,		name:'mainGuaranteeMethod',	title:'主要担保方式',type:'select',	valueMap:mainGuaranteeMethods,hidden:true},
+	    {width:150,		name:'ctmNum',				title:'客户编号'},
+	    {width:150,		name:'ctmName',				title:'客户名称'},
+	    {width:150,		name:'ctmType',				title:'客户类型',type:'select',	valueMap:ctmTyps },
+	    {width:150,		name:'gbIndustry',			title:'行业类型',type:'select',	valueMap:GBindustrys},
+	    {width:150,		name:'scale',				title:'企业规模',type:'select',	valueMap:EnterpriseScales },
+	    {width:100,		name:'taking',				title:'营业收入（元）', type:"float",format:"0.00"},	
+	    {width:100,		name:'totalAssets',				title:'资产总额（元）', type:"float",format:"0.00"},	
+	    {width:150,		name:'systemDecisionResult',title:'系统判定结果',type:'select',	valueMap:riskTypeEntitys},
+	    {width:150,		name:'manualDecisionResult',title:'人工判定结果',type:'select',	valueMap:riskTypeEntitys},
+	    {width:150,		name:'finalDecision',		title:'最终判定结果',type:'select',	valueMap:riskTypeEntitys},
+	    {width:150,		name:'systemDecisionDate',			title:'系统判定时间'},
+	    {width:150,		name:'startDate',			title:'发起时间'},
+	    {width:100,		name:'regulatingMethods',	title:'调整方式',		type:'select',	valueMap:regulatingMethodLists},
+		{width:100,		name:'initiationMode',		title:'发起方式',hidden:true		},
+		{width:100,		name:'startUser',			title:'发起人',hidden:true},
+		{width:150,		name:'processState',		title:'流程状态',		type:'select',	valueMap:processStates},		
+		{width:150,		name:'finshDate',			title:'完成时间'},
+		{width:100,		name:'currentTaskTerson',	title:'当前任务人',type: 'select',	valueMap:users},		
+		{width:300,		name:'btn',					title:'操作'}
+	]
+};
+
+//客户数据源
+isc.FwRestDataSource.create({
+	ID: 'defaultCustomerDS',
+    fields: RiskApplyForGridlist.grid,
+    fetchDataURL: '[[@{/irs/riskQuery/queryRiskData}]]'
+});
+
+function createOperationButton(record, colNum){
+    var fieldName = custList.getFieldName(colNum);  	
+    if (fieldName == "btn") {
+    	if (record["processState"] != null || record["processState"] != "") {
+    		 var button = isc.IButton.create({
+   	            layoutAlign: "center",
+   	            title: "查看详情",
+   	            click : function () {
+   	            	isc.FwRPCManager.get({    			
+       			       	url:"[(@{/irs/companyCustomer/queryCompanyCustomerById})]",
+       			       	urlParameters:{custNo:record["ctmNum"]},
+       			        callback: function(response,rawData,request){
+       			        	if(rawData=="undefined" ||rawData==undefined){
+       			        		rawData={};
+       			        	}
+       			        	rawData["defaultId"]=record["contractNum"];
+       			        	rawData["taskId"]=record["taskId"];
+       			        	rawData["custName"]=record["ctmName"];
+       			        	rawData["custNo"]=record["ctmNum"];
+       			        	customerVieweForm.setValues(rawData)
+       			        	record["systemDecisionResultText"]=riskTypeEntitys[record["systemDecisionResult"]];
+       			        	systemDecisionResultForms.setValues(record);
+       			        }
+        		    }); 
+   	            	contractInfoFrom.setValues(record);
+   	            	hisEventGrid.fetchData({'riskExporeId':record["contractNum"]});
+   	        		newDefaultWin.show();
+   	            }
+  	            });
+    	     return button;  
+    	}
+    } 
+    
+    return null;  
+}
+//客户列表
+isc.FwListGrid.create({
+	ID: 'custList',
+	title: '<b>风险暴露分类查询列表</b>',
+	dataSource: defaultCustomerDS,
+	//sortField: 'contractNum',
+	fields: RiskApplyForGridlist.grid,
+    showRecordComponents: true,
+    showRecordComponentsByCell: true,
+    recordComponentPoolingMode: "recycle",
+    cellHeight: 30,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: RiskApplyForGridlist.query
+	},
+	actionMembers:['query','reset','refresh'],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+    createRecordComponent : function (record, colNum) {
+    	return createOperationButton(record, colNum);
+    },
+    updateRecordComponent: function (record, colNum, component, recordChanged) {
+    	return createOperationButton(record, colNum);
+    },
+    changeActionMemberButtonStatus: function(record, recordList){
+		var status = FwUtil.isNull(record)?'disable':'enable';
+		if(record && record.taskId){
+			status = 'enable';
+		}else{
+			status = 'disable';
+		}
+   		this.setActionMemberButtonStatus(status,['diagram']);
+    }
+});
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[custList]
+		})
+	}
+});
+//字段定义
+var EnterpriseCustomerFieldsToShow ={
+		edit: [
+			{width:'100%',		name:'id',           		primaryKey:true,hidden:true},
+			{width:'100%',		name:'defaultId',           hidden:true},
+			{width:'100%',		name:'taskId',           	hidden:true},
+			{width:'100%',		name:'custNo',              title:'信贷客户号',	required:true},
+			{width:'100%',		name:'unCustNo',            title:'统一客户号',	required:true},
+			{width:'100%',		name:'custName',            title:'客户中文名',	required:true},
+			{width:'100%',		name:'regAmount',     		title:'注册金额(元)', type:"float",format:"0.00"},
+			{width:'100%',		name:'regAddress',     		title:'注册地址描述',	type:"textArea",	colSpan:3},
+			{width:'100%',		name:'offcAddress',     	title:'办公地址',		type:"textArea",	colSpan:3},
+			{width:'100%',		name:'gbIndustry',     		title:'国标行业',     type: 'select',valueMap:GBindustrys},
+			{width:'100%',		name:'busScope',     		title:'经营范围',		type:"textArea",	colSpan:3},
+			{width:'100%',		name:'ctmType',     	defaultValue:"COM",	title:'客户类型',	type: 'select',valueMap:ctmTyps,allowEmptyValue:true,autoFetchData:false},
+			{width:'100%',		name:'businessLicense',     title:'营业执照号'},
+			{width:'100%',		name:'empCount',     		title:'员工数量'},
+			{width:'100%',		name:'legalRep',     		title:'法人代表名称'},
+			{width:'100%',		name:'managerName',     	title:'客户经理名称'},
+			{width:'100%',		name:'managerUser.id',     	title:'客户经理编号'},
+			{width:'100%',		name:'offcAddrZipCode',     title:'办公地址邮编',	length:6},
+			{width:'100%',		name:'enterpriseScale',    	title:'企业规模',		type: 'select',valueMap:EnterpriseScales,allowEmptyValue:true,autoFetchData:false},
+			{width:'100%',		name:'crdtAmt',    	 		title:'授信金额(元)', type:"float",format:"0.00"}
+		]
+};
+var contractInfoData ={
+		edit: [
+			{width:'100%',		name:'contractNum',     title:'合同流水号',required:true},
+			{width:'100%',		name:'productType',		title:'产品类型' ,  type:'select',	valueMap:products},
+			{width:'100%',		name:'currency',        title:'币种',	 required:true,  type:'select',	valueMap:Currencys},
+			//{width:'100%',		name:'occurrenceType',  title:'发生类型',  type:'select',	valueMap:occurrenceTypes},
+			{width:'100%',		name:'contractSum',     title:'合同金额(元)', type:"float",format:"0.00"},
+			{width:'100%',		name:'balance',      	title:'余额(元)', type:"float",format:"0.00"},
+			{width:'100%',		name:'mainGuaranteeMethod',     title:'主要担保方式',type:'select',	valueMap:mainGuaranteeMethods},
+			{width:'100%',		name:'agency',      	title:'经办机构',type:'select', valueMap:orgLst},
+			{width:'100%',		name:'startDt',      	title:'起始日期'},
+			{width:'100%',		name:'endDt',      		title:'到期日期'},
+			{width:'100%',		name:'loansTo',     	title:'贷款投向',type:'select',	valueMap:IndustryType2002},
+		]
+};
+isc.FwReadOnlyDynamicForm.create({
+	ID : "customerVieweForm",
+	numCols : 4,
+	width:'100%',
+	height:'100%',
+	autoDraw : true,
+	overflow : "auto",
+	autoFocus : false,
+	fields : EnterpriseCustomerFieldsToShow.edit
+});
+ isc.FwReadOnlyDynamicForm.create({
+	ID : "contractInfoFrom",
+	numCols : 4,
+	width:'100%',
+	height:'100%',
+	autoDraw : true,
+	overflow : "auto",
+	autoFocus : false,
+	fields : contractInfoData.edit
+}); 
+//审批意见表单
+isc.DynamicForm.create({
+	ID : "systemDecisionResultForms",
+	numCols : 4,
+	width:"100%",
+	fields : [
+          	{
+          		name:'systemDecisionResultText',   
+          		title:"系统判定结果",
+          		showTitle:false,
+          		type:'textArea',
+          		width:'100%',	
+          		rowSpan:15,
+          		canEdit:false,
+          		colSpan:5,
+          		validators:[{type:'lengthRange',max:500}]	
+          	}
+	]
+});
+//审批意见表单
+isc.DynamicForm.create({
+	ID : "ManualDecisionResultForms",
+	numCols : 4,
+	width:"100%",
+	fields : [
+	          	{
+	          		name:'reason',   
+	          		title:"调整理由",
+	          		showTitle:false,
+	          		type:'textArea',
+	          		width:'100%',	
+	          		colSpan:4,
+	          		validators:[{type:'lengthRange',max:500}]	
+	          	},
+	          	{	
+	          		width:'100%',		
+	          		name:'manualDecisionResult',    	
+	          		title:'建议分类',		
+	          		type: 'select',
+	          		valueMap:riskTypeEntitys},
+	]
+});
+var HisEventItemFields ={
+		grid: [
+				{name:'lastModifier',			title:'处理人',type: 'select',	valueMap:users},	
+			    {name:'maintainDt',			title:'认定时间'	},	
+			    {name:'maintainResult',		title:'认定结果',valueMap:riskTypeEntitys},
+			    {name:'reason',		title:'理由'}
+		]
+	};
+//违约事件列表数据源
+isc.FwRestDataSource.create({
+	ID: 'hisEventDS',
+	autoFetchData:false,
+    fields: HisEventItemFields.grid,
+	fetchDataURL: '[[@{'/irs/risk/ApplyLog/findHisEventByRiskExporeId'}]]'
+});
+isc.FwListGrid.create({
+	ID: 'hisEventGrid',
+	title: '<b>历史意见列表</b>',
+	autoFetchData:false,
+	border:0,
+	width:"100%",
+	height:"100%",
+	canPageable:false,
+	canSort:false,
+	dataSource: hisEventDS,	
+	fields: HisEventItemFields.grid
+});
+
+//定义新增违约事件页面
+isc.Window.create({
+     	ID:"newDefaultWin",
+  		title: "风险暴露分类调整详情",
+ 		width: '80%',						//窗口默认宽度
+ 		height:'100%',
+		canDragResize: false,				//用户不能通过拖拽调整窗口大小
+  		autoCenter: true,					//自动将窗口定位于页面中央
+  		showMaximizeButton: false,			//在窗口标题栏中不显示最大化按钮
+  		showMinimizeButton: false,			//在窗口标题栏中不显示最小化按钮
+  		isModal: true,						//模式窗口
+  		showModalMask: true,				//显示遮罩
+  		autoSize:false,						
+  		canFocus: true,						//窗口可以获得焦点
+  		contentLayout:'hertical',			//窗口采用水平布局
+  		bodyStyle: 'fwWindowBody',			//窗口 body 样式名称
+  		dismissOnEscape: true,				//按 ESC 键后窗口关闭(会调用 close() 方法)
+  		bodyDefaults:{
+		   		padding:0
+		},
+		closeAndDestroy: false,				//关闭按钮点击时是否关闭并摧毁窗口
+	  	items: [
+	  		isc.VLayout.create({
+	  			width:'100%',
+	  			height:'100%',
+	  			members:[
+	  				isc.HLayout.create({
+	  					width:'100%',
+	  		  			height:'90%',
+	  					members:[
+							isc.VLayout.create({
+								widht:"50%",
+								height:"100%",
+								members:[
+									isc.HLayout.create({
+										width:'100%',
+										height:'70%',
+										members:[
+											customerVieweForm,
+										]
+									}),
+									isc.HLayout.create({
+										width:'100%',
+										height:'30%',
+										members:[
+											contractInfoFrom,
+										]
+									})
+								]
+							}),
+	  						isc.VLayout.create({
+	  							widht:"50%",
+	  							height:"100%",
+	  							members:[
+	  								hisEventGrid
+	  							]
+	  						})
+	  					]
+	  				})
+	  			]
+	  		})
+	  	]
+});
+
+//================================================发起违约客户页面定义——结束===========================================================
+	
+</script>
+</html>

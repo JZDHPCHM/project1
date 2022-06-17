@@ -1,0 +1,14 @@
+
+=====================================================================
+Install Success at 2018-11-20 19:45:13
+InstallerConfig Infromation:
+{
+  "ds_type" : "JDBC",
+  "ds_database_type" : "Oracle",
+  "ds_jdbc_url" : "jdbc:oracle:thin:@172.19.1.13:1522:hasldb02",
+  "ds_username" : "irrdev",
+  "ds_password" : "irrdev",
+  "ds_databaseOptions" : "dropAllFirst",
+  "admin_username" : "admin",
+  "admin_password" : "admin"
+}

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="MV_1.0.0_20180911__Report Template Database Schema DDL" author="framework">
+        <!-- 财报模板科目定义表  -->
+        <createTable tableName="NS_RT_FINANCIAL_ACCOUNT" remarks="财报模板科目定义表">
+			<column name="FD_ID"				type="java.sql.Types.VARCHAR(36)"		remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_FA_NUMBER"				type="java.sql.Types.NUMERIC(5)"		remarks="科目行号"></column>
+			<column name="FD_FA_CODE"				type="java.sql.Types.VARCHAR(100)"		remarks="科目编号"></column>
+			<column name="FD_FA_NAME"				type="java.sql.Types.VARCHAR(500)"		remarks="科目名称"></column>
+			<column name="FD_FA_CATEGORY"			type="java.sql.Types.VARCHAR(100)"		remarks="科目分类"></column>
+			<column name="FD_FA_STATEMENT_TEMPLATE"	type="java.sql.Types.VARCHAR(100)"		remarks="财报模板"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  	remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  	remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+         <!-- 财报模板科目定义表 
+        <createTable tableName="NS_RT_FINANCIAL_ACCOUNT" remarks="财报模板科目定义表">
+			<column name="FD_ID"				type="java.sql.Types.VARCHAR(36)"		remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_FA_NUMBER"				type="java.sql.Types.NUMERIC(5)"		remarks="科目行号"></column>
+			<column name="FD_FA_CODE"				type="java.sql.Types.VARCHAR(100)"		remarks="科目编号"></column>
+			<column name="FD_FA_NAME"				type="java.sql.Types.VARCHAR(500)"		remarks="科目名称"></column>
+			<column name="FD_FA_CATEGORY"			type="java.sql.Types.VARCHAR(100)"		remarks="科目分类"></column>
+			<column name="FD_FA_COMMON_USE"			type="java.sql.Types.NUMERIC(5)"		remarks="是否通用财报"></column>
+			<column name="FD_FA_HOSPITAL_USE"		type="java.sql.Types.NUMERIC(5)"		remarks="是否医院财报"></column>
+			<column name="FD_FA_SCHOOL_USE"			type="java.sql.Types.NUMERIC(5)"		remarks="是否学校财报"></column>
+			<column name="FD_FA_GUARANTOR_USE"		type="java.sql.Types.NUMERIC(5)"		remarks="是否担保企业财报"></column>
+			<column name="FD_FA_INSTITUTION_USE"	type="java.sql.Types.NUMERIC(5)"		remarks="是否事业单位财报"></column>
+			<column name="FD_FA_STATEMENT_TEMPLATE"	type="java.sql.Types.VARCHAR(100)"		remarks="财报模板"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  	remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  	remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable> -->
+        <!-- 财报模板表  -->
+        <createTable tableName="NS_RT_FINAN_STAT_TEMPLATE" remarks="财报模板表">
+			<column name="FD_ID"				type="java.sql.Types.VARCHAR(36)"		remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_FS_TYPE"				type="java.sql.Types.VARCHAR(100)"		remarks="系统财报类型"></column>
+			<column name="FD_FS_FORMERTYPE"			type="java.sql.Types.VARCHAR(100)"		remarks="原财报类型"></column>
+			<column name="FD_FS_ISVALID"			type="java.sql.Types.NUMERIC(5)"		remarks="是否有效"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  	remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  	remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+        <!-- 财报模板科目映射表  -->
+        <createTable tableName="NS_RT_FINAN_ACCOUNT_MAPP" remarks="财报模板科目映射表">
+			<column name="FD_ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_STAT_TEMPLATE_FD_ID"	type="java.sql.Types.VARCHAR(36)"		remarks="财报模板ID"></column>
+			<column name="FD_FA_CATEGORY"			type="java.sql.Types.VARCHAR(100)"		remarks="科目分类"></column>
+			<column name="FD_AM_NUMBER"				type="java.sql.Types.NUMERIC(5)"		remarks="科目行号"></column>
+			<column name="FD_FA_CODE"				type="java.sql.Types.VARCHAR(100)"		remarks="模板科目编号"></column>
+			<column name="FD_FA_NAME"				type="java.sql.Types.VARCHAR(500)"		remarks="模板科目名称"></column>
+			<column name="FD_FA_FORMERCODE"			type="java.sql.Types.VARCHAR(100)"		remarks="原科目编号"></column>
+			<column name="FD_FA_FORMERNAME"			type="java.sql.Types.VARCHAR(500)"		remarks="原科目名称"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  	remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  	remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+        <!-- 创建外键(级联删除) -->
+        <addForeignKeyConstraint 
+        	constraintName="FK_FINAN_STAT_TEMPLATE_FD_ID" 
+        	baseTableName="NS_RT_FINAN_ACCOUNT_MAPP" 
+        	baseColumnNames="FD_STAT_TEMPLATE_FD_ID" 
+        	referencedTableName="NS_RT_FINAN_STAT_TEMPLATE" 
+        	referencedColumnNames="FD_ID" onDelete="CASCADE"/>
+        	
+        <!-- 财务指标定义表  -->
+        <createTable tableName="NS_RT_FINANCIAL_INDICATORS" remarks="财务指标定义表">
+			<column name="FD_ID"				type="java.sql.Types.VARCHAR(36)"		remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_FI_CODE"				type="java.sql.Types.VARCHAR(100)"		remarks="指标编号"></column>
+			<column name="FD_FI_NAME"				type="java.sql.Types.VARCHAR(500)"		remarks="指标名称"></column>
+			<column name="FD_FI_DESCRIBE"			type="java.sql.Types.VARCHAR(1000)"		remarks="指标描述"></column>
+			<column name="FD_FI_APPLY_MODEL"		type="java.sql.Types.VARCHAR(500)"		remarks="适用模型"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  	remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  	remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+         <!-- 财务指标计算公式定义表  -->
+        <createTable tableName="NS_RT_FI_CALCU_FORM" remarks="财务指标计算公式定义表">
+			<column name="FD_ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_FI_ID"					type="java.sql.Types.VARCHAR(36)"		remarks="指标ID"></column>
+			<column name="FD_FI_REPORT_TEMPLATE"	type="java.sql.Types.VARCHAR(100)"		remarks="适用财报模板"></column>
+			<column name="FD_FI_CALCULATION_FORMULA" type="java.sql.Types.VARCHAR(2000)"	remarks="计算公式"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  	remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  	remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+        <!-- 创建外键(级联删除) -->
+        <addForeignKeyConstraint 
+        	constraintName="FK_FINAN_INDI_FD_ID" 
+        	baseTableName="NS_RT_FI_CALCU_FORM" 
+        	baseColumnNames="FD_FI_ID" 
+        	referencedTableName="NS_RT_FINANCIAL_INDICATORS" 
+        	referencedColumnNames="FD_ID" onDelete="CASCADE"/>
+        	
+        <!-- 基础指标定义表  -->
+        <createTable tableName="NS_RT_BASICS_LIB" remarks="基础指标定义表">
+			<column name="FD_ID"				type="java.sql.Types.VARCHAR(36)"		remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_BASICS_CODE"			type="java.sql.Types.VARCHAR(100)"		remarks="基础指标编号"></column>
+			<column name="FD_BASICS_NAME"			type="java.sql.Types.VARCHAR(500)"		remarks="基础指标名称"></column>
+			<column name="FD_BASICS_DESCRIBE"		type="java.sql.Types.VARCHAR(1000)"		remarks="指标描述"></column>
+			<column name="FD_SMALLENTERPRISE"		type="java.sql.Types.VARCHAR(1000)"		remarks="小企业一般准则"></column>
+			<column name="FD_SMALLENTERPRISEOLD"	type="java.sql.Types.VARCHAR(1000)"		remarks="小企业简易准则"></column>
+			<column name="FD_GENERALENTERPRISE"		type="java.sql.Types.VARCHAR(1000)"		remarks="一般企业新准则"></column>
+			<column name="FD_GENERALENTERPRISEOLD"	type="java.sql.Types.VARCHAR(1000)"		remarks="一般企业旧准则"></column>
+			<column name="FD_INSTITUTION"			type="java.sql.Types.VARCHAR(1000)"		remarks="事业单位新准则"></column>
+			<column name="FD_INSTITUTIONOLD"		type="java.sql.Types.VARCHAR(1000)"		remarks="事业单位旧准则"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  	remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  	remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 指标定义表  -->
+        <createTable tableName="NS_RT_KI_LIB" remarks="指标定义表">
+			<column name="FD_ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_KI_CODE"				type="java.sql.Types.VARCHAR(100)"		remarks="指标编号"></column>
+			<column name="FD_KI_NAME"				type="java.sql.Types.VARCHAR(500)"		remarks="指标名称"></column>
+			<column name="FD_KI_NUMERATOR"			type="java.sql.Types.VARCHAR(1000)"		remarks="公式分子"></column>
+			<column name="FD_KI_DENOMINATOR"		type="java.sql.Types.VARCHAR(1000)"		remarks="公式分母"></column>
+			<column name="FD_OUTLIER_HANDLING"		type="java.sql.Types.VARCHAR(50)"		remarks="异常值处理"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  	remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  	remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+        	
+        	  <!-- 勾稽关系校验表 -->
+         <createTable tableName="NS_FIN_ACCOUNT_NORM" remarks="勾稽关系校验表">
+			<column name="FD_ID"				type="java.sql.Types.VARCHAR(36)"		remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_NAME"				type="java.sql.Types.VARCHAR(100)"		remarks="母项编码"></column>
+			<column name="FD_CODE"				type="java.sql.Types.VARCHAR(100)"		remarks="母项编码"></column>
+			<column name="FD_NORM"				type="java.sql.Types.VARCHAR(1000)"		remarks="子项编码"></column>
+			<column name="FD_NORMCONFIG"		type="java.sql.Types.VARCHAR(1000)"		remarks="准则注释"></column>
+			<column name="FD_NORMID"			type="java.sql.Types.VARCHAR(100)"		remarks="准则类型"></column>
+        </createTable>
+        <addForeignKeyConstraint 
+        	constraintName="FK_NS_FIN_ACCOUNT_NORM_FD_ID" 
+        	baseTableName="NS_FIN_ACCOUNT_NORM" 
+        	baseColumnNames="FD_NORMID" 
+        	referencedTableName="NS_RT_FINAN_STAT_TEMPLATE" 
+        	referencedColumnNames="FD_ID" onDelete="CASCADE"/>
+        	
+        	
+    </changeSet>
+</databaseChangeLog>

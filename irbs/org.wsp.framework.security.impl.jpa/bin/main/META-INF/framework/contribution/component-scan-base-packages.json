@@ -1,0 +1,17 @@
+{
+    "includes":[
+        "org.wsp.framework.security.impl.jpa.controller",
+        "org.wsp.framework.security.impl.jpa.component",
+        "org.wsp.framework.security.impl.jpa.installer",
+        "org.wsp.framework.security.impl.jpa.service.impl",
+        "org.wsp.framework.security.impl",
+        "org.wsp.framework.security.impl.config",
+        "org.wsp.framework.security.impl.controller.roleInfo",
+        "org.wsp.framework.security.impl.controller.sso",
+        "org.wsp.framework.security.impl.controller.sync",
+        "org.wsp.framework.security.impl.entity",
+        "org.wsp.framework.security.impl.util",
+        "org.wsp.framework.security.service",
+        "org.wsp.framework.security.service.impl"
+    ]
+}

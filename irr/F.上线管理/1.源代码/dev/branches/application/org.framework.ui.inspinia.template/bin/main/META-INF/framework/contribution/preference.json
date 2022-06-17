@@ -1,0 +1,23 @@
+/*
+ * 首选项(系统配置)贡献项配置示例
+ * 功能: 该贡献项配置为框架提供系统配置
+ * 使用说明:
+ * id		: 配置项 ID
+ * parentId	: 父配置项 ID
+ * order	: 顺序，同层下的顺序
+ * urlType	: URL 类型，可能选项
+ * 				HTML		: 该配置功能由独立的 HTML 页面提供
+ *				JAVASCRIPT	: 该配置功能由执行指定的 javascript 功能提供
+ */
+
+/*
+[
+	{
+		"id"		:"org.wsp.framework.datasource.preference",
+		"parentId"	:"org.wsp.framework.mvc.preference.system",
+		"order"		:500,
+		"urlType"	:"HTML",
+		"url"		:"/system/datasources/datasources.html?removeNavbar=true&removeTab=true"
+	}
+]
+*/

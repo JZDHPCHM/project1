@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_LITIGATION_NOTICE" author="framework">
+
+        <!-- 涉诉公告 -->
+        <createTable tableName="FB_LITIGATION_NOTICE" remarks="涉诉公告">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="NOTICE_PEOPLE" type="java.sql.Types.VARCHAR(100)" remarks="公告人"></column>
+            <column name="NOTICE_DATE" type="java.sql.Types.VARCHAR(20)" remarks="公告时间"></column>
+            <column name="NOTICE_TYPE" type="java.sql.Types.VARCHAR(50)" remarks="公告类型"></column>
+            <column name="CONTENT" type="CLOB" remarks="正文"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 相关信息 -->
+        <createTable tableName="FB_LITIGATION_NOTICE_RELATED" remarks="相关信息">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="LITIGATION_NOTICE_ID" type="java.sql.Types.VARCHAR(36)" remarks="涉诉公告ID"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="名字"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+    </changeSet>
+</databaseChangeLog>

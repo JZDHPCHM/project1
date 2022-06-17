@@ -1,0 +1,29 @@
+[
+	{
+		"type": "CATEGORY",
+		"id": "menuitem.irs.warning",
+		"title": "[(#{menuitem.irs.warning})]",
+		"order": 300
+	},
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.warning",
+		"id": "menuitem.irs.warning.warnList",
+		"title": "[(#{menuitem.irs.warning.warnList})]",
+		"order": 700
+	},
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.warning",
+		"id": "menuitem.irs.warning.focusOn",
+		"title": "[(#{menuitem.irs.warning.focusOn})]",
+		"order": 700
+	},
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.warning",
+		"id": "menuitem.irs.warning.history",
+		"title": "[(#{menuitem.irs.warning.history})]",
+		"order": 700
+	}
+]

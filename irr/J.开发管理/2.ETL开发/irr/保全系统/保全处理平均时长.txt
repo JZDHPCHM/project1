@@ -1,0 +1,117 @@
+SELECT   COMPANY,SUM(AUDIT_PASS_DATE-STARTdate)/COUNT(1)
+  FROM (SELECT SUBSTR(T.DID, 0, 1) COMPANY,
+               TO_CHAR(T.START_DATE, 'YYYY/MM/DD') STARTDATE,
+               TRUNC((CASE
+                     /* --20180702 撤单的审核通过日期=结案日期
+                     WHEN status='cancel' THEN T.FIN*/
+                     -- 20180705补充告知审核通过日期调整为核保最后一次提交日期
+                       WHEN SERVICE_ID = '804' THEN
+                        CHECKER_SUBMIT_TIME
+                       WHEN SERVICE_ID IN (SELECT T.PARAM_CODE
+                                             FROM T_PARAM T
+                                            WHERE T.PARAM_VALUE = 'AUTO'
+                                              AND T.USING = '1') THEN
+                        T.START_DATE
+                       WHEN SERVICE_ID = '101' THEN
+                        (CASE
+                          WHEN P_ACC.OPERATOR_TIME > T.FIN THEN
+                           T.FIN
+                          ELSE
+                           P_ACC.OPERATOR_TIME
+                        END)
+                       WHEN SERVICE_ID = '917' THEN
+                        DD.SEND_DD_TIME
+                       WHEN DD.SEND_DD_TIME IS NOT NULL THEN
+                        (SELECT MAX(OPERATOR_TIME) AS OPERATOR_TIME
+                           FROM T_PROCESSSTEP VER_DD
+                          WHERE VER_DD.STEP_NAME = 'verify'
+                            AND VER_DD.CHANGE_ID = T.CHANGE_ID
+                            AND VER_DD.SUB_CHANGE_ID = T.SUB_CHANGE_ID
+                            AND VER_DD.OPERATOR_TIME <= DD.SEND_DD_TIME)
+                     --20180913 临时增加
+                       WHEN (P_APP.OPERATOR_TIME IS NOT NULL) AND
+                            (P_PAY.OPERATOR_TIME <= P_APP.OPERATOR_TIME) THEN
+                        P_PAY.OPERATOR_TIME
+                       WHEN (P_VER.OPERATOR_TIME IS NOT NULL) AND
+                            (P_PAY.OPERATOR_TIME <= P_VER.OPERATOR_TIME) THEN
+                        P_PAY.OPERATOR_TIME
+                       WHEN P_APP.OPERATOR_TIME IS NOT NULL THEN
+                        P_APP.OPERATOR_TIME
+                       WHEN P_VER.OPERATOR_TIME IS NOT NULL THEN
+                        P_VER.OPERATOR_TIME
+                     END)) AS AUDIT_PASS_DATE
+          FROM (SELECT T2.DID,
+                       (SELECT MIN(OPERATOR_TIME)
+                          FROM T_PROCESSSTEP
+                         WHERE CHANGE_ID = T1.CHANGE_ID) START_DATE,
+                       (SELECT MAX(OPERATOR_TIME)
+                          FROM T_PROCESSSTEP
+                         WHERE CHANGE_ID = T1.CHANGE_ID
+                           AND SUB_CHANGE_ID = T1.SUB_CHANGE_ID
+                           AND SUB_CHANGE_ID = T1.SUB_CHANGE_ID
+                           AND STEP_NAME IN ('end', 'cancel')) FIN,
+                       T1.CHANGE_ID,
+                       T1.SUB_CHANGE_ID
+                  FROM HASLCSBPM.T_POLICY_SERVICE T1,
+                --20180705增加核保时间
+                 HASLCSBPM.T_POLICY_CHANGE T2
+                 WHERE T1.CHANGE_ID = T2.CHANGE_ID 
+                   AND T1.STATUS IN ('end', 'cancel')
+                      --限定保全项目
+                   AND T1.SERVICE_ID IN
+                       (SELECT T.PARAM_CODE
+                          FROM T_PARAM T
+                         WHERE T.PARAM_VALUE IN ('AUTO', 'OUTER'))) T
+        
+          LEFT JOIN (SELECT MAX(P.OPERATOR_NAME) AS OPERATOR_NAME,
+                           P.CHANGE_ID,
+                           MAX(P.OPERATOR_TIME) AS OPERATOR_TIME
+                      FROM haslcsbpm.T_PROCESSSTEP P
+                     WHERE P.STEP_NAME = 'accept'
+                       AND P.ACTION_VERSION = '1'
+                     GROUP BY P.STEP_NAME, P.CHANGE_ID) P_ACC
+            ON P_ACC.CHANGE_ID = T.CHANGE_ID
+           AND P_ACC.OPERATOR_TIME = T.ACC_MAX_TIME
+          LEFT JOIN (SELECT (P.OPERATOR_NAME) AS OPERATOR_NAME,
+                           P.CHANGE_ID,
+                           P.SUB_CHANGE_ID,
+                           (P.OPERATOR_TIME) AS OPERATOR_TIME
+                      FROM haslcsbpm.T_PROCESSSTEP P
+                     WHERE P.STEP_NAME = 'verify') P_VER
+            ON P_VER.CHANGE_ID = T.CHANGE_ID
+           AND P_VER.SUB_CHANGE_ID = T.SUB_CHANGE_ID
+           AND P_VER.OPERATOR_TIME = T.VERIFY_MAX_TIME
+          LEFT JOIN (SELECT (P.OPERATOR_NAME) AS OPERATOR_NAME,
+                           P.CHANGE_ID,
+                           P.SUB_CHANGE_ID,
+                           (P.OPERATOR_TIME) AS OPERATOR_TIME
+                      FROM haslcsbpm.T_PROCESSSTEP P
+                     WHERE P.STEP_NAME = 'approval') P_APP
+            ON P_APP.CHANGE_ID = T.CHANGE_ID
+           AND P_APP.SUB_CHANGE_ID = T.SUB_CHANGE_ID
+           AND P_APP.OPERATOR_TIME = T.APP_MAX_TIME
+        --20180913 临时增加，解决审核通过时间系统记录有误的问题
+          LEFT JOIN (SELECT P.CHANGE_ID,
+                           P.SUB_CHANGE_ID,
+                           MIN(P.OPERATOR_TIME) AS OPERATOR_TIME
+                      FROM haslcsbpm.T_PROCESSSTEP P
+                     WHERE P.STEP_NAME IN
+                           ('payWait', 'paymentWait', 'H355H208Wait')
+                     GROUP BY P.CHANGE_ID, P.SUB_CHANGE_ID) P_PAY
+            ON P_PAY.CHANGE_ID = T.CHANGE_ID
+           AND P_PAY.SUB_CHANGE_ID = T.SUB_CHANGE_ID
+          LEFT JOIN (SELECT DD.CHANGE_ID,
+                           DD.SUB_CHANGE_ID,
+                           MIN(DD.CREATE_TIME) AS SEND_DD_TIME
+                      FROM haslcsbpm.T_SERVICE_DD DD
+                     GROUP BY DD.CHANGE_ID, DD.SUB_CHANGE_ID) DD
+            ON DD.CHANGE_ID = T.CHANGE_ID
+           AND DD.SUB_CHANGE_ID = T.SUB_CHANGE_ID) M
+ WHERE M.AUDIT_PASS_DATE BETWEEN add_months(to_date('20180630','yyyymmdd')+1,-3)
+   AND  to_date('20180630','yyyymmdd')
+GROUP BY COMPANY
+ 
+
+ 
+
+ 

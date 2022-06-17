@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FR_2019.05.10_15.49.13__T_XBRL_REGULATOR_MAPPING.xml -->
+<export>
+  <summary>
+    <t name="T_XBRL_REGULATOR_MAPPING">select * from T_XBRL_REGULATOR_MAPPING</t>
+  </summary>
+  <table name="T_XBRL_REGULATOR_MAPPING">
+    <sql>select * from T_XBRL_REGULATOR_MAPPING</sql>
+      <fields>
+        <field name="ID"                           type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="COMPANY_CODE"                 type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="REGULATOR_CODE"               type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATOR"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATE_DATE"               type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+        <field name="FD_LAST_MODIFIER"             type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_LAST_MODIFYDATE"           type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+      </fields>
+    <resultset>
+      <row>
+        <f>4910F3139DEE4BE497A27392ACED2066</f>
+        <f>86</f>
+        <f>1000</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.127</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.127</f>
+      </row>
+      <row>
+        <f>22E71BDFAE194E8FA18ECBCA33386E45</f>
+        <f>8601</f>
+        <f>10000001</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.158</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.158</f>
+      </row>
+      <row>
+        <f>18F07EE184A14B4E8BE9AEAABAA76225</f>
+        <f>8602</f>
+        <f>10000002</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.186</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.186</f>
+      </row>
+      <row>
+        <f>75599F932C76465984B1E8122117242C</f>
+        <f>8606</f>
+        <f>10000003</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.207</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.207</f>
+      </row>
+      <row>
+        <f>8F17A527EBF74DA6A08954BB97CA619C</f>
+        <f>8609</f>
+        <f>10000004</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.228</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.228</f>
+      </row>
+      <row>
+        <f>BEF0A36BC6AB4893B38E1C61D5C79115</f>
+        <f>8605</f>
+        <f>10000005</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.247</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.247</f>
+      </row>
+      <row>
+        <f>05B4A1A1A89F44DE8139C83E12C69144</f>
+        <f>8604</f>
+        <f>10000006</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.266</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.266</f>
+      </row>
+      <row>
+        <f>D6AEC64EAF7146F2A992C6467CE99D99</f>
+        <f>8603</f>
+        <f>10000007</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.291</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.291</f>
+      </row>
+      <row>
+        <f>226FF37952914834BEF9222F2AB7907E</f>
+        <f>8608</f>
+        <f>10000008</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.31</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.31</f>
+      </row>
+      <row>
+        <f>C8F43E8C7208464390AB4BF6E6701B6B</f>
+        <f>8610</f>
+        <f>10000009</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.329</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.329</f>
+      </row>
+      <row>
+        <f>ADEE5E78527349C6A63FE49457F523DF</f>
+        <f>8607</f>
+        <f>10000010</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.345</f>
+        <f>admin</f>
+        <f>2019-05-10 15:44:20.345</f>
+      </row>
+    </resultset>
+  </table>
+</export>

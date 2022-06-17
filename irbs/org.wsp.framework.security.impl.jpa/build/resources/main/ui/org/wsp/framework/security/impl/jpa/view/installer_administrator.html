@@ -1,0 +1,47 @@
+<fieldset>
+    <div class="form-group">
+		<label for="admin_username" th:text="#{org.wsp.framework.security.impl.jpa.installer.admin_username}">管理员用户名</label>
+		<input type="text" id="admin_username" name="admin_username" class="form-control" th:title="#{org.wsp.framework.security.impl.jpa.installer.tip.required}" th:placeholder="#{org.wsp.framework.security.impl.jpa.installer.tip.required}">
+    </div>
+    <div class="form-group">
+		<label for="admin_password" th:text="#{org.wsp.framework.security.impl.jpa.installer.admin_password}">管理员用户密码</label>
+		<input type="text" id="admin_password" name="admin_password" th:title="#{org.wsp.framework.security.impl.jpa.installer.tip.required}" class="form-control" th:placeholder="#{org.wsp.framework.security.impl.jpa.installer.tip.required}">
+    </div>
+    <p th:text="#{org.wsp.framework.security.impl.jpa.installer.tip.admin}">提示: 系统安装成功后,可使用此处设置的管理员用户名和密码登录系统</p>
+</fieldset>
+<nav>
+	<ul class="pager">
+		<li><a href="#" onclick="$.FrameworkInstaller.previous();" th:text="#{org.wsp.framework.installer.i18n.button.previous}">上一步</a></li>
+		<li><a href="#" onclick="$.FrameworkInstaller.next();" th:text="#{org.wsp.framework.installer.i18n.button.next}">下一步</a></li>
+	</ul>
+</nav>
+<script>
+$.FrameworkInstaller.addItem({
+	id : '[(${id})]',
+	validate : function(){
+		var result =true;
+		if($.trim($('#admin_username').val())==''){
+			$('#admin_username').parent().addClass('has-error');
+			result =false;
+		}else{
+			$('#admin_username').parent().removeClass('has-error');
+		}
+		
+		if($.trim($('#admin_password').val())==''){
+			$('#admin_password').parent().addClass('has-error');
+			result =false;
+		}else{
+			$('#admin_password').parent().removeClass('has-error');
+		}
+		return result;
+	},
+	buildConfig : function(object){
+		object.admin_username =$('#admin_username').val();
+		object.admin_password =$('#admin_password').val();
+	},
+	documentReady : function(){
+		$('#admin_username').val('[(${admin_username})]');
+		$('#admin_password').val('[(${admin_password})]');
+	}
+});
+</script>	

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html th:replace="${@frSystemParameterService.getParameter('uiTemplate')}::html">
+<body>
+</body>
+<script>
+isc.FwPage.create({
+	tab: {
+		title: '[[#{welcome}]]', 
+		pane: isc.FwVLayout.create({
+		    members: [
+				isc.LayoutSpacer.create({height:'100%'}),
+				isc.FwHLayout.create({
+					members:[
+						isc.LayoutSpacer.create({width:'100%'}),
+						isc.HTMLFlow.create({
+							height: 100,
+							contents: ""
+								+ "<h1>[[#{welcome}]], [[${T(org.wsp.framework.security.util.SecurityUtil).getUserName()}]]</h1>"
+								+ "<h2>您没有被赋予任何角色，请联系系统管理员配置角色！</h2>",
+						    padding:5
+						}),
+						isc.LayoutSpacer.create({width:'100%'})
+					]
+				}),
+				isc.LayoutSpacer.create({height:'100%'})
+			] 
+		})
+	}
+});
+</script>
+</html>

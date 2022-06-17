@@ -1,0 +1,5 @@
+{
+  "includes": [
+    "gbicc/irs/report/i18n/messages"
+  ]
+}

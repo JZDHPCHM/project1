@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>债项评级台账查询</title>
+<style type="text/css">
+	.form-group {
+	    margin-bottom: 10px;
+	}
+	.form-group:last-child {
+	    margin-bottom: 0;
+	}
+	.ibox-content{
+		padding: 10px;
+	}
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+	                <div class="col-lg-12">
+	                	<div class="ibox float-e-margins">
+	                		<div class="ibox-title">
+	                            <h5>查询</h5>
+	                            <div class="ibox-tools">
+	                                <a class="collapse-link">
+	                                    <i class="fa fa-chevron-up"></i>
+	                                </a>
+	                            </div>
+	                        </div>
+	                        <div class="ibox-content" style="padding-bottom: 0;">
+	                        	<form class="form-horizontal" id="formSearch">
+									<div class="form-group">
+										<label class="col-sm-1 control-label">承租人名称</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="请选择">请选择</option>
+												<option value="分公司">分公司</option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">承租人编号</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="请选择">请选择</option>
+												<option value="分公司">分公司</option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">承租人类型</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="请选择">请选择</option>
+												<option value="分公司">分公司</option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">项目名称</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="请选择">请选择</option>
+												<option value="分公司">分公司</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label">项目编号</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="精确查找" class="form-control">
+										</div>
+										<label class="col-sm-1 control-label">业务经理/协办经理</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="请选择">请选择</option>
+												<option value="分公司">分公司</option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">评审经理</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="请选择">请选择</option>
+												<option value="分公司">分公司</option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">项目状态</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="请选择">请选择</option>
+												<option value="分公司">分公司</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label">业务部</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="请选择">请选择</option>
+												<option value="分公司">分公司</option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">业务类别</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="请选择">请选择</option>
+												<option value="分公司">分公司</option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">业务类型</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="请选择">请选择</option>
+												<option value="分公司">分公司</option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">评级流水号</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="请选择">请选择</option>
+												<option value="分公司">分公司</option>
+											</select>
+										</div>										
+									</div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label">创建日期</label>
+										<div class="col-sm-3">
+											<div class="input-daterange input-group" id="datepicker">
+												<input id="date2" type="text" class="form-control"
+													name="date2" placeholder="请选择开始日期" readonly /> <span
+													class="input-group-addon">至</span> <input id="date1"
+													type="text" class="form-control" name="date1"
+													placeholder="请选择结束日期" readonly />
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<b id="btn-query" class="btn btn-success">查询</b>
+											<b id="btn-reset" class="btn btn-success">重置</b>
+										</div>
+									</div>
+								</form>
+	                        </div>
+	                	</div>
+						<div class="jqGrid_wrapper">
+                            <table id="table_list"></table>
+                            <div id="pager_list"></div>
+                        </div>    	    
+	                </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$('.chosen-select').chosen({width: "100%"});
+	$('#formSearch .input-daterange').datepicker({
+		keyboardNavigation: false,
+	    forceParse: false,
+	    autoclose: true
+	});
+	$("#date1").datepicker({
+		changeYear : true,
+		changeMonth : true,
+		numberOfMonths : 1,
+		showButtonPanel: true,
+		onSelect : function(selectedDate) {
+		$("#date2").datepicker("option", "minDate", selectedDate);  }
+	});		 
+	$("#date2").datepicker({
+		changeYear : true,
+		changeMonth : true,
+		numberOfMonths : 1,
+		showButtonPanel: true,
+		onSelect : function(selectedDate) {
+		$("#date1").datepicker("option", "maxDate", selectedDate);  }
+	});
+	$("#date3").datepicker({
+		changeYear : true,
+		changeMonth : true,
+		numberOfMonths : 1,
+		showButtonPanel: true,
+		onSelect : function(selectedDate) {
+		$("#date4").datepicker("option", "minDate", selectedDate);  }
+	});		 
+	$("#date4").datepicker({
+		changeYear : true,
+		changeMonth : true,
+		numberOfMonths : 1,
+		showButtonPanel: true,
+		onSelect : function(selectedDate) {
+		$("#date3").datepicker("option", "maxDate", selectedDate);  }
+	});
+	$(document).ready(function(){
+		//
+		$("#table_list").jqGrid({
+			url : "",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        datatype: "json",
+	        height: 280,
+	        scrollOffset : 0,
+	        autowidth: true,
+	        shrinkToFit: true,
+	        //autoScroll: false,//当autoScroll和shrinkToFit均为false时，会出现行滚动条
+            //shrinkToFit: false,//是否列宽度自适应。true=适应 false=不适应
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['承租人名称','承租人编号','承租人类型','项目名称','项目编号','项目经理', '项目状态', '业务部', '业务类别','业务类型','评级编号','评级类型','初评等级','复核等级','总体保障倍数','评级状态','评级日期'],
+	        colModel:[
+	            {name:'reportName',index:'reportName', editable: true},
+	            {name:'companyType',index:'companyType', editable: true},
+	            {name:'uploadTime',index:'uploadTime', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadHeir',index:'uploadHeir', editable: true}
+	        ],
+	        pager: "#pager_list",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "data",
+	        	records: "recordsTotal",
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		//$("#table_list").jqGrid('setFrozenColumns');//设置冻结列生效
+		$("#table_list").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+		// Setup buttons
+        $("#table_list").jqGrid('navGrid', '#pager_list',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+
+        // Add responsive to jqGrid
+        $(window).bind('resize', function () {
+            var width = $('.jqGrid_wrapper').width();
+            $('#table_list').setGridWidth(width);
+        });
+	});
+</script>
+</html>

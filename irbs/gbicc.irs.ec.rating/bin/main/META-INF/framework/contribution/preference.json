@@ -1,0 +1,141 @@
+/*
+ * 首选项(系统配置)贡献项配置示例
+ * 功能: 该贡献项配置为框架提供系统配置
+ * 使用说明:
+ * id		: 配置项 ID
+ * parentId	: 父配置项 ID
+ * order	: 顺序，同层下的顺序
+ * urlType	: URL 类型，可能选项
+ * 				HTML		: 该配置功能由独立的 HTML 页面提供
+ *				JAVASCRIPT	: 该配置功能由执行指定的 javascript 功能提供
+ */
+
+/*
+[
+	{
+		"id"		:"org.wsp.framework.datasource.preference",
+		"parentId"	:"org.wsp.framework.mvc.preference.system",
+		"order"		:500,
+		"urlType"	:"HTML",
+		"url"		:"/system/datasources/datasources.html?removeNavbar=true&removeTab=true"
+	}
+]
+*/
+
+[
+//对公评级配置
+{"id":"gbicc.irs.preference","order":4},
+
+	// 对公评级配置/子项定义
+	{"id":"gbicc.irs.preference.subConfig","parentId":"gbicc.irs.preference","order":10},
+		// 对公评级配置/子项定义/评级步骤定义
+		{
+			"id"		:"gbicc.irs.preference.ratingStepConfig",
+			"parentId"	:"gbicc.irs.preference.subConfig",
+			"order"		:10,
+			"urlType"	:"HTML",
+			"url"		:"/irs/stepConfig/ratingStepConfig.html?removeNavbar=true&removeTab=true"
+		},
+		// 对公评级配置/子项定义/评级调整项定义
+		{
+			"id"		:"gbicc.irs.preference.ratingAdjItemConfig",
+			"parentId"	:"gbicc.irs.preference.subConfig",
+			"order"		:20,
+			"urlType"	:"HTML",
+			"url"		:"/irs/ratingAdjItemConfig/ratingAdjItemConfig.html?removeNavbar=true&removeTab=true"
+		},
+		// 对公评级配置/子项定义/评级补录项定义
+		{
+			"id"		:"gbicc.irs.preference.ratingAdditItemConfig",
+			"parentId"	:"gbicc.irs.preference.subConfig",
+			"order"		:30,
+			"urlType"	:"HTML",
+			"url"		:"/irs/ratingAdditItemConfig/ratingAdditItemConfig.html?removeNavbar=true&removeTab=true"
+		},
+		// 对公评级配置/子项定义/评级外部支持定义
+		{
+			"id"		:"gbicc.irs.preference.ratingSuppItemConfig",
+			"parentId"	:"gbicc.irs.preference.subConfig",
+			"order"		:40,
+			"urlType"	:"HTML",
+			"url"		:"/irs/ratingSuppItemConfig/ratingSuppItemConfig.html?removeNavbar=true&removeTab=true"
+		},
+	
+	// 对公评级配置/评级配置
+	{
+		"id"		:"gbicc.irs.preference.ratingConfig",
+		"parentId"	:"gbicc.irs.preference",
+		"order"		:5,
+		"urlType"	:"HTML",
+		"url"		:"/irs/ratingConfig/ratingConfig.html?removeNavbar=true&removeTab=true"
+	},
+	// 对公评级配置/主标尺
+	{
+		"id"		:"gbicc.irs.preference.mainScaleConfig",
+		"parentId"	:"gbicc.irs.preference",
+		"order"		:56,
+		"urlType"	:"HTML",
+		"url"		:"/irs/mainScale/mainScale.html?removeNavbar=true&removeTab=true"
+	},
+	// 对公评级配置/评级模型标尺
+	{
+		"id"		:"gbicc.irs.preference.modelScaleConfig",
+		"parentId"	:"gbicc.irs.preference",
+		"order"		:55,
+		"urlType"	:"HTML",
+		"url"		:"/irs/modelScaleConfig/modelScaleConfig.html?removeNavbar=true&removeTab=true"
+	},
+	// 对公评级配置/财报选取规则配置
+	{
+		"id"		:"gbicc.irs.preference.reportSelectRule",
+		"parentId"	:"gbicc.irs.preference",
+		"order"		:60,
+		"urlType"	:"HTML",
+		"url"		:"/irs/reportSelectRule/reportSelectRule.html?removeNavbar=true&removeTab=true"
+	},
+	// 对公评级配置/评级推翻配置
+	{
+		"id"		:"gbicc.irs.preference.ratingLevelAdjustRange",
+		"parentId"	:"gbicc.irs.preference",
+		"order"		:70,
+		"urlType"	:"HTML",
+		"url"		:"/irs/ratingLevelAdjustRange/ratingLevelAdjustRange.html?removeNavbar=true&removeTab=true"
+	},
+	// 对公评级配置/模型选择路径配置
+	{
+		"id"		:"gbicc.irs.preference.modelSelectorConfig",
+		"parentId"	:"gbicc.irs.preference",
+		"order"		:80,
+		"urlType"	:"JAVASCRIPT",
+		"url"		:"/framework/loadResource.js?resource=gbicc/irs/rating/config/view/modelSelectorConfig.js"
+		//"url"		:"/irs/modelSelector/modelSelectorConfig.html?removeNavbar=true&removeTab=true"
+	},
+	// 对公评级配置/评级授权配置
+	{
+		"id"		:"gbicc.irs.preference.ratingAuthorization",
+		"parentId"	:"gbicc.irs.preference",
+		"order"		:90,
+		"urlType"	:"HTML",
+		"url"		:"/irs/ratingAuthorization/ratingAuthorizationConfig.html?removeNavbar=true&removeTab=true"
+	},
+	
+// 限额参数管理/子项定义
+{"id":"gbicc.irs.preference.quota.config","parentId":"gbicc.irs.preference","order":20},
+		// 限额参数管理/子项定义/客户CM配置
+		{
+			"id"		:"gbicc.irs.preference.customerCm",
+			"parentId"	:"gbicc.irs.preference.quota.config",
+			"order"		:10,
+			"urlType"	:"HTML",
+			"url"		:"/irs/customerCm/customerCm.html?removeNavbar=true&removeTab=true"
+		},
+		// 限额参数管理/子项定义/行业参数配置
+		{
+			"id"		:"gbicc.irs.preference.IndustryParameters",
+			"parentId"	:"gbicc.irs.preference.quota.config",
+			"order"		:20,
+			"urlType"	:"HTML",
+			"url"		:"/irs/IndustryParameters/IndustryParameters.html?removeNavbar=true&removeTab=true"
+		}
+]
+

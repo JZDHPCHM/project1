@@ -1,0 +1,11 @@
+--评估期保险公司关于承保、销售业务线的投诉次数
+select chdrcoy,COUNT(1)
+from COMPLAINTSRISKREPORT
+where
+TO_DATE(CLOSURE_TIME,'YYYYMMDD') BETWEEN
+add_months(TO_DATE('20180630','yyyymmdd')+1,-3)
+and  TO_DATE('20180630','yyyymmdd')
+AND NAME in ('1、代签名','2、误导客户','3、不实告知',
+'6、展业不规范','18、一站式手写保单')
+and MAIN_STATUSNAME = '投诉件' --案件类型
+group by chdrcoy

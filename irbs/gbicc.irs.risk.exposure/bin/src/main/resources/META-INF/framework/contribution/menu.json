@@ -1,0 +1,76 @@
+/*
+ * 菜单扫描贡献项配置示例
+ * 功能: 该贡献项配置为框架提供菜单
+ * 使用说明:
+ * A) 共有属性
+ * type: 菜单类型,可能的选项
+ *		CATEGORY			: 菜单分类(包含子菜单的菜单项)
+ *		SEPERATOR			: 分割符菜单项
+ * 		JAVASCRIPT			: javascript 菜单项
+ * 		URL					: URL 菜单项
+ *		ANNOTATION			: spring 控制器注解菜单项
+ * parentId					: 父菜单项ID,顶级菜单项的 parentId 为 null 或者 不指定 parentId 属性
+ * id						: 菜单项ID
+ * title					: 菜单项标题，可使用 thymeleaf 模板字符串实现国际化以及动态标题
+ * authorizeExpression		: 除了角色分配的菜单权限以外，附件的授权表达式,采用 spring spel 表达式语法:
+ *								当表达式为空时 			: 表示有权访问
+ *								当表达式评估结果为 true 	: 表示有权访问
+ *								当表达式评估结果为 false	: 表示无权访问
+ * order					: 菜单项排序,该顺序为同一层级的排序
+ 
+ * B) 特有属性(按照 type 分类)
+ * 1. CATEGORY 菜单分类
+ *		align				: 菜单项对齐方式,可能选项
+ *								LEFT	: 左对齐
+ *								RIGHT	: 右对齐
+ * 
+ * 2. SEPERATOR 分割符菜单项
+
+ * 3. JAVASCRIPT javascript 菜单项
+ * 		javascript			: javascript 代码
+ *
+ * 4. URL 菜单项
+ *		url					: URL
+ *		urlOpenType			: 打开方式,可能选项
+ *								DEFAULT		: 默认打开方式(在当前窗口打开)
+ *								NEW_WINDOW	: 在新窗口打开
+ *								EMBEDDED	: 嵌入式方式(通常在一个 tab 中打开)
+ *
+ * 5. ANNOTATION spring 控制器注解菜单项
+ *		urlOpenType			: 打开方式,可能选项
+ *								DEFAULT		: 默认打开方式(在当前窗口打开)
+ *								NEW_WINDOW	: 在新窗口打开
+ *								EMBEDDED	: 嵌入式方式(通常在一个 tab 中打开) 
+ */
+
+
+[
+	{
+		"type": "CATEGORY",
+		"id": "menuitem.irs.risk",
+		"title": "[(#{menuitem.irs.risk})]",
+		"order": 290
+	},
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.risk",
+		"id": "menuitem.irs.risk.apply.for",
+		"title": "[(#{menuitem.irs.risk.apply.for})]",
+		"order": 1
+	},
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.risk",
+		"id": "menuitem.irs.risk.approve",
+		"title": "[(#{menuitem.irs.risk.approve})]",
+		"order": 2
+	},
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.risk",
+		"id": "menuitem.irs.risk.riskMdz",
+		"title": "[(#{menuitem.irs.risk.riskMdz})]",
+		"order": 3
+	}
+]
+

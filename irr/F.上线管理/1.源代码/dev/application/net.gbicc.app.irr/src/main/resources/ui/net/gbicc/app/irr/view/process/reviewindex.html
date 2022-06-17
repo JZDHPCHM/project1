@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html th:replace="template/simple_inspinia/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+<style>
+	.formMargin{
+		margin : 0 0 0 5px
+	}
+	.form-group{
+		margin-top : 3px 
+	}
+</style>
+</head>
+<body style='background-color:white'>
+	<div class="wrapper">
+		<div class="row">
+     		<div class="col-lg-12">
+                 <div class="ibox float-e-margins">
+                     <div class="ibox-content">
+                     	<div class="row">
+	                     	<div class="col-lg-12" style='margin-left:20px;'>
+	                     		<div class="row">
+	                     			<form role="form" class="form-inline" id="searchForm">
+			                             <div class="form-group">
+			                                 <label for="searchIndexCode" class="control-label">指标编码</label>
+			                                 <input type="text" placeholder="模糊查询" id="searchIndexCode" name="splitCode" class="form-control">
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label for="searchIndexName" class="control-label">指标名称</label>
+			                                 <input type="text" placeholder="模糊查询" id="searchIndexName" name="splitName" class="form-control">
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label class="control-label" for="searchResultType">结果类型</label>
+		                                	 <select class="form-control" name="resultTypeName" id="searchResultType">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('indexResultType',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label class="control-label" for="sourceProjId">评估项目</label>
+		                                	 <select class="form-control" name="sourceProjId" id="sourceProjId">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@irrProjTypeServiceImpl.projTypeSelect(4)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                         </form>
+	                     		</div>
+	                     		<div class='row' style='margin-top:5px;'>
+	                     			<button class="btn btn-primary btn-sm" id="searchBtn">查询</button>
+			                        <button class="btn btn-primary btn-sm" id="searchClear">重置</button>
+	                     			<button type='button' class='btn btn-primary btn-sm' id='submitBtn'>提交</button>
+	                     			<button type='button' class='btn btn-primary btn-sm' id='backBtn'>退回</button>
+	                     		</div>
+	                     		<div class='row'>
+	                     			<div class='form-inline'>
+	                     				<label for="comment" class="control-label"><font size=3 color=red>审批意见</font></label>
+	                     				<div class="form-group">
+		                                    <input class="form-control" style="width:400%" placeholder="请填写审批意见(必填项)" id="comment" name="comment">
+		                                </div>
+	                     			</div>
+	                     		</div>
+	                     		<div class="row"  style='margin-top:10px;'>
+	                     			<!-- 表格 -->
+		                     		<div class="jqGrid_wrapper">
+					                    <table id="uploadResultTable"></table>
+					                    <div id="uploadResultPage"></div>
+					                </div>
+	                     		</div>
+	                     	</div>
+                     	</div>
+                     	
+                     </div>
+                 </div>
+             </div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var taskId = '[(${taskId})]';
+		var id = '[(${id})]';
+		var collUserLoginName = '[(${collUserLoginName})]';
+		/*查询函数*/
+		function searchFn(){
+			var formJson = $('#searchForm').getNotNullJson();
+	    	formJson.taskId = id;
+	    	formJson.creator = collUserLoginName;
+	    	$("#uploadResultTable").jqGrid('clearGridData');//清空表格
+			$("#uploadResultTable").jqGrid('setGridParam',{//重新加载数据
+				url : '[(@{/irr/uploadResult/findUploadResult.action})]',
+				datatype : 'json',
+				postData : formJson,
+				page : 1
+			},true).trigger("reloadGrid");
+		}
+		/*上传结果表格配置*/
+		$("#uploadResultTable").jqGrid({
+			url:"[(@{/irr/uploadResult/isc/fetch?isc_dataFormat=json})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        postData : {
+				operationType : 'fetch',
+				textMatchStyle : 'substring',
+				taskId : id,
+				creator : collUserLoginName
+			},
+	        height: 300,
+	        autowidth: true,
+	        shrinkToFit: false,
+	        autoScroll: true,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['id','指标ID','指标编码','指标名称','结果类型','上期指标结果','上期指标得分','当期指标结果','当期指标得分',
+	        	'数据验证','数据说明','采集方式','采集机构/部门ID','采集机构/部门名称','是否人工改动','任务期次','任务ID','主体编码',
+	        	'采集人','采集时间','是否填写原因'],
+	        colModel:[{
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'splitId',
+	        	index:'splitId',
+	        	hidden : true,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name:'splitCode',
+	        	index:'splitCode',
+	        	sortable : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name:'splitName',
+	        	index:'splitName',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name : 'resultType',
+	        	index : 'resultType',
+	        	sortable : false,
+	        	editable : false,
+	        	search:true
+	        },{
+	        	name:'splitResultQ1',
+	        	index:'splitResultQ1',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'splitScoreQ1',
+	        	index:'splitScoreQ1',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'splitResultQ2',
+	        	index:'splitResultQ2',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	edittype:'text'
+	        },{
+	        	name:'splitScoreQ2',
+	        	index:'splitScoreQ2',
+	        	sortable : false,
+	        	editable: false,
+	        	hidden : true,
+	        	search:true
+	        },{
+	        	name:'dataVali',
+	        	index:'dataVali',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'dataDesc',
+	        	index:'dataDesc',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	edittype:'text'
+	        },{
+	        	name:'collWay',
+	        	index:'collWay',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('collWay',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'collOrgId',
+	        	index:'collOrgId',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        },{
+	        	name:'collOrgName',
+	        	index:'collOrgName',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'isHandChange',
+	        	index:'isHandChange',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('isUse',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'taskBatch',
+	        	index:'taskBatch',
+	        	editable: false,
+	        	hidden : true,
+	        	search:true
+	        },{
+	        	name:'taskId',
+	        	index:'taskId',
+	        	editable: false,
+	        	hidden : true,
+	        	search:true
+	        },{
+	        	name:'dataBody',
+	        	index:'dataBody',
+	        	editable: false,
+	        	hidden : true,
+	        	search:true
+	        },{
+	        	name:'collUserName',
+	        	index:'collUserName',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'createDate',
+	        	index:'createDate',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'isFillReason',
+	        	index:'isFillReason',
+	        	editable: false,
+	        	hidden : true,
+	        	search:true
+	        }],
+	        pager: "#uploadResultPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }
+	    });
+	    $("#uploadResultTable").jqGrid('navGrid', '#uploadResultPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#uploadResultTable').setGridWidth(width);
+	    });
+	    setTimeout(function(){
+	        $('.wrapper-content').removeClass('animated fadeInRight');
+	    },700);
+	    
+	    /*主页面查询中的重置按钮*/
+	    $('#searchClear').click(function(){
+	    	$('#searchForm')[0].reset();
+	    });
+	    
+	    /*主页面查询中的查询按钮*/
+	    $('#searchBtn').click(function(){
+	    	searchFn();
+	    });
+	    
+	    /*提交按钮*/
+	    $('#submitBtn').click(function(){
+	    	var comment = $('#comment').val();
+	    	if(isEmpty(comment)){
+	    		swal('提示','请您先填写审核意见!','warning');
+	    		return false;
+	    	}
+	    	var param = {
+					id : taskId,
+					path : 'submit',
+					comment : comment,
+					collUserLoginName : collUserLoginName
+			};
+			processAjaxHandleJson('/system/flowable/task/completeTask',param);
+	    });
+	    
+	    /*退回按钮*/
+		$('#backBtn').click(function(){
+			var comment = $('#comment').val();
+			if(isEmpty(comment)){
+	    		swal('提示','请您先填写审核意见!','warning');
+	    		return false;
+	    	}
+			var param = {
+					id : taskId,
+					comment : comment,
+					path : 'back',
+					collUserLoginName : collUserLoginName
+			};
+			processAjaxHandleJson('/system/flowable/task/completeTask',param);
+	    });
+	    
+	});
+</script>
+</html>

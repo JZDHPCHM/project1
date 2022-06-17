@@ -1,0 +1,14 @@
+
+[
+    {
+        "category" : "install",
+        "order"    : 12400,
+        "description":"风险暴露数据",
+        "locations":[
+            "classpath:/liquibase/LIQUIBASE_2019.01.29_23.02.48__FR_SYS_DICTIONARY.xml",
+            "classpath:/liquibase/LIQUIBASE_2019.01.29_23.05.04__FR_SYS_I18N_MESSAGE.xml",
+           // "classpath:/liquibase/LIQUIBASE_2019.02.27_15.37.15__FR_SYS_PROCESS.xml",
+        ]
+    }
+]
+

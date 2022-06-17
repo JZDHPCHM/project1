@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="MV_1.0.0_20171101__Customer Database Schema DDL" author="framework">
+
+		<!-- 公司客户财报基本信息 -->
+        <createTable tableName="NS_FIN_STAT" remarks="公司客户财报基本信息">
+            <column name="FD_ID"						type="java.sql.Types.VARCHAR(36)"			remarks="主键">
+             <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_CUST_NO"					type="java.sql.Types.VARCHAR(100)"			remarks="信贷客户编号"></column>
+			<column name="FD_REPORT_BUSS_DATE"			type="java.sql.Types.VARCHAR(100)"			remarks="财报期数"></column>
+			<column name="FD_REPORT_SPECIFICATIONS"		type="java.sql.Types.VARCHAR(100)"			remarks="财报口径"></column>
+			<column name="FD_REPORT_CURRENCY"			type="java.sql.Types.VARCHAR(100)"			remarks="财报币种"></column>
+			<column name="FD_AUDIT_ORGANIZATION"		type="java.sql.Types.VARCHAR(255)"			remarks="审计单位(审计单位名称)"></column>
+			<column name="FD_AUDIT_OPINION"				type="java.sql.Types.VARCHAR(2000)"			remarks="审计意见"></column>
+			<column name="FD_VAILD"						type="java.sql.Types.SMALLINT"				remarks="是否有效"></column>
+			<column name="FD_IS_AUDIT"					type="java.sql.Types.SMALLINT"				remarks="是否审计"></column>
+			<column name="FD_REPORT_CYCLE"				type="java.sql.Types.VARCHAR(100)"			remarks="财报周期"></column>
+			<column name="FD_REPORT_SOURCE"				type="java.sql.Types.VARCHAR(100)"			remarks="财报来源"></column>
+			<column name="FD_REPORT_TYPE"				type="java.sql.Types.VARCHAR(100)"			remarks="财报类型"></column>
+			<column name="FD_REPORT_COUNT_TYPE"			type="java.sql.Types.VARCHAR(100)"			remarks="统计口径"></column>
+			<column name="FD_IS_NULL_TABLE"			    type="java.sql.Types.VARCHAR(100)"			remarks="是否空表"></column>
+			<column name="FD_IS_NULL_BALANCE"			type="java.sql.Types.VARCHAR(100)"			remarks="是否平衡"></column>
+			<column name="FD_CHECK_PASS_RATE"			type="java.sql.Types.VARCHAR(100)"			remarks="勾稽校验通过率"></column>
+			<column name="FD_REPORT_STATE"			    type="java.sql.Types.VARCHAR(100)"			remarks="报表状态"></column>
+			<column name="FD_REPORT_YEAR"			    type="java.sql.Types.NUMERIC(36)"			remarks="财报时间"></column>
+			<column name="FD_CREATOR"               	type="java.sql.Types.VARCHAR(255)"  		remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           	type="DATETIME"                     		remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        		type="java.sql.Types.VARCHAR(255)"  		remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       	type="DATETIME"                     		remarks="最后修改日期"></column>
+        </createTable>
+
+		<!-- 财报科目数据-->
+        <createTable tableName="NS_FIN_ACCOUNT_DATA" remarks="财报科目数据">
+			<column name="FD_ID"				type="java.sql.Types.VARCHAR(36)"		remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_REPORT_ID"				type="java.sql.Types.VARCHAR(36)"		remarks="财报ID"></column>
+			<column name="FD_ACCOUNT_CATEGORY"		type="java.sql.Types.VARCHAR(100)"		remarks="科目分类"></column>
+			<column name="FD_LINE_CODE"				type="java.sql.Types.NUMERIC(4)"		remarks="行号代码"></column>
+			<column name="FD_DATAITEM_CODE"			type="java.sql.Types.VARCHAR(20)"		remarks="数据项代码"></column>
+			<column name="FD_DATAITEM_NAME"			type="java.sql.Types.VARCHAR(255)"		remarks="数据项名称"></column>
+			<column name="FD_BEGING_VALUE"			type="java.sql.Types.NUMERIC(20,4)"		remarks="期初值"></column>
+			<column name="FD_END_VALUE"				type="java.sql.Types.NUMERIC(20,4)"		remarks="期末值"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  	remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  	remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+        <!-- 客户预警数据-->
+        <createTable tableName="NS_CUSTOMER_EARLY_WARNING" remarks="客户预警数据">
+			<column name="FD_ID"				type="java.sql.Types.VARCHAR(36)"		remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_CTM_NO"				type="java.sql.Types.VARCHAR(36)"		remarks="客户编号"></column>
+			<column name="FD_EARLY_WARNING"			type="java.sql.Types.VARCHAR(100)"		remarks="预警主题"></column>
+			<column name="FD_EARLY_DT"				type="DATETIME"		                    remarks="预警时间"></column>
+			<column name="FD_EARLY_SIGNAL"			type="java.sql.Types.VARCHAR(200)"		remarks="预警信号"></column>
+			<column name="FD_SIGNAL_LEVEL"			type="java.sql.Types.VARCHAR(200)"		remarks="信号等级"></column>
+			<column name="FD_EARLY_DESC"			type="java.sql.Types.VARCHAR(255)"		remarks="预警标签"></column>
+			<column name="FD_WARNING_DESCRIPTION"			type="java.sql.Types.VARCHAR(255)"		remarks="预警描述"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  	remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  	remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+         <!-- 财报指标表-->
+        <createTable tableName="NS_FINANCIAL_REPORT_INDEX" remarks="财报指标表">
+			<column name="FD_ID"                    type="java.sql.Types.VARCHAR(50)"			remarks="主键">
+				<constraints primaryKey="true"/>
+			</column>
+	        <column name="FD_CUSTOMER_NO"   		type="java.sql.Types.VARCHAR(254)"			remarks="客户编号"></column>
+	        <column name="FD_SPECIFICATIONS"        type="java.sql.Types.VARCHAR(100)"			remarks="报表口径"></column>
+	        <column name="FD_FINANCIAL_REPORT_DATE" type="java.sql.Types.VARCHAR(100)"			remarks="报表期次"></column>
+	        <column name="FD_INDEX_TYPE"            type="java.sql.Types.VARCHAR(100)"			remarks="指标风险分类	1盈利能力 2偿债能力 3运营效率 4规模性成长"></column>
+	        <column name="FD_INDEX_CODE"            type="java.sql.Types.VARCHAR(100)"			remarks="指标编码"></column>
+	        <column name="FD_INDEX_NAME"            type="java.sql.Types.VARCHAR(254)"			remarks="指标名称"></column>
+	        <column name="FD_INDEX_VALUE"          	type="java.sql.Types.NUMERIC(32,6)"			remarks="指标值"></column>
+	        <column name="FD_INDUSTRY_AVERAGE"      type="java.sql.Types.NUMERIC(32,6)"			remarks="行业均值"></column>
+	        <column name="FD_CORPORATE_RANKINGS"    type="java.sql.Types.NUMERIC(10)"			remarks="企业排名"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  	    remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     	    remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  	    remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     	    remarks="最后修改日期"></column>
+        </createTable>
+        
+        <createTable tableName="irs_risk_exposure" remarks="风险暴露分类申请">
+	        <column name="CONTRACT_NUM"   			type="java.sql.Types.VARCHAR(50)"			remarks="合同编号"><constraints primaryKey="true"/></column>
+	        <column name="CONTRACT_SUM"   			type="java.sql.Types.VARCHAR(500)"			remarks="合同金额"></column>
+	        <column name="BUSINESS_TYPE"          	type="java.sql.Types.VARCHAR(100)"			remarks="业务品种"></column>
+	        <column name="CURRENCY"          		type="java.sql.Types.VARCHAR(100)"			remarks="货币品种"></column>
+	        <column name="LOANS_TO"            	    type="java.sql.Types.VARCHAR(100)"			remarks="贷款投向"></column>
+	        <column name="MAIN_GUARANTEE_METHOD"    type="java.sql.Types.VARCHAR(100)"			remarks="主要担保方式"></column>
+			<column name="BALANCE"             		type="java.sql.Types.NUMERIC(15,2)"  	    remarks="余额"></column>
+			<column name="FD_INPUT_ORGID"           type="java.sql.Types.VARCHAR(100)"           remarks="经办机构"></column>
+			<column name="START_DT"       			type="DATETIME"  	    					remarks="合同开始时间"></column>
+			<column name="END_DT"       			type="DATETIME"                     	    remarks="合同结束时间"></column>
+	        <column name="PRODUCT_TYPE"   			type="java.sql.Types.VARCHAR(100)"			remarks="产品类型"></column>
+	        <column name="CTM_NUM"          		type="java.sql.Types.VARCHAR(100)"			remarks="客户编号"></column>
+	        <column name="CTM_NAME"           		type="java.sql.Types.VARCHAR(100)"			remarks="客户名称"></column>
+	        <column name="SYSTEM_DECISION_RESULT"   type="java.sql.Types.VARCHAR(100)"			remarks="系统判定结果"></column>
+	        <column name="MANUAL_DECISION_RESULT"   type="java.sql.Types.VARCHAR(100)"			remarks="人工判定结果"></column>
+	        <column name="FINAL_DECISION"           type="java.sql.Types.VARCHAR(100)"			remarks="最终判定结果"></column>
+			<column name="SYSTEM_DECISION_DATE"     type="DATETIME"  	    					remarks="系统判定时间"></column>
+			<column name="START_DATE"           	type="DATETIME"                     	    remarks="发起时间"></column>
+			<column name="START_USER"        		type="java.sql.Types.VARCHAR(255)"  	    remarks="发起人"></column>
+			<column name="PROCESS_STATE"       		type="java.sql.Types.VARCHAR(100)"           remarks="流程状态"></column>
+			<column name="CURRENT_TASK_TERSON"      type="java.sql.Types.VARCHAR(100)"           remarks="当前任务人"></column>
+			<column name="FINSH_DATE"       		type="DATETIME"                     	    remarks="完成时间"></column>
+			<column name="REGULATING_METHODS"       type="java.sql.Types.VARCHAR(100)"           remarks="调整方式"></column>
+			<column name="REASON"       			type="java.sql.Types.VARCHAR(255)"          remarks="调整理由"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  	    remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     	    remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  	    remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     	    remarks="最后修改日期"></column>
+		
+        </createTable>
+
+		<createTable tableName="irs_risk_type" remarks="风险暴露分类">
+	        <column name="FD_CODE"   				type="java.sql.Types.VARCHAR(50)"	remarks="风险暴露细类编码"><constraints primaryKey="true"/></column>
+	        <column name="FD_TYPE"          		type="java.sql.Types.VARCHAR(100)"	remarks="风险暴露大类"></column>
+	        <column name="FD_DETAIL_TYPE"          	type="java.sql.Types.VARCHAR(100)"	remarks="风险暴露细类"></column>
+	        <column name="FD_IS_START"    			type="java.sql.Types.VARCHAR(36)"	remarks="是否启用"></column>  
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                    	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     remarks="最后修改日期"></column>
+			</createTable>
+        <createTable tableName="irs_risk_type_ctm" remarks="风险暴露分类">
+			<column name="FD_CTM_NO"                type="java.sql.Types.VARCHAR(50)"	remarks="主键"><constraints primaryKey="true"/></column>
+	        <column name="FD_CTM_NAME"   			type="java.sql.Types.VARCHAR(100)"	remarks="客户名称"></column>
+	        <column name="FD_RISK_TYPE_CODE"        type="java.sql.Types.VARCHAR(36)"	remarks="风险暴露分类id"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                    	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     remarks="最后修改日期"></column>
+        </createTable>
+         <createTable tableName="IRS_RISK_APPLY_FOR_LOG" remarks="风险暴露分类历史表">
+			<column name="FD_ID"                	type="java.sql.Types.VARCHAR(50)"	remarks="主键"><constraints primaryKey="true"/></column>
+	        <column name="PROCESSOR"   				type="java.sql.Types.VARCHAR(100)"	remarks="认定人"></column>
+	        <column name="MAINTAIN_DT"        		type="DATETIME"						remarks="认定时间"></column>
+	        <column name="MAINTAIN_RESULT"        	type="java.sql.Types.VARCHAR(100)"	remarks="认定类型"></column>
+	        <column name="REASON"        			type="java.sql.Types.VARCHAR(2000)"	remarks="理由"></column>
+			<column name="OPERATE"        			type="java.sql.Types.VARCHAR(50)"	remarks="操作类型"></column>
+	        <column name="RISK_EXPOSURE_ID"        	type="java.sql.Types.VARCHAR(50)"	remarks="id"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                    	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     remarks="最后修改日期"></column>
+			<column name="ROLE_NAME"        	type="java.sql.Types.VARCHAR(100)"	remarks="角色"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

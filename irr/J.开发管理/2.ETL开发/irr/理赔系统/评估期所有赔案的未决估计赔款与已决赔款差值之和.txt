@@ -1,0 +1,108 @@
+SELECT
+SUM(CHANGE_AMOUNT)
+FROM (
+SELECT 
+--最终给付金额
+PAY.FINAL_ADJ_AMOUNT,
+--预估金额金额
+INS.EXPECTED_AMOUNT,
+--保额
+INS.INSURANCE_AMOUNT,
+--调整金额
+ABS(PAY.CHANGE_AMOUNT) CHANGE_AMOUNT,
+--调整之前金额  最终给付金额-调整金额
+(PAY.FINAL_ADJ_AMOUNT-PAY.CHANGE_AMOUNT) AS BEFORE_AMOUNT,
+--T3
+SUBSTR(M.POLICY_NO,1,3) AS T3,
+--报案号
+M.REPORT_ID,
+--保单号
+M.POLICY_NO,
+--理赔结论代码
+CONCLUSION,
+(SELECT p.par_value FROM TC_PARAM P
+WHERE P.PAR_TYPE LIKE '%pa_claims_conclusion%' AND P.PAR_KEY= CONCLUSION) AS "理赔结论"
+  FROM (SELECT CA3.REPORT_ID,
+               CA3.POLICY_NO,
+                listagg(ca3.conclusion,',') WITHIN GROUP (ORDER BY ca3.conclusion)
+               --WM_CONCAT(CA3.CONCLUSION)
+               AS CONCLUSION
+
+          FROM (SELECT DISTINCT CA2.*
+                  FROM haslclaims.TC_CLAIMSAUDIT CA
+                  LEFT JOIN ( --赔付险种及结论
+                            SELECT CA1.REPORT_ID,
+                                    CA1.POLICY_NO,
+                                    listagg(ca1.conclusion,',') WITHIN GROUP (ORDER BY ca1.conclusion)
+                                   --  WM_CONCAT(CA1.CONCLUSION)
+                                     AS CONCLUSION
+                              FROM (SELECT DISTINCT CA.REPORT_ID,
+                                                     CA.POLICY_NO,
+                                                     CA.CONCLUSION
+                                       FROM TC_CLAIMSAUDIT CA
+                                      WHERE CA.HIS_TAG = '0'
+                                        AND CA.CONCLUSION IN
+                                            ('01', '02', '03', '04')) CA1
+                             GROUP BY CA1.REPORT_ID, CA1.POLICY_NO) CA2
+                    ON CA.REPORT_ID = CA2.REPORT_ID
+                   AND CA.POLICY_NO = CA2.POLICY_NO
+                 WHERE CA.HIS_TAG = '0'
+                   AND CA.CONCLUSION IN ('01', '02', '03', '04')
+                   AND CA.INSURANCE_CODE IN
+                       (SELECT T.INSURANCE_CODE
+                          FROM TC_LIABILITY T
+                         WHERE T.PRODUCT_TYPE IN ('健康险', '意外险'))
+                   AND CA.REPORT_ID IN
+                       (SELECT TT.REPORT_ID
+                          FROM TC_TASKTIME TT,TC_CLAIMS C
+                         WHERE (TT.CODE = 'ClaimWf001_08' OR TT.CODE='ClaimWfPayment_Success')
+                         AND c.status='8' AND c.sub_status='0' AND tt.report_id=c.report_id
+                             HAVING max(TRUNC(TT.END_TIME))  BETWEEN
+                               TO_DATE('2018-09-29', 'YYYY-MM-DD') AND
+                               TO_DATE('2018-09-29', 'YYYY-MM-DD')
+                               GROUP BY tt.report_id)) CA3
+         GROUP BY CA3.REPORT_ID, CA3.POLICY_NO) M
+  LEFT JOIN (SELECT REPORT_ID,
+                    POLICY_NO,
+                    SUM(FINAL_ADJ_AMOUNT) AS FINAL_ADJ_AMOUNT,
+                    SUM(CHANGE_AMOUNT) AS CHANGE_AMOUNT
+               FROM (SELECT TC_DUTY.REPORT_ID REPORT_ID,
+                            TC_DUTY.POLICY_NO POLICY_NO,
+                            TC_DUTY_DETAIL.HCRTABLE INSURANCE_CODE,
+                            SUM(NVL(TC_DUTY_DETAIL.ACTVALUE, '0') +
+                                NVL(TC_DUTY_DETAIL.EMV, '0') +
+                                NVL(TC_DUTY_DETAIL.ZDISCAMT, '0')) FINAL_ADJ_AMOUNT,
+                            SUM(NVL(TC_DUTY_DETAIL.ZDISCAMT, '0')) AS CHANGE_AMOUNT
+                       FROM TC_DUTY
+                       LEFT JOIN TC_DUTY_DETAIL
+                         ON TC_DUTY.SERNO = TC_DUTY_DETAIL.DUTY_SERNO
+                      WHERE TC_DUTY.COMPUTE_FLAG = '1'
+                        AND TC_DUTY.ASS_CLAIMS_FLAG = '1'
+                        AND TC_DUTY.INSURANCE_CODE IS NULL
+                      GROUP BY TC_DUTY.REPORT_ID,
+                               TC_DUTY.POLICY_NO,
+                               TC_DUTY_DETAIL.HCRTABLE
+                     UNION ALL
+                     SELECT TC_DUTY.REPORT_ID REPORT_ID,
+                            TC_DUTY.POLICY_NO POLICY_NO,
+                            TC_DUTY.INSURANCE_CODE INSURANCE_CODE,
+                            NVL(TC_DUTY.FINAL_ADJ_AMOUNT, '0') FINAL_ADJ_AMOUNT,
+                            NVL(TC_DUTY.ADJUSTMENT_AMOUNT, '0') AS CHANGE_AMOUNT
+                       FROM TC_DUTY
+                      WHERE TC_DUTY.COMPUTE_FLAG = '0'
+                        AND TC_DUTY.ASS_CLAIMS_FLAG = '1'
+                        AND TC_DUTY.INSURANCE_CODE IS NOT NULL) DUTY
+              GROUP BY REPORT_ID, POLICY_NO
+             ) PAY
+    ON PAY.REPORT_ID = M.REPORT_ID
+   AND PAY.POLICY_NO = M.POLICY_NO
+  LEFT JOIN (SELECT INSURANCE.REPORT_ID,
+                    INSURANCE.POLICY_NO,
+                    SUM(INSURANCE.INSURED_AMOUNT) AS INSURANCE_AMOUNT,
+                    SUM(INSURANCE.EXPECTED_AMOUNT) AS EXPECTED_AMOUNT
+               FROM TC_INSURANCE INSURANCE
+              WHERE INSURANCE.ASS_CLAIMS_FLAG = '1'
+              GROUP BY INSURANCE.REPORT_ID, INSURANCE.POLICY_NO) INS
+    ON INS.REPORT_ID = M.REPORT_ID
+   AND INS.POLICY_NO = M.POLICY_NO)t
+   WHERE 理赔结论 NOT IN ('通融','协议','部分','拒赔','撤件','豁免')

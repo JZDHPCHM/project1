@@ -1,0 +1,18 @@
+/*
+ * 首页面贡献项配置示例
+ * 功能: 该贡献项配置为框架提供首页面,可为角色指定登录后的默认首页面,实现不同角色登陆后进入不同的首页面
+ * 使用说明:
+ * id			: 唯一标识
+ * parentId		: 父唯一标识
+ * order		: 顺序
+ * url			: 首页面URL
+ */
+
+/*
+[
+	//框架
+	{"id":"homepage.framework","order":0},
+		//框架/默认首页面
+		{"id":"homepage.framework.default",	"parentId":"homepage.framework",	"order":0,	"url":"/"}
+]
+*/

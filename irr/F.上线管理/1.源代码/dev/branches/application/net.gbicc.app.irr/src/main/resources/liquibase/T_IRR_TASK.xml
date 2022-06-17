@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="T_IRR_TASK" author="fc">
+        <createTable tableName="T_IRR_TASK" remarks="任务表">
+			<column name="ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键ID">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="TASK_NAME"       		type="varchar(300)"      	 	remarks="任务名称"></column>
+			<column name="TASK_BATCH" 			type="varchar(10)" 				remarks="任务期次"></column>
+			<column name="DEAD_PLAN_DATE" 		type="DATE" 					remarks="计划截止时间"></column>
+			<column name="END_DATE"    			type="date"      	 			remarks="结束时间"></column>
+			<column name="TASK_STATUS"     		type="varchar(5)"      	 		remarks="任务状态"></column>
+			<column name="TASK_DESC" 			type="varchar(1000)" 			remarks="任务描述"></column>
+			<column name="DATA_BODY"      		type="varchar(50)"      		remarks="主体编码"></column>
+			<column name="FD_CREATOR"           type="varchar(255)"  			remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"       type="DATETIME"                 remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"     type="varchar(50)"  			remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"   type="DATETIME"                 remarks="最后修改日期"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

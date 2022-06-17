@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_BOUND_ANNOUNCEMENT" author="framework">
+
+        <!-- 经营异常结果表 -->
+        <createTable tableName="FB_BOUND_ANNOUNCEMENT" remarks="债券公告">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ISSUER_NAME" type="java.sql.Types.VARCHAR(100)" remarks="发行人名称"></column>
+            <column name="URL" type="java.sql.Types.VARCHAR(200)" remarks="URL"></column>
+            <column name="TITLE" type="java.sql.Types.VARCHAR(300)" remarks="公告标题"></column>
+            <column name="TYPE" type="java.sql.Types.VARCHAR(50)" remarks="公告类型"></column>
+            <column name="PUBLIC_DATE" type="java.sql.Types.VARCHAR(20)" remarks="发布时间"></column>
+            <column name="DISCLOSURE" type="java.sql.Types.VARCHAR(100)" remarks="披露对象"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

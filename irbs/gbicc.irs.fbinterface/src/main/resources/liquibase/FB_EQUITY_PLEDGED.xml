@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_EQUITY_PLEDGED" author="framework">
+
+        <!-- 股权出质结果表 -->
+        <createTable tableName="FB_EQUITY_PLEDGED" remarks="股权出质">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="PLEDGOR" type="java.sql.Types.VARCHAR(100)" remarks="出质人"></column>
+            <column name="QUALITY_TARGET" type="java.sql.Types.VARCHAR(100)" remarks="出质标的"></column>
+            <column name="PLEDGED_EQUITY_AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="出质股权数额"></column>
+            <column name="RELEASE_TIME" type="java.sql.Types.VARCHAR(20)" remarks="发布时间"></column>
+            <column name="REMARK" type="java.sql.Types.VARCHAR(300)" remarks="备注"></column>
+            <column name="CANCELLATION_REASON" type="java.sql.Types.VARCHAR(300)" remarks="注销原因"></column>
+            <column name="CANCELLATION_DATE" type="java.sql.Types.VARCHAR(20)" remarks="注销日期"></column>
+            <column name="STATUS" type="java.sql.Types.VARCHAR(30)" remarks="状态"></column>
+            <column name="REGISTRATION_DATE" type="java.sql.Types.VARCHAR(20)" remarks="登记日期"></column>
+            <column name="REGISTRATION_TYPES" type="java.sql.Types.VARCHAR(100)" remarks="登记种类"></column>
+            <column name="REGISTRATION_NUMBER" type="java.sql.Types.VARCHAR(100)" remarks="登记编号"></column>
+            <column name="PLEDGEE" type="java.sql.Types.VARCHAR(100)" remarks="质权人"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

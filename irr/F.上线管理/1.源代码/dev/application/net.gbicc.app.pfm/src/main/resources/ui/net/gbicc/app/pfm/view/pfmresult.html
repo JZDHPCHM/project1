@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+<body style='background-color:white'>
+	<div class='wrapper'>
+		<div class='wrapper wrapper-content animated fadeInRight'>
+			<div class='row'>
+				<form class="form-inline" >
+                	<div class="form-group">
+	                    <label for="taskName" class="control-label">评估计划</label>
+                        <select class="form-control" name="taskId" id="taskId">
+                        	<option value=''>请选择</option>
+                            <option th:each="option: ${@irrTaskServiceImpl.getTaskMap('YWC')}" th:value="${option.key}" th:text="${option.value}"></option>
+                        </select>
+                	</div>
+                	<button type='button' class='btn btn-primary btn-sm' id='searchBtn'>查询</button>
+                	<button type='button' class='btn btn-primary btn-sm' id='exportBtn'>导出</button>							
+				</form>
+			</div>
+			<div class='row'>
+			   <div class="jqGrid_wrapper">
+                   <table id="resultTable"></table>
+                   <div id="resultPage"></div>
+               </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		/*绩效结果表格配置*/
+		$("#resultTable").jqGrid({
+			url:"[(@{/pfm/branchResult/findPfmResult.action})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 350,
+	        autowidth: true,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 1,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['名称','得分'],
+	        colModel:[{
+	        	name:'NAME',
+	        	index:'NAME',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SCORE',
+	        	index:'SCORE',
+	        	editable: false,
+	        	search:true
+	        }],
+	        pager: "#resultPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }
+	    });
+	    $("#resultTable").jqGrid('navGrid', '#resultPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#resultTable').setGridWidth(width);
+	    });
+	    
+	    /*查询按钮*/
+	    $('#searchBtn').click(function(){
+	    	var taskId = $('#taskId').val();
+	    	if(isEmpty(taskId)){
+	    		swal('提示','请先选一条择评估计划！','warning');
+				return false;	    		
+	    	}
+	    	$("#resultTable").jqGrid('clearGridData');//清空表格
+			$("#resultTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : {
+					id : taskId
+				},
+				page : 1
+			},true).trigger("reloadGrid");
+	    });
+	    
+	    /*导出按钮*/
+	    $('#exportBtn').click(function(){
+	    	var taskId = $('#taskId').val();
+	    	if(isEmpty(taskId)){
+	    		swal('提示','请先选一条择评估计划！','warning');
+				return false;	    		
+	    	}
+	    	window.location.href = '/pfm/branchResult/downloadPfmScore.action?id='+taskId;
+	    });
+		
+	});
+	
+</script>
+</html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="T_XBRL_REGULATOR_MAPPING" author="fc">
+        <createTable tableName="T_XBRL_REGULATOR_MAPPING" remarks="XBRL监管机构映射表">
+			<column name="ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键ID">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="COMPANY_CODE"       		type="VARCHAR(30)"      	 	remarks="公司编码"></column>
+			<column name="REGULATOR_CODE"       	type="VARCHAR(30)"      	 	remarks="监管机构编码"></column>
+			<column name="FD_CREATOR"           	type="VARCHAR(255)"  			remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"       	type="DATETIME"                 remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"     	type="VARCHAR(50)"  			remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"   	type="DATETIME"                 remarks="最后修改日期"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

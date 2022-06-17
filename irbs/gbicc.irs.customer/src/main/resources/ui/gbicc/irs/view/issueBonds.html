@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+<script type="text/javascript"
+	th:src="@{/webjars/echarts/js/echarts.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{/org.wsp.framework.mvc.ui.template.smartclient/js/smartclient-echarts.js}"></script>
+</head>
+<body>
+</body>
+<script>
+//当前登录人账号
+var roleCode = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+
+
+var orgCode=[(${@userService2.findByOrgCode()})];
+var roleShow=false;
+if(roleCode=="FINANCIAL_MARKETS_MAINTAINER"&&orgCode=="1008899"){//总行金融市场部信息维护岗
+	 roleShow=true;
+}
+//查询岗
+if("QUERY_POST"==roleCode){
+	roleShow=false;
+}
+//模型类型
+var mxs = [(${@frSystemDictionaryService.getDictionaryMapJsonString('MODEL_TYPE',#locale)})];
+//发债企业模型
+var mxTypes = {};
+for( modelCode in mxs){
+	if(modelCode.startsWith("B")){
+		mxTypes[modelCode]=mxs[modelCode];
+	}
+}
+/**
+ * ====================================================================================================================
+ * 发债企业列表
+ * ====================================================================================================================
+**/
+//字段定义
+var IssueBondsFields ={
+	query: [
+			{width:'*',			name:'custNo',              title:'[[#{custNo}]]'},
+			{width:'*',			name:'custName',            title:'[[#{custName}]]'},
+			{width:'*',		    name:'mxType',     			title:'[[#{mxType}]]', type: 'select',valueMap:mxTypes}
+	],
+	grid: [
+			{width:'200',		name:'custNo',              title:'[[#{custNo}]]',primaryKey:true},
+			{width:'400',		name:'custName',            title:'[[#{custName}]]'},
+			{width:'200',		name:'mxType',     		title:'[[#{mxType}]]',	type: 'select',valueMap:mxTypes,allowEmptyValue:true,autoFetchData:false},
+			{width:'170',		name:'djName',            title:'[[#{djName}]]'},
+			{width:'170',		name:'djTime',    		title:'[[#{djTime}]]'},
+			{width:'200',		name:'updateName',   			title:'[[#{updateName}]]'},
+			{width:'200',		name:'updateTime',    		title:'[[#{updateTime}]]'}
+			
+	],
+	edit: [
+		{validators:[
+            {
+                expression:"^[0-9a-zA-Z]+$",
+                type:"regexp"
+            }
+        ],width:200,		name:'custNo',		title:'[[#{custNo}]]',primaryKey:true,canEdit:true,required:true},
+		{width:200,		name:'mxType',		title:'[[#{mxType}]]',required:true,type: 'select',valueMap:mxTypes,allowEmptyValue:true,autoFetchData:false},
+	    {width:200,		name:'custName',			title:'[[#{custName}]]',required:true}
+]
+};
+//发债企业列表数据源
+isc.FwRestDataSource.create({
+	ID: 'issueBondsDS',
+    fields: IssueBondsFields.grid,
+   	fetchDataURL: '[[@{/irs/issueBonds/queryIssueBonds}]]',
+    dataURL: '[[@{/irs/issueBonds/isc}]]'
+});
+
+//客户列表
+isc.FwListGrid.create({
+	ID: 'issueBondsListGrid',
+	title: '<b>发债企业列表</b>',
+	dataSource: issueBondsDS,
+	fields: IssueBondsFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%'],
+	    fields: IssueBondsFields.query
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	ID: "issueBondsForm",
+        	numCols:4,
+        	titleWidth:150,
+        	colWidths: [190, "*"],
+        	dataSource: issueBondsDS,
+            fields: IssueBondsFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+        ],
+        okButtonClick: function(){
+        	if(issueBondsForm.validate()){
+        		if(this._fwAction=='add'){
+          	isc.FwRPCManager.get({
+               	url:'[(@{/irs/issueBonds/isExistsIssueBonds})]',
+               	urlParameters: {custNo:issueBondsForm.getValues().custNo},
+                callback: function(response, rawData, request){
+                	if(rawData == "1"){
+                		isc.say("客户已存在，无法保存");
+                		return;
+                	}
+                }
+             });
+        		}
+            this.Super('okButtonClick',arguments);
+        	}
+          },
+          afterFormSubmit: function(dsResponse, data, dsRequest){
+        	  issueBondsListGrid.invalidateCache();
+         	 this.Super('afterFormSubmit',arguments);	
+          }
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	changeActionMemberButtonStatus: function(record, recordList){
+		var status=roleShow==true?'enable':'disable';
+   		this.setActionMemberButtonStatus(status,['add']);
+   		this.setActionMemberButtonStatus(status,['update']);
+   		this.setActionMemberButtonStatus(status,['remove']);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+	}
+});
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				issueBondsListGrid
+			]
+		})
+	}
+});
+//验证输入框内不能输入特殊字符，输入前先作判断
+function processSpelChar() {
+    var code;
+    var character;
+    if (document.all) {
+        code = window.event.keyCode;
+    } else {
+        code = arguments.callee.caller.arguments[0].which;
+    }
+    var character = String.fromCharCode(code);
+    var txt = new RegExp(/["'<>%;)(&+]/);
+    if (txt.test(character)) {
+        if (document.all) {
+            window.event.returnValue = false;
+        } else {
+            arguments.callee.caller.arguments[0].preventDefault();
+        }
+    }
+}
+</script>
+</html>

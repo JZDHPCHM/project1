@@ -1,0 +1,22 @@
+[
+	{
+		"type": "CATEGORY",
+		"id": "menuitem.irs.rating",
+		"title": "[(#{menuitem.irs.rating})]",
+		"order": 300
+	},
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.rating",
+		"id": "menuitem.irs.rating.companyrating",
+		"title": "[(#{menuitem.irs.rating.companyrating})]",
+		"order": 700
+	},
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.rating",
+		"id": "menuitem.irs.rating.companyrating.task",
+		"title": "[(#{menuitem.irs.rating.companyrating.task})]",
+		"order": 800
+	}	
+]

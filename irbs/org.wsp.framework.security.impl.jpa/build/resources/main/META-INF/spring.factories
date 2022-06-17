@@ -1,0 +1,4 @@
+# Auto Configuration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.wsp.framework.security.impl.jpa.autoconfigure.JpaAuditorProviderAutoConfiguration,\
+org.wsp.framework.security.impl.jpa.autoconfigure.WebSecurityAutoConfiguration

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>预警信号列表</title>
+<style type="text/css">
+.form-group {
+	margin-bottom: 10px;
+}
+
+.ibox-content {
+	padding: 10px;
+}
+
+.modal-lg {
+	width: 600px;
+}
+
+.statistical-block {
+	padding-bottom: 10px;
+	color: #ff0000;
+	font-weight: bolder;
+}
+
+.statistical-level {
+	display: inline-block;
+}
+
+#searchShop {
+	line-height: 28px;
+	text-indent: 5px;
+	width: 180px;
+	float: left;
+	height: 34px;
+	border: 1px solid #e5e6e7;
+	border-radius: 2px;
+}
+
+.searchShopBtn {
+	font-size: 0;
+	padding-left: 15px;
+	padding-right: 15px;
+	background-repeat: no-repeat;
+	background-position: 8px 5px;
+}
+/* 小的搜索图标 */
+.searchIcon {
+	background-image:
+		url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABlElEQVQ4T52TP2uUQRDGn+c4sEqjglj4NQKCKDYWKnZpRIsgaCPO7BsQsQoW/oGTfRaVw8YqhYoIiliIEIOFhKQRP4Q2oiA2V+zKyr3HmzPkDrfa3Zn57ew8M0RnNU1zOud8HsBxAEfGpi8kb8cYn3Z92z3bjZldJVmDVyR9au/d/SiAxwBeSlqdhvwFNE1zLee8fzeHzgNLJC9KOteF0MzOkrwuqaa95woh3Mw5H0wpNZMvmNmjXq/3Lsb4ahag2s3sa0rp8ATg7t8lHZgnuPq4+xsAFyT9rGe6e5E0KeYskLuvklyPMW60gF+SFmYFdlS51e/37w0Gg98tYJtkiDF+nAfi7huSTkxqEEJYLqVcknRsFsDdL5NciDHe39FI7v68lLKWUnq9F8Td1yWd3NEHnb9VGb9JujINCSHcBbBYSqnBW5IW/2nlscYDkqcA7APwGcASgM1SysOU0pqZ3SF5A8CHNpNd5TOzQ3WgRqPR++Fw+KObkZk9IFnn5m2M8czc+k9BnpBcBvDivwDjjnxWR/4PuhKbIiKS30kAAAAASUVORK5CYII=);
+}
+/*查询结果对应的显示框css*/
+.searchResult {
+	position: absolute;
+	top: 47px;
+	right: 70px;
+	width: 180px;
+	border: 1px solid #e4e7ee;
+	border-top: 0;
+	border-bottom: 0;
+	background: #fff;
+	max-height: 279px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	z-index: 2;
+}
+
+/*列表都是li组成css*/
+.searchResult li {
+	border-bottom: 1px solid #e4e7ee;
+	line-height: 30px;
+	padding-left: 4px;
+	width: 176px;
+	list-style: none;
+}
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+		                    	<h5>查询</h5>
+		                    </div>
+		                    <div class="ibox-content" style="padding-bottom: 0;">
+	                    	<form class="form-horizontal" id="formSearch">
+							<div class="form-group">
+								<label class="col-sm-1 control-label">承租人名称</label>
+								<div class="col-sm-2">
+									<input id="lesseeName" type="text" placeholder="模糊查找"
+										name="custname" class="form-control">
+									<!-- <label for="searchShop" class="clear pos-a" style="top:17px;">
+										<input type="text" id="searchShop" placeholder="模糊搜索">
+										<input type="button" value="搜索" class="searchIcon searchShopBtn">
+									</label>
+									<ul id="searchResult" class="searchResult"></ul> -->
+									<!-- <select class="chosen-select" id="custname" name="custname">
+										<option value=''>请选择</option>
+										<option th:each="option: ${@AftWarnInfoServiceImpl.findCustName()}" th:value="${option.key}" th:text="${option.value}"></option>
+									</select> -->
+								</div>
+								<label class="col-sm-1 control-label">预警小类</label>
+								<div class="col-sm-2">
+									<!-- <select class="chosen-select" name="warnSmalt" id="warnSmalt">
+				 						<option value=''>请选择</option>
+				 						<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('R001',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+										<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('R002',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+										<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('R003',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+									</select> -->
+									<input id="warningSmall" type="text" name="warnSmalt"
+										placeholder="模糊查找" class="form-control">
+								</div>
+								<label class="col-sm-1 control-label">预警级别</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" name="level" id="level">
+										<option value=''>请选择</option>
+										<option
+											th:each="option: ${@frSystemDictionaryService.getDictionaryMap('RULE_WARN_LEVEL',#locale)}"
+											th:value="${option.key}" th:text="${option.value}"></option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label">推送状态</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" id="status" name="status">
+										<option value=''>请选择</option>
+										<option
+											th:each="option: ${@frSystemDictionaryService.getDictionaryMap('PushState',#locale)}"
+											th:value="${option.key}" th:text="${option.value}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">关联人类型</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" id="custType" name="custType">
+										<option value=''>请选择</option>
+										<option value="0">子公司</option>
+										<option value="1">母公司</option>
+										<option value="2">兄弟公司</option>
+										<option value="3">供应商</option>
+										<option value="4">担保方</option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label">预警类别</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" name="warnType" id="warnType">
+										<option value=''>请选择</option>
+										<option
+											th:each="option: ${@frSystemDictionaryService.getDictionaryMap('WARN_CATE',#locale)}"
+											th:value="${option.key}" th:text="${option.value}"></option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label">预警规则</label>
+								<div class="col-sm-2">
+									<!-- <select class="chosen-select" id="warnRule" name="warnRule">
+										<option value=''>请选择</option>
+										<option th:each="option: ${@AftWarnInfoServiceImpl.findRuleName()}" th:value="${option.key}" th:text="${option.value}"></option>
+									</select> -->
+									<input id="warningRule" name="warnRule" type="text"
+										placeholder="模糊查找" class="form-control">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">预警时间</label>
+								<div class="col-sm-3">
+									<div class="input-daterange input-group" id="datepicker">
+										<input id="date2" type="text" class="form-control"
+											name="date2" placeholder="请选择开始日期" readonly /> <span
+											class="input-group-addon">至</span> <input id="date1"
+											type="text" class="form-control" name="date1"
+											placeholder="请选择结束日期" readonly />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<b id="btn-query" class="btn btn-success">查询</b> <b
+										id="btn-reset" class="btn btn-success">重置</b> <b id="btn-push"
+										class="btn btn-success">推送</b>
+								</div>
+							</div>
+						</form>	
+	                    </div>
+						</div>
+						<div class="statistical-block">
+							<div class="statistical-level" id="high">
+								高风险预警信号：（<span id="highSignal">0</span>）
+							</div>
+							<div class="statistical-level"
+								style="padding-left: 30px; color: #FF9900;">
+								中风险预警信号：（<span id="middSignal">0</span>）
+							</div>
+						</div>
+						<!-- 模态窗口 -->
+						<div class="jqGrid_wrapper">
+							<table id="table_list"></table>
+							<div id="pager_list"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/js/seachList.js?t=2"></script>
+
+<script type="text/javascript">
+	
+$.ajax({
+	url: "/warn/groupWarn",
+	async:false,
+	success: function(result){
+		$("#highSignal").html(result[0].COUNT);
+		$("#middSignal").html(result[1].COUNT);
+	}
+});
+
+	$('.chosen-select').chosen({width: "100%"});
+	var form="";
+	$('#btn-query').click(function(){
+		form = $('#formSearch').serializeObject();
+	    $("#table_list").jqGrid('setGridParam', {postData:form}).trigger("reloadGrid");
+	});
+	$('#btn-push').click(function(){
+		  var ids = $("#table_list").jqGrid('getGridParam', 'selarrrow');//获取 多行数据
+		  var par="";
+		  
+		  for(var i=0;i<ids.length;i++){
+			  var rowData = $("#table_list").jqGrid('getRowData', i+1);  
+			  par+=rowData.id+",";
+		  }
+		$.ajax({
+				url: "/warn/warningByCode",
+				data:{ids:par},
+				async:false,
+				success: function(result){
+					if(result){
+						swal({
+			                title: "提示",
+			                text: "推送成功！",
+			                type: "success"
+			            });
+						//alert("推送成功！");
+					}else{
+						swal({
+			                title: "提示",
+			                text: "推送失败！",
+			                type: "error"
+			            });
+						//alert("推送失败！");
+					}
+		      }})
+	});
+	//重置按钮
+	$("#btn-reset").click(function(){
+		$("#formSearch input").val("");
+		$("#formSearch select").val("");
+		$("#formSearch select").trigger("chosen:updated");
+	});
+	/* $('#formSearch .input-daterange').datepicker({
+		keyboardNavigation: false,
+	    forceParse: false,
+	    autoclose: true
+	}); */
+	$("#date1").datepicker('setDate', new Date());//设置显示当前日期
+	$("#date2").datepicker('setDate', new Date());//设置显示当前日期
+	/* $("#date1").datepicker({
+		changeYear : true,
+		changeMonth : true,
+		numberOfMonths : 1,
+		showButtonPanel: true,
+		onSelect : function(selectedDate) {
+		$("#date2").datepicker("option", "minDate", selectedDate);  }
+	});		 
+	$("#date2").datepicker({
+		changeYear : true,
+		changeMonth : true,
+		numberOfMonths : 1,
+		showButtonPanel: true,
+		onSelect : function(selectedDate) {
+		$("#date1").datepicker("option", "maxDate", selectedDate);  }
+	}); */
+	$(document).ready(function(){
+		$("#table_list").jqGrid({
+			url : "/warn/warningList",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        datatype: "json",
+	        height: 300,
+	        autowidth: true,
+	        shrinkToFit: true,
+	        //recordpos: 'left',
+	        multiselect : true, //允许多选
+	        scrollOffset : 0,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+ 	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['','承租人名称','关联人类型','预警级别','预警类别', '预警小类','预警规则', '预警详情', '预警时间', '推送状态'],
+	        colModel:[
+	        	{name:'id',index:'id', editable: true,hidden:true},
+	            {name:'lesseeid',index:'lesseeid', editable: true,width: 115}, 
+	            {name:'assotype',index:'assotype', editable: true, width: 45},
+	            {name:'warnsignlevel',index:'warnsignlevel', editable: true, width: 40,formatter:function(value,row,index){
+	            	if(!value){
+	            		return "";
+	            	}
+	            	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('RULE_WARN_LEVEL','')})][value];
+	            }},
+	            {name:'warncateid',index:'warncateid', editable: true,width: 40,formatter:function(value,row,index){
+	            	if(!value){
+	            		return "";
+	            	}
+	            	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('WARN_CATE','')})][value];
+	            }},
+	            {name:'warnsubid',index:'warnsubid', editable: true,width: 60,formatter:function(value,row,index){
+	            	if(!value){
+	            		return "";
+	            	}
+	            	if(value.indexOf("R001")>-1){
+		            	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('R001','')})][value];
+	            	}
+	            	if(value.indexOf("R002")>-1){
+		            	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('R002','')})][value];
+	            	}
+	            	if(value.indexOf("R003")>-1){
+		            	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('R003','')})][value];
+	            	}
+	            }},
+	            {name:'rulename',index:'rulename', editable: true,width: 100},
+	            {name:'warndesc',index:'warndesc', editable: true,width: 215},
+	            {name:'warntime',index:'warntime', editable: true,width: 45},
+	            {name:'pushStatus',index:'pushStatus', editable: true,width: 40,formatter:function(value,row,index){
+	            	if(!value){
+	            		return "未推送";
+	            	}
+	            	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('PushState','')})][value];
+	            }}
+	        ],
+	        pager: "#pager_list",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "response.data",
+	        	records: "response.totalRows",
+	        	//page: "response.currPage", // 当前第几页
+                total: "response.totalPages", // 总共多少页
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		$("#table_list").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+		// Setup buttons
+        $("#table_list").jqGrid('navGrid', '#pager_list',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+
+        // Add responsive to jqGrid
+        $(window).bind('resize', function () {
+            var width = $('.jqGrid_wrapper').width();
+            $('#table_list').setGridWidth(width);
+        });
+	});
+</script>
+</html>

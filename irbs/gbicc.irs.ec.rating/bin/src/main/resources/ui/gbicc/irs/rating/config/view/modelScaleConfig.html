@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+//模型标尺状态
+var ModelScaleStatus = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.CommonVersionStatus),#locale)})];
+//区间类型
+var intervalTypes = [(${@frSystemDictionaryService.getDictionaryMapJsonString('INTERVAL_TYPE',#locale)})];
+//标尺配置字段定义
+var ModelScaleDetailConfigFields = {
+		grid: [
+				{width:80,		name:'id',							title:'[(#{id})]',type: 'text',primaryKey:true,hidden:true},
+				{name:'modelScaleConfig',			hidden:true},
+				{width:'*',		name:'snum',						title:'[(#{snum})]'},
+			    {width:'*',		name:'lowerLimit',					title:'[(#{lowerLimit})]'},
+			    {width:'*',		name:'upperLimit',					title:'[(#{upperLimit})]'},
+			   /*  {width:80,		name:'defaultProbability',			title:'[(#{defaultProbability})]'}, */
+			    {width:'*',		name:'intervalType',				title:'[(#{intervalType})]',type:"select",valueMap:intervalTypes},
+			    {width:'*',		name:'pdLevel',						title:'[(#{pdLevel})]'},
+			    /* {width:'*',		name:'admissionSuggest',			title:'[(#{admissionSuggest})]'}, */
+			    {width:'*',		name:'pdLevelSP',					title:'[(#{pdLevelSP})]',hidden:true}
+			    /* {width:'*',		name:'remark',						title:'[(#{remark})]'} */
+		],
+		edit: [
+				{width:'*',		name:'id',							title:'[(#{id})]',type: 'text',primaryKey:true,hidden:true},
+				{name:'modelScaleConfig',			hidden:true},
+				{width:200,		name:'snum',						title:'[(#{snum})]',type:"float",required:true},
+			    {width:200,		name:'lowerLimit',					title:'[(#{lowerLimit})]',type:"float",required:true},
+			    {width:200,		name:'upperLimit',					title:'[(#{upperLimit})]',type:"float",required:true},
+			   /*  {width:200,		name:'defaultProbability',			title:'[(#{defaultProbability})]',type:"float",required:true}, */
+			    {width:200,		name:'intervalType',				title:'[(#{intervalType})]',type:"select",valueMap:intervalTypes,required:true},
+			    {width:200,		name:'pdLevel',						title:'[(#{pdLevel})]',required:true},
+			    /* {width:'*',		name:'admissionSuggest',			title:'[(#{admissionSuggest})]'}, */
+			    {width:200,		name:'pdLevelSP',					title:'[(#{pdLevelSP})]',hidden:true}
+			    /* {width:200,		name:'remark',						title:'[(#{remark})]',type:"textArea"} */
+		]
+}
+
+//标尺配置据源
+isc.FwRestDataSource.create({
+	ID: 'ModelScaleDetailConfigDS',
+	autoFetchData:false,
+    fields: ModelScaleDetailConfigFields.grid,
+    dataURL: '[(@{/irs/modelScaleDetailConfig/isc})]',
+    fetchDataURL:'[(@{/irs/modelScaleDetailConfig/isc/listScaleDetailsByMainId})]'
+});
+
+//标尺配置列表
+isc.FwListGrid.create({
+	ID: 'modelScaleDetailConfigGrid',
+	title: '<b>标尺配置列表</b>',
+	dataSource: ModelScaleDetailConfigDS,
+	sortField: 'lowerLimit',
+	canHover:true,
+	autoFetchData:false,
+	fields: ModelScaleDetailConfigFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	editWindow: {
+		showOperateSuccessMessage: true,
+        form: {
+            dataSource: ModelScaleDetailConfigDS,
+            fields: ModelScaleDetailConfigFields.edit
+        },
+        afterShow: function(action){
+        	this.Super('afterShow',arguments);
+        	var mainScaleRecord = modelScaleConfigGrid.getSelectedRecord();
+        	if(mainScaleRecord){
+        		this.getForm().setValue('modelScaleConfig',mainScaleRecord);
+        	}else{
+        		isc.say("无法获取模型信息！");
+        	}
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh',
+		{
+			title:"<span class='fa fa-plus'></span> 新增",
+			name:"add_detail",
+			click:function(){
+				if(modelScaleConfigGrid.getSelectedRecord()){
+					this.target.add();
+                }else{
+                    isc.say('请先选择左侧主标尺,然后重试！');
+                }
+			}
+		}
+		,'update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		var mainScaleRe = modelScaleConfigGrid.getSelectedRecord();
+		var status = mainScaleRe.scaleStatus;
+		this.setActionMemberButtonStatus('disable',['remove']);
+		this.setActionMemberButtonStatus('disable',['update']);
+		this.setActionMemberButtonStatus('disable',['add_detail']);
+		if(status == "DRAFT"){
+			this.setActionMemberButtonStatus('enable',['remove']);
+			this.setActionMemberButtonStatus('enable',['update']);
+			this.setActionMemberButtonStatus('enable',['add_detail']);
+		}
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+
+//字段定义
+var ModelScaleConfigFields ={
+	query: [
+			{width:'*',		name:'scaleName',					title:'[(#{scaleName})]',type: 'text'},
+			{width:'*',		name:'modelCode',					title:'[(#{modelCode})]',type: 'text',	operator:'equals'},
+	],
+	grid: [
+			{width:80,		name:'id',							title:'[(#{id})]',type: 'text',primaryKey:true,hidden:true},
+			{width:120,		name:'scaleCode',					title:'[(#{scaleCode})]'},
+			{width:120,		name:'scaleName',					title:'[(#{scaleName})]'},
+		    {width:'*',		name:'scaleDesc',					title:'[(#{scaleDesc})]'},
+		    {width:80,		name:'scaleStatus',					title:'[(#{scaleStatus})]',type: 'select',valueMap:ModelScaleStatus,allowEmptyValue:true,autoFetchData:false},
+		    {width:80,		name:'scaleVersion',				title:'[(#{scaleVersion})]'},
+		    {width:80,		name:'isVaild',						title:'[(#{isVaild})]',type:"boolean"}
+	],
+	edit: [
+			{width:80,		name:'id',							title:'[(#{id})]',type: 'text',primaryKey:true,hidden:true},
+			{width:'*',		name:'scaleCode',					title:'[(#{scaleCode})]'},
+			{width:'*',		name:'scaleName',					title:'[(#{scaleName})]'},
+		    {width:'*',		name:'scaleDesc',					title:'[(#{scaleDesc})]',type:"textArea",colSpan:3},
+		    {width:'*',		name:'isVaild',						title:'[(#{isVaild})]',type:"boolean",defaultValue:1}
+	]
+};
+
+//标尺主表据源
+isc.FwRestDataSource.create({
+	ID: 'ModelScaleConfigDS',
+    fields: ModelScaleConfigFields.grid,
+    dataURL: '[(@{/irs/modelScaleConfig/isc})]'
+});
+
+//标尺主表列表
+isc.FwListGrid.create({
+	ID: 'modelScaleConfigGrid',
+	title: '<b>标尺列表</b>',
+	dataSource: ModelScaleConfigDS,
+	sortField: 'modelCode',
+	canHover:true,
+	fields: ModelScaleConfigFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: ModelScaleConfigFields.query
+	},
+	editWindow: {
+		width:800,
+		height:600,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: ModelScaleConfigDS,
+            fields: ModelScaleConfigFields.edit
+        },
+        afterShow: function(action){
+        	
+        },
+        actionMembers:[
+               		'ok','close'
+               	]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update',
+		{
+			title:'<span class="fa fa-clone"></span> 复制',
+			click:function(){
+				var mainScale = modelScaleConfigGrid.getSelectedRecord();
+				if(mainScale){
+					isc.FwRPCManager.post({
+	                   	url:'[(@{/irs/modelScaleConfig/isc/copyScale})]',
+	                   	urlParameters:{
+	                    	scaleId: mainScale.id
+	                    },
+	                    callback: function(){
+	                    	modelScaleConfigGrid.invalidateCache();
+	                    }
+	                });
+				}else{
+					isc.say("请选择要复制的标尺！");
+				}
+			}
+		},
+		{
+			title:'<span class="fa fa-check-circle"></span> 发布',
+			name:"RELEASE_BTN",
+			disabled:true,
+			click:function(){
+				var mainScale = modelScaleConfigGrid.getSelectedRecord();
+				if(mainScale){
+					isc.FwRPCManager.post({
+	                   	url:'[(@{/irs/modelScaleConfig/isc/releaseScale})]',
+	                   	urlParameters:{
+	                    	scaleId: mainScale.id
+	                    },
+	                    callback: function(){
+	                    	modelScaleConfigGrid.invalidateCache();
+	                    }
+	                });
+				}else{
+					isc.say("请选择要发布的标尺！");
+				}
+				
+			}
+		},
+		'remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+		//加载标尺详细配置数据
+		modelScaleDetailConfigGrid.fetchData({"scaleMainId":record.id});
+		var status = record.scaleStatus;
+		modelScaleDetailConfigGrid.setActionMemberButtonStatus('disable',['remove']);
+		modelScaleDetailConfigGrid.setActionMemberButtonStatus('disable',['update']);
+		modelScaleDetailConfigGrid.setActionMemberButtonStatus('disable',['add_detail']);
+		if(status == "DRAFT"){
+			modelScaleDetailConfigGrid.setActionMemberButtonStatus('enable',['remove']);
+			modelScaleDetailConfigGrid.setActionMemberButtonStatus('enable',['update']);
+			modelScaleDetailConfigGrid.setActionMemberButtonStatus('enable',['add_detail']);
+		}
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		if(record){
+			var status = record.scaleStatus;
+			this.setActionMemberButtonStatus('disable',['remove']);
+			this.setActionMemberButtonStatus('disable',['update']);
+			this.setActionMemberButtonStatus('disable',['RELEASE_BTN']);
+			if(status == "DRAFT"){
+				this.setActionMemberButtonStatus('enable',['RELEASE_BTN']);
+				this.setActionMemberButtonStatus('enable',['remove']);
+				this.setActionMemberButtonStatus('enable',['update']);
+			}
+		}
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				modelScaleConfigGrid,
+				modelScaleDetailConfigGrid
+			]
+		})
+	}
+});
+</script>
+</html>

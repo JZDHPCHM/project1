@@ -1,0 +1,10 @@
+group='net.gbicc'
+
+dependencies {
+    compile(
+        "org.wsp:org.wsp.framework.core:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa:${framework_version}",
+        "org.wsp:org.wsp.framework.mvc:${framework_version}",
+        project(":org.framework.ui.inspinia")
+	)
+}

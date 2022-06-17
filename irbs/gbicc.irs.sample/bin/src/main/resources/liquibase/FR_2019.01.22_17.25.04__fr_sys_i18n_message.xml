@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FR_2019.01.22_17.25.04__fr_sys_i18n_message.xml -->
+<export>
+  <summary>
+    <t name="fr_sys_i18n_message">SELECT * FROM  fr_sys_i18n_message </t>
+  </summary>
+  <table name="fr_sys_i18n_message">
+    <sql>SELECT * FROM  fr_sys_i18n_message</sql>
+      <fields>
+        <field name="FD_ID"                        type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CODE"                      type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_LANG"                      type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_MESSAGE"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATOR"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATE_DATE"               type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+        <field name="FD_LAST_MODIFIER"             type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_LAST_MODIFYDATE"           type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+      </fields>
+    <resultset>
+       <row>
+        <f>6d1904c2-3a67-4943-85a7-1e2ff3eb4494</f>
+        <f>dictionary.FinancialStatementTemplateType</f>
+        <f>zh_CN</f>
+        <f>系统标准财报模板</f>
+        <f>admin</f>
+        <f>2018-10-16 15:36:24.0</f>
+        <f>admin</f>
+        <f>2018-10-16 15:38:40.0</f>
+      </row>
+      <row>
+        <f>293bfa74-ce03-4703-8e7b-ef3aa0baa41f</f>
+        <f>dictionary.FinancialStatementTemplateType.COMMON</f>
+        <f>zh_CN</f>
+        <f>通用财报</f>
+        <f>admin</f>
+        <f>2018-10-16 15:36:50.0</f>
+        <f>admin</f>
+        <f>2018-10-16 15:36:50.0</f>
+      </row>
+      <row>
+        <f>136A1650B37D45BDB04359DBAEBBC4D5</f>
+        <f>dictionary.FinancialStatementTemplateType.GENERALENTERPRISE</f>
+        <f>zh_CN</f>
+        <f>一般企业新准则</f>
+        <f>admin</f>
+        <f>2019-01-28 16:45:32.0</f>
+        <f>admin</f>
+        <f>2019-01-28 16:45:32.0</f>
+      </row>
+      <row>
+        <f>aac2cbee-867f-4f2e-8720-672cf91fbffa</f>
+        <f>dictionary.FinancialStatementTemplateType.GENERALENTERPRISEOLD</f>
+        <f>zh_CN</f>
+        <f>一般企业旧准则</f>
+        <f>admin</f>
+        <f>2019-01-28 16:28:43.58</f>
+        <f>admin</f>
+        <f>2019-01-28 16:28:43.58</f>
+      </row>
+     
+      <row>
+        <f>8ca258cd-3040-4709-bc6c-5fc52036dac3</f>
+        <f>dictionary.FinancialStatementTemplateType.INSTITUTION</f>
+        <f>zh_CN</f>
+        <f>事业单位新准则</f>
+        <f>admin</f>
+        <f>2018-10-16 15:37:58.0</f>
+        <f>admin</f>
+        <f>2018-10-16 15:37:58.0</f>
+      </row>
+      <row>
+        <f>CC9D3AF9E8B54F62962800DCF8BA1BC6</f>
+        <f>dictionary.FinancialStatementTemplateType.INSTITUTIONOLD</f>
+        <f>zh_CN</f>
+        <f>事业单位旧准则</f>
+        <f>admin</f>
+        <f>2019-01-28 16:46:34.0</f>
+        <f>admin</f>
+        <f>2019-01-28 16:46:34.0</f>
+      </row>
+      <row>
+        <f>3876744B1DE7438886B14262856B0EF7</f>
+        <f>dictionary.FinancialStatementTemplateType.SMALLENTERPRISE</f>
+        <f>zh_CN</f>
+        <f>小企业一般准则</f>
+        <f>admin</f>
+        <f>2019-01-28 16:38:44.0</f>
+        <f>admin</f>
+        <f>2019-01-28 16:38:44.0</f>
+      </row>
+      <row>
+        <f>864C52E9453C46DA9A5C2415CF3F7F24</f>
+        <f>dictionary.FinancialStatementTemplateType.SMALLENTERPRISEOLD</f>
+        <f>zh_CN</f>
+        <f>小企业简易准则</f>
+        <f>admin</f>
+        <f>2019-01-28 16:38:44.0</f>
+        <f>admin</f>
+        <f>2019-01-28 16:38:44.0</f>
+      </row>
+      <row>
+        <f>05212ed0-b8a0-4b5a-8c30-732a175aaa9e</f>
+        <f>dictionary.ACCOUNT_CLASSIFICATION</f>
+        <f>zh_CN</f>
+        <f>财报科目分类</f>
+        <f>admin</f>
+        <f>2018-10-25 10:44:02.0</f>
+        <f>admin</f>
+        <f>2018-10-25 10:44:02.0</f>
+      </row>
+       <row>
+        <f>0d4f3ab6-9374-4ff2-8859-211a3e7abeec</f>
+        <f>dictionary.ACCOUNT_CLASSIFICATION.PROFIT_AND_LOSS_STATEMENT</f>
+        <f>zh_CN</f>
+        <f>损益表</f>
+        <f>admin</f>
+        <f>2018-10-25 10:45:10.0</f>
+        <f>admin</f>
+        <f>2018-10-25 10:45:10.0</f>
+      </row>
+      <row>
+        <f>369d1624-83ea-4634-b173-3f4329b81728</f>
+        <f>dictionary.ACCOUNT_CLASSIFICATION.INCOME_STATEMENT_AND_PROFIT_APPR</f>
+        <f>zh_CN</f>
+        <f>利润及利润分配表</f>
+        <f>admin</f>
+        <f>2018-10-25 10:45:35.0</f>
+        <f>admin</f>
+        <f>2018-10-25 10:45:35.0</f>
+      </row>
+
+      <row>
+        <f>71985f5d-199e-4bc2-9fb3-af971c77bff3</f>
+        <f>dictionary.ACCOUNT_CLASSIFICATION.BALANCE_SHEET_SIMPLE</f>
+        <f>zh_CN</f>
+        <f>资产负债简表</f>
+        <f>admin</f>
+        <f>2018-10-25 10:44:39.0</f>
+        <f>admin</f>
+        <f>2018-10-25 10:44:39.0</f>
+      </row>
+      <row>
+        <f>960c17e6-f335-412d-b651-2b8c44c674df</f>
+        <f>dictionary.ACCOUNT_CLASSIFICATION.BALANCE_SHEET</f>
+        <f>zh_CN</f>
+        <f>资产负债表</f>
+        <f>admin</f>
+        <f>2018-10-25 10:44:24.0</f>
+        <f>admin</f>
+        <f>2018-10-25 10:44:24.0</f>
+      </row>
+      <row>
+        <f>db26c5f9-e198-4712-b892-bf7d2d0eb72c</f>
+        <f>dictionary.ACCOUNT_CLASSIFICATION.CASH_FLOW_STATEMENT</f>
+        <f>zh_CN</f>
+        <f>现金流量表</f>
+        <f>admin</f>
+        <f>2018-10-25 10:44:56.0</f>
+        <f>admin</f>
+        <f>2018-10-25 10:44:56.0</f>
+      </row>
+      <row>
+        <f>fd06e4b5-3462-443e-b08c-ae57f58ae048</f>
+        <f>dictionary.ACCOUNT_CLASSIFICATION.INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>zh_CN</f>
+        <f>收入支出表</f>
+        <f>admin</f>
+        <f>2018-10-25 10:45:23.0</f>
+        <f>admin</f>
+        <f>2018-10-25 10:45:23.0</f>
+      </row>
+    </resultset>
+  </table>
+</export>

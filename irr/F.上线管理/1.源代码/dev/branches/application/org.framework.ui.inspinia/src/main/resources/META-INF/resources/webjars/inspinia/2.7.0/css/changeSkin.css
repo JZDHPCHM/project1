@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+.top-navigation .nav > li a:hover, .top-navigation .nav > li a:focus {
+    color: #1c84c6;
+}
+.form-control:focus{
+	border: 1px solid #1c84c6;
+}
+.chosen-container-active.chosen-with-drop .chosen-single{
+	border: 1px solid #1c84c6;
+}
+.chosen-container-active .chosen-choices{
+	border: 1px solid #1c84c6;
+}
+.chosen-container .chosen-results li.highlighted{
+	background-color: #1c84c6;
+}
+.ui-jqgrid-btable>tbody>tr:nth-of-type(even) {
+    
+}
+.ibox-content{
+	border-width: 0;
+}
+.ui-state-default, .ui-widget-content .ui-state-default{
+	background: #ecebeb;
+}
+.ui-jqgrid-labels{
+	height: 30px;
+	font-size: 14px;
+}
+.sk-spinner-wave div{
+	background-color: #1c84c6;
+}

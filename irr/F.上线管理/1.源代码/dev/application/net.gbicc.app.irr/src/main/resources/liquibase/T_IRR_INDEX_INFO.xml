@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="T_IRR_INDEX_INFO" author="fc">
+        <createTable tableName="T_IRR_INDEX_INFO" remarks="指标信息表">
+			<column name="ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键ID">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="INDEX_LINE"        	type="number(4,1)"      				remarks="行次"></column>
+			<column name="INDEX_CODE"        	type="java.sql.Types.VARCHAR(20)"      	remarks="指标编码"></column>
+			<column name="INDEX_NAME"        	type="java.sql.Types.VARCHAR(300)"      remarks="指标名称"></column>
+			<column name="PROJ_TYPE_ID"      	type="java.sql.Types.VARCHAR(36)"      	remarks="评估项目ID"></column>
+			<column name="PROJ_TYPE_NAME"       type="varchar(50)"      	 			remarks="评估项目名称"></column>
+			<column name="INDEX_RESULT_TYPE"    type="java.sql.Types.VARCHAR(10)"      	remarks="指标结果类型"></column>
+			<column name="INDEX_VALUE"        	type="number(5,2)"       				remarks="指标分值"></column>
+			<column name="INDEX_DESC"        	type="java.sql.Types.VARCHAR(4000)"     remarks="指标说明"></column>
+			<column name="EVAL_CRIT"        	type="java.sql.Types.VARCHAR(4000)"     remarks="评价标准"></column>
+			<column name="SCOR_TYPE"        	type="java.sql.Types.VARCHAR(10)"      	remarks="评分类型"></column>
+			<column name="XBRL_INDEX_NAME"      type="java.sql.Types.VARCHAR(200)"      remarks="XBRL指标名称"></column>
+			<column name="XBRL_INDEX_ELEMENT"   type="java.sql.Types.VARCHAR(200)"      remarks="XBRL指标元素"></column>
+			<column name="COLLECTION_WAY"       type="java.sql.Types.VARCHAR(10)"      	remarks="采集方式"></column>
+			<column name="INDEX_UNIT"      		type="java.sql.Types.VARCHAR(10)"      	remarks="指标单位"></column>
+			<column name="INDEX_FORMULA"      	type="varchar(4000)"      				remarks="指标公式"></column>
+			<column name="INDEX_FORMULA_CODE"   type="varchar(4000)"      				remarks="指标公式编码"></column>
+			<column name="INDEX_EVAL_FORM"      type="varchar(4000)"      				remarks="指标可计算公式"></column>
+			<column name="INDEX_LEVEL"      	type="varchar(10)"      				remarks="指标层级"></column>
+			<column name="PFM_LEVEL"      		type="varchar(15)"      				remarks="绩效层级"></column>
+			<column name="INDEX_STATUS"      	type="varchar(10)"      				remarks="指标状态"></column>
+			<column name="DECIMAL_PLACE"      	type="number(8,0)"      				remarks="小数位数"></column>
+			<column name="IS_SCORE_INDEX"      	type="varchar(5)"      					remarks="是否得分指标"></column>
+			<column name="IS_XBRL"      		type="varchar(5)"      					remarks="是否上报Y/N"></column>
+			<column name="IS_APPLICABIE"      	type="varchar(5)"      					remarks="是否适用"></column>
+			<column name="IS_PFM"      			type="varchar(5)"      					remarks="是否绩效指标"></column>
+			<column name="PFM_DESC"      		type="varchar(1000)"      				remarks="绩效描述"></column>
+			<column name="PFM_FORMULA"      	type="varchar(1000)"      				remarks="绩效公式"></column>
+			<column name="PFM_FORMULA_CODE"     type="varchar(500)"      				remarks="绩效公式编码"></column>
+			<column name="PFM_EVAL_FORM"      	type="varchar(150)"      				remarks="绩效可计算公式"></column>
+			<column name="DATA_BODY"      		type="varchar(50)"      				remarks="主体编码"></column>
+			<column name="FD_CREATOR"           type="java.sql.Types.VARCHAR(255)"  	remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"       type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"     type="java.sql.Types.VARCHAR(255)"  	remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"   type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

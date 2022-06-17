@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+</head>
+<body>
+</body>
+<script>
+    var newData = [];
+    var typeVal = 1;
+var typeMap ={
+		'1' : '表内授信余额',
+		'2' : '表外授信余额'
+	};
+tQueryQuarter.push(
+		{width:'*',		name:'type',		title:'类型',type: 'select',operator:'equals',valueMap: typeMap,defaultToFirstOption:true,
+		changed: function(form, item, value){
+            typeVal = value;
+		}
+	});
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQueryQuarter,
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{
+				name:'guestGr',					
+				title:'客户评级',
+				getGridSummary:function (records, summaryField) {
+					return "合计";
+	            }
+			},
+			{name:'grantNum',			title:'授信余额',summaryFunction: function() {return sumData['grantNum'];} },//新增客户数目
+		    {name:'compQuarterGrantNum',			title:'授信余额较上季末<br>变动度',summaryFunction: function() {return formatPer(sumData['compQuarterGrantNum']);} },//占比
+			{name:'compYearGrantNum',			title:'授信余额较去年同季度<br>变动度',summaryFunction: function() {return formatPer(sumData['compYearGrantNum']);} },//新增客户数目
+		    {name:'grantPer',			title:'授信余额占比',summaryFunction: function() {return formatPer(sumData['grantPer']);} },//占比
+			{name:'compQuarterGrantPer',			title:'授信余额占比较上季末<br>变动度',summaryFunction: function() {return formatPer(sumData['compQuarterGrantPer']);} },//授信余额占比较上季末变动度
+		    {name:'compYearGrantPer',			title:'授信余额占比较去年<br>同季度变动度',summaryFunction: function() {return formatPer(sumData['compYearGrantPer']);} },//占比
+	]
+};
+
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields: BorrowKeyBussFields.grid,
+    fetchDataURL: '[[@{/irs/report_analyseTrend/isc/fetchData}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>整体客户评级趋势分布</b>',
+	dataSource: report_borrowKeyBussDS,
+	//sortField: 'guestGr',
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	canPageable: false,
+	fields: BorrowKeyBussFields.grid,
+	headerSpans: [
+      {
+          fields: ["grantNum", "compQuarterGrantNum","compYearGrantNum",
+                   "grantPer","compQuarterGrantPer","compYearGrantPer"], 
+          title: "本季末"
+      }
+    ],
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	exportFilename:'整体借款人评级分布',
+	exportActionMembers:['export2Excel','exportAll2Excel'],
+	actionMembers:[
+		'query','reset',{
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+					url:"[(@{/irs/report_analyseTrend/isc/fetchData/Results.csv})]",
+					"year":year,"quarter":quarter,"type":typeVal,
+					fileName:  "整体客户评级趋势分布",
+                    sortBy: "guestGr"
+				});
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+    query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_analyseTrend/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year,"quarter":quarter,"type":typeVal},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                sumData = [];
+                newData=[];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.guestGr==='合计'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                borrowKeyBussFieldsListGrid.setData(newData);
+            }
+        });
+    },
+	afterQuery:function(dsResponse,data,dsRequest){
+		borrowKeyBussFieldsListGrid.setData(newData);
+	},
+	formatCellValue:function(value, record, rowNum, colNum){
+		var formatVal = value;
+		var fieldName = borrowKeyBussFieldsListGrid.getField(colNum).title;
+		if( colNum!=0 && colNum!=1){
+			formatVal = formatPer(value);
+		}
+		return formatVal;
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+</script>
+</html>

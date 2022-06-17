@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FR_2018.08.22_17.25.20__irs_r_debt_rating.xml -->
+<export>
+  <summary>
+    <t name="irs_r_debt_rating">select * from irs_r_debt_rating</t>
+  </summary>
+  <table name="irs_r_debt_rating">
+    <sql>select * from irs_r_debt_rating</sql>
+      <fields>
+        <field name="ID"                           type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="CUST_NO"                      type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="CUST_NAME"                    type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="CONTRACT_NO"                  type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="PATTERN_OWNERSHIP"            type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="STANDARD_INDUSTRY"            type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="CREDIT_ENVIRONMENT"           type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="ASSET_LIABILITY_RATIO"        type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="IS_OWNER"                     type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="APPLIED_AMOUNT"               type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="EAD"                          type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="MARGIN_RECOVERY_RATIO"        type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="PRODUCT_RECOVERY_RATIO"       type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="RATING_LEVEL"                 type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="B_G_RECOVERY_RATIO"           type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="MORTGAGE_RECOVERY_RATIO"      type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="LGD"                          type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATOR"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATE_DATE"               type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+        <field name="FD_LAST_MODIFIER"             type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_LAST_MODIFYDATE"           type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+      </fields>
+    <resultset>
+      <row>
+        <f>202ecaa6-7e80-4a8d-8c1c-3ac115e96dbe</f>
+        <f>SAMPLE04</f>
+        <f>案例数据04</f>
+        <f>2017029GS23333</f>
+        <f>金融机构</f>
+        <f>财产保险</f>
+        <f>北京市</f>
+        <f/>
+        <f>是</f>
+        <f>60000000</f>
+        <f>60000000</f>
+        <f>0.00</f>
+        <f>0.00</f>
+        <f>BBB+</f>
+        <f>0.9723</f>
+        <f>1</f>
+        <f>0.1123</f>
+        <f>admin</f>
+        <f>2018-08-22 16:44:36.0</f>
+        <f>admin</f>
+        <f>2018-08-22 17:12:24.0</f>
+      </row>
+      <row>
+        <f>471d84f0-5b28-4d4c-b4f6-7be81f8b14a5</f>
+        <f>SAMPLE003</f>
+        <f>桉树数据03</f>
+        <f>2017059GS56433</f>
+        <f>一般公司</f>
+        <f>床上用品制造</f>
+        <f>义乌市</f>
+        <f/>
+        <f>是</f>
+        <f>32500000</f>
+        <f>32500000</f>
+        <f>0.00</f>
+        <f>0.00</f>
+        <f>AA</f>
+        <f>0.4023</f>
+        <f>1</f>
+        <f>0.2192</f>
+        <f>admin</f>
+        <f>2018-08-22 16:42:36.0</f>
+        <f>admin</f>
+        <f>2018-08-22 17:11:27.0</f>
+      </row>
+      <row>
+        <f>55de8513-4bec-420c-9e69-1af9314f1f47</f>
+        <f>SAMPLE001</f>
+        <f>案例数据01</f>
+        <f>2017089GS23123</f>
+        <f>一般公司</f>
+        <f>陆地石油开采</f>
+        <f>乌鲁木齐</f>
+        <f/>
+        <f>是</f>
+        <f>25000000</f>
+        <f>25000000</f>
+        <f>0.00</f>
+        <f>0.00</f>
+        <f>AA+</f>
+        <f>0.8010</f>
+        <f>1.00</f>
+        <f>0.1990</f>
+        <f>admin</f>
+        <f>2018-08-22 16:40:59.0</f>
+        <f>admin</f>
+        <f>2018-08-22 17:09:30.0</f>
+      </row>
+      <row>
+        <f>86731d30-6923-4ae0-a665-6caef90d918b</f>
+        <f>SAMPLE05</f>
+        <f>案例数据05</f>
+        <f>2017086GS98632</f>
+        <f>事业单位</f>
+        <f>综合医院</f>
+        <f>上海市</f>
+        <f/>
+        <f>是</f>
+        <f>54000000</f>
+        <f>54000000</f>
+        <f>0.00</f>
+        <f>0.00</f>
+        <f>BBB</f>
+        <f>0.8923</f>
+        <f>1</f>
+        <f>0.1445</f>
+        <f>admin</f>
+        <f>2018-08-22 16:45:46.0</f>
+        <f>admin</f>
+        <f>2018-08-22 17:13:16.0</f>
+      </row>
+      <row>
+        <f>b24c2b95-59ef-4406-986e-5f793bc4c0d4</f>
+        <f>SAMPLE002</f>
+        <f>案例数据02</f>
+        <f>20173249GS2111</f>
+        <f>一般公司</f>
+        <f>方便面制造</f>
+        <f>青岛市</f>
+        <f/>
+        <f>是</f>
+        <f>42000000</f>
+        <f>42000000</f>
+        <f>0.00</f>
+        <f>1</f>
+        <f>AAA</f>
+        <f>1</f>
+        <f>1</f>
+        <f>0.012</f>
+        <f>admin</f>
+        <f>2018-08-22 16:41:54.0</f>
+        <f>admin</f>
+        <f>2018-08-22 17:10:15.0</f>
+      </row>
+    </resultset>
+  </table>
+</export>

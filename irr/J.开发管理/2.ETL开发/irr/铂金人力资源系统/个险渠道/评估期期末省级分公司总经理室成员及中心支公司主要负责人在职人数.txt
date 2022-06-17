@@ -1,0 +1,6 @@
+
+SELECT DID,COUNT(1) FROM ssa.t_person
+WHERE psntypeno='L'
+AND enddate >to_date('20180630','yyyymmdd')
+AND startdate <=to_date('20180630','yyyymmdd')
+GROUP BY DID

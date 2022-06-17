@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+// CM类型
+var cmListType = [(${@frSystemDictionaryService.getDictionaryMapJsonString('CM_TYPE',#locale)})];
+//模型列表
+var ModelList = [(${@frSystemDictionaryService.getDictionaryMapJsonString('MODEL_TYPE',#locale)})];
+var newModelList = {};
+for(modelCode in ModelList){
+	if(!modelCode.startsWith("F") && !modelCode.startsWith("B")){
+		newModelList[modelCode]=ModelList[modelCode];
+	}
+}
+//字段定义
+var IndustryParametersFields ={
+		query: [
+			{
+				width:200,		
+				name:'modelCode',		
+				title:'模型',
+				//require:true,
+				type: 'select',
+				valueMap:newModelList,
+				allowEmptyValue:true,
+				autoFetchData:false,	
+				operator:'equals'}
+		],
+		grid: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{width:200,name:'modelCode',				title:'模型',valueMap:newModelList},
+				/* {width:200,name:'excellentValue',			title:'优秀值'},
+			    {width:200,name:'goodValue',				title:'良好值'},
+				{width:200,name:'meanValue',				title:'均值'},
+				{width:200,name:'badValue',					title:'较差值'},
+			    {width:200,name:'differenceValue',			title:'差值'}, 
+				{width:200,name:'totalAssetTurnoverRate',	title:'总资产周转率'},*/
+			    {width:200,name:'assetLoadRate',			title:'Dm资产负债率'},
+			    {width:200,name:'interestBearingLoadRate',	title:'Di带息负债比率'},
+				{width:200,name:'operatingLoadRate',		title:'Rm（银行愿意承受客户的经营负债率）'},
+			    {width:200,name:'newNetAssetWeight',		title:'新建净资产法权重'},
+				{width:200,name:'generalNetAssetWeight',	title:'一般净资产法权重'},
+			    {width:200,name:'operatingRevenueWeight',	title:'营业收入法权重'}
+		],
+		edit: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{width:200,name:'modelCode',				title:'模型',valueMap:newModelList,required:true},
+				/* {width:200,name:'excellentValue',			title:'优秀值'},
+			    {width:200,name:'goodValue',				title:'良好值'},
+				{width:200,name:'meanValue',				title:'均值'},
+				{width:200,name:'badValue',					title:'较差值'},
+			    {width:200,name:'differenceValue',			title:'差值'},
+				{width:200,name:'totalAssetTurnoverRate',	title:'总资产周转率'}, */
+			    {width:200,name:'assetLoadRate',			title:'Dm资产负债率',required:true},
+			    {width:200,name:'interestBearingLoadRate',	title:'Di带息负债比率',required:true},
+				{width:200,name:'operatingLoadRate',		title:'Rm（银行愿意承受客户的经营负债率）',required:true},
+			    {width:200,name:'newNetAssetWeight',		title:'新建净资产法权重',required:true},
+				{width:200,name:'generalNetAssetWeight',	title:'一般净资产法权重',required:true},
+			    {width:200,name:'operatingRevenueWeight',	title:'营业收入法权重',required:true}
+		]
+};
+
+// 杠杆系数行业平均值数据源
+isc.FwRestDataSource.create({
+	 ID: 'IndustryParametersDS',
+ 	 fields: IndustryParametersFields.grid,
+ 	 dataURL: '[(@{/irs/IndustryParameters/isc})]'
+});
+
+
+isc.FwListGrid.create({
+	ID: 'IndustryParametersId',
+	title: '<b>客户CM配置列表</b>',
+	dataSource: IndustryParametersDS,
+	//sortField: 'industryNo',
+	canHover:true,
+	fields: IndustryParametersFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: IndustryParametersFields.query
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+      form: {
+      	numCols:4,
+      	titleWidth:150,
+      	colWidths: [190, "*"],
+          dataSource: IndustryParametersDS,
+          fields: IndustryParametersFields.edit
+      },
+      afterShow: function(action){
+     	
+      },
+      actionMembers:[
+             		'ok','close'
+      ]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+  },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				IndustryParametersId
+			]
+		})
+	}
+});
+
+</script>
+</html>

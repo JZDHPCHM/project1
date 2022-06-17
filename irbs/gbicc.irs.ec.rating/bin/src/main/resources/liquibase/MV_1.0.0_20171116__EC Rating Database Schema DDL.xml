@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="MV_1.0.0_20171116__EC Rating Database Schema DDL" author="framework">
+        	
+        <!-- 评级配置_模型标尺主表 -->
+        <createTable tableName="NS_R_CFG_SCALE" remarks="评级配置_模型标尺主表">
+        	<column name="FD_ID"						type="java.sql.Types.VARCHAR(36)"				remarks="主键">
+				<constraints primaryKey="true"/>
+			</column>
+            <column name="FD_SCALE_CODE"				type="java.sql.Types.VARCHAR(50)"				remarks="标尺编号"></column>
+			<column name="FD_SCALE_NAME"				type="java.sql.Types.VARCHAR(254)"				remarks="标尺名称"></column>
+			<column name="FD_SCALE_DESC"				type="java.sql.Types.VARCHAR(500)"				remarks="标尺描述"></column>
+			<column name="FD_STATUS"					type="java.sql.Types.VARCHAR(20)"				remarks="标尺状态"></column>
+			<column name="FD_VERSION"					type="java.sql.Types.NUMERIC(5)"				remarks="标尺版本"></column>
+			<column name="FD_ISVAILD"					type="java.sql.Types.NUMERIC(5)"				remarks="是否生效"></column>
+           	<column name="FD_CREATOR"           		type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     		type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       		type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   		type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+
+  
+        
+        <!-- 评级配置_评级配置主表 -->
+        <createTable tableName="NS_R_CFG_RATING" remarks="通用,生产模型">
+         	<column name="FD_ID"						type="java.sql.Types.VARCHAR(36)"				remarks="主键">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="FD_MODELID"           			type="java.sql.Types.VARCHAR(50)"             	remarks="模型ID"></column>
+			<column name="FD_MODELCODE"           			type="java.sql.Types.VARCHAR(50)"             	remarks="模型编号"></column>
+			<column name="FD_MODEL_VERSION"           		type="java.sql.Types.VARCHAR(50)"             	remarks="模型版本"></column>
+			<column name="FD_SCALEID"           			type="java.sql.Types.VARCHAR(36)"             	remarks="标尺ID"></column>
+			<column name="FD_STATUS"           				type="java.sql.Types.VARCHAR(20)"             	remarks="配置状态"></column>
+			<column name="FD_VERSION"           			type="java.sql.Types.SMALLINT"             		remarks="配置版本"></column>
+			<column name="FD_ISVAILD"           			type="java.sql.Types.SMALLINT"             		remarks="是否生效"></column>
+           	<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+ 		<!-- 创建外键(级联删除) -->
+        <addForeignKeyConstraint 
+        	constraintName="FK_NS_R_CFG_SCALE_FD_SCALEID" 
+        	baseTableName="NS_R_CFG_RATING" 
+        	baseColumnNames="FD_SCALEID" 
+        	referencedTableName="NS_R_CFG_SCALE" 
+        	referencedColumnNames="FD_ID"/>
+        	
+        <!-- 评级配置_评级步骤定义 -->
+        <createTable tableName="NS_R_CFG_STEPS" remarks="评级配置_评级步骤定义 ">
+       		<column name="FD_ID"						type="java.sql.Types.VARCHAR(36)"				remarks="主键">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="FD_RATINGCFG_ID"					type="java.sql.Types.VARCHAR(36)"				remarks="评级配置主表ID"></column>
+            <column name="FD_STEPCODE"						type="java.sql.Types.VARCHAR(50)"				remarks="步骤编号"></column>
+			<column name="FD_STEPNAME"           			type="java.sql.Types.VARCHAR(254)"             	remarks="步骤名称"></column>
+			<column name="FD_STEPNUM"           			type="java.sql.Types.NUMERIC(2)"             	remarks="步骤序号"></column>
+			<column name="FD_STEPTYPE"           			type="java.sql.Types.VARCHAR(20)"             	remarks="步骤类型(DL:定量,DX:定性,TZ:调整项,WB:外部支持,TF:评级推翻,OT:其它)"></column>
+			<column name="FD_RESOURCEPATH"           		type="java.sql.Types.VARCHAR(1000)"    			remarks="步骤资源路径"></column>
+           	<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+       
+        	
+		<!-- 评级数据_财报主表 -->
+        <createTable tableName="NS_RATING_FIN_STAT" remarks="评级数据_财报主表">
+            <column name="FD_ID"						type="java.sql.Types.VARCHAR(36)"			remarks="主键">
+             <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_CUST_ID"				type="java.sql.Types.VARCHAR(36)"		    remarks="客户表ID"></column>
+			<column name="FD_CUST_NO"				type="java.sql.Types.VARCHAR(100)"			remarks="信贷客户编号"></column>
+			<column name="FD_REPORT_BUSS_DATE"		type="java.sql.Types.VARCHAR(10)"			remarks="财报期数"></column>
+			<column name="FD_REPORT_SPECIFICATIONS"	type="java.sql.Types.VARCHAR(10)"			remarks="财报口径"></column>
+			<column name="FD_REPORT_CURRENCY"		type="java.sql.Types.VARCHAR(10)"			remarks="财报币种"></column>
+			<column name="FD_AUDIT_ORGANIZATION"	type="java.sql.Types.VARCHAR(254)"			remarks="审计单位(审计单位名称)"></column>
+			<column name="FD_AUDIT_OPINION"			type="java.sql.Types.VARCHAR(2000)"			remarks="审计意见"></column>
+			<column name="FD_VAILD"					type="java.sql.Types.SMALLINT"				remarks="是否有效"></column>
+			<column name="FD_IS_AUDIT"				type="java.sql.Types.VARCHAR(10)"				remarks="是否审计"></column>
+			<column name="FD_REPORT_CYCLE"			type="java.sql.Types.VARCHAR(10)"			remarks="财报周期"></column>
+			<column name="FD_REPORT_SOURCE"			type="java.sql.Types.VARCHAR(10)"			remarks="财报来源"></column>
+			<column name="FD_REPORT_TYPE"			type="java.sql.Types.VARCHAR(10)"			remarks="财报类型"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(254)"  		remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     		remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(254)"  		remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     		remarks="最后修改日期"></column>
+        </createTable>
+
+		<!-- 财报科目数据-->
+        <createTable tableName="NS_RATING_FIN_ACCOUNT_DATA" remarks="财报科目数据">
+			<column name="FD_ID"				type="java.sql.Types.VARCHAR(36)"		remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_REPORT_ID"				type="java.sql.Types.VARCHAR(36)"		remarks="财报ID"></column>
+			<column name="FD_ACCOUNT_CATEGORY"		type="java.sql.Types.VARCHAR(100)"		remarks="科目分类"></column>
+			<column name="FD_LINE_CODE"				type="java.sql.Types.NUMERIC(4)"		remarks="行号代码"></column>
+			<column name="FD_DATAITEM_CODE"			type="java.sql.Types.VARCHAR(20)"		remarks="数据项代码"></column>
+			<column name="FD_DATAITEM_NAME"			type="java.sql.Types.VARCHAR(255)"		remarks="数据项名称"></column>
+			<column name="FD_BEGING_VALUE"			type="java.sql.Types.NUMERIC(20,4)"		remarks="期初值"></column>
+			<column name="FD_END_VALUE"				type="java.sql.Types.NUMERIC(20,4)"		remarks="期末值"></column>
+			<column name="FD_CREATOR"               type="java.sql.Types.VARCHAR(255)"  	remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"           type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        	type="java.sql.Types.VARCHAR(255)"  	remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+		
+		<!-- 公司客户评级步骤表 -->
+        <createTable tableName="NS_RATING_STEP" remarks="公司客户评级步骤表">
+            <column name="FD_ID"							type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+             <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_RATEID"              			type="java.sql.Types.VARCHAR(36)"              	remarks="评级ID"></column>
+			<column name="FD_STEP_NAME"            			type="java.sql.Types.VARCHAR(50)"              	remarks="步骤名称"></column>
+			<column name="FD_STEP_RESOURCES"      			type="java.sql.Types.VARCHAR(500)"             	remarks="步骤资源"></column>
+			<column name="FD_SNO"      						type="java.sql.Types.NUMERIC(4)"             	remarks="步骤序号"></column>
+			<column name="FD_LAST_STEP"            			type="java.sql.Types.VARCHAR(36)"              	remarks="上一步骤"></column>
+			<column name="FD_NEXT_STEP"            			type="java.sql.Types.VARCHAR(36)"              	remarks="下一步骤"></column>
+			<column name="FD_STEP_TYPE"            			type="java.sql.Types.VARCHAR(50)"              	remarks="步骤类型"></column>
+			<column name="FD_MODEL_ID"             			type="java.sql.Types.VARCHAR(36)"              	remarks="模型ID(用于记录定性/定量模型的ID)"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_VAILD"     					type="java.sql.Types.VARCHAR(1)"             	remarks="是否有效"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+
+         <!-- 客户评级指标表 -->
+        <createTable tableName="NS_RATING_INDEXES" remarks="客户评级指标表">
+			<column name="FD_ID"							type="java.sql.Types.VARCHAR(36)"				remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_STEPID"              			type="java.sql.Types.VARCHAR(36)"             	remarks="评级步骤ID"></column>
+			<column name="FD_INDEXTYPE"      				type="java.sql.Types.VARCHAR(20)"              	remarks="指标类型"></column>
+			<column name="FD_INDEXCATEGORY"            		type="java.sql.Types.VARCHAR(500)"             	remarks="指标分类"></column>
+			<column name="FD_INDEXNAME"            			type="java.sql.Types.VARCHAR(500)"             	remarks="指标名称"></column>
+			<column name="FD_CONFIGID"            			type="java.sql.Types.VARCHAR(36)"             	remarks="配置ID"></column>
+			<column name="FD_INDEXID"            			type="java.sql.Types.VARCHAR(36)"             	remarks="指标ID"></column>
+			<column name="FD_INDEXCODE"              		type="java.sql.Types.VARCHAR(50)"             	remarks="指标编号"></column>
+			<column name="FD_INDEXVALUE"              		type="java.sql.Types.VARCHAR(100)"              remarks="指标值"></column>
+			<column name="FD_WEIGHT"              			type="java.sql.Types.VARCHAR(50)"             	remarks="权重"></column>
+			<column name="FD_LEVEL"              			type="java.sql.Types.VARCHAR(10)"             	remarks="模型层级"></column>
+			<column name="FD_PARENT_ID"              		type="java.sql.Types.VARCHAR(36)"             	remarks="父ID"></column>
+			<column name="FD_DX_TEXT"              			type="java.sql.Types.VARCHAR(2000)"             remarks="定性内容"></column>
+			<column name="FD_QUALITATIVE_OPTIONS"           type="java.sql.Types.VARCHAR(2000)"             remarks="定性选项"></column>
+			<column name="FD_SCORE"              			type="java.sql.Types.NUMERIC(20,8)"             remarks="指标得分"></column>
+			<column name="FD_CREATOR"              			type="java.sql.Types.VARCHAR(254)"              remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"         		type="java.sql.Types.VARCHAR(254)"              remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"           		type="DATETIME"              					remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"       		type="DATETIME"              					remarks="更新时间"></column>
+			
+        </createTable>
+		<!-- 创建外键(级联删除) -->
+        <addForeignKeyConstraint 
+        	constraintName="FK_NS_RATING_INDEXES_STEPID" 
+        	baseTableName="NS_RATING_INDEXES" 
+        	baseColumnNames="FD_STEPID" 
+        	referencedTableName="NS_RATING_STEP" 
+        	referencedColumnNames="FD_ID" onDelete="CASCADE"/>
+		
+		 <!-- 客户评级推翻记录表 -->
+        <createTable tableName="NS_RATING_OVERTURN" remarks="客户评级推翻记录表">
+			<column name="FD_ID"							type="java.sql.Types.VARCHAR(36)"				remarks="主键">
+				 <constraints primaryKey="true"/>
+			</column>
+			<column name="FD_RATEID"              			type="java.sql.Types.VARCHAR(36)"             	remarks="评级ID"></column>
+			<column name="FD_ROLE_NAME"      				type="java.sql.Types.VARCHAR(254)"              remarks="角色名称"></column>
+			<column name="FD_ROLE_CODE"            			type="java.sql.Types.VARCHAR(254)"             	remarks="角色编号"></column>
+			<column name="FD_USER_CODE"            			type="java.sql.Types.VARCHAR(254)"             	remarks="用户编号"></column>
+			<column name="FD_USER_NAME"            			type="java.sql.Types.VARCHAR(254)"             	remarks="用户名称"></column>
+			<column name="FD_SUGG_LEVEL"            		type="java.sql.Types.VARCHAR(50)"             	remarks="建议级别"></column>
+			<column name="FD_ADJ_REASON"            		type="java.sql.Types.VARCHAR(500)"             	remarks="调整原因"></column>
+			<column name="FD_FILE_URL"            			type="java.sql.Types.VARCHAR(500)"             	remarks="文件路径"></column>
+			<column name="FD_OPERATIONAL_ACTION"            type="java.sql.Types.VARCHAR(50)"             	remarks="文件路径"></column>
+			<column name="FD_ORG_ID"            			type="java.sql.Types.VARCHAR(50)"             	remarks="机构"></column>
+			<column name="FD_CREATOR"              			type="java.sql.Types.VARCHAR(254)"              remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"         		type="java.sql.Types.VARCHAR(254)"              remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"           		type="DATETIME"              					remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"       		type="DATETIME"              					remarks="更新时间"></column>
+        </createTable>
+		
+        <!-- 债项评级表 -->
+        <createTable tableName="IRS_R_DEBT_RATING" remarks="债项评级信息表">
+			<column name="ID"								type="java.sql.Types.VARCHAR(36)"				remarks="主键ID">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="CUST_NO"        					type="java.sql.Types.VARCHAR(100)"      		remarks="客户编号"></column>
+			<column name="CUST_NAME"        				type="java.sql.Types.VARCHAR(500)"      		remarks="客户名称"></column>
+			<column name="CONTRACT_NO"        				type="java.sql.Types.VARCHAR(100)"      		remarks="合同编号"></column>
+			<column name="PATTERN_OWNERSHIP"        		type="java.sql.Types.VARCHAR(100)"       		remarks="所有制类型"></column>
+			<column name="STANDARD_INDUSTRY"        		type="java.sql.Types.VARCHAR(50)"      	 		remarks="国标行业"></column>
+			<column name="CREDIT_ENVIRONMENT"        		type="java.sql.Types.VARCHAR(50)"       		remarks="信用环境"></column>
+			<column name="ASSET_LIABILITY_RATIO"        	type="java.sql.Types.VARCHAR(50)"       		remarks="资产负债率"></column>
+			<column name="IS_OWNER"        					type="java.sql.Types.VARCHAR(50)"       		remarks="基本账户是否在本行"></column>
+			<column name="APPLIED_AMOUNT"        			type="java.sql.Types.VARCHAR(50)"       		remarks="申请金额"></column>
+			<column name="EAD"        						type="java.sql.Types.VARCHAR(50)"       		remarks="违约风险暴露额(EAD)"></column>
+			<column name="MARGIN_RECOVERY_RATIO"        	type="java.sql.Types.VARCHAR(50)"       		remarks="保证金回收比例"></column>
+			<column name="PRODUCT_RECOVERY_RATIO"        	type="java.sql.Types.VARCHAR(50)"       		remarks="产品回收比例"></column>
+			<column name="RATING_LEVEL"        				type="java.sql.Types.VARCHAR(50)"       		remarks="借款人评级结果"></column>
+			<column name="B_G_RECOVERY_RATIO"        		type="java.sql.Types.VARCHAR(50)"       		remarks="借款人保证人回收比例"></column>
+			<column name="MORTGAGE_RECOVERY_RATIO"        	type="java.sql.Types.VARCHAR(50)"       		remarks="抵质押物回收比例"></column>
+			<column name="LGD"        						type="java.sql.Types.VARCHAR(50)"       		remarks="违约损失率(LGD)"></column>
+			<column name="FD_CREATOR"               		type="java.sql.Types.VARCHAR(254)"  			remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"          			type="DATETIME"                     			remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"        			type="java.sql.Types.VARCHAR(254)"  			remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"       		type="DATETIME"                     			remarks="最后修改日期"></column>
+        </createTable>
+        
+          <!-- 批量样本数据表 -->
+        <createTable tableName="POC_SAMPLE_DATA" remarks="批量评级样本数据表">
+			<column name="CUST_NO"              			type="java.sql.Types.VARCHAR(254)"              remarks="客户编号"></column>
+			<column name="CUST_NMAE"              			type="java.sql.Types.VARCHAR(254)"              remarks="客户名称"></column>
+			<column name="YQ_DAY"            				type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_MAIN_BUSSINESS"            	type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_MARKET_POSITION"            	type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_WHOLESALER_TYPE"            	type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_SALES_STABILITY"            	type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_CUSTOMER_STABILITY"            type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_CORE_MANAGER"            		type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_PEOP_CY"            			type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_OVERDUE_2YRS"            		type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_INTERNAL_CONTROL"            	type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_INCOME_VERI"            		type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_FINC_CAPACITY"            		type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_CD_RATIO"            			type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_SUM_QX"            			type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_GUARANTEE_NA"            		type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_INDUS_FUTURE"            		type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DL_GROWTH4"            			type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DL_LEVERAGE7"            			type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DL_LEVERAGE8"            			type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DL_LIQUIDITY6"            		type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DL_SIZE2"            				type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+		</createTable>
+        
+         <!-- 批量评级结果表 -->
+        <createTable tableName="IRS_R_BATCH_RATING" remarks="批量评级结果表">
+            <column name="ID"								type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+             <constraints primaryKey="true"/>
+            </column>
+			<column name="CUST_NO"              			type="java.sql.Types.VARCHAR(254)"              remarks="客户编号"></column>
+			<column name="CUST_NAME"              			type="java.sql.Types.VARCHAR(254)"              remarks="客户名称"></column>
+			<column name="DL_SCORE"            				type="java.sql.Types.VARCHAR(254)"              remarks="定量得分"></column>
+			<column name="DX_SCORE"      					type="java.sql.Types.VARCHAR(254)"             	remarks="定性得分"></column>
+			<column name="MODEL_SCORE"              		type="java.sql.Types.VARCHAR(254)"  			remarks="模型总分"></column>
+			<column name="PD_LEVEL"              			type="java.sql.Types.VARCHAR(254)"  			remarks="评级等级"></column>
+			<column name="SP_LEVEL"              			type="java.sql.Types.VARCHAR(254)"  			remarks="标普等级"></column>
+			<column name="FD_CORPORATION"             		type="java.sql.Types.VARCHAR(254)"  			remarks="多法人类型"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+        
+         <!-- 定价参数表 -->
+        <createTable tableName="NS_LOAN_PRICING_PARAM" remarks="定价参数表">
+            <column name="ID"								type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+             <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_TARGET_RAROC"              	type="java.sql.Types.NUMERIC(10,4)"             remarks="目标RAROC"></column>
+			<column name="FD_CAR"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="资本充足率"></column>
+			<column name="FD_OCR"            				type="java.sql.Types.NUMERIC(10,4)"             remarks="运营成本率"></column>
+			<column name="FD_FTR"      						type="java.sql.Types.NUMERIC(10,4)"             remarks="全行统一综合税率"></column>
+			<column name="FD_RR"              				type="java.sql.Types.NUMERIC(10,4)"  			remarks="参考利率P调整值"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+        <!-- 定价FTP曲线参数表 -->
+        <createTable tableName="NS_LOAN_PRICING_FTP_PARAM"  remarks="定价FTP曲线参数表">
+            <column name="ID"								type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+             <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_FTP_TYPE"              		type="java.sql.Types.VARCHAR(254)"             remarks="指标名"></column>
+			<column name="FD_DOD"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="0/N(活期)"></column>
+			<column name="FD_OW"            				type="java.sql.Types.NUMERIC(10,4)"             remarks="1W(一周)"></column>
+			<column name="FD_TW"      						type="java.sql.Types.NUMERIC(10,4)"             remarks="2W(两周)"></column>
+			<column name="FD_OM"              				type="java.sql.Types.NUMERIC(10,4)"  			remarks="1M(一月)"></column>
+			<column name="FD_TM"              				type="java.sql.Types.NUMERIC(10,4)"  			remarks="3M(三月)"></column>
+			<column name="FD_SM"              				type="java.sql.Types.NUMERIC(10,4)"  			remarks="6M(六月)"></column>
+			<column name="FD_NM"              				type="java.sql.Types.NUMERIC(10,4)"  			remarks="9M(九月)"></column>
+			<column name="FD_OY"              				type="java.sql.Types.NUMERIC(10,4)"  			remarks="1Y(一年)"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+        <!-- 限额模型参数表 -->
+        <createTable tableName="NS_RISKLIMIT_MODEL_PARAM"  remarks="限额模型参数表">
+            <column name="ID"								type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+             <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_MODEL"              			type="java.sql.Types.VARCHAR(254)"              remarks="模型"></column>
+			<column name="FD_CZNLZB"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="偿债能力代理指标"></column>
+			<column name="FD_PJZZNL"            			type="java.sql.Types.NUMERIC(10,4)"             remarks="行业平均增长能力"></column>
+			<column name="FD_JZGGBS"      					type="java.sql.Types.NUMERIC(10,4)"             remarks="行业基准杠杆倍数"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+        <!-- 限额评分等级调整系数参数表 -->
+        <createTable tableName="NS_RISKLIMIT_LEVEL_PARAM"  remarks="限额评分等级调整系数参数表">
+            <column name="ID"								type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+             <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_RATING_LEVEL"              	type="java.sql.Types.VARCHAR(254)"              remarks="评级等级"></column>
+			<column name="FD_XS"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="调整系数"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+        <!-- 贷款定价计算结果表 -->
+        <createTable tableName="NS_LOAN_PRICING_RESULT"  remarks="贷款定价计算结果表">
+            <column name="ID"								type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+              <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_BUSS_TYPE"              		type="java.sql.Types.VARCHAR(254)"              remarks="业务类型"></column>
+			<column name="FD_BWPMJE"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="表外业务票面金额（万元）"></column>
+			<column name="FD_SXJE"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="授信金额（万元）"></column>
+			<column name="FD_SXQX"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="授信期限（月）"></column>
+			<column name="FD_RATINGLEVEL"              		type="java.sql.Types.VARCHAR(254)"              remarks="客户评级级别"></column>
+			<column name="FD_DEBTLEVEL"              		type="java.sql.Types.VARCHAR(254)"             	remarks="债项评级级别"></column>
+			<column name="FD_NYYSR"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="年营业收入"></column>
+			<column name="FD_CKSY"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="存款收益（万元）"></column>
+			<column name="FD_ZJCBL"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="资金成本率"></column>
+			<column name="FD_ZBCBL"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="资本成本率"></column>
+			<column name="FD_FXCBL"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="风险成本率"></column>
+			<column name="FD_YYCBL"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="运营成本率"></column>
+			<column name="FD_SWCBL"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="税务成本率"></column>
+			<column name="FD_BNCKDJ"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="表内参考定价P"></column>
+			<column name="FD_BWCKDJ"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="表外参考定价P"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+        <!-- 债项评级参数配置表 -->
+        <!-- 借款人回收调整系数参数表 -->
+        <createTable tableName="NS_DEBTRATING_TZXS_PARAM"  remarks="借款人回收调整系数参数表">
+            <column name="ID"								type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+              <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_PARAM_TYPE"              		type="java.sql.Types.VARCHAR(254)"              remarks="参数类型"></column>
+			<column name="FD_ZCS"              				type="java.sql.Types.VARCHAR(254)"              remarks="子参数类型"></column>
+			<column name="FD_QJXX"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="调整区间上限"></column>
+			<column name="FD_QJSX"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="调整区间下限"></column>
+			<column name="FD_TZXS"              			type="java.sql.Types.NUMERIC(10,4)"              remarks="调整系数"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+        
+        <!-- 借款人和保证人基准回收比例参数表 -->
+        <createTable tableName="NS_DEBTRATING_JABHS_PARAM"  remarks="借款人回收调整系数参数表">
+            <column name="ID"								type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+              <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_JKR_LEVEL"              		type="java.sql.Types.VARCHAR(254)"              remarks="借款人评级级别"></column>
+			<column name="FD_NOBZ"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="无保证人"></column>
+			<column name="FD_B1"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人1级"></column>
+			<column name="FD_B2"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人2级"></column>
+			<column name="FD_B3"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人3级"></column>
+			<column name="FD_B4"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人4级"></column>
+			<column name="FD_B5"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人5级"></column>
+			<column name="FD_B6"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人6级"></column>
+			<column name="FD_B7"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人7级"></column>
+			<column name="FD_B8"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人8级"></column>
+			<column name="FD_B9"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人9级"></column>
+			<column name="FD_B10"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人10级"></column>
+			<column name="FD_B11"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人11级"></column>
+			<column name="FD_B12"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人12级"></column>
+			<column name="FD_B13"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人13级"></column>
+			<column name="FD_B14"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人14级"></column>
+			<column name="FD_B15"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人15级"></column>
+			<column name="FD_B16"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="保证人16级"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+        
+        <!-- CCF参数表 -->
+        <createTable tableName="NS_DEBTRATING_CCF_PARAM"  remarks="CCF参数表">
+            <column name="ID"								type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+              <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_PROD_CODE"              		type="java.sql.Types.VARCHAR(254)"              remarks="产品编码"></column>
+			<column name="FD_PROD_NAME"              		type="java.sql.Types.VARCHAR(254)"              remarks="产品名称"></column>
+			<column name="FD_NW_TYPE"              			type="java.sql.Types.VARCHAR(254)"              remarks="表内表外"></column>
+			<column name="FD_VALUE"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="CCF值"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+        
+         <!-- LGD与债项等级关系表 -->
+        <createTable tableName="NS_DEBTRATING_LGDLEVEL_PARAM"  remarks="LGD与债项等级关系表 ">
+            <column name="ID"								type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+              <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_DEBTLEVEL"              		type="java.sql.Types.VARCHAR(254)"              remarks="债项等级"></column>
+			<column name="FD_BL"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="下界(含临界值)"></column>
+			<column name="FD_TL"              				type="java.sql.Types.NUMERIC(10,4)"             remarks="上界(不含临界值)"></column>
+			<column name="FD_LGD_AVG"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="等级采用的LGD均值"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+        
+        <!-- 保证人回收调整系数 -->
+        <createTable tableName="NS_DEBTRATING_BHSXS_PARAM"  remarks="保证人回收调整系数 ">
+            <column name="ID"								type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+              <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_BZTYPE_CODE"              		type="java.sql.Types.VARCHAR(254)"              remarks="保证类型编号"></column>
+			<column name="FD_BZTYPE_NAME"              		type="java.sql.Types.VARCHAR(254)"              remarks="保证类型名称"></column>
+			<column name="FD_TZ_CODE"              			type="java.sql.Types.VARCHAR(254)"              remarks="调整标准编号"></column>
+			<column name="FD_TZ_NAME"              			type="java.sql.Types.VARCHAR(254)"              remarks="调整标准名称"></column>
+			<column name="FD_TZ_VALUE"              		type="java.sql.Types.NUMERIC(10,4)"             remarks="调整系数"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+        
+        <!-- 产品基准回收比例参数 -->
+        <createTable tableName="NS_DEBTRATING_PRODHSL_PARAM"  remarks="产品基准回收比例参数 ">
+            <column name="ID"								type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+              <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_PROD_CODE"              		type="java.sql.Types.VARCHAR(254)"              remarks="产品编号"></column>
+			<column name="FD_PROD_NAME"              		type="java.sql.Types.VARCHAR(254)"              remarks="产品名称"></column>
+			<column name="FD_DW"              				type="java.sql.Types.VARCHAR(254)"              remarks="档位"></column>
+			<column name="FD_JZHSL"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="基准回收率"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+        
+         <!-- 抵质押物基准回收率参数 -->
+        <createTable tableName="NS_DEBTRATING_LIMITSHSL_PARAM"  remarks="抵质押物基准回收率参数 ">
+            <column name="ID"								type="java.sql.Types.VARCHAR(36)"			  	remarks="主键">
+              <constraints primaryKey="true"/>
+            </column>
+			<column name="FD_YPDL_CODE"              		type="java.sql.Types.VARCHAR(254)"              remarks="押品大类编号"></column>
+			<column name="FD_YPDL_NAME"              		type="java.sql.Types.VARCHAR(254)"              remarks="押品大类名称"></column>
+			<column name="FD_YPZL_CODE"              		type="java.sql.Types.VARCHAR(254)"              remarks="押品中类编号"></column>
+			<column name="FD_YPZL_NAME"              		type="java.sql.Types.VARCHAR(254)"              remarks="押品中类名称"></column>
+			<column name="FD_YPXL_CODE"              		type="java.sql.Types.VARCHAR(254)"              remarks="押品小类编号"></column>
+			<column name="FD_YPXL_NAME"              		type="java.sql.Types.VARCHAR(254)"              remarks="押品小类名称"></column>
+			<column name="FD_JZHSL"              			type="java.sql.Types.NUMERIC(10,4)"             remarks="基准回收率"></column>
+			<column name="FD_CREATOR"           			type="java.sql.Types.VARCHAR(254)"             	remarks="创建人"></column>
+			<column name="FD_LAST_MODIFIER"     			type="java.sql.Types.VARCHAR(254)"             	remarks="更新人"></column>
+			<column name="FD_CREATE_DATE"       			type="DATETIME"              	 			   	remarks="创建时间"></column>
+			<column name="FD_LAST_MODIFYDATE"   			type="DATETIME"              	 			   	remarks="更新时间"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

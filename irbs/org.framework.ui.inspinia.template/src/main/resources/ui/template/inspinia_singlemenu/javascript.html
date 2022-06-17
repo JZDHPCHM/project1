@@ -1,0 +1,198 @@
+<th:block>
+	<!-- Mainly scripts -->
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/jquery-3.1.1.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+	<!-- Peity -->
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/peity/jquery.peity.min.js}"></script>
+	<!-- Custom and plugin javascript -->
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/inspinia.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/pace/pace.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/jquery-ui/jquery-ui.min.js}"></script>
+	<!-- Flot -->
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/flot/jquery.flot.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/flot/jquery.flot.tooltip.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/flot/jquery.flot.resize.js}"></script>
+	<!-- ladda -->
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/ladda/spin.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/ladda/ladda.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/ladda/ladda.jquery.min.js}"></script>
+	<!-- Nestable List -->
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/nestable/jquery.nestable.js}"></script>
+	<!-- jqGrid -->
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/jqGrid5.3.2/i18n/grid.locale-en.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/jqGrid5.3.2/jquery.jqGrid.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/jeditable/jquery.jeditable.js}"></script>
+    <!-- bootstrap-table -->
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/bootstrap-table/dist/bootstrap-table.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/sweetalert/sweetalert.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/chosen/chosen.jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/datapicker/bootstrap-datepicker.js}"></script>
+    <!-- Steps -->
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/steps/jquery.steps.min.js}"></script>
+    <!-- echarts -->
+  	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/echarts.js}"></script>
+  	<!-- jstree -->
+  	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/jsTree/jstree.min.js}"></script>
+    <!-- Jasny -->
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/jasny/jasny-bootstrap.min.js}"></script>
+    <!-- DROPZONE -->
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/dropzone/dropzone.js}"></script>
+    <!-- CodeMirror -->
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/codemirror/codemirror.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/codemirror/mode/xml/xml.js}"></script>
+    <!-- Tinycon -->
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/tinycon/tinycon.min.js}"></script>
+    <!-- select2 -->
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/plugins/select2/select2.full.min.js}"></script>
+    <!-- 自定义 -->
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/jsutil.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/mydefinejq.js}"></script>    
+    <!-- <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/menu.js}"></script> -->
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/jqgrid_common.js}"></script>
+    <!-- 模糊查找 -->
+    <script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/bootstrap3-typeahead.min.js}"></script>
+    <!-- 表格无数据js通用文件 -->
+    <script type="text/javascript" th:src="@{/webjars/inspinia/common/js/common.js}"></script>
+</th:block>
+<!--/* 开发模式采用源码级别的 js */-->
+<th:block th:if="${T(org.wsp.framework.core.Environment).isRunInDevelopmentMode()}">
+	<!--[if lte IE 9]>
+	<script th:src="@{/webjars/response/js/response.js}"></script>
+	<script th:src="@{/webjars/html5shiv/js/html5shiv.js}"></script>
+	<![endif]-->
+	<script type="text/javascript" th:src="@{/webjars/jquery-json/js/jquery.json.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap-submenu/js/bootstrap-submenu.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//开启 bootstrap-submenu 功能
+			$('[data-submenu]').submenupicker();
+	    });  
+	</script>
+</th:block>
+<!--/* 产品模式采用压缩后的 min 版 js */-->
+<th:block th:unless="${T(org.wsp.framework.core.Environment).isRunInDevelopmentMode()}">
+	<!--[if lte IE 9]>
+	<script th:src="@{/webjars/response/js/response.min.js}"></script>
+	<script th:src="@{/webjars/html5shiv/js/html5shiv.min.js}"></script>
+	<![endif]-->
+	<script type="text/javascript" th:src="@{/webjars/jquery-json/js/jquery.json.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/bootstrap-submenu/js/bootstrap-submenu.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){ 
+			//开启 bootstrap-submenu 功能
+			$('[data-submenu]').submenupicker();
+	    });  
+	</script>
+</th:block>
+<style>
+	.modal-title{
+		font-size: 14px !important;
+	    font-weight: bold;
+	    font-family: calibri;
+	    text-align: left;
+	}
+	#roleModal .chosen-search{
+		display: none;
+	}
+</style>
+<!-- 切换角色模态窗口 -->
+<div class="modal inmodal fade" id="roleModal" tabindex="-1" role="dialog"
+	aria-hidden="true">
+	<div class="modal-dialog" style="width: 350px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title">切换角色</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-lg-12">
+						<label class="col-sm-4 control-label" style="height: 34px; line-height: 34px; margin: 0;">*默认角色:</label>
+						<div class="col-sm-8">
+							<select class="chosen-select" id="" name="">
+								<option th:each="option: ${@clockDictionary.dicOrg()}" th:value="${option.key}" th:text="${option.value}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" id="confirm">确认</button>
+				<button type="button" class="btn btn-success" id="" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	var FrameworkUiInterface ={
+		/*[- 属性============================================================================================= -]*/
+		webContextPath		: '[[${#request.getContextPath()}]]',
+		csrf: {
+			enable         : '[[${@frSpringApplicationContextService.getProperty('security.enable-csrf',false)=='true'?true:false}]]',
+			'X-CSRF-TOKEN' : '[[${@frSpringApplicationContextService.getProperty('security.enable-csrf','false')=='true'?_csrf.token:''}]]'
+		},
+		/*[- 方法============================================================================================= -]*/
+		/*[- 切换语言 -]*/
+		lang: function(lang){
+			$.ajax({
+				async: false,
+				url: '[[@{/system/i18n/changeLanguage}]]?locale=' + lang,
+			    type: "GET"
+			}).done(function(json) {
+				
+			}).fail(function(xhr, status, errorThrown){
+				
+			}).always(function(xhr, status){
+				window.location.reload(true);
+			});
+		},
+		/*[- 当会话过期后，重新登录 -]*/
+		login: function(){
+			
+		},
+		/*[- 退出系统 -]*/
+		logout: function(){
+			window.location.href=FrameworkUiInterface.webContextPath + '/logout';
+		},
+		/*[- 显示当前页面信息 -]*/
+		showPageInfoWindow: function(){
+			$('#pageInfoModalDialog').modal();
+		},
+		/*[- 修改用户登录密码 -]*/
+		changePassword: function(){
+			
+		},
+		/*[- 切换角色 -]*/
+		changeRole: function(){
+			$("#roleModal").modal({
+		        //点击背景不关闭
+		        backdrop:"static",
+		        //触发键盘esc事件时不关闭
+		        keyboard: false
+		    });
+		}
+	};
+	$("#confirm").click(function(){
+		swal({
+		    title: "",
+		    text: "操作成功",
+		    type: "info"
+		}, function (){
+			swal.close();
+			$('#roleModal').modal('hide');
+			refresh();
+		});
+	})
+	//点击按钮调用的方法
+    function refresh() {
+        window.location.reload();//刷新当前页面.
+        //或者下方刷新方法
+        //parent.location.reload()刷新父亲对象（用于框架）--需在iframe框架内使用
+        //opener.location.reload()刷新父窗口对象（用于单开窗口)
+        //top.location.reload()刷新最顶端对象（用于多开窗口）
+    }
+</script>

@@ -1,0 +1,26 @@
+/*
+ * 系统参数贡献项配置示例
+ * 功能说明: 为系统提供参数配置
+ * 使用说明:
+ * id: 参数唯一标识
+ * parentId: 父唯一标识,用于进行参数分类
+ * code: 参数代码,应用可通过该代码获取参数值
+ * defaultValue: 默认值
+ * order: 排序
+ */
+ 
+/*
+ * 示例
+[
+	//系统
+	{"id":"parameter.system","order":0},
+		//系统/默认皮肤
+		{
+			"id"			:"parameter.system.defaultSkin", 
+			"parentId"		:"parameter.system",
+			"code"			:"defaultSkin",
+			"defaultValue"	:"Tahoe",
+			"order"			: 0
+		}
+]
+*/

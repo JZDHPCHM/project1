@@ -1,0 +1,61 @@
+﻿zackdte，回执日期 ( 电话回访日期)
+chtttype，险种代码
+bacrs，回访结果
+datime，创建日
+OCCDATE 风险起始日，保险起期，保单生效日
+
+ISCFI  是否计算CFI
+ISWD 是否计算WD
+NEEDCALLBACK 是否需要回访
+
+ENDHESDATE 犹豫期截止日期（比如签收日期+10或者15，已经是结果值了）
+
+CALLBACKDATE 电话回访日期
+
+
+
+<bacrs key="0" name="重复创建"/>
+	
+<bacrs key="1" name="未回电已CFI"/>
+	
+<bacrs key="2" name="电话回访完全干净件"/>
+	
+<bacrs key="3" name="电话回访问题件"/>
+	
+<bacrs key="4" name="无人接听"/>
+	
+<bacrs key="5" name="无效电话"/>
+	
+<bacrs key="6" name="非投保人接听且无法提供投保人联系方式"/>
+	
+<bacrs key="7" name="处理中"/>
+	
+<bacrs key="8" name="拒访/拒绝"/>
+	
+<bacrs key="9" name="电话回访CS干净件"/>
+	
+<bacrs key="10" name="单边账"/>
+	
+<bacrs key="12" name="电话回访完全干净件非投操作"/>
+	
+<bacrs key="13" name="电话回访CS干净件非投操作"/>
+	
+<bacrs key="14" name="电话回访问题件非投操作"/>
+	
+<bacrs key="15" name="电话回访问题件未收到电子保单"/>
+	
+<bacrs key="16" name="未收到保险合同"/>
+	
+<bacrs key="17" name="特殊问题件-保险性质存疑"/>
+	
+<bacrs key="18" name="特殊问题件-回访过程中断"/>
+	
+<bacrs key="19" name="未收到保险合同非投操作"/>
+	
+<bacrs key="20" name="特殊问题件-保险性质存疑非投操作"/>
+	
+<bacrs key="21" name="问题件-投保未双录"/>
+
+
+ ISCFI是否cfi  ISWD是否wd   NEEDCALLBACK是否需回访   1是   0否 
+

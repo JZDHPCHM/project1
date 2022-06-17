@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+<style>
+	.form-group{
+		margin : 3px 0 0 5px
+	}
+</style>
+</head>
+<body style='background-color:white'>
+	<div class="wrapper">
+		<div class="row">
+     		<div class="col-lg-12">
+                 <div class="float-e-margins">
+                 	<!-- 左侧菜单点击展开伸缩 -->
+					<div id="mydiv" style="margin-left:-5px">  
+				      <div id="left-menu" class="menu-content"></div>  
+				      <div style="height:507px; float: left;">  
+				        <div id="pull" class="left-menu">菜单</div>  
+				      </div>  
+				    </div>
+                     <div class="ibox-content">
+                     	<div class="row">
+	                     	<div class="col-lg-12">
+	                     		<div class="row" style='margin:0 0 0 0;'>
+	                     			<form role="form" class="form-inline" id="searchForm">
+	                     				 <div class="form-group formMargin">
+			                                 <label class="control-label" for="searchRiskCategoryId">风险分类</label>
+		                                	 <select class="form-control" name="riskCategoryId" id="searchRiskCategoryId">
+		                                     	<option></option>
+		                                     	<option th:each="option: ${@kriRiskCategroyServiceImpl.getRiskCateMap('Y','')}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label for="searchIndexCode" class="control-label">指标编码</label>
+			                                 <input type="text" placeholder="模糊查询" id="searchIndexCode" name="indexCode" class="form-control">
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label for="searchIndexName" class="control-label">指标名称</label>
+			                                 <input type="text" placeholder="模糊查询" id="searchIndexName" name="indexName" class="form-control">
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label class="control-label" for="searchUpdateFrequency">更新频率</label>
+		                                	 <select class="form-control" name="updateFrequency" id="searchUpdateFrequency">
+		                                     	<option value=''>请选择</option>
+		                                     	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('FREQUENCY',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label class="control-label" for="searchStatus">状态</label>
+		                                	 <select class="form-control" name="status" id="searchStatus">
+		                                     	<option value=''>请选择</option>
+		                                     	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('INDEX_STATUS',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label class="control-label" for="searchIsUse">是否年审指标</label>
+		                                	 <select class="form-control" name="isAnnual" id="searchIsUse">
+		                                     	<option value=''>请选择</option>
+		                                     	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('YESNO',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                         </form>
+	                     		</div>
+	                     		<div class="row" style='margin:5px 0 0 0;'>
+	                     			<button class="btn btn-primary btn-sm" id="searchBtn">查询</button>
+			                        <button class="btn btn-primary btn-sm" id="searchClear">重置</button>
+	                     			<button class="btn btn-primary btn-sm" id='addIndexBtn'>新增</button>
+	                     			<button class="btn btn-primary btn-sm" id='editIndexBtn'>编辑</button>
+	                     			<button class="btn btn-primary btn-sm" id='setFormulaBtn'>公式</button>
+	                     			<button class="btn btn-primary btn-sm" id='scopeBtn'>范围</button>
+	                     			<button class="btn btn-primary btn-sm" id='setThresholdBtn'>阈值</button>
+	                     			<button class="btn btn-primary btn-sm hidden" id='prodBtn'>产品</button>
+	                     			<button class="btn btn-primary btn-sm" id='useIndexBtn'>启用/禁用</button>
+	                     			<button class="btn btn-primary btn-sm" id='setTagBtn'>标签</button>
+	                     			<button class="btn btn-primary btn-sm" id='allotBtn'>分配</button>
+	                     			<!-- 表格 -->
+		                     		<div class="jqGrid_wrapper">
+					                    <table id="indexTable"></table>
+					                    <div id="indexPage"></div>
+					                </div>
+					                
+					                <!-- 关键指标模态框 -->
+									<div class="modal inmodal fade" id="indexModal" tabindex="-1" role="dialog"  aria-hidden="true">
+		                                <div class="modal-dialog modal-lg">
+		                                    <div class="modal-content">
+		                                        <div class="modal-header">
+		                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		                                            <h4 class="modal-title">关键指标信息</h4>
+		                                            <small class="font-bold">在这里，您可以进行新增指标或者修改指标信息的操作！</small>
+		                                        </div>
+		                                        <div class="modal-body">
+		                                            <form class="form-inline" id="indexInfoFrom">
+		                                            	<input type='hidden' name='id' id='indexId'>
+		                                            	<div class="form-group">
+						                                    <label for="riskCategoryId" class="control-label">风险分类</label>
+						                                    <select class="form-control" name='riskCategoryId' id='riskCategoryId'>
+						                                        <option></option>
+						                                        <option th:each="option: ${@kriRiskCategroyServiceImpl.getRiskCateMap('Y','')}" th:value="${option.key}" th:text="${option.value}"></option>
+						                                    </select>
+						                                </div>
+		                                            	<div class="form-group">
+						                                    <label for="indexCode" class="control-label">指标编码</label>
+						                                    <input type="text" placeholder="请输入指标编码" id="indexCode" name="indexCode" class="form-control">
+						                                </div>
+						                                <div class="form-group">
+						                                    <label for="unit" class="control-label">计量单位</label>
+						                                    <select class="form-control" name="unit" id="unit">
+						                                     	<option value=''>请选择</option>
+								                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('UNIT',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+						                                	</select>
+						                                </div>
+						                                <div></div>
+						                                <div class="form-group">
+						                                    <label for="updateFrequency" class="control-label">更新频率</label>
+						                                    <select class="form-control" name="updateFrequency" id="updateFrequency">
+						                                     	<option value=''>请选择</option>
+								                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('FREQUENCY',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+						                                	</select>
+						                                </div>
+						                                <div class="form-group">
+						                                    <label for="indexName" class="control-label">指标名称</label>
+						                                    <input type="text" placeholder="请输入指标名称" id="indexName" name="indexName" class="form-control">
+						                                </div>
+						                                <div class="form-group">
+						                                    <label for="isAnnual" class="control-label">是否年审</label>
+						                                    <select class="form-control" name="isAnnual" id="isAnnual">
+						                                     	<option value=''>请选择</option>
+								                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('YESNO',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+						                                	</select>
+						                                </div>
+						                                <div class="form-group">
+						                                    <label for="indexDesc" class="control-label">指标说明</label>
+						                                    <textarea class="form-control" placeholder="请输入指标说明" rows="3" cols="110" id="indexDesc" name="indexDesc"></textarea>
+						                                </div>
+						                                <div class="form-group">
+						                                    <label for="superRequire" class="control-label">监管要求及影响</label>
+						                                    <textarea class="form-control" placeholder="请输入监管要求及影响" rows="3" cols="110" id="superRequire" name="superRequire"></textarea>
+						                                </div>
+		                                            </form>
+		                                        </div>
+		                                        <div class="modal-footer">
+		                                            <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+		                                            <button type="button" class="btn btn-primary" id="saveBtn">保存</button>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            
+		                            <!-- 编辑公式模态框 -->
+		                            <div class="modal inmodal fade" id="editFormulaModal" tabindex="-1" role="dialog"
+										aria-hidden="true">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+													</button>
+													<h4 class="modal-title">编辑公式</h4>
+													<small class="font-bold">在这里，您可以对指标的公式进行编辑！</small>
+												</div>
+												<div class="modal-body">
+					                            	<form id='formulaForm'>
+					                            		<input type='hidden' name='id' id='formulaIndexId'>
+					                            		<input type='hidden' name='factorIds' id='formulaFactorIds'>
+					                            		<div class="form-group">
+						                                    <label for="formula" class="control-label">公式名称</label>
+						                                    <textarea class="form-control" rows="3" cols="40" placeholder="编辑公式后会显示" name='formula' id="formula" readonly="readonly"></textarea>
+						                                </div>
+						                                <div class="form-group">
+						                                    <label for="calculateMethod" class="control-label">公式编码</label>
+						                                    <textarea class="form-control" rows="3" cols="40" placeholder="编辑公式后会显示" name='calculateMethod' id="calculateMethod" readonly="readonly"></textarea>
+						                                </div>
+					                            	</form>
+													<div class="row" id="formulaBtnGroup">
+														<div class="row" style="margin:5px 0 0 0">
+							                            	<button type="button" class="btn-sm btn-warning">1</button>
+							                            	<button type="button" class="btn-sm btn-warning">2</button>
+							                            	<button type="button" class="btn-sm btn-warning">3</button>
+							                            	<button type="button" class="btn-sm btn-warning">4</button>
+							                            	<button type="button" class="btn-sm btn-warning">5</button>
+							                            	<button type="button" class="btn-sm btn-warning">6</button>
+							                            	<button type="button" class="btn-sm btn-warning">7</button>
+							                            	<button type="button" class="btn-sm btn-warning">8</button>
+							                            	<button type="button" class="btn-sm btn-warning">9</button>
+							                            	<button type="button" class="btn-sm btn-warning">0</button>
+							                            	<button type="button" class="btn-sm btn-warning">+</button>
+							                            	<button type="button" class="btn-sm btn-warning">-</button>
+							                            	<button type="button" class="btn-sm btn-warning">*</button>
+							                            	<button type="button" class="btn-sm btn-warning">/</button>
+							                            	<button type="button" class="btn-sm btn-warning">(</button>
+							                            	<button type="button" class="btn-sm btn-warning">)</button>
+							                            	<button type="button" class="btn-sm btn-warning">清除</button>
+							                            </div>
+													</div>
+													<div class="row">
+														<form class="form-inline">
+															<div class="form-group">
+							                                    <label for="formulaTableSearchFactorName" class="control-label">数据项名称</label>
+							                                    <input type="text" placeholder="模糊查询" id="formulaTableSearchFactorName" class="form-control">
+							                                </div>
+							                                <button style='margin:3px 0 0 0;' type="button" class="btn btn-primary btn-sm" id='formulaTableSearchBtn'>查询</button>
+							                            </form>
+														<div class="jqGrid_wrapper" style='margin-top:3px'>
+										                    <table id="formulaTable"></table>
+										                    <div id="formulaPage"></div>
+										                </div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+													<button type="button" class="btn btn-primary" id="editFormulaModalSureBtn">确定</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<!-- 指标阈值模态框 -->
+		                            <div class="modal inmodal fade" id="thresholdModal" tabindex="-1" role="dialog"
+										aria-hidden="true">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+													</button>
+													<h4 class="modal-title">配置阈值</h4>
+													<small class="font-bold">在这里，您可以对关键指标项进行配置阈值操作！</small>
+												</div>
+												<div class="modal-body">
+													<div class="row col-lg-offset-1">
+						                            	<form class="form-inline" id="thresholdForm">
+						                            		<input type='hidden' name='id' id='thresholdId'>
+						                            		<input type='hidden' name='indexId' id='thresholdIndexId'>
+						                            		<div class="form-group">
+							                                    <label for="section" class="control-label">阈值区间</label>
+							                                	<select class="form-control" name="section" id="section">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('SECTION',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+					                                		</div>
+					                                		<div class="form-group">
+								                                <label for="expression" class="control-label">表达式</label>
+								                            	<input type="text" id="expression" name="expression" class="form-control" placeholder="填写完其他信息后自动显示" readonly>
+								                            </div>
+								                            <div></div>
+							                           	 	<div class="form-group">
+							                                    <label for="lowerBounOper" class="control-label">下边界操作符号</label>
+							                                	<select class="form-control" name="lowerBounOper" id="lowerBounOper">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('BOUN_OPER',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+					                                		</div>
+					                                		<div class="form-group">
+								                                <label for="lowerBoun" class="control-label">下边界</label>
+								                            	<input type="number" id="lowerBoun" name="lowerBoun" class="form-control" placeholder="请填写下边界值">
+								                            </div>
+								                            <div></div>
+								                            <div class="form-group">
+							                                    <label for="upperBounOper" class="control-label">上边界操作符号</label>
+							                                	<select class="form-control" name="upperBounOper" id="upperBounOper">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('BOUN_OPER',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+					                                		</div>
+					                                		<div class="form-group">
+								                                <label for="upperBoun" class="control-label">上边界</label>
+								                            	<input type="number" id="upperBoun" name="upperBoun" class="form-control" placeholder="请填写上边界值">
+								                            </div>
+						                            	</form>
+					                            	</div>
+					                            	<div class="row col-lg-offset-1" style="margin-top:3px">
+					                            		<button type="button" class="btn btn-primary btn-sm" id="thresholdSaveBtn">保存</button>
+					                            		<button type="button" class="btn btn-primary btn-sm" id="thresholdResetBtn">重置</button>
+					                            	</div>
+					                            	<div class="row">
+														<div class="jqGrid_wrapper">
+										                    <table id="thresholdTable"></table>
+										                    <div id="thresholdPage"></div>
+										                </div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<!-- 标签模态框 -->
+		                            <div class="modal inmodal fade" id="tagModal" tabindex="-1" role="dialog"
+										aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+													</button>
+													<h4 class="modal-title">打标签</h4>
+													<small class="font-bold">在这里，您可以对关键指标项进行打标签操作！</small>
+												</div>
+												<div class="modal-body">
+													<div class="row col-lg-offset-1">
+						                            	<form class="form-inline" id="tagForm">
+						                            		<input type='hidden' name='id' id='tagId'>
+						                            		<input type='hidden' name='indexId' id='tagIndexId'>
+					                                		<div class="form-group">
+								                                <label for="tagName" class="control-label">标签</label>
+								                            	<input type="text" id="tagName" name="tagName" class="form-control" placeholder="请填写标签">
+								                            </div>
+						                            	</form>
+					                            	</div>
+					                            	<div class="row col-lg-offset-1" style="margin-top:3px">
+					                            		<button type="button" class="btn btn-primary btn-sm" id="tagSaveBtn">保存</button>
+					                            		<button type="button" class="btn btn-primary btn-sm" id="tagResetBtn">重置</button>
+					                            	</div>
+					                            	<div class="row">
+														<div class="jqGrid_wrapper">
+										                    <table id="tagTable"></table>
+										                    <div id="tagPage"></div>
+										                </div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+												</div>
+											</div>
+										</div>
+									</div>
+		                            
+		                            <!-- 分配模态框 -->
+		                            <div class="modal inmodal fade" id="allotModal" tabindex="-1" role="dialog"
+										aria-hidden="true">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+													</button>
+													<h4 class="modal-title">分配关键指标</h4>
+													<small class="font-bold">在这里，您可以对关键指标进行分配操作！</small>
+												</div>
+												<div class="modal-body">
+													<div class="row col-lg-offset-1">
+						                            	<form class="form-inline" id="allotForm">
+						                            		<input type='hidden' name='id'>
+						                            		<input type='hidden' name='indexId' id='allotIndexId'>
+						                            		<div class="form-group">
+							                                    <label for="dimenCode" class="control-label">监测维度</label>
+							                                	<select class="form-control" name="dimenCode" id="dimenCode">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('MONI_DIMEN',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+					                                		</div>
+					                                		<div class="form-group">
+								                            	<input type="hidden" name="belongDeptId" id="belongDeptId">
+								                                <label for="belongDeptName" class="control-label">属主部门</label>
+								                            	<div class="input-group">
+								                            		<input type="text" class="form-control" name="belongDeptName" id="belongDeptName" readOnly placeholder="请选择属主部门"> 
+								                            		<span class="input-group-btn"><button type="button" class="btn btn-sm btn-info" id="orgChooseBtn">选择</button></span>
+                                        						</div>
+						                            		</div>
+						                            	</form>
+					                            	</div>
+					                            	<div class="row col-lg-offset-1" style="margin-top:3px">
+					                            		<button type="button" class="btn btn-primary btn-sm" id="allotSaveBtn">保存</button>
+					                            		<button type="button" class="btn btn-primary btn-sm" id="allotResetBtn">重置</button>
+					                            		<button type="button" class="btn btn-primary btn-sm" id="allotIsUseBtn">启用/禁用</button>
+					                            	</div>
+					                            	<div class="row">
+														<div class="jqGrid_wrapper">
+										                    <table id="allotTable"></table>
+										                    <div id="allotPage"></div>
+										                </div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+												</div>
+											</div>
+										</div>
+									</div>
+		                            
+		                            <!-- 机构树模态框 -->
+		                            <div class="modal inmodal fade" id="orgTreeModal" tabindex="-1" role="dialog" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+													</button>
+													<h4 class="modal-title">机构</h4>
+													<small class="font-bold">在这里，您可以选择机构！</small>
+												</div>
+												<div class="modal-body"  style='overflow-y:scroll;height:400px'>
+									                <div id="orgTree"></div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+													<button type="button" class="btn btn-primary" id="orgTreeModalSureBtn">确定</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<!-- 产品类型模态框 -->
+		                            <div class="modal inmodal fade" id="prodModal" tabindex="-1" role="dialog"
+										aria-hidden="true">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+													</button>
+													<h4 class="modal-title">产品类型</h4>
+													<small class="font-bold">在这里，您可以对关键指标配置产品类型！</small>
+												</div>
+												<div class="modal-body">
+													<div class="row col-lg-offset-1">
+						                            	<form class="form-inline" id="prodForm">
+						                            		<input type='hidden' name='id'>
+						                            		<input type='hidden' name='indexId' id='prodIndexId'>
+						                            		<div class="form-group">
+							                                    <label for="prodCode" class="control-label">产品类型</label>
+							                                	<select class="form-control" name="prodCode" id="prodCode">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('PROD_TYPE',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+					                                		</div>
+					                                		<div class="form-group">
+							                                    <label for="prodIsUse" class="control-label">是否启用</label>
+							                                	<select class="form-control" name="isUse" id="prodIsUse">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('YESNO',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+					                                		</div>
+						                            	</form>
+					                            	</div>
+					                            	<div class="row col-lg-offset-1" style="margin-top:3px">
+					                            		<button type="button" class="btn btn-primary btn-sm" id="prodSaveBtn">保存</button>
+					                            		<button type="button" class="btn btn-primary btn-sm" id="prodResetBtn">重置</button>
+					                            		<button type="button" class="btn btn-primary btn-sm" id="prodIsUseBtn">启用/禁用</button>
+					                            	</div>
+					                            	<div class="row">
+														<div class="jqGrid_wrapper">
+										                    <table id="prodTable"></table>
+										                    <div id="prodPage"></div>
+										                </div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<!-- 指标范围模态框 -->
+		                            <div class="modal inmodal fade" id="scopeModal" tabindex="-1" role="dialog"
+										aria-hidden="true">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+													</button>
+													<h4 class="modal-title">指标范围</h4>
+													<small class="font-bold">在这里，您可以对关键指标配置指标范围！</small>
+												</div>
+												<div class="modal-body">
+													<div class="row col-lg-offset-1">
+						                            	<form class="form-inline" id="scopeForm">
+						                            		<input type='hidden' name='id'>
+						                            		<input type='hidden' name='indexId' id='scopeIndexId'>
+						                            		<div class="form-group">
+							                                    <label for="scopeCode" class="control-label">机构范围</label>
+							                                	<select class="form-control" name="scopeCode" id="scopeCode">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('ORG_LEVEL',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+					                                		</div>
+						                            	</form>
+					                            	</div>
+					                            	<div class="row col-lg-offset-1" style="margin-top:3px">
+					                            		<button type="button" class="btn btn-primary btn-sm" id="scopeSaveBtn">保存</button>
+					                            		<button type="button" class="btn btn-primary btn-sm" id="scopeResetBtn">重置</button>
+					                            		<button type="button" class="btn btn-primary btn-sm" id="scopeDeleteBtn">删除</button>
+					                            	</div>
+					                            	<div class="row">
+														<div class="jqGrid_wrapper">
+										                    <table id="scopeTable"></table>
+										                    <div id="scopePage"></div>
+										                </div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+	                     		</div>
+	                     	</div>
+                     	</div>
+                     </div>
+                 </div>
+             </div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		/*初始化搜索表单风险分类select2*/
+		$('#searchRiskCategoryId').select2({
+		    placeholder: "请选择",
+		    allowClear: true
+		});
+		
+		/*初始化新增编辑关键风险指标风险分类select2*/
+		$("#riskCategoryId").select2({
+		    placeholder: "请选择",
+		    allowClear: true
+		});
+		
+		/*机构树*/
+		$('#orgTree').jstree({
+			  "core" : {
+			    "animation" : false,
+			    'multiple':false,
+			    "check_callback" : true,
+			    'expand_selected_onload':true,
+			    "themes" : { "stripes" : false },
+			    'data' : {
+			      'url' : function (node) {
+			        return '/system/org/findOrg.action';
+			      },
+			      "datatype": "json",
+			      'data' : function (node) {
+			        return { 'id' : node.id };
+			      }
+			    }
+			  },
+			  "types" : {
+			    "#" : {
+			      "max_children" : -1,
+			      "max_depth" : -1,
+			      "valid_children" : ["root"]
+			    },
+			    "root" : {
+			      "valid_children" : ["default"]
+			    },
+			    "default" : {
+			      "valid_children" : ["default","file"]
+			    },
+			    "file" : {
+			      "icon" : "glyphicon glyphicon-file",
+			      "valid_children" : []
+			    }
+			  },
+			  "plugins" : [
+			    "contextmenu", "dnd", "search",
+			    "state", "types", "wholerow"
+			  ]
+		});
+		$('#orgTree').bind("ready.jstree", function (obj, e) {
+			$('#orgTree').jstree(true).deselect_all(false);
+			$('#orgTree').jstree(true).refresh();
+		});
+		$('#orgTree').bind("activate_node.jstree", function (obj, e) {
+			
+		});
+		
+		/*查询方法*/
+		function searchFn(){
+			var formJson = $('#searchForm').getNotNullJson();
+	    	formJson.operationType = 'fetch';
+	    	formJson.textMatchStyle = 'substring';
+	    	formJson.sortBy = 'indexCode';
+	    	$("#indexTable").jqGrid('clearGridData');//清空表格
+			$("#indexTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : formJson,
+				page : 0
+			},true).trigger("reloadGrid");
+		}
+		
+		/*阈值表格查询*/
+		function thresholdSearchFn(){
+			var formJson = {
+	    		operationType : 'fetch',
+	    		textMatchStyle : 'substring',
+	    		sortBy : 'section'
+	    	};
+			var rowId = $('#thresholdIndexId').val();
+			if(isNotEmpty(rowId)){
+				formJson.indexId = rowId;
+			}
+	    	$("#thresholdTable").jqGrid('clearGridData');//清空表格
+			$("#thresholdTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : formJson,
+				page : 0
+			},true).trigger("reloadGrid");
+		}
+		
+		/*标签表格查询*/
+		function tagSearchFn(){
+			var formJson = {
+	    		operationType : 'fetch',
+	    		textMatchStyle : 'substring',
+	    		sortBy : 'tagName'
+	    	};
+			var rowId = $('#tagIndexId').val();
+			if(isNotEmpty(rowId)){
+				formJson.indexId = rowId;
+			}
+	    	$("#tagTable").jqGrid('clearGridData');//清空表格
+			$("#tagTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : formJson,
+				page : 0
+			},true).trigger("reloadGrid");
+		}
+		
+		/*阈值表格反显表达式函数*/
+		function setSection(){
+			var lowerBounOper = $('#lowerBounOper').val();
+			var lowerBoun = $('#lowerBoun').val();
+			var upperBounOper = $('#upperBounOper').val();
+			var upperBoun = $('#upperBoun').val();
+			if(isEmpty(lowerBounOper) || isEmpty(upperBounOper)){
+				return false;
+			}
+			if(lowerBounOper == '<=' && isEmpty(lowerBoun)){
+				$('#expression').val('');
+				return false;
+			}
+			if(upperBounOper == '<=' && isEmpty(upperBoun)){
+				$('#expression').val('');
+				return false;
+			}
+			if(lowerBounOper == '<='){
+				lowerBounOper = '[';
+			}else{
+				lowerBounOper = '(';
+			}
+			if(upperBounOper == '<='){
+				upperBounOper = ']';
+			}else{
+				upperBounOper = ')';
+			}
+			if(isEmpty(lowerBoun)){
+				lowerBoun = '-∞';
+			}
+			if(isEmpty(upperBoun)){
+				upperBoun = '+∞';
+			}
+			$('#expression').val(lowerBounOper + lowerBoun + ',' + upperBoun + upperBounOper);
+		}
+		
+		/*分配表格查询*/
+		function allotTableSearch(){
+			var indexId = $('#allotIndexId').val();
+			var formJson = {
+				operationType : 'fetch',
+				textMatchStyle : 'substring',
+				sortBy : 'dimenCode',
+				indexId : indexId
+			};
+	    	$("#allotTable").jqGrid('clearGridData');//清空表格
+			$("#allotTable").jqGrid('setGridParam',{//重新加载数据
+				url : "[(@{/kri/indexDime/isc/fetch?isc_dataFormat=json})]",
+				datatype : 'json',
+				postData : formJson,
+				page : 0
+			},true).trigger("reloadGrid");
+		}
+		
+		/*产品表格查询*/
+		function prodTableSearch(){
+			var indexId = $('#prodIndexId').val();
+			var formJson = {
+				operationType : 'fetch',
+				textMatchStyle : 'substring',
+				sortBy : 'prodCode',
+				indexId : indexId
+			};
+	    	$("#prodTable").jqGrid('clearGridData');//清空表格
+			$("#prodTable").jqGrid('setGridParam',{//重新加载数据
+				url : "[(@{/kri/kriProd/isc/fetch?isc_dataFormat=json})]",
+				datatype : 'json',
+				postData : formJson,
+				page : 0
+			},true).trigger("reloadGrid");
+		}
+		
+		/*范围表格查询*/
+		function scopeTableSearch(){
+			var indexId = $('#scopeIndexId').val();
+			var formJson = {
+				operationType : 'fetch',
+				textMatchStyle : 'substring',
+				sortBy : 'scopeCode',
+				indexId : indexId
+			};
+	    	$("#scopeTable").jqGrid('clearGridData');//清空表格
+			$("#scopeTable").jqGrid('setGridParam',{//重新加载数据
+				url : "[(@{/kri/indexScope/isc/fetch?isc_dataFormat=json})]",
+				datatype : 'json',
+				postData : formJson,
+				page : 0
+			},true).trigger("reloadGrid");
+		}
+		
+		/*配置关键指标表格*/
+		$("#indexTable").jqGrid({
+			url:"[(@{/kri/index/isc/fetch?isc_dataFormat=json})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 350,
+	        autowidth: true,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colModel : [{
+	        	label : 'id',
+	        	name:'id',
+	        	index:'id',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '风险分类',
+	        	name:'riskCategoryId',
+	        	index:'riskCategoryId',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@kriRiskCategroyServiceImpl.getRiskCateMapJsonString('Y','')})][cellValue];
+	        	}
+	        },{
+	        	label : '格式化前风险分类',
+	        	name:'riskCategoryId',
+	        	index:'riskCategoryId',
+	        	editable: false,
+	        	search:true,
+				hidden : true
+	        },{
+	        	label : '指标编码',
+	        	name:'indexCode',
+	        	index:'indexCode',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	label : '指标名称',
+	        	name:'indexName',
+	        	index:'indexName',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	label : '指标说明',
+	        	name:'indexDesc',
+	        	index:'indexDesc',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	label : '计算公式',
+	        	name:'calculateMethod',
+	        	index:'calculateMethod',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	label : '公式/口径说明',
+	        	name:'formula',
+	        	index:'formula',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	label : '计量单位',
+	        	name:'unit',
+	        	index:'unit',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('UNIT',#locale)})][cellValue];
+	        	}
+	        },{
+	        	label : '格式化前计量单位',
+	        	name:'unit',
+	        	index:'unit',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '更新频率',
+	        	name:'updateFrequency',
+	        	index:'updateFrequency',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('FREQUENCY',#locale)})][cellValue];
+	        	}
+	        },{
+	        	label : '格式化前更新频率',
+	        	name:'updateFrequency',
+	        	index:'updateFrequency',
+	        	editable: false,
+	        	search:true,
+				hidden : true
+	        },{
+	        	label : '监管要求及影响',
+	        	name:'superRequire',
+	        	index:'superRequire',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	label : '是否年审指标',
+	        	name:'isAnnual',
+	        	index:'isAnnual',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('YESNO',#locale)})][cellValue];
+	        	}
+	        },{
+	        	label : '格式化前是否年审指标',
+	        	name:'isAnnual',
+	        	index:'isAnnual',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '状态',
+	        	name:'status',
+	        	index:'status',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('INDEX_STATUS',#locale)})][cellValue];
+	        	}
+	        },{
+	        	label : '格式化前状态',
+	        	name:'status',
+	        	index:'status',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        }],
+	        pager: "#indexPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }
+	    });
+	    $("#indexTable").jqGrid('navGrid', '#indexPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    
+	    /*配置编辑公式表格*/
+		$("#formulaTable").jqGrid({
+			url:"[(@{/kri/factor/isc/fetch?isc_dataFormat=json})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 100,
+	        width : 850,
+	        autowidth: false,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['id','数据项编码','数据项名称','数据项说明','计量单位','采集频率','数据来源','精度','状态','格式化前状态'],
+	        colModel:[{
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'factorCode',
+	        	index:'factorCode',
+	        	hidden : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'factorName',
+	        	index:'factorName',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'factorDesc',
+	        	index:'factorDesc',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'unit',
+	        	index:'unit',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('UNIT',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'collFrequency',
+	        	index:'collFrequency',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('FREQUENCY',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'dataSource',
+	        	index:'dataSource',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'precision',
+	        	index:'precision',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'status',
+	        	index:'status',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('INDEX_STATUS',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'status',
+	        	index:'status',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        }],
+	        pager: "#formulaPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        },
+	        ondblClickRow : function(rowid,e){
+	    		var formulaData = $("#formulaTable").jqGrid("getRowData",rowid);
+	    		if(formulaData.status == 'DISABLE'){
+	    			swal('提示','不能使用禁用的数据项！','warning');
+	    			return false;
+	    		}
+	    	 	$('#formula').val($('#formula').val()+formulaData.factorName);
+	    	 	$('#calculateMethod').val($('#calculateMethod').val()+formulaData.factorCode);
+	    	 	/*赋值关联的指标ID*/
+	    	 	var formulaFactorIds = $('#formulaFactorIds').val();
+	    	 	var ids = '';
+	    	 	if(isNotEmpty(formulaFactorIds)){
+	    	 		ids = formulaFactorIds + ',' + formulaData.id;
+	    	 	}else{
+	    	 		ids = formulaData.id;
+	    	 	}
+	    	 	$('#formulaFactorIds').val(ids);
+	    	}
+	    });
+	    $("#formulaTable").jqGrid('navGrid', '#formulaPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    
+	    /*配置阈值表格*/
+		$("#thresholdTable").jqGrid({
+			url:"[(@{/kri/threshold/isc/fetch?isc_dataFormat=json})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 100,
+	        width : 850,
+	        autowidth: false,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colModel:[{
+	        	label : 'id',
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	label : '关键风险指标ID',
+	        	name : 'indexId',
+	        	index : 'indexId',
+	        	hidden : true,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	label : '阈值区间',
+	        	name:'section',
+	        	index:'section',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('SECTION',#locale)})][cellValue];
+	        	}
+	        },{
+	        	label : '初始化前阈值区间',
+	        	name:'section',
+	        	index:'section',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '下边界操作符号',
+	        	name:'lowerBounOper',
+	        	index:'lowerBounOper',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('BOUN_OPER',#locale)})][cellValue];
+	        	}
+	        },{
+	        	label : '初始化前下边界操作符号',
+	        	name:'lowerBounOper',
+	        	index:'lowerBounOper',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '下边界',
+	        	name:'lowerBoun',
+	        	index:'lowerBoun',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	label : '上边界操作符号',
+	        	name:'upperBounOper',
+	        	index:'upperBounOper',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('BOUN_OPER',#locale)})][cellValue];
+	        	}
+	        },{
+	        	label : '初始化前上边界操作符号',
+	        	name:'upperBounOper',
+	        	index:'upperBounOper',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '上边界',
+	        	name:'upperBoun',
+	        	index:'upperBoun',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	label : '表达式',
+	        	name:'expression',
+	        	index:'expression',
+	        	editable: false,
+	        	search:true
+	        }],
+	        pager: "#thresholdPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        },
+	        ondblClickRow : function(rowid,e){
+	    		var rowData = $("#thresholdTable").jqGrid("getRowData",rowid);
+	    		$('#thresholdForm').loadJson(rowData);
+	    		$('#section').attr('disabled','disabled');
+	    	}
+	    });
+	    $("#thresholdTable").jqGrid('navGrid', '#thresholdPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    
+	    /*配置标签表格*/
+		$("#tagTable").jqGrid({
+			url:"[(@{/kri/indexTag/isc/fetch?isc_dataFormat=json})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 100,
+	        width : 550,
+	        autowidth: false,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colModel:[{
+	        	label : 'id',
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	label : '关键风险指标ID',
+	        	name : 'indexId',
+	        	index : 'indexId',
+	        	hidden : true,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	label : '标签',
+	        	name:'tagName',
+	        	index:'tagName',
+	        	editable: false,
+	        	search:true
+	        }],
+	        pager: "#tagPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        },
+	        ondblClickRow : function(rowid,e){
+	    		var rowData = $("#tagTable").jqGrid("getRowData",rowid);
+	    		$('#tagForm').loadJson(rowData);
+	    	}
+	    });
+	    $("#tagTable").jqGrid('navGrid', '#tagPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    
+	    /*表格自适应函数*/
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#indexTable').setGridWidth(width);
+	        $('#formulaTable').setGridWidth(width);
+	        $('#thresholdTable').setGridWidth(width);
+	        $('#tagTable').setGridWidth(width);
+	        $('#allotTable').setGridWidth(width);
+	        $('#prodTable').setGridWidth(width);
+	        $('#scopeTable').setGridWidth(width);
+	    });
+	    
+	    /*新增按钮点击事件*/ 
+	    $('#addIndexBtn').click(function(){
+			defineResetForm('#indexInfoFrom');
+	    	$('#indexModal').modal('show');
+	    });
+	    
+	    /*信息模态框保存按钮*/
+	    $('#saveBtn').click(function(){
+	    	var indexCode = $('#indexCode').val();
+	    	var indexName = $('#indexName').val();
+	    	if(isEmpty(indexCode) || isEmpty(indexName)){
+	    		swal('提示','请先填写指标编码和指标名称！','warning');
+	    		return false;
+	    	}
+	    	ajaxRequestCloseFn('[(@{/kri/index/saveIndex.action})]',$('#indexInfoFrom').getJson(),'#indexModal',searchFn);
+	    });
+	    
+	    /*编辑按钮点击事件*/
+	    $('#editIndexBtn').click(function(){
+	    	var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	if(isEmpty(rowId)){
+	    		swal('提示','请您先选择一条记录!','warning');
+	    		return false;
+	    	}
+	    	var rowData = $("#indexTable").jqGrid("getRowData",rowId);
+	    	$('#indexInfoFrom').loadJson(rowData);
+	    	$('#riskCategoryId').val(rowData.riskCategoryId).select2();
+	    	$('#indexModal').modal('show');
+	    });
+	    
+	    /*启用/禁用*/
+	    $('#useIndexBtn').click(function(){
+	    	var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	if(isEmpty(rowId)){
+	    		swal('提示','请您先选择一条记录!','warning');
+	    		return false;
+	    	}
+	    	ajaxRequestFn('[(@{/kri/index/useIndex.action})]','id='+rowId,searchFn);
+	    });
+	    
+	    /*公式按钮*/
+	    $('#setFormulaBtn').click(function(){
+	    	var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	if(isEmpty(rowId)){
+	    		swal('提示','请您先选择一条记录!','warning');
+	    		return false;
+	    	}
+	    	defineResetForm('#formulaForm');
+	    	$('#formulaIndexId').val(rowId);
+	    	$('#formulaTableSearchFactorName').val('');
+	    	$('#editFormulaModal').modal('show');
+	    });
+	    
+	    /*配置公式模态框的按钮点击事件*/
+	    $('#formulaBtnGroup button').click(function(){
+	    	var btnValue = $(this).text();
+	    	if(btnValue == '清除'){
+    	    	$('#formulaFactorIds').val('');
+    	    	$('#formula').val('');
+    	    	$('#calculateMethod').val('');
+	    		return false;
+	    	}
+	    	var name = $('#formula').val();
+	    	var code = $('#calculateMethod').val();
+	    	$('#formula').val(name+btnValue);
+	    	$('#calculateMethod').val(code+btnValue);
+	    });
+	    
+	    /*公式模态框搜索按钮*/
+	    $('#formulaTableSearchBtn').click(function(){
+	    	var formJson = {
+	    		operationType : 'fetch',
+	    		textMatchStyle : 'substring',
+	    		sortBy : 'factorCode'
+	    	};
+	    	var factorName = $('#formulaTableSearchFactorName').val();
+	    	if(isNotEmpty(factorName)){
+	    		formJson.factorName = factorName;
+	    	}
+	    	$("#formulaTable").jqGrid('clearGridData');//清空表格
+			$("#formulaTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : formJson,
+				page : 0
+			},true).trigger("reloadGrid");
+	    });
+	    
+	    /*公式模态框确定按钮*/
+	    $('#editFormulaModalSureBtn').click(function(){
+	    	var formula = $('#formula').val();
+	    	var calculateMethod = $('#calculateMethod').val();
+	    	if(isEmpty(formula) || isEmpty(calculateMethod)){
+	    		swal('提示','无法保存：公式编码或者公式名称为空！','warning');
+				return false;	    		
+	    	}
+	    	ajaxRequestCloseFn('[(@{/kri/index/saveFormula.action})]',$('#formulaForm').getJson(),'#editFormulaModal',searchFn);
+	    });
+	    
+	    /*阈值按钮*/
+	    $('#setThresholdBtn').click(function(){
+	    	var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	if(isEmpty(rowId)){
+	    		swal('提示','请您先选择一条记录!','warning');
+	    		return false;
+	    	}
+	    	defineResetForm('#thresholdForm');
+	    	$('#thresholdIndexId').val(rowId);
+	    	thresholdSearchFn();
+	    	$('#thresholdModal').modal('show');
+	    });
+	    
+	    /*阈值模态框重置按钮*/
+	    $('#thresholdResetBtn').click(function(){
+	    	var indexId = $('#thresholdIndexId').val();
+	    	defineResetForm('#thresholdForm');
+	    	$('#thresholdIndexId').val(indexId);
+	    	$('#section').removeAttr('disabled');
+	    });
+	    
+	    /*阈值信息改变监听事件*/
+	    $('#lowerBounOper,#lowerBoun,#upperBounOper,#upperBoun').change(function(){
+	    	setSection();
+	    });
+	    
+	    /*阈值模态框保存按钮*/
+	    $('#thresholdSaveBtn').click(function(){
+	    	var lowerBounOper = $('#lowerBounOper').val();
+			var upperBounOper = $('#upperBounOper').val();
+			var section = $('#section').val();
+			var expression = $('#expression').val();
+	    	if(isEmpty(lowerBounOper) || isEmpty(upperBounOper) || isEmpty(section) || isEmpty(expression)){
+	    		swal('提示','无法保存：阈值区间、上边界符号、下边界符号、表达式为必填！','warning');
+	    		return false;
+	    	}
+	    	var lowerBoun = $('#lowerBoun').val();
+	    	var upperBoun = $('#upperBoun').val();
+			if(isNotEmpty(lowerBoun) && isNotEmpty(upperBoun) && lowerBoun > upperBoun){
+				swal('提示','上边界必须大于等于下边界！','warning');
+				return false;
+			}
+	    	ajaxRequestFn('[(@{/kri/threshold/saveThreshold.action})]', $('#thresholdForm').getJson(),thresholdSearchFn);
+	    });
+	    
+	    /*标签按钮*/
+	    $('#setTagBtn').click(function(){
+	    	var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	if(isEmpty(rowId)){
+	    		swal('提示','请您先选择一条记录!','warning');
+	    		return false;
+	    	}
+	    	defineResetForm('#tagForm');
+	    	$('#tagIndexId').val(rowId);
+	    	tagSearchFn();
+	    	$('#tagModal').modal('show');
+	    });
+	    
+	    /*标签重置按钮*/
+	    $('#tagResetBtn').click(function(){
+	    	var indexId = $('#tagIndexId').val();
+	    	defineResetForm('#tagForm');
+	    	$('#tagIndexId').val(indexId);
+	    });
+	    
+	    /*标签保存按钮*/
+	    $('#tagSaveBtn').click(function(){
+	    	var tagName = $('#tagName').val();
+	    	if(isEmpty(tagName)){
+	    		swal('提示','无法保存：标签为空！','warning');
+	    		return false;
+	    	}
+	    	ajaxRequestFn('[(@{/kri/indexTag/saveTag.action})]', $('#tagForm').getJson(),tagSearchFn);
+	    });
+	    
+	    /*分配按钮点击事件*/
+	    $('#allotBtn').click(function(){
+	    	var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	if(isEmpty(rowId)){
+	    		swal('提示','请您先选择一条记录!','warning');
+	    		return false;
+	    	}
+	    	defineResetForm('#allotForm');
+	    	$('#allotIndexId').val(rowId);
+	    	allotTableSearch();
+	    	$('#allotModal').modal('show');
+	    });
+	    
+	    /*主页面查询中的重置按钮*/
+	    $('#searchClear').click(function(){
+	    	$('#searchForm')[0].reset();
+	    });
+	    
+	    /*查询按钮*/
+	    $('#searchBtn').click(function(){
+	    	searchFn();
+	    });
+	    
+	    /*分配界面重置按钮*/
+	    $('#allotResetBtn').click(function(){
+	    	var allotIndexId = $('#allotIndexId').val();
+	    	defineResetForm('#allotForm');
+	    	$('#allotIndexId').val(allotIndexId);
+	    	$('#dimenCode').removeAttr('disabled');
+	    });
+	    
+	    /*分配界面选择机构树按钮*/
+	    $('#orgChooseBtn').click(function(){
+	    	$('#orgTreeModal').modal('show');
+	    });
+	    
+	    /*机构树模态框中的确定按钮*/
+	    $('#orgTreeModalSureBtn').click(function(){
+	    	var selectNode = $('#orgTree').jstree(true).get_selected(true)[0];
+	    	if(isEmpty(selectNode)){
+	    		swal('提示','请先一个机构！','warning');
+	    		return false;
+	    	}
+	    	$('#belongDeptId').val(selectNode.li_attr.orgId);
+	    	$('#belongDeptName').val(selectNode.li_attr.orgName);
+	    	$('#orgTreeModal').modal('hide');
+	    });
+	    
+	    /*配置数据项分配维度表格*/
+		$("#allotTable").jqGrid({
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        width : 870,
+	        shrinkToFit: true,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colModel : [{
+	        	label : 'id',
+	        	name:'id',
+	        	index:'id',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '关键指标ID',
+	        	name:'indexId',
+	        	index:'indexId',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '维度编码',
+	        	name:'dimenCode',
+	        	index:'dimenCode',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	label : '维度名称',
+	        	name:'dimenName',
+	        	index:'dimenName',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	label : '属主部门ID',
+	        	name:'belongDeptId',
+	        	index:'belongDeptId',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '属主部门名称',
+	        	name:'belongDeptName',
+	        	index:'belongDeptName',
+	        	editable: false,
+	        	search:true
+	        },{
+	        	label : '是否启用',
+	        	name:'isUse',
+	        	index:'isUse',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('YESNO',#locale)})][cellValue];
+	        	}
+	        },{
+	        	label : '格式化前是否启用',
+	        	name:'isUse',
+	        	index:'isUse',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        }],
+	        pager: "#allotPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        },
+	        ondblClickRow : function(rowid,iRow,iCol,e){
+	        	var rowData = $("#allotTable").jqGrid("getRowData",rowid);
+	        	$('#allotForm').loadJson(rowData);
+	        	$('#dimenCode').attr('disabled','disabled');
+	    	}
+	    });
+	    $("#allotTable").jqGrid('navGrid', '#allotPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    
+	    /*分配界面保存按钮*/
+	    $('#allotSaveBtn').click(function(){
+	    	var moniDime = $('#dimenCode').val();
+	    	var belongDeptId = $('#belongDeptId').val();
+	    	if(isEmpty(moniDime) || isEmpty(belongDeptId)){
+	    		swal('提示','监测维度、属主部门为必填项！','warning');
+	    		return false;
+	    	}
+	    	ajaxRequestFn('[(@{/kri/indexDime/saveIndexDime.action})]',$('#allotForm').getJson(),allotTableSearch);
+	    });
+	    
+	    /*分配界面启用/停用*/
+	    $('#allotIsUseBtn').click(function(){
+	    	var rowId = $("#allotTable").jqGrid("getGridParam","selrow");
+	    	if(isEmpty(rowId)){
+	    		swal('提示','请先选择一条分配记录！','warning');
+	    		return false;
+	    	}
+	    	ajaxRequestFn('[(@{/kri/indexDime/useIndexDime.action})]','id=' + rowId,allotTableSearch);
+	    });
+	    
+	    /*配置指标范围表格*/
+		$("#scopeTable").jqGrid({
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        width : 870,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colModel : [{
+	        	label : 'id',
+	        	name:'id',
+	        	index:'id',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '关键指标ID',
+	        	name:'indexId',
+	        	index:'indexId',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '范围',
+	        	name:'scopeCode',
+	        	index:'scopeCode',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('ORG_LEVEL',#locale)})][cellValue];
+	        	}
+	        },{
+	        	label : '格式化前范围',
+	        	name:'scopeCode',
+	        	index:'scopeCode',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        }],
+	        pager: "#scopePage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        },
+	        ondblClickRow : function(rowid,iRow,iCol,e){
+	        	var rowData = $("#scopeTable").jqGrid("getRowData",rowid);
+	        	$('#scopeForm').loadJson(rowData);
+	    	}
+	    });
+	    $("#scopeTable").jqGrid('navGrid', '#scopePage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    
+	    /*指标范围按钮*/
+	    $('#scopeBtn').click(function(){
+	    	var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	if(isEmpty(rowId)){
+	    		swal('提示','请您先选择一条记录!','warning');
+	    		return false;
+	    	}
+	    	defineResetForm('#scopeForm');
+	    	$('#scopeIndexId').val(rowId);
+	    	scopeTableSearch();
+	    	$('#scopeModal').modal('show');
+	    });
+	    
+	    /*配置产品维度表格*/
+		$("#prodTable").jqGrid({
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        width : 870,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colModel : [{
+	        	label : 'id',
+	        	name:'id',
+	        	index:'id',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '关键指标ID',
+	        	name:'indexId',
+	        	index:'indexId',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '产品类型',
+	        	name:'prodCode',
+	        	index:'prodCode',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('PROD_TYPE',#locale)})][cellValue];
+	        	}
+	        },{
+	        	label : '格式化前产品类型',
+	        	name:'prodCode',
+	        	index:'prodCode',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	label : '是否启用',
+	        	name:'isUse',
+	        	index:'isUse',
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('YESNO',#locale)})][cellValue];
+	        	}
+	        },{
+	        	label : '格式化前是否启用',
+	        	name:'isUse',
+	        	index:'isUse',
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        }],
+	        pager: "#prodPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        },
+	        ondblClickRow : function(rowid,iRow,iCol,e){
+	        	var rowData = $("#prodTable").jqGrid("getRowData",rowid);
+	        	$('#prodForm').loadJson(rowData);
+	    	}
+	    });
+	    $("#prodTable").jqGrid('navGrid', '#prodPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    
+	    /*产品按钮*/
+	    $('#prodBtn').click(function(){
+	    	var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	if(isEmpty(rowId)){
+	    		swal('提示','请您先选择一条记录!','warning');
+	    		return false;
+	    	}
+	    	defineResetForm('#prodForm');
+	    	$('#prodIndexId').val(rowId);
+	    	prodTableSearch();
+	    	$('#prodModal').modal('show');
+	    });
+	    
+	    /*产品模态框保存按钮*/
+	    $('#prodSaveBtn').click(function(){
+	    	var prodCode = $('#prodCode').val();
+	    	if(isEmpty(prodCode)){
+	    		swal('提示','产品类型必须选择！','warning');
+	    		return false;
+	    	}
+	    	ajaxRequestFn('[(@{/kri/kriProd/saveIndexProd.action})]',$('#prodForm').getJson(),prodTableSearch);
+	    });
+	    
+	    /*产品模态框重置按钮*/
+	    $('#prodResetBtn').click(function(){
+	    	var factorId = $('#prodIndexId').val();
+	    	defineResetForm('#prodForm');
+	    	$('#prodIndexId').val(factorId);
+	    });
+	    
+	    /*产品模态框启用禁用按钮*/
+	    $('#prodIsUseBtn').click(function(){
+	    	var rowId = $("#prodTable").jqGrid("getGridParam","selrow");
+	    	if(isEmpty(rowId)){
+	    		swal('提示','请先选择一条分配记录！','warning');
+	    		return false;
+	    	}
+	    	ajaxRequestFn('[(@{/kri/kriProd/useIndexProd.action})]','id=' + rowId,prodTableSearch);
+	    });
+	    
+	    /*范围保存按钮*/
+	    $('#scopeSaveBtn').click(function(){
+	    	var scopeCode = $('#scopeCode').val();
+	    	if(isEmpty(scopeCode)){
+	    		swal('提示','请先选择机构范围！','warning');
+	    		return false;
+	    	}
+	    	ajaxRequestFn('[(@{/kri/indexScope/saveIndexScope.action})]',$('#scopeForm').getJson(),scopeTableSearch);
+	    });
+	    
+	    /*范围重置按钮*/
+	    $('#scopeResetBtn').click(function(){
+	    	var indexId = $('#scopeIndexId').val();
+	    	defineResetForm('#scopeForm');
+	    	$('#scopeIndexId').val(indexId);
+	    });
+	    
+	    /*范围删除按钮*/
+	    $('#scopeDeleteBtn').click(function(){
+	    	var rowId = $("#scopeTable").jqGrid("getGridParam","selrow");
+	    	if(isEmpty(rowId)){
+	    		swal('提示','请您先选择一条记录!','warning');
+	    		return false;
+	    	}
+	    	ajaxRequestFn('[(@{/kri/indexScope/deleteIndexScope.action})]','id='+rowId,scopeTableSearch);
+	    });
+	    
+	})	    
+</script>
+</html>

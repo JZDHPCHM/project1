@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+</head>
+<body>
+</body>
+<script>
+    var newData=[];
+// var orgs = [(${@ReportPriceLimitService.getOrgLst()})];
+var sumFlag = "init";
+/*tQueryQuarter.push(
+	    {
+	        name: "type", title: "机构名称", editorType: "ComboBoxItem", 
+	        addUnknownValues:false, wrapTitle: false,
+	        valueMap: orgs,
+	        defaultToFirstOption : true,
+    		changed : function(form, item, value) {
+    			sumFlag = value;
+    			form.submit();
+    		}
+	    }
+	    );*/
+	
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQueryQuarter,
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{
+				name:'fdGuestGr',					
+				title:'客户评级',
+				getGridSummary:function (records, summaryField) {
+					return "合计";
+	            }
+			},
+			{name:'fdLoanSum',			title:'总债项数目',summaryFunction:  function() {return sumData['fdLoanSum'];}},//客户数目
+		    {name:'fdOverLoanSum',			title:'超定价债项数目',summaryFunction: function() {return sumData['fdOverLoanSum'];}},//占比
+			{name:'fdLimit10',			title:'超定价幅度 <br>0%~10%（含）',summaryFunction: function() {return formatPer(sumData['fdLimit10']);}},//客户数目
+		    {name:'fdLimit30',			title:'超定价幅度<br> 10%~30%（含）',summaryFunction: function() {return formatPer(sumData['fdLimit30']);}},//占比
+		    {name:'fdLimit50',			title:'超定价幅度 <br>30%~50%（含）',summaryFunction: function() {return formatPer(sumData['fdLimit50']);}}, //占比
+		    {name:'fdLimitGreat50',			title:'超定价幅度 <br>50%以上',summaryFunction: function() {return formatPer(sumData['fdLimitGreat50']);}}, //占比
+		    {name:'fdOverLimitSum',			title:'总体超定价幅度',summaryFunction: function() {return formatPer(sumData['fdOverLimitSum']);}},//占比
+	]
+};
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields: BorrowKeyBussFields.grid,
+    dataURL: '[[@{/irs/report_priceLimit/isc}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>风险定价管理报告—超定价幅度</b>',
+	dataSource: report_borrowKeyBussDS,
+	//sortField: 'fdGuestGr',
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	canPageable: false,
+	fields: BorrowKeyBussFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	headerSpans: [
+         {
+             fields: ["fdLimit10", "fdLimit30","fdLimit50","fdLimitGreat50"], 
+             title: "超定价幅度"
+         }
+     ],
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	exportFilename:'整体借款人评级分布',
+	//exportActionMembers:['export2Excel','exportAll2Excel'],
+	actionMembers:[
+		'query','reset',
+		{
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+					url:"[(@{/irs/report_priceLimit/isc/fetchData/Results.csv})]",
+                    "year":year,"quarter":quarter,
+					fileName:  "风险定价管理报告—超定价幅度",
+                    sortBy: "fdGuestGr"
+				});
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+	afterQuery:function(dsResponse,data,dsRequest){
+		var newData=[];
+		sumData = [];
+		for(var i =0 ;i<data.length;i++){
+			var record = data[i];
+			if(record.fdGuestGr==='合计'){
+				if(sumFlag==='' || typeof sumFlag == 'undefined'){
+					for(var key in sumData){
+						sumData[key]=null;
+					}
+					continue;
+				}
+				sumData = record;
+				continue ;
+			}
+			newData.push(record);
+		}
+		borrowKeyBussFieldsListGrid.setData(newData);
+
+	},
+	formatCellValue:function(value, record, rowNum, colNum){
+		var formatVal = value;
+		if( colNum>2){
+			formatVal = formatPer(value);
+		}
+		return formatVal;
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+
+</script>
+</html>

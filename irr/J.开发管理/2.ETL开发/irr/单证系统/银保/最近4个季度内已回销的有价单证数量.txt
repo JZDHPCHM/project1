@@ -1,0 +1,24 @@
+--最近4个季度内已回销的有价单证数量
+SELECT COUNT(1)
+  FROM AFMS_AFMSAAUDIT_HISTORY A
+  LEFT JOIN (SELECT ID, MAX(UPDATETIME) MAXDATE
+               FROM AFMS_AFMSAAUDIT_HISTORY
+              GROUP BY ID) B
+              ON a.id=b.id
+  LEFT JOIN (SELECT ID, MAX(UPDATETIME) RETDATE
+               FROM AFMS_AFMSAAUDIT_HISTORY
+              WHERE STATUS IN ('11', '12')
+              GROUP BY ID
+              ) C
+    ON A.ID = C.ID
+  LEFT JOIN (SELECT ID, MAX(UPDATETIME) CRDATE
+               FROM AFMS_AFMSAAUDIT_HISTORY
+              WHERE STATUS IN ('4', '2')
+              GROUP BY ID) D
+    ON A.ID = D.ID   
+ WHERE  to_date(MAXDATE,'yyyymmddhh24miss') BETWEEN
+       ADD_MONTHS(TO_DATE('20150630000000', 'yyyymmddhh24miss') + 1, -12) 
+      AND TO_DATE('20150630235959', 'yyyymmddhh24miss')
+   AND C.RETDATE < D.CRDATE 
+   AND A.STATUS IN ('6', '9', '11', '12', '8') --6 出单回销 9 遗失 11 空白退回(T2) 12 空白退回(T3) 8 作废
+

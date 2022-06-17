@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="T_PFM_BRANCH_RESULT" author="fc">
+        <createTable tableName="T_PFM_BRANCH_RESULT" remarks="分公司绩效结果表">
+			<column name="ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键ID">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="INDEX_ID"       		type="varchar(36)"      	 	remarks="指标ID"></column>
+			<column name="INDEX_NAME" 			type="varchar(300)" 			remarks="指标名称"></column>
+			<column name="INDEX_CODE"      		type="VARCHAR(50)"      	 	remarks="指标编码"></column>
+			<column name="INDEX_WEIGHT"      	type="NUMBER(5,2)"      	 	remarks="指标权重"></column>
+			<column name="STAND_VALUE"      	type="NUMBER(5,2)"      	 	remarks="标准分值"></column>
+			<column name="INDEX_SCORE"    		type="VARCHAR(300)"      		remarks="指标绩效得分"></column>
+			<column name="ORG_ID"    			type="VARCHAR(36)"      		remarks="机构ID"></column>
+			<column name="ORG_NAME"    			type="VARCHAR(50)"      		remarks="机构名称"></column>
+			<column name="ORG_CODE"    			type="VARCHAR(30)"      		remarks="机构编码"></column>
+			<column name="TASK_BATCH"     		type="varchar(10)"      	 	remarks="任务期次"></column>
+			<column name="TASK_ID" 				type="varchar(36)" 				remarks="任务ID"></column>
+			<column name="SORT_NUM" 			type="NUMBER(3,0)" 				remarks="序号"></column>
+			<column name="DATA_BODY"      		type="varchar(50)"      		remarks="主体编码"></column>
+			<column name="FD_CREATOR"           type="varchar(255)"  			remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"       type="DATETIME"                 remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"     type="varchar(50)"  			remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"   type="DATETIME"                 remarks="最后修改日期"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

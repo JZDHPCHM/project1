@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+<script type="text/javascript" th:src="@{/webjars/jquery/1.12.4/js/jquery.js}"></script>
+<script th:src="@{/portlet/js/echarts.js}"></script>
+</body>
+<script>
+//审批页面是否可以输入
+var levelFlag = true;
+// 非客户经理才能看到意见说明
+var isManager = false;
+//当前登录人账号
+var userAccout = "[(${T(org.wsp.framework.security.util.SecurityUtil).getLoginName()})]";
+//用户当前所属机构
+var currentOrg = "[(${@ProcessDataService.findCurrentOrg()})]";
+//用户当前所属机构的父级机构
+var currentParentOrg = "[(${@ProcessDataService.findCurrentParentOrg()})]";
+//风险定量、定性信息展示
+var isRiskShow = currentOrg == "1002299" || userAccout == "admin";
+// 总行风险定量、定性信息展示
+var isHeadOfficeShow = currentOrg == "1009999" || currentParentOrg == "1009999" || userAccout == "admin";
+//当前登录人默认角色
+//当前登录人账号
+var roleCode = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+var defaultRole = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+var userAccoutAndRole = defaultRole + userAccout;
+//模型列表
+var ModelList = [(${@frSystemDictionaryService.getDictionaryMapJsonString('MODEL_TYPE',#locale)})];
+var newModelList = {};
+for( modelCode in ModelList){
+	if(!modelCode.startsWith("F") && !modelCode.startsWith("B")){
+		newModelList[modelCode]=ModelList[modelCode];
+	}
+}
+//是否开启试算功能
+var ratingTrialEnable = [(${@frSystemParameterService.getParameter(T(gbicc.irs.ec.rating.support.RatingConstants).RATING_TRIAL_ENABLE)})];
+//试算次数
+var ratingTrialCount = [(${@frSystemParameterService.getParameter(T(gbicc.irs.ec.rating.support.RatingConstants).RATING_TRIAL_NUM_LIMIT)})];
+//评级状态
+var RatingStatus = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.RatingStatus),#locale)})];
+//企业规模
+var EnterpriseScales =[(${@CodeLibraryService.findByItemCode("Scope")})];
+//公司客户评级类型
+var RatingType = [(${@frSystemDictionaryService.getDictionaryMapJsonString('RATING_TYPE',#locale)})]
+//公司客户评级流程状态
+var RatingProcessStatus = [(${@frSystemDictionaryService.getDictionaryMapJsonString('CUSTOMER_RATING_PROCESS_STATUS',#locale)})];
+//评级状态
+var RatingStatus = [(${@frSystemDictionaryService.getDictionaryMapJsonString('RATING_STATUS',#locale)})];
+//评级触发类型
+var RatingTriggerType = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.RatingTriggerType),#locale)})];
+//企业规模
+var EnterpriseScales =[(${@CodeLibraryService.findByItemCode("Scope")})];
+//财报币种
+var ReportCurrencys =[(${@CodeLibraryService.findByItemCode("Currency")})];
+//财报周期
+var ReportCycles = [(${@CodeLibraryService.findByItemCode("ReportPeriod")})];
+//财报类型
+var ReportTypes = [(${@frSystemDictionaryService.getDictionaryMapJsonString('FinancialStatementTemplateType',#locale)})];
+//财报科目分类
+var FinanciaAccountCategory =[(${@frSystemDictionaryService.getDictionaryMapJsonString('ACCOUNT_CLASSIFICATION',#locale)})];
+//客户分类
+var ctmTyps =[(${@CodeLibraryService.findByItemCode("CustomerType")})];
+//证件类型
+var certTypes = [(${@CodeLibraryService.findByItemCode("CertType")})];
+//用户列表
+var userEntitys =[(${@jacksonObjectMapper.writeValueAsString(@userService2.findByUser("12"))})] ;
+//统计口径
+var ReportSpecificationss = [(${@CodeLibraryService.findByItemCode("ReportScope")})];
+//国标行业
+var GBindustrys=[(${@CodeLibraryService.findByItemCode("IndustryType")})];
+//行内行业
+var industrys=[(${@CodeLibraryService.findByItemCode("IndustryType1")})];
+//是否审计
+var isAudits=[(${@CodeLibraryService.findByItemCode("报表审计")})];
+//是否空表
+var isNullTabels=[(${@CodeLibraryService.findByItemCode("IsEmpty")})];
+//是否平衡
+var isNullBalances=[(${@CodeLibraryService.findByItemCode("IsBalanced")})];
+var users=[(${@DefaultCustomerService.findUserNames()})];
+var orgs = [(${@ProcessDataService.findOrgs()})];
+//客户财报类型
+var customerReportTypes=[(${@CodeLibraryService.findByItemCode("FinanceBelong")})];
+var plclickFlag = false;
+isc.defineClass('UserWorkflowAction','HLayout').addProperties({
+	//自定义扩展属性列表及默认值===========================================
+	//获取回退按钮列表的 url,由系统自动提供,使用者无需指定
+	gobackActionUrl: FrameworkUiInterface.webContextPath +'/irs/FlowGetMenu/getButtom',	//获取回退操作的 url
+	actionUrl: null,													//操作对应的服务器端控制器 url
+	taskId : null,	
+	suggLevel : null,		//任务ID
+	transientVariables:null,											//临时变量
+	comPanyId:null,
+	actionButtonWidth: 100,												//回退按钮默认宽度
+	defaultActionButtons:[],											//默认按钮
+	defaultActionButtonsAlign:'right',									//默认按钮对齐方式
+	/**
+	 * 回调函数
+	 */
+	callback: function(){
+		isc.say('操作成功！');
+		ratingTaskListGrid.refresh();
+		rateWindow.close();
+	},
+	
+	initWidget: function(){
+		var target =this;
+        if(this.taskId!=null){
+        	//如果是完成任务,首先获取可选的操作按钮列表
+        	isc.FwRPCManager.get({
+        		url: this.gobackActionUrl ,
+        		urlParameters:{taskId:this.taskId,suggLevel:this.suggLevel,comPanyId:this.comPanyId}, //传入当前步骤ID
+        		callback: function(response, rawData, request){
+        			target.buildMembers(rawData);
+        		}
+        	});
+        }else{
+        	//如果是创建流程实例
+        	this.buildMembers();
+        }
+        this.Super("initWidget", arguments);
+	},
+	buildMembers: function(gobacks){
+		var target =this;
+		if(plclickFlag)
+		{
+			var index =0;
+			for(var o of gobacks){
+				if(o.title=="退回上一步")
+					break;
+				index++;
+			}
+			gobacks.splice(index,1);
+		}
+		//添加默认按钮
+		if(this.defaultActionButtonsAlign=='left'){
+			if(this.defaultActionButtons && isc.isA.Array(this.defaultActionButtons) && this.defaultActionButtons.length>0){
+				for(var i=0;i<this.defaultActionButtons.length;i++){
+					var button =isc.IButton.create(this.defaultActionButtons[i]);
+					this.addMembers([button,isc.LayoutSpacer.create({width:10})]);
+				}
+			}
+		}
+		
+		
+		//回退按钮
+		if(gobacks){
+			for(var i=0;i<gobacks.length;i++){
+				var goback =gobacks[i];
+				var transientVariables ={};
+				transientVariables[goback.variableName] =goback.variableValue;
+				this.addMembers([
+					isc.LayoutSpacer.create({width:10}),
+					isc.IButton.create({
+						title:goback.title || I18n.goback,
+						width:this.actionButtonWidth,
+						transientVariables: transientVariables,
+						click: function(){
+							target.submit(this.transientVariables);
+						}
+					})
+				]);
+			}
+		}
+		
+		//添加默认按钮
+		if(this.defaultActionButtonsAlign=='right'){
+			if(this.defaultActionButtons && isc.isA.Array(this.defaultActionButtons) && this.defaultActionButtons.length>0){
+				for(var i=0;i<this.defaultActionButtons.length;i++){
+					var button =isc.IButton.create(this.defaultActionButtons[i]);
+					this.addMembers([isc.LayoutSpacer.create({width:10}),button]);
+				}
+			}
+		}
+	},
+	// 自定义人工调整等级展示按钮
+	reloadButton:function(value){
+		// 清空已加载按钮
+		this.removeMembers(this.getMembers());
+		var target =this;
+        if(this.taskId!=null){
+        	//如果是完成任务,首先获取可选的操作按钮列表
+        	isc.FwRPCManager.get({
+        		url: this.gobackActionUrl ,
+        		urlParameters:{taskId:this.taskId,suggLevel:value,comPanyId:this.comPanyId}, //传入当前步骤ID
+        		callback: function(response, rawData, request){
+        			target.buildMembers(rawData);
+        		}
+        	});
+        }else{
+        	//如果是创建流程实例
+        	this.buildMembers();
+        }
+        this.Super("initWidget", arguments);
+	},
+	//提交（即：用户点击“提交”或者“回退”按钮,如果点击了“提交”按钮，无参数，如果点击了“回退”按钮，传入回退控制变量）
+	submit: function(goback){
+		//首先清除临时变量，为第二次提交初始化数据
+		this.transientVariables ={};
+		
+		//如果是点击了“回退”按钮，将回退控制变量付给临时变量
+		if(goback){
+			isc.addProperties(this.transientVariables,goback);
+		}
+		
+		//数据验证
+		if(goback){
+			if(this.validate(goback.goback)){
+				this.doSubmit();
+			}
+		}else{
+			if(this.validate(0)){
+				this.doSubmit();
+			}
+		}
+	},
+	
+	//真正的提交(可能一次就提交完毕，也可能发现存在多个候选人，弹出选择处理人对话框，当用户选择完毕后再次提交)
+	doSubmit: function(){
+		var target =this;
+		//首先获取客户端需要提交的业务数据
+		var data =this.getData() || {};
+		if(isc.FwUtil.isNull(data.transientVariables)){
+			data.transientVariables ={};
+		}
+		//将本次保存的临时变量和用户数据的临时变量进行合并
+		isc.addProperties(data.transientVariables,this.transientVariables);
+		
+		//发起服务器端请求
+		isc.FwRPCManager.post({
+           	url: this.actionUrl,
+            data: data,
+            callback: function(response, rawData, request){
+            	if(rawData.code==0){//操作成功
+            		if(target.successCallback){
+            			target.successCallback();
+            		}
+            	}else if(rawData.code==1){//需要选择处理人
+            		var candidates ={};
+            		for(var i=0;i<rawData.assignees.length;i++){
+            			var assignee =rawData.assignees[i];
+            			candidates[assignee.loginName] =assignee.loginName + '/' + assignee.userName;
+            		}
+            		
+            		isc.SelectAssigneeWindow.create({
+            			assignees: candidates,
+            			afterSelectedAssignee: function(assignee){
+            				isc.addProperties(target.transientVariables,{assignee:assignee});
+            				target.doSubmit();
+            			}
+            		}).show();
+            	}
+            }
+        });
+	},
+	
+	validate: function(){
+		return true;
+	},
+	
+	getData: function(){
+		return null;
+	}
+});
+
+
+function formatterDecimal(value,row,index){
+	  if(!value){
+	   return null;
+	  }
+	  value=value*1;
+	  value = Math.floor(value * 100) / 100
+	  return value;
+}
+
+//-----------------------------------------------------评级步骤组件-----------------------------------
+//展示评级步骤组件
+isc.ViewLoader.create({
+	ID : "rateWindowLoader",
+	autoDraw : false,
+	loadingMessage : "",
+	redrawOnStateChange : true,
+	overflow : 'auto'
+});
+
+//展示评级步骤组件
+isc.ViewLoader.create({
+	ID : "rateWindowLoader1",
+	autoDraw : false,
+	loadingMessage : "",
+	redrawOnStateChange : true,
+	overflow : 'auto'
+});
+		
+//自定义窗口，用于保存评级当前步骤以及是否可编辑
+isc.defineClass("RatingWindow", "Window").addProperties({
+	step : new Object,			//当前步骤对象
+	RatingObject : new Object,	//评级对象
+	qualStepId : "",			//定性步骤ID
+	quanStepId : "",			//定量步骤ID
+	editable : false,
+	editable1_3 : false,
+	leftBtnDis : false,
+	defaultLevel : "",
+	trialObject : new Object,
+	headOfficeShow:isHeadOfficeShow,		// 总行定量、定性信息展示
+	riskShow:isRiskShow,					// 风险定量和定性展示
+	ProjectLoanRating : new Object,			// 关联评级（S3模型）
+	isProjectLoan : false,
+	levelFlag:levelFlag						// 审批页面能否操作
+});
+
+//评级窗口，弹出框
+isc.RatingWindow.create({
+			ID : "rateWindow",
+			title : "",
+			width : "100%",
+			height : "100%",
+			autoCenter : true,
+			isModal : true,
+			visiable : false,
+			showModalMask : true,
+			autoDraw : false,
+			headerControls : ["headerLabel", "closeButton"],
+			changePage : function(url) {
+				rateWindowLoader.setViewURL(url);
+			},
+			items : [rateWindowLoader],
+			closeClick : function() {
+				isStart = false;
+				noFinStepId = ""; // 定性步骤id
+				finStepId = ""; // 定量步骤id
+				rateWindow.hide();
+				//刷新评级列表数据
+				ratingTaskListGrid.invalidateCache();
+			}
+});
+
+
+// 项目贷款评级窗口，弹出框
+isc.RatingWindow.create({
+			ID : "projectLoanWindow",
+			title : "",
+			width : "100%",
+			height : "100%",
+			autoCenter : true,
+			isModal : true,
+			visiable : false,
+			showModalMask : true,
+			autoDraw : false,
+			headerControls : ["headerLabel", "closeButton"],
+			changePage : function(url) {
+				rateWindowLoader1.setViewURL(url);
+			},
+			items : [rateWindowLoader1]
+});
+//-----------------------------------------评级组件定义结束----------------------------------------------
+
+//字段定义
+var RatingMainFields ={
+	query: [
+			{width:'*',		name:'fdCustno',				title:'客户编号',							type: 'text'},
+			{width:'*',		name:'fdCustname',				title:'客户名称',							type: 'text'},
+			{width:'*',		name:'fdModelcode',				title:'模型'	,type: 'select',valueMap:newModelList,allowEmptyValue:true,autoFetchData:false}
+	],
+	grid: [
+			{width:100,		name:'fdId',					    		primaryKey:true,hidden:true},
+			{width:100,		name:'fdTaskId',					    		hidden:true},
+			{width:100,		name:'procInstId',					    	hidden:true},
+		    {width:180,		name:'fdCustno',							title:'客户编号'},
+			{width:200,		name:'fdCustname',							title:'客户名称',		type: 'text'					 },
+		    {width:120,		name:'fdModelcode',							title:'模型',			type: 'select',valueMap:newModelList,allowEmptyValue:true,autoFetchData:false},
+		    {width:100,		name:'fdRateType',							title:'评级类型',		type:"select",valueMap:RatingType},
+		    {width:120,		name:'fdSco',								title:'系统评估得分',formatCellValue:formatterDecimal},
+			{width:120,		name:'fdModelLevel',						title:'系统评估等级'},
+			{width:120,		name:'fdAdjLevel',							title:'特例调整等级'},
+		    {width:120,		name:'fdFinLevel',							title:'人工调整等级'},
+		    {width:120,		name:'fdPd',								title:'违约概率'},
+			{width:120,		name:'fdProcessStatus',						title:'流程状态',		type:"select",valueMap:RatingProcessStatus},
+		    {width:120,		name:'fdSrartTime',							title:'发起时间'},
+			/* {width:100,		name:'fdLaunchUser',						title:'发起人'}, */
+			{width:100,		name:'fdManagerCode',						title:'发起人',type:"select",valueMap:users},
+			{width:300,		name:'operationField',					    title:'操作',canSort:false}
+		    
+	]
+};
+
+//客户评级任务列表数据源
+isc.FwRestDataSource.create({
+	ID: 'ratingTaskDS',
+    fields: RatingMainFields.grid,
+    fetchDataURL:'[[@{/irs/companyRating/ratingTaskListByLoginName}]]',
+    dataURL: '[[@{/irs/companyRating/isc}]]'
+});
+
+//客户评级任务列表
+isc.FwListGrid.create({
+	ID: 'ratingTaskListGrid',
+	title: '<b>待处理客户评级列表</b>',
+	dataSource: ratingTaskDS,
+	sortField: 'startTime',
+	fields: RatingMainFields.grid,
+	showRecordComponents: true,
+    showRecordComponentsByCell: true,
+    recordComponentPoolingMode: "recycle",
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: RatingMainFields.query
+	},
+	actionMembers:[
+		'query','reset','refresh',
+		{
+			title:'<span class="fa fa-sitemap"></span>批量提交',
+			name:'BATCHSUBMIT',
+			click: function(){
+				var records = ratingTaskListGrid.getSelectedRecords();
+				var currentRatingId = "";
+				var currentTaskId = "";
+				if(records.length > 1){
+					var arr = new Array();
+					for(var i=0;i<records.length;i++){
+						arr.push(records[i].fdId);
+						currentRatingId = records[i].fdId;
+						currentTaskId = records[i].fdTaskId;
+					}
+					var ratingIds = arr.join(',');
+					// 校验是否满足发起批量
+					isc.FwRPCManager.post({
+	                   	url:'[(@{/irs/companyRating/checkBatch})]',
+	                   	urlParameters:{ratingIds:ratingIds},
+	                    callback: function(response, rawData, request){
+	                    	if(rawData == "0"){
+	                    		isc.say("所选评级不在一个评级审批流程节点上，请单独审批");
+	                    		return false;
+	                    	}
+	                    	if(rawData == "2"){
+	                    		isc.say("所选评级需要“均在其审批权限内”或“均不在其审批权限内”，请单独审批");
+	                    		return false;
+	                    	} 
+	                    	plclickFlag = true;
+	                    	// 满足批量则弹框，进行批量提交
+	                    	isc.FwWindow.create({
+	                    		ID: 'batchSubmitWindow',
+	        					title: '批量提交',
+	        					autoSize: false,
+	        					width: 700,
+	        					height: 200,
+	        					showActionBar: false,
+	        					items:[
+	        						isc.FwDynamicForm.create({
+	        							ID: 'batchSubmitForm',
+	        						    numCols: 2,
+	        						    fields:[
+	        						    	{
+	        						            type: "textArea",
+	        						            name: 'reason',
+	        						            width: 500,
+	        						            title: "意见说明",
+	        						            required: true
+	        						        }
+	        						    ]
+	        						}),
+	        						isc.UserWorkflowAction.create({
+	        							ID:"tesdt",
+	        		    				taskId:currentTaskId,
+	        		    				comPanyId:currentRatingId,
+	        		    	    		actionUrl:FrameworkUiInterface.webContextPath+"/irs/companyRating/batchSubmit",
+	        		    	    		getData: function(){
+	        		    	    			return {
+	        		    	    	        	transientVariables	: {
+	        		    	    	        		ratingIds:ratingIds,
+	        		    	    	        		first_task_assignee:userAccout,
+	        		    	    	        		approvalOpinion:batchSubmitForm.getValue("reason"),
+	        		    	    	        		batchFlag:"1"
+	        		    	    	        	},
+	        		    	    	        	autoCompleteFirstTask: true
+	        		    	    			}
+	        		    	    		},
+	        		    	    		doSubmit:function(){
+	        		    	    			var values = batchSubmitForm.getValues();
+	        		    	    	    	if(values.reason == null || values.reason.length == 0){
+	        		    	    	    		isc.say("必须填写意见说明")
+	        		    	    	    		return false;
+	        		    	    	    	}
+	        		    	    			// 按钮标识
+	        		    	    			var goback = this.transientVariables.goback;
+	        		    	    			// 弹框提示信息
+	        		    	    			var info = "";
+	        		    	    			if(goback == -4){
+	        		    	    				info = "任务将退回上一岗";
+	        		    	    			}
+											if(goback == -2 || goback == -1 || goback == -3){
+												info = "任务将退回客户经理";
+	        		    	    			}
+											var thisDoSubmit = this;
+											if(info == ""){
+												thisDoSubmit.Super("doSubmit", arguments);
+											}else{
+												isc.ask(info,function(v){
+							            			if(v){
+							            				thisDoSubmit.Super("doSubmit", arguments); 
+							            			}
+							            		});
+											}
+	        		    	    		},
+	        		    	    		successCallback: function(){
+	        		    	    			isc.say('操作完成！');
+	        		    	    			ratingTaskListGrid.refresh();
+	        		    	    			batchSubmitWindow.close();
+	        		    	    		}
+	        		    	    	})
+	        					]
+	        				}).show();
+	                    }
+					});
+			}else{
+				isc.say("请选择至少2行");
+			}
+		}
+		},
+		{
+			title:'<span class="fa fa-sitemap"></span>批量退回上一步',
+			name:'BATCHRETURN',
+			click: function(){
+				var records = ratingTaskListGrid.getSelectedRecords();
+				if(records.length > 1){
+					var arr = new Array();
+					for(var i=0;i<records.length;i++){
+						arr.push(records[i].fdId);
+					}
+					var ratingIds = arr.join(',');
+					// 校验是否满足发起批量
+					isc.FwRPCManager.post({
+	                   	url:'[(@{/irs/companyRating/checkBatch})]',
+	                   	urlParameters:{ratingIds:ratingIds},
+	                    callback: function(response, rawData, request){
+	                    	if(rawData == "0"){
+	                    		isc.say("所选评级不在一个评级审批流程节点上，请单独审批");
+	                    		return false;
+	                    	}
+	                    	// 满足批量则弹框，进行批量退回
+	                    	isc.FwWindow.create({
+	                    		ID: 'batchReturnWindow',
+	        					title: '批量退回上一步',
+	        					autoSize: false,
+	        					width: 500,
+	        					height: 200,
+	        					items:[
+	        						isc.FwDynamicForm.create({
+	        							ID: 'batchReturnForm',
+	        						    numCols: 2,
+	        						    fields:[
+	        						    	{
+	        						            type: "textArea",
+	        						            name: 'reason',
+	        						            width: 350,
+	        						            title: "退回原因",
+	        						            required: true
+	        						            
+	        						        }
+	        						    ]
+	        						})
+	        					],
+	        					actionMembers:[
+	        						{
+	        							title:"确定",
+	        							click:function(){
+	        								
+	        								var values = batchReturnForm.getValues();
+	        								if(values.reason){
+	        									isc.ask("任务将退回上一岗",function(v){
+							            			if(v){
+							            				// 批量退回
+			        									isc.FwRPCManager.post({
+				        		    	                   	url:'[(@{/irs/companyRating/batchReturn})]',
+				        		    	                   	 urlParameters:{
+				        		    	                   		ratingIds:ratingIds,
+				        		    	                   		reason:batchReturnForm.getValue("reason"),
+				        		    	    	        		batchFlag:"1"
+				        		    	                   	}, 
+				        		    	                    callback: function(response, rawData, request){
+				        		    	                    	isc.say("操作完成");
+				        		    	                    	ratingTaskListGrid.refresh();
+				    	        		    	    			batchReturnWindow.close();
+				        		    	                    }
+				        		                    	});
+							            			}
+							            		});
+	        								}else{
+	        									isc.say("退回原因不能为空");
+	        								}
+	        							}
+	        						},
+	        						'close'
+	        					]
+	        				}).show();
+	                    }
+	                });
+					
+				}else{
+					isc.say("请选择至少2行");
+				}
+									 
+			}
+		}
+	],
+	createRecordComponent : function (record, colNum) {  
+		return createOperationButton(record, colNum);
+    },
+    updateRecordComponent: function (record, colNum, component, recordChanged) {
+    	return createOperationButton(record, colNum);
+    },
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		/* var status =FwUtil.isNull(record)?'disable':'enable';
+		if(!FwUtil.isNull(record)){
+			if((!record.fdTaskId) || record.fdTaskId == ""){
+				status = 'disable';
+			}else{
+				status = 'enable';
+			}
+		}else{
+			status = 'disable';
+		}
+   		this.setActionMemberButtonStatus(status,['APPROVE_RATING']); */
+   		var target = this;
+   		// 判断是否展示批量按钮
+   		isc.FwRPCManager.get({
+	                   	url:'[(@{/irs/companyRating/isShowBatchSubmit})]',
+	                    callback: function(response, rawData, request){
+	                   		if(rawData){
+	                   			target.setActionMemberButtonStatus('enable',['BATCHSUBMIT']);
+	                   		}else{
+	                   			target.setActionMemberButtonStatus('disable',['BATCHSUBMIT']);
+	                   		}
+	                    }
+	                    }); 
+   		
+   		isc.FwRPCManager.get({
+           	url:'[(@{/irs/companyRating/isShowBatchReturn})]',
+            callback: function(response, rawData, request){
+           		if(rawData){
+           			target.setActionMemberButtonStatus('enable',['BATCHRETURN']);
+           		}else{
+           			target.setActionMemberButtonStatus('disable',['BATCHRETURN']);
+           		}
+            }
+            });
+   		
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	},
+	rowDoubleClick: function(record, recordNum,fieldNum){
+		//展示评级步骤页面
+		rateWindow.setTitle("审批客户评级(客户名称-"+record.custName+" 模型为:"+record.modelCode+")");
+		rateWindow.step = record.steps[0]; //默认显示客户基本信息页面
+		rateWindow.RatingObject = record;//评级对象
+		rateWindow.changePage("[[@{/resources/js/rating_Frame.js}]]");
+		rateWindow.show();
+	}
+});
+
+// 审批和查看意见逻辑
+function ratingApproval(rawData,record){
+	if(rawData){
+		plclickFlag = false;
+    	//显示评级审批页面
+		rateWindow.setTitle("客户评级 ："+rawData.custName+" 模型为 ："+ModelList[rawData.modelCode]);
+		rateWindow.RatingObject =rawData;//评级对象
+		rateWindow.taskId = record.fdTaskId;//任务ID
+		rateWindow.editable=false;		//设置不可修改
+		rateWindow.leftBtnDis=true;	//左侧按钮可用
+		isc.FwRPCManager.get({
+           	url:'[(@{/irs/ratingOverturn/getRatingOverturnList})]',
+           	urlParameters:{ratingId:rateWindow.RatingObject.id},
+            callback: function(response, rawData, request){
+            	if(rawData && rawData.response.data[0]){
+            		// 审批-调整等级展示级别
+					rateWindow.defaultLevel = rawData.response.data[0].suggLevel;
+            	}
+            	// 如果是房地产并且包含项目贷款
+				rateWindow.isProjectLoan = rateWindow.RatingObject.modelCode == "C5" && rateWindow.RatingObject.associationRatingId;
+				// 获取项目贷款
+				isc.FwRPCManager.get({
+                   	url:"[(@{/irs/companyRating/getRatingById})]",
+        	       	urlParameters:{ratingId:rateWindow.RatingObject.associationRatingId},
+                    callback: function(response, rawData, request){
+                    	if(rawData){
+                    		rateWindow.ProjectLoanRating = rawData;//评级对象
+                    	}else{
+                    		// 为空，说明后续JS页面不用展示，避免报错随意给个值
+                    		rateWindow.ProjectLoanRating = rateWindow.RatingObject;
+                    	}
+                		rateWindow.changePage("[[@{/js/rating_Frame_For_App.js}]]");
+						rateWindow.show();
+                    }
+                });	
+            }
+        });
+	}
+}
+
+
+//创建操作按钮 方法
+function createOperationButton(record, colNum){
+	var fieldName = ratingTaskListGrid.getFieldName(colNum);  
+    if (fieldName == "operationField") {
+        var recordCanvas = isc.HLayout.create({
+            height: 22,
+            width: "100%",
+            align: "left"
+        });
+        
+        var approvalBtn = isc.IButton.create({
+        	name:"approvalBtn",
+            title: "审批",
+            grid: this,
+            click : function () {
+            	rateWindow.levelFlag = true;
+				isc.FwRPCManager.get({
+					url:"[(@{/irs/companyRating/getRatingById})]",
+        	       	urlParameters:{ratingId:record.fdId},
+			        callback: function(response, rawData, request){
+			        	ratingApproval(rawData,record);    	
+			        }
+				});
+            }
+        });
+                
+        var showRatingReportBtn = isc.IButton.create({
+        	name:"showRatingReportBtn",
+            title: "查看报告",
+            grid: this,
+            click : function () {
+            	window.open("[(@{/irs/companyRating/customerReport.html})]?custNo="+record.fdCustno + "&id=" + record.fdId,"评级报告"); 
+            }
+        });
+        
+        var viewComments = isc.IButton.create({
+        	name:"viewComments",
+            title: "查看意见",
+            grid: this,
+            click : function () {
+            	ApprovalOverturnHisList1.fetchData({"ratingId":record.fdId});
+            	opinionWindow.show();
+            }
+        });
+        
+        var viewDetails = isc.IButton.create({
+        	name:"viewDetails",
+            title: "评级详情",
+            grid: this,
+            click : function () {
+            	rateWindow.levelFlag = false;
+				isc.FwRPCManager.get({
+					url:"[(@{/irs/companyRating/getRatingById})]",
+        	       	urlParameters:{ratingId:record.fdId},
+			        callback: function(response, rawData, request){
+			        	ratingApproval(rawData,record);    	
+			        }
+				});
+			 }
+		});
+		if(record.fdSource =="IRB"){
+			if(record.fdCurrentAssignee == userAccout 
+					&& record.fdCurrentRole == defaultRole 
+					&& record.fdProcessStatus == "020" 
+					&& record.fdModelcode != "S3" 
+					&& roleCode != "CUSTOMER_MANAGER"){
+				// 审批
+				recordCanvas.addMember(approvalBtn);
+		        recordCanvas.addMember(isc.LayoutSpacer.create({width:10}));	
+			}
+			if(record.fdProcessStatus == "060"){
+	        	// 查看报告
+	            recordCanvas.addMember(showRatingReportBtn);
+	            recordCanvas.addMember(isc.LayoutSpacer.create({width:10}));
+	        }
+	        // 查看意见
+	        recordCanvas.addMember(viewComments);
+	        recordCanvas.addMember(isc.LayoutSpacer.create({width:10}));
+	     	// 查看详情
+	     	recordCanvas.addMember(viewDetails);
+	        recordCanvas.addMember(isc.LayoutSpacer.create({width:30}));
+        }
+        return recordCanvas;  
+    }else {  
+        return null;  
+    }
+}
+
+
+//评级建议等级历史字段定义
+var RatingOverturnFields = {
+		 DS: [
+				{name:'id',			primaryKey:true},
+				{name:'ratingMain'	},
+				{name:'roleName'	},
+				{name:'roleCode'	},
+				{name:'userCode'	},
+			    {name:'userName'	},
+			    {name:'suggLevel'	},
+			    {name:'adjReason'	},
+			    {name:'orgId'	},
+			    {name:'operationalAction'},
+			    {name:'createDate'	}
+		 ],
+		 grid:[
+				{widht:'*',		name:'roleName',		title:"建议角色"},
+			    {widht:'*',		name:'userCode',		title:"建议人",type:"select",valueMap:users},
+			    {widht:'*',		name:'orgId',			title:"机构",type:"select",valueMap:orgs},
+			    {widht:'*',		name:'operationalAction',title:"操作动作"},
+			    {widht:'*',		name:'suggLevel',		title:"建议级别"},
+			    {widht:'*',		name:'adjReason',		title:"意见",type:"textArea",hidden:isManager},
+			    {widht:'*',		name:'createDate',		title:"提交时间"},
+		 ]
+}
+
+//评级建议等级历史数据源定义
+isc.FwRestDataSource.create({
+	ID: 'RatingOverturnDS',
+	fields:RatingOverturnFields.DS,
+	dataURL: FrameworkUiInterface.webContextPath+'/irs/ratingOverturn/isc',
+	fetchDataURL: FrameworkUiInterface.webContextPath + '/irs/ratingOverturn/getRatingOverturnListOpinion'  //用于指定自定义控制器方法属性
+});
+
+//查看历史意见弹出框
+isc.Window.create({
+			ID : "opinionWindow",
+			title : "审批信息",
+			width : "100%",
+			height : "100%",
+			autoCenter : true,
+			isModal : true,
+			visiable : false,
+			showModalMask : true,
+			autoDraw : false,
+			headerControls : ["headerLabel", "closeButton"],
+			items : [
+				isc.FwListGrid.create({
+		    		ID:"ApprovalOverturnHisList1",
+		    		title: '<b>意见历史列表</b>',
+		    		height:200,
+		    		canPageable:false,
+		    		dataSource: RatingOverturnDS,
+		    		fields: RatingOverturnFields.grid
+		    	})
+				
+			]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				ratingTaskListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

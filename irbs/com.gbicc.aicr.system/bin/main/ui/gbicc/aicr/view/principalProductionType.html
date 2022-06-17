@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>报表管理&nbsp;&nbsp;/&nbsp;&nbsp;主体-生产型-底表</title>
+<style type="text/css">
+	.form-group {
+	    margin-bottom: 0;
+	}
+</style>
+</head>
+<body>
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+	                <div class="col-lg-12">
+	                	<div class="ibox float-e-margins">
+	                		<div class="ibox-title">
+	                            <h5>报表管理&nbsp;&nbsp;/&nbsp;&nbsp;主体-生产型-底表</h5>
+	                        </div>
+	                        <div class="ibox-content" style="padding-bottom: 0;">
+	                        	<form class="form-horizontal" id="formSearch">
+									<div class="form-group">
+										<label class="col-sm-1 control-label">报表日期</label>
+										<div class="col-sm-3">
+											<div class="input-daterange input-group" id="datepicker">
+												<input id="date2" type="text" class="form-control"
+													name="date2" placeholder="请选择开始日期" readonly /> <span
+													class="input-group-addon">至</span> <input id="date1"
+													type="text" class="form-control" name="date1"
+													placeholder="请选择结束日期" readonly />
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<b id="btn-query" class="btn btn-success">查询</b>
+											<b id="btn-reset" class="btn btn-success">重置</b>
+										</div>
+									</div>
+								</form>
+	                        </div>
+	                	</div>
+						<div class="jqGrid_wrapper">
+                            <table id="table_list"></table>
+                            <div id="pager_list"></div>
+                        </div>    	    
+	                </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	$('#date1').datepicker({
+	    format: 'yyyy-mm',
+	    language: "zh-CN",
+	    autoclose:true,
+	    startView: 1,
+	    minViewMode: 1,
+	    maxViewMode: 1
+	});
+	$('#date2').datepicker({
+	    format: 'yyyy-mm',
+	    language: "zh-CN",
+	    autoclose:true,
+	    startView: 1,
+	    minViewMode: 1,
+	    maxViewMode: 1
+	});
+	var form="";
+	$('#btn-query').click(function(){
+		form = $('#formSearch').serializeObject();
+	    $("#table_list").jqGrid('setGridParam', {postData:form,page:1}).trigger("reloadGrid");
+	});
+	//重置按钮
+	$("#btn-reset").click(function(){
+		$("#formSearch input").val("");
+		$("#formSearch select").val("");
+		$("#formSearch select").trigger("chosen:updated");
+	});
+$(document).ready(function(){
+	//二级表头
+    var names = []; //显示列名
+    var model = []; //绑定列名
+    var dataz = [];
+    //var num = 1;  //设定num主要是区分前几列固定不需要动态，可以单独设置一些不同的属性，如宽度、固定列等
+    $.ajax({
+    	url: "/irs/reportMain/productionBaseTable", 
+		async:false,
+		success: function(result){
+			names=result[0];
+			dataz=result[1];
+			$.each(result[0], function(key,value) {
+				//names.push(key);
+				model.push({name:value,index:value});				
+			});
+			//alert([[${jq}]]);
+			$("#table_list").jqGrid([[${jq}]]);
+			$("#table_list").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+    	}
+    })
+
+   
+	//滑动时冻结列设置
+    $('#table_list').jqGrid('setFrozenColumns');
+	//一级表头
+    var topname = [];
+    //data1.lms 是后台传过来的一个List<string>类型的一级表头
+    /* $.each(data1.lms, function (key, value) {
+         topname.push({
+             startColumnName: value + "1", //从哪一列开始绑定
+             numberOfColumns: 5,//合并5列
+             titleText: value   //显示值
+         });
+    }) */
+    $("#table_list").jqGrid('setGroupHeaders', {//多表头
+        useColSpanStyle: true,
+        groupHeaders: topname
+    });
+	//清空表格
+	/* $("#table-box").html("");
+	var jqstr = ' <table id="table_list" class="table table-striped"></table><div class="pagination-wrap text-center" id="Pagination" style="display:none;"></div>';
+ 	$("#table-box").html(jqstr); */
+	// Setup buttons
+    $("#table_list").jqGrid('navGrid', '#pager_list',
+            {edit: false, add: false, del: false, search: false},
+            {height: 200, reloadAfterSubmit: true}
+    );
+});
+
+var form="";
+$('#btn-query').click(function(){
+	debugger
+	form = $('#formSearch').serializeObject();
+    $("#table_list").jqGrid('setGridParam', {postData:form,page:1}).trigger("reloadGrid");
+});
+$.fn.serializeObject = function() {  
+    var o = {};  
+    var a = this.serializeArray();  
+    $.each(a, function() {  
+        if (o[this.name]) {  
+            if (!o[this.name].push) {  
+                o[this.name] = [ o[this.name] ];  
+            }  
+            o[this.name].push(this.value || '');  
+        } else {  
+            o[this.name] = this.value || '';  
+        }  
+    });  
+    return o;  
+}
+</script>
+</html>
+

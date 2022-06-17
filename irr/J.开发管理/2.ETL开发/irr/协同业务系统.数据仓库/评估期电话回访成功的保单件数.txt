@@ -1,0 +1,51 @@
+SELECT COMPANYNO,COUNT(NVL(POLICYNO, 0))
+  FROM (SELECT BASE.AGENTNO,
+               BASE.COMPANYNO,
+               BASE.BRANCH,
+               BASE.CHANNEL,
+               BASE.ENDHESDATE,
+               BASE.CHDRNUM,
+               BASE.POLICYNO,
+               MIN(CBLIST.CALLBACKDATE) CALLBACKDATE,
+               BASE.ARACDE1
+          FROM CCREPORT_POLICYS_BASE BASE
+         INNER JOIN CCREPORT_POLICYS_INDICATOR INDI
+            ON BASE.POLICYNO = INDI.POLICYNO
+         INNER JOIN CCREPORT_CRM_CASE3 CASE3
+            ON BASE.POLICYNO = CASE3.POLICYNO
+         INNER JOIN CCREPORT_CRM_CALLBACK_LIST CBLIST
+            ON CBLIST.POLICYNO = BASE.POLICYNO
+         WHERE BASE.OCCDATE >= '20180401' --保单生效日
+           AND BASE.OCCDATE <= '20180630' 
+           AND INDI.ISCFI = '0' --剔除CFI
+           AND INDI.ISWD = '0' --剔除WD
+           AND BASE.ZACKDTE IS NOT NULL --回执日期 
+           AND BASE.ZACKDTE != '99999999'
+           AND BASE.NEEDCALLBACK = '1' --是否需要回访
+           AND BASE.CNTTYPE NOT LIKE 'PA%'
+           AND NOT
+                (CASE3.DATIME LIKE '% 0:00AM' OR CASE3.DATIME LIKE '%000000')
+           AND CASE3.BACRS NOT IN ('0', '1') --回访结果 0重复创建     1未回电已CFI  
+           AND CBLIST.CALLBACKRESULT IN
+               ('电话回访完全干净件',
+                '电话回访问题件',
+                '电话回访-CS干净件',
+                '电话回访CS干净件',
+                '电话回访完全干净件非投操作',
+                '电话回访CS干净件非投操作',
+                '电话回访问题件非投操作',
+                '亲访信回访干净件',
+                '亲访信回访问题件非投操作',
+                '问题件-投保未双录')
+         GROUP BY BASE.COMPANYNO,
+                  BASE.BRANCH,
+                  BASE.CHANNEL,
+                  BASE.ENDHESDATE,
+                  BASE.CHDRNUM,
+                  BASE.AGENTNO,
+                  BASE.ARACDE1,
+                  BASE.POLICYNO) T
+ WHERE T.ENDHESDATE >=
+       SUBSTR(T.CALLBACKDATE, 0, 4) || SUBSTR(T.CALLBACKDATE, 6, 2) ||
+       SUBSTR(T.CALLBACKDATE, 9, 2)
+ GROUP BY COMPANYNO

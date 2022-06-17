@@ -1,0 +1,11 @@
+{
+    "includes":[
+        "com.gbicc.aicr.system.controller",
+        "com.gbicc.aicr.system.service.impl",
+        "com.gbicc.aicr.system.flowable.listener",
+        "com.gbicc.aicr.system.flowable.controller",
+        "com.gbicc.aicr.system.flowable.service",
+        "com.gbicc.aicr.system.in2oa.service",
+        "com.gbicc.aicr.system.support.poi"
+    ]
+}

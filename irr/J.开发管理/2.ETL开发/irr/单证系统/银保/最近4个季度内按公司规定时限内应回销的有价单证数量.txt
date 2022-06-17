@@ -1,0 +1,14 @@
+SELECT COUNT(1)
+  FROM AFMS_AFMSAAUDIT_HISTORY A
+  LEFT JOIN (SELECT ID, MIN(UPDATETIME) MinDATE
+               FROM AFMS_AFMSAAUDIT_HISTORY
+              GROUP BY ID) B
+              ON a.id=b.id
+  LEFT JOIN (SELECT ID,COUNT(1) FROM AFMS_AFMSAAUDIT_HISTORY
+  WHERE status IN ('2','4')
+  GROUP BY ID
+   ) d
+   ON a.id=d.id
+WHERE d.id IS not NULL
+AND add_months(to_date(b.MinDATE,'yyyymmddhh24miss'),12) BETWEEN add_months(TO_DATE('20150630235959', 'yyyymmddhh24miss')+1,-3)
+AND TO_DATE('20150630235959', 'yyyymmddhh24miss')

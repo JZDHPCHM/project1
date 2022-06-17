@@ -1,0 +1,2 @@
+-- Add/modify columns 
+alter table T_IRR_UPLOAD_RESULT modify DATA_VALI NUMBER(10,2);

@@ -1,0 +1,15 @@
+{
+    "includes":[
+        "gbicc.irs.ec.rating.controller",
+        "gbicc.irs.ec.rating.service.impl",
+        "gbicc.irs.ec.financialtrade.rating.controller",
+        "gbicc.irs.ec.financialtrade.rating.service.impl",
+        "gbicc.irs.ec.issueBonds.rating.controller",
+        "gbicc.irs.ec.issueBonds.rating.service.impl",
+        "gbicc.irs.ec.ratingconfig.service.impl",
+        "gbicc.irs.ec.ratingconfig.controller",
+        "gbicc.irs.ec.dataCheckController",
+        "gbicc.irs.main.rating.service.impl",
+        "gbicc.irs.main.rating.controller"
+    ]
+}

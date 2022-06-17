@@ -1,0 +1,233 @@
+[
+  /*报表管理*/
+  {
+    "type": "CATEGORY",
+    "id": "menuitem.irs.report",
+    "title": "[(#{menuitem.irs.report})]",
+    "order": 500
+  },
+  /*评级总体报表*/
+  {
+    "type": "CATEGORY",
+    "parentId": "menuitem.irs.report",
+    "id": "menuitem.irs.report.rating",
+    "title": "[(#{menuitem.irs.report.rating})]",
+    "order": 600
+  },
+  /*整体借款人评级分布*/
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.rating",
+    "id": "menuitem.irs.report.report_ratingDistribution",
+    "title": "[(#{menuitem.irs.report.report_ratingDistribution})]",
+    "order": 601
+  },
+  /*整体借款人评级分布—重点行业*/
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.rating",
+    "id": "menuitem.irs.report.report_ratingImportant",
+    "title": "[(#{menuitem.irs.report.report_ratingImportant})]",
+    "order": 602
+  },
+  /*整体借款人评级分布—门类行业*/
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.rating",
+    "id": "menuitem.irs.report.report_ratingKinds",
+    "title": "[(#{menuitem.irs.report.report_ratingKinds})]",
+    "order": 603
+  },
+  /*整体借款人评级分布—分支机构*/
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.rating",
+    "id": "menuitem.irs.report.report_ratingBranch",
+    "title": "[(#{menuitem.irs.report.report_ratingBranch})]",
+    "order": 604
+  },
+  /* 借款人评级与风险调整收益率总体情况*/
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.rating",
+    "id": "menuitem.irs.report.report_profitAll",
+    "title": "[(#{menuitem.irs.report.report_profitAll})]",
+    "order": 605
+  },
+  /* 借款人评级与风险调整收益率总体情况—重点行业*/
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.rating",
+    "id": "menuitem.irs.report.report_profitImportant",
+    "title": "[(#{menuitem.irs.report.report_profitImportant})]",
+    "order": 606
+  },
+  /* 借款人评级与风险调整收益率总体情况—门类行业*/
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.rating",
+    "id": "menuitem.irs.report.report_profitKinds",
+    "title": "[(#{menuitem.irs.report.report_profitKinds})]",
+    "order": 607
+  },
+  /* 借款人评级与风险调整收益率总体情况—分支机构*/
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.rating",
+    "id": "menuitem.irs.report.report_profitBranch",
+    "title": "[(#{menuitem.irs.report.report_profitBranch})]",
+    "order": 608
+  },
+  /* 贷款五级分类分布表*/
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.rating",
+    "id": "menuitem.irs.report.report_loanFive",
+    "title": "[(#{menuitem.irs.report.report_loanFive})]",
+    "order": 609
+  },
+  /*	评级分析报告*/
+  {
+    "type": "CATEGORY",
+    "parentId": "menuitem.irs.report",
+    "id": "menuitem.irs.report.analyse",
+    "title": "[(#{menuitem.irs.report.analyse})]",
+    "order": 700
+  },
+  /*增客户评级集中度分布 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.analyse",
+    "id": "menuitem.irs.report.report_analyseDistribution",
+    "title": "[(#{menuitem.irs.report.report_analyseDistribution})]",
+    "order": 701
+  },
+  /* 违约客户集中度分布—门类行业 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.analyse",
+    "id": "menuitem.irs.report.report_analyseKinds",
+    "title": "[(#{menuitem.irs.report.report_analyseKinds})]",
+    "order": 702
+  },
+  /* 整体借款人评级分布—分支机构 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.analyse",
+    "id": "menuitem.irs.report.report_analyseBranch",
+    "title": "[(#{menuitem.irs.report.report_analyseBranch})]",
+    "order": 703
+  },
+  /* 新增违约客户集中度分布—门类行业 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.analyse",
+    "id": "menuitem.irs.report.report_newAnalyseKinds",
+    "title": "[(#{menuitem.irs.report.report_newAnalyseKinds})]",
+    "order": 704
+  },
+  /* 新增违约客户集中度分布—分支机构 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.analyse",
+    "id": "menuitem.irs.report.report_newAnalyseBranch",
+    "title": "[(#{menuitem.irs.report.report_newAnalyseBranch})]",
+    "order": 705
+  },
+  /* 整体客户评级趋势分布 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.analyse",
+    "id": "menuitem.irs.report.report_analyseTrend",
+    "title": "[(#{menuitem.irs.report.report_analyseTrend})]",
+    "order": 706
+  },
+  /* 借款人评级迁徙表（客户数目） */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.analyse",
+    "id": "menuitem.irs.report.report_moveCustom",
+    "title": "[(#{menuitem.irs.report.report_moveCustom})]",
+    "order": 707
+  },
+  /* 借款人评级迁徙表（授信余额） */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.analyse",
+    "id": "menuitem.irs.report.report_moveGrant",
+    "title": "[(#{menuitem.irs.report.report_moveGrant})]",
+    "order": 708
+  },
+  /* PD估值与实际值比较情况 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.analyse",
+    "id": "menuitem.irs.report.report_pdCompare",
+    "title": "[(#{menuitem.irs.report.report_pdCompare})]",
+    "order": 709
+  },
+  /* LGD估值与实际值比较情况 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.analyse",
+    "id": "menuitem.irs.report.report_lgdCompare",
+    "title": "[(#{menuitem.irs.report.report_lgdCompare})]",
+    "order": 710
+  },
+  /*评级总体报告*/
+  {
+    "type": "CATEGORY",
+    "parentId": "menuitem.irs.report",
+    "id": "menuitem.irs.report.application",
+    "title": "[(#{menuitem.irs.report.application})]",
+    "order": 800
+  },
+  /*评级模型推翻幅度报告 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.application",
+    "id": "menuitem.irs.report.report_singleLimit",
+    "title": "[(#{menuitem.irs.report.report_singleLimit})]",
+    "order": 801
+  },
+  /*评级模型推翻幅度报告 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.application",
+    "id": "menuitem.irs.report.report_singleOver",
+    "title": "[(#{menuitem.irs.report.report_singleOver})]",
+    "order": 802
+  },
+  /*评级模型推翻幅度报告 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.application",
+    "id": "menuitem.irs.report.report_singleManage",
+    "title": "[(#{menuitem.irs.report.report_singleManage})]",
+    "order": 803
+  },
+  /*评级模型推翻幅度报告 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.application",
+    "id": "menuitem.irs.report.report_priceLimit",
+    "title": "[(#{menuitem.irs.report.report_priceLimit})]",
+    "order": 804
+  },
+  /*评级模型推翻幅度报告 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.application",
+    "id": "menuitem.irs.report.report_modeRufuse",
+    "title": "[(#{menuitem.irs.report.report_modeRufuse})]",
+    "order": 805
+  },
+  /*评级模型推翻幅度报告 */
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report.application",
+    "id": "menuitem.irs.report.report_applicationTrend",
+    "title": "[(#{menuitem.irs.report.report_applicationTrend})]",
+    "order": 806
+  }
+]

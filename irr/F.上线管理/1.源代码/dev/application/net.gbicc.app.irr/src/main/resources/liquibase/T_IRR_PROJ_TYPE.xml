@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="T_IRR_PROJ_TYPE" author="fc">
+        <createTable tableName="T_IRR_PROJ_TYPE" remarks="评估项目表">
+			<column name="ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键ID">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="TYPE_CODE"        	type="java.sql.Types.VARCHAR(32)"      	remarks="类型编码"></column>
+			<column name="TYPE_NAME"        	type="java.sql.Types.VARCHAR(100)"      remarks="类型名称"></column>
+			<column name="PCODE"      			type="java.sql.Types.VARCHAR(36)"      	remarks="父编码"></column>
+			<column name="PID"      			type="java.sql.Types.VARCHAR(36)"      	remarks="父ID"></column>
+			<column name="STAN_SCORE"        	type="number(17,5)"      	 			remarks="评分标准"></column>
+			<column name="A_STAN_SCORE"        	type="number(17,5)"      	 			remarks="A类评分标准"></column>
+			<column name="IS_LEAF"        		type="java.sql.Types.VARCHAR(1)"      	remarks="是否叶子节点"></column>
+			<column name="IS_USE"        		type="java.sql.Types.VARCHAR(1)"       	remarks="是否启用0否1是"></column>
+			<column name="CIRC_RATE"        	type="java.sql.Types.VARCHAR(10)"      	remarks="保监会权重"></column>
+			<column name="BUREAU_RATE"        	type="java.sql.Types.VARCHAR(10)"      	remarks="保监局权重"></column>
+			<column name="THE_RISK_RATE"      	type="java.sql.Types.VARCHAR(10)"      	remarks="占本类风险的比重"></column>
+			<column name="PDQ_RISK_RATE"       	type="java.sql.Types.VARCHAR(10)"      	remarks="占难以量化风险的比重"></column>
+			<column name="TOTAL_RISK_RATE"      type="java.sql.Types.VARCHAR(10)"      	remarks="占总风险的比重"></column>
+			<column name="WEIG_SCOR_STAND"      type="java.sql.Types.VARCHAR(10)"      	remarks="加权后评分标准"></column>
+			<column name="DATA_BODY"        	type="java.sql.Types.VARCHAR(32)"      	remarks="主体"></column>
+			<column name="FD_CREATOR"           type="java.sql.Types.VARCHAR(255)"  	remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"       type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"     type="java.sql.Types.VARCHAR(255)"  	remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"   type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

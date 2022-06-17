@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cre="http://localhost/services/CreateWorkflowService">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <cre:createWorkflow>
+       <cre:in0>8921</cre:in0>
+                             <cre:in1>&lt;?xml version=&quot;1.0&quot; encoding=&quot;GBK&quot;?&gt;&lt;ROOT&gt;&lt;workflow requestname=&quot;IRR风险评级任务提醒测试&quot; creatorname=&quot;PE0757&quot; requestlevel=&quot;0&quot;&gt;&lt;field name=&quot;rwqc&quot;&gt;2019Q3&lt;/field&gt;&lt;field name=&quot;cjr&quot;&gt;PE0757&lt;/field&gt;&lt;field name=&quot;sqbm&quot;&gt;信息技术部-总部&lt;/field&gt;&lt;field name=&quot;startdate&quot;&gt;2019-11-04&lt;/field&gt;&lt;field name=&quot;enddate&quot;&gt;2019-11-14&lt;/field&gt;&lt;field name=&quot;gzsm&quot;&gt;您有新的待办任务等待处理，请前往“OA首页-系统导航模块-单点登录：IRR风险综合评级”或点击页面URL链接进行操作，谢谢！&lt;/field&gt;&lt;field name=&quot;url&quot;&gt;http://172.19.50.134:8080/system/flowable/task/todo.html&lt;/field&gt;&lt;/workflow&gt;&lt;/ROOT&gt;</cre:in1>
+   </cre:createWorkflow>
+   </soapenv:Body>
+</soapenv:Envelope>

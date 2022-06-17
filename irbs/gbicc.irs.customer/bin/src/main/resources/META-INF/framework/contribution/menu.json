@@ -1,0 +1,11 @@
+[
+		/*客户管理*/
+		{"type":"CATEGORY",	"id":"menuitem.irs.customerManagement","title":"[(#{menuitem.irs.customerManagement})]","order":290},
+		/*客户管理/企业客户管理*/
+		{"type":"ANNOTATION","parentId":"menuitem.irs.customerManagement","id":"menuitem.irs.customerManagement.companyCustomer","title":"[(#{menuitem.irs.customerManagement.companyCustomer})]","order":100},
+        /*客户管理/金融同业管理*/
+		{"type":"ANNOTATION","parentId":"menuitem.irs.customerManagement","id":"menuitem.irs.customerManagement.financialIndustry","title":"[(#{menuitem.irs.customerManagement.financialIndustry})]","order":900},
+        /*客户管理/发债企业管理*/
+		{"type":"ANNOTATION","parentId":"menuitem.irs.customerManagement","id":"menuitem.irs.customerManagement.issueBonds","title":"[(#{menuitem.irs.customerManagement.issueBonds})]","order":901}
+
+]

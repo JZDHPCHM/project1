@@ -1,0 +1,41 @@
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=5,IE=9" ><![endif]-->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>图形编辑器</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/tools/graph-editor/styles/grapheditor.css}">
+    
+    <script type="text/javascript" th:src="@{/webjars/jquery/js/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/tools/graph-editor-ext/js/alert.js}"></script>
+    <script type="text/javascript" th:src="@{/framework/loadResource.js?resource=org/wsp/framework/grapheditor/editor/urlParameter.js}"></script>
+	
+	<script type="text/javascript" th:src="@{/tools/graph-editor/js/Init.js}"></script>
+	<script type="text/javascript" th:src="@{/tools/graph-editor/deflate/pako.min.js}"></script>
+	<script type="text/javascript" th:src="@{/tools/graph-editor/deflate/base64.js}"></script>
+	<script type="text/javascript" th:src="@{/tools/graph-editor/jscolor/jscolor.js}"></script>
+	<script type="text/javascript" th:src="@{/tools/graph-editor/sanitizer/sanitizer.min.js}"></script>
+	<script type="text/javascript" th:src="@{/webjars/mxgraph/js/mxClient.js}"></script>
+	<script type="text/javascript" th:src="@{/tools/graph-editor/js/EditorUi.js}"></script>
+	<script type="text/javascript" th:src="@{/tools/graph-editor/js/Editor.js}"></script>
+	<script type="text/javascript" th:src="@{/tools/graph-editor/js/Sidebar.js}"></script>
+	<script type="text/javascript" th:src="@{/tools/graph-editor/js/Graph.js}"></script>
+	<script type="text/javascript" th:src="@{/framework/loadResource.js?resource=org/wsp/framework/grapheditor/editor/Format.js}"></script>
+	<script type="text/javascript" th:src="@{/tools/graph-editor/js/Shapes.js}"></script>
+	<script type="text/javascript" th:src="@{/framework/loadResource.js?resource=org/wsp/framework/grapheditor/editor/Actions.js}"></script>
+	<script type="text/javascript" th:src="@{/tools/graph-editor/js/Menus.js}"></script>
+	<script type="text/javascript" th:src="@{/tools/graph-editor/js/Toolbar.js}"></script>
+	<script type="text/javascript" th:src="@{/framework/loadResource.js?resource=org/wsp/framework/grapheditor/editor/Dialogs.js}"></script>
+</head>
+<body class="geEditor">
+</body>
+<script type="text/javascript" th:src="@{/framework/loadResource.js?resource=gbicc/irs/rating/config/view/select.js}"></script>
+<script>
+	//初始化显示图表的 xml 获取 url
+	window.mxInitXmlUrl ='[(@{/irs/modelSelector/getModelSelectorXML})]/[(${id})]';
+	//保存图标 xml url
+	window.mxSaveXmlUrl ='[(@{/irs/modelSelector/saveModelSelectorXML})]/[(${id})]';
+</script>
+<script type="text/javascript" th:src="@{/framework/loadResource.js?resource=org/wsp/framework/grapheditor/editor/init.js}"></script>
+</html>

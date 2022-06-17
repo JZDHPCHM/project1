@@ -1,0 +1,41 @@
+SELECT  'OR02003',
+           '86',
+            'FC',
+             CASE WHEN sum(E_BDS_BIDM_KPI.CURPSNNUM)
+IS NULL THEN 0
+ ELSE SUM(E_BDS_BIDM_KPI.CURPSNNUM)
+   END
+FROM
+  ( 
+  select * from E_BDS_BIDM_MGECMP
+  )  E_BDS_BIDM_MGECMP,
+  ( 
+  select * from E_BDS_BIDM_KPI t where to_number(t.dateid)<=to_number(to_char((sysdate-1),'YYYYMM'))
+  )  E_BDS_BIDM_KPI,
+  ( 
+  select t.companyno||t.branch  as ORI,
+t.areacode,t.longdesc,o.innerorgcode,o.origorgcode
+,d.provincechnname,d.branchchnname
+from E_BDS_BIDM_FC_AREACODE t
+,E_BDS_BIDM_ORGMAP o,E_BDS_BIDM_MGECMP d
+where o.origorgcode = t.companyno||t.branch
+and o.innerorgcode=d.innerorgcode
+
+  )  D_FC_AREACODE,
+  ( 
+  select * from E_BDS_BIDM_MGECMP_map
+  )  E_BDS_BIDM_MGECMP_MAP
+WHERE
+  ( E_BDS_BIDM_KPI.ADD_BKCOD(+)=D_FC_AREACODE.AREACODE  )
+  AND  ( D_FC_AREACODE.INNERORGCODE=E_BDS_BIDM_MGECMP.INNERORGCODE(+)  )
+  AND  ( E_BDS_BIDM_MGECMP.INNERORGCODE=E_BDS_BIDM_MGECMP_MAP.BRANCHCOMCODE  )
+  AND  
+  (
+   (
+    E_BDS_BIDM_KPI.DATEID  =  '202004'
+    OR
+    E_BDS_BIDM_KPI.DATEID  Is Null  
+   )
+   AND
+   E_BDS_BIDM_MGECMP_MAP.PROVINCECOMCODE  Like  '86'
+  )

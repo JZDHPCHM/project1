@@ -1,0 +1,3145 @@
+<?xml version='1.0' encoding='UTF-8'?><!--FR_2019.10.16_16.22.29__FR_SYS_I18N_MESSAGE.xml -->
+<export>
+	<summary>
+		<t name="FR_SYS_I18N_MESSAGE">select * from FR_SYS_I18N_MESSAGE</t>
+	</summary>
+	<table name="FR_SYS_I18N_MESSAGE">
+		<sql>select * from FR_SYS_I18N_MESSAGE</sql>
+		<fields>
+			<field name="FD_ID" type="12" typeName="java.sql.Types.VARCHAR" />
+			<field name="FD_CODE" type="12"
+				typeName="java.sql.Types.VARCHAR" />
+			<field name="FD_LANG" type="12"
+				typeName="java.sql.Types.VARCHAR" />
+			<field name="FD_MESSAGE" type="12"
+				typeName="java.sql.Types.VARCHAR" />
+			<field name="FD_CREATOR" type="12"
+				typeName="java.sql.Types.VARCHAR" />
+			<field name="FD_CREATE_DATE" type="93"
+				typeName="java.sql.Types.TIMESTAMP" />
+			<field name="FD_LAST_MODIFIER" type="12"
+				typeName="java.sql.Types.VARCHAR" />
+			<field name="FD_LAST_MODIFYDATE" type="93"
+				typeName="java.sql.Types.TIMESTAMP" />
+		</fields>
+		<resultset>
+			<row>
+				<f>eede0104-90e9-414e-ab7d-7d91556389f9</f>
+				<f>dictionary.R001.R001005</f>
+				<f>zh_CN</f>
+				<f>管理层信息</f>
+				<f>admin</f>
+				<f>2019-09-17 14:10:47.486</f>
+				<f>admin</f>
+				<f>2019-09-17 14:10:47.486</f>
+			</row>
+			<row>
+				<f>0629f106-2a08-4f6a-81b4-ea6a5dcaa601</f>
+				<f>dictionary.R001.R001006</f>
+				<f>zh_CN</f>
+				<f>催缴/欠税</f>
+				<f>admin</f>
+				<f>2019-09-17 14:10:57.561</f>
+				<f>admin</f>
+				<f>2019-09-17 14:10:57.561</f>
+			</row>
+			<row>
+				<f>b24a9ffb-56f4-4a87-9066-f1197919b4d3</f>
+				<f>dictionary.R001.R001007</f>
+				<f>zh_CN</f>
+				<f>税务非正常户</f>
+				<f>admin</f>
+				<f>2019-09-17 14:11:13.552</f>
+				<f>admin</f>
+				<f>2019-09-17 14:11:13.552</f>
+			</row>
+			<row>
+				<f>c2f09e7e-fac0-4903-8895-c3e3708568e3</f>
+				<f>dictionary.R002</f>
+				<f>zh_CN</f>
+				<f>舆情预警小类</f>
+				<f>admin</f>
+				<f>2019-09-17 14:13:33.072</f>
+				<f>admin</f>
+				<f>2019-09-17 14:13:33.072</f>
+			</row>
+			<row>
+				<f>aaac8489-5662-4ce0-ba2c-4734b30c6e6c</f>
+				<f>dictionary.R002.R002001</f>
+				<f>zh_CN</f>
+				<f>信息披露</f>
+				<f>admin</f>
+				<f>2019-09-17 14:13:50.408</f>
+				<f>admin</f>
+				<f>2019-09-17 14:13:50.408</f>
+			</row>
+			<row>
+				<f>8bf8fdb5-f804-4fe3-b034-c7b793be75de</f>
+				<f>dictionary.R002.R002002</f>
+				<f>zh_CN</f>
+				<f>事件检索-违法违规</f>
+				<f>admin</f>
+				<f>2019-09-17 14:13:59.224</f>
+				<f>admin</f>
+				<f>2019-09-17 14:13:59.224</f>
+			</row>
+			<row>
+				<f>1391af93-3f26-4ea5-b795-479f4a773ae4</f>
+				<f>dictionary.R002.R002003</f>
+				<f>zh_CN</f>
+				<f>债券公告</f>
+				<f>admin</f>
+				<f>2019-09-17 14:14:08.196</f>
+				<f>admin</f>
+				<f>2019-09-17 14:14:08.196</f>
+			</row>
+			<row>
+				<f>ba3b1661-3e4d-49c7-8f61-19c222feb4f9</f>
+				<f>dictionary.R002.R002004</f>
+				<f>zh_CN</f>
+				<f>事件检索-人事</f>
+				<f>admin</f>
+				<f>2019-09-17 14:14:17.291</f>
+				<f>admin</f>
+				<f>2019-09-17 14:14:17.291</f>
+			</row>
+			<row>
+				<f>f290b623-6149-47fe-a14e-ac165753d035</f>
+				<f>dictionary.R002.R002005</f>
+				<f>zh_CN</f>
+				<f>事件检索-财务经营</f>
+				<f>admin</f>
+				<f>2019-09-17 14:14:26.936</f>
+				<f>admin</f>
+				<f>2019-09-17 14:14:26.936</f>
+			</row>
+			<row>
+				<f>0b13658c-91b2-4604-87b3-f9bdd1463da6</f>
+				<f>dictionary.R002.R002006</f>
+				<f>zh_CN</f>
+				<f>事件检索-资本运作</f>
+				<f>admin</f>
+				<f>2019-09-17 14:14:37.606</f>
+				<f>admin</f>
+				<f>2019-09-17 14:14:37.606</f>
+			</row>
+			<row>
+				<f>e480fca3-3879-4045-b7e2-97421eb31327</f>
+				<f>dictionary.R002.R002007</f>
+				<f>zh_CN</f>
+				<f>评级记录</f>
+				<f>admin</f>
+				<f>2019-09-17 14:14:48.435</f>
+				<f>admin</f>
+				<f>2019-09-17 14:14:48.435</f>
+			</row>
+			<row>
+				<f>894870ef-96f5-44b8-8774-61cd556d0c91</f>
+				<f>dictionary.R003</f>
+				<f>zh_CN</f>
+				<f>诉讼处罚预警小类</f>
+				<f>admin</f>
+				<f>2019-09-17 14:22:16.441</f>
+				<f>admin</f>
+				<f>2019-09-17 14:22:16.441</f>
+			</row>
+			<row>
+				<f>01e25121-0446-45e2-8771-564a4d03623b</f>
+				<f>dictionary.R003.R003001</f>
+				<f>zh_CN</f>
+				<f>裁判文书</f>
+				<f>admin</f>
+				<f>2019-09-17 14:22:37.465</f>
+				<f>admin</f>
+				<f>2019-09-17 14:22:37.465</f>
+			</row>
+			<row>
+				<f>f17aa908-ebee-4271-b687-e1469d8cf2aa</f>
+				<f>dictionary.R003.R003002</f>
+				<f>zh_CN</f>
+				<f>开庭公告</f>
+				<f>admin</f>
+				<f>2019-09-17 14:22:45.96</f>
+				<f>admin</f>
+				<f>2019-09-17 14:22:45.96</f>
+			</row>
+			<row>
+				<f>639eae14-6cfe-41a4-a766-99c6e86904b2</f>
+				<f>dictionary.R003.R003003</f>
+				<f>zh_CN</f>
+				<f>失信被执行人</f>
+				<f>admin</f>
+				<f>2019-09-17 14:22:55.646</f>
+				<f>admin</f>
+				<f>2019-09-17 14:22:55.646</f>
+			</row>
+			<row>
+				<f>c78a3db5-edc7-4c51-b354-d9556abf3ace</f>
+				<f>dictionary.R003.R003004</f>
+				<f>zh_CN</f>
+				<f>被执行人</f>
+				<f>admin</f>
+				<f>2019-09-17 14:23:05.693</f>
+				<f>admin</f>
+				<f>2019-09-17 14:23:05.693</f>
+			</row>
+			<row>
+				<f>99c026a5-04fd-4714-a951-7440f609cb52</f>
+				<f>dictionary.R003.R003005</f>
+				<f>zh_CN</f>
+				<f>审判流程</f>
+				<f>admin</f>
+				<f>2019-09-17 14:23:15.676</f>
+				<f>admin</f>
+				<f>2019-09-17 14:23:15.676</f>
+			</row>
+			<row>
+				<f>61dbb688-2c53-4cd8-beeb-87954e1b69c4</f>
+				<f>dictionary.R003.R003006</f>
+				<f>zh_CN</f>
+				<f>涉诉公告</f>
+				<f>admin</f>
+				<f>2019-09-17 14:23:25.125</f>
+				<f>admin</f>
+				<f>2019-09-17 14:23:25.125</f>
+			</row>
+			<row>
+				<f>6b9cde16-ffae-4aac-87b6-4b55f21fa655</f>
+				<f>dictionary.R003.R003007</f>
+				<f>zh_CN</f>
+				<f>重大税收违法</f>
+				<f>admin</f>
+				<f>2019-09-17 14:23:34.994</f>
+				<f>admin</f>
+				<f>2019-09-17 14:23:34.994</f>
+			</row>
+			<row>
+				<f>e01b7000-8061-4945-84b5-b3bcb28e3149</f>
+				<f>dictionary.R003.R003008</f>
+				<f>zh_CN</f>
+				<f>行政处罚-罚款</f>
+				<f>admin</f>
+				<f>2019-09-17 14:23:46.259</f>
+				<f>admin</f>
+				<f>2019-09-17 14:23:46.259</f>
+			</row>
+			<row>
+				<f>a9512c24-fc36-4d84-a84a-8b8c6ea9acb4</f>
+				<f>dictionary.R003.R003009</f>
+				<f>zh_CN</f>
+				<f>行政处罚-没收违法所得和非法财物</f>
+				<f>admin</f>
+				<f>2019-09-17 14:24:04.964</f>
+				<f>admin</f>
+				<f>2019-09-17 14:24:04.964</f>
+			</row>
+			<row>
+				<f>a2e2a55b-bfd0-4830-9262-40f544c9510a</f>
+				<f>dictionary.R003.R003010</f>
+				<f>zh_CN</f>
+				<f>行政处罚-撤销机构</f>
+				<f>admin</f>
+				<f>2019-09-17 14:24:15.092</f>
+				<f>admin</f>
+				<f>2019-09-17 14:24:15.092</f>
+			</row>
+			<row>
+				<f>19619630-28eb-4f17-af45-50487c053e8d</f>
+				<f>dictionary.R003.R003011</f>
+				<f>zh_CN</f>
+				<f>行政处罚-禁入行业</f>
+				<f>admin</f>
+				<f>2019-09-17 14:24:27.72</f>
+				<f>admin</f>
+				<f>2019-09-17 14:24:27.72</f>
+			</row>
+			<row>
+				<f>c12c8e8e-ccea-4fe5-8aed-1194ccdd2e55</f>
+				<f>dictionary.R003.R003012</f>
+				<f>zh_CN</f>
+				<f>行政处罚-取消终身任职资格</f>
+				<f>admin</f>
+				<f>2019-09-17 14:24:36.969</f>
+				<f>admin</f>
+				<f>2019-09-17 14:24:36.969</f>
+			</row>
+			<row>
+				<f>e38e6b18-3e8d-478c-a082-6b603fff0ce1</f>
+				<f>dictionary.R003.R003013</f>
+				<f>zh_CN</f>
+				<f>行政处罚-取消任职资格</f>
+				<f>admin</f>
+				<f>2019-09-17 14:24:46.406</f>
+				<f>admin</f>
+				<f>2019-09-17 14:24:46.406</f>
+			</row>
+			<row>
+				<f>f7a8bb48-240e-48de-96d4-d80ab5e8b4c2</f>
+				<f>dictionary.R003.R003014</f>
+				<f>zh_CN</f>
+				<f>行政处罚-停止执业</f>
+				<f>admin</f>
+				<f>2019-09-17 14:24:59.175</f>
+				<f>admin</f>
+				<f>2019-09-17 14:24:59.175</f>
+			</row>
+			<row>
+				<f>ce797170-0192-4cd5-979c-c8865d26239c</f>
+				<f>dictionary.R003.R003015</f>
+				<f>zh_CN</f>
+				<f>行政处罚-吊销业务许可或执照</f>
+				<f>admin</f>
+				<f>2019-09-17 14:25:15.775</f>
+				<f>admin</f>
+				<f>2019-09-17 14:25:15.775</f>
+			</row>
+			<row>
+				<f>d0837bca-35dd-4efe-98c7-070b0ac755eb</f>
+				<f>dictionary.R003.R003016</f>
+				<f>zh_CN</f>
+				<f>行政处罚-暂扣业务许可或执照</f>
+				<f>admin</f>
+				<f>2019-09-17 14:25:26.029</f>
+				<f>admin</f>
+				<f>2019-09-17 14:25:26.029</f>
+			</row>
+			<row>
+				<f>5746e253-1538-4117-9d2c-1d118656fc30</f>
+				<f>dictionary.R003.R003017</f>
+				<f>zh_CN</f>
+				<f>行政处罚-停产停业</f>
+				<f>admin</f>
+				<f>2019-09-17 14:25:36.021</f>
+				<f>admin</f>
+				<f>2019-09-17 14:25:36.021</f>
+			</row>
+			<row>
+				<f>2b6288d1-7ebf-4038-9fff-058b99c7422e</f>
+				<f>dictionary.R003.R003018</f>
+				<f>zh_CN</f>
+				<f>行政处罚-停业整顿</f>
+				<f>admin</f>
+				<f>2019-09-17 14:25:53.999</f>
+				<f>admin</f>
+				<f>2019-09-17 14:25:53.999</f>
+			</row>
+			<row>
+				<f>f0448bdb-b70e-4656-97a0-ae469675a36f</f>
+				<f>dictionary.R003.R003019</f>
+				<f>zh_CN</f>
+				<f>行政处罚-停止接受新业务</f>
+				<f>admin</f>
+				<f>2019-09-17 14:26:07.587</f>
+				<f>admin</f>
+				<f>2019-09-17 14:26:07.587</f>
+			</row>
+			<row>
+				<f>d9f5cda0-a415-487a-a882-44fa70fcfeb4</f>
+				<f>dictionary.R003.R003020</f>
+				<f>zh_CN</f>
+				<f>行政处罚-限制业务范围</f>
+				<f>admin</f>
+				<f>2019-09-17 14:26:23.937</f>
+				<f>admin</f>
+				<f>2019-09-17 14:26:23.937</f>
+			</row>
+			<row>
+				<f>fcdf7370-30ac-4c2f-8a50-46d296610822</f>
+				<f>dictionary.R003.R003021</f>
+				<f>zh_CN</f>
+				<f>行政处罚-约谈/通报批评</f>
+				<f>admin</f>
+				<f>2019-09-17 14:26:40.665</f>
+				<f>admin</f>
+				<f>2019-09-17 14:26:40.665</f>
+			</row>
+			<row>
+				<f>0727556a-650b-4e93-8384-604f586f55b0</f>
+				<f>dictionary.R003.R003022</f>
+				<f>zh_CN</f>
+				<f>行政处罚-警告</f>
+				<f>admin</f>
+				<f>2019-09-17 14:26:52.791</f>
+				<f>admin</f>
+				<f>2019-09-17 14:26:52.791</f>
+			</row>
+			<row>
+				<f>7c65aab6-4a0b-4f58-9006-86d44b5fe015</f>
+				<f>dictionary.R003.R003023</f>
+				<f>zh_CN</f>
+				<f>行政处罚-列入不良行为记录名单</f>
+				<f>admin</f>
+				<f>2019-09-17 14:27:02.874</f>
+				<f>admin</f>
+				<f>2019-09-17 14:27:02.874</f>
+			</row>
+			<row>
+				<f>07f418f5-b5dd-41ec-a41c-f43c8a09ce71</f>
+				<f>dictionary.R003.R003024</f>
+				<f>zh_CN</f>
+				<f>行政处罚-行政处分</f>
+				<f>admin</f>
+				<f>2019-09-17 14:27:12.553</f>
+				<f>admin</f>
+				<f>2019-09-17 14:27:12.553</f>
+			</row>
+			<row>
+				<f>2f900f52-3d84-419b-b54e-9d543a29854a</f>
+				<f>dictionary.R003.R003025</f>
+				<f>zh_CN</f>
+				<f>行政处罚-行政拘留</f>
+				<f>admin</f>
+				<f>2019-09-17 14:27:23.147</f>
+				<f>admin</f>
+				<f>2019-09-17 14:27:23.147</f>
+			</row>
+			<row>
+				<f>ee6fbf93-e163-430e-8c81-ada1bc844924</f>
+				<f>dictionary.R003.R003026</f>
+				<f>zh_CN</f>
+				<f>行政处罚-撤销登记</f>
+				<f>admin</f>
+				<f>2019-09-17 14:27:36.336</f>
+				<f>admin</f>
+				<f>2019-09-17 14:27:36.336</f>
+			</row>
+			<row>
+				<f>867fad45-1d05-4a19-9b99-f0344f3b897f</f>
+				<f>dictionary.R003.R003027</f>
+				<f>zh_CN</f>
+				<f>行政处罚-承担赔偿责任</f>
+				<f>admin</f>
+				<f>2019-09-17 14:27:45.336</f>
+				<f>admin</f>
+				<f>2019-09-17 14:27:45.336</f>
+			</row>
+			<row>
+				<f>16f3dc6f-b82f-4460-a3f8-d0e0c99d69f4</f>
+				<f>dictionary.R003.R003028</f>
+				<f>zh_CN</f>
+				<f>行政处罚-限制股东权利</f>
+				<f>admin</f>
+				<f>2019-09-17 14:27:54.566</f>
+				<f>admin</f>
+				<f>2019-09-17 14:27:54.566</f>
+			</row>
+			<row>
+				<f>1c530ed9-bc5d-4108-a321-d524acddbc4e</f>
+				<f>dictionary.R003.R003029</f>
+				<f>zh_CN</f>
+				<f>行政处罚-责令转让股权</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:03.719</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:03.719</f>
+			</row>
+			<row>
+				<f>ca389e5c-e9f6-4f79-8a68-dfe0a451a0ca</f>
+				<f>dictionary.R003.R003030</f>
+				<f>zh_CN</f>
+				<f>行政处罚-限期补办手续</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:13.088</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:13.088</f>
+			</row>
+			<row>
+				<f>969dc562-06c1-4ce6-aff1-bc82270ba3c6</f>
+				<f>dictionary.R003.R003031</f>
+				<f>zh_CN</f>
+				<f>行政处罚-查封扣押</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:22.51</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:22.51</f>
+			</row>
+			<row>
+				<f>fb7fbe46-6da4-459b-a20a-127d4731dd1d</f>
+				<f>dictionary.R003.R003032</f>
+				<f>zh_CN</f>
+				<f>行政处罚-责令销毁</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:31.484</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:31.484</f>
+			</row>
+			<row>
+				<f>1db59436-ce53-4351-810d-90f163f0438c</f>
+				<f>dictionary.R003.R003033</f>
+				<f>zh_CN</f>
+				<f>行政处罚-责令召回</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:41.234</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:41.234</f>
+			</row>
+			<row>
+				<f>7bf26706-4d32-4c6d-b117-ff7c4ef0fd60</f>
+				<f>dictionary.R003.R003034</f>
+				<f>zh_CN</f>
+				<f>行政处罚-责令改正</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:50.764</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:50.764</f>
+			</row>
+			<row>
+				<f>8cfb04a8-5756-4d1a-bbb8-d437a29d426e</f>
+				<f>dictionary.R003.R003035</f>
+				<f>zh_CN</f>
+				<f>行政处罚-扣分</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:59.77</f>
+				<f>admin</f>
+				<f>2019-09-17 14:28:59.77</f>
+			</row>
+			<row>
+				<f>8c0b3227-63b0-4a78-96a6-613b597eff34</f>
+				<f>dictionary.R003.R003036</f>
+				<f>zh_CN</f>
+				<f>行政处罚-取消成绩</f>
+				<f>admin</f>
+				<f>2019-09-17 14:29:09.255</f>
+				<f>admin</f>
+				<f>2019-09-17 14:29:09.255</f>
+			</row>
+			<row>
+				<f>f8693c64-f99f-44e6-9e5f-a74cbef9825d</f>
+				<f>dictionary.R003.R003037</f>
+				<f>zh_CN</f>
+				<f>行政处罚-其他</f>
+				<f>admin</f>
+				<f>2019-09-17 14:29:19.011</f>
+				<f>admin</f>
+				<f>2019-09-17 14:29:19.011</f>
+			</row>
+			<row>
+				<f>7dcda3f3-2fa0-4e4a-9c10-363187a2090d</f>
+				<f>dictionary.FB_INTERFACE</f>
+				<f>zh_CN</f>
+				<f>风报接口配置</f>
+				<f>admin</f>
+				<f>2019-09-18 11:58:28.966</f>
+				<f>admin</f>
+				<f>2019-09-18 11:58:28.966</f>
+			</row>
+			<row>
+				<f>2aafd75b-de61-4ef7-b10b-5338c3465901</f>
+				<f>dictionary.FB_INTERFACE.APIKEY</f>
+				<f>zh_CN</f>
+				<f>wR7k6HoDXurt4VFL8qckdg</f>
+				<f>admin</f>
+				<f>2019-09-18 11:59:35.0</f>
+				<f>admin</f>
+				<f>2019-10-11 10:22:45.824</f>
+			</row>
+			<row>
+				<f>b4575849-5b93-42e1-a049-3af2a30750c9</f>
+				<f>dictionary.FB_INTERFACE.BASE_URL</f>
+				<f>zh_CN</f>
+				<f>https://data.riskstorm.com/v1/company/</f>
+				<f>admin</f>
+				<f>2019-09-18 12:00:30.0</f>
+				<f>admin</f>
+				<f>2019-09-18 12:00:59.091</f>
+			</row>
+			<row>
+				<f>296650b6-2579-4da9-901f-19ce5f5fca78</f>
+				<f>dictionary.FB_INTERFACE.GQCZ</f>
+				<f>zh_CN</f>
+				<f>gqcz</f>
+				<f>admin</f>
+				<f>2019-09-18 12:01:21.205</f>
+				<f>admin</f>
+				<f>2019-09-18 12:01:21.205</f>
+			</row>
+			<row>
+				<f>71403c3a-3d61-4be5-ae6c-3610c0d9bc56</f>
+				<f>dictionary.FB_INTERFACE.GSBG</f>
+				<f>zh_CN</f>
+				<f>gsbg</f>
+				<f>admin</f>
+				<f>2019-09-18 12:01:35.602</f>
+				<f>admin</f>
+				<f>2019-09-18 12:01:35.602</f>
+			</row>
+			<row>
+				<f>2a6f4f8c-5795-4a4f-b864-d9b480026d1e</f>
+				<f>dictionary.FB_INTERFACE.NIANBAO</f>
+				<f>zh_CN</f>
+				<f>nianbao</f>
+				<f>admin</f>
+				<f>2019-09-18 12:01:55.837</f>
+				<f>admin</f>
+				<f>2019-09-18 12:01:55.837</f>
+			</row>
+			<row>
+				<f>d52d3fbb-ce79-49e7-994f-0063dcad5994</f>
+				<f>dictionary.FB_INTERFACE.SFXZ</f>
+				<f>zh_CN</f>
+				<f>sfxz</f>
+				<f>admin</f>
+				<f>2019-09-18 12:02:05.945</f>
+				<f>admin</f>
+				<f>2019-09-18 12:02:05.945</f>
+			</row>
+			<row>
+				<f>ef860422-3a31-4575-964f-e1ef1186ca49</f>
+				<f>dictionary.FB_INTERFACE.QSJL</f>
+				<f>zh_CN</f>
+				<f>qsjl</f>
+				<f>admin</f>
+				<f>2019-09-18 12:02:17.693</f>
+				<f>admin</f>
+				<f>2019-09-18 12:02:17.693</f>
+			</row>
+			<row>
+				<f>316efc5b-9be4-4a15-af9c-7d10276e8a59</f>
+				<f>dictionary.FB_INTERFACE.SWFZCH</f>
+				<f>zh_CN</f>
+				<f>swfzch</f>
+				<f>admin</f>
+				<f>2019-09-18 12:02:30.309</f>
+				<f>admin</f>
+				<f>2019-09-18 12:02:30.309</f>
+			</row>
+			<row>
+				<f>6d1904c2-3a67-4943-85a7-1e2ff3eb4494</f>
+				<f>dictionary.FinancialStatementTemplateType</f>
+				<f>zh_CN</f>
+				<f>系统标准财报模板</f>
+				<f>admin</f>
+				<f>2018-10-16 15:36:24.0</f>
+				<f>admin</f>
+				<f>2018-10-16 15:38:40.0</f>
+			</row>
+			<row>
+				<f>136A1650B37D45BDB04359DBAEBBC4D5</f>
+				<f>dictionary.FinancialStatementTemplateType.GENERALENTERPRISE</f>
+				<f>zh_CN</f>
+				<f>一般企业新准则</f>
+				<f>admin</f>
+				<f>2019-01-28 16:45:32.0</f>
+				<f>admin</f>
+				<f>2019-04-09 17:46:40.971</f>
+			</row>
+			<row>
+				<f>aac2cbee-867f-4f2e-8720-672cf91fbffa</f>
+				<f>dictionary.FinancialStatementTemplateType.GENERALENTERPRISEOLD
+				</f>
+				<f>zh_CN</f>
+				<f>一般企业旧准则</f>
+				<f>admin</f>
+				<f>2019-01-28 16:28:43.58</f>
+				<f>admin</f>
+				<f>2019-01-28 16:28:43.58</f>
+			</row>
+			<row>
+				<f>8ca258cd-3040-4709-bc6c-5fc52036dac3</f>
+				<f>dictionary.FinancialStatementTemplateType.INSTITUTION</f>
+				<f>zh_CN</f>
+				<f>事业单位新准则</f>
+				<f>admin</f>
+				<f>2018-10-16 15:37:58.0</f>
+				<f>admin</f>
+				<f>2019-04-09 17:46:48.774</f>
+			</row>
+			<row>
+				<f>CC9D3AF9E8B54F62962800DCF8BA1BC6</f>
+				<f>dictionary.FinancialStatementTemplateType.INSTITUTIONOLD</f>
+				<f>zh_CN</f>
+				<f>事业单位旧准则</f>
+				<f>admin</f>
+				<f>2019-01-28 16:46:34.0</f>
+				<f>admin</f>
+				<f>2019-01-28 16:46:34.0</f>
+			</row>
+			<row>
+				<f>3876744B1DE7438886B14262856B0EF7</f>
+				<f>dictionary.FinancialStatementTemplateType.SMALLENTERPRISE</f>
+				<f>zh_CN</f>
+				<f>小企业一般准则</f>
+				<f>admin</f>
+				<f>2019-01-28 16:38:44.0</f>
+				<f>admin</f>
+				<f>2019-01-28 16:38:44.0</f>
+			</row>
+			<row>
+				<f>864C52E9453C46DA9A5C2415CF3F7F24</f>
+				<f>dictionary.FinancialStatementTemplateType.SMALLENTERPRISEOLD</f>
+				<f>zh_CN</f>
+				<f>小企业简易准则</f>
+				<f>admin</f>
+				<f>2019-01-28 16:38:44.0</f>
+				<f>admin</f>
+				<f>2019-01-28 16:38:44.0</f>
+			</row>
+			<row>
+				<f>05212ed0-b8a0-4b5a-8c30-732a175aaa9e</f>
+				<f>dictionary.ACCOUNT_CLASSIFICATION</f>
+				<f>zh_CN</f>
+				<f>财报科目分类</f>
+				<f>admin</f>
+				<f>2018-10-25 10:44:02.0</f>
+				<f>admin</f>
+				<f>2018-10-25 10:44:02.0</f>
+			</row>
+			<row>
+				<f>960c17e6-f335-412d-b651-2b8c44c674df</f>
+				<f>dictionary.ACCOUNT_CLASSIFICATION.BALANCE_SHEET</f>
+				<f>zh_CN</f>
+				<f>资产负债表</f>
+				<f>admin</f>
+				<f>2018-10-25 10:44:24.0</f>
+				<f>admin</f>
+				<f>2018-10-25 10:44:24.0</f>
+			</row>
+			<row>
+				<f>71985f5d-199e-4bc2-9fb3-af971c77bff3</f>
+				<f>dictionary.ACCOUNT_CLASSIFICATION.BALANCE_SHEET_SIMPLE</f>
+				<f>zh_CN</f>
+				<f>资产负债简表</f>
+				<f>admin</f>
+				<f>2018-10-25 10:44:39.0</f>
+				<f>admin</f>
+				<f>2018-10-25 10:44:39.0</f>
+			</row>
+			<row>
+				<f>db26c5f9-e198-4712-b892-bf7d2d0eb72c</f>
+				<f>dictionary.ACCOUNT_CLASSIFICATION.CASH_FLOW_STATEMENT</f>
+				<f>zh_CN</f>
+				<f>现金流量表</f>
+				<f>admin</f>
+				<f>2018-10-25 10:44:56.0</f>
+				<f>admin</f>
+				<f>2018-10-25 10:44:56.0</f>
+			</row>
+			<row>
+				<f>fd06e4b5-3462-443e-b08c-ae57f58ae048</f>
+				<f>dictionary.ACCOUNT_CLASSIFICATION.INCOME_AND_EXPENSE_STATEMENT
+				</f>
+				<f>zh_CN</f>
+				<f>收入支出表</f>
+				<f>admin</f>
+				<f>2018-10-25 10:45:23.0</f>
+				<f>admin</f>
+				<f>2018-10-25 10:45:23.0</f>
+			</row>
+			<row>
+				<f>369d1624-83ea-4634-b173-3f4329b81728</f>
+				<f>dictionary.ACCOUNT_CLASSIFICATION.INCOME_STATEMENT_AND_PROFIT_APPR
+				</f>
+				<f>zh_CN</f>
+				<f>利润及利润分配表</f>
+				<f>admin</f>
+				<f>2018-10-25 10:45:35.0</f>
+				<f>admin</f>
+				<f>2018-10-25 10:45:35.0</f>
+			</row>
+			<row>
+				<f>0d4f3ab6-9374-4ff2-8859-211a3e7abeec</f>
+				<f>dictionary.ACCOUNT_CLASSIFICATION.PROFIT_AND_LOSS_STATEMENT</f>
+				<f>zh_CN</f>
+				<f>损益表</f>
+				<f>admin</f>
+				<f>2018-10-25 10:45:10.0</f>
+				<f>admin</f>
+				<f>2018-10-25 10:45:10.0</f>
+			</row>
+			<row>
+				<f>aec82dad-1af3-46f5-80d0-2be0c8459124</f>
+				<f>dictionary.MODEL_TYPE</f>
+				<f>zh_CN</f>
+				<f>模型类别</f>
+				<f>admin</f>
+				<f>2019-01-29 10:01:15.447</f>
+				<f>admin</f>
+				<f>2019-01-29 10:01:15.447</f>
+			</row>
+			<row>
+				<f>6cf59428-aed3-4d69-891f-3b86a6c41564</f>
+				<f>dictionary.MODEL_TYPE.B10</f>
+				<f>zh_CN</f>
+				<f>汽车与汽车零部件</f>
+				<f>admin</f>
+				<f>2019-01-29 10:53:27.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:26:54.241</f>
+			</row>
+			<row>
+				<f>7d630451-5694-4fb2-bfd8-2f78feb8f21e</f>
+				<f>dictionary.MODEL_TYPE.B12</f>
+				<f>zh_CN</f>
+				<f>农林牧渔与食品饮料</f>
+				<f>admin</f>
+				<f>2019-01-29 10:37:26.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:28:13.655</f>
+			</row>
+			<row>
+				<f>4b163d27-f850-4d91-bc76-9c616e0b5099</f>
+				<f>dictionary.MODEL_TYPE.F01</f>
+				<f>zh_CN</f>
+				<f>银行</f>
+				<f>admin</f>
+				<f>2019-01-29 10:25:51.0</f>
+				<f>admin</f>
+				<f>2019-03-12 10:50:56.097</f>
+			</row>
+			<row>
+				<f>8baeccbd-ba54-42a9-902f-8b589d5c24fb</f>
+				<f>dictionary.MODEL_TYPE.B06</f>
+				<f>zh_CN</f>
+				<f>煤炭</f>
+				<f>admin</f>
+				<f>2019-01-29 10:34:26.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:21:14.308</f>
+			</row>
+			<row>
+				<f>688f7011-75c0-435e-8d01-2627c5127178</f>
+				<f>dictionary.MODEL_TYPE.C1</f>
+				<f>zh_CN</f>
+				<f>大中型批发零售业</f>
+				<f>admin</f>
+				<f>2019-01-29 10:02:01.127</f>
+				<f>admin</f>
+				<f>2019-01-29 10:02:01.127</f>
+			</row>
+			<row>
+				<f>046689d9-5dea-4463-bbd1-c0c56c7ab88e</f>
+				<f>dictionary.MODEL_TYPE.C10</f>
+				<f>zh_CN</f>
+				<f>小型综合</f>
+				<f>admin</f>
+				<f>2019-01-29 10:16:21.792</f>
+				<f>admin</f>
+				<f>2019-01-29 10:16:21.792</f>
+			</row>
+			<row>
+				<f>ad26d4b5-6adc-4744-9356-2996356cb156</f>
+				<f>dictionary.MODEL_TYPE.C2</f>
+				<f>zh_CN</f>
+				<f>大中型轻资产工业</f>
+				<f>admin</f>
+				<f>2019-01-29 10:04:21.702</f>
+				<f>admin</f>
+				<f>2019-01-29 10:04:21.702</f>
+			</row>
+			<row>
+				<f>9c5924af-577d-4ce1-b74a-8bb76ee4ab11</f>
+				<f>dictionary.MODEL_TYPE.C3</f>
+				<f>zh_CN</f>
+				<f>大中型重资产工业</f>
+				<f>admin</f>
+				<f>2019-01-29 10:04:36.564</f>
+				<f>admin</f>
+				<f>2019-01-29 10:04:36.564</f>
+			</row>
+			<row>
+				<f>d350f0f0-1a68-4a2e-867a-21e320b5cdb2</f>
+				<f>dictionary.MODEL_TYPE.C4</f>
+				<f>zh_CN</f>
+				<f>大中型综合</f>
+				<f>admin</f>
+				<f>2019-01-29 10:04:50.928</f>
+				<f>admin</f>
+				<f>2019-01-29 10:04:50.928</f>
+			</row>
+			<row>
+				<f>34e723f9-3e86-4801-bae4-81213fd8a63b</f>
+				<f>dictionary.MODEL_TYPE.C5</f>
+				<f>zh_CN</f>
+				<f>房地产主体评级</f>
+				<f>admin</f>
+				<f>2019-01-29 10:05:06.592</f>
+				<f>admin</f>
+				<f>2019-01-29 10:05:06.592</f>
+			</row>
+			<row>
+				<f>664572bd-8b70-4658-be4d-ac44f3f1a515</f>
+				<f>dictionary.MODEL_TYPE.C6</f>
+				<f>zh_CN</f>
+				<f>建筑业</f>
+				<f>admin</f>
+				<f>2019-01-29 10:05:26.022</f>
+				<f>admin</f>
+				<f>2019-01-29 10:05:26.022</f>
+			</row>
+			<row>
+				<f>1a120611-8ab3-468a-a380-a5d6736262ba</f>
+				<f>dictionary.MODEL_TYPE.C7</f>
+				<f>zh_CN</f>
+				<f>基础设施业</f>
+				<f>admin</f>
+				<f>2019-01-29 10:06:13.128</f>
+				<f>admin</f>
+				<f>2019-01-29 10:06:13.128</f>
+			</row>
+			<row>
+				<f>652fc49c-6cc6-4692-9ca0-eed574b95eb7</f>
+				<f>dictionary.MODEL_TYPE.C8</f>
+				<f>zh_CN</f>
+				<f>小型批发零售业</f>
+				<f>admin</f>
+				<f>2019-01-29 10:06:25.741</f>
+				<f>admin</f>
+				<f>2019-01-29 10:06:25.741</f>
+			</row>
+			<row>
+				<f>2b11665c-2b5d-4782-bc1c-5705476a9042</f>
+				<f>dictionary.MODEL_TYPE.C9</f>
+				<f>zh_CN</f>
+				<f>小型制造业</f>
+				<f>admin</f>
+				<f>2019-01-29 10:06:35.568</f>
+				<f>admin</f>
+				<f>2019-01-29 10:06:35.568</f>
+			</row>
+			<row>
+				<f>3d709909-23ca-4e0e-a309-5e5c5112d9df</f>
+				<f>dictionary.MODEL_TYPE.B01</f>
+				<f>zh_CN</f>
+				<f>城投</f>
+				<f>admin</f>
+				<f>2019-01-29 10:28:50.0</f>
+				<f>admin</f>
+				<f>2019-03-12 10:59:10.742</f>
+			</row>
+			<row>
+				<f>461ae4d5-afde-43d7-9034-7b8b1827797c</f>
+				<f>dictionary.MODEL_TYPE.B08</f>
+				<f>zh_CN</f>
+				<f>化工</f>
+				<f>admin</f>
+				<f>2019-01-29 10:34:57.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:22:40.621</f>
+			</row>
+			<row>
+				<f>e8dff23a-cd37-4a71-bd6e-2f47ef7e0132</f>
+				<f>dictionary.MODEL_TYPE.F06</f>
+				<f>zh_CN</f>
+				<f>公募基金</f>
+				<f>admin</f>
+				<f>2019-01-29 10:27:28.0</f>
+				<f>admin</f>
+				<f>2019-03-12 10:54:20.411</f>
+			</row>
+			<row>
+				<f>753ab20d-d540-49da-b78f-3b5c9828c28a</f>
+				<f>dictionary.MODEL_TYPE.F10</f>
+				<f>zh_CN</f>
+				<f>期货</f>
+				<f>admin</f>
+				<f>2019-01-29 10:27:55.0</f>
+				<f>admin</f>
+				<f>2019-03-12 10:57:45.443</f>
+			</row>
+			<row>
+				<f>3e9f4538-7d13-442e-9d78-1e58781dda6e</f>
+				<f>dictionary.MODEL_TYPE.G1</f>
+				<f>zh_CN</f>
+				<f>担保公司</f>
+				<f>admin</f>
+				<f>2019-01-29 10:20:03.608</f>
+				<f>admin</f>
+				<f>2019-01-29 10:20:03.608</f>
+			</row>
+			<row>
+				<f>adc8efd0-4388-4e23-9926-ea9eb4025da1</f>
+				<f>dictionary.MODEL_TYPE.B19</f>
+				<f>zh_CN</f>
+				<f>通用公司</f>
+				<f>admin</f>
+				<f>2019-01-29 10:45:45.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:33:19.698</f>
+			</row>
+			<row>
+				<f>b1d39866-80a3-4f4c-98c0-35fdd44a7d07</f>
+				<f>dictionary.MODEL_TYPE.B09</f>
+				<f>zh_CN</f>
+				<f>重工业</f>
+				<f>admin</f>
+				<f>2019-01-29 10:35:08.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:23:25.182</f>
+			</row>
+			<row>
+				<f>c76a2357-ae09-44cb-865d-66d544f5827e</f>
+				<f>dictionary.MODEL_TYPE.F03</f>
+				<f>zh_CN</f>
+				<f>财险</f>
+				<f>admin</f>
+				<f>2019-01-29 10:26:20.0</f>
+				<f>admin</f>
+				<f>2019-03-12 10:52:30.535</f>
+			</row>
+			<row>
+				<f>84daa538-2044-4e8e-90bc-352a8e60abdb</f>
+				<f>dictionary.MODEL_TYPE.F04</f>
+				<f>zh_CN</f>
+				<f>寿险</f>
+				<f>admin</f>
+				<f>2019-01-29 10:26:34.0</f>
+				<f>admin</f>
+				<f>2019-03-12 10:53:04.689</f>
+			</row>
+			<row>
+				<f>7ab71800-4b9f-4e32-b567-9eff6419b2b1</f>
+				<f>dictionary.MODEL_TYPE.B11</f>
+				<f>zh_CN</f>
+				<f>轻工业</f>
+				<f>admin</f>
+				<f>2019-01-29 10:35:19.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:27:41.43</f>
+			</row>
+			<row>
+				<f>122aceb2-18ba-484e-be68-ab96731ca511</f>
+				<f>dictionary.MODEL_TYPE.B07</f>
+				<f>zh_CN</f>
+				<f>金属与采矿</f>
+				<f>admin</f>
+				<f>2019-01-29 10:34:39.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:22:09.798</f>
+			</row>
+			<row>
+				<f>69ddb030-d250-492d-9d7e-55160aaf46ea</f>
+				<f>dictionary.MODEL_TYPE.B13</f>
+				<f>zh_CN</f>
+				<f>传媒</f>
+				<f>admin</f>
+				<f>2019-01-29 10:37:38.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:29:02.996</f>
+			</row>
+			<row>
+				<f>e121e84b-691e-40f3-871a-cb29e056b6a0</f>
+				<f>dictionary.MODEL_TYPE.B16</f>
+				<f>zh_CN</f>
+				<f>医疗保健</f>
+				<f>admin</f>
+				<f>2019-01-29 10:38:18.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:31:27.561</f>
+			</row>
+			<row>
+				<f>914f4957-e2aa-412f-a57a-8c0ec360bfa7</f>
+				<f>dictionary.MODEL_TYPE.F08</f>
+				<f>zh_CN</f>
+				<f>类银行机构</f>
+				<f>admin</f>
+				<f>2019-01-29 10:28:06.0</f>
+				<f>admin</f>
+				<f>2019-03-12 10:56:33.764</f>
+			</row>
+			<row>
+				<f>fd7dec9b-bdcd-452d-8068-4a35781e413b</f>
+				<f>dictionary.MODEL_TYPE.B05</f>
+				<f>zh_CN</f>
+				<f>石油天然气</f>
+				<f>admin</f>
+				<f>2019-01-29 10:34:14.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:20:30.65</f>
+			</row>
+			<row>
+				<f>9faa7b35-14ac-4a0f-9929-39d8aa389ca9</f>
+				<f>dictionary.MODEL_TYPE.F07</f>
+				<f>zh_CN</f>
+				<f>私募基金</f>
+				<f>admin</f>
+				<f>2019-02-15 10:07:40.0</f>
+				<f>admin</f>
+				<f>2019-03-12 10:55:07.988</f>
+			</row>
+			<row>
+				<f>78446133-ae8f-4c14-a64e-e8bcbebbf2a9</f>
+				<f>dictionary.MODEL_TYPE.P1</f>
+				<f>zh_CN</f>
+				<f>教育</f>
+				<f>admin</f>
+				<f>2019-01-29 10:18:52.071</f>
+				<f>admin</f>
+				<f>2019-01-29 10:18:52.071</f>
+			</row>
+			<row>
+				<f>39b8ece3-4beb-44ac-8389-68ed445f9d1c</f>
+				<f>dictionary.MODEL_TYPE.P2</f>
+				<f>zh_CN</f>
+				<f>卫生</f>
+				<f>admin</f>
+				<f>2019-01-29 10:19:04.703</f>
+				<f>admin</f>
+				<f>2019-01-29 10:19:04.703</f>
+			</row>
+			<row>
+				<f>62455b93-142d-46c6-bde3-b57d72c26287</f>
+				<f>dictionary.MODEL_TYPE.P3</f>
+				<f>zh_CN</f>
+				<f>其他事业单位</f>
+				<f>admin</f>
+				<f>2019-01-29 10:19:14.269</f>
+				<f>admin</f>
+				<f>2019-01-29 10:19:14.269</f>
+			</row>
+			<row>
+				<f>236cab21-be0e-41a6-bf94-b6c26d69df19</f>
+				<f>dictionary.MODEL_TYPE.B02</f>
+				<f>zh_CN</f>
+				<f>持有型房地产</f>
+				<f>admin</f>
+				<f>2019-01-29 10:29:08.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:02:04.703</f>
+			</row>
+			<row>
+				<f>92915120-94ca-4efc-a060-600075941125</f>
+				<f>dictionary.MODEL_TYPE.B03</f>
+				<f>zh_CN</f>
+				<f>开发型房地产</f>
+				<f>admin</f>
+				<f>2019-02-15 10:07:04.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:03:42.07</f>
+			</row>
+			<row>
+				<f>60ac6da0-969c-4865-80af-f2f9f4012cdb</f>
+				<f>dictionary.MODEL_TYPE.F02</f>
+				<f>zh_CN</f>
+				<f>券商</f>
+				<f>admin</f>
+				<f>2019-01-29 10:26:56.0</f>
+				<f>admin</f>
+				<f>2019-03-12 10:51:51.229</f>
+			</row>
+			<row>
+				<f>9c0db795-4430-4bb1-8205-ee4c579c30db</f>
+				<f>dictionary.MODEL_TYPE.S1</f>
+				<f>zh_CN</f>
+				<f>政府融资平台</f>
+				<f>admin</f>
+				<f>2019-01-29 10:16:46.213</f>
+				<f>admin</f>
+				<f>2019-01-29 10:16:46.213</f>
+			</row>
+			<row>
+				<f>3e352583-1f36-4cca-b567-c873422c062c</f>
+				<f>dictionary.MODEL_TYPE.S2</f>
+				<f>zh_CN</f>
+				<f>新建企业</f>
+				<f>admin</f>
+				<f>2019-01-29 10:17:03.315</f>
+				<f>admin</f>
+				<f>2019-01-29 10:17:03.315</f>
+			</row>
+			<row>
+				<f>cc62947d-ea2b-43c4-8f73-2c9a0f08b441</f>
+				<f>dictionary.MODEL_TYPE.S3</f>
+				<f>zh_CN</f>
+				<f>房地产项目贷款</f>
+				<f>admin</f>
+				<f>2019-01-29 10:17:16.206</f>
+				<f>admin</f>
+				<f>2019-01-29 10:17:16.206</f>
+			</row>
+			<row>
+				<f>43d075cf-86b6-4011-83ed-3d9d5b5be785</f>
+				<f>dictionary.MODEL_TYPE.F05</f>
+				<f>zh_CN</f>
+				<f>信托</f>
+				<f>admin</f>
+				<f>2019-01-29 10:27:41.0</f>
+				<f>admin</f>
+				<f>2019-03-12 10:53:46.213</f>
+			</row>
+			<row>
+				<f>899c7ad1-0079-477d-a115-fe2e18c94bea</f>
+				<f>dictionary.MODEL_TYPE.B14</f>
+				<f>zh_CN</f>
+				<f>交通运输</f>
+				<f>admin</f>
+				<f>2019-01-29 10:37:54.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:29:46.446</f>
+			</row>
+			<row>
+				<f>331b67e2-f242-4895-adb2-5d55d4282955</f>
+				<f>dictionary.MODEL_TYPE.B17</f>
+				<f>zh_CN</f>
+				<f>IT与电信</f>
+				<f>admin</f>
+				<f>2019-01-29 10:45:22.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:31:59.796</f>
+			</row>
+			<row>
+				<f>f98ab9c9-8587-42fc-8bc2-ec2a7176b00b</f>
+				<f>dictionary.MODEL_TYPE.B18</f>
+				<f>zh_CN</f>
+				<f>公用事业</f>
+				<f>admin</f>
+				<f>2019-01-29 10:45:32.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:32:41.956</f>
+			</row>
+			<row>
+				<f>4f366192-50f4-4429-ac06-852ba3232bb8</f>
+				<f>dictionary.MODEL_TYPE.B15</f>
+				<f>zh_CN</f>
+				<f>批发零售</f>
+				<f>admin</f>
+				<f>2019-01-29 10:38:07.0</f>
+				<f>admin</f>
+				<f>2019-03-12 11:30:35.504</f>
+			</row>
+			<row>
+				<f>6c9b7c14-fc04-4dad-a959-f66a7adbe9f4</f>
+				<f>dictionary.MODEL_TYPE.W1</f>
+				<f>zh_CN</f>
+				<f>微型企业</f>
+				<f>admin</f>
+				<f>2019-01-29 10:19:43.669</f>
+				<f>admin</f>
+				<f>2019-01-29 10:19:43.669</f>
+			</row>
+			<row>
+				<f>fbd2bb37-44a0-488b-b955-a8a38aeec34b</f>
+				<f>dictionary.MODEL_TYPE.B04</f>
+				<f>zh_CN</f>
+				<f>建筑业(发债企业)</f>
+				<f>admin</f>
+				<f>2019-03-12 11:19:43.764</f>
+				<f>admin</f>
+				<f>2019-03-12 11:19:43.764</f>
+			</row>
+			<row>
+				<f>5ab88cd1-a174-4684-8d7e-2c75ed86a660</f>
+				<f>dictionary.INTERVAL_TYPE</f>
+				<f>zh_CN</f>
+				<f>区间类型</f>
+				<f>admin</f>
+				<f>2019-01-28 16:55:53.415</f>
+				<f>admin</f>
+				<f>2019-01-28 16:55:53.415</f>
+			</row>
+			<row>
+				<f>269940cb-6f14-486b-b110-768ca6557e4c</f>
+				<f>dictionary.INTERVAL_TYPE.010</f>
+				<f>zh_CN</f>
+				<f>左闭右开</f>
+				<f>admin</f>
+				<f>2019-01-28 16:57:05.795</f>
+				<f>admin</f>
+				<f>2019-01-28 16:57:05.795</f>
+			</row>
+			<row>
+				<f>cebeb43f-8386-4ddb-a3d6-251842dfbcf9</f>
+				<f>dictionary.INTERVAL_TYPE.020</f>
+				<f>zh_CN</f>
+				<f>左闭右闭</f>
+				<f>admin</f>
+				<f>2019-01-28 16:57:15.0</f>
+				<f>admin</f>
+				<f>2019-02-12 16:51:24.353</f>
+			</row>
+			<row>
+				<f>5e7727cf-0555-4875-9530-2132badc4281</f>
+				<f>dictionary.INTERVAL_TYPE.030</f>
+				<f>zh_CN</f>
+				<f>左开右闭</f>
+				<f>admin</f>
+				<f>2019-02-12 16:50:53.0</f>
+				<f>admin</f>
+				<f>2019-02-12 16:51:09.141</f>
+			</row>
+			<row>
+				<f>9de377a7-c7fe-4c81-91b2-28ca9cc2d7aa</f>
+				<f>dictionary.ADJUSTMENT_TYPE</f>
+				<f>zh_CN</f>
+				<f>调整类型</f>
+				<f>admin</f>
+				<f>2019-02-20 15:36:57.341</f>
+				<f>admin</f>
+				<f>2019-02-20 15:36:57.341</f>
+			</row>
+			<row>
+				<f>c400c9b9-bbda-42be-ad9f-9a7a780ddddf</f>
+				<f>dictionary.ADJUSTMENT_TYPE.01</f>
+				<f>zh_CN</f>
+				<f>调整评分</f>
+				<f>admin</f>
+				<f>2019-02-20 15:37:34.766</f>
+				<f>admin</f>
+				<f>2019-02-20 15:37:34.766</f>
+			</row>
+			<row>
+				<f>acbdc2d2-76bc-40aa-bd9b-dc9db9155dcd</f>
+				<f>dictionary.ADJUSTMENT_TYPE.02</f>
+				<f>zh_CN</f>
+				<f>调整级别</f>
+				<f>admin</f>
+				<f>2019-02-20 15:37:44.398</f>
+				<f>admin</f>
+				<f>2019-02-20 15:37:44.398</f>
+			</row>
+			<row>
+				<f>8a28c031-a7a9-47a6-986b-945dc7c39811</f>
+				<f>dictionary.CUSTOMER_RATING_PROCESS_STATUS</f>
+				<f>zh_CN</f>
+				<f>客户评级流程状态</f>
+				<f>admin</f>
+				<f>2019-01-25 14:52:38.0</f>
+				<f>admin</f>
+				<f>2019-01-25 14:55:55.287</f>
+			</row>
+			<row>
+				<f>d3c6a84c-9701-451f-9b6d-95b7fa9a9245</f>
+				<f>dictionary.CUSTOMER_RATING_PROCESS_STATUS.010</f>
+				<f>zh_CN</f>
+				<f>待提交</f>
+				<f>admin</f>
+				<f>2019-01-25 14:58:04.0</f>
+				<f>admin</f>
+				<f>2019-01-25 15:00:00.53</f>
+			</row>
+			<row>
+				<f>a77b3bd4-188c-41aa-8437-5434ab45f393</f>
+				<f>dictionary.CUSTOMER_RATING_PROCESS_STATUS.020</f>
+				<f>zh_CN</f>
+				<f>审批中</f>
+				<f>admin</f>
+				<f>2019-01-25 15:00:11.957</f>
+				<f>admin</f>
+				<f>2019-01-25 15:00:11.957</f>
+			</row>
+			<row>
+				<f>04377e1f-4a0a-474b-a407-07166fb249c8</f>
+				<f>dictionary.CUSTOMER_RATING_PROCESS_STATUS.030</f>
+				<f>zh_CN</f>
+				<f>退回重审</f>
+				<f>admin</f>
+				<f>2019-01-25 15:00:36.902</f>
+				<f>admin</f>
+				<f>2019-01-25 15:00:36.902</f>
+			</row>
+			<row>
+				<f>9eafd5e5-1bd5-4514-9972-e6e427bbe67e</f>
+				<f>dictionary.CUSTOMER_RATING_PROCESS_STATUS.040</f>
+				<f>zh_CN</f>
+				<f>退回补充材料</f>
+				<f>admin</f>
+				<f>2019-01-25 15:01:39.796</f>
+				<f>admin</f>
+				<f>2019-01-25 15:01:39.796</f>
+			</row>
+			<row>
+				<f>91aa8f09-5291-40f1-aec7-183b91167036</f>
+				<f>dictionary.CUSTOMER_RATING_PROCESS_STATUS.050</f>
+				<f>zh_CN</f>
+				<f>退回撤销</f>
+				<f>admin</f>
+				<f>2019-01-25 15:02:00.39</f>
+				<f>admin</f>
+				<f>2019-01-25 15:02:00.39</f>
+			</row>
+			<row>
+				<f>25ae6cf6-4e30-400c-880c-b7a0c277a561</f>
+				<f>dictionary.CUSTOMER_RATING_PROCESS_STATUS.060</f>
+				<f>zh_CN</f>
+				<f>已完成-同意</f>
+				<f>admin</f>
+				<f>2019-01-25 15:02:26.935</f>
+				<f>admin</f>
+				<f>2019-01-25 15:02:26.935</f>
+			</row>
+			<row>
+				<f>f92b8665-7410-4262-8428-07800a66e62c</f>
+				<f>dictionary.CUSTOMER_RATING_PROCESS_STATUS.070</f>
+				<f>zh_CN</f>
+				<f>已完成－否决</f>
+				<f>admin</f>
+				<f>2019-01-25 15:02:50.805</f>
+				<f>admin</f>
+				<f>2019-01-25 15:02:50.805</f>
+			</row>
+			<row>
+				<f>d3630240-7816-4875-99f9-8621fa6b5dee</f>
+				<f>dictionary.CUSTOMER_RATING_PROCESS_STATUS.080</f>
+				<f>zh_CN</f>
+				<f>已完成－撤销</f>
+				<f>admin</f>
+				<f>2019-01-25 15:03:18.915</f>
+				<f>admin</f>
+				<f>2019-01-25 15:03:18.915</f>
+			</row>
+			<row>
+				<f>e4a4f24c-4f42-4a70-bc76-510fa44343b0</f>
+				<f>dictionary.CUSTOMER_RATING_PROCESS_STATUS.090</f>
+				<f>zh_CN</f>
+				<f>已完成－终止</f>
+				<f>admin</f>
+				<f>2019-01-25 15:03:48.794</f>
+				<f>admin</f>
+				<f>2019-01-25 15:03:48.794</f>
+			</row>
+			<row>
+				<f>133a1b8f-033f-4217-8362-12a1d289cfd2</f>
+				<f>dictionary.TRIAL_COUNT</f>
+				<f>zh_CN</f>
+				<f>评级试算次数</f>
+				<f>admin</f>
+				<f>2019-03-11 20:12:45.571</f>
+				<f>admin</f>
+				<f>2019-03-11 20:12:45.571</f>
+			</row>
+			<row>
+				<f>9cc173ad-bdd1-4452-98fa-70a9d287fde9</f>
+				<f>dictionary.WORK_FLOW.loan_model_rating</f>
+				<f>zh_CN</f>
+				<f>信贷模型流程图</f>
+				<f>admin</f>
+				<f>2019-03-12 14:59:20.686</f>
+				<f>admin</f>
+				<f>2019-03-12 14:59:20.686</f>
+			</row>
+			<row>
+				<f>f981af66-a0fa-497d-8224-4fa63844ff02</f>
+				<f>dictionary.CM_TYPE</f>
+				<f>zh_CN</f>
+				<f>CM类型</f>
+				<f>admin</f>
+				<f>2019-05-28 09:59:44.136</f>
+				<f>admin</f>
+				<f>2019-05-28 09:59:44.136</f>
+			</row>
+			<row>
+				<f>76bfd20f-51fd-45dc-9fef-a50f065cf131</f>
+				<f>dictionary.CM_TYPE.010</f>
+				<f>zh_CN</f>
+				<f>新经营客户CM</f>
+				<f>admin</f>
+				<f>2019-05-28 10:03:27.687</f>
+				<f>admin</f>
+				<f>2019-05-28 10:03:27.687</f>
+			</row>
+			<row>
+				<f>32077ef8-49ed-46e1-86c3-c3e7cbd6dfbc</f>
+				<f>dictionary.CM_TYPE.020</f>
+				<f>zh_CN</f>
+				<f>两年以上客户CM</f>
+				<f>admin</f>
+				<f>2019-05-28 10:03:53.34</f>
+				<f>admin</f>
+				<f>2019-05-28 10:03:53.34</f>
+			</row>
+			<row>
+				<f>0031439b-2365-49da-9adc-c7acbe1282b2</f>
+				<f>dictionary.CM_TYPE.030</f>
+				<f>zh_CN</f>
+				<f>两年以上贸易客户CM</f>
+				<f>admin</f>
+				<f>2019-05-28 10:04:05.615</f>
+				<f>admin</f>
+				<f>2019-05-28 10:04:05.615</f>
+			</row>
+			<row>
+				<f>da6b7eeb-92ae-4569-82e8-ca04e58555d5</f>
+				<f>dictionary.RATING_STATUS</f>
+				<f>zh_CN</f>
+				<f>评级状态</f>
+				<f>admin</f>
+				<f>2019-01-25 16:59:55.294</f>
+				<f>admin</f>
+				<f>2019-01-25 16:59:55.294</f>
+			</row>
+			<row>
+				<f>b0c452cd-0575-4b08-8d36-423d2d68320f</f>
+				<f>dictionary.RATING_STATUS.010</f>
+				<f>zh_CN</f>
+				<f>生效</f>
+				<f>admin</f>
+				<f>2019-01-25 17:00:20.487</f>
+				<f>admin</f>
+				<f>2019-01-25 17:00:20.487</f>
+			</row>
+			<row>
+				<f>2b278b92-71bf-4ff2-b52a-ec24709df2a2</f>
+				<f>dictionary.RATING_STATUS.020</f>
+				<f>zh_CN</f>
+				<f>失效</f>
+				<f>admin</f>
+				<f>2019-01-25 17:01:18.7</f>
+				<f>admin</f>
+				<f>2019-01-25 17:01:18.7</f>
+			</row>
+			<row>
+				<f>4770277a-9f3e-4792-8348-fdd4dd1016b8</f>
+				<f>dictionary.RATING_STATUS.030</f>
+				<f>zh_CN</f>
+				<f>未生效</f>
+				<f>admin</f>
+				<f>2019-01-25 17:01:28.923</f>
+				<f>admin</f>
+				<f>2019-01-25 17:01:28.923</f>
+			</row>
+			<row>
+				<f>69489fd1-c86b-4fab-96e6-2d090d86c8e7</f>
+				<f>dictionary.RATING_TYPE</f>
+				<f>zh_CN</f>
+				<f>评级类型</f>
+				<f>admin</f>
+				<f>2019-01-25 16:55:16.089</f>
+				<f>admin</f>
+				<f>2019-01-25 16:55:16.089</f>
+			</row>
+			<row>
+				<f>cd34f7ff-8423-478b-bbf1-b14303e5d775</f>
+				<f>dictionary.RATING_TYPE.010</f>
+				<f>zh_CN</f>
+				<f>年度评级</f>
+				<f>admin</f>
+				<f>2019-01-25 16:55:56.068</f>
+				<f>admin</f>
+				<f>2019-01-25 16:55:56.068</f>
+			</row>
+			<row>
+				<f>fe94d397-39f5-41cf-a0db-3d2c7379ba5a</f>
+				<f>dictionary.RATING_TYPE.020</f>
+				<f>zh_CN</f>
+				<f>评级更新</f>
+				<f>admin</f>
+				<f>2019-01-25 16:56:07.292</f>
+				<f>admin</f>
+				<f>2019-01-25 16:56:07.292</f>
+			</row>
+			<row>
+				<f>EC6C412A6590457B955A94C5C00D1EE3</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.BB1</f>
+				<f>zh_CN</f>
+				<f>BB1</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:50.884</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:50.884</f>
+			</row>
+			<row>
+				<f>E8FC6C1B17D54641A1E1F2C9B1D74CD1</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.BB2</f>
+				<f>zh_CN</f>
+				<f>BB2</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:58.067</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:58.067</f>
+			</row>
+			<row>
+				<f>4179116A9340476BB684F1B34586147A</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.BB3</f>
+				<f>zh_CN</f>
+				<f>BB3</f>
+				<f>admin</f>
+				<f>2019-06-14 16:29:04.546</f>
+				<f>admin</f>
+				<f>2019-06-14 16:29:04.546</f>
+			</row>
+			<row>
+				<f>0F3C12F0193245C7B001241D4ACD8B8A</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.BBB1</f>
+				<f>zh_CN</f>
+				<f>BBB1</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:28.793</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:28.793</f>
+			</row>
+			<row>
+				<f>3FE25FA69CBD40918DCAEB0D5E389ADE</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.BBB2</f>
+				<f>zh_CN</f>
+				<f>BBB2</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:36.092</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:36.092</f>
+			</row>
+			<row>
+				<f>C41EAA18D7424F1DB59673FA216AF5FB</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.BBB3</f>
+				<f>zh_CN</f>
+				<f>BBB3</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:42.936</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:42.936</f>
+			</row>
+			<row>
+				<f>6A6B19165CAF42868DF02AF5630ED1DA</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.C</f>
+				<f>zh_CN</f>
+				<f>C</f>
+				<f>admin</f>
+				<f>2019-06-14 16:29:25.589</f>
+				<f>admin</f>
+				<f>2019-06-14 16:29:25.589</f>
+			</row>
+			<row>
+				<f>3f3f48f1-e608-46cb-927a-4a6022a0da37</f>
+				<f>dictionary.SCALE_TYPE</f>
+				<f>zh_CN</f>
+				<f>标尺类型</f>
+				<f>admin</f>
+				<f>2019-06-14 14:37:48.53</f>
+				<f>admin</f>
+				<f>2019-06-14 14:37:48.53</f>
+			</row>
+			<row>
+				<f>cbca80e3-07dc-4f92-ac72-55c41f1f5508</f>
+				<f>dictionary.SCALE_TYPE.010</f>
+				<f>zh_CN</f>
+				<f>公司客户主标尺</f>
+				<f>admin</f>
+				<f>2019-06-14 14:38:48.791</f>
+				<f>admin</f>
+				<f>2019-06-14 14:38:48.791</f>
+			</row>
+			<row>
+				<f>095c1b81-e7eb-450c-bc6b-ddda4d87873d</f>
+				<f>dictionary.SCALE_TYPE.020</f>
+				<f>zh_CN</f>
+				<f>金融机构主标尺</f>
+				<f>admin</f>
+				<f>2019-06-14 14:39:06.034</f>
+				<f>admin</f>
+				<f>2019-06-14 14:39:06.034</f>
+			</row>
+			<row>
+				<f>8BE2B5AC114C4D588702362DF7CA6AB6</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.D</f>
+				<f>zh_CN</f>
+				<f>D</f>
+				<f>9727</f>
+				<f>2019-06-19 15:18:16.919</f>
+				<f>9727</f>
+				<f>2019-06-19 15:18:16.919</f>
+			</row>
+			<row>
+				<f>72190D68292545A4A2BBE425B0BB6C60</f>
+				<f>dictionary.CREDIT_RATING_TYPE.D</f>
+				<f>zh_CN</f>
+				<f>D</f>
+				<f>9727</f>
+				<f>2019-06-19 15:19:10.799</f>
+				<f>9727</f>
+				<f>2019-06-19 15:19:10.799</f>
+			</row>
+			<row>
+				<f>54EAA5320FF54615B1F803C60D1BCA11</f>
+				<f>dictionary.CREDIT_RATING_TYPE</f>
+				<f>zh_CN</f>
+				<f>信用等级</f>
+				<f>admin</f>
+				<f>2019-05-28 10:33:47.798</f>
+				<f>admin</f>
+				<f>2019-05-28 10:33:47.798</f>
+			</row>
+			<row>
+				<f>2AC1419E8E6448638B4FD6E19B7BF623</f>
+				<f>dictionary.CREDIT_RATING_TYPE.AAA</f>
+				<f>zh_CN</f>
+				<f>AAA</f>
+				<f>admin</f>
+				<f>2019-05-28 11:06:58.889</f>
+				<f>admin</f>
+				<f>2019-05-28 11:06:58.889</f>
+			</row>
+			<row>
+				<f>31BA735BB3E743979CCBE681F413B644</f>
+				<f>dictionary.CREDIT_RATING_TYPE.AA+</f>
+				<f>zh_CN</f>
+				<f>AA+</f>
+				<f>admin</f>
+				<f>2019-05-28 11:07:18.726</f>
+				<f>admin</f>
+				<f>2019-05-28 11:07:18.726</f>
+			</row>
+			<row>
+				<f>330A76C4C4A8426E90AA47BC24E75E42</f>
+				<f>dictionary.CREDIT_RATING_TYPE.AA</f>
+				<f>zh_CN</f>
+				<f>AA</f>
+				<f>admin</f>
+				<f>2019-05-28 11:07:33.034</f>
+				<f>admin</f>
+				<f>2019-05-28 11:07:33.034</f>
+			</row>
+			<row>
+				<f>2F4FBC962C414C65B57E0C7B11F5D88B</f>
+				<f>dictionary.CREDIT_RATING_TYPE.AA-</f>
+				<f>zh_CN</f>
+				<f>AA-</f>
+				<f>admin</f>
+				<f>2019-05-28 11:07:42.252</f>
+				<f>admin</f>
+				<f>2019-05-28 11:07:42.252</f>
+			</row>
+			<row>
+				<f>13D5CD57BD66408F91A9490EDF916158</f>
+				<f>dictionary.CREDIT_RATING_TYPE.A+</f>
+				<f>zh_CN</f>
+				<f>A+</f>
+				<f>admin</f>
+				<f>2019-05-28 11:07:50.0</f>
+				<f>admin</f>
+				<f>2019-05-28 11:07:59.735</f>
+			</row>
+			<row>
+				<f>037AE0EEB1C140BFB12CD72F2EBF25AD</f>
+				<f>dictionary.CREDIT_RATING_TYPE.A</f>
+				<f>zh_CN</f>
+				<f>A</f>
+				<f>admin</f>
+				<f>2019-05-28 11:08:06.908</f>
+				<f>admin</f>
+				<f>2019-05-28 11:08:06.908</f>
+			</row>
+			<row>
+				<f>29E1F3B4ED9A4167944BE0ABDFC0F25A</f>
+				<f>dictionary.CREDIT_RATING_TYPE.A-</f>
+				<f>zh_CN</f>
+				<f>A-</f>
+				<f>admin</f>
+				<f>2019-05-28 11:08:11.82</f>
+				<f>admin</f>
+				<f>2019-05-28 11:08:11.82</f>
+			</row>
+			<row>
+				<f>36217A399EBB47BC8299601BAF93D18B</f>
+				<f>dictionary.CREDIT_RATING_TYPE.BBB+</f>
+				<f>zh_CN</f>
+				<f>BBB+</f>
+				<f>admin</f>
+				<f>2019-05-28 11:08:27.842</f>
+				<f>admin</f>
+				<f>2019-05-28 11:08:27.842</f>
+			</row>
+			<row>
+				<f>682F0ECC0C81462980275FDE184B2930</f>
+				<f>dictionary.CREDIT_RATING_TYPE.BBB</f>
+				<f>zh_CN</f>
+				<f>BBB</f>
+				<f>admin</f>
+				<f>2019-05-28 11:09:29.909</f>
+				<f>admin</f>
+				<f>2019-05-28 11:09:29.909</f>
+			</row>
+			<row>
+				<f>CCA69B08968D4A94B7188578F88FE174</f>
+				<f>dictionary.CREDIT_RATING_TYPE.BBB-</f>
+				<f>zh_CN</f>
+				<f>BBB-</f>
+				<f>admin</f>
+				<f>2019-05-28 11:09:34.943</f>
+				<f>admin</f>
+				<f>2019-05-28 11:09:34.943</f>
+			</row>
+			<row>
+				<f>BB83C7D477454D958F8FB54D8D2F9534</f>
+				<f>dictionary.CREDIT_RATING_TYPE.BB+</f>
+				<f>zh_CN</f>
+				<f>BB+</f>
+				<f>admin</f>
+				<f>2019-05-28 11:09:44.605</f>
+				<f>admin</f>
+				<f>2019-05-28 11:09:44.605</f>
+			</row>
+			<row>
+				<f>FBEE522942974D44BF8A5A6485BF3560</f>
+				<f>dictionary.CREDIT_RATING_TYPE.BB</f>
+				<f>zh_CN</f>
+				<f>BB</f>
+				<f>admin</f>
+				<f>2019-05-28 11:09:53.008</f>
+				<f>admin</f>
+				<f>2019-05-28 11:09:53.008</f>
+			</row>
+			<row>
+				<f>755D622FA1B44DD98F771AFADDA91E3B</f>
+				<f>dictionary.CREDIT_RATING_TYPE.BB-</f>
+				<f>zh_CN</f>
+				<f>BB-</f>
+				<f>admin</f>
+				<f>2019-05-28 11:09:58.223</f>
+				<f>admin</f>
+				<f>2019-05-28 11:09:58.223</f>
+			</row>
+			<row>
+				<f>40742F26A3DD479E853F58DF629C2CB5</f>
+				<f>dictionary.CREDIT_RATING_TYPE.B+</f>
+				<f>zh_CN</f>
+				<f>B+</f>
+				<f>admin</f>
+				<f>2019-05-28 11:10:07.114</f>
+				<f>admin</f>
+				<f>2019-05-28 11:10:07.114</f>
+			</row>
+			<row>
+				<f>74EA0AE8D4CB4082868FEDE0F358D7AB</f>
+				<f>dictionary.CREDIT_RATING_TYPE.B</f>
+				<f>zh_CN</f>
+				<f>B</f>
+				<f>admin</f>
+				<f>2019-05-28 11:10:12.712</f>
+				<f>admin</f>
+				<f>2019-05-28 11:10:12.712</f>
+			</row>
+			<row>
+				<f>3B05C6FB84E144AC9055EDB307BE49EE</f>
+				<f>dictionary.CREDIT_RATING_TYPE.B-</f>
+				<f>zh_CN</f>
+				<f>B-</f>
+				<f>admin</f>
+				<f>2019-05-28 11:10:17.832</f>
+				<f>admin</f>
+				<f>2019-05-28 11:10:17.832</f>
+			</row>
+			<row>
+				<f>DFB86209DEE2464D86CD851DA98F4D3E</f>
+				<f>dictionary.CREDIT_RATING_TYPE.C+</f>
+				<f>zh_CN</f>
+				<f>C+</f>
+				<f>admin</f>
+				<f>2019-05-28 11:10:29.793</f>
+				<f>admin</f>
+				<f>2019-05-28 11:10:29.793</f>
+			</row>
+			<row>
+				<f>2FD5B191F5D848E8A01495A75F05AEBE</f>
+				<f>dictionary.CREDIT_RATING_TYPE.C</f>
+				<f>zh_CN</f>
+				<f>C</f>
+				<f>admin</f>
+				<f>2019-05-28 11:10:41.193</f>
+				<f>admin</f>
+				<f>2019-05-28 11:10:41.193</f>
+			</row>
+			<row>
+				<f>ABACF535403C40F79FC4133FC2E50F17</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE</f>
+				<f>zh_CN</f>
+				<f>金融机构标尺</f>
+				<f>admin</f>
+				<f>2019-06-14 16:26:23.081</f>
+				<f>admin</f>
+				<f>2019-06-14 16:26:23.081</f>
+			</row>
+			<row>
+				<f>CB2AC26AB01F4AB49FF935A7B457C75F</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.A1</f>
+				<f>zh_CN</f>
+				<f>A1</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:53.522</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:53.522</f>
+			</row>
+			<row>
+				<f>32C46D0649054DEABDB7B672FAA1D6A2</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.A2</f>
+				<f>zh_CN</f>
+				<f>A2</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:04.33</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:04.33</f>
+			</row>
+			<row>
+				<f>7630FDB6DE084BACB7C112A81472FAF4</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.A3</f>
+				<f>zh_CN</f>
+				<f>A3</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:13.44</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:13.44</f>
+			</row>
+			<row>
+				<f>CDAE1DB3D0D64DE28E41F17CDCCDD00E</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.A4</f>
+				<f>zh_CN</f>
+				<f>A4</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:21.377</f>
+				<f>admin</f>
+				<f>2019-06-14 16:28:21.377</f>
+			</row>
+			<row>
+				<f>6F3D332CB8DB44EF907CE912FE0B40FA</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.AA1</f>
+				<f>zh_CN</f>
+				<f>AA1</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:07.42</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:07.42</f>
+			</row>
+			<row>
+				<f>CB97D05740F5428D869B70F86A6CD3CF</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.AA2</f>
+				<f>zh_CN</f>
+				<f>AA2</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:17.119</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:17.119</f>
+			</row>
+			<row>
+				<f>10875257CB694AA38356E01046D30EE3</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.AA3</f>
+				<f>zh_CN</f>
+				<f>AA3</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:24.493</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:24.493</f>
+			</row>
+			<row>
+				<f>316FD0C3366948D88D27E2859CAC04A4</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.AA4</f>
+				<f>zh_CN</f>
+				<f>AA4</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:31.57</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:31.57</f>
+			</row>
+			<row>
+				<f>4DFF9D573BEB4D6A84F18609ADB3439A</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.AA5</f>
+				<f>zh_CN</f>
+				<f>AA5</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:39.26</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:39.26</f>
+			</row>
+			<row>
+				<f>517697C97BDF4EB68C0E9202A9D0B7E0</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.AA6</f>
+				<f>zh_CN</f>
+				<f>AA6</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:46.328</f>
+				<f>admin</f>
+				<f>2019-06-14 16:27:46.328</f>
+			</row>
+			<row>
+				<f>7DB29511B33B451A938614F418848FC4</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.AAA</f>
+				<f>zh_CN</f>
+				<f>AAA</f>
+				<f>admin</f>
+				<f>2019-06-14 16:26:56.339</f>
+				<f>admin</f>
+				<f>2019-06-14 16:26:56.339</f>
+			</row>
+			<row>
+				<f>40E768E9409D4701A187E1E10D5C9FE8</f>
+				<f>dictionary.FINANCIAL_SCALE_TYPE.B</f>
+				<f>zh_CN</f>
+				<f>B</f>
+				<f>admin</f>
+				<f>2019-06-14 16:29:17.019</f>
+				<f>admin</f>
+				<f>2019-06-14 16:29:17.019</f>
+			</row>
+			<row>
+				<f>6e0c2052-e34b-4f6c-9d97-f5c9f18b0ecf</f>
+				<f>dictionary.RISK_MAIN_MAIN_GUARANTEE_METHOD</f>
+				<f>zh_CN</f>
+				<f>主要担保方式</f>
+				<f>admin</f>
+				<f>2019-01-29 22:43:11.752</f>
+				<f>admin</f>
+				<f>2019-01-29 22:43:11.752</f>
+			</row>
+			<row>
+				<f>0226302f-5627-4715-a3c9-8d53e29ebe37</f>
+				<f>dictionary.RISK_MAIN_MAIN_GUARANTEE_METHOD.ENSURE</f>
+				<f>zh_CN</f>
+				<f>保证</f>
+				<f>admin</f>
+				<f>2019-01-29 22:43:41.558</f>
+				<f>admin</f>
+				<f>2019-01-29 22:43:41.558</f>
+			</row>
+			<row>
+				<f>addee9e8-9c55-43a8-aac9-c11bddadb002</f>
+				<f>dictionary.RISK_MAIN_MAIN_GUARANTEE_METHOD.MORTGAGE</f>
+				<f>zh_CN</f>
+				<f>抵押</f>
+				<f>admin</f>
+				<f>2019-01-29 22:42:58.537</f>
+				<f>admin</f>
+				<f>2019-01-29 22:42:58.537</f>
+			</row>
+			<row>
+				<f>3ae0e711-9c81-4d0f-b3f6-492c6a55ee72</f>
+				<f>dictionary.RISK_MAIN_MAIN_GUARANTEE_METHOD.PLEDGE</f>
+				<f>zh_CN</f>
+				<f>质押</f>
+				<f>admin</f>
+				<f>2019-01-29 22:43:29.464</f>
+				<f>admin</f>
+				<f>2019-01-29 22:43:29.464</f>
+			</row>
+			<row>
+				<f>f7ff7bbb-c3fd-43a3-8b30-cf4127b6dda8</f>
+				<f>dictionary.RISK_REGULATING_METHODS</f>
+				<f>zh_CN</f>
+				<f>调整方式</f>
+				<f>admin</f>
+				<f>2019-01-29 22:51:35.637</f>
+				<f>admin</f>
+				<f>2019-01-29 22:51:35.637</f>
+			</row>
+			<row>
+				<f>9b59bfd9-7377-4d30-a37a-c09bfe774eb0</f>
+				<f>dictionary.RISK_REGULATING_METHODS.MAN</f>
+				<f>zh_CN</f>
+				<f>人工</f>
+				<f>admin</f>
+				<f>2019-01-29 22:51:00.001</f>
+				<f>admin</f>
+				<f>2019-01-29 22:51:00.001</f>
+			</row>
+			<row>
+				<f>c05c8c4e-5ec3-4652-b73c-de1e6a273b9f</f>
+				<f>dictionary.RISK_REGULATING_METHODS.SYSTEM</f>
+				<f>zh_CN</f>
+				<f>系统</f>
+				<f>admin</f>
+				<f>2019-01-29 22:51:18.1</f>
+				<f>admin</f>
+				<f>2019-01-29 22:51:18.1</f>
+			</row>
+			<row>
+				<f>d40ab8c6-e054-47f5-a876-6393af28cb7e</f>
+				<f>dictionary.DEFAULT_IDENTIFICATION_METHOD</f>
+				<f>zh_CN</f>
+				<f>违约认定方式</f>
+				<f>admin</f>
+				<f>2019-01-29 21:22:07.099</f>
+				<f>admin</f>
+				<f>2019-01-29 21:22:07.099</f>
+			</row>
+			<row>
+				<f>bca4aebb-41d2-4962-ba88-aece319232a4</f>
+				<f>dictionary.DEFAULT_IDENTIFICATION_METHOD.SYSTEM</f>
+				<f>zh_CN</f>
+				<f>系统认定</f>
+				<f>admin</f>
+				<f>2019-01-29 21:22:29.0</f>
+				<f>admin</f>
+				<f>2019-01-29 21:23:13.042</f>
+			</row>
+			<row>
+				<f>72d18bd1-58c2-424d-bac0-b50382436d4d</f>
+				<f>dictionary.DEFAULT_PROCESS_TYPE</f>
+				<f>zh_CN</f>
+				<f>流程类型</f>
+				<f>admin</f>
+				<f>2019-01-29 21:55:59.068</f>
+				<f>admin</f>
+				<f>2019-01-29 21:55:59.068</f>
+			</row>
+			<row>
+				<f>01364f7e-bb93-45d9-b3b8-391768babf66</f>
+				<f>dictionary.DEFAULT_PROCESS_TYPE.DEFAULT_REBORN</f>
+				<f>zh_CN</f>
+				<f>违约重生</f>
+				<f>admin</f>
+				<f>2019-01-29 21:56:16.342</f>
+				<f>admin</f>
+				<f>2019-01-29 21:56:16.342</f>
+			</row>
+			<row>
+				<f>ccd9ec24-794c-4671-bdbf-64b064b11a5e</f>
+				<f>dictionary.DEFAULT_PROCESS_TYPE.DEFAULT_COGNIZANCE</f>
+				<f>zh_CN</f>
+				<f>违约认定</f>
+				<f>admin</f>
+				<f>2019-01-29 21:56:37.028</f>
+				<f>admin</f>
+				<f>2019-01-29 21:56:37.028</f>
+			</row>
+			<row>
+				<f>61451599-04c9-43f7-a824-4e1de873a0cd</f>
+				<f>dictionary.DEFAULT_ APPROVAL_RESULT</f>
+				<f>zh_CN</f>
+				<f>违约审批结果</f>
+				<f>admin</f>
+				<f>2019-01-29 22:01:36.154</f>
+				<f>admin</f>
+				<f>2019-01-29 22:01:36.154</f>
+			</row>
+			<row>
+				<f>f1269ad9-2033-4c22-b28b-fb8a1c37981d</f>
+				<f>dictionary.DEFAULT_ APPROVAL_RESULT.DEFAULT</f>
+				<f>zh_CN</f>
+				<f>违约</f>
+				<f>admin</f>
+				<f>2019-01-29 22:01:53.536</f>
+				<f>admin</f>
+				<f>2019-01-29 22:01:53.536</f>
+			</row>
+			<row>
+				<f>fa38cfc2-8fe6-4c73-973a-e760713aec53</f>
+				<f>dictionary.DEFAULT_ APPROVAL_RESULT.NODEFAULT</f>
+				<f>zh_CN</f>
+				<f>非违约</f>
+				<f>admin</f>
+				<f>2019-01-29 22:02:08.506</f>
+				<f>admin</f>
+				<f>2019-01-29 22:02:08.506</f>
+			</row>
+			<row>
+				<f>6b8bc9be-c873-4d58-b55f-799de3a6a48b</f>
+				<f>dictionary.DEFAULT_ APPROVAL_RESULT.REBORN</f>
+				<f>zh_CN</f>
+				<f>重生</f>
+				<f>admin</f>
+				<f>2019-01-29 22:02:26.513</f>
+				<f>admin</f>
+				<f>2019-01-29 22:02:26.513</f>
+			</row>
+			<row>
+				<f>7fb39adf-12d8-4a94-9218-02eb0c2ee920</f>
+				<f>dictionary.DEFAULT_ APPROVAL_RESULT.NOREBORN</f>
+				<f>zh_CN</f>
+				<f>非重生</f>
+				<f>admin</f>
+				<f>2019-01-29 22:02:40.841</f>
+				<f>admin</f>
+				<f>2019-01-29 22:02:40.841</f>
+			</row>
+			<row>
+				<f>945c98bc-550c-406c-ab11-f272f2affd80</f>
+				<f>dictionary.DEFAULT_ CURRENT_STATE.DEFAULT</f>
+				<f>zh_CN</f>
+				<f>违约</f>
+				<f>admin</f>
+				<f>2019-01-29 22:08:32.882</f>
+				<f>admin</f>
+				<f>2019-01-29 22:08:32.882</f>
+			</row>
+			<row>
+				<f>e1ca3c8d-9da3-4443-ad46-f023a99b6a2d</f>
+				<f>dictionary.DEFAULT_ CURRENT_STATE.REBORN</f>
+				<f>zh_CN</f>
+				<f>重生</f>
+				<f>admin</f>
+				<f>2019-01-29 22:08:47.16</f>
+				<f>admin</f>
+				<f>2019-01-29 22:08:47.16</f>
+			</row>
+			<row>
+				<f>94236579-4bcc-40ad-a676-3e78428668d1</f>
+				<f>dictionary.DEFAULT_ CURRENT_STATE</f>
+				<f>zh_CN</f>
+				<f>当前状态</f>
+				<f>admin</f>
+				<f>2019-01-29 22:08:57.37</f>
+				<f>admin</f>
+				<f>2019-01-29 22:08:57.37</f>
+			</row>
+			<row>
+				<f>7d474ac7-8730-4dcc-8a7c-b8f72cc0f045</f>
+				<f>dictionary.DEFAULT_PROCESS_STATE</f>
+				<f>zh_CN</f>
+				<f>违约流程状态</f>
+				<f>admin</f>
+				<f>2019-01-29 20:44:21.268</f>
+				<f>admin</f>
+				<f>2019-01-29 20:44:21.268</f>
+			</row>
+			<row>
+				<f>BFA2F667A0D8450A89BB23060306F6FF</f>
+				<f>dictionary.DEFAULT_PROCESS_STATE.MAN_DEFAULT</f>
+				<f>zh_CN</f>
+				<f>人工认定－违约</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:15.0</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:15.0</f>
+			</row>
+			<row>
+				<f>F8B212EB449543248B911A16889131C5</f>
+				<f>dictionary.DEFAULT_PROCESS_STATE.TO_BE_CONFIRMED</f>
+				<f>zh_CN</f>
+				<f>待确认</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:15.0</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:15.0</f>
+			</row>
+			<row>
+				<f>22E7BD885F5B4F568F7E42091AA6551F</f>
+				<f>dictionary.DEFAULT_PROCESS_STATE.APPROVAL</f>
+				<f>zh_CN</f>
+				<f>审批中</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:15.0</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:15.0</f>
+			</row>
+			<row>
+				<f>97BC8DE60C7B43F38B871F4B40E374F7</f>
+				<f>dictionary.DEFAULT_PROCESS_STATE.MAN_NO_DEFAULT</f>
+				<f>zh_CN</f>
+				<f>人工认定－非违约</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:15.0</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:15.0</f>
+			</row>
+			<row>
+				<f>5594E42F8C724FC1B98AB3060D368594</f>
+				<f>dictionary.DEFAULT_PROCESS_STATE.SYSTEM_DEFAULT</f>
+				<f>zh_CN</f>
+				<f>系统认定-违约</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:57.0</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:57.0</f>
+			</row>
+			<row>
+				<f>51167B94EE764906AAF6A18A356738A9</f>
+				<f>dictionary.DEFAULT_PROCESS_STATE.OVERTIME_DEFAULT</f>
+				<f>zh_CN</f>
+				<f>超时认定-违约</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:57.0</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:57.0</f>
+			</row>
+			<row>
+				<f>2AD899D2AE514E0180FC943950773E27</f>
+				<f>dictionary.DEFAULT_PROCESS_STATE.COMPLETED_TERMINATION</f>
+				<f>zh_CN</f>
+				<f>已完成-终止</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:57.0</f>
+				<f>admin</f>
+				<f>2019-01-29 20:57:57.0</f>
+			</row>
+			<row>
+				<f>e329e055-a0a8-4c93-a9ec-f5c10b9b5671</f>
+				<f>dictionary.DEFAULT_LAUNCHING_MODE</f>
+				<f>zh_CN</f>
+				<f>违约流程发起方式</f>
+				<f>admin</f>
+				<f>2019-01-29 21:07:04.396</f>
+				<f>admin</f>
+				<f>2019-01-29 21:07:04.396</f>
+			</row>
+			<row>
+				<f>8BE904798328443D9580EA20307598D2</f>
+				<f>dictionary.DEFAULT_LAUNCHING_MODE.SYATEM</f>
+				<f>zh_CN</f>
+				<f>系统自动发起</f>
+				<f>admin</f>
+				<f>2019-01-29 21:09:40.0</f>
+				<f>admin</f>
+				<f>2019-01-29 21:09:40.0</f>
+			</row>
+			<row>
+				<f>0AA376F78D724D639F353044F8F22A25</f>
+				<f>dictionary.DEFAULT_LAUNCHING_MODE.CUSTOMER_MANAGER</f>
+				<f>zh_CN</f>
+				<f>客户经理发起</f>
+				<f>admin</f>
+				<f>2019-01-29 21:09:40.0</f>
+				<f>admin</f>
+				<f>2019-01-29 21:09:40.0</f>
+			</row>
+			<row>
+				<f>80B0FAE3D21A4C5F8A38FC1D72ECCE84</f>
+				<f>dictionary.DEFAULT_LAUNCHING_MODE.BRANCH_MANAGERS</f>
+				<f>zh_CN</f>
+				<f>分支行管理人员发起</f>
+				<f>admin</f>
+				<f>2019-01-29 21:09:40.0</f>
+				<f>admin</f>
+				<f>2019-01-29 21:09:40.0</f>
+			</row>
+			<row>
+				<f>848E4BC291CC4D23A3338D9BF5D1FA03</f>
+				<f>dictionary.DEFAULT_LAUNCHING_MODE.HEAD_OFFICE_MANAGER</f>
+				<f>zh_CN</f>
+				<f>总行管理人员发起</f>
+				<f>admin</f>
+				<f>2019-01-29 21:09:40.0</f>
+				<f>admin</f>
+				<f>2019-01-29 21:09:40.0</f>
+			</row>
+			<row>
+				<f>8249c796-766a-4b69-9692-17b5fd0ceed3</f>
+				<f>dictionary.DEFAULT_STATE</f>
+				<f>zh_CN</f>
+				<f>违约状态</f>
+				<f>admin</f>
+				<f>2019-01-29 21:12:35.875</f>
+				<f>admin</f>
+				<f>2019-01-29 21:12:35.875</f>
+			</row>
+			<row>
+				<f>44917270-f360-4b12-8985-6335a6336d36</f>
+				<f>dictionary.DEFAULT_STATE.DEFAULT</f>
+				<f>zh_CN</f>
+				<f>违约</f>
+				<f>admin</f>
+				<f>2019-01-29 21:13:01.157</f>
+				<f>admin</f>
+				<f>2019-01-29 21:13:01.157</f>
+			</row>
+			<row>
+				<f>57523222-02d4-43c3-80f2-9a042a28c765</f>
+				<f>dictionary.DEFAULT_STATE.NO_DEFAULT</f>
+				<f>zh_CN</f>
+				<f>非违约</f>
+				<f>admin</f>
+				<f>2019-01-29 21:13:28.982</f>
+				<f>admin</f>
+				<f>2019-01-29 21:13:28.982</f>
+			</row>
+			<row>
+				<f>c7af9dd5-57ed-4e34-943e-dec354399ef9</f>
+				<f>dictionary.DEFAULT_IDENTIFICATION_METHOD.MAN</f>
+				<f>zh_CN</f>
+				<f>人工认定</f>
+				<f>admin</f>
+				<f>2019-01-29 21:22:49.934</f>
+				<f>admin</f>
+				<f>2019-01-29 21:22:49.934</f>
+			</row>
+			<row>
+				<f>b8ac316f-2c76-4df7-ad07-53d877412bed</f>
+				<f>dictionary.DEFAULT_TERM_OF_VALIDITY</f>
+				<f>zh_CN</f>
+				<f>违约有效期</f>
+				<f>admin</f>
+				<f>2019-01-29 21:32:15.054</f>
+				<f>admin</f>
+				<f>2019-01-29 21:32:15.054</f>
+			</row>
+			<row>
+				<f>2f819cb3-d536-451f-8aa3-a84966a29e96</f>
+				<f>dictionary.DEFAULT_TERM_OF_VALIDITY.15</f>
+				<f>zh_CN</f>
+				<f>违约认定有效期</f>
+				<f>admin</f>
+				<f>2019-01-29 21:32:51.579</f>
+				<f>admin</f>
+				<f>2019-01-29 21:32:51.579</f>
+			</row>
+			<row>
+				<f>77c96cb1-f70e-4b3b-81c4-93e4289d314f</f>
+				<f>dictionary.DEFAULT_COGNIZANCE_LAUNCHING_MODE</f>
+				<f>zh_CN</f>
+				<f>违约认定发起方式</f>
+				<f>admin</f>
+				<f>2019-01-29 21:34:51.917</f>
+				<f>admin</f>
+				<f>2019-01-29 21:34:51.917</f>
+			</row>
+			<row>
+				<f>364fddef-8384-43ea-9dbc-d76a36ee50ff</f>
+				<f>dictionary.DEFAULT_COGNIZANCE_LAUNCHING_MODE.MAN</f>
+				<f>zh_CN</f>
+				<f>人工发起</f>
+				<f>admin</f>
+				<f>2019-01-29 21:35:11.006</f>
+				<f>admin</f>
+				<f>2019-01-29 21:35:11.006</f>
+			</row>
+			<row>
+				<f>8a9733f4-6ac7-41af-b312-acdbbedd50da</f>
+				<f>dictionary.DEFAULT_REBORN_PROCESS_STATE</f>
+				<f>zh_CN</f>
+				<f>重生流程状态</f>
+				<f>admin</f>
+				<f>2019-01-29 21:42:58.481</f>
+				<f>admin</f>
+				<f>2019-01-29 21:42:58.481</f>
+			</row>
+			<row>
+				<f>b1485d14-9bce-4d1e-a1c6-95ecf4f68be5</f>
+				<f>dictionary.DEFAULT_REBORN_PROCESS_STATE.COMPLETED_REBORN</f>
+				<f>zh_CN</f>
+				<f>已完成-重生</f>
+				<f>admin</f>
+				<f>2019-04-26 17:44:12.0</f>
+				<f>admin</f>
+				<f>2019-04-26 17:48:28.657</f>
+			</row>
+			<row>
+				<f>de2d29db-7e92-4434-8199-7d6307658507</f>
+				<f>dictionary.DEFAULT_REBORN_PROCESS_STATE.APPROVAL</f>
+				<f>zh_CN</f>
+				<f>审批中</f>
+				<f>admin</f>
+				<f>2019-01-29 21:43:22.251</f>
+				<f>admin</f>
+				<f>2019-01-29 21:43:22.251</f>
+			</row>
+			<row>
+				<f>824f105b-196e-4d57-9352-9244b640e5b8</f>
+				<f>dictionary.DEFAULT_REBORN_PROCESS_STATE.COMPLETED_NOREBORN</f>
+				<f>zh_CN</f>
+				<f>已完成-不重生</f>
+				<f>admin</f>
+				<f>2019-01-29 21:43:46.096</f>
+				<f>admin</f>
+				<f>2019-01-29 21:43:46.096</f>
+			</row>
+			<row>
+				<f>b0ce8c57-3713-4eaf-b048-0772d1003bca</f>
+				<f>dictionary.DEFAULT_REBORN_PROCESS_STATE.COMPLETED_TERMINATION</f>
+				<f>zh_CN</f>
+				<f>已完成-终止</f>
+				<f>admin</f>
+				<f>2019-01-29 21:44:11.792</f>
+				<f>admin</f>
+				<f>2019-01-29 21:44:11.792</f>
+			</row>
+			<row>
+				<f>be7d8ecc-fc51-4fd2-9017-c46c728a3402</f>
+				<f>dictionary.DEFAULT_REBORN_IDENTIFICATION_RESULT</f>
+				<f>zh_CN</f>
+				<f>重生认定结果</f>
+				<f>admin</f>
+				<f>2019-01-29 21:46:27.514</f>
+				<f>admin</f>
+				<f>2019-01-29 21:46:27.514</f>
+			</row>
+			<row>
+				<f>a8404a26-920c-4288-8f24-9064afebd139</f>
+				<f>dictionary.DEFAULT_REBORN_IDENTIFICATION_RESULT.REBORN</f>
+				<f>zh_CN</f>
+				<f>重生</f>
+				<f>admin</f>
+				<f>2019-01-29 21:46:43.778</f>
+				<f>admin</f>
+				<f>2019-01-29 21:46:43.778</f>
+			</row>
+			<row>
+				<f>d31a6d03-dcb3-4f2d-8452-2191478eb412</f>
+				<f>dictionary.DEFAULT_REBORN_IDENTIFICATION_RESULT.NOREBORN</f>
+				<f>zh_CN</f>
+				<f>不重生</f>
+				<f>admin</f>
+				<f>2019-01-29 21:47:02.832</f>
+				<f>admin</f>
+				<f>2019-01-29 21:47:02.832</f>
+			</row>
+			<row>
+				<f>63920104-7edb-45ba-b2ed-57db2dad036e</f>
+				<f>dictionary.WORK_FLOW.CONTRACT_CUSTOMER</f>
+				<f>zh_CN</f>
+				<f>违约发起流程</f>
+				<f>admin</f>
+				<f>2019-04-04 15:17:23.272</f>
+				<f>admin</f>
+				<f>2019-04-04 15:17:23.272</f>
+			</row>
+			<row>
+				<f>eee180e3-e4f8-485a-b0c5-988d6946252a</f>
+				<f>dictionary.WORK_FLOW.CONTRACT_CUSTOMER_REBIRTH</f>
+				<f>zh_CN</f>
+				<f>违约客户重生发起流程</f>
+				<f>admin</f>
+				<f>2019-04-15 10:36:38.118</f>
+				<f>admin</f>
+				<f>2019-04-15 10:36:38.118</f>
+			</row>
+			<row>
+				<f>c8f49b20-1dae-4cc1-b3e7-8ae3b2147718</f>
+				<f>dictionary.DEBTRATING_TABLE_TYPE</f>
+				<f>zh_CN</f>
+				<f>表内/表外</f>
+				<f>admin</f>
+				<f>2019-01-30 18:00:25.009</f>
+				<f>admin</f>
+				<f>2019-01-30 18:00:25.009</f>
+			</row>
+			<row>
+				<f>1b18f60f-501b-4050-bee4-a189ada18a6d</f>
+				<f>dictionary.DEBTRATING_TABLE_TYPE.IN_TABLE</f>
+				<f>zh_CN</f>
+				<f>表内</f>
+				<f>admin</f>
+				<f>2019-01-30 18:00:42.219</f>
+				<f>admin</f>
+				<f>2019-01-30 18:00:42.219</f>
+			</row>
+			<row>
+				<f>c65138c6-78c3-4364-a792-811bdaccbcf8</f>
+				<f>dictionary.DEBTRATING_TABLE_TYPE.OFF_BALANCE_SHEET</f>
+				<f>zh_CN</f>
+				<f>表外</f>
+				<f>admin</f>
+				<f>2019-01-30 18:00:54.0</f>
+				<f>admin</f>
+				<f>2019-01-30 18:03:31.233</f>
+			</row>
+			<row>
+				<f>806b52ba-8ba0-469e-a682-ce9971897c39</f>
+				<f>dictionary.DEBTRATING_TABLE_TYPE.SYNDICATED_LOAN</f>
+				<f>zh_CN</f>
+				<f>银团贷款</f>
+				<f>admin</f>
+				<f>2019-01-30 18:01:42.0</f>
+				<f>admin</f>
+				<f>2019-01-30 18:03:39.811</f>
+			</row>
+			<row>
+				<f>10694dcc-b87a-449d-9589-53cd80b44f25</f>
+				<f>dictionary.DEBTRATING_TABLE_TYPE.OTHER_BUSINESSES</f>
+				<f>zh_CN</f>
+				<f>其他业务</f>
+				<f>admin</f>
+				<f>2019-01-30 18:01:58.0</f>
+				<f>admin</f>
+				<f>2019-01-30 18:04:52.598</f>
+			</row>
+			<row>
+				<f>3c4d8a5a-564d-4d49-a4bf-904c821d6c69</f>
+				<f>dictionary.DEBTRATING_COMMITMENT_REVOCABLE</f>
+				<f>zh_CN</f>
+				<f>贷款承诺是否可撤销</f>
+				<f>admin</f>
+				<f>2019-01-30 18:18:47.591</f>
+				<f>admin</f>
+				<f>2019-01-30 18:18:47.591</f>
+			</row>
+			<row>
+				<f>3a35fe45-b955-4962-ae5e-67582d7fb06f</f>
+				<f>dictionary.DEBTRATING_COMMITMENT_REVOCABLE.REVOCABLE </f>
+				<f>zh_CN</f>
+				<f>可随时无条件撤销</f>
+				<f>admin</f>
+				<f>2019-01-30 18:19:16.0</f>
+				<f>admin</f>
+				<f>2019-01-30 18:20:35.654</f>
+			</row>
+			<row>
+				<f>a2a5836a-f87f-4d48-8443-745e3ea746fa</f>
+				<f>dictionary.DEBTRATING_COMMITMENT_REVOCABLE.IRREVOCABLE</f>
+				<f>zh_CN</f>
+				<f>不可撤销</f>
+				<f>admin</f>
+				<f>2019-01-30 18:20:00.511</f>
+				<f>admin</f>
+				<f>2019-01-30 18:20:00.511</f>
+			</row>
+			<row>
+				<f>f122c18a-eb25-499b-8c2a-0d6e36c39d83</f>
+				<f>dictionary.DEBTRATING_CREDIT_TYPE.MORE_YEAR</f>
+				<f>zh_CN</f>
+				<f>一年以上的跟单信用证</f>
+				<f>admin</f>
+				<f>2019-01-30 18:27:14.0</f>
+				<f>admin</f>
+				<f>2019-01-30 18:28:03.953</f>
+			</row>
+			<row>
+				<f>76ea2a27-7f12-45e2-8b05-bb972edd2f91</f>
+				<f>dictionary.DEBTRATING_CREDIT_TYPE</f>
+				<f>zh_CN</f>
+				<f>信用证类型</f>
+				<f>admin</f>
+				<f>2019-01-30 18:28:20.735</f>
+				<f>admin</f>
+				<f>2019-01-30 18:28:20.735</f>
+			</row>
+			<row>
+				<f>93bd6e16-77b4-4747-a6d6-be62f538da54</f>
+				<f>dictionary.DEBTRATING_CREDIT_TYPE.OTHER</f>
+				<f>zh_CN</f>
+				<f>其他信用证类型</f>
+				<f>admin</f>
+				<f>2019-01-30 18:28:42.098</f>
+				<f>admin</f>
+				<f>2019-01-30 18:28:42.098</f>
+			</row>
+			<row>
+				<f>34a0aa6c-e674-4b4f-a78b-3d84586ae568</f>
+				<f>dictionary.DEBTRATING_LGD_INTERVAL_TYPE.LEFT_AND_RIGHT_OPEN</f>
+				<f>zh_CN</f>
+				<f>左闭右开</f>
+				<f>admin</f>
+				<f>2019-01-31 16:30:31.078</f>
+				<f>admin</f>
+				<f>2019-01-31 16:30:31.078</f>
+			</row>
+			<row>
+				<f>f45120cd-f146-459c-801e-2b90fa746ec3</f>
+				<f>dictionary.DEBTRATING_LGD_INTERVAL_TYPE.LEFT_OPEN_AND_RIGHT_CLOSED
+				</f>
+				<f>zh_CN</f>
+				<f>左开右闭</f>
+				<f>admin</f>
+				<f>2019-01-31 16:30:31.078</f>
+				<f>admin</f>
+				<f>2019-01-31 16:30:31.078</f>
+			</row>
+			<row>
+				<f>6633ff52-ddf4-4bdb-b795-f9010b56848c</f>
+				<f>dictionary.DEBTRATING_LGD_INTERVAL_TYPE</f>
+				<f>zh_CN</f>
+				<f>LGD区间类型</f>
+				<f>admin</f>
+				<f>2019-01-31 16:30:49.359</f>
+				<f>admin</f>
+				<f>2019-01-31 16:30:49.359</f>
+			</row>
+			<row>
+				<f>ed2ee703-9bd1-43b9-9c04-35000281ec04</f>
+				<f>dictionary.PRICING_INFO_BEEL</f>
+				<f>zh_CN</f>
+				<f>定价信息</f>
+				<f>admin</f>
+				<f>2019-02-12 16:32:11.396</f>
+				<f>admin</f>
+				<f>2019-02-12 16:32:11.396</f>
+			</row>
+			<row>
+				<f>8fe2b2ec-599d-4e92-88b0-1a82a73a5b2f</f>
+				<f>dictionary.PRICING_INFO_BEEL.0</f>
+				<f>zh_CN</f>
+				<f>BEEL</f>
+				<f>admin</f>
+				<f>2019-02-12 16:32:21.571</f>
+				<f>admin</f>
+				<f>2019-02-12 16:32:21.571</f>
+			</row>
+			<row>
+				<f>4d688c9d-3908-493b-ba40-7f1fca0fcdc9</f>
+				<f>dictionary.PRICING_INFO_RAROC</f>
+				<f>zh_CN</f>
+				<f>定价信息</f>
+				<f>admin</f>
+				<f>2019-02-12 16:29:21.486</f>
+				<f>admin</f>
+				<f>2019-02-12 16:29:21.486</f>
+			</row>
+			<row>
+				<f>89b6df58-f91d-4490-b92c-ddb5ae7c0e56</f>
+				<f>dictionary.PRICING_INFO_RAROC.8</f>
+				<f>zh_CN</f>
+				<f>RAROC(目标)</f>
+				<f>admin</f>
+				<f>2019-02-12 16:29:33.891</f>
+				<f>admin</f>
+				<f>2019-02-12 16:29:33.891</f>
+			</row>
+			<row>
+				<f>82e289dd-4a5a-40a8-b42d-310dac2cea10</f>
+				<f>dictionary.PRICING_INFO_RAROC_TARGET_RATE</f>
+				<f>zh_CN</f>
+				<f>定价信息</f>
+				<f>admin</f>
+				<f>2019-02-12 16:31:04.841</f>
+				<f>admin</f>
+				<f>2019-02-12 16:31:04.841</f>
+			</row>
+			<row>
+				<f>e27d7a73-87b3-4950-9dfc-08a6514bad29</f>
+				<f>dictionary.PRICING_INFO_RAROC_TARGET_RATE.0</f>
+				<f>zh_CN</f>
+				<f>目标收益率</f>
+				<f>admin</f>
+				<f>2019-02-12 16:31:16.237</f>
+				<f>admin</f>
+				<f>2019-02-12 16:31:16.237</f>
+			</row>
+			<row>
+				<f>d53ec8e7-6bb0-40c6-91a7-04adea3f4196</f>
+				<f>dictionary.PRICING_INFO_VALUE_ADDED_TAX</f>
+				<f>zh_CN</f>
+				<f>定价信息</f>
+				<f>admin</f>
+				<f>2019-02-12 16:27:52.916</f>
+				<f>admin</f>
+				<f>2019-02-12 16:27:52.916</f>
+			</row>
+			<row>
+				<f>1a03e5c5-e1b0-4010-8f14-d705c6b382f7</f>
+				<f>dictionary.PRICING_INFO_VALUE_ADDED_TAX.5.7</f>
+				<f>zh_CN</f>
+				<f>增值税率</f>
+				<f>admin</f>
+				<f>2019-02-12 16:28:22.368</f>
+				<f>admin</f>
+				<f>2019-02-12 16:28:22.368</f>
+			</row>
+			<row>
+				<f>b2e73809-f851-43f7-b1f8-8953e9d1e253</f>
+				<f>dictionary.RULE_FREQUENCY</f>
+				<f>zh_CN</f>
+				<f>批量规则跑批频率</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>ZHANGTAO487</f>
+				<f />
+			</row>
+			<row>
+				<f>33fedfc0-aeb9-49d8-aba0-bb53bc2b5088</f>
+				<f>dictionary.RULE_FREQUENCY.1</f>
+				<f>zh_CN</f>
+				<f>每天一次</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>ZHANGTAO487</f>
+				<f />
+			</row>
+			<row>
+				<f>e0d78565-a965-4c50-aa74-1e42b17d6224</f>
+				<f>dictionary.RULE_FREQUENCY.3</f>
+				<f>zh_CN</f>
+				<f>每天三次</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>ZHANGTAO487</f>
+				<f />
+			</row>
+			<row>
+				<f>65fd47bb-5ea4-4227-b0a1-c4d4d9838cf8</f>
+				<f>dictionary.RULE_FREQUENCY.7</f>
+				<f>zh_CN</f>
+				<f>每7天一次</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>ZHANGTAO487</f>
+				<f />
+			</row>
+			<row>
+				<f>53a89520-9519-432c-8908-8874b227a30d</f>
+				<f>dictionary.RULE_FREQUENCY.8</f>
+				<f>zh_CN</f>
+				<f>每季度一次</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>ZHANGTAO487</f>
+				<f />
+			</row>
+			<row>
+				<f>3a66196a-a736-437f-837c-15d0e476f378</f>
+				<f>dictionary.RULE_RELE_TYPE.DB-BZ</f>
+				<f>zh_CN</f>
+				<f>保证人</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>UMRUNNER</f>
+				<f />
+			</row>
+			<row>
+				<f>af38538f-d9d8-49ba-8204-9afcafc32410</f>
+				<f>dictionary.RULE_RELE_TYPE.PG-ZT</f>
+				<f>zh_CN</f>
+				<f>评估主体</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>UMRUNNER</f>
+				<f />
+			</row>
+			<row>
+				<f>6738777e-2635-4480-9125-9a3f4a2efa8b</f>
+				<f>dictionary.RULE_RELE_TYPE</f>
+				<f>zh_CN</f>
+				<f>规则适用关联人类型</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>ZHANGTAO487</f>
+				<f />
+			</row>
+			<row>
+				<f>24d98e23-9242-428d-8597-7aa6c882563f</f>
+				<f>dictionary.RULE_WARN_LEVEL</f>
+				<f>zh_CN</f>
+				<f>预警等级</f>
+				<f>admin</f>
+				<f />
+				<f>admin</f>
+				<f />
+			</row>
+			<row>
+				<f>d3124330-eaca-459b-a697-02ec6edf93f7</f>
+				<f>dictionary.RULE_WARN_LEVEL.high</f>
+				<f>zh_CN</f>
+				<f>高</f>
+				<f>admin</f>
+				<f />
+				<f>admin</f>
+				<f />
+			</row>
+			<row>
+				<f>f47dda9f-9b4e-4359-b1b9-ce3e7a822bc6</f>
+				<f>dictionary.RULE_WARN_LEVEL.med</f>
+				<f>zh_CN</f>
+				<f>中</f>
+				<f>admin</f>
+				<f />
+				<f>admin</f>
+				<f />
+			</row>
+			<row>
+				<f>e9c9af12-4c20-4229-8437-46073661d6f4</f>
+				<f>dictionary.WARN_CATE</f>
+				<f>zh_CN</f>
+				<f>预警大类</f>
+				<f>admin</f>
+				<f>2019-09-17 14:06:28.837</f>
+				<f>admin</f>
+				<f>2019-09-17 14:06:28.837</f>
+			</row>
+			<row>
+				<f>d49d8df2-69ee-46ed-82d5-409232dbd69e</f>
+				<f>dictionary.WARN_CATE.R001</f>
+				<f>zh_CN</f>
+				<f>工商信息</f>
+				<f>admin</f>
+				<f>2019-09-17 14:06:54.098</f>
+				<f>admin</f>
+				<f>2019-09-17 14:06:54.098</f>
+			</row>
+			<row>
+				<f>40c65e89-fcef-44d1-963c-e3600234a12b</f>
+				<f>dictionary.WARN_CATE.R002</f>
+				<f>zh_CN</f>
+				<f>舆情预警</f>
+				<f>admin</f>
+				<f>2019-09-17 14:07:04.684</f>
+				<f>admin</f>
+				<f>2019-09-17 14:07:04.684</f>
+			</row>
+			<row>
+				<f>ae6c4d2e-8789-4bb5-9f0f-4ef1a1b5ede8</f>
+				<f>dictionary.WARN_CATE.R003</f>
+				<f>zh_CN</f>
+				<f>诉讼处罚</f>
+				<f>admin</f>
+				<f>2019-09-17 14:07:16.398</f>
+				<f>admin</f>
+				<f>2019-09-17 14:07:16.398</f>
+			</row>
+			<row>
+				<f>cdbd5e2f-936f-40de-862f-97eb6961efa6</f>
+				<f>dictionary.R001</f>
+				<f>zh_CN</f>
+				<f>工商信息预警小类</f>
+				<f>admin</f>
+				<f>2019-09-17 14:09:50.948</f>
+				<f>admin</f>
+				<f>2019-09-17 14:09:50.948</f>
+			</row>
+			<row>
+				<f>9fd29f8f-5768-4f54-85fc-e404ae705c73</f>
+				<f>dictionary.R001.R001001</f>
+				<f>zh_CN</f>
+				<f>股东及投资</f>
+				<f>admin</f>
+				<f>2019-09-17 14:10:08.867</f>
+				<f>admin</f>
+				<f>2019-09-17 14:10:08.867</f>
+			</row>
+			<row>
+				<f>d6f34b18-7076-4c78-bd49-6687570e5187</f>
+				<f>dictionary.R001.R001002</f>
+				<f>zh_CN</f>
+				<f>经营异常</f>
+				<f>admin</f>
+				<f>2019-09-17 14:10:17.831</f>
+				<f>admin</f>
+				<f>2019-09-17 14:10:17.831</f>
+			</row>
+			<row>
+				<f>43fc6c8e-ae0c-45a1-a482-ee945c93959a</f>
+				<f>dictionary.R001.R001003</f>
+				<f>zh_CN</f>
+				<f>股权冻结</f>
+				<f>admin</f>
+				<f>2019-09-17 14:10:28.978</f>
+				<f>admin</f>
+				<f>2019-09-17 14:10:28.978</f>
+			</row>
+			<row>
+				<f>e2d6cfa4-9157-4f8f-9d61-cf447a82499f</f>
+				<f>dictionary.R001.R001004</f>
+				<f>zh_CN</f>
+				<f>工商变更</f>
+				<f>admin</f>
+				<f>2019-09-17 14:10:38.479</f>
+				<f>admin</f>
+				<f>2019-09-17 14:10:38.479</f>
+			</row>
+			<row>
+				<f>753e1292-3282-4884-836d-4bc1eb603b1e</f>
+				<f>dictionary.FB_INTERFACE.ZQGG</f>
+				<f>zh_CN</f>
+				<f>zqgg</f>
+				<f>admin</f>
+				<f>2019-09-23 11:39:28.789</f>
+				<f>admin</f>
+				<f>2019-09-23 11:39:28.789</f>
+			</row>
+			<row>
+				<f>4b53ecfa-912b-4389-8384-6847bb9d9924</f>
+				<f>dictionary.FB_INTERFACE.XXPL</f>
+				<f>zh_CN</f>
+				<f>xxpl</f>
+				<f>admin</f>
+				<f>2019-09-23 11:39:40.579</f>
+				<f>admin</f>
+				<f>2019-09-23 11:39:40.579</f>
+			</row>
+			<row>
+				<f>13cdb498-3596-4a4d-bdad-8900ddced250</f>
+				<f>dictionary.FB_INTERFACE.PJJL</f>
+				<f>zh_CN</f>
+				<f>pjjl</f>
+				<f>admin</f>
+				<f>2019-09-23 11:39:50.119</f>
+				<f>admin</f>
+				<f>2019-09-23 11:39:50.119</f>
+			</row>
+			<row>
+				<f>93541bab-c74f-4998-a3d9-a7d2a5232bdb</f>
+				<f>dictionary.FB_INTERFACE.SSGG</f>
+				<f>zh_CN</f>
+				<f>ssgg</f>
+				<f>admin</f>
+				<f>2019-09-18 13:09:28.332</f>
+				<f>admin</f>
+				<f>2019-09-18 13:09:28.332</f>
+			</row>
+			<row>
+				<f>3a576b2c-d2e0-404d-b342-16c2e7c9c2da</f>
+				<f>dictionary.FB_INTERFACE.SSWF</f>
+				<f>zh_CN</f>
+				<f>sswf</f>
+				<f>admin</f>
+				<f>2019-09-18 13:09:40.504</f>
+				<f>admin</f>
+				<f>2019-09-18 13:09:40.504</f>
+			</row>
+			<row>
+				<f>33a20f5d-55fc-42c5-9c77-ee60af18d6c0</f>
+				<f>dictionary.FB_INTERFACE.XZCF2</f>
+				<f>zh_CN</f>
+				<f>xzcf2</f>
+				<f>admin</f>
+				<f>2019-09-18 13:09:53.468</f>
+				<f>admin</f>
+				<f>2019-09-18 13:09:53.468</f>
+			</row>
+			<row>
+				<f>99678250-e4fb-4b5c-99f3-bf6d218ac2dc</f>
+				<f>dictionary.FB_INTERFACE.INVESTOR</f>
+				<f>zh_CN</f>
+				<f>investor</f>
+				<f>admin</f>
+				<f>2019-09-18 12:02:42.299</f>
+				<f>admin</f>
+				<f>2019-09-18 12:02:42.299</f>
+			</row>
+			<row>
+				<f>0afe609f-35f4-41a3-8497-a8425835d544</f>
+				<f>dictionary.FB_INTERFACE.JYYC</f>
+				<f>zh_CN</f>
+				<f>jyyc</f>
+				<f>admin</f>
+				<f>2019-09-18 12:02:54.527</f>
+				<f>admin</f>
+				<f>2019-09-18 12:02:54.527</f>
+			</row>
+			<row>
+				<f>2c1c4be1-9e81-4659-ba5b-f18cfd24426c</f>
+				<f>dictionary.FB_INTERFACE.CPWS</f>
+				<f>zh_CN</f>
+				<f>cpws</f>
+				<f>admin</f>
+				<f>2019-09-18 12:03:03.45</f>
+				<f>admin</f>
+				<f>2019-09-18 12:03:03.45</f>
+			</row>
+			<row>
+				<f>609c8c1b-3143-4721-92a5-3ca66e703722</f>
+				<f>dictionary.FB_INTERFACE.KTGG</f>
+				<f>zh_CN</f>
+				<f>ktgg</f>
+				<f>admin</f>
+				<f>2019-09-18 12:03:13.0</f>
+				<f>admin</f>
+				<f>2019-09-18 13:09:04.076</f>
+			</row>
+			<row>
+				<f>529d6ad4-e3b8-4255-95f7-7d1fc1d7b7f2</f>
+				<f>dictionary.FB_INTERFACE.ZHIXING</f>
+				<f>zh_CN</f>
+				<f>zhixing</f>
+				<f>admin</f>
+				<f>2019-09-18 12:03:27.928</f>
+				<f>admin</f>
+				<f>2019-09-18 12:03:27.928</f>
+			</row>
+			<row>
+				<f>f43c7f4d-61bd-447a-b883-7f7f1a98817f</f>
+				<f>dictionary.FB_INTERFACE.SHIXIN</f>
+				<f>zh_CN</f>
+				<f>shixin</f>
+				<f>admin</f>
+				<f>2019-09-18 12:03:38.293</f>
+				<f>admin</f>
+				<f>2019-09-18 12:03:38.293</f>
+			</row>
+			<row>
+				<f>1de0c771-b1f1-4a98-9e5f-e2e6840128e1</f>
+				<f>dictionary.FB_INTERFACE.SPLC</f>
+				<f>zh_CN</f>
+				<f>splc</f>
+				<f>admin</f>
+				<f>2019-09-18 12:03:47.678</f>
+				<f>admin</f>
+				<f>2019-09-18 12:03:47.678</f>
+			</row>
+			<row>
+				<f>6c0976fe-4c93-4a41-89e6-6ab3a663806a</f>
+				<f>dictionary.FB_INTERFACE.EVENT</f>
+				<f>zh_CN</f>
+				<f>event</f>
+				<f>admin</f>
+				<f>2019-09-18 14:11:54.098</f>
+				<f>admin</f>
+				<f>2019-09-18 14:11:54.098</f>
+			</row>
+			<row>
+				<f>d3613364-8674-40a9-841e-9e3ee61d3402</f>
+				<f>dictionary.FB_INTERFACE.EVENT_NEWS_URL</f>
+				<f>zh_CN</f>
+				<f>https://data.riskstorm.com/v1/news</f>
+				<f>admin</f>
+				<f>2019-09-18 14:13:42.0</f>
+				<f>admin</f>
+				<f>2019-10-09 12:10:50.353</f>
+			</row>
+			<row>
+				<f>3d5d55f2-ff3d-4fc6-97b1-4ce8bba36ecc</f>
+				<f>dictionary.RULE_CATE_SYS</f>
+				<f>zh_CN</f>
+				<f>系统推送规则大类开关</f>
+				<f>admin</f>
+				<f>2019-09-19 20:16:59.0</f>
+				<f>admin</f>
+				<f>2019-09-19 20:19:31.686</f>
+			</row>
+			<row>
+				<f>af72b46a-080c-479c-88ec-4832a01aeb58</f>
+				<f>dictionary.RULE_CATE_SYS.R001</f>
+				<f>zh_CN</f>
+				<f>0</f>
+				<f>admin</f>
+				<f>2019-09-19 20:17:35.0</f>
+				<f>admin</f>
+				<f>2019-09-19 20:20:16.193</f>
+			</row>
+			<row>
+				<f>ba9d00b1-7c79-4348-b3aa-27e032046196</f>
+				<f>dictionary.RULE_CATE_SYS.R003</f>
+				<f>zh_CN</f>
+				<f>0</f>
+				<f>admin</f>
+				<f>2019-09-19 20:18:20.0</f>
+				<f>admin</f>
+				<f>2019-09-19 20:18:42.437</f>
+			</row>
+			<row>
+				<f>6612c35c-a4e7-4b83-be41-d86d45621fd3</f>
+				<f>dictionary.RULE_CATE_SYS.R002</f>
+				<f>zh_CN</f>
+				<f>0</f>
+				<f>admin</f>
+				<f>2019-09-19 20:19:02.021</f>
+				<f>admin</f>
+				<f>2019-09-19 20:19:02.021</f>
+			</row>
+			<row>
+				<f>ff6513f3-fd0c-4693-844d-2ff43596ebe4</f>
+				<f>dictionary.FB_INTERFACE.EVENT_INTERVAL</f>
+				<f>zh_CN</f>
+				<f>1</f>
+				<f>admin</f>
+				<f>2019-10-09 12:11:13.0</f>
+				<f>admin</f>
+				<f>2019-10-09 12:13:48.637</f>
+			</row>
+			<row>
+				<f>e3499765-aee1-44c2-8ad0-898851f5b00e</f>
+				<f>dictionary.FB_INTERFACE.FOLLOWING_FEED</f>
+				<f>zh_CN</f>
+				<f>https://data.riskstorm.com/v1/following/feed</f>
+				<f>admin</f>
+				<f>2019-10-09 15:37:25.0</f>
+				<f>admin</f>
+				<f>2019-10-09 15:37:38.866</f>
+			</row>
+
+			<row>
+				<f>08136e22-1b68-485d-9f4b-cfbe3df67920</f>
+				<f>dictionary.PushState.010</f>
+				<f>zh_CN</f>
+				<f>推送成功</f>
+				<f>admin</f>
+				<f>2019-10-09 10:59:03.0</f>
+				<f>admin</f>
+				<f>2019-10-09 11:00:26.671</f>
+			</row>
+			<row>
+				<f>1fde973e-4342-45d3-be19-691512157a25</f>
+				<f>dictionary.PushState.020</f>
+				<f>zh_CN</f>
+				<f>推送失败</f>
+				<f>admin</f>
+				<f>2019-10-09 10:59:20.0</f>
+				<f>admin</f>
+				<f>2019-10-09 11:00:34.509</f>
+			</row>
+			<row>
+				<f>a1979c42-c70e-4ba8-aa87-6260ab80f963</f>
+				<f>dictionary.PushState</f>
+				<f>zh_CN</f>
+				<f>推送状态</f>
+				<f>admin</f>
+				<f>2019-10-09 11:01:21.732</f>
+				<f>admin</f>
+				<f>2019-10-09 11:01:21.732</f>
+			</row>
+			<row>
+				<f>bf5f9cef-204c-417a-bb03-b61a8082f5b7</f>
+				<f>dictionary.PushState.030</f>
+				<f>zh_CN</f>
+				<f>未推送</f>
+				<f>admin</f>
+				<f>2019-10-09 11:19:10.0</f>
+				<f>admin</f>
+				<f>2019-10-09 11:27:32.068</f>
+			</row>
+
+
+		</resultset>
+	</table>
+</export>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="T_IRR_UPLOAD_RESULT" author="fc">
+        <createTable tableName="T_IRR_UPLOAD_RESULT" remarks="上传结果表">
+			<column name="ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键ID">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="SPLIT_ID"       		type="varchar(36)"      	 	remarks="拆分指标ID"></column>
+			<column name="SPLIT_NAME" 			type="varchar(300)" 			remarks="拆分指标名称"></column>
+			<column name="SPLIT_CODE"      		type="VARCHAR(50)"      	 	remarks="拆分指标编码"></column>
+			<column name="COLL_WAY"    			type="VARCHAR(15)"      		remarks="采集方式"></column>
+			<column name="COLL_ORG_ID"    		type="VARCHAR(36)"      		remarks="采集机构/部门ID"></column>
+			<column name="COLL_ORG_NAME"    	type="VARCHAR(300)"      		remarks="采集机构/部门名称"></column>
+			<column name="IS_HAND_CHANGE"    	type="VARCHAR(10)"      		remarks="是否人工改动"></column>
+			<column name="IS_FILL_REASON"    	type="VARCHAR(10)"      		remarks="是否填写原因"></column>
+			<column name="RESULT_TYPE_NAME"    	type="VARCHAR(60)"      		remarks="结果类型名称"></column>
+			<column name="SPLIT_RESULT_Q1"    	type="VARCHAR(300)"      		remarks="Q1指标结果"></column>
+			<column name="SPLIT_SCORE_Q1"    	type="VARCHAR(10)"      		remarks="Q1指标得分"></column>
+			<column name="SPLIT_RESULT_Q2"    	type="VARCHAR(300)"      		remarks="Q2指标结果"></column>
+			<column name="SPLIT_SCORE_Q2"    	type="VARCHAR(10)"      		remarks="Q2指标得分"></column>
+			<column name="DATA_VALI"    		type="NUMBER(5,2)"      		remarks="数据验证"></column>
+			<column name="DATA_DESC"    		type="VARCHAR(300)"      		remarks="数据说明"></column>
+			<column name="TASK_BATCH"     		type="varchar(10)"      	 	remarks="任务期次"></column>
+			<column name="TASK_ID" 				type="varchar(36)" 				remarks="任务ID"></column>
+			<column name="DATA_BODY"      		type="varchar(50)"      		remarks="主体编码"></column>
+			<column name="COLL_USER_NAME"       type="varchar(255)"  			remarks="采集人名称"></column>
+			<column name="FD_CREATOR"           type="varchar(255)"  			remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"       type="DATETIME"                 remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"     type="varchar(50)"  			remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"   type="DATETIME"                 remarks="最后修改日期"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

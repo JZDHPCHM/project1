@@ -1,0 +1,2271 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+<style>
+	.formMargin{
+		margin : 0 0 0 5px
+	}
+	.form-group{
+		margin-top : 3px 
+	}
+</style>
+</head>
+<body style='background-color:white'>
+	<div class="wrapper">
+		<div class="row">
+     		<div class="col-lg-12">
+                 <div class="ibox float-e-margins">
+                     <div class="ibox-content">
+                     	<div class="row">
+                     		<div class="col-lg-3">
+                     			<div id="projTypeTree"></div>
+	                     	</div>
+	                     	<div class="col-lg-9">
+	                     		<div class="row">
+	                     			<form role="form" class="form-inline" id="searchForm">
+			                             <div class="form-group">
+			                                 <label for="searchIndexCode" class="control-label">指标编码</label>
+			                                 <input type="text" placeholder="模糊查询" id="searchIndexCode" name="indexCode" class="form-control">
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label for="searchIndexName" class="control-label">指标名称</label>
+			                                 <input type="text" placeholder="模糊查询" id="searchIndexName" name="indexName" class="form-control">
+			                             </div>
+			                             <div class="form-group formMargin hidden">
+			                                 <label class="control-label" for="searchCollectionWay">采集方式</label>
+		                                	 <select class="form-control" name="collectionWay" id="searchCollectionWay">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('collWay',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label class="control-label" for="indexLevel">指标层级</label>
+		                                	 <select class="form-control" name="indexLevel" id="searchIndexLevel">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('indexLevel',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label class="control-label" for="indexStatus">指标状态</label>
+		                                	 <select class="form-control" name="indexStatus" id="searchIndexStatus">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('indexStatus',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                         </form>
+			                         <div class="row" style="margin:10px 0 0 0 ">
+			                         	<div class="col-lg-offset-5">
+			                         		<button class="btn btn-primary" id="searchBtn">查询</button>
+			                         		<button class="btn btn-primary" id="searchClear" style="margin-left:30px">重置</button>
+			                         	</div>
+			                         </div>
+	                     		</div>
+	                     		<div class="row">
+	                     			<button class="btn btn-primary" id='addIndexBtn'>新增</button>
+	                     			<button class="btn btn-primary" id='editIndexBtn'>修改</button>
+	                     			<button class="btn btn-primary" id='indexSplitBtn'>分配</button>
+	                     			<button class="btn btn-primary" id='indexImportBtn'>导入</button>
+	                     			<!-- 表格 -->
+		                     		<div class="jqGrid_wrapper">
+					                    <table id="indexTable"></table>
+					                    <div id="indexPage"></div>
+					                </div>
+					                
+					                <!-- 新增修改指标模态框 -->
+									<div class="modal inmodal fade" id="indexInfoModal" tabindex="-1" role="dialog"  aria-hidden="true">
+		                                <div class="modal-dialog modal-lg">
+		                                    <div class="modal-content">
+		                                        <div class="modal-header">
+		                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		                                            <h4 class="modal-title">指标信息</h4>
+		                                            <small class="font-bold">在这里，您可以进行新增指标或者修改指标信息的操作！</small>
+		                                        </div>
+		                                        <div class="modal-body">
+		                                            <form class="form-inline" id="indexInfoFrom">
+		                                            	<div>
+		                                            		<input type='hidden' name="id" id="indexInfoFormIndexId">
+		                                            		<input type="hidden" name="projTypeId" id="indexInfoFormProjTypeId">
+		                                            		<input type="hidden" name="projTypeName" id="indexInfoFormProjTypeName">
+		                                            		<input type="hidden" name="indexEvalForm" id="indexInfoFormIndexEvalForm">
+		                                            		<input type="hidden" name="pfmEvalForm" id="indexInfoFormPfmEvalForm">
+		                                            	</div>
+		                                            	<div class="row">
+							                                <div class="form-group col-lg-4">
+							                                    <label for="indexCode" class="control-label">指标编码</label>
+							                                    <input type="text" placeholder="请输入指标编码" id="indexCode" name="indexCode" class="form-control">
+							                                </div>
+							                                <div class="form-group col-lg-4">
+							                                    <label for="indexUnit" class="control-label">指标单位</label>
+							                                    <select class="form-control" name="indexUnit" id="indexUnit">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('indexUnit',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+							                                </div>
+							                                <div class="form-group col-lg-3">
+							                                    <label for="isScoreIndex" class="control-label">是否得分</label>
+							                                    <select class="form-control" name="isScoreIndex" id="isScoreIndex">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('isUse',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+							                                </div>
+						                                </div>
+						                                <div class="row">
+						                                	<div class="form-group col-lg-4">
+							                                    <label for="indexName" class="control-label">指标名称</label>
+							                                    <input type="text" placeholder="请输入指标名称" id="indexName" name="indexName" class="form-control">
+							                                </div>
+							                                <div class="form-group col-lg-4">
+							                                    <label for="indexResultType" class="control-label">结果类型</label>
+							                                	<select class="form-control" name="indexResultType" id="indexResultType">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('indexResultType',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+							                                </div>
+							                                <div class="form-group col-lg-4" style="display: none;">
+							                                    <label for="collectionWay" class="control-label">采集方式</label>
+							                                	<select class="form-control" name="collectionWay" id="collectionWay">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('collWay',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+						                                	</div>
+						                                	<div class="form-group col-lg-4">
+							                                    <label for="isPfm" class="control-label">绩效指标</label>
+							                                    <select class="form-control" name="isPfm" id="isPfm">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('isUse',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+							                                </div>
+						                                </div>
+						                                <div class="row">
+						                                	<div class="form-group col-lg-4">
+							                                    <label for="decimalPlace" class="control-label">小数位数</label>
+							                                    <input type="number" placeholder="请输入小数位数" id="decimalPlace" name="decimalPlace" class="form-control">
+							                                </div>
+							                                <div class="form-group col-lg-4">
+							                                    <label for="indexStatus" class="control-label">指标状态</label>
+							                                    <select class="form-control" name="indexStatus" id="indexStatus">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('indexStatus',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+							                                </div>
+							                                <div class="form-group col-lg-4">
+							                                    <label for="indexLevel" class="control-label">指标层级</label>
+							                                	<select class="form-control" name="indexLevel" id="indexLevel">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('indexLevel',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+							                                </div>
+							                             </div>
+							                             <div class="row">
+							                                <div class="form-group col-lg-4">
+							                                    <label for="indexLine" class="control-label">指标行次</label>
+							                                    <input type="number" placeholder="请输入指标行次" id="indexLine" step='0.1' name="indexLine" class="form-control">
+							                                </div>
+							                                <div class="form-group col-lg-4">
+							                                    <label for="isXbrl" class="control-label">是否上报</label>
+							                                    <select class="form-control" name="isXbrl" id="isXbrl">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('isUse',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+							                                </div>
+							                                <div class="form-group col-lg-4">
+							                                    <label for="isApplicabie" class="control-label">是否适用</label>
+							                                    <select class="form-control" name="isApplicabie" id="isApplicabie">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('isUse',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+							                                </div>
+						                                </div>
+						                                <div class="row">
+							                                <div class="form-group col-lg-4" style="display:none" id="indexValueDiv">
+							                                    <label for="indexValue" class="control-label">指标分值</label>
+							                                    <input type="number" placeholder="请输入指标分值" id="indexValue" name="indexValue" class="form-control">
+							                                </div>
+						                                	<div class="form-group col-lg-4" style="display:none" id="pfmLevelDiv">
+							                                    <label for="pfmLevel" class="control-label">绩效层级</label>
+							                                	<select class="form-control" name="pfmLevel" id="pfmLevel">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('pfmLevel',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+						                                	</div>
+						                                	<div class="form-group col-lg-4" style="display:none" id="scorTypeDiv">
+							                                    <label for="scorType" class="control-label">评分类型</label>
+							                                	<select class="form-control" name="scorType" id="scorType">
+							                                     	<option value=''>请选择</option>
+									                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('scoreType',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+							                                	</select>
+						                                	</div>
+						                                </div>
+						                                <div class="form-group" style="display:none" id='indexDescDiv'>
+						                                    <label for="indexDesc" class="control-label">指标说明</label>
+						                                    <textarea class="form-control" placeholder="请输入指标说明" rows="3" cols="105" id="indexDesc" name="indexDesc"></textarea>
+						                                </div>
+						                                <div class="form-group" style="display:none" id='evalCritDiv'>
+						                                    <label for="evalCrit" class="control-label">评价标准</label>
+						                                    <textarea class="form-control" placeholder="请输入评价标准" rows="3" cols="105" id="evalCrit" name="evalCrit"></textarea>
+						                                </div>
+						                                <div class="form-group" style="display:none" id='pfmDescDiv'>
+						                                    <label for="pfmDesc" class="control-label">绩效描述</label>
+						                                    <textarea class="form-control" rows="3" placeholder="请输入绩效描述" cols="105" id="pfmDesc" name="pfmDesc"></textarea>
+						                                </div>
+						                                <div class="form-group" id='indexFormulaDiv'>
+						                                    <label for="indexFormula" class="control-label">
+						                                    	<div>指标公式</div>
+						                                    	<div><button type="button" class="btn btn-primary" id="indexFormulaEditBtn" formulaIds='indexFormula,indexFormulaCode,indexInfoFormIndexEvalForm'>编辑</button></div>
+						                                    </label>
+						                                    <textarea style="margin:0 0 0 25px" class="form-control" rows="3" placeholder="编辑公式后会显示" cols="40" id="indexFormula" name="indexFormula" readonly></textarea>
+						                                </div>
+						                                <div class="form-group" style="display:none" id='pfmFormulaDiv'>
+						                                    <label for="pfmFormula" class="control-label">
+						                                    	<div>绩效公式</div>
+						                                    	<div><button type="button" class="btn btn-primary" id="pfmFormulaEditBtn" formulaIds='pfmFormula,pfmFormulaCode,indexInfoFormPfmEvalForm'>编辑</button></div>
+						                                    </label>
+						                                    <textarea style="margin:0 0 0 25px" class="form-control" rows="3" placeholder="编辑公式后会显示" cols="40" id="pfmFormula" name="pfmFormula" readonly></textarea>
+						                                </div>
+						                                <div class="form-group" id='indexFormulaCodeDiv'>
+						                                    <label for="indexFormulaCode" class="control-label">指标公式编码</label>
+						                                    <textarea class="form-control" rows="3" cols="40" placeholder="编辑公式后会显示" id="indexFormulaCode" name="indexFormulaCode" readonly></textarea>
+						                                </div>
+						                                <div class="form-group" style="display:none" id='pfmFormulaCodeDiv'>
+						                                    <label for="pfmFormulaCode" class="control-label">绩效公式编码</label>
+						                                    <textarea class="form-control" rows="3" cols="40" placeholder="编辑公式后会显示" id="pfmFormulaCode" name="pfmFormulaCode" readonly></textarea>
+						                                </div>
+		                                            </form>
+		                                            <form class="form-inline">
+			                                            <div class="form-group" id="optionDescDiv" style='display:none'>
+						                                    <label for="optionDesc" class="control-label">
+						                                    	<div>选项描述</div>
+						                                    	<div><button type="button" class="btn btn-primary" id="editOptionBtn">编辑</button></div>
+						                                    </label>
+						                                    <textarea style="margin:0 0 0 25px" class="form-control" rows="3" placeholder="编辑选项后会显示" cols="100" id="optionDesc" name="optionDesc" readonly></textarea>
+							                            </div>
+						                            </form>
+		                                        </div>
+		                                        <div class="modal-footer">
+		                                            <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+		                                            <button type="button" class="btn btn-primary" id="indexInfoFormSaveBtn">保存</button>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            
+		                            <!-- 编辑公式模态框 -->
+		                            <div class="modal inmodal fade" id="editFormulaModal" tabindex="-1" role="dialog"
+										aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+													</button>
+													<h4 class="modal-title">编辑公式</h4>
+													<small class="font-bold">在这里，您可以对指标的公式进行编辑！</small>
+												</div>
+												<div class="modal-body">
+					                            	<div class="row">
+					                            		<input type="hidden" id="formulaModalNameId">
+					                            		<input type="hidden" id="formulaModalCodeId">
+					                            		<input type="hidden" id="formulaModalEvalId">
+					                            		<input type="hidden" id="formulaIndexIds">
+					                            		<div class="form-group">
+						                                    <label for="formulaModalName" class="control-label">公式名称</label>
+						                                    <textarea class="form-control" rows="3" cols="40" placeholder="编辑公式后会显示" id="formulaModalName" readonly></textarea>
+						                                </div>
+						                                <div class="form-group">
+						                                    <label for="formulaModalCode" class="control-label">公式编码</label>
+						                                    <textarea class="form-control" rows="3" cols="40" placeholder="编辑公式后会显示" id="formulaModalCode" readonly></textarea>
+						                                </div>
+					                            	</div>
+													<div class="row" id="formulaBtnGroup">
+														<div class="row" style="margin:5px 0 0 0">
+							                            	<button type="button" class="btn-sm btn-warning">1</button>
+							                            	<button type="button" class="btn-sm btn-warning">2</button>
+							                            	<button type="button" class="btn-sm btn-warning">3</button>
+							                            	<button type="button" class="btn-sm btn-warning">4</button>
+							                            	<button type="button" class="btn-sm btn-warning">5</button>
+							                            	<button type="button" class="btn-sm btn-warning">6</button>
+							                            	<button type="button" class="btn-sm btn-warning">7</button>
+							                            	<button type="button" class="btn-sm btn-warning">8</button>
+							                            	<button type="button" class="btn-sm btn-warning">9</button>
+							                            	<button type="button" class="btn-sm btn-warning">0</button>
+							                            	<button type="button" class="btn-sm btn-warning">+</button>
+							                            	<button type="button" class="btn-sm btn-warning">-</button>
+							                            	<button type="button" class="btn-sm btn-warning">*</button>
+							                            	<button type="button" class="btn-sm btn-warning">/</button>
+							                            	<button type="button" class="btn-sm btn-warning">(</button>
+							                            	<button type="button" class="btn-sm btn-warning">)</button>
+							                            	<button type="button" class="btn-sm btn-warning">,</button>
+							                            </div>
+							                            <div class="row" style="margin:5px 0 0 0">
+							                            	<button type="button" class="btn-sm btn-warning">&gt;</button>
+							                            	<button type="button" class="btn-sm btn-warning">&lt;</button>
+							                            	<button type="button" class="btn-sm btn-warning">=</button>
+							                            	<button type="button" class="btn-sm btn-warning">IF</button>
+							                            	<button type="button" class="btn-sm btn-warning">空</button>
+							                            	<button type="button" class="btn-sm btn-warning">清除</button>
+							                            </div>
+							                            <div class="row" style="margin:5px 0 0 0">
+							                            </div>
+													</div>
+													<div class="row">
+														<div class="jqGrid_wrapper">
+										                    <table id="formulaTable"></table>
+										                    <div id="formulaPage"></div>
+										                </div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+													<button type="button" class="btn btn-primary" id="editFormulaModalSureBtn">确定</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<!-- 编辑选项模态框 -->
+		                            <div class="modal inmodal fade" id="editOptionModal" tabindex="-1" role="dialog"
+										aria-hidden="true">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+													</button>
+													<h4 class="modal-title">编辑选项</h4>
+													<small class="font-bold">在这里，您可以对指标的选项进行编辑！</small>
+												</div>
+												<div class="modal-body">
+													<div class="row col-lg-offset-1">
+						                            	<input type="hidden" id="optionModalOptionDescId">
+						                            	<form role="form" class="form-inline" id="optionEditForm">
+						                            		<input type="hidden" name="indexCode" id="optionFormIndexCode">
+						                            		<input type="hidden" name="indexName" id="optionFormIndexName">
+						                            		<input type="hidden" name="id" id="optionId">
+						                            		<input type="hidden" name="indexId" id="optionIndexId">
+						                            		<div class="form-group">
+								                                <label for="optionName" class="control-label">选项名称</label>
+								                            	<input type="text"  placeholder="请输入选项名称" id="optionName" name="optionName" class="form-control" style="width:700px">
+								                            </div>
+								                            <div class="row" style="margin-left:0px">
+									                            <div class="form-group">
+									                                <label for="optionSort" class="control-label">选项顺序</label>
+									                            	<input type="number" placeholder="请输入选项顺序 " id="optionSort" name="optionSort" class="form-control">
+									                            </div>
+								                            	<div class="form-group">
+									                                <label for="optionScore" class="control-label">选项得分</label>
+									                            	<input type="number" placeholder="请输入选项得分 " id="optionScore" name="optionScore" class="form-control">
+									                            </div>
+								                            	<div class="form-group">
+									                                <label for="optionPoints" class="control-label">选项扣分标准</label>
+									                            	<input type="number" placeholder="请输入选项扣分标准" id="optionPoints" name="optionPoints" class="form-control">
+									                            </div>
+								                            </div>
+								                            <div class="form-group">
+							                                    <label for="optionRemark" class="control-label">选项备注</label>
+							                                    <textarea class="form-control" rows="3" cols="100" placeholder="请输入选项备注" id="optionRemark" name="optionRemark"></textarea>
+							                                </div>
+						                            	</form>
+					                            	</div>
+					                            	<div class="row col-lg-offset-1" style="margin-top:3px">
+					                            		<button type="button" class="btn btn-primary" id="editOptionModalSaveBtn">保存</button>
+					                            		<button type="button" class="btn btn-primary" id="optionDeleteBtn">删除</button>
+					                            		<button type="button" class="btn btn-primary" id="optionFormReset">重置</button>
+					                            	</div>
+					                            	<div class="row col-lg-offset-1" style="margin-top:3px">
+														<div class="jqGrid_wrapper" style='width:800px;'>
+										                    <table id="optionTable"></table>
+										                    <div id="optionPage"></div>
+										                </div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+												</div>
+											</div>
+										</div>
+									</div>
+		                            
+		                            <!-- 分配指标模态框 -->
+		                            <div class="modal inmodal fade" id="splitIndexModal" tabindex="-1" role="dialog"
+										aria-hidden="true">
+										<div class="modal-dialog modal-lg">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+													</button>
+													<h4 class="modal-title">分配指标</h4>
+													<small class="font-bold">在这里，您可以对指标进行分配操作！</small>
+												</div>
+												<div class="modal-body">
+													<div class="row col-lg-offset-1">
+						                            	<form class="form-inline" id="splitIndexForm">
+						                            		<div>
+							                            		<input type='hidden' name='id' id='splitIndexId'>
+							                            		<input type="hidden" name="sourceIndexId" id="sourceIndexId">
+							                            		<input type="hidden" name="sourceIndexName" id="sourceIndexName">
+							                            		<input type="hidden" name="sourceProjName" id="sourceProjName">
+							                            		<input type="hidden" name="sourceProjId" id="sourceProjId">
+							                            		<input type="hidden" name="splitEvalForm" id="splitEvalForm">
+							                            		<input type="hidden" name="resultType" id="resultType">
+						                            		</div>
+						                            		<div class='row'>
+							                            		<div class="form-group col-lg-4">
+									                                <label for="splitCode" class="control-label">指标编码</label>
+									                            	<input type="text" id="splitCode" name="splitCode" class="form-control" readOnly placeholder="选择完后自动生成">
+									                            </div>
+							                            		<div class="form-group col-lg-6">
+									                                <label for="splitName" class="control-label">指标名称</label>
+									                            	<input type="text"  id="splitName" name="splitName" class="form-control" readOnly placeholder="选择完后自动生成">
+									                            </div>
+								                            </div>
+								                            <div class='row'>
+								                            	<div class="form-group col-lg-4">
+								                                    <label for="collectionWay" class="control-label">采集方式</label>
+								                                	<select class="form-control" name="collWay" id="collWay">
+								                                     	<option value=''>请选择</option>
+										                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('collWay',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+								                                	</select>
+						                                		</div>
+								                                <div class="form-group col-lg-6">
+								                                    <label for="isUse" class="control-label">是否启用</label>
+								                                    <select class="form-control" name="isUse" id="isUse">
+								                                     	<option value=''>请选择</option>
+										                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('isUse',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+								                                	</select>
+								                                </div>
+							                                </div>
+							                                <div class='row'>
+									                            <div class="form-group col-lg-4">
+								                                    <label for="splitLevel" class="control-label">分配层级</label>
+								                                    <select class="form-control" name="splitLevel" id="splitLevel">
+								                                     	<option value=''>请选择</option>
+										                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('splitLevel',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+								                                	</select>
+								                                </div>
+								                                <div class="form-group col-lg-6" id='splitOrgDiv'>
+									                            	<input type="hidden" name="orgId" id="orgId">
+									                            	<input type="hidden" name="orgCode" id="orgCode">
+									                                <label for="orgName" class="control-label">所属部门</label>
+									                            	<div class="input-group">
+									                            		<input type="text" class="form-control" name="orgName" id="orgName" readOnly placeholder="请选择部门"> 
+									                            		<span class="input-group-btn"><button type="button" class="btn btn-sm btn-info" id="splitIndexChoseBtn">选择</button></span>
+	                                        						</div>
+								                           	 	</div>
+								                           	 	<div class="form-group col-lg-6" id='splitChannelFlagDiv'>
+								                                    <label for="channelFlag" class="control-label">渠道标识</label>
+								                                    <select class="form-control" name="channelFlag" id="channelFlag">
+								                                     	<option value=''>请选择</option>
+										                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('channelFlag',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+								                                	</select>
+								                                </div>
+							                                </div>
+								                            <div class="form-group hidden">
+							                                    <label for="splitFormula" class="control-label">
+							                                    	<div>公式</div>
+							                                    	<div><button type="button" class="btn btn-primary" id="splitFormulaEditBtn">编辑</button></div>
+							                                    </label>
+							                                    <textarea class="form-control" rows="3" placeholder="编辑公式后会显示" cols="60" id="splitFormula" name="splitFormula" readonly></textarea>
+						                                	</div>
+						                                	<div class="form-group hidden">
+							                                    <label for="splitFormulaCode" class="control-label">公式编码</label>
+							                                    <textarea class="form-control" rows="3" cols="60" placeholder="编辑公式后会显示" id="splitFormulaCode" name="splitFormulaCode" readonly></textarea>
+						                                	</div>
+						                            	</form>
+					                            	</div>
+					                            	<div class="row col-lg-offset-1" style="margin-top:3px">
+					                            		<button type="button" class="btn btn-primary" id="splitFormSaveBtn">保存</button>
+					                            		<button type="button" class="btn btn-primary" id="splitFormResetBtn">重置</button>
+					                            	</div>
+					                            	<div class="row" style="margin:3px 0 0 0">
+														<div class="jqGrid_wrapper">
+										                    <table id="splitIndexTable"></table>
+										                    <div id="splitIndexPage"></div>
+										                </div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+												</div>
+											</div>
+										</div>
+									</div>
+		                            
+		                            <!-- 机构树模态框 -->
+		                            <div class="modal inmodal fade" id="orgTreeModal" tabindex="-1" role="dialog" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+													</button>
+													<h4 class="modal-title">机构</h4>
+													<small class="font-bold">在这里，您可以选择机构！</small>
+												</div>
+												<div class="modal-body"  style='overflow-y:scroll;height:400px'>
+									                <div id="orgTree"></div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+													<button type="button" class="btn btn-primary" id="orgTreeModalSureBtn">确定</button>
+												</div>
+											</div>
+										</div>
+									</div>
+		                            
+		                            <!-- 拆分指标的公式模态框 -->
+		                            <div class="modal inmodal fade" id="splitFormulaModal" tabindex="-1" role="dialog" aria-hidden="true">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal">
+														<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+													</button>
+													<h4 class="modal-title">编辑公式</h4>
+													<small class="font-bold">在这里，您可以对拆分指标的公式进行编辑！</small>
+												</div>
+												<div class="modal-body">
+													<div class="row">
+					                            		<input type="hidden" id="splitFormulaModalIds">
+					                            		<div class="form-group">
+						                                    <label for="splitFormulaModalName" class="control-label">公式名称</label>
+						                                    <textarea class="form-control" rows="3" cols="40" placeholder="编辑公式后会显示" id="splitFormulaModalName" readonly></textarea>
+						                                </div>
+						                                <div class="form-group">
+						                                    <label for="splitFormulaModalCode" class="control-label">公式编码</label>
+						                                    <textarea class="form-control" rows="3" cols="40" placeholder="编辑公式后会显示" id="splitFormulaModalCode" readonly></textarea>
+						                                </div>
+					                            	</div>
+													<div class="row" id="splitFormulaBtnGroup">
+														<div class="row" style="margin:5px 0 0 0">
+							                            	<button type="button" class="btn-sm btn-warning">1</button>
+							                            	<button type="button" class="btn-sm btn-warning">2</button>
+							                            	<button type="button" class="btn-sm btn-warning">3</button>
+							                            	<button type="button" class="btn-sm btn-warning">4</button>
+							                            	<button type="button" class="btn-sm btn-warning">5</button>
+							                            	<button type="button" class="btn-sm btn-warning">6</button>
+							                            	<button type="button" class="btn-sm btn-warning">7</button>
+							                            	<button type="button" class="btn-sm btn-warning">8</button>
+							                            	<button type="button" class="btn-sm btn-warning">9</button>
+							                            	<button type="button" class="btn-sm btn-warning">0</button>
+							                            	<button type="button" class="btn-sm btn-warning">+</button>
+							                            	<button type="button" class="btn-sm btn-warning">-</button>
+							                            	<button type="button" class="btn-sm btn-warning">*</button>
+							                            	<button type="button" class="btn-sm btn-warning">/</button>
+							                            	<button type="button" class="btn-sm btn-warning">(</button>
+							                            	<button type="button" class="btn-sm btn-warning">)</button>
+							                            	<button type="button" class="btn-sm btn-warning">,</button>
+							                            </div>
+							                            <div class="row" style="margin:5px 0 0 0">
+							                            	<button type="button" class="btn-sm btn-warning">&gt;</button>
+							                            	<button type="button" class="btn-sm btn-warning">&lt;</button>
+							                            	<button type="button" class="btn-sm btn-warning">=</button>
+							                            	<button type="button" class="btn-sm btn-warning">IF</button>
+							                            	<button type="button" class="btn-sm btn-warning">空</button>
+							                            	<button type="button" class="btn-sm btn-warning">清除</button>
+							                            </div>
+							                            <div class="row" style="margin:5px 0 0 0">
+															<div class="jqGrid_wrapper">
+											                    <table id="splitFormulaTable"></table>
+											                    <div id="splitFormulaPage"></div>
+											                </div>
+														</div>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+													<button type="button" class="btn btn-primary" id="splitFormulaModalSureBtn">确定</button>
+												</div>
+											</div>
+										</div>
+									</div>
+		                            
+		                            <!-- 导入指标模态框 -->
+		                            <div class="row">
+			                     		<div class="modal inmodal fade" id="importModal" tabindex="-1" role="dialog" aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal">
+															<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+														</button>
+														<h4 class="modal-title">导入指标数据</h4>
+														<!-- <small class="font-bold">您需要先下载对应模板</small> -->
+													</div>
+													<div class="modal-body">
+														<div class="row" style="margin-top:10px">
+															<form class="form-inline">
+									                           	<div class="form-group">
+									                              <div>
+									                              	<big class="font-bold">您需要先下载对应模板</big>
+									                              </div>
+									                              <div style="margin-top:10px">
+									                              	<button id="obtainTemplate" type="button" class="btn btn-primary">下载模板</button>
+									                              </div>
+									                          	</div>							
+															</form>
+														</div>
+														<div class="row" style="margin-top:10px">
+															<form action="/irr/indexInfo/importFile.action" class="dropzone" id="importFileForm">
+								                                <input type='hidden' name='templateId' id='templateId'> 
+								                                <input type='hidden' name='projTypeId' id='projTypeId'>
+								                                <div class="fallback">
+								                                    <input name="file" type="file" multiple />
+								                                </div>
+								                            </form>
+														</div>
+														
+													</div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+													</div>
+												</div>
+											</div>
+										</div>
+			                     	</div>
+		                            
+	                     		</div>
+	                     	</div>
+                     	</div>
+                     </div>
+                 </div>
+             </div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+
+	Dropzone.autoDiscover = false;
+	var irrDropzone = new Dropzone('#importFileForm',{
+	    paramName: "file", // The name that will be used to transfer the file
+	    maxFilesize: 2, // MB
+	    maxFiles : 1,
+	    parallelUploads : 1,//并行处理多少文件上传
+	    dictRemoveFile : true,//如果addRemoveLinks为true，则用于删除文件的文本
+	    dictDefaultMessage: "<strong>拖动文件到这里或者点击此处进行上传文件</strong>",
+	    acceptedFiles : '.xls,.xlsx',
+	    addRemoveLinks : true,
+	    dictRemoveFile : '删除',
+	    autoProcessQueue : true,//是否自动上传
+	    sending: function(file, xhr, formData) {
+	      	  
+	    },
+	    success: function (file, response, e) {
+	    	if(response.body == true){
+	    		swal('提示',response.body,'success');
+			}else{
+				swal('提示',response.body,'error');
+			}
+        }
+	});
+
+	/*控制绩效公式和绩效公式编码显示*/
+	function isPfmFormulaShow(){
+		var isScoreIndex = $('#isScoreIndex').val();
+		var isPfm = $('#isPfm').val();
+		if(isScoreIndex == 'Y' && isPfm == 'Y'){
+			$('#pfmFormulaDiv').show();
+			$('#pfmFormulaCodeDiv').show();
+		}else{
+			$('#pfmFormulaDiv').hide();
+			$('#pfmFormulaCodeDiv').hide();
+		}
+	}
+	
+	/*选项描述改变函数*/
+	function indexResultType(){
+		var optionValue = $('#indexResultType').val();
+		if(optionValue == 'OPTION'){
+			$('#optionDescDiv').css({'display':'block'});
+		}else{
+			$('#optionDescDiv').hide();
+		}
+	}
+	
+	/*绩效指标改变函数*/
+	function isPfmChange(){
+		var isPfm = $('#isPfm').val();
+    	if(isPfm == 'Y'){
+    		$('#pfmLevelDiv').show();
+    		$('#pfmDescDiv').show();
+    	}else{
+    		$('#pfmLevelDiv').hide();
+    		$('#pfmDescDiv').hide();
+    	}
+	}
+	/*是否得分改变函数*/
+	function isScoreIndexChange(){
+		var isScoreIndex = $('#isScoreIndex').val();
+    	if(isScoreIndex == 'Y'){
+    		$('#scorTypeDiv').show();
+    		$('#indexValueDiv').show();
+    		$('#indexDescDiv').show();
+    		$('#evalCritDiv').show();
+    	}else{
+    		$('#scorTypeDiv').hide();
+    		$('#indexValueDiv').hide();
+    		$('#indexDescDiv').hide();
+    		$('#evalCritDiv').hide();
+    	}
+	}
+	/*拆分模态框拆分层级改变函数*/
+	function splitLevelChange(){
+		var splitLevel = $('#splitLevel').val();
+		if(splitLevel == 'HEAD'){
+			$('#splitOrgDiv').show();
+			$('#splitChannelFlagDiv').hide();
+		}else if(splitLevel == 'CHANNEL'){
+			$('#splitChannelFlagDiv').show();
+			var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+			var rowData = $("#indexTable").jqGrid("getRowData",rowId);
+			if(isNotEmpty(rowData.indexLevel) && rowData.indexLevel == '总公司'){
+				$('#splitOrgDiv').show();
+			}else{
+				$('#splitOrgDiv').hide();
+			}
+		}else if(splitLevel == 'MYSELF'){
+			$('#splitOrgDiv').hide();
+			$('#splitChannelFlagDiv').hide();
+			var text = $('#splitLevel').find("option:selected").text();
+			var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	var rowData = $("#indexTable").jqGrid("getRowData",rowId);
+	    	$('#splitCode').val(rowData.indexCode + indexCodeSimpleRule(null,4));
+	    	$('#splitName').val(rowData.indexName + '(' + text + ')');
+		}else{
+			$('#splitOrgDiv').hide();
+			$('#splitChannelFlagDiv').hide();
+		}
+	}
+	
+	$(document).ready(function(){
+		/*机构树*/
+		$('#orgTree').jstree({
+			  "core" : {
+			    "animation" : false,
+			    'multiple':false,
+			    "check_callback" : true,
+			    'expand_selected_onload':true,
+			    "themes" : { "stripes" : false },
+			    'data' : {
+			      'url' : function (node) {
+			        return '/irr/indexInfo/findOrg.action';
+			      },
+			      "datatype": "json",
+			      'data' : function (node) {
+			        return { 'id' : node.id };
+			      }
+			    }
+			  },
+			  "types" : {
+			    "#" : {
+			      "max_children" : 5,
+			      "max_depth" : 4,
+			      "valid_children" : ["root"]
+			    },
+			    "root" : {
+			      "valid_children" : ["default"]
+			    },
+			    "default" : {
+			      "valid_children" : ["default","file"]
+			    },
+			    "file" : {
+			      "icon" : "glyphicon glyphicon-file",
+			      "valid_children" : []
+			    }
+			  },
+			  "plugins" : [
+			    "contextmenu", "dnd", "search",
+			    "state", "types", "wholerow"
+			  ]
+		});
+		$('#orgTree').bind("ready.jstree", function (obj, e) {
+			$('#orgTree').jstree(true).deselect_all(false);
+			$('#orgTree').jstree(true).refresh();
+		});
+		$('#orgTree').bind("activate_node.jstree", function (obj, e) {
+			
+		});
+		
+		/*评估项目树*/
+		$('#projTypeTree').jstree({
+			  "core" : {
+			    "animation" : 0,
+			    "check_callback" : true,
+			    "themes" : { "stripes" : false },
+			    'data' : {
+			      'url' : function (node) {
+			        return '/irr/projType/findJsTreeNode.action';
+			      },
+			      "datatype": "json",
+			      'data' : function (node) {
+			        return { 'id' : node.id };
+			      }
+			    }
+			  },
+			  "types" : {
+			    "#" : {
+			      "max_children" : 5,
+			      "max_depth" : 4,
+			      "valid_children" : ["root"]
+			    },
+			    "root" : {
+			      "valid_children" : ["default"]
+			    },
+			    "default" : {
+			      "valid_children" : ["default","file"]
+			    },
+			    "file" : {
+			      "icon" : "glyphicon glyphicon-file",
+			      "valid_children" : []
+			    }
+			  },
+			  "plugins" : [
+			    "contextmenu", "dnd", "search",
+			    "state", "types", "wholerow"
+			  ]
+		});
+		/*所有的节点加载完后*/
+		$('#projTypeTree').bind("ready.jstree", function (e,obj) {
+			$('#projTypeTree').jstree(true).deselect_all(false);
+			$('#projTypeTree').jstree(true).refresh();
+		});
+		/*点击tree节点事件*/
+		$('#projTypeTree').bind("activate_node.jstree", function (e,obj) {
+			var formJson = $('#searchForm').getNotNullJson();
+	    	formJson.operationType = 'fetch';
+	    	formJson.textMatchStyle = 'substring';
+	    	var selectNode = $('#projTypeTree').jstree(true).get_selected(true)[0];
+	    	if(isNotEmpty(selectNode)){
+	    		formJson.projTypeId = selectNode.li_attr.entityId;
+	    	}
+	    	$("#indexTable").jqGrid('clearGridData');//清空表格
+			$("#indexTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : formJson,
+				page : 0
+			},true).trigger("reloadGrid");
+		});
+		
+		
+		/*配置指标表格*/
+		$("#indexTable").jqGrid({
+			url:"[(@{/irr/indexInfo/isc/fetch?isc_dataFormat=json})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 350,
+	        autowidth: true,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['ID','评估项目ID','评估项目名称','指标结果类型','指标说明','评价标准','评分类型','指标公式','指标公式编码',
+	        	'指标可计算公式','绩效描述','绩效公式','绩效公式编码','绩效可计算公式',
+	        	'指标编码','指标名称','指标分值','指标单位','指标层级','指标状态','小数位数','是否适用','是否上报','是否得分指标','拆分个数'],
+	        colModel:[{
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'projTypeId',
+	        	index:'projTypeId',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'projTypeName',
+	        	index:'projTypeName',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexResultType',
+	        	index:'indexResultType',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexDesc',
+	        	index:'indexDesc',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'evalCrit',
+	        	index:'evalCrit',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'scorType',
+	        	index:'scorType',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexFormula',
+	        	index:'indexFormula',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexFormulaCode',
+	        	index:'indexFormulaCode',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexEvalForm',
+	        	index:'indexEvalForm',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'pfmDesc',
+	        	index:'pfmDesc',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'pfmFormula',
+	        	index:'pfmFormula',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'pfmFormulaCode',
+	        	index:'pfmFormulaCode',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'pfmEvalForm',
+	        	index:'pfmEvalForm',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexCode',
+	        	index:'indexCode',
+	        	sortable : false,
+	        	editable: false,
+	        	sortable : false,
+	        	search:true
+	        },{
+	        	name:'indexName',
+	        	index:'indexName',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexValue',
+	        	index:'indexValue',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexUnit',
+	        	index:'indexUnit',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('indexUnit',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'indexLevel',
+	        	index:'indexLevel',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('indexLevel',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'indexStatus',
+	        	index:'indexStatus',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('indexStatus',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'decimalPlace',
+	        	index:'decimalPlace',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'isApplicabie',
+	        	index:'isApplicabie',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('isUse',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'isXbrl',
+	        	index:'isXbrl',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('isUse',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'isScoreIndex',
+	        	index:'isScoreIndex',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('isUse',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'splitNum',
+	        	index:'splitNum',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        }],
+	        pager: "#indexPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }
+	    });
+	    $("#indexTable").jqGrid('navGrid', '#indexPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#indexTable').setGridWidth(width);
+	    });
+	    
+	    /*主页面的新增按钮点击事件*/ 
+	    $('#addIndexBtn').click(function(){
+	    	var selectNode = $('#projTypeTree').jstree(true).get_selected(true)[0];
+	    	if(isEmpty(selectNode)){
+	    		swal('提示','请您先选择一条评估项目的记录!','warning');
+	    		return false;
+	    	}
+	    	$('#indexCode').attr('readonly',false);
+	    	defineResetForm('#indexInfoFrom');
+	    	$('#indexCode').val(selectNode.id);
+	    	$('#indexInfoFormProjTypeId').val(selectNode.li_attr.entityId);
+	    	$('#indexInfoFormProjTypeName').val(selectNode.li_attr.typeName);
+	    	$('#indexInfoModal').modal('show');
+	    	isScoreIndexChange();
+			isPfmChange();
+			isPfmFormulaShow();
+			indexResultType();
+	    });
+	    
+	    /*主页面的修改按钮点击事件*/
+	    $('#editIndexBtn').click(function(){
+	    	var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	if(isEmpty(rowId)){
+	    		swal('提示','请您先选择一条指标记录!','warning');
+	    		return false;
+	    	}
+	    	var params = {
+    			operationType : 'fetch',
+				textMatchStyle : 'substring',
+				id : rowId,
+				page : 0
+		    };
+			$.ajax({
+				type : 'get',
+				url : '[(@{/irr/indexInfo/isc/fetch?isc_dataFormat=json})]',
+				dataType : 'json',
+				data : params,
+				success : function(data, textStatus){
+					if(textStatus == 'success'){
+				    	$('#indexInfoFrom').loadJson(data.response.data[0]);
+				    	$('#indexCode').attr('readonly',true);
+				    	$('#indexInfoModal').modal('show');
+				    	isScoreIndexChange();
+						isPfmChange();
+						indexResultType();
+						isPfmFormulaShow();
+					}
+				},
+				error : function(data, textStatus){
+					swal({
+		                title: '提示',
+		                text: '修改失败！',
+		            });
+				}
+			});
+	    });
+	    
+	    /*主界面的拆分按钮点击事件*/
+	    $('#indexSplitBtn').click(function(){
+	    	var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	if(isEmpty(rowId)){
+	    		swal('提示','请您先选择一条指标记录!','warning');
+	    		return false;
+	    	}
+	    	defineResetForm('#splitIndexForm');
+	    	var rowData = $("#indexTable").jqGrid("getRowData",rowId);
+	    	$('#sourceIndexId').val(rowData.id);
+	    	$('#sourceIndexName').val(rowData.indexName);
+	    	$('#sourceProjName').val(rowData.projTypeName);
+	    	$('#sourceProjId').val(rowData.projTypeId);
+	    	$('#resultType').val(rowData.indexResultType);
+	    	$("#splitIndexTable").jqGrid('clearGridData');//清空表格
+			$("#splitIndexTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : {
+					operationType : 'fetch',
+					textMatchStyle : 'substring',
+					sourceProjId : rowData.projTypeId,
+					sourceIndexId : rowData.id
+				},
+				page : 0
+			},true).trigger("reloadGrid");
+			splitLevelChange();
+	    	$('#splitIndexModal').modal('show');
+	    });
+	    
+	    /*公式编辑按钮点击事件*/
+	    $('#pfmFormulaEditBtn,#indexFormulaEditBtn').click(function(){
+	    	var indexCode = $('#indexCode').val();
+	    	var indexName = $('#indexName').val();
+	    	if(isEmpty(indexCode) || isEmpty(indexName)){
+	    		swal('提示','请您先填写指标编码和指标名称！','warning');
+	    		return false;
+	    	}
+	    	var formulaIds = $(this).attr('formulaIds');
+	    	var ids = formulaIds.split(',');
+			$('#formulaModalNameId').val(ids[0]);
+			$('#formulaModalCodeId').val(ids[1]);
+			$('#formulaModalEvalId').val(ids[2]);
+			$('#formulaModalName').val($('#'+ids[0]).val());
+	    	$('#formulaModalCode').val($('#'+ids[1]).val());
+			$('#editFormulaModal').modal('show');
+			$("#formulaTable").jqGrid('clearGridData');//清空表格
+			var projTypeId = null;
+			var indexId = $('#indexInfoFormIndexId').val();
+			if(isNotEmpty(indexId)){//修改
+				projTypeId = $('#indexInfoFormProjTypeId').val();
+			}else{//新增
+				var selectNode = $('#projTypeTree').jstree(true).get_selected(true)[0];
+				projTypeId = selectNode.li_attr.entityId;
+			}
+			$("#formulaTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : {
+					operationType : 'fetch',
+					textMatchStyle : 'substring',
+					projTypeId : projTypeId
+				},
+				page : 0
+			},true).trigger("reloadGrid");
+	    });
+	    
+	    /*配置编辑公式表格*/
+		$("#formulaTable").jqGrid({
+			url:"[(@{/irr/indexInfo/isc/fetch?isc_dataFormat=json})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 100,
+	        width : 550,
+	        autowidth: false,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['id','指标编码','指标名称'],
+	        colModel:[{
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexCode',
+	        	index:'indexCode',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexName',
+	        	index:'indexName',
+	        	editable: false,
+	        	width : 520,
+	        	search:true
+	        }],
+	        pager: "#formulaPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        },
+	        ondblClickRow : function(rowid,e){
+	    		var formulaData = $("#formulaTable").jqGrid("getRowData",rowid);
+	    	 	$('#formulaModalName').val($('#formulaModalName').val()+formulaData.indexName);
+	    	 	$('#formulaModalCode').val($('#formulaModalCode').val()+formulaData.indexCode);
+	    	 	/*赋值关联的指标ID*/
+	    	 	var formulaIndexIds = $('#formulaIndexIds').val();
+	    	 	var ids = '';
+	    	 	if(isNotEmpty(formulaIndexIds)){
+	    	 		ids += formulaIndexIds + ',';
+	    	 	}
+	    	 	ids += formulaData.id;
+	    	 	$('#formulaIndexIds').val(ids);
+	    	}
+	    });
+	    $("#formulaTable").jqGrid('navGrid', '#formulaPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#formulaTable').setGridWidth(width);
+	    });
+	    
+	    /*指标新增*/
+	    function indexAddFn(){
+	    	var indexJson = $("#indexInfoFrom").getJson();
+	    	$.ajax({
+				type : 'POST',
+				url : '[(@{/irr/indexInfo/saveIndexInfo.action})]',
+				dataType : 'json',
+				data : {
+					indexInfo : JSON.stringify(indexJson)
+				},
+				success : function(data,textStatus){
+					if(data.flag == true){
+						$("#indexTable").jqGrid('clearGridData');//清空表格
+						$("#indexTable").jqGrid('setGridParam',{//重新加载数据
+						datatype : 'json',
+						page : 0
+						},true).trigger("reloadGrid");
+						$('#indexInfoModal').modal('hide');
+						swal('提示','保存成功','success');
+					}else{
+						swal('提示','保存出错','error');
+					}
+				},
+				error : function(){
+					swal('提示','保存出错','error');
+				}
+	    	});
+	    }
+	    /*指标修改*/
+	    function indexUpdateFn(){
+	    	var indexJson = $('#indexInfoFrom').getJson();
+	    	$.ajax({
+	    		type : 'POST',
+				url : '[(@{/irr/indexInfo/saveIndexInfo.action})]',
+				dataType : 'json',
+				data : {
+					indexInfo : JSON.stringify(indexJson)
+				},
+				success : function(data, textStatusOption){
+					if(data.flag == true){
+						$("#indexTable").jqGrid('clearGridData');//清空表格
+						$("#indexTable").jqGrid('setGridParam',{//重新加载数据
+						datatype : 'json',
+						page : 0
+						},true).trigger("reloadGrid");
+						$('#indexInfoModal').modal('hide');
+						swal('提示','修改成功！','success');
+					}else{
+						swal('提示','修改失败！');
+					}
+				},
+				error : function(dataOption, textStatusOption){
+					swal('提示','修改失败！');
+				}
+			});
+	    }
+	    
+	    /*是否得分选择是的时候显示评分类型*/
+	    $('#isScoreIndex').change(function(){
+	    	isScoreIndexChange();
+	    	isPfmFormulaShow();
+	    });
+	    
+	    /*是否绩效指标*/
+	    $('#isPfm').change(function(){
+	    	isPfmChange();
+	    	isPfmFormulaShow();
+	    });
+	    
+	    /*指标信息模态框保存按钮点击事件*/
+	    $('#indexInfoFormSaveBtn').click(function(){
+	    	var indexId = $('#indexInfoFormIndexId').val();
+	    	if(isEmpty(indexId)){
+	    		indexAddFn();
+	    	}else{
+	    		indexUpdateFn();
+	    	}
+	    	//清空选项描述框内容
+	    	$('#optionDesc').val('');
+	    });
+	    
+	    /*模态框关闭事件*/
+	    $('#editFormulaModal').on('hidden.bs.modal', function() {
+	    	$('#indexInfoModal').css({'overflow-y':'scroll'});
+	    });
+	    $('#editOptionModal').on('hidden.bs.modal', function() {
+	    	$('#indexInfoModal').css({'overflow-y':'scroll'});
+	    	var ids = $('#optionTable').jqGrid('getRowData');
+	    	var optionName = '';
+	    	for(var i=0;i<ids.length;i++){
+	    		optionName += ids[i].optionName;
+	    		if(i != ids.length - 1){
+	    			optionName += '\r\n';
+	    		}
+	    	}
+	    	$('#optionDesc').val(optionName);
+	    });
+	    
+	    /*结果类型选择选项的时候，选项描述显示*/
+		$('#indexResultType').change(function(){
+			indexResultType();
+		});
+	    
+	    /*配置公式模态框的按钮点击事件*/
+	    $('#formulaBtnGroup button').click(function(){
+	    	var btnValue = $(this).text();
+	    	btnValue = btnValue == '空'? null:btnValue;
+	    	if(btnValue == '清除'){
+    			$('#formulaModalName').val('');
+    	    	$('#formulaModalCode').val('');
+    	    	$('#formulaIndexIds').val('');
+	    		return false;
+	    	}
+	    	var name = $('#formulaModalName').val();
+	    	var code = $('#formulaModalCode').val();
+	    	$('#formulaModalName').val(name+btnValue);
+	    	$('#formulaModalCode').val(code+btnValue);
+	    });
+	    
+	    /*公式模态框点击确定反显回去*/
+	    $('#editFormulaModalSureBtn').click(function(){
+	    	/*保存指标的关联关系*/
+	    	var formulaIndexIds = $('#formulaIndexIds').val();
+	    	var indexJson = $("#indexInfoFrom").getJson();
+	    	$.ajax({
+				type : 'POST',
+				url : '[(@{/irr/indexInfo/saveIndexInfo.action})]',
+				dataType : 'json',
+				data : {
+					indexInfo : JSON.stringify(indexJson)
+				},
+				success : function(data, textStatus){
+					if(data.flag == true){
+						$.ajax({
+							type : 'POST',
+							url : '[(@{/irr/indexRela/saveIndexRela.action})]',
+							dataType : 'json',
+							data : {
+								indexId : data.data.id,
+								indexCode : data.data.indexCode,
+								indexName : data.data.indexName,
+								relaIds : formulaIndexIds
+							},
+							success : function(data,textStatus){
+								if(data.flag == true){
+									var formulaModalNameId = $('#formulaModalNameId').val();
+							    	var formulaModalCodeId = $('#formulaModalCodeId').val();
+							    	var formulaEvalId = $('#formulaModalEvalId').val();
+							    	$('#'+formulaModalNameId).val($('#formulaModalName').val());
+							    	var formula = $('#formulaModalCode').val();
+							    	$('#'+formulaModalCodeId).val(formula);
+							    	$('#'+formulaEvalId).val(ifFormulaTransEvalFormula(formula));
+							    	$('#editFormulaModal').modal('hide');
+									swal('提示','保存成功','success');
+								}else{
+									swal('提示','保存出错','error');
+								}
+							},
+							error : function(){
+								swal('提示','保存出错','error');
+							}
+				    	});
+					}
+				},
+				error : function(){
+					swal('提示','保存出错','error');
+				}
+	    	});
+	    });
+	    
+	    /*配置选项模态框中的表格*/
+		$("#optionTable").jqGrid({
+			url:"[(@{/irr/indexOption/isc/fetch?isc_dataFormat=json})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 100,
+	        width : 750,
+	        autowidth: false,
+	        shrinkToFit: true,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['ID','指标ID','指标编码','指标名称','选项名称','选项顺序','选项得分','选项扣分标准','选项备注'],
+	        colModel:[{
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexId',
+	        	index:'indexId',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexCode',
+	        	index:'indexCode',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexName',
+	        	index:'indexName',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'optionName',
+	        	index:'optionName',
+	        	editable: false,
+	        	width : 300,
+	        	search:true
+	        },{
+	        	name:'optionSort',
+	        	index:'optionSort',
+	        	editable: false,
+	        	width : 100,
+	        	search:true
+	        },{
+	        	name:'optionScore',
+	        	index:'optionScore',
+	        	editable: false,
+	        	width : 100,
+	        	search:true
+	        },{
+	        	name:'optionPoints',
+	        	index:'optionPoints',
+	        	editable: false,
+	        	width : 100,
+	        	search:true
+	        },{
+	        	name:'optionRemark',
+	        	index:'optionRemark',
+	        	editable: false,
+	        	width : 100,
+	        	search:true
+	        }],
+	        pager: "#optionPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        },
+	        ondblClickRow : function(rowid,e){
+	    		var optionData = $("#optionTable").jqGrid("getRowData",rowid);
+	    		$('#optionEditForm').loadJson(optionData);
+	    	}
+	    });
+		// Setup buttons
+	    $("#optionTable").jqGrid('navGrid', '#optionPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    // Add responsive to jqGrid
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#optionTable').setGridWidth(width);
+	    });
+	    
+	    /*选项描述的编辑按钮点击事件*/
+		$('#editOptionBtn').click(function(){
+			 var indexCode = $('#indexCode').val();
+			 var indexName = $('#indexName').val();
+			 if(isEmpty(indexCode) || isEmpty(indexName)){
+				 swal({
+		                title: '提示',
+		                text: '指标编码和指标名称不能为空！'
+		            });
+				 return false;
+			 }
+			 $('#optionFormIndexCode').val(indexCode);
+			 $('#optionFormIndexName').val(indexName);
+			 $('#optionModalOptionDescId').val('optionDesc');
+			 $("#optionTable").jqGrid('clearGridData');//清空表格
+			 $('#optionEditForm')[0].reset();
+			 $('#editOptionModal').modal('show');
+			 $("#optionTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : {
+					operationType : 'fetch',
+					textMatchStyle : 'substring',
+					indexCode : indexCode
+				},
+				page : 0
+			 },true).trigger("reloadGrid");
+	    });
+	    
+		/*选项新增*/
+	    function optionAddFn(){
+	    	var indexJson = $("#indexInfoFrom").getJson();
+	    	$.ajax({
+				type : 'POST',
+				url : '[(@{/irr/indexInfo/saveIndexInfo.action})]',
+				dataType : 'json',
+				data : {
+					indexInfo : JSON.stringify(indexJson)
+				},
+				success : function(data, textStatus){
+					if(data.flag == true){
+						$('#optionIndexId').val(data.data.id);
+						var optionJson = $('#optionEditForm').getJson();
+						optionFormReset();
+						var params = {
+								data : optionJson,
+								operationType : 'add',
+								textMatchStyle : 'exact'
+						};
+						$.ajax({
+							contentType: 'application/json;charset=utf-8',
+							type : 'POST',
+							url : '[(@{/irr/indexOption/isc/add?isc_dataFormat=json})]',
+							dataType : 'json',
+							data : JSON.stringify(params),
+							success : function(dataOption, textStatusOption){
+								if(textStatusOption == 'success'){
+									$("#optionTable").jqGrid('clearGridData');//清空表格
+									$("#optionTable").jqGrid('setGridParam',{//重新加载数据
+									datatype : 'json',
+									page : 0
+									},true).trigger("reloadGrid");
+									swal({
+						                title: '提示',
+						                text: '保存成功！',
+						                type: 'success'
+						            });
+								}else{
+									swal({
+						                title: '提示',
+						                text: '保存失败！',
+						            });
+								}
+							},
+							error : function(dataOption, textStatusOption){
+								swal({
+					                title: '提示',
+					                text: '保存失败！',
+					            });
+							}
+						});
+					}else{
+						swal({
+			                title: '提示',
+			                text: '保存失败！',
+			            });
+					}
+				},
+				error : function(data, textStatus){
+					swal({
+		                title: '提示',
+		                text: '保存失败！',
+		            });
+				}
+			});
+	    }
+	    /*选项修改*/
+	    function optionEditFn(){
+	    	var rowid = $("#optionTable").jqGrid("getGridParam","selrow");
+	    	var optionData = $("#optionTable").jqGrid("getRowData",rowid);
+	    	var optionJson = $('#optionEditForm').getJson();
+	    	optionFormReset();
+	    	var params = {
+	    			data : optionJson,
+	    			operationType : 'update',
+	    			textMatchStyle : 'exact',
+	    			oldValues : optionData
+	    	};
+	    	$.ajax({
+				contentType: 'application/json;charset=utf-8',
+				type : 'POST',
+				url : '[(@{/irr/indexOption/isc/update?isc_dataFormat=json})]',
+				dataType : 'json',
+				data : JSON.stringify(params),
+				success : function(dataOption, textStatusOption){
+					if(textStatusOption == 'success'){
+						$("#optionTable").jqGrid('clearGridData');//清空表格
+						$("#optionTable").jqGrid('setGridParam',{//重新加载数据
+						datatype : 'json',
+						page : 0
+						},true).trigger("reloadGrid");
+						swal({
+			                title: '提示',
+			                text: '修改成功！',
+			                type: 'success'
+			            });
+					}else{
+						swal({
+			                title: '提示',
+			                text: '修改失败！',
+			            });
+					}
+				},
+				error : function(dataOption, textStatusOption){
+					swal({
+		                title: '提示',
+		                text: '修改失败！',
+		            });
+				}
+			});
+	    }
+	    
+	    /*选项模态框点击保存*/
+	    $('#editOptionModalSaveBtn').click(function(){
+	    	var optionId = $('#optionId').val();
+	    	/*根据是否存在ID来判断是新增还是修改*/
+	    	if(isEmpty(optionId)){
+	    		optionAddFn();
+	    	}else{
+	    		optionEditFn();
+	    		$('#optionId').val("");
+	    	}
+	    });
+	    
+	    /*选项模态框点击删除*/
+	    $('#optionDeleteBtn').click(function(){
+	    	var rowId = $("#optionTable").jqGrid("getGridParam","selrow");
+			if(isEmpty(rowId)){
+				swal("提示", "请先选择一条记录！");
+				return false;
+			}
+	    	swal({
+                title: "确定删除?",
+                text: "您正在执行删除操作，请确定是否删除？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "删除",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+            	var json = {
+            		operationType : 'remove',
+            		textMatchStyle : 'substring',
+            		data : {
+            			id : rowId
+            		}
+            	};
+    			$.ajax({
+    				contentType: 'application/json;charset=utf-8',
+    				type : 'POST',
+    				url : '[(@{/irr/indexOption/isc/remove?isc_dataFormat=json})]',
+    				dataType : 'json',
+    				data : JSON.stringify(json),
+    				success : function(data, textStatus){
+    					if(textStatus == 'success'){
+    						$("#optionTable").jqGrid('clearGridData');//清空表格
+    						$("#optionTable").jqGrid('setGridParam',{//重新加载数据
+    						datatype : 'json',
+    						page : 0
+    						},true).trigger("reloadGrid");
+    						swal("删除", "删除成功", "success");
+    					}else{
+    						swal({
+    			                title: '提示',
+    			                text: '删除失败！',
+    			            });
+    					}
+    				},
+    				error : function(data, textStatus){
+    					swal({
+    		                title: '提示',
+    		                text: '删除失败！',
+    		            });
+    				}
+    			});
+            });
+	    });
+	    
+	    /*选项模态框重置按钮*/
+	    $('#optionFormReset').click(function(){
+	    	optionFormReset();
+	    });
+	    
+	    /*选项模态框重置方法*/
+	    function optionFormReset(){
+	    	$('#optionEditForm')[0].reset();
+	    }
+	    
+	    /*主页面查询中的重置按钮*/
+	    $('#searchClear').click(function(){
+	    	$('#searchForm')[0].reset();
+	    });
+	    
+	    /*主页面查询中的查询按钮*/
+	    $('#searchBtn').click(function(){
+	    	var formJson = $('#searchForm').getNotNullJson();
+	    	formJson.operationType = 'fetch';
+	    	formJson.textMatchStyle = 'substring';
+	    	var selectNode = $('#projTypeTree').jstree(true).get_selected(true)[0];
+	    	if(isNotEmpty(selectNode)){
+	    		formJson.projTypeId = selectNode.li_attr.entityId;
+	    	}
+	    	$("#indexTable").jqGrid('clearGridData');//清空表格
+			$("#indexTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : formJson,
+				page : 0
+			},true).trigger("reloadGrid");
+	    });
+	    
+	    /*拆分指标模态框拆分层级选择改变*/
+	    $('#splitLevel').change(function(){
+	    	splitLevelChange();
+	    });
+	    
+	    /*拆分指标模态框渠道标识改变*/
+	    $('#channelFlag').change(function(){
+	    	var channelFlagValue = $('#channelFlag').val();
+	    	var channelFlagText = $('#channelFlag').find("option:selected").text();
+	    	var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	var rowData = $("#indexTable").jqGrid("getRowData",rowId);
+	    	$('#splitCode').val(rowData.indexCode + indexCodeSimpleRule(channelFlagValue,4));
+	    	$('#splitName').val(rowData.indexName + '(' + channelFlagText + ')');
+	    });
+	    
+	    /*拆分指标选择机构树按钮*/
+	    $('#splitIndexChoseBtn').click(function(){
+	    	$('#orgTreeModal').modal('show');
+	    });
+	    /*机构树模态框中的确定按钮*/
+	    $('#orgTreeModalSureBtn').click(function(){
+	    	var selectNode = $('#orgTree').jstree(true).get_selected(true)[0];
+	    	if(isEmpty(selectNode)){
+	    		swal('提示','请先一个机构！','warning');
+	    		return false;
+	    	}
+	    	$('#orgId').val(selectNode.li_attr.orgId);
+	    	$('#orgCode').val(selectNode.li_attr.orgCode);
+	    	$('#orgName').val(selectNode.li_attr.orgName);
+	    	var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	var rowData = $("#indexTable").jqGrid("getRowData",rowId);
+	    	$('#splitCode').val(rowData.indexCode + indexCodeSimpleRule(selectNode.li_attr.orgCode,4));
+	    	$('#splitName').val(rowData.indexName + '('+selectNode.li_attr.orgName+')');
+	    	$('#orgTreeModal').modal('hide');
+	    });
+	    
+	    /*配置拆分指标公式表格*/
+		$("#splitFormulaTable").jqGrid({
+			url:"[(@{/irr/splitIndex/isc/fetch?isc_dataFormat=json})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 100,
+	        autowidth: true,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['id','拆分指标编码','拆分指标名称'],
+	        colModel:[{
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'splitCode',
+	        	index:'splitCode',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'splitName',
+	        	index:'splitName',
+	        	editable: false,
+	        	width : 520,
+	        	search:true
+	        }],
+	        pager: "#splitFormulaPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        },
+	        ondblClickRow : function(rowid,e){
+	    		var formulaData = $("#splitFormulaTable").jqGrid("getRowData",rowid);
+	    	 	$('#splitFormulaModalName').val($('#splitFormulaModalName').val()+formulaData.splitName);
+	    	 	$('#splitFormulaModalCode').val($('#splitFormulaModalCode').val()+formulaData.splitCode);
+	    	 	/*赋值关联的指标ID*/
+	    	 	var formulaIndexIds = $('#splitFormulaModalIds').val();
+	    	 	var ids = '';
+	    	 	if(isNotEmpty(formulaIndexIds)){
+	    	 		ids += formulaIndexIds + ',';
+	    	 	}
+	    	 	ids += formulaData.id;
+	    	 	$('#splitFormulaModalIds').val(ids);
+	    	}
+	    });
+	    $("#splitFormulaTable").jqGrid('navGrid', '#splitFormulaPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#splitFormulaTable').setGridWidth(width);
+	    });
+	    
+	    /*拆分指标公式编辑*/
+	    $('#splitFormulaEditBtn').click(function(){
+	    	var rowId = $("#indexTable").jqGrid("getGridParam","selrow");
+	    	var rowData = $("#indexTable").jqGrid("getRowData",rowId);
+	    	$("#splitFormulaTable").jqGrid('clearGridData');//清空表格
+			$("#splitFormulaTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : {
+					operationType : 'fetch',
+					textMatchStyle : 'substring',
+					sourceProjId : rowData.projTypeId
+				},
+				page : 0
+			},true).trigger("reloadGrid");
+	    	$('#splitFormulaModal').modal('show');
+	    });
+	    
+	    /*拆分指标公式按钮*/
+	    $('#splitFormulaBtnGroup button').click(function(){
+	    	var btnValue = $(this).text();
+	    	btnValue = btnValue == '空' ? null : btnValue;
+	    	if(btnValue == '清除'){
+    			$('#splitFormulaModalName').val('');
+    	    	$('#splitFormulaModalCode').val('');
+    	    	$('#splitFormulaModalIds').val('');
+	    		return false;
+	    	}
+	    	var name = $('#splitFormulaModalName').val();
+	    	var code = $('#splitFormulaModalCode').val();
+	    	$('#splitFormulaModalName').val(name+btnValue);
+	    	$('#splitFormulaModalCode').val(code+btnValue);
+	    });
+	    
+	    /*配置拆分主页面表格*/
+		$("#splitIndexTable").jqGrid({
+			url:"[(@{/irr/splitIndex/isc/fetch?isc_dataFormat=json})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 100,
+	        width : 850,
+	        autowidth: false,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['id','拆分指标编码','拆分指标名称','拆分层级','源指标ID','源指标名称','评估项目名称','评估项目ID','拆分指标公式',
+	        		  '拆分指标公式编码','拆分指标可执行公式','是否启用','采集方式','所属机构ID','所属机构编码','渠道名称','所属机构名称'],
+	        colModel:[{
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'splitCode',
+	        	index:'splitCode',
+	        	hidden : false,
+	        	editable : false,
+	        	width : 100,
+	        	search : true
+	        },{
+	        	name:'splitName',
+	        	index:'splitName',
+	        	editable: false,
+	        	width : 200,
+	        	search:true
+	        },{
+	        	name:'splitLevel',
+	        	index:'splitLevel',
+	        	editable: false,
+	        	width : 100,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('splitLevel',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'sourceIndexId',
+	        	index:'sourceIndexId',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        },{
+	        	name:'sourceIndexName',
+	        	index:'sourceIndexName',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'sourceProjName',
+	        	index:'sourceProjName',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'sourceProjId',
+	        	index:'sourceProjId',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'splitFormula',
+	        	index:'splitFormula',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        },{
+	        	name:'splitFormulaCode',
+	        	index:'splitFormulaCode',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'splitEvalForm',
+	        	index:'splitEvalForm',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        },{
+	        	name:'isUse',
+	        	index:'isUse',
+	        	editable: false,
+	        	width : 100,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('isUse',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'collWay',
+	        	index:'collWay',
+	        	editable: false,
+	        	width : 100,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('collWay',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'orgId',
+	        	index:'orgId',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        },{
+	        	name:'orgCode',
+	        	index:'orgCode',
+	        	editable: false,
+	        	hidden:true,
+	        	search:true
+	        },{
+	        	name:'channelFlag',
+	        	index:'channelFlag',
+	        	editable: false,
+	        	width : 100,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('channelFlag',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'orgName',
+	        	index:'orgName',
+	        	editable: false,
+	        	width : 100,
+	        	search:true
+	        }],
+	        pager: "#splitIndexPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        },
+	        ondblClickRow : function(rowid,iRow,iCol,e){
+    			$.ajax({
+    				type : 'get',
+    				url : '[(@{/irr/splitIndex/isc/fetch?isc_dataFormat=json})]',
+    				dataType : 'json',
+    				data : {
+            			operationType : 'fetch',
+        				textMatchStyle : 'substring',
+        				id : rowid,
+        				page : 0
+        		    },
+    				success : function(data, textStatus){
+    					if(textStatus == 'success'){
+    						$('#splitIndexForm').loadJson(data.response.data[0]);
+    						splitLevelChange();
+    					}
+    				},
+    				error : function(data, textStatus){
+    					swal('提示','修改失败！');
+    				}
+    			});
+	    	}
+	    });
+	    $("#splitIndexTable").jqGrid('navGrid', '#splitIndexPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#splitIndexTable').setGridWidth(width);
+	    });
+	    
+	    /*拆分指标表单重置方法*/
+	    function splitFormReset(){
+	    	$('#splitIndexId').val('');
+	    	$('#splitEvalForm').val('');
+	    	$('#splitFormula').val('');
+	    	$('#splitFormulaCode').val('');
+	    	$('#splitCode').val('');
+	    	$('#splitName').val('');
+	    	$('#splitLevel').val('');
+	    	$('#isUse').val('');
+	    	$('#orgId').val('');
+	    	$('#orgCode').val('');
+	    	$('#orgName').val('');
+	    	$('#collWay').val('');
+	    	$('#channelFlag').val('');
+	    }
+	    
+	    /*拆分指标公式模态框和机构树模态框关闭*/
+	    $('#orgTreeModal,#splitFormulaModal').on('hidden.bs.modal', function() {
+	    	$('#splitIndexModal').css({'overflow-y':'scroll'});
+	    });
+	    
+	    /*分配指标主界面保存按钮*/
+	    $('#splitFormSaveBtn').click(function(){
+	    	var splitInfo = $('#splitIndexForm').getJson();
+	    	$.ajax({
+				type : 'POST',
+				url : '[(@{/irr/splitIndex/saveSplitInfo.action})]',
+				dataType : 'json',
+				data : {
+					splitInfo : JSON.stringify(splitInfo)
+				},
+				success : function(data, textStatus){
+					if(data.flag == true){
+						$("#splitIndexTable").jqGrid('clearGridData');//清空表格
+						$("#splitIndexTable").jqGrid('setGridParam',{//重新加载数据
+							datatype : 'json',
+							page : 0
+						},true).trigger("reloadGrid");
+						splitFormReset();
+						swal('提示','保存成功！','success');
+					}else{
+						swal('提示','保存失败！','error');
+					}
+				},
+				error : function(){
+					swal('提示','保存出错','error');
+				}
+	    	});
+	    });
+	    
+	    /*拆分指标配置公式的模态框的确定按钮*/
+	    $('#splitFormulaModalSureBtn').click(function(){
+	    	var formulaCode = $('#splitFormulaModalCode').val();
+	    	$('#splitFormula').val($('#splitFormulaModalName').val());
+	    	$('#splitFormulaCode').val(formulaCode);
+	    	$('#splitEvalForm').val(ifFormulaTransEvalFormula(formulaCode));
+	    	var splitInfo = $('#splitIndexForm').getJson();
+	    	$.ajax({
+				type : 'POST',
+				url : '[(@{/irr/splitIndex/saveSplitInfo.action})]',
+				dataType : 'json',
+				data : {
+					splitInfo : JSON.stringify(splitInfo)
+				},
+				success : function(data, textStatus){
+					if(data.flag == true){
+						$('#splitIndexId').val(data.data.id);
+						var relaIds = $('#splitFormulaModalIds').val(); 
+						$.ajax({
+							type : 'POST',
+							url : '[(@{/irr/splitRela/saveSplitRela.action})]',
+							dataType : 'json',
+							data : {
+								splitId : data.data.id,
+								splitCode : data.data.splitCode,
+								splitName : data.data.splitName,
+								relaIds : relaIds
+							},
+							success : function(data,textStatus){
+								if(data.flag == true){
+									$('#splitFormulaModal').modal('hide');
+									$("#splitIndexTable").jqGrid('clearGridData');//清空表格
+									$("#splitIndexTable").jqGrid('setGridParam',{//重新加载数据
+										datatype : 'json',
+										page : 0
+									},true).trigger("reloadGrid");
+									swal('提示','保存成功','success');
+								}else{
+									swal('提示','保存出错','error');
+								}
+							},
+							error : function(){
+								swal('提示','保存出错','error');
+							}
+				    	});
+					}
+				},
+				error : function(){
+					swal('提示','保存出错','error');
+				}
+	    	});
+	    });
+	    
+	    /*拆分指标主页面重置按钮*/
+	    $('#splitFormResetBtn').click(function(){
+	    	splitFormReset();
+	    });
+	    
+	    /*上传采集数据按钮*/
+	    $('#indexImportBtn').click(function(){
+	    	var selectNode = $('#projTypeTree').jstree(true).get_selected(true)[0];
+	    	if(isEmpty(selectNode)){
+	    		swal('提示','请您先选择一条评估项目的记录!','warning');
+	    		return false;
+	    	}
+	    	if(selectNode.id == 'OR11' || selectNode.id == 'OR16' || selectNode.id == 'OR17'
+	    		 || selectNode.id == 'LR01' || selectNode.id == 'SR01'){
+	    		//获取导入模板ID
+	    		$('#templateId').val($('#projTypeTree').jstree(true).get_selected(true)[0].id);
+			 	//获取评估项目ID
+			 	$('#projTypeId').val($('#projTypeTree').jstree(true).get_selected(true)[0].li_attr.entityId);
+			 	irrDropzone.removeAllFiles();
+		    	$('#importModal').modal('show');
+	    	}else{
+	    		swal('提示','请您选择可手工导入的的评估项目!','warning');
+	    		return false;
+	    	}
+	    });
+	    
+	    /* 获取模板按钮 */
+	    $('#obtainTemplate').click(function(){
+	    	var templateId = $('#projTypeTree').jstree(true).get_selected(true)[0].id;
+	        window.location.href="/irr/indexInfo/downloadTemplate.action?templateId=" + templateId;
+	    });
+	    
+	});
+</script>
+</html>

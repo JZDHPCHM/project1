@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="MV_1.0.0_20190917__DataBase T_AFT_WARN_INFO Database Schema DDL" author="framework">
+
+        <createTable tableName="T_AFT_WARN_INFO" remarks="预警信息表">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="RULE_CODE" type="java.sql.Types.VARCHAR(40)" remarks="规则编码"></column>
+            <column name="TASK_SEQNO" type="NUMBER(3)" remarks="任务批次"></column>
+            <column name="LESSEE_ID" type="java.sql.Types.VARCHAR(36)" remarks="承租人ID"></column>
+            <!-- <column name="WARN_SIGN_LEVEL" type="java.sql.Types.VARCHAR(20)" remarks="预警信号等级"></column>
+            <column name="WARN_CATE_ID" type="java.sql.Types.VARCHAR(36)" remarks="预警大类ID"></column>
+            <column name="WARN_SUB_ID" type="java.sql.Types.VARCHAR(36)" remarks="预警小类ID"></column> -->
+            <column name="WARN_DESC" type="java.sql.Types.VARCHAR(4000)" remarks="预警详情"></column>
+            <column name="ASSO_TYPE" type="java.sql.Types.VARCHAR(30)" remarks="关联人类型"></column>
+            <column name="ASSO_ID" type="java.sql.Types.VARCHAR(36)" remarks="关联人ID"></column>
+            <column name="WARN_TIME" type="DATETIME" remarks="预警时间"></column>
+            <column name="DISP_RESULT" type="java.sql.Types.VARCHAR(1000)" remarks="处置结果"></column>
+            <column name="DISP_TIME" type="DATETIME" remarks="处置时间"></column>
+            <column name="BUSINESS_PROCESS" type="java.sql.Types.VARCHAR(50)" remarks="业务流程（当前审批人）"></column>
+        </createTable>
+        
+    </changeSet>
+</databaseChangeLog>

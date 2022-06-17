@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+<body style='background-color:white'>
+	<div class="wrapper">
+		<div class="wrapper wrapper-content animated fadeInRight">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="row" style="margin-top:10px">
+						<form class="form-inline" >
+                           	<div class="form-group">
+                                <label class="control-label" for="searchProjTypeId">评估项目</label>
+                              	 <select class="form-control" name="projTypeId" id="searchProjTypeId">
+                                   	<option value=''>请选择</option>
+                             	<option th:each="option: ${@irrProjTypeServiceImpl.fiveProjTypeSelect()}" th:value="${option.key}" th:text="${option.value}"></option>
+                              	 </select>
+                            </div>						
+						</form>
+					</div>
+					<div class="row" style='margin-top:5px;'>
+						<button class="btn btn-primary btn-sm" id='indexImportBtn'>导入</button>
+					</div>
+					
+					<!-- 导入指标模态框 -->
+                    <div class="row">
+                   		<div class="modal inmodal fade" id="importModal" tabindex="-1" role="dialog" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">
+										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+									</button>
+									<h4 class="modal-title">导入指标数据</h4>
+									<!-- <small class="font-bold">您需要先下载对应模板</small> -->
+								</div>
+								<div class="modal-body">
+									<div class="row" style="margin-top:10px">
+										<form class="form-inline">
+				                           	<div class="form-group">
+				                              <div>
+				                              	<big class="font-bold">您需要先下载对应模板</big>
+				                              </div>
+				                              <div style="margin-top:10px">
+				                              	<button id="obtainTemplate" type="button" class="btn btn-primary">下载模板</button>
+				                              </div>
+				                          	</div>							
+										</form>
+									</div>
+									<div class="row" style="margin-top:10px">
+										<form action="/irr/indexInfo/importFile.action" class="dropzone form-inline" id="importFileForm">
+			                                <input type='hidden' name='templateId' id='templateId'> 
+			                                <input type='hidden' name='projTypeId' id='projTypeId'>
+			                                <div class="form-group">
+			                                    <label for="importYear" class="control-label">年</label>
+			                                    <select class="form-control" name="importYear" id="importYear">
+			                                     	<option value=''>请选择</option>
+					                             	<option th:each="option: ${@irrTaskServiceImpl.findTaskYear()}" th:value="${option.key}" th:text="${option.value}"></option>
+			                                	</select>
+			                                </div>
+			                                <div class="form-group" id="season">
+			                                    <label for="importQuar" class="control-label">季</label>
+			                                    <select class="form-control" name="importQuar" id="importQuar">
+			                                     	<option value=''>请选择</option>
+					                             	<option value='1'>1</option>
+					                             	<option value='2'>2</option>
+					                             	<option value='3'>3</option>
+					                             	<option value='4'>4</option>
+			                                	</select>
+			                                </div>
+			                                <div class="fallback">
+			                                    <input name="file" type="file" multiple />
+			                                </div>
+			                            </form>
+									</div>
+									
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+			                     	
+			                     	
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+
+	Dropzone.autoDiscover = false;
+	var irrDropzone = new Dropzone('#importFileForm',{
+	    paramName: "file", // The name that will be used to transfer the file
+	    maxFilesize: 2, // MB
+	    maxFiles : 1,
+	    parallelUploads : 1,//并行处理多少文件上传
+	    dictRemoveFile : true,//如果addRemoveLinks为true，则用于删除文件的文本
+	    dictDefaultMessage: "<strong>拖动文件到这里或者点击此处进行上传文件</strong>",
+	    acceptedFiles : '.xls,.xlsx',
+	    addRemoveLinks : true,
+	    dictRemoveFile : '删除',
+	    autoProcessQueue : true,//是否自动上传
+	    sending: function(file, xhr, formData) {
+	      	  
+	    },
+	    success: function (file, response, e) {
+	    	if(response.flag == true){
+	    		swal('提示',response.mes,'success');
+			}else{
+				swal('提示',response.mes,'error');
+			}
+	    }
+	});
+
+	$(document).ready(function(){
+		/*获取评估项目ID*/
+		function getProjId(){
+			return $('#searchProjTypeId').val();
+		}
+		/*获取评估项目编码*/
+		function getProjCode(){
+			var projTypeInfo = $('#searchProjTypeId').find("option:selected").text();
+			if(isSelect(projTypeInfo)){
+				return '';
+			}else{
+				return projTypeInfo.substring(projTypeInfo.indexOf("(")+1,projTypeInfo.indexOf(")"));
+			}
+		}
+		
+		/*上传采集数据按钮*/
+	    $('#indexImportBtn').click(function(){
+	    	defineResetForm('#importFileForm');
+	    	irrDropzone.removeAllFiles();
+	    	var projCode = getProjCode();
+	    	if(isEmpty(projCode)){
+	    		swal('提示','请您先选择一条评估项目!','warning');
+	    		return false;
+	    	}
+	    	if(projCode == 'OR11' || projCode == 'OR16' || projCode == 'OR17'
+	    		 || projCode == 'LR01' || projCode == 'SR01'){
+	    		//获取导入模板ID
+	    		$('#templateId').val(projCode);
+			 	//获取评估项目ID
+			 	$('#projTypeId').val(getProjId());			 	
+			 	if(projCode == 'SR01'||projCode == 'OR11'){
+			 		$("#season").hide();
+			 	}
+			 	if(projCode == 'OR16'||projCode == 'OR17'||projCode == 'LR01'){
+			 		$("#season").show();
+			 	}
+		    	$('#importModal').modal('show');
+	    	}else{
+	    		swal('提示','请您选择可手工导入的的评估项目!','warning');
+	    		return false;
+	    	}
+	    });
+		
+	    /* 获取模板按钮 */
+	    $('#obtainTemplate').click(function(){
+	        window.location.href="/irr/indexInfo/downloadTemplate.action?templateId=" + getProjCode();
+	    });
+		
+	});
+</script>
+</html>

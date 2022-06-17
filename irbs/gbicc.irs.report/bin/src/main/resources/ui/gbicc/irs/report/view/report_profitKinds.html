@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+</head>
+<body>
+</body>
+<script>
+    var newData=[];
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQuery,
+	grid: [
+			{width:100, name:'id',		primaryKey:true,hidden:true},
+			{
+				width:120,
+				name:'fdKindName',					
+				title:'门类行业',
+				getGridSummary:function (records, summaryField) {
+					return "平均收益率";
+	            }
+			},
+ 			{width:100, name:'fdAaaMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdAaaMonthRate']);}},//本月 AAA
+		    {width:100, name:'fdAaaCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdAaaCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdAaaCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdAaaCompareYear']);}},//较上年同期变动
+		    
+ 			{width:100, name:'fdAaPMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdAaPMonthRate']);}},//本月 AA+
+		    {width:100, name:'fdAaPCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdAaPCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdAaPCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdAaPCompareYear']);}},//较上年同期变动
+		    
+ 			{width:100, name:'fdAaMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdAaMonthRate']);}},//本月 AA
+		    {width:100, name:'fdAaCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdAaCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdAaCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdAaCompareYear']);}},//较上年同期变动
+		    
+ 			{width:100, name:'fdAaMMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdAaMMonthRate']);}},//本月 AA-
+		    {width:100, name:'fdAaMCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdAaMCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdAaMCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdAaMCompareYear']);}},//较上年同期变动
+		    
+ 			{width:100, name:'fdAPMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdAPMonthRate']);}},//本月 A+
+		    {width:100, name:'fdAPCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdAPCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdAPCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdAPCompareYear']);}},//较上年同期变动
+		    
+ 			{width:100, name:'fdAMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdAMonthRate']);}},//本月 A
+		    {width:100, name:'fdACompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdACompareMonth']);}},//较上月变动
+		    {width:130, name:'fdACompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdACompareYear']);}},//较上年同期变动
+
+ 			{width:100, name:'fdAMMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdAMMonthRate']);}},//本月 A-
+		    {width:100, name:'fdAMCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdAMCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdAMCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdAMCompareYear']);}},//较上年同期变动
+
+ 			{width:100, name:'fdBbbPMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdBbbPMonthRate']);}},//本月 BBB+
+		    {width:100, name:'fdBbbPCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdBbbPCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdBbbPCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdBbbPCompareYear']);}},//较上年同期变动
+
+ 			{width:100, name:'fdBbbMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdBbbMonthRate']);}},//本月 BBB
+		    {width:100, name:'fdBbbCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdBbbCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdBbbCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdBbbCompareYear']);}},//较上年同期变动
+		    
+ 			{width:100, name:'fdBbbMMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdBbbMMonthRate']);}},//本月 BBB-
+		    {width:100, name:'fdBbbMCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdBbbMCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdBbbMCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdBbbMCompareYear']);}},//较上年同期变动
+
+ 			{width:100, name:'fdBbPMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdBbPMonthRate']);}},//本月 BB+
+		    {width:100, name:'fdBbPCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdBbPCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdBbPCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdBbPCompareYear']);}},//较上年同期变动
+		    
+ 			{width:100, name:'fdBbMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdBbMonthRate']);}},//本月 BB
+		    {width:100, name:'fdBbCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdBbCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdBbCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdBbCompareYear']);}},//较上年同期变动
+		    
+ 			{width:100, name:'fdBbMMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdBbMMonthRate']);}},//本月 BB-
+		    {width:100, name:'fdBbMCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdBbMCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdBbMCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdBbMCompareYear']);}},//较上年同期变动
+
+ 			{width:100, name:'fdBMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdBMonthRate']);}},//本月 B
+		    {width:100, name:'fdBCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdBCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdBCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdBCompareYear']);}},//较上年同期变动
+		    
+ 			{width:100, name:'fdCMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdCMonthRate']);}},//本月 C
+		    {width:100, name:'fdCCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdCCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdCCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdCCompareYear']);}},//较上年同期变动
+
+ 			{width:100, name:'fdDMonthRate',			title:'本月',summaryFunction:function() {return (sumData['fdDMonthRate']);}},//本月 D
+		    {width:100, name:'fdDCompareMonth',			title:'较上月变动',summaryFunction:function() {return (sumData['fdDCompareMonth']);}},//较上月变动
+		    {width:130, name:'fdDCompareYear',			title:'较上年同期变动',summaryFunction:function() {return (sumData['fdDCompareYear']);}},//较上年同期变动
+		    
+	]
+};
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields:BorrowKeyBussFields.grid,
+    fetchDataURL:'[[@{/irs/report_profitKinds/isc/fetchData}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>借款人评级与风险调整收益率分布—门类行业</b>',
+	dataSource: report_borrowKeyBussDS,
+	sortField: 'fdKindName',
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	canPageable: false,
+	fields: BorrowKeyBussFields.grid,
+	headerSpans: [
+         {
+            fields: ["fdAaaMonthRate", "fdAaaCompareMonth", "fdAaaCompareYear"], 
+            title: "AAA"        
+        },
+        {
+            fields: ["fdAaPMonthRate", "fdAaPCompareMonth", "fdAaPCompareYear"], 
+            title: "AA+"
+        },
+        {
+            fields: ["fdAaMonthRate", "fdAaCompareMonth", "fdAaCompareYear"], 
+            title: "AA"        
+        },
+        {
+            fields: ["fdAaMMonthRate", "fdAaMCompareMonth", "fdAaMCompareYear"], 
+            title: "AA-"
+        },
+        {
+            fields: ["fdAPMonthRate", "fdAPCompareMonth", "fdAPCompareYear"], 
+            title: "A+"        
+        },
+        {
+            fields: ["fdAMonthRate", "fdACompareMonth", "fdACompareYear"],  
+            title: "A"
+        },
+        {
+            fields: ["fdAMMonthRate", "fdAMCompareMonth", "fdAMCompareYear"], 
+            title: "A-"        
+        },
+        {
+            fields: ["fdBbbPMonthRate", "fdBbbPCompareMonth", "fdBbbPCompareYear"], 
+            title: "BBB+"
+        },
+        {
+            fields: ["fdBbbMonthRate", "fdBbbCompareMonth", "fdBbbCompareYear"], 
+            title: "BBB"
+        },
+        {
+            fields: ["fdBbbMMonthRate", "fdBbbMCompareMonth", "fdBbbMCompareYear"],
+            title: "BBB-"
+        },
+        {
+            fields: ["fdBbPMonthRate", "fdBbPCompareMonth", "fdBbPCompareYear"],
+            title: "BB+"
+        },
+        {
+            fields: ["fdBbMonthRate", "fdBbCompareMonth", "fdBbCompareYear"],
+            title: "BB"
+        },
+        {
+            fields: ["fdBbMMonthRate", "fdBbMCompareMonth", "fdBbMCompareYear"],
+            title: "BB-"
+        },
+        {
+            fields: ["fdBMonthRate", "fdBCompareMonth", "fdBCompareYear"], 
+            title: "B"
+        },
+        {
+            fields: ["fdCMonthRate", "fdCCompareMonth", "fdCCompareYear"],  
+            title: "C"
+        },
+        {
+            fields: ["fdDMonthRate", "fdDCompareMonth", "fdDCompareYear"], 
+            title: "D"
+        }
+    ],
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	actionMembers:[
+		'query','reset',
+        {
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+                    url:"[(@{/irs/report_profitKinds/isc/fetchData/Results.csv})]",
+                    "year":year,"month":month,
+                    fileName:  "借款人评级与风险调整收益率分布—门类行业",
+                    sortBy: "fdKindName"
+                });
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+    query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_profitKinds/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year,"month":month},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                sumData = [];
+                newData=[];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.fdKindName==='平均收益率'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                borrowKeyBussFieldsListGrid.setData(newData);
+            }
+        });
+    },
+	afterQuery:function(dsResponse,data,dsRequest){
+		borrowKeyBussFieldsListGrid.setData(newData);
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+
+</script>
+</html>

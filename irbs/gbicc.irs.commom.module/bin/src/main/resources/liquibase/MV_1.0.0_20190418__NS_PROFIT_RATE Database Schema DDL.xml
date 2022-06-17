@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="MV_1.0.0_20190418__Capital operation Database Schema DDL.xml" author="framework">
+        <!-- 贷款定价-->
+      <createTable tableName="NS_PROFIT_RATE" remarks="贷款定价">
+			<column name="input_date"						type="java.sql.Types.VARCHAR(10)"		remarks="获取时间"></column>
+			<column name="org2_no"						type="java.sql.Types.VARCHAR(60)"		remarks="机构编号"></column>
+			<column name="org2_name"           			type="java.sql.Types.VARCHAR(60)"       remarks="机构名称"></column>
+			<column name="profit_rate"     			type="java.sql.Types.NUMERIC"             	remarks="收益率"></column>
+ </createTable>
+ 
+ 
+  <createTable tableName="NS_DEVIATING_VALUE" remarks="贷款定价">
+			<column name="fd_indicators_type"						type="java.sql.Types.VARCHAR(100)"		remarks="关注点结果值"></column>
+			<column name="fd_lower"						type="java.sql.Types.VARCHAR(36)"		remarks="下限值"></column>
+			<column name="fd_upper"           			type="java.sql.Types.VARCHAR(18)"       remarks="上限值"></column>
+			<column name="fd_result"     			type="java.sql.Types.VARCHAR(30)"             	remarks="指标名"></column>
+ </createTable>
+      
+        <createTable tableName="NS_DEVIATE_INDEX" remarks="3级指标池">
+			<column name="FD_CODE"						type="java.sql.Types.VARCHAR(32)"		remarks="指标编码"></column>
+			<column name="FD_NAME"						type="java.sql.Types.VARCHAR(100)"		remarks="指标名"></column>
+			<column name="FD_RELATE"           			type="java.sql.Types.VARCHAR(60)"       remarks="违约相关性"></column>
+			<column name="FD_VAL"     			type="java.sql.Types.NUMERIC"             	remarks="1、正相关；-1、负相关"></column>
+			<column name="FD_CREATE_DATE"           			type="java.sql.Types.TIMESTAMP"       remarks=""></column>
+ 	</createTable>
+        
+    </changeSet>
+</databaseChangeLog>
+

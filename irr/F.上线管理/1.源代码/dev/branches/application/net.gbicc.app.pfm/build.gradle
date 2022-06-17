@@ -1,0 +1,10 @@
+group='org.wsp'
+
+dependencies {
+    compile(
+        "org.wsp:org.wsp.framework.core:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa:${framework_version}",
+        "org.wsp:org.wsp.framework.mvc:${framework_version}",
+        project(":com.gbicc.aicr.system")
+	)
+}

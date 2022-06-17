@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+</head>
+<body>
+</body>
+<script>
+    var newData = [];
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQuery,
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{
+				name:'name',					
+				title:'门类行业',
+				getGridSummary:function (records, summaryField) {
+					return "合计";
+	            }
+			},
+			{name:'customerNum',			title:'新增违约客户数目',summaryFunction: function() {return sumData['customerNum'];} },//新增客户数目
+		    {name:'customerNumPercent',			title:'新增违约客户数目占比',summaryFunction: function() {return formatPer(sumData['customerNumPercent']);} },//占比
+			{name:'grantNum',			title:'表内授信余额',summaryFunction: function() {return sumData['grantNum'];} },//新增客户数目
+		    {name:'grantNumPercent',			title:'表内授信余额占比',summaryFunction: function() {return formatPer(sumData['grantNumPercent']);} },//占比
+	]
+};
+
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields: BorrowKeyBussFields.grid,
+    fetchDataURL: '[[@{/irs/report_newAnalyseKinds/isc/fetchData}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>新增违约客户集中度分布—门类行业</b>',
+	dataSource: report_borrowKeyBussDS,
+	sortField: 'name',
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	canPageable: false,
+	fields: BorrowKeyBussFields.grid,
+	headerSpans: [
+    ],
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	exportFilename:'整体借款人评级分布',
+	exportActionMembers:['export2Excel','exportAll2Excel'],
+	actionMembers:[
+		'query','reset',{
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+					url:"[(@{/irs/report_newAnalyseKinds/isc/fetchData/Results.csv})]",
+                    "year":year,"month":month,
+					fileName:  "新增违约客户集中度分布—门类行业",
+                    sortBy: "name"
+				});
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+	afterQuery:function(dsResponse,data,dsRequest){
+		borrowKeyBussFieldsListGrid.setData(newData);
+	},
+    query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_newAnalyseKinds/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year,"month":month},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                sumData = [];
+                newData=[];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.name==='合计'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                borrowKeyBussFieldsListGrid.setData(newData);
+            }
+        });
+    },
+	formatCellValue:function(value, record, rowNum, colNum){
+		var formatVal = value;
+		var fieldName = borrowKeyBussFieldsListGrid.getField(colNum).title;
+		if( fieldName === "新增违约客户数目占比" || fieldName === "表内授信余额占比"){
+			formatVal = formatPer(value);
+		}
+		return formatVal;
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+</script>
+</html>

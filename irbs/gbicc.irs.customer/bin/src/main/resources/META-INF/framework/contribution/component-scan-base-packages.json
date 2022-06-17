@@ -1,0 +1,10 @@
+{
+    "includes":[
+        "gbicc.irs.customer.controller",
+        "gbicc.irs.customer.services.impl",
+        "gbicc.irs.financialindustry.controller",
+        "gbicc.irs.financialindustry.services.impl",
+        "gbicc.irs.issueBonds.controller",
+        "gbicc.irs.issueBonds.services.impl"
+    ]
+}

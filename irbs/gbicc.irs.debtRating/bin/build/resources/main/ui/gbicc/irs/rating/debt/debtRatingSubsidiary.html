@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>债项评级明细</title>
+<style type="text/css">
+	.ui-state-default, .ui-widget-content .ui-state-default{
+		font-weight: normal;
+    	font-size: 12px;
+	}
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+			    <div class="row">
+	                <div class="col-lg-12">
+	                	<div class="jqGrid_wrapper">
+                           	<table id="table_list"></table>
+                       	</div>	    
+	                </div>
+	            </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$('.chosen-select').chosen({width: "100%"});
+	// Examle data for jqGrid
+    var mydata = [
+        {name1: "经营性现金流保障倍数", name2: "调整前经营性现金流保障倍数", name3: "租期内经营性现金流现值/风险敞口", name4: "租期内经营性现金流现值/风险敞口", name5: "系统产出", name6: "系统产出"},
+        {name1: "经营性现金流保障倍数", name2: "现金流估算准确度调整", name3: "A", name4: "历史财表数据计算历史经营性现金流增长率，该增长率能够一定程度上反应承租人未来经营性现金流增长情况。业务人员使用该增长率作为承租人未来现金流增长率。", name5: "（选项）", name6: "（选项）"},
+        {name1: "经营性现金流保障倍数", name2: "短期现金流保障能力调整（第一年现金流/第一年租金比率）", name3: "A", name4: ">6.74", name5: "系统产出", name6: "系统产出"},
+        {name1: "经营性现金流保障倍数", name2: "租期长度调整", name3: "A", name4: "两年（含）以内", name5: "系统产出", name6: "系统产出"},
+        {name1: "现金流保障倍数", name2: "现金流保障倍数", name3: "", name4: "", name5: "系统产出", name6: "系统产出"}
+    ];
+	//
+	$("#table_list").jqGrid({
+		url : "",
+		recordtext: "显示：{0} - {1}，总数：{2} ",
+	    emptyrecords: "本次查询无数据！",
+	    loadtext: "读取中...",
+	    pgtext : "第 {0}页， 共{1}页",
+		mtype : "post",
+        //datatype: "json",
+        data: mydata,
+        datatype: "local",
+        //height: 250,
+        height: '100%',
+        autowidth: true,
+        shrinkToFit: true,
+        prmNames: {
+            page: "page"   // 表示请求页码的参数名称
+        },
+        rowNum: 100,
+        rowList: [10, 20, 30],
+        colNames:['','','档位','档位描述','初评结果','复评结果'],
+        colModel:[
+        	{name:'name1',index:'name1', width: 50,
+				cellattr: function(rowId, tv, rawObject, cm, rdata) {
+				//合并单元格
+				return 'id=\'name1' + rowId + "\'";
+			}},
+        	{name:'name2',index:'name2', width: 80,
+				cellattr: function(rowId, tv, rawObject, cm, rdata) {
+				//合并单元格
+				return 'id=\'name2' + rowId + "\'";
+			}},
+			{name:'name3',index:'name3', width: 20,
+				cellattr: function(rowId, tv, rawObject, cm, rdata) {
+				//合并单元格
+				return 'id=\'name3' + rowId + "\'";
+			}},
+			{name:'name4',index:'name4', width: 280,
+				cellattr: function(rowId, tv, rawObject, cm, rdata) {
+				//合并单元格
+				return 'id=\'name4' + rowId + "\'";
+			}},
+        	{name:'name5',index:'name5', width: 60,
+				cellattr: function(rowId, tv, rawObject, cm, rdata) {
+				//合并单元格
+				return 'id=\'name5' + rowId + "\'";
+			}},
+			{name:'name6',index:'name6', width: 60,
+				cellattr: function(rowId, tv, rawObject, cm, rdata) {
+				//合并单元格
+				return 'id=\'name6' + rowId + "\'";
+			}}
+        ],
+        viewrecords: true,
+        caption: "",
+        gridComplete: function() {
+			//在gridComplete调用合并方法
+			var gridName = "table_list";
+			MergerRowspan(gridName, 'name1');//跨行
+			MergerRowspan(gridName, 'name2');//跨行
+			MergerColspan(gridName,1, 'name3','name4');//跨列
+			MergerColspan(gridName,1, 'name5','name6');//跨列
+			MergerColspan(gridName,3, 'name5','name6');//跨列
+			MergerColspan(gridName,4, 'name5','name6');//跨列
+			MergerColspan(gridName,5, 'name1','name2');//跨列
+			MergerColspan(gridName,5, 'name5','name6');//跨列
+		},
+        add: true,
+        edit: true,
+        addtext: 'Add',
+        edittext: 'Edit',
+        rownumbers: false,
+        hidegrid: false
+    });
+	$("#table_list").jqGrid('setGroupHeaders', {
+    	useColSpanStyle: true,
+    	groupHeaders:[
+    	    {startColumnName:'name1', numberOfColumns:2, titleText: '现金流维度'}
+    	]  
+    })
+    $(window).bind('resize', function () {
+        var width = $('.jqGrid_wrapper').width();
+        $('#table_list').setGridWidth(width);
+    });
+
+    setTimeout(function(){
+        $('.wrapper-content').removeClass('animated fadeInRight');
+    },700);
+</script>
+</html>

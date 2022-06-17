@@ -1,0 +1,46 @@
+[
+	{
+		"type": "CATEGORY",
+		"parentId": "menuitem.irs.customerManagement",
+		"id": "menuitem.irs.defaultcustomer.management",
+		"title": "[(#{menuitem.irs.defaultcustomer.management})]",
+		"order": 300
+	},/*客户管理/违约客户管理/违约事件管理
+		{"type":"ANNOTATION","parentId":"menuitem.irs.customerManagement","id":"menuitem.irs.defaultcustomer.defaultEventlib","title":"[(#{menuitem.irs.defaultcustomer.defaultEventlib})]","order":200},
+		*//*违约发起*/
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.defaultcustomer.management",
+		"id": "menuitem.irs.defaultcustomer.start",
+		"title": "[(#{menuitem.irs.defaultcustomer.start})]",
+		"order": 300
+	},/*违约审批*/
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.defaultcustomer.management",
+		"id": "menuitem.irs.defaultcustomer.arrpove",
+		"title": "[(#{menuitem.irs.defaultcustomer.arrpove})]",
+		"order": 400
+	},/*客户管理/违约客户重生管理*/
+	{
+		"type": "CATEGORY",
+		"parentId": "menuitem.irs.customerManagement",
+		"id": "menuitem.irs.rebirthdefaultcustomer.management",
+		"title": "[(#{menuitem.irs.rebirthdefaultcustomer.management})]",
+		"order": 500
+	},/*违约重生发起*/
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.rebirthdefaultcustomer.management",
+		"id": "menuitem.irs.rebirthdefaultcustomer.start",
+		"title": "[(#{menuitem.irs.rebirthdefaultcustomer.start})]",
+		"order": 600
+	},/*违约重生审批*/
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.rebirthdefaultcustomer.management",
+		"id": "menuitem.irs.rebirthdefaultcustomer.arrpove",
+		"title": "[(#{menuitem.irs.rebirthdefaultcustomer.arrpove})]",
+		"order": 700
+	}
+]

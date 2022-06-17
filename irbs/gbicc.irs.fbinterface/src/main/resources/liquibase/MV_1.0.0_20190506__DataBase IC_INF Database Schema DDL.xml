@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="MV_1.0.0_20180102__DataBase IC_INF Database Schema DDL" author="framework">
+
+        <!-- 工商资料结果表 -->
+        <createTable tableName="FB_INTERFACE_IC_INF" remarks="工商资料">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="BIZ_HEAD_UNIT" type="java.sql.Types.VARCHAR(300)" remarks="业务主管单位"></column>
+            <column name="LICEN_DT" type="java.sql.Types.VARCHAR(20)" remarks="发照日期"></column>
+            <column name="ISSUCTF_ORG" type="java.sql.Types.VARCHAR(300)" remarks="发证机关"></column>
+            <column name="REVOKE_DT" type="java.sql.Types.VARCHAR(20)" remarks="吊销日期"></column>
+            <column name="COMPANY_NAME" type="java.sql.Types.VARCHAR(300)" remarks="名称"></column>
+            <column name="COMPANY_ADDRESS" type="java.sql.Types.VARCHAR(300)" remarks="地址"></column>
+            <column name="MORE_ONE" type="java.sql.Types.VARCHAR(200)" remarks="多证合一"></column>
+            <column name="ESTAB_DT" type="java.sql.Types.VARCHAR(20)" remarks="成立日期"></column>
+            <column name="EXEC_AFR_COPSN" type="java.sql.Types.VARCHAR(300)" remarks="执行事务合伙人"></column>
+            <column name="EXEC_AFR_COPSN_DELE" type="java.sql.Types.VARCHAR(300)" remarks="执行事务合伙人（委派代表）"></column>
+            <column name="IVSTR" type="java.sql.Types.VARCHAR(300)" remarks="投资人"></column>
+            <column name="STD_NAME" type="java.sql.Types.VARCHAR(300)" remarks="标准化名称"></column>
+            <column name="STD_DT" type="java.sql.Types.VARCHAR(20)" remarks="核准日期"></column>
+            <column name="FADE_EXEC" type="java.sql.Types.VARCHAR(20)" remarks="法代/执行"></column>
+            <column name="LEGAL_REPR" type="java.sql.Types.VARCHAR(90)" remarks="法定代表人"></column>
+            <column name="RGST_NO" type="java.sql.Types.VARCHAR(20)" remarks="注册号"></column>
+            <column name="RGST_CPTL_CCY" type="java.sql.Types.VARCHAR(30)" remarks="注册资本币种"></column>
+            <column name="RGST_CPTL" type="NUMBER(24,4)" remarks="注册资本（万元）"></column>
+            <column name="NOTE_REVOKE_DT" type="java.sql.Types.VARCHAR(20)" remarks="注吊销日期"></column>
+            <column name="CNCL_DT" type="java.sql.Types.VARCHAR(20)" remarks="注销日期"></column>
+            <column name="DISP_ETP_NAME" type="java.sql.Types.VARCHAR(300)" remarks="派出企业名称"></column>
+            <column name="REGST_DT" type="java.sql.Types.VARCHAR(20)" remarks="登记时间"></column>
+            <column name="REGST_ORG" type="java.sql.Types.VARCHAR(300)" remarks="登记机关"></column>
+            <column name="REGST_STATUS" type="java.sql.Types.VARCHAR(20)" remarks="登记状态"></column>
+            <column name="PROV_CITY" type="java.sql.Types.VARCHAR(300)" remarks="省市"></column>
+            <column name="TP_NAME" type="java.sql.Types.VARCHAR(300)" remarks="类型"></column>
+            <column name="TP_CODE" type="java.sql.Types.VARCHAR(30)" remarks="类型代码"></column>
+            <column name="ECON_PROP" type="java.sql.Types.VARCHAR(30)" remarks="经济性质"></column>
+            <column name="MG_DEDLN_START" type="java.sql.Types.VARCHAR(30)" remarks="经营期限自"></column>
+            <column name="MG_DEDLN_END" type="java.sql.Types.VARCHAR(30)" remarks="经营期限至"></column>
+            <column name="OPERATOR" type="java.sql.Types.VARCHAR(300)" remarks="经营者"></column>
+            <column name="MG_SCP" type="java.sql.Types.VARCHAR(4000)" remarks="经营范围"></column>
+            <column name="UNIF_SOCI_CRED_CODE" type="java.sql.Types.VARCHAR(20)" remarks="统一社会信用代码"></column>
+            <column name="CTCT_TEL" type="java.sql.Types.VARCHAR(20)" remarks="联系电话"></column>
+            <column name="EVAL_LVL" type="java.sql.Types.VARCHAR(20)" remarks="评估等级"></column>
+            <column name="CHRGTOR" type="java.sql.Types.VARCHAR(300)" remarks="负责人"></column>
+            <column name="IN_INDU" type="java.sql.Types.VARCHAR(300)" remarks="迁入地工商局"></column>
+            <column name="CHIEF_BHAF" type="java.sql.Types.VARCHAR(300)" remarks="首席代表"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 工商资料-A级纳税人评价年度 -->
+        <createTable tableName="FB_INTERFACE_IC_INF_EVALANN" remarks="工商资料-A级纳税人评价年度">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="IC_INF_ID" type="java.sql.Types.VARCHAR(36)" remarks="工商资料ID"></column>
+            <column name="EVAL_ANNU" type="java.sql.Types.VARCHAR(20)" remarks="评价年度"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 工商资料-曾用名 -->
+        <createTable tableName="FB_INTERFACE_IC_INF_USEDNAME" remarks="工商资料-曾用名">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="IC_INF_ID" type="java.sql.Types.VARCHAR(36)" remarks="工商资料ID"></column>
+            <column name="USED_NAME" type="java.sql.Types.VARCHAR(300)" remarks="曾用名"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 工商资料-股票 -->
+        <createTable tableName="FB_INTERFACE_IC_INF_STK" remarks="工商资料-股票">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="IC_INF_ID" type="java.sql.Types.VARCHAR(36)" remarks="工商资料ID"></column>
+            <column name="STK_CODE" type="java.sql.Types.VARCHAR(30)" remarks="代码"></column>
+            <column name="STK_NAME" type="java.sql.Types.VARCHAR(300)" remarks="简称"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

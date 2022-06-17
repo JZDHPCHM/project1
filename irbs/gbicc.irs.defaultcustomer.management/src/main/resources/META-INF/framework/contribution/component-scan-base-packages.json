@@ -1,0 +1,6 @@
+{
+    "includes":[
+        "gbicc.irs.defaultcustomer.controller",
+        "gbicc.irs.defaultcustomer.service.impl"
+    ]
+}

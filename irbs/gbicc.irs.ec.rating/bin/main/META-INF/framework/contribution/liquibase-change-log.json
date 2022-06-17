@@ -1,0 +1,22 @@
+[
+    {
+        "category" : "install", 
+        "order"    : 12400,
+        "description":"对公客户评级管理数据库表结构及初始数据",
+        "locations":[
+     			"classpath:/liquibase/MV_1.0.0_20190917__NS_STANDARD_SCORE.xml",
+     			"classpath:/liquibase/MV_1.0.0_20190917__NS_BP_MASTER.xml",
+     			"classpath:/liquibase/MV_1.0.0_20190614_MainScale_DDL.xml",
+     			"classpath:/liquibase/MV_1.0.0_20171116__EC Rating Database Schema DDL.xml",
+     			"classpath:/liquibase/LIQUIBASE_2019.10.16_15.52.01__NS_MAIN_LEVEL.xml",
+     			"classpath:/liquibase/LIQUIBASE_2019.10.16_15.51.24__NS_CFG_MAIN_SCALE.xml",
+     			"classpath:/liquibase/LIQUIBASE_2019.10.16_15.57.19__NS_R_CFG_STEPS.xml",
+     			"classpath:/liquibase/LIQUIBASE_2019.10.16_16.22.06__FR_SYS_DICTIONARY.xml",
+       			"classpath:/liquibase/LIQUIBASE_2019.10.16_16.22.29__FR_SYS_I18N_MESSAGE.xml",
+       			"classpath:/liquibase/LIQUIBASE_2019.10.18_09.38.53__T_AFT_WARN_RULE.xml",
+       			"classpath:/liquibase/LIQUIBASE_2019.10.18_19.13.23__NS_STANDARD_SCORE.xml"
+       			
+        ]
+    }
+  
+]

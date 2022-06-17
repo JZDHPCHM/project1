@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+</head>
+<body>
+</body>
+<script>
+    var newData = [];
+var q=[];
+q.push(tQuery[0]);
+//字段定义
+var BorrowKeyBussFields ={
+	query: q,
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{
+				name:'fdGuestGr',					
+				title:'信用等级',
+				getGridSummary:function (records, summaryField) {
+					return "合计";
+	            }
+			},
+			{name:'fdPdAvg', title:'PD平均值',summaryFunction: function() {return sumData['fdPdAvg'];} },//新增客户数目
+		    {name:'fdCustomNum', title:'客户数目',summaryFunction: function() {return sumData['fdCustomNum'];} },//占比
+			{name:'fdIlegalCustomNum', title:'违约客户数目',summaryFunction: function() {return sumData['fdIlegalCustomNum'];} },//新增客户数目
+		    {name:'fdActualIlegalPer', title:'实际违约率',summaryFunction: function() {return formatPer(sumData['fdActualIlegalPer']);} },//占比
+			{name:'fdEadNum', title:'实际违约金额',summaryFunction: function() {return sumData['fdEadNum'];} },//授信余额占比较上季末变动度
+		    {name:'fdEadPer', title:'违约金额占比',summaryFunction: function() {return formatPer(sumData['fdEadPer']);} },//占比
+	]
+};
+
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields: BorrowKeyBussFields.grid,
+    fetchDataURL: '[[@{/irs/report_pdCompare/isc/fetchData}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>PD估值与实际值比较情况</b>',
+	dataSource: report_borrowKeyBussDS,
+	//sortField: 'fdGuestGr',
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	canPageable: false,
+	fields: BorrowKeyBussFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	actionMembers:[
+		'query','reset',
+		 {
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+					url:"[(@{/irs/report_pdCompare/isc/fetchData/Results.csv})]",
+                    "year":year,
+					fileName:  "PD估值与实际值比较情况",
+                    sortBy: "fdGuestGr"
+				});
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+    query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_pdCompare/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                sumData = [];
+                newData=[];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.fdGuestGr==='合计'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                borrowKeyBussFieldsListGrid.setData(newData);
+            }
+        });
+    },
+	afterQuery:function(dsResponse,data,dsRequest){
+		borrowKeyBussFieldsListGrid.setData(newData);
+	},
+	formatCellValue:function(value, record, rowNum, colNum){
+		var formatVal = value;
+		if( colNum==4 || colNum==6){
+			formatVal = formatPer(value);
+		}
+		return formatVal;
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+</script>
+</html>

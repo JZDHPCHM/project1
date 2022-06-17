@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FR_2019.04.09_20.28.53__FR_AA_ROLE.xml -->
+<export>
+  <summary>
+    <t name="FR_AA_ROLE">select * from FR_AA_ROLE where fd_code !=&apos;admin&apos;</t>
+  </summary>
+  <table name="FR_AA_ROLE">
+    <sql>select * from FR_AA_ROLE where fd_code !=&apos;admin&apos;</sql>
+      <fields>
+        <field name="FD_ID"                        type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CODE"                      type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_NAME"                      type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_ENABLE"                    type="2"                  typeName="java.sql.Types.NUMERIC"/>
+        <field name="FD_DESCRIPTION"               type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_INDEX_PAGE_URL"            type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_HELP_IDS"                  type="2005"               typeName="java.sql.Types.CLOB"/>
+        <field name="FD_PREFERENCE_IDS"            type="2005"               typeName="java.sql.Types.CLOB"/>
+        <field name="FD_DATA_COME_FROM"            type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATOR"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATE_DATE"               type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+        <field name="FD_LAST_MODIFIER"             type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_LAST_MODIFYDATE"           type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+      </fields>
+    <resultset>
+      <row>
+        <f>c7d99780-1e12-48e5-b370-f9c90213445c</f>
+        <f>FINANCIAL_MARKETS_MAINTAINER</f>
+        <f>总行金融市场部信息维护岗</f>
+        <f>1</f>
+        <f>总行金融市场部信息维护岗</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 10:27:03.08</f>
+        <f>admin</f>
+        <f>2019-04-09 20:26:11.166</f>
+      </row>
+      <row>
+        <f>b75fce0f-6dd5-45a0-b0e3-bef839c8ef10</f>
+        <f>CREDIT_PRELIMINARY_EXAMINATION</f>
+        <f>信用等级初审岗</f>
+        <f>1</f>
+        <f>信用等级初审岗</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 10:48:19.025</f>
+        <f>admin</f>
+        <f>2019-04-09 20:26:44.676</f>
+      </row>
+      <row>
+        <f>24d92398-0425-448c-bbaa-562c08603763</f>
+        <f>BRANCHBRANCH_PRESIDENT</f>
+        <f>分/支行行长</f>
+        <f>1</f>
+        <f>分/支行行长</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 10:51:06.259</f>
+        <f>admin</f>
+        <f>2019-04-09 20:26:58.502</f>
+      </row>
+      <row>
+        <f>c78f11f3-833f-40b4-a92e-5780af310a09</f>
+        <f>HEAD_OFFICE_APPROVER</f>
+        <f>总行部门审批人</f>
+        <f>1</f>
+        <f>总行部门审批人</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 11:06:08.058</f>
+        <f>admin</f>
+        <f>2019-04-09 20:26:35.553</f>
+      </row>
+      <row>
+        <f>a945a5f2-ec28-4072-b1aa-83ffade1ff26</f>
+        <f>HEAD_OFFICE_DISTRIBUTOR</f>
+        <f>总行部门分发员</f>
+        <f>1</f>
+        <f>总行部门分发员</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 11:07:39.413</f>
+        <f>admin</f>
+        <f>2019-04-09 20:26:40.613</f>
+      </row>
+      <row>
+        <f>e6b8a164-1287-4e48-bf1f-598612ba8621</f>
+        <f>CREDIT_COMMITTEE_COMPREHENSIVE_DIRECTOR</f>
+        <f>贷审会主任</f>
+        <f>1</f>
+        <f>贷审会主任</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 11:12:49.0</f>
+        <f>admin</f>
+        <f>2019-04-09 20:27:05.931</f>
+      </row>
+      <row>
+        <f>ec5abbb2-e679-45da-93e1-37699a141db6</f>
+        <f>EXAMINATION_REBEWAL_APPROVAL</f>
+        <f>总行风险管理部违约重生审批岗</f>
+        <f>1</f>
+        <f>总行风险管理部违约重生审批岗</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 11:25:52.642</f>
+        <f>admin</f>
+        <f>2019-04-09 20:26:25.444</f>
+      </row>
+      <row>
+        <f>ecba78b5-e0c9-4727-ba29-96dbdca519ae</f>
+        <f>QUERY_POST</f>
+        <f>查询岗</f>
+        <f>1</f>
+        <f>查询岗</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 11:28:17.396</f>
+        <f>admin</f>
+        <f>2019-04-09 20:27:09.885</f>
+      </row>
+      <row>
+        <f>ecba78b5-e0c9-4727-ba29-96dbdca51888</f>
+        <f>REPORT_QUERY_POST</f>
+        <f>报表查询岗</f>
+        <f>1</f>
+        <f>报表查询岗</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 11:28:17.396</f>
+        <f>admin</f>
+        <f>2019-04-09 20:27:09.885</f>
+      </row>
+      <row>
+        <f>86a38e61-85b8-44c7-850f-ec7884a38175</f>
+        <f>FINANCIAL_MARKETS_OPERATOR</f>
+        <f>总行金融市场部评级操作员</f>
+        <f>1</f>
+        <f>总行金融市场部评级操作员</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 09:24:17.0</f>
+        <f>admin</f>
+        <f>2019-04-09 20:26:20.206</f>
+      </row>
+      <row>
+        <f>7e7308a6-05eb-4dba-bf90-4c96fc612cd4</f>
+        <f>FINANCIAL_MARKETS_APPROVER</f>
+        <f>总行金融市场部评级审批人</f>
+        <f>1</f>
+        <f>总行金融市场部评级审批人</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 09:37:36.133</f>
+        <f>admin</f>
+        <f>2019-04-09 20:26:15.557</f>
+      </row>
+      <row>
+        <f>785eb9ef-1896-4794-bf6d-4bc87cac43f2</f>
+        <f>CREDIT_COMMITTEE_COMPREHENSIVE_SECRETARY</f>
+        <f>贷审会综合员（秘书）</f>
+        <f>1</f>
+        <f>贷审会综合员（秘书）</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 11:11:07.467</f>
+        <f>admin</f>
+        <f>2019-04-09 20:27:02.249</f>
+      </row>
+      <row>
+        <f>493ea632-ae89-4646-b81f-489ddd3ef33f</f>
+        <f>RISK_APPROVAL</f>
+        <f>总行风险部风险暴露分类审批岗</f>
+        <f>1</f>
+        <f>总行风险部风险暴露分类审批岗</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 11:27:13.395</f>
+        <f>admin</f>
+        <f>2019-04-09 20:26:30.829</f>
+      </row>
+      <row>
+        <f>00000000-0000-0000-3000-000000000001</f>
+        <f>CUSTOMER_MANAGER</f>
+        <f>客户经理</f>
+        <f>1</f>
+        <f>客户经理</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f/>
+        <f>system</f>
+        <f>2019-02-11 10:11:00.0</f>
+        <f>admin</f>
+        <f>2019-04-09 20:26:54.537</f>
+      </row>
+      <row>
+        <f>88e78a27-df96-465a-819c-dc40fadbc0b3</f>
+        <f>DETERMINATION_COGNIZANCEP_APPLY</f>
+        <f>违约认定申请岗</f>
+        <f>1</f>
+        <f>违约认定申请岗</f>
+        <f/>
+        <f>[ &quot;help.application&quot; ]</f>
+        <f>[ ]</f>
+        <f>MANUAL</f>
+        <f>admin</f>
+        <f>2019-02-15 11:20:14.071</f>
+        <f>admin</f>
+        <f>2019-04-09 20:25:51.541</f>
+      </row>
+    </resultset>
+  </table>
+</export>

@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8'?><!--FR_2019.07.15_16.16.27__MV_CFG_SCALE.xml--><export>
+    <summary>
+        <t name="MV_CFG_SCALE">select * from MV_CFG_SCALE</t>
+    </summary>
+    <table name="MV_CFG_SCALE">
+        <sql>select * from MV_CFG_SCALE</sql>
+        <fields>
+            <field name="FD_ID" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_MODEL_ID" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_MODEL_NAME" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_LEVEL" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_PD" type="2" typeName="java.sql.Types.NUMERIC"/>
+            <field name="FD_ORDER" type="2" typeName="java.sql.Types.NUMERIC"/>
+            <field name="FD_CREATOR" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_CREATE_DATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+            <field name="FD_LAST_MODIFIER" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_LAST_MODIFYDATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+        </fields>
+        <resultset>
+            <row>
+                <f>a8833fc1-4043-4c70-b22b-70ddffd26651</f>
+                <f/>
+                <f/>
+                <f>BBB+</f>
+                <f>.0138</f>
+                <f>6</f>
+                <f>admin</f>
+                <f>2019-07-15 11:41:48.749</f>
+                <f>admin</f>
+                <f>2019-07-15 11:41:48.749</f>
+            </row>
+            <row>
+                <f>581d6c81-0b3c-451b-b149-f332725a301b</f>
+                <f/>
+                <f/>
+                <f>D</f>
+                <f>.2637</f>
+                <f>1</f>
+                <f>admin</f>
+                <f>2019-07-15 11:39:13.0</f>
+                <f>admin</f>
+                <f>2019-07-15 11:39:51.787</f>
+            </row>
+            <row>
+                <f>8516569f-14be-43c9-b0b7-6039b5e153c6</f>
+                <f/>
+                <f/>
+                <f>C</f>
+                <f>.2637</f>
+                <f>2</f>
+                <f>admin</f>
+                <f>2019-07-15 11:40:05.763</f>
+                <f>admin</f>
+                <f>2019-07-15 11:40:05.763</f>
+            </row>
+            <row>
+                <f>251599fa-d71f-45aa-8143-c17ece797275</f>
+                <f/>
+                <f/>
+                <f>B</f>
+                <f>.173</f>
+                <f>3</f>
+                <f>admin</f>
+                <f>2019-07-15 11:40:50.77</f>
+                <f>admin</f>
+                <f>2019-07-15 11:40:50.77</f>
+            </row>
+            <row>
+                <f>750fae85-5313-4558-a632-e92515971938</f>
+                <f/>
+                <f/>
+                <f>BB</f>
+                <f>.0745</f>
+                <f>4</f>
+                <f>admin</f>
+                <f>2019-07-15 11:41:06.237</f>
+                <f>admin</f>
+                <f>2019-07-15 11:41:06.237</f>
+            </row>
+            <row>
+                <f>3305879a-4280-4176-9601-527d835638be</f>
+                <f/>
+                <f/>
+                <f>BBB-</f>
+                <f>.0321</f>
+                <f>5</f>
+                <f>admin</f>
+                <f>2019-07-15 11:41:27.103</f>
+                <f>admin</f>
+                <f>2019-07-15 11:41:27.103</f>
+            </row>
+            <row>
+                <f>cbfef159-cd49-418e-a15f-daa6ebaa2879</f>
+                <f/>
+                <f/>
+                <f>A</f>
+                <f>.0059</f>
+                <f>7</f>
+                <f>admin</f>
+                <f>2019-07-15 11:42:07.565</f>
+                <f>admin</f>
+                <f>2019-07-15 11:42:07.565</f>
+            </row>
+            <row>
+                <f>cc42eccd-2c11-42be-91f6-86c45f475eac</f>
+                <f/>
+                <f/>
+                <f>AA-</f>
+                <f>.0026</f>
+                <f>8</f>
+                <f>admin</f>
+                <f>2019-07-15 11:42:26.206</f>
+                <f>admin</f>
+                <f>2019-07-15 11:42:26.206</f>
+            </row>
+            <row>
+                <f>1dc5cdaa-d861-40b5-9ee7-12a3b6ee9329</f>
+                <f/>
+                <f/>
+                <f>AA+</f>
+                <f>.0011</f>
+                <f>9</f>
+                <f>admin</f>
+                <f>2019-07-15 11:42:44.381</f>
+                <f>admin</f>
+                <f>2019-07-15 11:42:44.381</f>
+            </row>
+            <row>
+                <f>eaa6ed89-afd7-454a-b08c-033f672117c7</f>
+                <f/>
+                <f/>
+                <f>AAA</f>
+                <f>.0003</f>
+                <f>10</f>
+                <f>admin</f>
+                <f>2019-07-15 11:43:00.055</f>
+                <f>admin</f>
+                <f>2019-07-15 11:43:00.055</f>
+            </row>
+            <row>
+                <f>4f89acd6-0ffd-466a-8ea2-19f0d2df6437</f>
+                <f/>
+                <f/>
+                <f>AA</f>
+                <f>.0017</f>
+                <f>11</f>
+                <f>admin</f>
+                <f>2019-07-15 11:43:14.492</f>
+                <f>admin</f>
+                <f>2019-07-15 11:43:14.492</f>
+            </row>
+            <row>
+                <f>79678a04-60f8-4036-9a63-5054ea0ab69a</f>
+                <f/>
+                <f/>
+                <f>A+</f>
+                <f>.0039</f>
+                <f>12</f>
+                <f>admin</f>
+                <f>2019-07-15 11:43:28.192</f>
+                <f>admin</f>
+                <f>2019-07-15 11:43:28.192</f>
+            </row>
+            <row>
+                <f>c916ffab-0525-41bc-beef-09d1bbfd2b4a</f>
+                <f/>
+                <f/>
+                <f>A-</f>
+                <f>.0091</f>
+                <f>13</f>
+                <f>admin</f>
+                <f>2019-07-15 11:43:44.933</f>
+                <f>admin</f>
+                <f>2019-07-15 11:43:44.933</f>
+            </row>
+            <row>
+                <f>c620abfb-71ed-46fd-8ef7-8456bf9793df</f>
+                <f/>
+                <f/>
+                <f>BBB</f>
+                <f>.021</f>
+                <f>14</f>
+                <f>admin</f>
+                <f>2019-07-15 11:44:05.887</f>
+                <f>admin</f>
+                <f>2019-07-15 11:44:05.887</f>
+            </row>
+            <row>
+                <f>cb832781-cbef-46d8-bc0a-9a6b76c5dcb2</f>
+                <f/>
+                <f/>
+                <f>BB+</f>
+                <f>.0489</f>
+                <f>15</f>
+                <f>admin</f>
+                <f>2019-07-15 11:44:32.395</f>
+                <f>admin</f>
+                <f>2019-07-15 11:44:32.395</f>
+            </row>
+            <row>
+                <f>111a631c-bced-492c-8aa4-62bc03196b23</f>
+                <f/>
+                <f/>
+                <f>BB-</f>
+                <f>.1135</f>
+                <f>16</f>
+                <f>admin</f>
+                <f>2019-07-15 11:44:47.335</f>
+                <f>admin</f>
+                <f>2019-07-15 11:44:47.335</f>
+            </row>
+        </resultset>
+    </table>
+</export>

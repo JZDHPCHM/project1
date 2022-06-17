@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>风险管理系统</title>
+
+<style type="text/css">
+	.enter-sty{
+		text-align: center;
+	    font-size: 22px;
+	    height: 100%;
+	    background: #f5f6fa;		    	
+	}
+</style>
+</head>
+<body id="body">
+	<div class="enter-sty">
+		<div><img alt="" src="/image/welcome.png" width="609" height="438"></div>
+		<div id="user"></div>
+		<div>欢迎进入风险管理系统</div>
+	</div>
+</body>
+<script type="text/javascript">
+var currUserName = "[(${T(org.wsp.framework.security.util.SecurityUtil).getUserName()})]";
+var roleId = "[(${T(gbicc.irs.main.rating.service.impl.BpMasterServiceImpl).roleCode()})]";
+	if(roleId.indexOf("cockpit")>-1){
+		window.location.href = "/index/enterCockpit";
+	}
+$("#user").text(currUserName);
+</script>
+</html>

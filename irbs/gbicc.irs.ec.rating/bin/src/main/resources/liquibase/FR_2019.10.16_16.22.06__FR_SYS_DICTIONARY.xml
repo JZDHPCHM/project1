@@ -1,0 +1,1051 @@
+<?xml version='1.0' encoding='UTF-8'?><!--FR_2019.10.16_16.22.06__FR_SYS_DICTIONARY.xml -->
+<export>
+	<summary>
+		<t name="FR_SYS_DICTIONARY">select * from FR_SYS_DICTIONARY</t>
+	</summary>
+	<table name="FR_SYS_DICTIONARY">
+		<sql>select * from FR_SYS_DICTIONARY</sql>
+		<fields>
+			<field name="FD_ID" type="12" typeName="java.sql.Types.VARCHAR" />
+			<field name="FD_CODE" type="12"
+				typeName="java.sql.Types.VARCHAR" />
+			<field name="FD_KEY" type="12"
+				typeName="java.sql.Types.VARCHAR" />
+			<field name="FD_ORDER" type="2"
+				typeName="java.sql.Types.NUMERIC" />
+			<field name="FD_CREATOR" type="12"
+				typeName="java.sql.Types.VARCHAR" />
+			<field name="FD_CREATE_DATE" type="93"
+				typeName="java.sql.Types.TIMESTAMP" />
+			<field name="FD_LAST_MODIFIER" type="12"
+				typeName="java.sql.Types.VARCHAR" />
+			<field name="FD_LAST_MODIFYDATE" type="93"
+				typeName="java.sql.Types.TIMESTAMP" />
+		</fields>
+		<resultset>
+			<row>
+				<f>0c1abada-b9f1-4271-aea3-aaf27fb81150</f>
+				<f>RATING_STATUS</f>
+				<f>010</f>
+				<f>1</f>
+				<f>admin</f>
+				<f>2019-01-25 16:58:34.335</f>
+				<f>admin</f>
+				<f>2019-01-25 16:58:34.335</f>
+			</row>
+			<row>
+				<f>bcbf4de6-9fdf-44b4-94c1-3db0991fd155</f>
+				<f>RATING_STATUS</f>
+				<f>020</f>
+				<f>2</f>
+				<f>admin</f>
+				<f>2019-01-25 17:01:52.878</f>
+				<f>admin</f>
+				<f>2019-01-25 17:01:52.878</f>
+			</row>
+			<row>
+				<f>8622c549-fd42-4f92-bbdd-9e52d9fee4e8</f>
+				<f>RATING_STATUS</f>
+				<f>030</f>
+				<f>3</f>
+				<f>admin</f>
+				<f>2019-01-25 17:01:57.975</f>
+				<f>admin</f>
+				<f>2019-01-25 17:01:57.975</f>
+			</row>
+			<row>
+				<f>09e7ee24-538a-4775-9f2e-579d167f0bd9</f>
+				<f>RULE_FREQUENCY</f>
+				<f>1</f>
+				<f>0</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>ZHANGTAO487</f>
+				<f />
+			</row>
+			<row>
+				<f>fe0e9c12-0516-4422-80d2-3267d2e253dc</f>
+				<f>RULE_FREQUENCY</f>
+				<f>3</f>
+				<f>0</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>ZHANGTAO487</f>
+				<f />
+			</row>
+			<row>
+				<f>edea1cae-97b6-4e5c-8405-7f69dbd7a0c0</f>
+				<f>RULE_FREQUENCY</f>
+				<f>7</f>
+				<f>2</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>ZHANGTAO487</f>
+				<f />
+			</row>
+			<row>
+				<f>dbb9eff6-f825-4685-8708-44e68d57bbcc</f>
+				<f>RULE_FREQUENCY</f>
+				<f>8</f>
+				<f>3</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>ZHANGTAO487</f>
+				<f />
+			</row>
+			<row>
+				<f>d2160730-75e5-4d52-a20c-971f1484d143</f>
+				<f>RULE_RELE_TYPE</f>
+				<f>PG-ZT</f>
+				<f>0</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>ZHANGTAO487</f>
+				<f />
+			</row>
+			<row>
+				<f>2f28fbf7-2173-400c-a22d-c8a8e219bb6c</f>
+				<f>RULE_RELE_TYPE</f>
+				<f>DB-BZ</f>
+				<f>0</f>
+				<f>ZHANGTAO487</f>
+				<f />
+				<f>ZHANGTAO487</f>
+				<f />
+			</row>
+			<row>
+				<f>cf5e309b-674e-44c9-bc44-045ca4874ec1</f>
+				<f>RULE_WARN_LEVEL</f>
+				<f>high</f>
+				<f>1</f>
+				<f>admin</f>
+				<f />
+				<f>admin</f>
+				<f />
+			</row>
+			<row>
+				<f>7000c5e2-f49f-41c1-81e2-aeff1eeb4e5e</f>
+				<f>RULE_WARN_LEVEL</f>
+				<f>med</f>
+				<f>2</f>
+				<f>admin</f>
+				<f />
+				<f>admin</f>
+				<f />
+			</row>
+			<row>
+				<f>50698bf3-ed3a-493d-a624-38af11e274f0</f>
+				<f>R003</f>
+				<f>R003001</f>
+				<f>0</f>
+				<f>admin</f>
+				<f>2019-09-17 14:15:13.263</f>
+				<f>admin</f>
+				<f>2019-09-17 14:15:13.263</f>
+			</row>
+			<row>
+				<f>4985e68d-5a44-43ce-bd0a-27cefb14f35c</f>
+				<f>R003</f>
+				<f>R003002</f>
+				<f>1</f>
+				<f>admin</f>
+				<f>2019-09-17 14:15:24.008</f>
+				<f>admin</f>
+				<f>2019-09-17 14:15:24.008</f>
+			</row>
+			<row>
+				<f>4874cba6-d7e8-42d7-81ff-a7164caf1498</f>
+				<f>R003</f>
+				<f>R003003</f>
+				<f>2</f>
+				<f>admin</f>
+				<f>2019-09-17 14:15:30.458</f>
+				<f>admin</f>
+				<f>2019-09-17 14:15:30.458</f>
+			</row>
+			<row>
+				<f>9c2009b0-07df-4100-b8e7-350baec0ac0f</f>
+				<f>FB_INTERFACE</f>
+				<f>GQCZ</f>
+				<f>1</f>
+				<f>admin</f>
+				<f>2019-09-18 11:37:12.0</f>
+				<f>admin</f>
+				<f>2019-09-18 11:38:22.502</f>
+			</row>
+			<row>
+				<f>43c42a19-741e-4ecb-9c0e-6fd6b45951ec</f>
+				<f>FB_INTERFACE</f>
+				<f>APIKEY</f>
+				<f>0</f>
+				<f>admin</f>
+				<f>2019-09-18 11:38:16.0</f>
+				<f>admin</f>
+				<f>2019-09-18 11:54:36.123</f>
+			</row>
+			<row>
+				<f>035ba479-c66f-452e-88fa-96f236904661</f>
+				<f>FB_INTERFACE</f>
+				<f>GSBG</f>
+				<f>2</f>
+				<f>admin</f>
+				<f>2019-09-18 11:38:46.0</f>
+				<f>admin</f>
+				<f>2019-09-18 11:38:53.443</f>
+			</row>
+			<row>
+				<f>598aaea5-a309-4094-b8fb-10c1d9529014</f>
+				<f>FB_INTERFACE</f>
+				<f>NIANBAO</f>
+				<f>3</f>
+				<f>admin</f>
+				<f>2019-09-18 11:39:11.648</f>
+				<f>admin</f>
+				<f>2019-09-18 11:39:11.648</f>
+			</row>
+			<row>
+				<f>d45ae8f6-4b7c-4b03-84c0-d0100bc45681</f>
+				<f>FB_INTERFACE</f>
+				<f>SFXZ</f>
+				<f>4</f>
+				<f>admin</f>
+				<f>2019-09-18 11:40:04.161</f>
+				<f>admin</f>
+				<f>2019-09-18 11:40:04.161</f>
+			</row>
+			<row>
+				<f>18e5abb2-5311-4696-90e0-008527b675b0</f>
+				<f>FB_INTERFACE</f>
+				<f>QSJL</f>
+				<f>5</f>
+				<f>admin</f>
+				<f>2019-09-18 11:40:39.265</f>
+				<f>admin</f>
+				<f>2019-09-18 11:40:39.265</f>
+			</row>
+			<row>
+				<f>916b3618-c7d7-463c-857d-ba7e33ba57c2</f>
+				<f>FB_INTERFACE</f>
+				<f>SWFZCH</f>
+				<f>6</f>
+				<f>admin</f>
+				<f>2019-09-18 11:41:02.224</f>
+				<f>admin</f>
+				<f>2019-09-18 11:41:02.224</f>
+			</row>
+			<row>
+				<f>b840e5f7-3e20-4976-a35c-83e50f1680c8</f>
+				<f>FB_INTERFACE</f>
+				<f>INVESTOR</f>
+				<f>7</f>
+				<f>admin</f>
+				<f>2019-09-18 11:42:03.661</f>
+				<f>admin</f>
+				<f>2019-09-18 11:42:03.661</f>
+			</row>
+			<row>
+				<f>bcdc948d-5658-4b48-8a83-bb4290a96b7c</f>
+				<f>FB_INTERFACE</f>
+				<f>JYYC</f>
+				<f>8</f>
+				<f>admin</f>
+				<f>2019-09-18 11:55:06.0</f>
+				<f>admin</f>
+				<f>2019-09-18 11:55:27.259</f>
+			</row>
+			<row>
+				<f>698637ce-0da8-41c6-ada9-6247c1a24b0d</f>
+				<f>FB_INTERFACE</f>
+				<f>CPWS</f>
+				<f>9</f>
+				<f>admin</f>
+				<f>2019-09-18 11:55:34.246</f>
+				<f>admin</f>
+				<f>2019-09-18 11:55:34.246</f>
+			</row>
+			<row>
+				<f>5ea6369b-3eb3-4672-bde3-96ca7b11f95c</f>
+				<f>FB_INTERFACE</f>
+				<f>KTGG</f>
+				<f>10</f>
+				<f>admin</f>
+				<f>2019-09-18 11:55:42.568</f>
+				<f>admin</f>
+				<f>2019-09-18 11:55:42.568</f>
+			</row>
+			<row>
+				<f>aab93a10-b409-4e05-8f82-5dffda101ab9</f>
+				<f>FB_INTERFACE</f>
+				<f>ZHIXING</f>
+				<f>11</f>
+				<f>admin</f>
+				<f>2019-09-18 11:55:51.287</f>
+				<f>admin</f>
+				<f>2019-09-18 11:55:51.287</f>
+			</row>
+			<row>
+				<f>90322dce-68ee-4703-9945-80b25321537d</f>
+				<f>FB_INTERFACE</f>
+				<f>SHIXIN</f>
+				<f>12</f>
+				<f>admin</f>
+				<f>2019-09-18 11:56:29.675</f>
+				<f>admin</f>
+				<f>2019-09-18 11:56:29.675</f>
+			</row>
+			<row>
+				<f>cc71d2dd-ec66-4b05-ba19-3e458d2be4ad</f>
+				<f>FB_INTERFACE</f>
+				<f>SPLC</f>
+				<f>13</f>
+				<f>admin</f>
+				<f>2019-09-18 11:56:39.366</f>
+				<f>admin</f>
+				<f>2019-09-18 11:56:39.366</f>
+			</row>
+			<row>
+				<f>9ec6bdaa-d769-4bb6-884b-b90557da90b7</f>
+				<f>FB_INTERFACE</f>
+				<f>SSGG</f>
+				<f>14</f>
+				<f>admin</f>
+				<f>2019-09-18 11:56:46.705</f>
+				<f>admin</f>
+				<f>2019-09-18 11:56:46.705</f>
+			</row>
+			<row>
+				<f>f8ec92c8-b07b-461b-b6eb-37e6593f07f4</f>
+				<f>FB_INTERFACE</f>
+				<f>SSWF</f>
+				<f>15</f>
+				<f>admin</f>
+				<f>2019-09-18 11:56:56.717</f>
+				<f>admin</f>
+				<f>2019-09-18 11:56:56.717</f>
+			</row>
+			<row>
+				<f>262cb20e-e005-43b7-8179-29cb4642ae0d</f>
+				<f>FB_INTERFACE</f>
+				<f>XZCF2</f>
+				<f>16</f>
+				<f>admin</f>
+				<f>2019-09-18 11:57:07.322</f>
+				<f>admin</f>
+				<f>2019-09-18 11:57:07.322</f>
+			</row>
+			<row>
+				<f>c3ce011d-aef7-41bd-8c3f-dda87024f431</f>
+				<f>FB_INTERFACE</f>
+				<f>EVENT</f>
+				<f>17</f>
+				<f>admin</f>
+				<f>2019-09-18 11:57:15.66</f>
+				<f>admin</f>
+				<f>2019-09-18 11:57:15.66</f>
+			</row>
+			<row>
+				<f>5d7be5c7-1931-4940-87ca-3a15537dc4c0</f>
+				<f>FB_INTERFACE</f>
+				<f>EVENT_NEWS_URL</f>
+				<f>18</f>
+				<f>admin</f>
+				<f>2019-09-18 11:57:25.0</f>
+				<f>admin</f>
+				<f>2019-09-18 14:13:10.42</f>
+			</row>
+			<row>
+				<f>a8eabf4c-f0f4-432d-a07a-9e63058048db</f>
+				<f>FB_INTERFACE</f>
+				<f>BASE_URL</f>
+				<f>0</f>
+				<f>admin</f>
+				<f>2019-09-18 11:57:46.296</f>
+				<f>admin</f>
+				<f>2019-09-18 11:57:46.296</f>
+			</row>
+			<row>
+				<f>4a0635a3-b61c-4cb5-91ed-6356ef12095a</f>
+				<f>FB_INTERFACE</f>
+				<f>ZQGG</f>
+				<f>19</f>
+				<f>admin</f>
+				<f>2019-09-23 11:38:33.911</f>
+				<f>admin</f>
+				<f>2019-09-23 11:38:33.911</f>
+			</row>
+			<row>
+				<f>f04523b9-a331-4153-a549-993f28403f72</f>
+				<f>FB_INTERFACE</f>
+				<f>PJJL</f>
+				<f>20</f>
+				<f>admin</f>
+				<f>2019-09-23 11:38:54.638</f>
+				<f>admin</f>
+				<f>2019-09-23 11:38:54.638</f>
+			</row>
+			<row>
+				<f>898efe48-0309-4bb6-ae57-8b5933898d0e</f>
+				<f>FB_INTERFACE</f>
+				<f>XXPL</f>
+				<f>21</f>
+				<f>admin</f>
+				<f>2019-09-23 11:39:11.682</f>
+				<f>admin</f>
+				<f>2019-09-23 11:39:11.682</f>
+			</row>
+			<row>
+				<f>6c0b496a-fef4-4755-8f71-1b637717008f</f>
+				<f>FB_INTERFACE</f>
+				<f>FOLLOWING_FEED</f>
+				<f>23</f>
+				<f>admin</f>
+				<f>2019-10-09 15:36:37.0</f>
+				<f>admin</f>
+				<f>2019-10-09 15:36:47.587</f>
+			</row>
+			<row>
+				<f>a27655f5-d6e4-4e18-80fb-99043d0ec977</f>
+				<f>RULE_CATE_SYS</f>
+				<f>R001</f>
+				<f>0</f>
+				<f>admin</f>
+				<f>2019-09-19 20:15:22.215</f>
+				<f>admin</f>
+				<f>2019-09-19 20:15:22.215</f>
+			</row>
+			<row>
+				<f>245369d6-03eb-4318-936f-ddf8c07b8492</f>
+				<f>RULE_CATE_SYS</f>
+				<f>R002</f>
+				<f>1</f>
+				<f>admin</f>
+				<f>2019-09-19 20:16:14.554</f>
+				<f>admin</f>
+				<f>2019-09-19 20:16:14.554</f>
+			</row>
+			<row>
+				<f>6a133e77-6a59-45fe-8474-e014f4d89853</f>
+				<f>RULE_CATE_SYS</f>
+				<f>R003</f>
+				<f>2</f>
+				<f>admin</f>
+				<f>2019-09-19 20:18:33.245</f>
+				<f>admin</f>
+				<f>2019-09-19 20:18:33.245</f>
+			</row>
+			<row>
+				<f>aa94a224-4d42-4129-b762-0fbf45fe24cb</f>
+				<f>FB_INTERFACE</f>
+				<f>EVENT_INTERVAL</f>
+				<f>22</f>
+				<f>admin</f>
+				<f>2019-10-09 12:08:51.738</f>
+				<f>admin</f>
+				<f>2019-10-09 12:08:51.738</f>
+			</row>
+			<row>
+				<f>afd42edd-ed52-45e9-b9c9-6dd6c7d1c113</f>
+				<f>WARN_CATE</f>
+				<f>R001</f>
+				<f>0</f>
+				<f>admin</f>
+				<f>2019-09-17 14:05:04.08</f>
+				<f>admin</f>
+				<f>2019-09-17 14:05:04.08</f>
+			</row>
+			<row>
+				<f>28013c3c-e027-4918-ab16-f87552ad65b2</f>
+				<f>WARN_CATE</f>
+				<f>R002</f>
+				<f>1</f>
+				<f>admin</f>
+				<f>2019-09-17 14:05:19.358</f>
+				<f>admin</f>
+				<f>2019-09-17 14:05:19.358</f>
+			</row>
+			<row>
+				<f>0ffa5904-c34c-4544-b3dc-08586114038b</f>
+				<f>WARN_CATE</f>
+				<f>R003</f>
+				<f>2</f>
+				<f>admin</f>
+				<f>2019-09-17 14:05:26.745</f>
+				<f>admin</f>
+				<f>2019-09-17 14:05:26.745</f>
+			</row>
+			<row>
+				<f>320911a7-4eb5-4fe9-aa12-93926e46ddde</f>
+				<f>R001</f>
+				<f>R001001</f>
+				<f>0</f>
+				<f>admin</f>
+				<f>2019-09-17 14:07:57.447</f>
+				<f>admin</f>
+				<f>2019-09-17 14:07:57.447</f>
+			</row>
+			<row>
+				<f>0b5e1897-3138-42ab-b495-fd69ad9fbf8f</f>
+				<f>R001</f>
+				<f>R001002</f>
+				<f>1</f>
+				<f>admin</f>
+				<f>2019-09-17 14:08:24.988</f>
+				<f>admin</f>
+				<f>2019-09-17 14:08:24.988</f>
+			</row>
+			<row>
+				<f>0509b51a-b427-4355-98bc-0e587061f4f3</f>
+				<f>R001</f>
+				<f>R001003</f>
+				<f>2</f>
+				<f>admin</f>
+				<f>2019-09-17 14:08:41.054</f>
+				<f>admin</f>
+				<f>2019-09-17 14:08:41.054</f>
+			</row>
+			<row>
+				<f>00b3304e-908f-48b0-b313-bc2361564336</f>
+				<f>R001</f>
+				<f>R001004</f>
+				<f>3</f>
+				<f>admin</f>
+				<f>2019-09-17 14:08:50.699</f>
+				<f>admin</f>
+				<f>2019-09-17 14:08:50.699</f>
+			</row>
+			<row>
+				<f>ba18dd7c-1685-47d5-8d8b-1d905ee8a71c</f>
+				<f>R001</f>
+				<f>R001005</f>
+				<f>4</f>
+				<f>admin</f>
+				<f>2019-09-17 14:09:00.13</f>
+				<f>admin</f>
+				<f>2019-09-17 14:09:00.13</f>
+			</row>
+			<row>
+				<f>d31a3e47-0b25-403a-9b7d-68a4fa207cee</f>
+				<f>R001</f>
+				<f>R001006</f>
+				<f>5</f>
+				<f>admin</f>
+				<f>2019-09-17 14:09:10.826</f>
+				<f>admin</f>
+				<f>2019-09-17 14:09:10.826</f>
+			</row>
+			<row>
+				<f>669e5708-a9a9-4399-a087-9993d2274ac4</f>
+				<f>R001</f>
+				<f>R001007</f>
+				<f>6</f>
+				<f>admin</f>
+				<f>2019-09-17 14:09:29.215</f>
+				<f>admin</f>
+				<f>2019-09-17 14:09:29.215</f>
+			</row>
+			<row>
+				<f>8ec0f51e-939b-4c1b-ae4d-1365d091c371</f>
+				<f>R002</f>
+				<f>R002001</f>
+				<f>0</f>
+				<f>admin</f>
+				<f>2019-09-17 14:12:01.071</f>
+				<f>admin</f>
+				<f>2019-09-17 14:12:01.071</f>
+			</row>
+			<row>
+				<f>780c4f5b-895e-4875-8f18-5710820b8ec5</f>
+				<f>R002</f>
+				<f>R002002</f>
+				<f>1</f>
+				<f>admin</f>
+				<f>2019-09-17 14:12:22.079</f>
+				<f>admin</f>
+				<f>2019-09-17 14:12:22.079</f>
+			</row>
+			<row>
+				<f>0655b662-bcd3-4804-9a9d-085b4e0c81f7</f>
+				<f>R002</f>
+				<f>R002003</f>
+				<f>2</f>
+				<f>admin</f>
+				<f>2019-09-17 14:12:37.86</f>
+				<f>admin</f>
+				<f>2019-09-17 14:12:37.86</f>
+			</row>
+			<row>
+				<f>0652218d-ee5c-4647-88e7-c0f480b7ca03</f>
+				<f>R002</f>
+				<f>R002004</f>
+				<f>3</f>
+				<f>admin</f>
+				<f>2019-09-17 14:12:44.097</f>
+				<f>admin</f>
+				<f>2019-09-17 14:12:44.097</f>
+			</row>
+			<row>
+				<f>6fe7d796-aaf0-4e34-860e-506c501346f9</f>
+				<f>R002</f>
+				<f>R002005</f>
+				<f>4</f>
+				<f>admin</f>
+				<f>2019-09-17 14:12:53.181</f>
+				<f>admin</f>
+				<f>2019-09-17 14:12:53.181</f>
+			</row>
+			<row>
+				<f>504bfde7-9be8-47b7-a93f-2cac930dbc50</f>
+				<f>R002</f>
+				<f>R002006</f>
+				<f>5</f>
+				<f>admin</f>
+				<f>2019-09-17 14:13:01.729</f>
+				<f>admin</f>
+				<f>2019-09-17 14:13:01.729</f>
+			</row>
+			<row>
+				<f>789ff1ec-c56b-42e1-977a-25bc2ff14468</f>
+				<f>R002</f>
+				<f>R002007</f>
+				<f>6</f>
+				<f>admin</f>
+				<f>2019-09-17 14:13:13.496</f>
+				<f>admin</f>
+				<f>2019-09-17 14:13:13.496</f>
+			</row>
+			<row>
+				<f>31e3b7b7-dfbe-40d3-be57-21ae2eb5db1b</f>
+				<f>R003</f>
+				<f>R003004</f>
+				<f>3</f>
+				<f>admin</f>
+				<f>2019-09-17 14:15:39.594</f>
+				<f>admin</f>
+				<f>2019-09-17 14:15:39.594</f>
+			</row>
+			<row>
+				<f>e507fb57-854c-4da7-a863-af21138fed02</f>
+				<f>R003</f>
+				<f>R003005</f>
+				<f>4</f>
+				<f>admin</f>
+				<f>2019-09-17 14:15:47.954</f>
+				<f>admin</f>
+				<f>2019-09-17 14:15:47.954</f>
+			</row>
+			<row>
+				<f>c0bf1be6-c7aa-4f17-870b-dfffe6d9b50f</f>
+				<f>R003</f>
+				<f>R003006</f>
+				<f>5</f>
+				<f>admin</f>
+				<f>2019-09-17 14:16:06.445</f>
+				<f>admin</f>
+				<f>2019-09-17 14:16:06.445</f>
+			</row>
+			<row>
+				<f>1e990e77-35bf-41a2-9acc-925200f1db08</f>
+				<f>R003</f>
+				<f>R003007</f>
+				<f>6</f>
+				<f>admin</f>
+				<f>2019-09-17 14:16:22.198</f>
+				<f>admin</f>
+				<f>2019-09-17 14:16:22.198</f>
+			</row>
+			<row>
+				<f>f1bb9a7a-3146-4864-91e4-2971cac35ad0</f>
+				<f>R003</f>
+				<f>R003008</f>
+				<f>7</f>
+				<f>admin</f>
+				<f>2019-09-17 14:16:29.882</f>
+				<f>admin</f>
+				<f>2019-09-17 14:16:29.882</f>
+			</row>
+			<row>
+				<f>10ae6dc8-0b0b-4772-9192-a3fa11b509d3</f>
+				<f>R003</f>
+				<f>R003009</f>
+				<f>8</f>
+				<f>admin</f>
+				<f>2019-09-17 14:16:36.825</f>
+				<f>admin</f>
+				<f>2019-09-17 14:16:36.825</f>
+			</row>
+			<row>
+				<f>8dc28316-406f-48e9-8209-dc87f22da3d6</f>
+				<f>R003</f>
+				<f>R003010</f>
+				<f>9</f>
+				<f>admin</f>
+				<f>2019-09-17 14:16:48.599</f>
+				<f>admin</f>
+				<f>2019-09-17 14:16:48.599</f>
+			</row>
+			<row>
+				<f>52eb61aa-f33d-4396-8529-38266b505edb</f>
+				<f>R003</f>
+				<f>R003011</f>
+				<f>10</f>
+				<f>admin</f>
+				<f>2019-09-17 14:17:03.747</f>
+				<f>admin</f>
+				<f>2019-09-17 14:17:03.747</f>
+			</row>
+			<row>
+				<f>9be8a80c-9ea2-48c6-848a-723876eacf3e</f>
+				<f>R003</f>
+				<f>R003012</f>
+				<f>11</f>
+				<f>admin</f>
+				<f>2019-09-17 14:17:12.513</f>
+				<f>admin</f>
+				<f>2019-09-17 14:17:12.513</f>
+			</row>
+			<row>
+				<f>1233f578-576f-4124-9313-2fd557297f1e</f>
+				<f>R003</f>
+				<f>R003013</f>
+				<f>12</f>
+				<f>admin</f>
+				<f>2019-09-17 14:17:20.96</f>
+				<f>admin</f>
+				<f>2019-09-17 14:17:20.96</f>
+			</row>
+			<row>
+				<f>43e08739-2a7e-430c-aaa2-5efbb8d9131b</f>
+				<f>R003</f>
+				<f>R003014</f>
+				<f>13</f>
+				<f>admin</f>
+				<f>2019-09-17 14:17:39.943</f>
+				<f>admin</f>
+				<f>2019-09-17 14:17:39.943</f>
+			</row>
+			<row>
+				<f>62d56bd7-f914-474d-a078-5dcc9c759307</f>
+				<f>R003</f>
+				<f>R003015</f>
+				<f>14</f>
+				<f>admin</f>
+				<f>2019-09-17 14:17:47.659</f>
+				<f>admin</f>
+				<f>2019-09-17 14:17:47.659</f>
+			</row>
+			<row>
+				<f>dc821d14-931a-4abd-8d53-56cb274c716b</f>
+				<f>R003</f>
+				<f>R003016</f>
+				<f>15</f>
+				<f>admin</f>
+				<f>2019-09-17 14:17:57.614</f>
+				<f>admin</f>
+				<f>2019-09-17 14:17:57.614</f>
+			</row>
+			<row>
+				<f>179085ac-b83a-47a9-89e5-bb58b8b23a6a</f>
+				<f>R003</f>
+				<f>R003017</f>
+				<f>16</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:05.393</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:05.393</f>
+			</row>
+			<row>
+				<f>f4f47ea9-0bd9-4ad3-b8a9-686bdb63ca96</f>
+				<f>R003</f>
+				<f>R003018</f>
+				<f>17</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:19.37</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:19.37</f>
+			</row>
+			<row>
+				<f>974d4ba7-4c41-42e7-9d5f-e8e63d1d9b3f</f>
+				<f>R003</f>
+				<f>R003019</f>
+				<f>18</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:28.281</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:28.281</f>
+			</row>
+			<row>
+				<f>75d6bffc-5dfb-4a78-9420-0fa422584ea5</f>
+				<f>R003</f>
+				<f>R003020</f>
+				<f>19</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:37.016</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:37.016</f>
+			</row>
+			<row>
+				<f>217c9a8c-05e0-4398-80a1-d34c20b8f08e</f>
+				<f>R003</f>
+				<f>R003021</f>
+				<f>20</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:43.909</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:43.909</f>
+			</row>
+			<row>
+				<f>7b31aa32-7aae-42f2-b27b-7d58bb38a08b</f>
+				<f>R003</f>
+				<f>R003022</f>
+				<f>21</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:49.912</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:49.912</f>
+			</row>
+			<row>
+				<f>1f9e964b-c2a5-485b-be67-d10a3de57008</f>
+				<f>R003</f>
+				<f>R003023</f>
+				<f>22</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:57.103</f>
+				<f>admin</f>
+				<f>2019-09-17 14:18:57.103</f>
+			</row>
+			<row>
+				<f>3d8412d0-fc29-44cc-a7f0-ff22811c6e69</f>
+				<f>R003</f>
+				<f>R003024</f>
+				<f>23</f>
+				<f>admin</f>
+				<f>2019-09-17 14:19:14.326</f>
+				<f>admin</f>
+				<f>2019-09-17 14:19:14.326</f>
+			</row>
+			<row>
+				<f>d017ca9e-55be-4028-87b6-01b5a1e19634</f>
+				<f>R003</f>
+				<f>R003025</f>
+				<f>24</f>
+				<f>admin</f>
+				<f>2019-09-17 14:19:35.52</f>
+				<f>admin</f>
+				<f>2019-09-17 14:19:35.52</f>
+			</row>
+			<row>
+				<f>3bf0976a-882a-4a5c-b249-344375fee63d</f>
+				<f>R003</f>
+				<f>R003026</f>
+				<f>25</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:05.239</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:05.239</f>
+			</row>
+			<row>
+				<f>1867fa1a-b02d-46cb-896f-d3eb1f969996</f>
+				<f>R003</f>
+				<f>R003027</f>
+				<f>26</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:13.997</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:13.997</f>
+			</row>
+			<row>
+				<f>9a514d01-8c91-4328-a487-fae6f846128e</f>
+				<f>R003</f>
+				<f>R003028</f>
+				<f>27</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:19.946</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:19.946</f>
+			</row>
+			<row>
+				<f>1279397c-0191-4ad3-a018-c40c2471b9b1</f>
+				<f>R003</f>
+				<f>R003029</f>
+				<f>28</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:25.65</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:25.65</f>
+			</row>
+			<row>
+				<f>dd9ded01-0adf-4b31-b8b6-31a2354bb8a4</f>
+				<f>R003</f>
+				<f>R003030</f>
+				<f>29</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:37.435</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:37.435</f>
+			</row>
+			<row>
+				<f>9866dfae-24cf-4837-8fbe-925012563ee0</f>
+				<f>R003</f>
+				<f>R003031</f>
+				<f>30</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:45.797</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:45.797</f>
+			</row>
+			<row>
+				<f>b230ffd6-9fe2-4d67-8072-16151cf1034c</f>
+				<f>R003</f>
+				<f>R003032</f>
+				<f>31</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:53.749</f>
+				<f>admin</f>
+				<f>2019-09-17 14:20:53.749</f>
+			</row>
+			<row>
+				<f>1a7af50a-25ac-4dc2-a0f3-d7bc183eecdc</f>
+				<f>R003</f>
+				<f>R003033</f>
+				<f>32</f>
+				<f>admin</f>
+				<f>2019-09-17 14:21:01.506</f>
+				<f>admin</f>
+				<f>2019-09-17 14:21:01.506</f>
+			</row>
+			<row>
+				<f>00e95183-9c24-4dee-81b8-3a1ae36f9c6d</f>
+				<f>R003</f>
+				<f>R003034</f>
+				<f>33</f>
+				<f>admin</f>
+				<f>2019-09-17 14:21:12.775</f>
+				<f>admin</f>
+				<f>2019-09-17 14:21:12.775</f>
+			</row>
+			<row>
+				<f>c4e7c38a-41b6-4265-95b0-61fca0f63bce</f>
+				<f>R003</f>
+				<f>R003035</f>
+				<f>34</f>
+				<f>admin</f>
+				<f>2019-09-17 14:21:22.843</f>
+				<f>admin</f>
+				<f>2019-09-17 14:21:22.843</f>
+			</row>
+			<row>
+				<f>93099564-18d5-4a00-be89-e7c470c0feae</f>
+				<f>R003</f>
+				<f>R003036</f>
+				<f>35</f>
+				<f>admin</f>
+				<f>2019-09-17 14:21:32.036</f>
+				<f>admin</f>
+				<f>2019-09-17 14:21:32.036</f>
+			</row>
+			<row>
+				<f>990466c6-d6ca-4761-a941-4715aa781395</f>
+				<f>R003</f>
+				<f>R003037</f>
+				<f>36</f>
+				<f>admin</f>
+				<f>2019-09-17 14:21:41.833</f>
+				<f>admin</f>
+				<f>2019-09-17 14:21:41.833</f>
+			</row>
+			<row>
+				<f>090c5104-0b4f-48b6-a1b0-ef78ff5b657a</f>
+				<f>ACCOUNT_CLASSIFICATION</f>
+				<f>CASH_FLOW_STATEMENT</f>
+				<f>2</f>
+				<f>admin</f>
+				<f>2018-10-25 10:46:04.0</f>
+				<f>admin</f>
+				<f>2018-10-25 10:46:50.0</f>
+			</row>
+			<row>
+				<f>30a4b10f-bc4a-4d3b-b5ea-52166aaab464</f>
+				<f>ACCOUNT_CLASSIFICATION</f>
+				<f>BALANCE_SHEET_SIMPLE</f>
+				<f>4</f>
+				<f>admin</f>
+				<f>2018-10-25 10:45:58.0</f>
+				<f>admin</f>
+				<f>2018-10-25 10:47:09.0</f>
+			</row>
+			<row>
+				<f>4f45aad4-234f-4875-9a4a-c24f84794b76</f>
+				<f>ACCOUNT_CLASSIFICATION</f>
+				<f>PROFIT_AND_LOSS_STATEMENT</f>
+				<f>3</f>
+				<f>admin</f>
+				<f>2018-10-25 10:46:12.0</f>
+				<f>admin</f>
+				<f>2018-10-25 10:47:03.0</f>
+			</row>
+			<row>
+				<f>5930e6ca-6b2f-4174-b4be-3d1d177fe9cb</f>
+				<f>ACCOUNT_CLASSIFICATION</f>
+				<f>BALANCE_SHEET</f>
+				<f>1</f>
+				<f>admin</f>
+				<f>2018-10-25 10:43:28.0</f>
+				<f>admin</f>
+				<f>2018-10-25 10:43:28.0</f>
+			</row>
+			<row>
+				<f>da609424-48ee-4489-a901-ee2b5bed52b6</f>
+				<f>ACCOUNT_CLASSIFICATION</f>
+				<f>INCOME_STATEMENT_AND_PROFIT_APPR</f>
+				<f>5</f>
+				<f>admin</f>
+				<f>2018-10-25 10:46:27.0</f>
+				<f>admin</f>
+				<f>2018-10-25 10:47:18.0</f>
+			</row>
+			<row>
+				<f>fc28c274-02f8-4898-9455-916c85808de3</f>
+				<f>ACCOUNT_CLASSIFICATION</f>
+				<f>INCOME_AND_EXPENSE_STATEMENT</f>
+				<f>6</f>
+				<f>admin</f>
+				<f>2018-10-25 10:46:19.0</f>
+				<f>admin</f>
+				<f>2018-10-25 10:47:22.0</f>
+			</row>
+
+
+			<row>
+				<f>720ea0e5-a34d-4402-9c34-7624f40b0540</f>
+				<f>PushState</f>
+				<f>010</f>
+				<f>1</f>
+				<f>admin</f>
+				<f>2019-10-09 10:55:48.0</f>
+				<f>admin</f>
+				<f>2019-10-09 10:56:34.968</f>
+			</row>
+			<row>
+				<f>bb45fea5-ac3f-4f47-a59a-9f0ec772e37b</f>
+				<f>PushState</f>
+				<f>020</f>
+				<f>2</f>
+				<f>admin</f>
+				<f>2019-10-09 10:56:43.0</f>
+				<f>admin</f>
+				<f>2019-10-09 10:57:00.557</f>
+			</row>
+			<row>
+				<f>06b274a8-9556-4c7c-908b-af061529e3bf</f>
+				<f>PushState</f>
+				<f>030</f>
+				<f>3</f>
+				<f>admin</f>
+				<f>2019-10-09 11:17:52.0</f>
+				<f>admin</f>
+				<f>2019-10-09 11:27:19.478</f>
+			</row>
+
+		</resultset>
+	</table>
+</export>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+// 模型列表(从模型系统获取)
+var modelList = [(${@frSystemDictionaryService.getDictionaryMapJsonString('MODEL_TYPE',#locale)})];
+
+//字段定义
+var leverCoefficientAvgFields ={
+		query: [
+			{
+				width:200,		
+				name:'industryNo',		
+				title:'行业',
+				require:true,
+				type: 'select',
+				valueMap:modelList,
+				allowEmptyValue:true,
+				autoFetchData:false,
+				operator:'equals'}
+		],
+		grid: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{width:200,name:'industryNo',	title:'行业'	 ,required:true,type: 'select',valueMap:modelList},
+			    {width:200,name:'dOne',			title:'D1/均',required:true},
+			    {width:200,name:'dTwo',			title:'D2/均',required:true},
+			    {width:200,name:'dThree',		title:'D3/均',required:true},
+			    {width:200,name:'dFour',		title:'D4/均',required:true},
+			    {width:200,name:'dFives',		title:'D5/均',required:true}
+		],
+		edit: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{width:200,name:'industryNo',	title:'行业'	,required:true,type: 'select',valueMap:modelList},
+			    {width:200,name:'dOne',			title:'D1/均',required:true},
+			    {width:200,name:'dTwo',			title:'D2/均',required:true},
+			    {width:200,name:'dThree',		title:'D3/均',required:true},
+			    {width:200,name:'dFour',		title:'D4/均',required:true},
+			    {width:200,name:'dFives',		title:'D5/均',required:true}
+		]
+};
+
+// 杠杆系数行业平均值数据源
+isc.FwRestDataSource.create({
+	 ID: 'leverCoefficientAvgDS',
+ 	 fields: leverCoefficientAvgFields.grid,
+ 	 dataURL: '[(@{/irs/leverCoefficientAvg/isc})]'
+});
+
+
+isc.FwListGrid.create({
+	ID: 'leverCoefficientAvgId',
+	title: '<b>杠杆系数行业平均值列表</b>',
+	dataSource: leverCoefficientAvgDS,
+	sortField: 'industryNo',
+	canHover:true,
+	fields: leverCoefficientAvgFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: leverCoefficientAvgFields.query
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+      form: {
+      	numCols:4,
+      	titleWidth:150,
+      	colWidths: [190, "*"],
+          dataSource: leverCoefficientAvgDS,
+          fields: leverCoefficientAvgFields.edit
+      },
+      afterShow: function(action){
+     	
+      },
+      actionMembers:[
+             		'ok','close'
+      ]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+  },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				leverCoefficientAvgId
+			]
+		})
+	}
+});
+
+</script>
+</html>

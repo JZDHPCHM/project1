@@ -1,0 +1,2998 @@
+[
+	{
+		"FD_NAME": "非流动资产合计",
+		"FD_NORM": "非流动资产合计=可供出售金融资产+持有至到期投资+长期应收款+长期股权投资+投资性房地产+固定资产+在建工程+工程物资+固定资产清理+生产性生物资产+油气资产+无形资产+开发支出+商誉+长期待摊费用+递延所得税资产+其他非流动资产",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "A043+A044+A083+A041+A084+A019+A059+A085+A058+A086+A087+A020+A040+A039+A021+A022+A088",
+		"FD_CODE": "A089"
+	},
+	{
+		"FD_NAME": "应收帐款",
+		"FD_NORM": "应收帐款=一年内应收帐款+一至三年应收帐款+三年以上应收帐款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A045+A046+A047",
+		"FD_CODE": "A005"
+	},
+	{
+		"FD_NAME": "专项应付款",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A093"
+	},
+	{
+		"FD_NAME": "销售费用",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "P003"
+	},
+	{
+		"FD_NAME": "营业利润",
+		"FD_NORM": "营业利润=营业总收入-减：营业成本-营业税金及附加-销售费用-管理费用-财务费用-资产减值损失+公允价值变动净收益+投资收益",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "P001-P002-P003-P004-P005-P006-P021+P012+P008",
+		"FD_CODE": "P007"
+	},
+	{
+		"FD_NAME": "公允价值变动净收益",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "P012"
+	},
+	{
+		"FD_NAME": "经营活动产生的现金流量净额",
+		"FD_NORM": "经营活动产生的现金流量净额=经营活动产生现金流入小计-经营活动产生现金流出小计",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "C010-C018",
+		"FD_CODE": "C002"
+	},
+	{
+		"FD_NAME": "经营活动现金流入小计",
+		"FD_NORM": "经营活动产生现金流入小计= 销售商品、提供劳务收到的现金+ 收到的税费返还+收到其他与经营活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "C001+C045+C009",
+		"FD_CODE": "C010"
+	},
+	{
+		"FD_NAME": "收回投资收到的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C019"
+	},
+	{
+		"FD_NAME": "存货",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B009"
+	},
+	{
+		"FD_NAME": "银行借款",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B020"
+	},
+	{
+		"FD_NAME": "应付票据（敞口）",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B021"
+	},
+	{
+		"FD_NAME": "实收资本",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B029"
+	},
+	{
+		"FD_NAME": "其他应付款",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B045"
+	},
+	{
+		"FD_NAME": "不动产",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B054"
+	},
+	{
+		"FD_NAME": "业务税金及附加",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "I004"
+	},
+	{
+		"FD_NAME": "股东个人收入合并",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "I016"
+	},
+	{
+		"FD_NAME": "经营支出",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "M025"
+	},
+	{
+		"FD_NAME": "支出总计",
+		"FD_NORM": "支出总计=经营支出+家庭支出+还款支出+利息支出+投资支出+其它支出",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "M025+M030+M031+M032+M033+M034",
+		"FD_CODE": "M029"
+	},
+	{
+		"FD_NAME": "其它支出",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "M034"
+	},
+	{
+		"FD_NAME": "负债合计",
+		"FD_NORM": "负债合计=短期借入款项+长期借入款项+应付票据+应付帐款+预收帐款+应付工资+其他应付款（暂存款）+应缴预算款+应缴财政专户款+应交税金+预提费用",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "AS09+AS11+AS36+AS37+AS38+AS39+AS40+AS41+AS42+AS43+AS44",
+		"FD_CODE": "AS12"
+	},
+	{
+		"FD_NAME": "支出合计",
+		"FD_NORM": "支出合计=拨出经费+拨出专款+专款支出+事业支出（经费支出）+经营支出+成本费用+销售税金+上缴上级支出+对附属单位补助+结转自筹基建",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "AS24+AS25+AS26+AS27+AS28+AS29+AS30+AS31+AS32+AS33",
+		"FD_CODE": "AS34"
+	},
+	{
+		"FD_NAME": "收入合计",
+		"FD_NORM": "收入合计=财政补助收入（拨入经费）+上级补助收入+拨入专款+事业收入+经营收入（预算外资金收入）+附属单位缴款+其他收入",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "AS51+AS52+AS53+AS54+AS55+AS56+AS57",
+		"FD_CODE": "AS58"
+	},
+	{
+		"FD_NAME": "资产部类总计",
+		"FD_NORM": "资产部类总计=负债部类总计",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "AS59",
+		"FD_CODE": "AS35"
+	},
+	{
+		"FD_NAME": "净资产合计",
+		"FD_NORM": "净资产合计=事业基金+固定基金+专用基金+事业结余+经营结余+结余分配",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "AS45+AS46+AS47+AS48+AS49+AS50",
+		"FD_CODE": "AS13"
+	},
+	{
+		"FD_NAME": "经营结余",
+		"FD_NORM": "经营结余=小计2-小计4+以前年度亏损(一)",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "IE19-IE26+IE33",
+		"FD_CODE": "IE12"
+	},
+	{
+		"FD_NAME": "小计2",
+		"FD_NORM": "小计2=经营收入（预算外资金收入）+拨入专款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "IE06+IE39",
+		"FD_CODE": "IE19"
+	},
+	{
+		"FD_NAME": "支出总计",
+		"FD_NORM": "支出总计=小计3+小计4+小计5",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "IE24+IE26+IE29",
+		"FD_CODE": "IE30"
+	},
+	{
+		"FD_NAME": "二、本期事业结转结余",
+		"FD_NORM": "本期事业结转结余=事业类收入-事业类支出",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "IE04-IE40",
+		"FD_CODE": "IE03"
+	},
+	{
+		"FD_NAME": "三、本期经营结余",
+		"FD_NORM": "本期经营结余=经营收入-经营支出",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "IE06-IE45",
+		"FD_CODE": "IE12"
+	},
+	{
+		"FD_NAME": "七、转入事业基金",
+		"FD_NORM": "转入事业基金=本年非财政补助结余-应缴企业所得税-提取专用基金",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "IE13-IE35-IE36",
+		"FD_CODE": "IE37"
+	},
+	{
+		"FD_NAME": "五、本年非财政补助结转结余",
+		"FD_NORM": "本年非财政补助结转结余=本期事业结转结余+弥补以前年度亏损后的经营结余",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "IE03+IE42",
+		"FD_CODE": "IE43"
+	},
+	{
+		"FD_NAME": "流动资产合计",
+		"FD_NORM": "流动资产合计=货币资金+短期投资+财政应返还额度+应收票据+应收账款+预付帐款+其他应收款+存货+其他流动资产",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "AS14+AS22+AS60+AS16+AS17+AS18+AS19+AS02+AS61",
+		"FD_CODE": "AS01"
+	},
+	{
+		"FD_NAME": "非流动资产合计",
+		"FD_NORM": "非流动资产合计=长期投资+固定资产+无形资产+待处置资产损益+在建工程",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "AS23+AS03+AS05+AS06+AS04",
+		"FD_CODE": "AS07"
+	},
+	{
+		"FD_NAME": "流动负债合计",
+		"FD_NORM": "流动负债合计=短期借款+应缴税费+应缴国库款+应缴财政专户款+应付职工薪酬+应付票据+应付账款+预收账款+其他应付款+其他流动负债",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "AS09+AS43+AS41+AS42+AS39+AS36+AS37+AS38+AS40+AS66",
+		"FD_CODE": "AS10"
+	},
+	{
+		"FD_NAME": "净资产合计",
+		"FD_NORM": "净资产合计=事业基金+非流动资产基金+专用基金+财政补助结转+财政补助结余+非财政补助结转+非财政补助结余",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "AS69+AS46+AS47+AS70+AS71+AS72+AS73",
+		"FD_CODE": "AS13"
+	},
+	{
+		"FD_NAME": "流动资产合计",
+		"FD_NORM": "流动资产合计=货币资金+短期投资-短期投资减值准备+应收票据+应收帐款净额+预付货款+其它应收款+应收股利+应收利息+应收补贴款+存货净额+待摊费用+待处理流动资产损益+一年内到期的长期债券投资+其它流动资产",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A001+A002-A003+A004+A006+A007+A008+A009+A010+A011+A013+A014+A051+A015+A016",
+		"FD_CODE": "A017"
+	},
+	{
+		"FD_NAME": "资产总计",
+		"FD_NORM": "资产总计=流动资产合计+长期投资合计+固定资产合计+无形及递延资产合计+其它长期资产+长期待摊费用+递延税款借项",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A017+A018+A042+A064+A065+A066+A022",
+		"FD_CODE": "A023"
+	},
+	{
+		"FD_NAME": "流动负债合计",
+		"FD_NORM": "流动负债合计=短期借款+应付票据+应付帐款+预收账款+其他应付款+应付工资+应付福利费+未交税金+未交包干利润+未付利润+应付利息+其他未交款+预提费用+一年内到期的长期负债+其他流动负债",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A024+A025+A026+A027+A067+A068+A069+A070+A071+A072+A073+A074+A075+A028+A076",
+		"FD_CODE": "A029"
+	},
+	{
+		"FD_NAME": "固定资产合计",
+		"FD_NORM": "固定资产合计=固定资产净值+固定资产清理+在建工程-减： 在建工程减值准备-减： 固定资产减值准备+待处理固定资产��益",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A019+A058+A059-A060-A061+A062",
+		"FD_CODE": "A042"
+	},
+	{
+		"FD_NAME": "投资活动产生的现金流量净额",
+		"FD_NORM": "投资活动产生的现金流量净额=投资活动现金流入小计-投资活动现金流出小计",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "C024-C029",
+		"FD_CODE": "C003"
+	},
+	{
+		"FD_NAME": "负债及所有者权益总计",
+		"FD_NORM": "负债及所有者权益总计=负债合计+所有者权益合计+少数股东权益",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A034+A038+A080",
+		"FD_CODE": "A082"
+	},
+	{
+		"FD_NAME": "资产总计",
+		"FD_NORM": "资产总计=负债及所有者权益总计",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A082",
+		"FD_CODE": "A023"
+	},
+	{
+		"FD_NAME": "现金及现金等价物净增加额",
+		"FD_NORM": "现金及现金等价物净增加额=经营活动产生的现金流量净额+投资活动产生的现金流量净额+融资活动产生的现金净流量+汇率变动对现金的影响额",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "C002+C003+C004+C042",
+		"FD_CODE": "C005"
+	},
+	{
+		"FD_NAME": "经营活动产生现金流入小计",
+		"FD_NORM": "经营活动产生现金流入小计= 销售商品、提供劳务收到的现金+ 收到的租金+收到的增值税销项税额和退回的增值税款+收到的除增值税以外的其他税费返还+收到的其他与经营活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "C001+C006+C007+C008+C009",
+		"FD_CODE": "C010"
+	},
+	{
+		"FD_NAME": "投资活动现金流入小计",
+		"FD_NORM": "投资活动现金流入小计=收回投资所收到的现金+分得股利或利润所收到的现金+取得债券利息收入所收到的现金+处置固定资产、无形资产和其他长期资产而收到的现金净额+收到其他与投资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "C019+C020+C021+C022+C023",
+		"FD_CODE": "C024"
+	},
+	{
+		"FD_NAME": "投资活动现金流出小计",
+		"FD_NORM": "投资活动现金流出小计=购建固定资产、无形资产和其他长期资产所支付的现金净额+权益性投资所支付的现金+债权性投资所支付的现金+支付的其他与投资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "C025+C026+C027+C028",
+		"FD_CODE": "C029"
+	},
+	{
+		"FD_NAME": "筹资活动现金流出小计",
+		"FD_NORM": "筹资活动现金流出小计=偿还债务所支付的现金+发生筹资费用所支付的现金+分配股利、利润、偿付利息所支付的现金+融资租赁所支付的现金+减少注册资本所支付的现金+ 支付的其他与筹资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "C035+C036+C037+C038+C039+C040",
+		"FD_CODE": "C041"
+	},
+	{
+		"FD_NAME": "利润总额",
+		"FD_NORM": "利润总额=经营利润+加：投资收益+期货收益 +补贴收入+营业外收入-减：营业外支出+加：以前年度损益调整",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "P007+P008+P015+P016+P017-P018+P019",
+		"FD_CODE": "P009"
+	},
+	{
+		"FD_NAME": "流动资产合计",
+		"FD_NORM": "流动资产合计=货币资金+交易性金融资产+应收票据+应收账款+预付款项+应收利息+应收股利+其他应收款+存货+一年内到期的非流动资产+其他流动资产",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "A001+A002+A004+A005+A007+A008+A009+A010+A012+A015+A016",
+		"FD_CODE": "A017"
+	},
+	{
+		"FD_NAME": "流动负债合计",
+		"FD_NORM": "流动负债合计=短期借款+交易性金融负债+应付票据+应付账款+预收款项+应付职工薪酬+应交税费+应付利息+应付股利+其他应付款+一年内到期的非流动负债+其他流动负债",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "A024+A090+A025+A026+A027+A068+A091+A073+A092+A067+A028+A076",
+		"FD_CODE": "A029"
+	},
+	{
+		"FD_NAME": "所有者权益（或股东权益）合计",
+		"FD_NORM": "所有者权益（或股东权益）合计=实收资本（股本）+资本公积-库存股本+盈余公积+未分配利润+少数股东权益",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "A035+A081-A095+A036+A037+A080",
+		"FD_CODE": "A038"
+	},
+	{
+		"FD_NAME": "资产总计",
+		"FD_NORM": "资产总计=负债和所有者权益（或股东权益）总计",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "A082",
+		"FD_CODE": "A023"
+	},
+	{
+		"FD_NAME": "利润总额",
+		"FD_NORM": "利润总额=营业利润+营业外收入-营业外支出",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "P007+P017-P018",
+		"FD_CODE": "P009"
+	},
+	{
+		"FD_NAME": "筹资活动产生的现金流量净额",
+		"FD_NORM": "筹资活动产生的现金净流量=筹资活动现金流入小计-筹资活动现金流出小计",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "C034-C041",
+		"FD_CODE": "C004"
+	},
+	{
+		"FD_NAME": "现金及现金等价物增加额",
+		"FD_NORM": "现金及现金等价物净增加额=经营活动产生的现金流量净额+投资活动产生的现金流量净额+筹资活动产生的现金净流量+汇率变动对现金的影响额",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "C002+C003+C004+C042",
+		"FD_CODE": "C005"
+	},
+	{
+		"FD_NAME": "投资活动现金流入小计",
+		"FD_NORM": "投资活动现金流入小计=收回投资所收到的现金+取得投资收益收到的现金+处置固定资产、无形资产和其他长期资产而收到的现金净额+处置子公司及其他营业单位收到的现金净额+收到其他与投资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "C019+C047+C022+C023+C048",
+		"FD_CODE": "C024"
+	},
+	{
+		"FD_NAME": "投资活动现金流出小计",
+		"FD_NORM": "投资活动现金流出小计=构建固定资产、无形资产和其他长期资产支付的现金+投资支付的现金+取得子公司及其他营业单位支付的现金净额+支付的其他与投资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "C025+C049+C050+C028",
+		"FD_CODE": "C029"
+	},
+	{
+		"FD_NAME": "筹资活动现金流出小计",
+		"FD_NORM": "筹资活动现金流出小计=偿还债务支付的现金+分配股利、利润或偿付利息支付的现金+支付的其他与筹资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "C035+C037+C040",
+		"FD_CODE": "C041"
+	},
+	{
+		"FD_NAME": "流动资产合计",
+		"FD_NORM": "流动资产合计=货币资金+短期投资+应收票据+应收账款+预付账款+应收股利+应收利息+其他应收款+存货+其他流动资产",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "B001+B002+B003+B004+B005+B006+B007+B008+B009+B011",
+		"FD_CODE": "B012"
+	},
+	{
+		"FD_NAME": "流动负债合计",
+		"FD_NORM": "流动负债合计=短期借款+应付票据+应付账款+预收账款+应付职工薪酬+应交税费+应付利息+应付利润+其他应付款+其他流动负债",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "B020+B021+B022+B023+B041+B042+B043+B044+B045+B046",
+		"FD_CODE": "B024"
+	},
+	{
+		"FD_NAME": "所有者权益（或股东权益）合计",
+		"FD_NORM": "所有者权益（或股东权益）合计=实收资本（或股本）+资本公积+盈余公积+未分配利润",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "B029+B049+B030+B031",
+		"FD_CODE": "B032"
+	},
+	{
+		"FD_NAME": "非流动资产合计",
+		"FD_NORM": "非流动资产合计=长期债券投资+长期股权投资+固定资产账面价值+在建工程+工程物资+固定资产清理+生产性生物资产+无形资产+开发支出+长期待摊费用+其他非流动资产",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "B013+B014+B015+B035+B036+B037+B038+B016+B017+B018+B039",
+		"FD_CODE": "B040"
+	},
+	{
+		"FD_NAME": "经营活动产生的现金流量净额",
+		"FD_NORM": "经营活动产生的现金流量净额=销售产成品、商品、提供劳务收到的现金+收到其他与经营活动有关的现金-购买原材料、商品、接受劳务支付的现金-支付的职工薪酬-支付的税费-支付其他与经营活动有关的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "M001+M006-M007-M008-M009-M010",
+		"FD_CODE": "M002"
+	},
+	{
+		"FD_NAME": "投资活动产生的现金流量净额",
+		"FD_NORM": "投资活动产生的现金流量净额=收回短期投资、长期债券投资和长期股权投资收到的现金+取得投资收益收到的现金+处置固定资产、无形资产和其他非流动资产收回的现金净额-短期投资、长期债券投资和长期股权投资支付的现金-购建固定资产、无形资产和其他非流动资产支付的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "M011+M012+M013-M014-M015",
+		"FD_CODE": "M003"
+	},
+	{
+		"FD_NAME": "负债和所有者权益（或股东权益）",
+		"FD_NORM": "负债和所有者权益（或股东权益）总计=资产总计",
+		"FD_NORMCONFIG": "B019",
+		"FD_CODE": "B050"
+	},
+	{
+		"FD_NAME": "流动资产合计",
+		"FD_NORM": "流动资产合计=货币资金+短期投资+应收帐款+其他应收款+存货+其他流动资产",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "B001+B002+B004+B006+B009+B011",
+		"FD_CODE": "B012"
+	},
+	{
+		"FD_NAME": "资产总计",
+		"FD_NORM": "资产总计=流动资产合计+长期投资+投资企业净资产+固定资产合计+其它资产资产总计=流动资产合计+长期投资+投资企业净资产+固定资产合计+其它资产",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "B012+B051+B052+B015+B055",
+		"FD_CODE": "B019"
+	},
+	{
+		"FD_NAME": "长期负债合计",
+		"FD_NORM": "长期负债合计=银行按揭贷款",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "B025",
+		"FD_CODE": "B027"
+	},
+	{
+		"FD_NAME": "负债及所有者权益合计",
+		"FD_NORM": "负债及所有者权益合计=负债合计+所有者权益合计",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "B032+B028",
+		"FD_CODE": "B050"
+	},
+	{
+		"FD_NAME": "利润总额（必输）",
+		"FD_NORM": "利润总额=业务利润+加：其他收入+股东个人收入合并-减：其他支出-股东个人支出合并",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "I008+I014+I016-I015-I017",
+		"FD_CODE": "I009"
+	},
+	{
+		"FD_NAME": "负债及所有者权益合计",
+		"FD_NORM": "负债及所有者权益合计=资产总",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "B019",
+		"FD_CODE": "B050"
+	},
+	{
+		"FD_NAME": "短期投资",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A002"
+	},
+	{
+		"FD_NAME": "短期投资减值准备",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A003"
+	},
+	{
+		"FD_NAME": "应收票据",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A004"
+	},
+	{
+		"FD_NAME": "应收帐款净额",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A006"
+	},
+	{
+		"FD_NAME": "预付货款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A007"
+	},
+	{
+		"FD_NAME": "其它应收款",
+		"FD_NORM": "其它应收款=一年内其他应收款+一至三年其他应收款+三年以上其他应收款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A048+A049+A050",
+		"FD_CODE": "A008"
+	},
+	{
+		"FD_NAME": "应收股利",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A009"
+	},
+	{
+		"FD_NAME": "应收利息",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A010"
+	},
+	{
+		"FD_NAME": "应收补贴款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A011"
+	},
+	{
+		"FD_NAME": "存货",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A012"
+	},
+	{
+		"FD_NAME": "存货净额",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A013"
+	},
+	{
+		"FD_NAME": "待摊费用",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A014"
+	},
+	{
+		"FD_NAME": "一年内到期的长期债券投资",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A015"
+	},
+	{
+		"FD_NAME": "其它流动资产",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A016"
+	},
+	{
+		"FD_NAME": "长期投资合计",
+		"FD_NORM": "长期投资合计=长期投资-减：长期投资减值准备+委托贷款-减：委托贷款减值准备",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A052-A053+A054-A055",
+		"FD_CODE": "A018"
+	},
+	{
+		"FD_NAME": "固定资产净值",
+		"FD_NORM": "固定资产净值=固定资产原价-减：累计折旧",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A056-A057",
+		"FD_CODE": "A019"
+	},
+	{
+		"FD_NAME": "无形资产",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A020"
+	},
+	{
+		"FD_NAME": "递延资产",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A021"
+	},
+	{
+		"FD_NAME": "递延税款借项",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A022"
+	},
+	{
+		"FD_NAME": "短期借款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A024"
+	},
+	{
+		"FD_NAME": "应付票据",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A025"
+	},
+	{
+		"FD_NAME": "应付帐款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A026"
+	},
+	{
+		"FD_NAME": "预收账款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A027"
+	},
+	{
+		"FD_NAME": "一年内到期的长期负债",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A028"
+	},
+	{
+		"FD_NAME": "长期借款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A030"
+	},
+	{
+		"FD_NAME": "应付债券",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A031"
+	},
+	{
+		"FD_NAME": "长期应付款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A032"
+	},
+	{
+		"FD_NAME": "长期负债合计",
+		"FD_NORM": "长期负债合计=长期借款+应付债券+长期应付款+递延出租收入+其他长期负债",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A030+A031+A032+A077+A078",
+		"FD_CODE": "A033"
+	},
+	{
+		"FD_NAME": "负债合计",
+		"FD_NORM": "负债合计=流动负债合计+长期负债合计+递延税款贷项",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A029+A033+A079",
+		"FD_CODE": "A034"
+	},
+	{
+		"FD_NAME": "实收资本",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A035"
+	},
+	{
+		"FD_NAME": "盈余公积",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A036"
+	},
+	{
+		"FD_NAME": "未分配利润",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A037"
+	},
+	{
+		"FD_NAME": "所有者权益合计",
+		"FD_NORM": "所有者权益合计=实收资本+资本公积+盈余公积+未分配利润",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A035+A081+A036+A037",
+		"FD_CODE": "A038"
+	},
+	{
+		"FD_NAME": "一年内应收帐款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A045"
+	},
+	{
+		"FD_NAME": "一至三年应收帐款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A046"
+	},
+	{
+		"FD_NAME": "三年以上应收帐款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A047"
+	},
+	{
+		"FD_NAME": "一年内其他应收款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A048"
+	},
+	{
+		"FD_NAME": "一至三年其他应收款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A049"
+	},
+	{
+		"FD_NAME": "三年以上其他应收款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A050"
+	},
+	{
+		"FD_NAME": "待处理流动资产损益",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A051"
+	},
+	{
+		"FD_NAME": "长期投资",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A052"
+	},
+	{
+		"FD_NAME": "减：长期投资减值准备",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A053"
+	},
+	{
+		"FD_NAME": "委托贷款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A054"
+	},
+	{
+		"FD_NAME": "减：委托贷款减值准备",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A055"
+	},
+	{
+		"FD_NAME": "固定资产原价",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A056"
+	},
+	{
+		"FD_NAME": "减：累计折旧",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A057"
+	},
+	{
+		"FD_NAME": "固定资产清理",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A058"
+	},
+	{
+		"FD_NAME": "在建工程",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A059"
+	},
+	{
+		"FD_NAME": "减：在建工程减值准备",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A060"
+	},
+	{
+		"FD_NAME": "减：固定资产减值准备",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A061"
+	},
+	{
+		"FD_NAME": "减：无形资产减值准备",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A063"
+	},
+	{
+		"FD_NAME": "无形及递延资产合计",
+		"FD_NORM": "无形及递延资产合计=无形资产-减：无形资产减值准备+递延资产",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "A020-A063+A021",
+		"FD_CODE": "A064"
+	},
+	{
+		"FD_NAME": "其它长期资产",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A065"
+	},
+	{
+		"FD_NAME": "长期待摊费用",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A066"
+	},
+	{
+		"FD_NAME": "其他应付款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A067"
+	},
+	{
+		"FD_NAME": "应付福利费",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A069"
+	},
+	{
+		"FD_NAME": "未交税金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A070"
+	},
+	{
+		"FD_NAME": "未交包干利润",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A071"
+	},
+	{
+		"FD_NAME": "未付利润",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A072"
+	},
+	{
+		"FD_NAME": "其他未交款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A074"
+	},
+	{
+		"FD_NAME": "预提费用",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A075"
+	},
+	{
+		"FD_NAME": "其他流动负债",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A076"
+	},
+	{
+		"FD_NAME": "递延出租收入",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A077"
+	},
+	{
+		"FD_NAME": "递延税款贷项",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A079"
+	},
+	{
+		"FD_NAME": "少数股东权益",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A080"
+	},
+	{
+		"FD_NAME": "资本公积",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A081"
+	},
+	{
+		"FD_NAME": "主营业务收入",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P001"
+	},
+	{
+		"FD_NAME": "营业费用",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P003"
+	},
+	{
+		"FD_NAME": "营业税金及附加",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P004"
+	},
+	{
+		"FD_NAME": "管理费用",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P005"
+	},
+	{
+		"FD_NAME": "财务费用",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P006"
+	},
+	{
+		"FD_NAME": "投资收益",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P008"
+	},
+	{
+		"FD_NAME": "所得税",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P010"
+	},
+	{
+		"FD_NAME": "净利润",
+		"FD_NORM": "净利润=利润总额-减：所得税-少数股东损益",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "P009-P010-P020",
+		"FD_CODE": "P011"
+	},
+	{
+		"FD_NAME": "主营业务经营利润",
+		"FD_NORM": "主营业务经营利润=主营业务收入-减：营业成本-营业费用-营业税金及附加",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "P001-P002-P003-P004",
+		"FD_CODE": "P013"
+	},
+	{
+		"FD_NAME": "加：其它业务利润（亏损以\"-\"号表示）",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P014"
+	},
+	{
+		"FD_NAME": "期货收益（损失以\"-\"号表示）",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P015"
+	},
+	{
+		"FD_NAME": "补贴收入",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P016"
+	},
+	{
+		"FD_NAME": "营业外收入",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P017"
+	},
+	{
+		"FD_NAME": "减：营业外支出",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P018"
+	},
+	{
+		"FD_NAME": "加：以前年度损益调整（调减负号表示）",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P019"
+	},
+	{
+		"FD_NAME": "少数股东损益",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P020"
+	},
+	{
+		"FD_NAME": "销售商品、提供劳务收到的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C001"
+	},
+	{
+		"FD_NAME": "经营活动产生的现金流量净额",
+		"FD_NORM": "经营活动产生的现金流量净额=经营活动产生现金流入小计-经营活动产生现金流出小计",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "C010-C018",
+		"FD_CODE": "C002"
+	},
+	{
+		"FD_NAME": "融资活动产生的现金净流量",
+		"FD_NORM": "融资活动产生的现金净流量=筹资活动现金流入小计-筹资活动现金流出小计",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "C034-C041",
+		"FD_CODE": "C004"
+	},
+	{
+		"FD_NAME": "收到的租金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C006"
+	},
+	{
+		"FD_NAME": "收到的增值税销项税额和退回的增值税款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C007"
+	},
+	{
+		"FD_NAME": "收到的除增值税以外的其他税费返还",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C008"
+	},
+	{
+		"FD_NAME": "收到的其他与经营活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C009"
+	},
+	{
+		"FD_NAME": "购买商品、接受劳务支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C011"
+	},
+	{
+		"FD_NAME": "经营费用现金支出",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C012"
+	},
+	{
+		"FD_NAME": "支付给职工以及为职工支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C013"
+	},
+	{
+		"FD_NAME": "支付的增值税款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C014"
+	},
+	{
+		"FD_NAME": "支付的所得税款",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C015"
+	},
+	{
+		"FD_NAME": "支付的除增值税、所得税以外的其他税费",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C016"
+	},
+	{
+		"FD_NAME": "支付的其他与经营活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C017"
+	},
+	{
+		"FD_NAME": "经营活动产生现金流出小计",
+		"FD_NORM": "经营活动产生现金流出小计=购买商品、接受劳务支付的现金+经营费用现金支出+支付给职工以及为职工支付的现金+支付的增值税款+支付的所得税款+支付的除增值税、所得税以外的其他税费+支付的其他与经营活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "C011+C012+C013+C014+C015+C016+C017",
+		"FD_CODE": "C018"
+	},
+	{
+		"FD_NAME": "收回投资所收到的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C019"
+	},
+	{
+		"FD_NAME": "分得股利或利润所收到的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C020"
+	},
+	{
+		"FD_NAME": "取得债券利息收入所收到的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C021"
+	},
+	{
+		"FD_NAME": "处置固定资产、无形资产和其他长期资产而收到的现金净额",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C022"
+	},
+	{
+		"FD_NAME": "收到其他与投资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C023"
+	},
+	{
+		"FD_NAME": "购建固定资产、无形资产和其他长期资产所支付的现金净额",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C025"
+	},
+	{
+		"FD_NAME": "权益性投资所支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C026"
+	},
+	{
+		"FD_NAME": "债权性投资所支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C027"
+	},
+	{
+		"FD_NAME": "支付的其他与投资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C028"
+	},
+	{
+		"FD_NAME": "吸收权益性投资所收到的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C030"
+	},
+	{
+		"FD_NAME": "发行债券所收到的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C031"
+	},
+	{
+		"FD_NAME": "借款所收到的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C032"
+	},
+	{
+		"FD_NAME": "收到其他与筹资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C033"
+	},
+	{
+		"FD_NAME": "筹资活动现金流入小计",
+		"FD_NORM": "筹资活动现金流入小计=吸收权益性投资所收到的现金+发行债券所收到的现金+借款所收到的现金+收到其他与筹资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "C030+C031+C032+C033",
+		"FD_CODE": "C034"
+	},
+	{
+		"FD_NAME": "偿还债务所支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C035"
+	},
+	{
+		"FD_NAME": "发生筹资费用所支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C036"
+	},
+	{
+		"FD_NAME": "分配股利、利润、偿付利息所支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C037"
+	},
+	{
+		"FD_NAME": "融资租赁所支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C038"
+	},
+	{
+		"FD_NAME": "减少注册资本所支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C039"
+	},
+	{
+		"FD_NAME": "支付的其他与筹资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C040"
+	},
+	{
+		"FD_NAME": "四、汇率变动对现金的影响额",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "C042"
+	},
+	{
+		"FD_NAME": "拨入专款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE39"
+	},
+	{
+		"FD_NAME": "固定资产",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS03"
+	},
+	{
+		"FD_NAME": "在建工程",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS04"
+	},
+	{
+		"FD_NAME": "待处理资产损失",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS06"
+	},
+	{
+		"FD_NAME": "资产合计",
+		"FD_NORM": "资产合计=现金+银行存款+应收票据+应收帐款+预付帐款+其它应收款（暂付款）+材料+产成品+短期对外投资+长期对外投资+固定资产+在建工程+无形资产+待处理资产损失",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "AS14+AS15+AS16+AS17+AS18+AS19+AS20+AS21+AS22+AS23+AS03+AS04+AS05+AS06",
+		"FD_CODE": "AS08"
+	},
+	{
+		"FD_NAME": "短期借入款项",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS09"
+	},
+	{
+		"FD_NAME": "现金",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS14"
+	},
+	{
+		"FD_NAME": "应收票据",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS16"
+	},
+	{
+		"FD_NAME": "应收帐款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS17"
+	},
+	{
+		"FD_NAME": "预付帐款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS18"
+	},
+	{
+		"FD_NAME": "材料",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS20"
+	},
+	{
+		"FD_NAME": "产成品",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS21"
+	},
+	{
+		"FD_NAME": "短期对外投资",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS22"
+	},
+	{
+		"FD_NAME": "拨出经费",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS24"
+	},
+	{
+		"FD_NAME": "拨出专款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS25"
+	},
+	{
+		"FD_NAME": "专款支出",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS26"
+	},
+	{
+		"FD_NAME": "经营支出",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS28"
+	},
+	{
+		"FD_NAME": "成本费用",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS29"
+	},
+	{
+		"FD_NAME": "销售税金",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS30"
+	},
+	{
+		"FD_NAME": "对附属单位补助",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS32"
+	},
+	{
+		"FD_NAME": "结转自筹基建",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS33"
+	},
+	{
+		"FD_NAME": "应付票据",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS36"
+	},
+	{
+		"FD_NAME": "应付帐款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS37"
+	},
+	{
+		"FD_NAME": "预收帐款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS38"
+	},
+	{
+		"FD_NAME": "应付工资",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS39"
+	},
+	{
+		"FD_NAME": "其他应付款（暂存款）",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS40"
+	},
+	{
+		"FD_NAME": "应缴预算款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS41"
+	},
+	{
+		"FD_NAME": "应缴财政专户款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS42"
+	},
+	{
+		"FD_NAME": "应交税金",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS43"
+	},
+	{
+		"FD_NAME": "预提费用",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS44"
+	},
+	{
+		"FD_NAME": "事业基金",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS45"
+	},
+	{
+		"FD_NAME": "固定基金",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS46"
+	},
+	{
+		"FD_NAME": "专用基金",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS47"
+	},
+	{
+		"FD_NAME": "事业结余",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS48"
+	},
+	{
+		"FD_NAME": "经营结余",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS49"
+	},
+	{
+		"FD_NAME": "结余分配",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS50"
+	},
+	{
+		"FD_NAME": "财政补助收入（拨入经费）",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS51"
+	},
+	{
+		"FD_NAME": "上级补助收入",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS52"
+	},
+	{
+		"FD_NAME": "拨入专款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS53"
+	},
+	{
+		"FD_NAME": "事业收入",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS54"
+	},
+	{
+		"FD_NAME": "经营收入（预算外资金收入）",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS55"
+	},
+	{
+		"FD_NAME": "附属单位缴款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS56"
+	},
+	{
+		"FD_NAME": "其他收入",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS57"
+	},
+	{
+		"FD_NAME": "负债部类总计",
+		"FD_NORM": "负债部类总计=负债合计+净资产合计+收入合计",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "AS12+AS13+AS58",
+		"FD_CODE": "AS59"
+	},
+	{
+		"FD_NAME": "财政补助收入（拨入经费）",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE02"
+	},
+	{
+		"FD_NAME": "事业结余",
+		"FD_NORM": "事业结余=正常收支结余+收回以前年度事业支出",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "IE31+IE32",
+		"FD_CODE": "IE03"
+	},
+	{
+		"FD_NAME": "事业收入",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE05"
+	},
+	{
+		"FD_NAME": "经营收入（预算外资金收入）",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE06"
+	},
+	{
+		"FD_NAME": "其他收入",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE07"
+	},
+	{
+		"FD_NAME": "其中：财政补助支出",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE08"
+	},
+	{
+		"FD_NAME": "预算外资金支出",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE09"
+	},
+	{
+		"FD_NAME": "经营支出",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE10"
+	},
+	{
+		"FD_NAME": "附属单位缴款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE11"
+	},
+	{
+		"FD_NAME": "上级补助收入",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE14"
+	},
+	{
+		"FD_NAME": "上缴上级支出",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE15"
+	},
+	{
+		"FD_NAME": "对附属单位补助",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE16"
+	},
+	{
+		"FD_NAME": "小计1",
+		"FD_NORM": "小计1=财政补助收入（拨入经费）+上级补助收入+附属单位缴款+事业收入+其他收入",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "IE02+IE14+IE11+IE05+IE07",
+		"FD_CODE": "IE18"
+	},
+	{
+		"FD_NAME": "事业支出",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE21"
+	},
+	{
+		"FD_NAME": "销售税金1",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE22"
+	},
+	{
+		"FD_NAME": "结转自筹基建",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE23"
+	},
+	{
+		"FD_NAME": "销售税金2",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE25"
+	},
+	{
+		"FD_NAME": "小计4",
+		"FD_NORM": "小计4=经营支出+销售税金2",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "IE10+IE25",
+		"FD_CODE": "IE26"
+	},
+	{
+		"FD_NAME": "拨出专款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE27"
+	},
+	{
+		"FD_NAME": "小计5",
+		"FD_NORM": "小计5=拨出专款+专款支出",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "IE27+IE28",
+		"FD_CODE": "IE29"
+	},
+	{
+		"FD_NAME": "正常收支结余",
+		"FD_NORM": "正常收支结余=小计1-小计3",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "IE18-IE24",
+		"FD_CODE": "IE31"
+	},
+	{
+		"FD_NAME": "以前年度亏损(一)",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE33"
+	},
+	{
+		"FD_NAME": "结余分配",
+		"FD_NORM": "结余分配=应交所得税+提取专用基金+转入事业基金+其他",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "IE35+IE36+IE37+IE38",
+		"FD_CODE": "IE34"
+	},
+	{
+		"FD_NAME": "应交所得税",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE35"
+	},
+	{
+		"FD_NAME": "转入事业基金",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE37"
+	},
+	{
+		"FD_NAME": "处置固定资产、无形资产和其他长期资产收回的现金净额",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C022"
+	},
+	{
+		"FD_NAME": "收到其他与投资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C023"
+	},
+	{
+		"FD_NAME": "支付其他与投资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C028"
+	},
+	{
+		"FD_NAME": "取得借款收到的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C032"
+	},
+	{
+		"FD_NAME": "收到其他与筹资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C033"
+	},
+	{
+		"FD_NAME": "筹资活动现金流入小计",
+		"FD_NORM": "筹资活动现金流入小计=吸收投资收到的现金+取得借款收到的现金+收到其他与筹资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "C051+C032+C033",
+		"FD_CODE": "C034"
+	},
+	{
+		"FD_NAME": "分配股利、利润或偿付利息支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C037"
+	},
+	{
+		"FD_NAME": "支付其他与筹资活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C040"
+	},
+	{
+		"FD_NAME": "四、汇率变动对现金及现金等价物的影响",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C042"
+	},
+	{
+		"FD_NAME": "加：期初现金及现金等价物余额",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C044"
+	},
+	{
+		"FD_NAME": "收到的税费返还",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C045"
+	},
+	{
+		"FD_NAME": "支付的各项税费",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C046"
+	},
+	{
+		"FD_NAME": "取得投资收益收到的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C047"
+	},
+	{
+		"FD_NAME": "投资支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C049"
+	},
+	{
+		"FD_NAME": "取得子公司及其他营业单位支付的现金净额",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C050"
+	},
+	{
+		"FD_NAME": "吸收投资收到的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C051"
+	},
+	{
+		"FD_NAME": "货币资金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A001"
+	},
+	{
+		"FD_NAME": "交易性金融资产",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A002"
+	},
+	{
+		"FD_NAME": "应收账款",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A005"
+	},
+	{
+		"FD_NAME": "预付款项",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A007"
+	},
+	{
+		"FD_NAME": "其他应收款",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A008"
+	},
+	{
+		"FD_NAME": "应收股利",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A009"
+	},
+	{
+		"FD_NAME": "存货",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A012"
+	},
+	{
+		"FD_NAME": "一年内到期的非流动资产",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A015"
+	},
+	{
+		"FD_NAME": "其他流动资产",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A016"
+	},
+	{
+		"FD_NAME": "固定资产",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A019"
+	},
+	{
+		"FD_NAME": "无形资产",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A020"
+	},
+	{
+		"FD_NAME": "长期待摊费用",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A021"
+	},
+	{
+		"FD_NAME": "递延所得税资产",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A022"
+	},
+	{
+		"FD_NAME": "资产总计",
+		"FD_NORM": "资产总计=流动资产合计+非流动资产合计",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "A017+A089",
+		"FD_CODE": "A023"
+	},
+	{
+		"FD_NAME": "短期借款",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A024"
+	},
+	{
+		"FD_NAME": "应付票据",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A025"
+	},
+	{
+		"FD_NAME": "应付账款",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A026"
+	},
+	{
+		"FD_NAME": "预收款项",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A027"
+	},
+	{
+		"FD_NAME": "一年内到期的非流动负债",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A028"
+	},
+	{
+		"FD_NAME": "长期借���",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A030"
+	},
+	{
+		"FD_NAME": "应付债券",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A031"
+	},
+	{
+		"FD_NAME": "长期应付款",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A032"
+	},
+	{
+		"FD_NAME": "非流动负债合计",
+		"FD_NORM": "非流动负债合计=长期借款+应付债券+长期应付款+专项应付款+预计负债+递延所得税负债+其他非流动负债",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "A030+A031+A032+A093+A094+A079+A078",
+		"FD_CODE": "A033"
+	},
+	{
+		"FD_NAME": "负债合计",
+		"FD_NORM": "负债合计=流动负债合计+非流动负债合计",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "A029+A033",
+		"FD_CODE": "A034"
+	},
+	{
+		"FD_NAME": "实收资本（股本）",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A035"
+	},
+	{
+		"FD_NAME": "盈余公积",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A036"
+	},
+	{
+		"FD_NAME": "未分配利润",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A037"
+	},
+	{
+		"FD_NAME": "商誉",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A039"
+	},
+	{
+		"FD_NAME": "开发支出",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A040"
+	},
+	{
+		"FD_NAME": "长期股权投资",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A041"
+	},
+	{
+		"FD_NAME": "可供出售金融资产",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A043"
+	},
+	{
+		"FD_NAME": "持有至到期投资",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A044"
+	},
+	{
+		"FD_NAME": "固定资产清理",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A058"
+	},
+	{
+		"FD_NAME": "在建工程",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A059"
+	},
+	{
+		"FD_NAME": "其他应付款",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A067"
+	},
+	{
+		"FD_NAME": "应付职工薪酬",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A068"
+	},
+	{
+		"FD_NAME": "应付利息",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A073"
+	},
+	{
+		"FD_NAME": "其他流动负债",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A076"
+	},
+	{
+		"FD_NAME": "其他非流动负债",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A078"
+	},
+	{
+		"FD_NAME": "递延所得税负债",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A079"
+	},
+	{
+		"FD_NAME": "少数股东权益",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A080"
+	},
+	{
+		"FD_NAME": "资本公积",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A081"
+	},
+	{
+		"FD_NAME": "负债和所有者权益（或股东权益）总计",
+		"FD_NORM": "负债和所有者权益（或股东权益）总计=负债合计+所有者权益（或股东权益）合计",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "A034+A038",
+		"FD_CODE": "A082"
+	},
+	{
+		"FD_NAME": "长期应收款",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A083"
+	},
+	{
+		"FD_NAME": "投资性房地产",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A084"
+	},
+	{
+		"FD_NAME": "工程物资",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A085"
+	},
+	{
+		"FD_NAME": "生产性生物资产",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A086"
+	},
+	{
+		"FD_NAME": "油气资产",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A087"
+	},
+	{
+		"FD_NAME": "其他非流动资产",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A088"
+	},
+	{
+		"FD_NAME": "交易性金融负债",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A090"
+	},
+	{
+		"FD_NAME": "应交税费",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A091"
+	},
+	{
+		"FD_NAME": "应付股利",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A092"
+	},
+	{
+		"FD_NAME": "预计负债",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A094"
+	},
+	{
+		"FD_NAME": "减：库存股",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A095"
+	},
+	{
+		"FD_NAME": "营业总收入",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "P001"
+	},
+	{
+		"FD_NAME": "营业成本",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "P002"
+	},
+	{
+		"FD_NAME": "营业税金及附加",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "P004"
+	},
+	{
+		"FD_NAME": "管理费用",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "P005"
+	},
+	{
+		"FD_NAME": "财务费用",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "P006"
+	},
+	{
+		"FD_NAME": "投资收益",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "P008"
+	},
+	{
+		"FD_NAME": "所得税费用",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "P010"
+	},
+	{
+		"FD_NAME": "净利润",
+		"FD_NORM": "净利润=利润总额-所得税费用",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "P009-P010",
+		"FD_CODE": "P011"
+	},
+	{
+		"FD_NAME": "加：营业外收入",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "P017"
+	},
+	{
+		"FD_NAME": "减：营业外支出",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "P018"
+	},
+	{
+		"FD_NAME": "资产减值损失",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "P021"
+	},
+	{
+		"FD_NAME": "销售商品、提供劳务收到的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C001"
+	},
+	{
+		"FD_NAME": "投资活动产生的现金流量净额",
+		"FD_NORM": "投资活动产生的现金流量净额=投资活动现金流入小计-投资活动现金流出小计",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "C024-C029",
+		"FD_CODE": "C003"
+	},
+	{
+		"FD_NAME": "收到其他与经营活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C009"
+	},
+	{
+		"FD_NAME": "购买商品、接受劳务支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C011"
+	},
+	{
+		"FD_NAME": "支付给职工以及为职工支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C013"
+	},
+	{
+		"FD_NAME": "支付其他与经营活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C017"
+	},
+	{
+		"FD_NAME": "经营活动现金流出小计",
+		"FD_NORM": "经营活动产生现金流出小计=购买商品、接受劳务支付的现金+支付给职工以及为职工支付的现金+支付的各项税费+支付的其他与经营活动有关的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "C011+C013+C046+C017",
+		"FD_CODE": "C018"
+	},
+	{
+		"FD_NAME": "货币资金",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B001"
+	},
+	{
+		"FD_NAME": "短期投资",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B002"
+	},
+	{
+		"FD_NAME": "应收帐款",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B004"
+	},
+	{
+		"FD_NAME": "其他应收款",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B006"
+	},
+	{
+		"FD_NAME": "其他流动资产",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B011"
+	},
+	{
+		"FD_NAME": "固定资产合计",
+		"FD_NORM": "固定资产合计=动产+不动产",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "B053+B054",
+		"FD_CODE": "B015"
+	},
+	{
+		"FD_NAME": "应付帐款",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B022"
+	},
+	{
+		"FD_NAME": "流动负债合计",
+		"FD_NORM": "流动负债合计=银行借款+社会集资+应付票据（敞口）+应付帐款+其他应付款",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "B020+B056+B021+B022+B045",
+		"FD_CODE": "B024"
+	},
+	{
+		"FD_NAME": "银行按揭贷款",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B025"
+	},
+	{
+		"FD_NAME": "负债合计",
+		"FD_NORM": "负债合计=流动负债合计+长期负债合计",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "B024+B027",
+		"FD_CODE": "B028"
+	},
+	{
+		"FD_NAME": "盈余公积",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B030"
+	},
+	{
+		"FD_NAME": "未分配利润",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B031"
+	},
+	{
+		"FD_NAME": "所有者权益合计：",
+		"FD_NORM": "所有者权益合计=实收资本+盈余公积+未分配利润",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "B029+B030+B031",
+		"FD_CODE": "B032"
+	},
+	{
+		"FD_NAME": "长期投资：",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B051"
+	},
+	{
+		"FD_NAME": "投资企业净资产：",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B052"
+	},
+	{
+		"FD_NAME": "动产",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B053"
+	},
+	{
+		"FD_NAME": "其它资产：",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B055"
+	},
+	{
+		"FD_NAME": "社会集资",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "B056"
+	},
+	{
+		"FD_NAME": "业务收入（必输）",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "I001"
+	},
+	{
+		"FD_NAME": "减：业务成本",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "I002"
+	},
+	{
+		"FD_NAME": "业务利润",
+		"FD_NORM": "业务利润=业务收入-减：业务成本-业务税金及附加",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "I001-I002-I004",
+		"FD_CODE": "I008"
+	},
+	{
+		"FD_NAME": "加：其他收入",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "I014"
+	},
+	{
+		"FD_NAME": "减：其他支出",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "I015"
+	},
+	{
+		"FD_NAME": "股东个人支出合并",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "I017"
+	},
+	{
+		"FD_NAME": "收支净额",
+		"FD_NORM": "收支净额=收入总计-支出总计",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "M023-M029",
+		"FD_CODE": "M005"
+	},
+	{
+		"FD_NAME": "收入总计",
+		"FD_NORM": "收入总计=经营收入+家庭收入+新增贷款+投资收入",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_NORMCONFIG": "M024+M026+M027+M028",
+		"FD_CODE": "M023"
+	},
+	{
+		"FD_NAME": "经营收入",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "M024"
+	},
+	{
+		"FD_NAME": "家庭收入",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "M026"
+	},
+	{
+		"FD_NAME": "新增贷款",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "M027"
+	},
+	{
+		"FD_NAME": "投资收入",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "M028"
+	},
+	{
+		"FD_NAME": "家庭支出",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "M030"
+	},
+	{
+		"FD_NAME": "还款支出",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "M031"
+	},
+	{
+		"FD_NAME": "利息支出",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "M032"
+	},
+	{
+		"FD_NAME": "投资支出",
+		"FD_FS_TYPE": "SMALLENTERPRISEOLD",
+		"FD_CODE": "M033"
+	},
+	{
+		"FD_NAME": "存货",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS02"
+	},
+	{
+		"FD_NAME": "固定资产",
+		"FD_NORM": "固定资产=固定资产原价-减：累计折旧",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "AS62-AS63",
+		"FD_CODE": "AS03"
+	},
+	{
+		"FD_NAME": "在建工程",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS04"
+	},
+	{
+		"FD_NAME": "无形资产",
+		"FD_NORM": "无形资产=无形资产原价-减：累计摊销",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "AS64-AS65",
+		"FD_CODE": "AS05"
+	},
+	{
+		"FD_NAME": "待处置资产损益",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS06"
+	},
+	{
+		"FD_NAME": "资产总计",
+		"FD_NORM": "资产总计=流动资产合计+非流动资产合计",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "AS01+AS07",
+		"FD_CODE": "AS08"
+	},
+	{
+		"FD_NAME": "短期借款",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS09"
+	},
+	{
+		"FD_NAME": "长期借款",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS11"
+	},
+	{
+		"FD_NAME": "负债合计",
+		"FD_NORM": "负债合计=流动负债合计+非流动负债合计",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "AS10+AS68",
+		"FD_CODE": "AS12"
+	},
+	{
+		"FD_NAME": "货币资金",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS14"
+	},
+	{
+		"FD_NAME": "应收票据",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS16"
+	},
+	{
+		"FD_NAME": "应收账款",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS17"
+	},
+	{
+		"FD_NAME": "预付账款",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS18"
+	},
+	{
+		"FD_NAME": "其他应收款",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS19"
+	},
+	{
+		"FD_NAME": "短期投资",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS22"
+	},
+	{
+		"FD_NAME": "长期投资",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS23"
+	},
+	{
+		"FD_NAME": "应付票据",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS36"
+	},
+	{
+		"FD_NAME": "应付账款",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS37"
+	},
+	{
+		"FD_NAME": "预收账款",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS38"
+	},
+	{
+		"FD_NAME": "应付职工薪酬",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS39"
+	},
+	{
+		"FD_NAME": "其他应付款",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS40"
+	},
+	{
+		"FD_NAME": "应缴国库款",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS41"
+	},
+	{
+		"FD_NAME": "应缴财政专户款",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS42"
+	},
+	{
+		"FD_NAME": "应缴税费",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS43"
+	},
+	{
+		"FD_NAME": "非流动资产基金",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS46"
+	},
+	{
+		"FD_NAME": "专用基金",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS47"
+	},
+	{
+		"FD_NAME": "1.事业结余",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS48"
+	},
+	{
+		"FD_NAME": "2.经营结余",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS49"
+	},
+	{
+		"FD_NAME": "负债和净资产总计",
+		"FD_NORM": "负债和净资产总计=负债合计+净资产合计",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "AS12+AS13",
+		"FD_CODE": "AS59"
+	},
+	{
+		"FD_NAME": "财政应返还额度",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS60"
+	},
+	{
+		"FD_NAME": "固定资产原价",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS62"
+	},
+	{
+		"FD_NAME": "减：累计折旧",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS63"
+	},
+	{
+		"FD_NAME": "无形资产原价",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS64"
+	},
+	{
+		"FD_NAME": "其他流动负债",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS66"
+	},
+	{
+		"FD_NAME": "长期应付款",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS67"
+	},
+	{
+		"FD_NAME": "事业基金",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS69"
+	},
+	{
+		"FD_NAME": "财政补助结转",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS70"
+	},
+	{
+		"FD_NAME": "财政补助结余",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS71"
+	},
+	{
+		"FD_NAME": "非财政补助结余",
+		"FD_NORM": "非财政补助结余=事业结余+经营结余",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "AS48+AS49",
+		"FD_CODE": "AS73"
+	},
+	{
+		"FD_NAME": "一、本期财政补助结转结余",
+		"FD_NORM": "本期财政补助结转结余=财政补助收入-事业支出（财政补助支出）",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "IE02-IE08",
+		"FD_CODE": "IE01"
+	},
+	{
+		"FD_NAME": "（一）事业类收入",
+		"FD_NORM": "事业类收入=事业收入+上级补助收入+附属单位上缴收入+其他收入",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "IE05+IE14+IE11+IE07",
+		"FD_CODE": "IE04"
+	},
+	{
+		"FD_NAME": "1.事业收入",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE05"
+	},
+	{
+		"FD_NAME": "4.其他收入",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE07"
+	},
+	{
+		"FD_NAME": "减：事业支出（财政补助支出）",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE08"
+	},
+	{
+		"FD_NAME": "1.事业支出（非财政补助支出）",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE09"
+	},
+	{
+		"FD_NAME": "3.附属单位上缴收入",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE11"
+	},
+	{
+		"FD_NAME": "六、本年非财政补助结余",
+		"FD_NORM": "本年非财政补助结余=本年非财政补助结转结余-非财政补助结转",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "IE43-IE44",
+		"FD_CODE": "IE13"
+	},
+	{
+		"FD_NAME": "2.上级补助收入",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE14"
+	},
+	{
+		"FD_NAME": "2.上缴上级支出",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE15"
+	},
+	{
+		"FD_NAME": "3.对附属单位补助支出",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE16"
+	},
+	{
+		"FD_NAME": "减：应缴企业所得税",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE35"
+	},
+	{
+		"FD_NAME": "减：提取专用基金",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE36"
+	},
+	{
+		"FD_NAME": "减：（二）事业类支出",
+		"FD_NORM": "事业类支出=事业支出（非财政补助支出）+上缴上级支出+对附属单位补助支出+其他支出",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "IE09+IE15+IE16+IE41",
+		"FD_CODE": "IE40"
+	},
+	{
+		"FD_NAME": "4.其他支出",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE41"
+	},
+	{
+		"FD_NAME": "四、弥补以前年度亏损后的经营结余",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE42"
+	},
+	{
+		"FD_NAME": "减：非财政补助结转",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE44"
+	},
+	{
+		"FD_NAME": "减：经营支出",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE45"
+	},
+	{
+		"FD_NAME": "货币资金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B001"
+	},
+	{
+		"FD_NAME": "短期投资",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B002"
+	},
+	{
+		"FD_NAME": "应收票据",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B003"
+	},
+	{
+		"FD_NAME": "应收账款",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B004"
+	},
+	{
+		"FD_NAME": "预付账款",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B005"
+	},
+	{
+		"FD_NAME": "其他应收款",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B006"
+	},
+	{
+		"FD_NAME": "应收股利",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B007"
+	},
+	{
+		"FD_NAME": "应收利息",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B008"
+	},
+	{
+		"FD_NAME": "存货",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B009"
+	},
+	{
+		"FD_NAME": "待摊费用",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B010"
+	},
+	{
+		"FD_NAME": "其他流动资产",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B011"
+	},
+	{
+		"FD_NAME": "长期债券投资",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B013"
+	},
+	{
+		"FD_NAME": "长期股权投资",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B014"
+	},
+	{
+		"FD_NAME": "固定资产账面价值",
+		"FD_NORM": "固定资产账面价值=固定资产原价-减：累计折旧",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "B033-B034",
+		"FD_CODE": "B015"
+	},
+	{
+		"FD_NAME": "无形资产",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B016"
+	},
+	{
+		"FD_NAME": "开发支出",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B017"
+	},
+	{
+		"FD_NAME": "长期待摊费用",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B018"
+	},
+	{
+		"FD_NAME": "资产总计",
+		"FD_NORM": "资产总计=流动资产合计+非流动资产合计",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "B012+B040",
+		"FD_CODE": "B019"
+	},
+	{
+		"FD_NAME": "短期借款",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B020"
+	},
+	{
+		"FD_NAME": "应付票据",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B021"
+	},
+	{
+		"FD_NAME": "预收账款",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B023"
+	},
+	{
+		"FD_NAME": "长期借款",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B025"
+	},
+	{
+		"FD_NAME": "非流动负债合计",
+		"FD_NORM": "非流动负债合计=长期借款+长期应付款+递延收益+其他非流动负债",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "B025+B026+B047+B048",
+		"FD_CODE": "B027"
+	},
+	{
+		"FD_NAME": "负债合计",
+		"FD_NORM": "负债合计=流动负债合计+非流动负债合计",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "B024+B027",
+		"FD_CODE": "B028"
+	},
+	{
+		"FD_NAME": "实收资本（或股本）",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B029"
+	},
+	{
+		"FD_NAME": "未分配利润",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B031"
+	},
+	{
+		"FD_NAME": "固定资产原价",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B033"
+	},
+	{
+		"FD_NAME": "在建工程",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B035"
+	},
+	{
+		"FD_NAME": "工程物资",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B036"
+	},
+	{
+		"FD_NAME": "固定资产清理",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B037"
+	},
+	{
+		"FD_NAME": "其他非流动资产",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B039"
+	},
+	{
+		"FD_NAME": "应付职工薪酬",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B041"
+	},
+	{
+		"FD_NAME": "应交税费",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B042"
+	},
+	{
+		"FD_NAME": "应付利润",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B044"
+	},
+	{
+		"FD_NAME": "其他应付款",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B045"
+	},
+	{
+		"FD_NAME": "其他流动负债",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B046"
+	},
+	{
+		"FD_NAME": "其他非流动负债",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B048"
+	},
+	{
+		"FD_NAME": "资本公积",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B049"
+	},
+	{
+		"FD_NAME": "负债和所有者权益（或股东权益）总计",
+		"FD_NORM": "负债和所有者权益（或股东权益）总计=负债合计+所有者权益（或股东权益）合计",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "B028+B032",
+		"FD_CODE": "B050"
+	},
+	{
+		"FD_NAME": "营业成本",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "I002"
+	},
+	{
+		"FD_NAME": "销售费用",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "I003"
+	},
+	{
+		"FD_NAME": "营业税金及附加",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "I004"
+	},
+	{
+		"FD_NAME": "财务费用",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "I006"
+	},
+	{
+		"FD_NAME": "投资收益",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "I007"
+	},
+	{
+		"FD_NAME": "营业利润",
+		"FD_NORM": "营业利润=营业收入-营业成本-营业税金及附加-销售费用-管理费用-财务费用+投资收益",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "I001-I002-I004-I003-I005-I006+I007",
+		"FD_CODE": "I008"
+	},
+	{
+		"FD_NAME": "所得税费用",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "I010"
+	},
+	{
+		"FD_NAME": "净利润",
+		"FD_NORM": "净利润=利润总额-减：所得税费用",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "I009-I010",
+		"FD_CODE": "I011"
+	},
+	{
+		"FD_NAME": "加：营业外收入",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "I012"
+	},
+	{
+		"FD_NAME": "销售产成品、商品、提供劳务收到的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M001"
+	},
+	{
+		"FD_NAME": "现金净增加额",
+		"FD_NORM": "现金净增加额=经营活动产生的现金流量净额+投资活动产生的现金流量净额+筹资活动产生的现金流量净额",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "M002+M003+M004",
+		"FD_CODE": "M005"
+	},
+	{
+		"FD_NAME": "收到其他与经营活动有关的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M006"
+	},
+	{
+		"FD_NAME": "购买原材料、商品、接受劳务支付的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M007"
+	},
+	{
+		"FD_NAME": "支付的职工薪酬",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M008"
+	},
+	{
+		"FD_NAME": "支付其他与经营活动有关的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M010"
+	},
+	{
+		"FD_NAME": "收回短期投资、长期债券投资和长期股权投资收到的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M011"
+	},
+	{
+		"FD_NAME": "取得投资收益收到的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M012"
+	},
+	{
+		"FD_NAME": "处置固定资产、无形资产和其他非流动资产收回的现金净额",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M013"
+	},
+	{
+		"FD_NAME": "短期投资、长期债券投资和长期股权投资支付的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M014"
+	},
+	{
+		"FD_NAME": "购建固定资产、无形资产和其他非流动资产支付的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M015"
+	},
+	{
+		"FD_NAME": "取得借款收到的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M016"
+	},
+	{
+		"FD_NAME": "吸收投资者投资收到的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M017"
+	},
+	{
+		"FD_NAME": "偿还借款本金支付的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M018"
+	},
+	{
+		"FD_NAME": "偿还借款利息支付的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M019"
+	},
+	{
+		"FD_NAME": "分配利润支付的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M020"
+	},
+	{
+		"FD_NAME": "加：期初现金余额",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M021"
+	},
+	{
+		"FD_NAME": "五、期末现金余额",
+		"FD_NORM": "期末现金余额=现金净增加额+加：期初现金余额",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "M005+M021",
+		"FD_CODE": "M022"
+	},
+	{
+		"FD_NAME": "货币资金",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A001"
+	},
+	{
+		"FD_NAME": "其他流动资产",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS61"
+	},
+	{
+		"FD_NAME": "减：累计摊销",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS65"
+	},
+	{
+		"FD_NAME": "非流动负债合计",
+		"FD_NORM": "非流动负债合计=长期借款+长期应付款",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_NORMCONFIG": "AS11+AS67",
+		"FD_CODE": "AS68"
+	},
+	{
+		"FD_NAME": "非财政补助结转",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "AS72"
+	},
+	{
+		"FD_NAME": "财政补助收入",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE02"
+	},
+	{
+		"FD_NAME": "经营收入",
+		"FD_FS_TYPE": "INSTITUTION",
+		"FD_CODE": "IE06"
+	},
+	{
+		"FD_NAME": "应付账款",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B022"
+	},
+	{
+		"FD_NAME": "长期应付款",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B026"
+	},
+	{
+		"FD_NAME": "盈余公积",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B030"
+	},
+	{
+		"FD_NAME": "减：累计折旧",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B034"
+	},
+	{
+		"FD_NAME": "生产性生物资产",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B038"
+	},
+	{
+		"FD_NAME": "应付利息",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B043"
+	},
+	{
+		"FD_NAME": "递延收益",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "B047"
+	},
+	{
+		"FD_NAME": "营业收入",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "I001"
+	},
+	{
+		"FD_NAME": "管理费用",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "I005"
+	},
+	{
+		"FD_NAME": "利润总额",
+		"FD_NORM": "利润总额=营业利润+加：营业外收入-减：营业外支出",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "I008+I012-I013",
+		"FD_CODE": "I009"
+	},
+	{
+		"FD_NAME": "减：营业外支出",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "I013"
+	},
+	{
+		"FD_NAME": "筹资活动产生的现金流量净额",
+		"FD_NORM": "筹资活动产生的现金流量净额=取得借款收到的现金+吸收投资者投资收到的现金-偿还借款本金支付的现金-偿还借款利息支付的现金-分配利润支付的现金",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_NORMCONFIG": "M016+M017-M018-M019-M020",
+		"FD_CODE": "M004"
+	},
+	{
+		"FD_NAME": "支付的税费",
+		"FD_FS_TYPE": "SMALLENTERPRISE",
+		"FD_CODE": "M009"
+	},
+	{
+		"FD_NAME": "待处理固定资产损益",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A062"
+	},
+	{
+		"FD_NAME": "应付工资",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A068"
+	},
+	{
+		"FD_NAME": "应付利息",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A073"
+	},
+	{
+		"FD_NAME": "其他长期负债",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "A078"
+	},
+	{
+		"FD_NAME": "营业成本",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_CODE": "P002"
+	},
+	{
+		"FD_NAME": "经营利润",
+		"FD_NORM": " 经营利润=主营业务经营利润+加：其它业务利润-减：管理费用-财务费用",
+		"FD_FS_TYPE": "GENERALENTERPRISEOLD",
+		"FD_NORMCONFIG": "P013+P014-P005-P006",
+		"FD_CODE": "P007"
+	},
+	{
+		"FD_NAME": "其他",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE38"
+	},
+	{
+		"FD_NAME": "无形资产",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS05"
+	},
+	{
+		"FD_NAME": "长期借入款项",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS11"
+	},
+	{
+		"FD_NAME": "银行存款",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS15"
+	},
+	{
+		"FD_NAME": "其它应收款（暂付款）",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS19"
+	},
+	{
+		"FD_NAME": "长期对外投资",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS23"
+	},
+	{
+		"FD_NAME": "事业支出（经费支出）",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS27"
+	},
+	{
+		"FD_NAME": "上缴上级��出",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "AS31"
+	},
+	{
+		"FD_NAME": "资产部类总计",
+		"FD_NORM": "资产部类总计=资产合计+支出合计",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "AS08+AS34",
+		"FD_CODE": "AS35"
+	},
+	{
+		"FD_NAME": "收入总计",
+		"FD_NORM": "收入总计=小计1+小计2",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "IE18+IE19",
+		"FD_CODE": "IE17"
+	},
+	{
+		"FD_NAME": "拨出经费",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE20"
+	},
+	{
+		"FD_NAME": "小计3",
+		"FD_NORM": "小计3=拨出经费+上缴上级支出+对附属单位补助+事业支出+销售税金1+结转自筹基建",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_NORMCONFIG": "IE20+IE15+IE16+IE21+IE22+IE23",
+		"FD_CODE": "IE24"
+	},
+	{
+		"FD_NAME": "专款支出",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE28"
+	},
+	{
+		"FD_NAME": "收回以前年度事业支出",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE32"
+	},
+	{
+		"FD_NAME": "提取专用基金",
+		"FD_FS_TYPE": "INSTITUTIONOLD",
+		"FD_CODE": "IE36"
+	},
+	{
+		"FD_NAME": "购建固定资产、无形资产和其他长期资产支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C025"
+	},
+	{
+		"FD_NAME": "偿还债务支付的现金",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C035"
+	},
+	{
+		"FD_NAME": "六、期末现金及现金等价物余额",
+		"FD_NORM": "期末现金及现金等价物余额=现金及现金等价物增加额+期初现金及现金等价物余额",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_NORMCONFIG": "C005+C044",
+		"FD_CODE": "C043"
+	},
+	{
+		"FD_NAME": "处置子公司及其他营业单位收到的现金净额",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "C048"
+	},
+	{
+		"FD_NAME": "应收票据",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A004"
+	},
+	{
+		"FD_NAME": "应收利息",
+		"FD_FS_TYPE": "GENERALENTERPRISE",
+		"FD_CODE": "A010"
+	}
+]

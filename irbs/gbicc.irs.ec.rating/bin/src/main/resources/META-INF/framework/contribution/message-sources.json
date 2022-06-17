@@ -1,0 +1,5 @@
+{
+    "includes":[
+        "gbicc/irs/ec/rating/i18n/messages"
+    ]
+}

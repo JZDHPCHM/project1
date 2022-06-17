@@ -1,0 +1,5 @@
+{
+    "includes":[
+        "org/wsp/framework/security/impl/jpa/i18n/messages"
+    ]
+}

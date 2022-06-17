@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>初始化数据</title>
+<style type="text/css">
+	.form-group {
+	    margin-bottom: 10px;
+	}
+	.form-group:last-child {
+	    margin-bottom: 0;
+	}
+	.ibox-content{
+		padding: 10px;
+	}
+	.modal-show{
+		color: #199fff;
+		cursor: pointer;
+	}
+	.modal-body {
+    	padding: 20px 30px;
+	}
+	.bottom-btn{
+		text-align: center;
+    	padding-top: 20px;
+	}
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<div class="wrapper wrapper-content">
+				<div class="row">
+	                <div class="col-lg-12">
+	                	<div class="ibox float-e-margins">
+	                		<div class="ibox-title">
+	                            <h5>1.同步角色数据</h5>
+	                        </div>
+	                        <div class="ibox-content">
+	                        	<form class="form-horizontal" id="formSearch">
+									<div class="form-group">
+									    <div class="col-sm-6" style="text-align: center;">
+                                            <b style="margin-left: 20px;" id="role" class="btn btn-warning">同步角色数据</b>
+                                            <span style="color: red;font-size: 6px;margin-bottom: 0px;">备注：此按钮用于向统一认证平台同步角色数据</span>
+                                        </div>
+									</div>
+								</form>
+	                        </div>
+	                	</div>
+	                </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+$('#role').click(function(){
+	//同步角色
+	 $.ajax({
+		url: "/irs/inData/roleSy", 
+		async:false,
+		success: function(result){
+			if(result == 0) {
+				swal({
+		               title: "提示",
+		               text: "同步角色成功！",
+		               type: "success"
+		         });
+			}else {
+				swal({
+		               title: "错误",
+		               text: "同步角色失败！",
+		               type: "error"
+		           });
+			}
+    }})
+});
+</script>
+</html>

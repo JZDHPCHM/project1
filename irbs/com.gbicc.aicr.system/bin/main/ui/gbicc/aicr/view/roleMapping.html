@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>角色映射</title>
+<link href="/libs/inspinia/css/bootstrap.min.css" rel="stylesheet">
+<link href="/libs/inspinia/font_awesome/css/font-awesome.css" rel="stylesheet">
+<link href="/libs/inspinia/css/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+<link href="/libs/inspinia/css/plugins/jqGrid/ui.jqgrid.css" rel="stylesheet">
+<link href="/libs/inspinia/css/plugins/chosen/bootstrap-chosen.css" rel="stylesheet">
+<link href="/libs/inspinia/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+<link href="/libs/inspinia/css/plugins/ladda/ladda-themeless.min.css" rel="stylesheet">
+<link href="/libs/inspinia/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+<link href="/libs/inspinia/css/plugins/bootstrapValidator/bootstrapValidator.min.css" rel="stylesheet">
+<link href="/libs/inspinia/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+<link href="/libs/inspinia/css/animate.css" rel="stylesheet">
+<link href="/libs/inspinia/css/style.css" rel="stylesheet">
+<link href="/libs/inspinia/css/changeSkin.css" rel="stylesheet">
+<link href="/libs/inspinia/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+<link href="/com/gbicc/aicr/warning/rule/css/rules.css" rel="stylesheet">
+<style type="text/css">
+.logoImg {
+	width: 90px;
+	display: inline-block !important;
+	margin-right: 20px;
+	position: relative;
+	top: -3px;
+}
+
+.navbar-brand {
+	padding-top: 12px !important;
+}
+
+.modal-footer {
+	padding: 0;
+    position: fixed;
+    width: 100%;
+    bottom: 25px;
+    border: 0;
+	text-align: center;
+}
+
+.ibox-title-grid {
+	background-color: #fff;
+	border-color: #e7eaec;
+	border-image: none;
+	border-style: solid solid none;
+	border-width: 0;
+	color: inherit;
+	margin-bottom: 0;
+	padding: 8px 8px 8px;
+	min-height: 35px;
+}
+
+#yzb-td-1 {
+	display: none;
+}
+
+#addForm  .form-group {
+	width: 50%;
+}
+
+.form-groups {
+	width: 100% !important;
+}
+
+.form-group-right {
+	float: right;
+}
+
+.clear {
+	clear: both;
+}
+
+.colorsred {
+	color: #a94442;
+	display: none;
+}
+
+.colorsred-1 {
+	color: #a94442;
+	display: none;
+}
+
+.chosen-search {
+	display: none;
+}
+
+.star-flag {
+	color: red;
+}
+
+.modal-content {
+	height: 670px;
+}
+
+.modal-body {
+	padding: 20px 30px;
+}
+
+.inmodal .modal-body {
+	height: 608px;
+}
+
+.group-btn {
+	width: 100% !important;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.ztree-btn {
+	width: 25% !important;
+	display: inline-block;
+}
+
+.group-editor {
+	width: 75% !important;
+}
+
+.group-editor-newmodal {
+	width: 100%!important;
+    margin: 0 auto!important;
+}
+
+.ui-icon-plus, .ui-state-disabled, .ui-icon-pencil, .ui-icon-trash,
+	.ui-icon-search {
+	display: none !important;
+}
+.business{
+	border: 1px solid #000;
+    padding: 5px;
+    margin: 12px 0;
+}
+.plate{
+	display: inline-block;
+    border: 1px solid #c1c7c7;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+#navbar {
+    height: 95px!important;
+    background: url(/image/dl34.png)no-repeat;
+    background-size: 100% 100%;
+    height: 100px;
+}
+.top-navigation .nav > li > a {
+    padding: 38px 20px;
+    color: #fff;
+}
+.top-navigation .nav > li a:hover, .top-navigation .nav > li a:focus {
+    background: rgba(225,225,225,0.2);
+    color: #49a9ee;
+}
+.modal-body .form-group {
+   height:30px;
+}
+.preservation {
+cursor: pointer;
+}
+.ibox {
+    margin: 0px 10px;
+}
+table tr th,td {
+text-align:center;
+}
+</style>
+</head>
+
+<body class="top-navigation">
+	<div id="wrapper">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 页面主体内容start -->
+			<div class="wrapper wrapper-content">
+				<!-- 查询区域面板start -->
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="row">
+					<div class="ibox">
+						<div class="ibox-title">
+							<h5>角色列表</h5>
+							<div class="ibox-tools">
+								<a class="collapse-link"> <i class="fa fa-chevron-up"></i>
+								</a>
+							</div>
+						</div>
+						<div class="ibox-content">
+							<div class="row">
+								<div class="col-lg-12">
+								    
+									<div id="table_bg_div">
+								       <table id="role_list"></table>
+								       <div id="pager_list_3"></div>
+							        </div> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+					<!-- 右边的内容 -->
+					<div class="col-lg-6">
+						<div class="row">
+					<div class="ibox">
+						<div class="ibox-title">
+							<h5>核心角色列表</h5>
+							<div class="ibox-tools">
+							<span class="preservation"><i class="fa fa-save"></i>保存</span>
+								<a class="collapse-link"> 								
+								<i class="fa fa-chevron-up"></i>
+								</a>
+							</div>
+						</div>
+						<div class="ibox-content">
+							<div class="row">
+								<div class="col-lg-12">
+								
+									 <div id="">
+								       <table id="core_role_list"></table>
+								       <div id="pager_list_4"></div>
+							        </div> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>				
+		 </div>
+		</div>
+			<!-- 页面主体内容end -->
+	</div>
+</div>
+</body>
+<!-- Mainly scripts -->
+<script src="/libs/inspinia/js/jquery-3.1.1.min.js"></script>
+<script src="/libs/jquery/jquery-form.js"></script>
+<script src="/libs/inspinia/js/bootstrap.min.js"></script>
+<script src="/libs/inspinia/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script
+	src="/libs/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="/libs/inspinia/js/inspinia.js"></script>
+<script src="/libs/inspinia/js/plugins/pace/pace.min.js"></script>
+
+<!-- Peity -->
+<script src="/libs/inspinia/js/plugins/peity/jquery.peity.min.js"></script>
+
+<!-- jqGrid -->
+<script src="/libs/inspinia/js/plugins/jqGrid/i18n/grid.locale-en.js"></script>
+<script src="/libs/inspinia/js/plugins/jqGrid/jquery.jqGrid.min.js"></script>
+
+<script src="/libs/inspinia/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<script src="/libs/inspinia/js/plugins/ladda/spin.min.js"></script>
+<script src="/libs/inspinia/js/plugins/ladda/ladda.min.js"></script>
+<script src="/libs/inspinia/js/plugins/ladda/ladda.jquery.min.js"></script>
+
+<script src="/libs/inspinia/js/plugins/sweetalert/sweetalert.min.js"></script>
+
+<script src="/libs/inspinia/js/plugins/chosen/chosen.jquery.js"></script>
+<script src="/libs/inspinia/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+ <script src="/custview/roleMapping.js"></script>
+<script>
+
+ //复选框全选
+ $("#allAndNotAll").click(function() { 
+var isChecked = $(this).prop("checked");
+$("#core_role_list input").prop("checked", isChecked);
+});
+</script>
+</html>

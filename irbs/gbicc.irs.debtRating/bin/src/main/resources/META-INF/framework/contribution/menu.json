@@ -1,0 +1,23 @@
+[
+	{
+		"type": "CATEGORY",
+		"id": "menuitem.irs.debtRating",
+		"title": "[(#{menuitem.irs.debtRating})]",
+		"order": 300
+	},
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.debtRating",
+		"id": "menuitem.irs.debtRating.contract",
+		"title": "[(#{menuitem.irs.debtRating.contract})]",
+		"order": 1000
+	},
+		{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.debtRating",
+		"id": "menuitem.irs.debtRating.ious",
+		"title": "[(#{menuitem.irs.debtRating.ious})]",
+		"order": 1000
+	}
+	
+]

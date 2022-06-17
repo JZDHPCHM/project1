@@ -1,0 +1,162 @@
+/*
+ * 数据库建表 Liquibase ChangeLog XML 贡献项配置示例
+ * 功能: 该贡献项配置为框架提供数据库无关的建表脚本
+ * 使用说明:
+ * category: 建表脚本分类,可能的值包括: 
+ * 		install : 系统安装时自动执行
+ *		manual  : 系统安装时不自动执行,可通过 '开发者工具'-->'导入示例数据' 功能菜单执行
+ * order: 执行顺序
+ * description: 描述信息
+ * locations: 建表 liquibase changelog xml 文件位置
+ */
+
+[
+    {
+        "category" : "install",
+        "order"    : 100,
+        "description":"指标信息表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_INDEX_INFO.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 101,
+        "description":"评估项目表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_PROJ_TYPE.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 102,
+        "description":"拆分指标表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_SPLIT_INDEX.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 103,
+        "description":"任务表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_TASK.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 104,
+        "description":"上传结果表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_UPLOAD_RESULT.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 105,
+        "description":"信息系统结果表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_INFOSYS_RESULT.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 106,
+        "description":"案件管理结果表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_CASEMANA_RESULT.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 107,
+        "description":"流动性风险结果表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_LIQURISK_RESULT.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 108,
+        "description":"公司治理结果表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_CORPGOVE_RESULT.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 109,
+        "description":"战略风险结果表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_STRARISK_RESULT.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 110,
+        "description":"指标结果表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_INDEX_RESULT.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 111,
+        "description":"机构结果表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_ORG_RESULT.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 112,
+        "description":"渠道结果表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_CHANNEL_RESULT.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 113,
+        "description":"总分多维度结果表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_TOTALSCORE_RESULT.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 114,
+        "description":"指标选项表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_INDEX_OPTION.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 115,
+        "description":"评估项目得分表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_PROJ_RESULT.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 116,
+        "description":"指标关联表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_INDEX_RELATION.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 117,
+        "description":"指标拆分关联表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_SPLIT_RELATION.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 118,
+        "description":"指标得分关联表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_INDEX_SCORE_RELA.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 119,
+        "description":"irr历史数据导入表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_DATAIMPL_HIS.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 120,
+        "description":"授权表",
+        "locations":[
+            "classpath:/liquibase/T_IRR_AUTH_TABLE.xml"
+        ]
+    }
+]

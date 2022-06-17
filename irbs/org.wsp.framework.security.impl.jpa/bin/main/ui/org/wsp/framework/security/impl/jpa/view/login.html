@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html th:replace="template/bootstrap/bootstrap.html::html(removeNavbar=true)">
+<head>
+	<title th:text="#{security.impl.jpa.i18n.title}">登录</title>
+	<style>
+	body{
+		background-image: url([[@{/public/org.wsp.framework.security.impl.jpa/images/background.jpg}]]);
+	}
+	img {
+			width: 200px!important;
+		}
+	</style>
+	<script th:inline="javascript">
+		if(window.parent!=window){
+			window.parent.location.href ='[(@{/})]';
+		}
+	</script>
+</head>
+<body>
+<div id="_navbar" class="nav navbar-default">
+	<div class="navbar-header">
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="sr-only"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand navbar-brand-img" th:href="@{/}"><img alt="Brand" th:src="@{${@frSystemParameterService.getParameter('logo')}}"></a>
+		<!-- <a class="navbar-brand" href="#" th:utext="|#{welcomeUse} 《#{application.title}》|"></a> -->
+		<a class="navbar-brand" href="#" style="height: 63px; line-height: 30px;">欢迎使用风险管理系统</a>
+	</div>
+</div>
+<div style="height:100px"></div>
+<div class="container">    
+	<div class="mainbox col-md-5 col-md-offset-6 col-sm-5 col-sm-offset-6">	
+		<div class="panel panel-info">
+			<div class="panel-heading" th:text="#{security.impl.jpa.i18n.title}"></div>
+			<div class="panel-body">
+				<div th:if="${error}" class="alert alert-danger" role="alert">
+					<span th:utext="#{security.impl.jpa.i18n.message.error}">登陆认证失败!<br/>请检查您输入的登录名和密码是否正确,然后重试一次。 </span>
+				</div>
+				<div class="row">
+					<div class="col-xs-2"></div>
+					<div class="col-xs-8">
+				    	<form class="form-horizontal" th:action="@{/login}" method="post">
+							<div class="form-group">
+								<label for="username" class="control-label" th:text="#{security.impl.jpa.i18n.label.username}">用户名</label>
+								<input type="text" class="form-control" id="username" name="username" th:placeholder="#{security.impl.jpa.i18n.label.username.placeholder}" autofocus="autofocus"/>
+							</div>
+							<div class="form-group">
+								<label for="password" class="control-label" th:text="#{security.impl.jpa.i18n.label.password}">密码</label>
+								<input type="password" class="form-control" id="password" name="password" th:placeholder="#{security.impl.jpa.i18n.label.password.placeholder}"/>
+							</div>
+							<div class="form-group">
+								<div class="text-right">
+									<button type="reset" class="btn btn-primary" style="border:1px solid">
+										<span th:text="#{security.impl.jpa.i18n.button.reset}">重置</span>
+									</button>
+									<button type="submit" class="btn btn-success" style="border:1px solid">
+										<span th:text="#{security.impl.jpa.i18n.button.login}">登录</span>
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-xs-2"></div>
+				</div>
+				<div class="row">
+					<div class="col-xs-1"><i class="fa fa-lightbulb-o fa-3x" style="color:green;"></i></div>
+					<div class="col-xs-11">
+						<div id="tip-content"></div>
+						<div>
+							* 我要获取<a th:href="@{${@frSystemParameterService.getParameter('loginPageHelpUrl')}}">《使用帮助文档》</a>。
+						</div>
+						<hr/>
+						<div th:with="
+							ip=${T(org.wsp.framework.core.util.IpUtil).getRemoteAddress(#httpServletRequest)},
+							corporation=${@frCorporationService.tryGetCorporation(ip)}
+							" 
+							th:text="|IP地址 : ${ip}|">
+						</div>
+						<div th:if="${corporation!=null}" th:text="|所属法人 : ${corporation.name}|"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-4"></div>
+</div>
+</body>
+<script>
+	var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+	var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器  
+	var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
+	var isEdge = userAgent.indexOf("Windows NT 6.1; Trident/7.0;") > -1 && !isIE; //判断是否IE的Edge浏览器
+	
+	function IEVersion(){
+		var reIE = new RegExp("MSIE (\\d+\\.\\d+);");  
+        reIE.test(userAgent);  
+        var fIEVersion = parseFloat(RegExp["$1"]);  
+        if(fIEVersion == 7)  
+        { return 7;}  
+        else if(fIEVersion == 8)  
+        { return 8;}  
+        else if(fIEVersion == 9)  
+        { return 9;}  
+        else if(fIEVersion == 10)  
+        { return 10;}  
+        else if(fIEVersion == 11)  
+        { return 11;}  
+        else  
+        { return -1}//IE版本过低  
+	}
+	
+	$(function() {
+		if(isIE && IEVersion()<10){
+			$('#tip-content').html('* 请下载 <a href="[(@{//anonymous-help/login-help/html5/resources/files/ChromePortable53.rar})]">谷歌 Chrome 浏览器</a> 获得最佳用户体验。');
+		}
+	});
+</script>
+</html>

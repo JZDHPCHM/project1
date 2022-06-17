@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h1>表达式帮助文档</h1>
+<ul>
+<li><a href="#简介">简介</a></li>
+<li>
+<a href="#语法手册">语法手册</a>
+<ul>
+<li><a href="#数据类型">数据类型</a></li>
+<li>
+<a href="#操作符">操作符</a>
+<ul>
+<li><a href="#算术运算符">算术运算符</a></li>
+<li><a href="#逻辑运算符">逻辑运算符</a></li>
+<li><a href="#关系运算符">关系运算符</a></li>
+<li><a href="#位运算符">位运算符</a></li>
+<li><a href="#匹配运算符">匹配运算符</a></li>
+<li><a href="#三元运算符">三元运算符</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#内置函数">内置函数</a></li>
+<li><a href="#选项列表">选项列表</a></li>
+</ul>
+<p>Created by <a href="https://github.com/ekalinin/github-markdown-toc">gh-md-toc</a></p>
+<h2>简介</h2>
+<p>后台使用Aviator实现、Aviator是一个高性能、轻量级的 java 语言实现的表达式求值引擎, 主要用于各种表达式的动态求值。现在已经有很多开源可用的 java 表达式求值引擎,为什么还需要 Avaitor 呢?  </p>
+<p>Aviator的设计目标是轻量级和高性能,相比于Groovy、JRuby的笨重, Aviator非常小, 加上依赖包也才 537K,不算依赖包的话只有 70K; 当然, Aviator的语法是受限的, 它不是一门完整的语言, 而只是语言的一小部分集合。  </p>
+<p>其次, Aviator的实现思路与其他轻量级的求值器很不相同, 其他求值器一般都是通过解释的方式运行, 而Aviator则是直接将表达式编译成 JVM 字节码, 交给 JVM 去执行。简单来说, Aviator的定位是介于 Groovy 这样的重量级脚本语言和 IKExpression 这样的轻量级表达式引擎之间。  </p>
+<p>Aviator 的特性：</p>
+<ol>
+<li>支持绝大多数运算操作符，包括算术操作符、关系运算符、逻辑操作符、位运算符、正则匹配操作符(<code>=~</code>)、三元表达式(<code>?:</code>)</li>
+<li>支持操作符优先级和括号强制设定优先级</li>
+<li>逻辑运算符支持短路运算。</li>
+<li>支持丰富类型，例如nil、整数和浮点数、字符串、正则表达式、日期、变量等，支持自动类型转换。</li>
+<li>内置一套强大的常用函数库</li>
+<li>可自定义函数，易于扩展</li>
+<li>可重载操作符</li>
+<li>支持大数运算(BigInteger)和高精度运算(BigDecimal)</li>
+<li>性能优秀</li>
+</ol>
+<h2>语法手册</h2>
+<p>下面是 Aviator 详细的语法规则定义。</p>
+<h3>数据类型</h3>
+<ul>
+<li>
+<code>Number</code>类型: 数字类型,支持四种类型,分别是<code>long,double,java.math.BigInteger(简称 big int)</code>和<code>java.math.BigDecimal(简 称 decimal)</code>,规则如下:
+<ul>
+<li>任何以大写字母 <code>N</code> 结尾的整数都被认为是 <code>big int</code></li>
+<li>任何以大写字母 <code>M</code> 结尾的数字都被认为是 <code>decimal</code></li>
+<li>其他的任何整数都将被转换为 <code>Long</code></li>
+<li>其他任何浮点数都将被转换为 <code>Double</code></li>
+<li>超过 <code>long</code> 范围的整数字面量都将自动转换为 <code>big int</code> 类型</li>
+</ul>
+</li>
+</ul>
+<p>其中 <code>big int</code> 和 <code>decimal</code> 是 2.3.0 版本开始引入的。数字还支持十六进制(以<code>0x</code>或者<code>0X</code>开头的数字), 以及科学计数法,如<code>1e-3</code>等。 不支持其他进制。</p>
+<ul>
+<li><code>String</code>类型: 字符串类型,单引号或者双引号括起来的文本串,如<code>'hello world'</code>, 变量如果传入的是<code>String</code>或者<code>Character</code>也将转为<code>String</code>类型</li>
+<li><code>Bool</code>类型: 常量<code>true</code>和<code>false</code>,表示真值和假值,与 java 的<code>Boolean.TRUE</code>和<code>Boolean.False</code>对应</li>
+<li><code>Pattern</code>类型: 正则表达式, 以<code>//</code>括起来的字符串,如<code>/\d+/</code>,内部 实现为<code>java.util.Pattern</code></li>
+<li>变量类型: 与 Java 的变量命名规则相同,变量的值由用户传入</li>
+<li><code>nil</code>类型: 常量<code>nil</code>,类似 java 中的<code>null</code>,但是<code>nil</code>比较特殊,<code>nil</code>不仅可以参与<code>==、!=</code>的比较, 也可以参与<code>&gt;、&gt;=、&lt;、&lt;=</code>的比较,Aviator 规定任何类型都大于<code>nil</code>除了<code>nil</code>本身,<code>nil==nil</code>返回<code>true</code>。 用户传入的变量值如果为<code>null</code>,那么也将作为<code>nil</code>处理,<code>nil</code>打印为<code>null</code></li>
+</ul>
+<h3>操作符</h3>
+<h4>算术运算符</h4>
+<p>Aviator 支持常见的算术运算符,包括<code>+ - * / %</code>五个二元运算符,和一元运算符<code>-(负)</code>。其中<code>- * / %</code>和一元的<code>-</code>仅能作用于<code>Number</code>类型。<br />
+<code>+</code>不仅能用于<code>Number</code>类型,还可以用于<code>String</code>的相加,或者字符串与其他对象的相加。<br />
+Aviator 规定,任何类型与<code>String</code>相加,结果为<code>String</code>。</p>
+<h4>逻辑运算符</h4>
+<p>Avaitor 的支持的逻辑运算符包括,一元否定运算符<code>!</code>,以及逻辑与的<code>&amp;&amp;</code>,逻辑或的<code>||</code>。逻辑运算符的操作数只能为<code>Boolean</code>。<br />
+<code>&amp;&amp;</code>和<code>||</code>都执行短路规则。</p>
+<h4>关系运算符</h4>
+<p>Aviator 支持的关系运算符包括<code>&lt;, &lt;=, &gt;, &gt;=</code>以及<code>==</code>和<code>!=</code> 。<br />
+关系运算符可以作用于<code>Number</code>之间、<code>String</code>之间、<code>Pattern</code>之间、<code>Boolean</code>之间、变量之间以及其他类型与<code>nil</code>之间的关系比较, 不同类型除了<code>nil</code>之外不能相互比较。</p>
+<h4>位运算符</h4>
+<p>Aviator 支持所有的 Java 位运算符,包括<code>&amp;, |, ^, ~, &gt;&gt;, &lt;&lt;, &gt;&gt;&gt;</code>。</p>
+<h4>匹配运算符</h4>
+<p>匹配运算符<code>=~</code>用于<code>String</code>和<code>Pattern</code>的匹配,它的左操作数必须为<code>String</code>,右操作数必须为<code>Pattern</code>。 匹配成功后,<code>Pattern</code>的分组将存于变量<code>$num</code>,<code>num</code>为分组索引。</p>
+<h4>三元运算符</h4>
+<p>Aviator 没有提供<code>if else</code>语句,但是提供了三元运算符<code>?:</code>,形式为<code>bool ? exp1: exp2</code>。 其中<code>bool</code>必须为<code>Boolean</code>类型的表达式, 而<code>exp1</code>和<code>exp2</code>可以为任何合法的 Aviator 表达式,并且不要求<code>exp1</code>和<code>exp2</code>返回的结果类型一致。</p>
+<h2>内置函数</h2>
+<table style="color:rgb(51,51,51); font-family:'Helvetica Neue',Helvetica,'Lucida Grande',Arial,'Hiragino Sans GB','Microsoft Yahei','WenQuanYi Micro Hei',sans-serif; font-size:16px; line-height:24px">
+
+<thead>
+
+<tr style="">
+
+<th style="padding:4px 8px">函数名称</th>
+
+<th style="padding:4px 8px">说明</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr style="">
+
+<td style="padding:4px 8px">sysdate()</td>
+
+<td style="padding:4px 8px">返回当前日期对象 java.util.Date</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">rand()</td>
+
+<td style="padding:4px 8px">返回一个介于 0-1 的随机数,double 类型</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">rand(n)</td>
+
+<td style="padding:4px 8px">返回一个介于 0- n 的随机数,long 类型</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">print([out],obj)</td>
+
+<td style="padding:4px 8px">打印对象,如果指定 out,向 out 打印, 否则输出到控制台</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">println([out],obj)</td>
+
+<td style="padding:4px 8px">与 print 类似,但是在输出后换行</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">now()</td>
+
+<td style="padding:4px 8px">返回 System.currentTimeMillis</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">long(v)</td>
+
+<td style="padding:4px 8px">将值的类型转为 long</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">double(v)</td>
+
+<td style="padding:4px 8px">将值的类型转为 double</td>
+
+</tr>
+
+
+<tr style="">
+
+<td style="padding:4px 8px">boolean(v)</td>
+
+<td style="padding:4px 8px">将值的类型转为 boolean，除了 nil 和 false，其他都值都将转为布尔值 true。</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">str(v)</td>
+
+<td style="padding:4px 8px">将值的类型转为 string</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">date_to_string(date,format)</td>
+
+<td style="padding:4px 8px">将 Date 对象转化化特定格式的字符串,2.1.1 新增</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">string_to_date(source,format)</td>
+
+<td style="padding:4px 8px">将特定格式的字符串转化为 Date 对 象,2.1.1 新增</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">string.contains(s1,s2)</td>
+
+<td style="padding:4px 8px">判断 s1 是否包含 s2,返回 Boolean</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">string.length(s)</td>
+
+<td style="padding:4px 8px">求字符串长度,返回 Long</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">string.startsWith(s1,s2)</td>
+
+<td style="padding:4px 8px">s1 是否以 s2 开始,返回 Boolean</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">string.endsWith(s1,s2)</td>
+
+<td style="padding:4px 8px">s1 是否以 s2 结尾,返回 Boolean</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">string.substring(s,begin[,end])</td>
+
+<td style="padding:4px 8px">截取字符串 s,从 begin 到 end,如果忽略 end 的话,将从 begin 到结尾,与 java.util.String.substring 一样。</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">string.indexOf(s1,s2)</td>
+
+<td style="padding:4px 8px">java 中的 s1.indexOf(s2),求 s2 在 s1 中 的起始索引位置,如果不存在为-1</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">string.split(target,regex,[limit])</td>
+
+<td style="padding:4px 8px">Java 里的 String.split 方法一致,2.1.1 新增函数</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">string.join(seq,seperator)</td>
+
+<td style="padding:4px 8px">将集合 seq 里的元素以 seperator 为间隔 连接起来形成字符串,2.1.1 新增函数</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">string.replace_first(s,regex,replacement)</td>
+
+<td style="padding:4px 8px">Java 里的 String.replaceFirst 方法, 2.1.1 新增</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">string.replace_all(s,regex,replacement)</td>
+
+<td style="padding:4px 8px">Java 里的 String.replaceAll 方法 , 2.1.1 新增</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">math.abs(d)</td>
+
+<td style="padding:4px 8px">求 d 的绝对值</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">math.sqrt(d)</td>
+
+<td style="padding:4px 8px">求 d 的平方根</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">math.pow(d1,d2)</td>
+
+<td style="padding:4px 8px">求 d1 的 d2 次方</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">math.log(d)</td>
+
+<td style="padding:4px 8px">求 d 的自然对数</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">math.log10(d)</td>
+
+<td style="padding:4px 8px">求 d 以 10 为底的对数</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">math.sin(d)</td>
+
+<td style="padding:4px 8px">正弦函数</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">math.cos(d)</td>
+
+<td style="padding:4px 8px">余弦函数</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">math.tan(d)</td>
+
+<td style="padding:4px 8px">正切函数</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">map(seq,fun)</td>
+
+<td style="padding:4px 8px">将函数 fun 作用到集合 seq 每个元素上, 返回新元素组成的集合</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">filter(seq,predicate)</td>
+
+<td style="padding:4px 8px">将谓词 predicate 作用在集合的每个元素 上,返回谓词为 true 的元素组成的集合</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">count(seq)</td>
+
+<td style="padding:4px 8px">返回集合大小</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">include(seq,element)</td>
+
+<td style="padding:4px 8px">判断 element 是否在集合 seq 中,返回 boolean 值</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">sort(seq)</td>
+
+<td style="padding:4px 8px">排序集合,仅对数组和 List 有效,返回排 序后的新集合</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">reduce(seq,fun,init)</td>
+
+<td style="padding:4px 8px">fun 接收两个参数,第一个是集合元素, 第二个是累积的函数,本函数用于将 fun 作用在集合每个元素和初始值上面,返回 最终的 init 值</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">seq.every(seq, fun)</td>
+
+<td style="padding:4px 8px">fun 接收集合的每个元素作为唯一参数，返回 true 或 false。当集合里的每个元素调用 fun 后都返回 true 的时候，整个调用结果为 true，否则为 false。</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">seq.not_any(seq, fun)</td>
+
+<td style="padding:4px 8px">fun 接收集合的每个元素作为唯一参数，返回 true 或 false。当集合里的每个元素调用 fun 后都返回 false 的时候，整个调用结果为 true，否则为 false。</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">seq.some(seq, fun)</td>
+
+<td style="padding:4px 8px">fun 接收集合的每个元素作为唯一参数，返回 true 或 false。当集合里的只要有一个元素调用 fun 后返回 true 的时候，整个调用结果立即为 true，否则为 false。</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">seq.eq(value)</td>
+
+<td style="padding:4px 8px">返回一个谓词,用来判断传入的参数是否跟 value 相等,用于 filter 函数,如filter(seq,seq.eq(3)) 过滤返回等于3 的元素组成的集合</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">seq.neq(value)</td>
+
+<td style="padding:4px 8px">与 seq.eq 类似,返回判断不等于的谓词</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">seq.gt(value)</td>
+
+<td style="padding:4px 8px">返回判断大于 value 的谓词</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">seq.ge(value)</td>
+
+<td style="padding:4px 8px">返回判断大于等于 value 的谓词</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">seq.lt(value)</td>
+
+<td style="padding:4px 8px">返回判断小于 value 的谓词</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">seq.le(value)</td>
+
+<td style="padding:4px 8px">返回判断小于等于 value 的谓词</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">seq.nil()</td>
+
+<td style="padding:4px 8px">返回判断是否为 nil 的谓词</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">seq.exists()</td>
+
+<td style="padding:4px 8px">返回判断不为 nil 的谓词</td>
+
+</tr>
+
+<tr style="">
+
+<td style="padding:4px 8px">seq.and(p1, p2, p3, ...)</td>
+
+<td style="padding:4px 8px">组合多个谓词函数，返回一个新的谓词函数，当今仅当 p1、p2、p3 ...等所有函数都返回 true 的时候，新函数返回 true</td>
+
+</tr>
+
+
+<tr style="">
+
+<td style="padding:4px 8px">seq.or(p1, p2, p3, ...)</td>
+
+<td style="padding:4px 8px">组合多个谓词函数，返回一个新的谓词函数，当 p1, p2, p3... 其中一个返回 true 的时候，新函数立即返回 true，否则返回 false。</td>
+
+</tr>
+
+</tbody>
+
+</table>
+<h3>选项列表</h3>
+<p><code>AviatorEvaluator.setOption(opt, val)</code> 支持定义求值器的行为，完整的 <code>Options</code> 枚举选项参见<a href="https://github.com/killme2008/aviator/wiki/%E5%AE%8C%E6%95%B4%E9%80%89%E9%A1%B9%E5%88%97%E8%A1%A8%E8%AF%B4%E6%98%8E">完整选项说明</a> </p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

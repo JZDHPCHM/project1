@@ -1,0 +1,5 @@
+ select b.managecom,count(b.prtno)
+  from lishasl.lzcardstate b
+ where b.backstate = '2'
+   and b.backdate BETWEEN DATE '2018-07-01' AND DATE  '2018-09-30'
+   group by b.managecom;

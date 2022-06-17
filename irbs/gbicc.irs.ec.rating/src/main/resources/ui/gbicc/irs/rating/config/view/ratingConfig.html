@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+//模型列表(从模型系统获取)
+var ModelList = [(${@frSystemDictionaryService.getDictionaryMapJsonString('MODEL_TYPE',#locale)})];
+//模型标尺状态
+var RatingConfigStatus = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.CommonVersionStatus),#locale)})];
+//评级步骤类型
+var RatingStepTypes = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.RatingStepType),#locale)})];
+//补录组件类型
+var AdditFieldTypes =[(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.AdditFieldType),#locale)})];
+//补录值类型
+var AdditValueTypes =[(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.AdditValueType),#locale)})];
+//调整项候选值权重
+var ItemValueWeights =[(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.ItemValueWeight),#locale)})];
+	
+//标尺(下拉框选项)
+isc.FwRestDataSource.create({
+    ID: 'allModelScaleDs',
+    fields:[
+    	{name:'id',hidden:true},
+    	{name:'scaleCode',		title:'[(#{scaleCode})]'},
+    	{name:'scaleName',		title:'[(#{scaleName})]'}
+    ],
+    fetchDataURL: '[(@{/irs/modelScaleConfig/isc/findForSelectItems})]'
+});
+
+//***********************************************问题选项数据源 start ************************************
+//问题选项数据源
+isc.FwRestDataSource.create({
+	ID: 'additItemsForSelectDS',
+	autoFetchData:true,
+    fields:[
+    	{width:80,		name:'id'},
+    	{width:120,		name:'fieldTitle',				title:'[(#{fieldTitle})]'},
+		{width:150,		name:'fieldName',				title:'[(#{fieldName})]'}
+    ],
+    fetchDataURL:'[(@{/irs/ratingAdditItemConfig/getAllAdditemsSelectList})]'
+});
+	
+	
+var RatingSelectValuesConfigFields = {
+	dataSourceGrid: [
+			{width:80,		name:'id',					title:'[(#{id})]',type: 'text',primaryKey:true},
+			{width:80,		name:'defId',				title:'[(#{defId})]'},
+			{width:150,		name:'defCode',				title:'[(#{defCode})]'},
+			{width:'*',		name:'orderNum',			title:'[(#{orderNum})]'},
+		    {width:'*',		name:'displayValue',		title:'[(#{displayValue})]'},
+		    {width:'*',		name:'realValue',			title:'[(#{realValue})]'},
+		    {width:'*',		name:'weight',				title:'[(#{weight})]'},
+		    {width:'*',		name:'additID',				title:'[(#{additID})]'},
+		    {width:'*',		name:'reMarks',				title:'[(#{reMarks})]'},
+		    {width:300,		name:'isHis',				title:'[(#{isHis})]',type:"boolean"}
+	 ],
+	 showGrid:[
+		 	{width:80,		name:'id',					title:'[(#{id})]',type: 'text',hidden:true},
+		 	{width:50,		name:'orderNum',			title:'[(#{orderNum})]',type:"integer"},
+		 	{width:80,		name:'realValue',			title:'[(#{realValue})]'},
+		 	{width:80,		name:'displayValue',		title:'[(#{displayValue})]'},
+		    {width:50,		name:'weight',				title:'[(#{weight})]',type:"select",valueMap:ItemValueWeights},
+		    {
+		    	width:170,		
+		    	name:'additID',				
+		    	title:'[(#{additID})]',
+		    	type: "select",
+		    	optionDataSource: additItemsForSelectDS,
+		    	displayField:'fieldTitle',
+				valueField:'id',
+				pickListFields: [
+		              { name:"fieldName",width:80},
+		              { name:"fieldTitle",width:80}
+		        ]
+		    }, 
+		    {width:'*',		name:'reMarks',				title:'[(#{reMarks})]'}
+	 ],
+	 edit:[
+		 	{width:80,		name:'id',					title:'[(#{id})]',type: 'text',hidden:true},
+		 	{width:'*',		name:'defId',				hidden:true},
+		 	{width:'*',		name:'orderNum',			title:'[(#{orderNum})]',type:"integer"},
+		 	{width:'*',		name:'realValue',			title:'[(#{realValue})]'},
+		 	{width:'*',		name:'displayValue',		title:'[(#{displayValue})]'},
+		    {width:'*',		name:'weight',				title:'[(#{weight})]',type:"select",editorType: "ComboBoxItem",valueMap:ItemValueWeights,allowEmptyValue:true},
+		    {
+		    	width:'*',		
+		    	name:'additID',				
+		    	title:'[(#{additID})]',
+		    	type: "select",
+		    	optionDataSource: additItemsForSelectDS,
+		    	displayField:'fieldTitle',
+				valueField:'id',
+				pickListFields: [
+		              { name:"fieldName",width:'50%'},
+		              { name:"fieldTitle",width:'50%'}
+		        ]
+		    }, 
+		    {width:'*',		name:'reMarks',				title:'[(#{reMarks})]'}
+	 ]
+}
+
+//问题选项数据源
+isc.FwRestDataSource.create({
+	ID: 'ratingSelectValuesConfigDS',
+	autoFetchData:false,
+    fields:RatingSelectValuesConfigFields.dataSourceGrid,
+    dataURL: '[(@{/irs/ratingSelectValuesConfig/isc})]'
+});
+
+//***********************************************问题选项数据源 end ************************************
+
+//模型步骤列表字段定义
+var StepConfigFields ={
+	query: [
+			{width:'*',		name:'stepCode',				title:'[(#{stepCode})]',			type: 'text',	operator:'equals'},
+			{width:'*',		name:'stepName',				title:'[(#{stepName})]',			type: 'text'},
+	],
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{name:'ratingConfig',	hidden:true},
+			{width:80,		name:'stepNum',					title:'[(#{stepNum})]'},
+			{width:80,		name:'stepType',				title:'[(#{stepType})]',type:'select',valueMap: RatingStepTypes,defaultValue:''},
+			{width:100,		name:'stepCode',				title:'[(#{stepCode})]'},
+		    {width:200,		name:'stepName',				title:'[(#{stepName})]'},
+		    {width:'100%',	name:'stepResourcePath',		title:'[(#{stepResourcePath})]'}
+	],
+	edit: [
+			{width:150,		name:'id',						primaryKey:true,hidden:true},
+			{name:'ratingConfig',	hidden:true},
+			{width:'100%',		name:'stepNum',					title:'[(#{stepNum})]',	type: 'text',		required:true},
+			{width:'100%',		name:'stepCode',				title:'[(#{stepCode})]',type: 'text',		validators:[{type:'lengthRange',max:25}], required:true,canEdit:true},
+			{width:'100%',		name:'stepType',				title:'[(#{stepType})]',type:'select',valueMap: RatingStepTypes,defaultValue:''},
+			{width:'100%',		name:'stepName',				title:'[(#{stepName})]',type: 'text',		validators:[{type:'lengthRange',max:100}], required:true},
+			{width:'100%',		name:'stepResourcePath',		title:'[(#{stepResourcePath})]',validators:[{type:'lengthRange',max:500}], required:true,type:'textArea',colSpan:3}
+	]
+};
+
+//模型步骤列表数据源
+isc.FwRestDataSource.create({
+	ID: 'stepConfigDS',
+    fields: StepConfigFields.grid,
+    dataURL:'[(@{/irs/stepConfig/isc})]'								 	//默认查询及增删改操作属性
+});
+
+//模型步骤列表
+isc.FwListGrid.create({
+	ID: 'stepConfigListGrid',
+	title: '<b>当前模型评级步骤列表</b>',
+	dataSource: stepConfigDS,
+	sortField: 'stepNum',
+	fields: StepConfigFields.grid,
+	canPageable:false,
+	autoFetchData:false,
+	initialCriteria:{
+		ratingConfigId:null
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: stepConfigDS,
+            fields: StepConfigFields.edit
+        },
+        afterShow: function(action){
+       		//获取评级配置
+        	var configRecord = ratingConfigListGrid.getSelectedRecord();
+       		if(configRecord){
+       			this.getForm().setValue('ratingConfig',configRecord);
+       		}
+        },
+        actionMembers:[
+        	'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		var configRecord = ratingConfigListGrid.getSelectedRecord();
+		this.setActionMemberButtonStatus('disable',['add']);
+		this.setActionMemberButtonStatus('disable',['update']);
+		this.setActionMemberButtonStatus('disable',['remove']);
+		if(configRecord && configRecord.configStatus == "DRAFT"){
+			this.setActionMemberButtonStatus('enable',['add']);
+			this.setActionMemberButtonStatus('enable',['update']);
+			this.setActionMemberButtonStatus('enable',['remove']);
+		}
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+	
+//调整项字段定义
+var RatingAdjItemConfigFields ={
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{name:'ratingConfig',	hidden:true},
+			{width:150,		name:'adjItemCode',					title:'[(#{adjItemCode})]'},
+			{width:150,		name:'adjItemName',					title:'[(#{adjItemName})]'},
+		    {width:'*',		name:'adjItemDescribe',				title:'[(#{adjItemDescribe})]'},
+		    {width:80,		name:'isHis',						title:'[(#{isHis})]'},
+	],
+	edit: [
+			{name:'id',						primaryKey:true,hidden:true},
+			{name:'ratingConfig',	hidden:true},
+			{width:'*',		name:'adjItemCode',					title:'[(#{adjItemCode})]',		type:'text'},
+			{width:'*',		name:'adjItemName',					title:'[(#{adjItemName})]',		type:'text'},
+		    {width:'*',		name:'adjItemDescribe',				title:'[(#{adjItemDescribe})]',	type:'textArea',		colSpan:3},
+		    {
+				width:'*', 
+				name:'options',					
+				title:'<b>选项值列表</b>',								
+				type:'editGrid',
+				colSpan:4,
+				editGridProperties:{
+					height: 200,
+					filterPropertyName:'defId',
+					autoFetchData:false,
+					dataSource: ratingSelectValuesConfigDS,
+					defaultFields:RatingSelectValuesConfigFields.showGrid,
+					actionMembers:[
+			    		'refresh','add','remove'
+			    	],
+					editWindow: {
+						titleSuffix: '值',
+				        form: {
+				            dataSource: ratingSelectValuesConfigDS,
+				            fields: RatingSelectValuesConfigFields.edit
+				        },
+						afterShow:function(action){
+							this.Super("afterShow",arguments);
+							var record = ratingAdjItemConfigListGrid.getSelectedRecord();
+							if(record){
+								this.getForm().setValue("defId",record.id);
+							}
+				        }
+					}
+				}
+			}
+	]
+};
+var RatingAdjItemConfigFields2 ={
+		grid: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{name:'ratingConfig',	hidden:true},
+				{width:150,		name:'adjItemCode',					title:'[(#{adjItemCode})]'},
+				{width:150,		name:'adjItemName',					title:'[(#{adjItemName})]'},
+			    {width:'*',		name:'adjItemDescribe',				title:'[(#{adjItemDescribe})]'},
+		]
+	};
+
+//模型选项_调整项 数据源
+isc.FwRestDataSource.create({
+	ID: 'ratingAdjItemConfig_DS',
+    fields: RatingAdjItemConfigFields.grid,
+    dataURL: '[(@{/irs/ratingAdjItemConfig/isc})]'
+});
+
+//模型选项_调整项 列表
+isc.FwListGrid.create({
+	ID: 'ratingAdjItemConfigListGrid',
+	title: '<b>模型调整项配置列表</b>',
+	dataSource: ratingAdjItemConfig_DS,
+	sortField: 'opCode',
+	canHover:true,
+	canPageable:false,
+	autoDraw: true,
+	autoFetchData:false,
+	fields: RatingAdjItemConfigFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	editWindow: {
+		width:800,
+		height:600,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: ratingAdjItemConfig_DS,
+            fields: RatingAdjItemConfigFields.edit
+        },
+        afterShow: function(action){
+        	this.Super("afterShow",arguments);
+        	//赋值配置主表ID
+        	var configRecord = ratingConfigListGrid.getSelectedRecord();
+       		if(configRecord){
+       			this.getForm().setValue('ratingConfig',configRecord);
+       		}
+        },
+        actionMembers:[
+               		'ok','close'
+               	]
+	},
+	actionMembers:[
+		'refresh','add','update','remove',
+		{
+			title:'<span class="fa fa-sitemap"></span> 关联',
+			name:'associated',
+			click: function(){
+				isc.FwWindow.create({
+					title: '关联',
+					autoSize: false,
+					width: 800,
+					height: 500,
+					showActionBar: false,
+					members:[
+						isc.FwListGrid.create({
+							ID: 'ratingAdjItemConfigListGrid2',
+							title: '<b>调整项分类</b>',
+							dataSource: ratingAdjItemConfig_DS,
+							sortField:"bzTypeCode",
+							fields: RatingAdjItemConfigFields2.grid,
+							editWindow: {
+								width:800,
+								showOperateSuccessMessage: true,
+						        form: {
+						        	numCols:4,
+						        	titleWidth:150,
+						            dataSource: ratingAdjItemConfig_DS,
+						        },
+						        afterShow: function(action){
+						       	
+						        },
+						        actionMembers:[
+						               		'ok','close'
+						        ]
+							},
+							actionMembers:[
+								'refresh',{
+									title:'确认',
+									name:'associated',
+									click: function(){
+										var ratingConfig = ratingConfigListGrid.getSelectedRecord();
+										if(ratingConfig.id){
+											var record = ratingAdjItemConfigListGrid2.getSelectedRecords();
+											var arrpara = new Array();
+										for(var i=0;i<record.length;i++){
+											arrpara.push(record[i].id);
+										}
+											
+											isc.FwRPCManager.post({
+							                   	url:'[(@{/irs/ratingConfig/isc/associated})]',
+							                   	urlParameters:{
+							                   		ratingConfig: ratingConfig.id,
+							                   		record:arrpara.join(',')
+							                    },
+							                    callback: function(result){
+							                    	if(result.data){
+							                    		isc.say("调整项关联成功！");
+							                    		ratingAdjItemConfigListGrid.refresh();
+							                    	}else{
+							                    		isc.say("添加失败：重复添加！");
+							                    	}
+							                    }
+							                });
+										}
+									}
+								}
+							]
+						})
+					]
+				}).show();
+			}
+		}
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		var configRecord = ratingConfigListGrid.getSelectedRecord();
+		this.setActionMemberButtonStatus('disable',['add']);
+		this.setActionMemberButtonStatus('disable',['update']);
+		this.setActionMemberButtonStatus('disable',['remove']);
+		if(configRecord && configRecord.configStatus == "DRAFT"){
+			this.setActionMemberButtonStatus('enable',['add']);
+			this.setActionMemberButtonStatus('enable',['update']);
+			this.setActionMemberButtonStatus('enable',['remove']);
+		}
+		this.Super('changeActionMemberButtonStatus',arguments);
+    }
+});
+
+//外部支持字段定义
+var RatingSuppItemConfigFields ={
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{name:"ratingConfig",hidden:true},
+			{width:150,		name:'suppItemCode',					title:'[(#{suppItemCode})]'},
+			{width:150,		name:'suppItemName',					title:'[(#{suppItemName})]'},
+		    {width:'*',		name:'suppItemDescribe',				title:'[(#{suppItemDescribe})]'},
+		    {width:80,		name:'isHis',							title:'[(#{isHis})]'},
+	],
+	edit: [
+		{name:'id',						primaryKey:true,hidden:true},
+		{name:"ratingConfig",hidden:true},
+		{width:'*',		name:'suppItemCode',					title:'[(#{suppItemCode})]',		type:'text'},
+		{width:'*',		name:'suppItemName',					title:'[(#{suppItemName})]',		type:'text'},
+	    {width:'*',		name:'suppItemDescribe',				title:'[(#{suppItemDescribe})]',	type:'textArea',		colSpan:3},
+	    {
+			width:'*', 
+			name:'options',					
+			title:'<b>选项值列表</b>',								
+			type:'editGrid',
+			colSpan:4,
+			editGridProperties:{
+				height: 200,
+				filterPropertyName:'defId',
+				autoFetchData:false,
+				dataSource: ratingSelectValuesConfigDS,
+				defaultFields:RatingSelectValuesConfigFields.showGrid,
+				actionMembers:[
+		    		'refresh','add','remove'
+		    	],
+				editWindow: {
+					titleSuffix: '值',
+			        form: {
+			            dataSource: ratingSelectValuesConfigDS,
+			            fields: RatingSelectValuesConfigFields.edit
+			        },
+					afterShow:function(action){
+						this.Super("afterShow",arguments);
+						var record = ratingSuppItemConfigListGrid.getSelectedRecord();
+						if(record){
+							this.getForm().setValue("defId",record.id);
+						}
+			        }
+				}
+			}
+		}
+	]
+};
+
+//模型选项_外部支持 数据源
+isc.FwRestDataSource.create({
+	ID: 'ratingSuppItemConfig_DS',
+    fields: RatingSuppItemConfigFields.grid,
+    dataURL: '[(@{/irs/ratingSuppItemConfig/isc})]'
+});
+
+//模型选项_外部支持 列表
+isc.FwListGrid.create({
+	ID: 'ratingSuppItemConfigListGrid',
+	title: '<b>模型外部支持配置列表</b>',
+	dataSource: ratingSuppItemConfig_DS,
+	sortField: 'opCode',
+	canHover:true,
+	canPageable:false,
+	autoDraw: true,
+	autoFetchData:false,
+	fields: RatingSuppItemConfigFields.grid,
+	initialCriteria:{
+		enable: true
+	},editWindow: {
+		width:800,
+		height:600,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: ratingSuppItemConfig_DS,
+            fields: RatingSuppItemConfigFields.edit
+        },
+        afterShow: function(action){
+        	this.Super("afterShow",arguments);
+        	//赋值配置主表ID
+        	var configRecord = ratingConfigListGrid.getSelectedRecord();
+       		if(configRecord){
+       			this.getForm().setValue('ratingConfig',configRecord);
+       		}
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		var configRecord = ratingConfigListGrid.getSelectedRecord();
+		this.setActionMemberButtonStatus('disable',['add']);
+		this.setActionMemberButtonStatus('disable',['update']);
+		this.setActionMemberButtonStatus('disable',['remove']);
+		if(configRecord && configRecord.configStatus == "DRAFT"){
+			this.setActionMemberButtonStatus('enable',['add']);
+			this.setActionMemberButtonStatus('enable',['update']);
+			this.setActionMemberButtonStatus('enable',['remove']);
+		}
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+//补录字段定义
+var RatingAdditItemConfigFields ={
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{name:"ratingConfig",hidden:true},
+			{width:150,		name:'fieldTitle',			title:'[(#{fieldTitle})]'},
+			{width:150,		name:'fieldName',			title:'[(#{fieldName})]'},
+		    {width:80,		name:'fieldType',			title:'[(#{fieldType})]',type: 'select',valueMap:AdditFieldTypes,allowEmptyValue:true,autoFetchData:false},
+		    {width:80,		name:'valueType',			title:'[(#{valueType})]',type: 'select',valueMap:AdditValueTypes,allowEmptyValue:true,autoFetchData:false},
+		    {width:150,		name:'defaultValue',		title:'[(#{defaultValue})]'},
+		    {width:80,		name:'fieldColSpan',		title:'[(#{fieldColSpan})]'},
+		    {width:80,		name:'isEnabled',			title:'[(#{isEnabled})]',type:"boolean"},
+	],
+	edit: [
+			{name:'id',						primaryKey:true,hidden:true},
+			{name:"ratingConfig",hidden:true},
+			{width:'*',		name:'fieldTitle',				title:'[(#{fieldTitle})]',required:true},
+			{width:'*',		name:'fieldName',				title:'[(#{fieldName})]',required:true},
+		    {width:'*',		name:'fieldType',				title:'[(#{fieldType})]',required:true,type: 'select',valueMap:AdditFieldTypes,allowEmptyValue:true,autoFetchData:false},
+		    {width:'*',		name:'valueType',				title:'[(#{valueType})]',required:true,type: 'select',valueMap:AdditValueTypes,allowEmptyValue:true,autoFetchData:false},
+		    {width:'*',		name:'defaultValue',			title:'[(#{defaultValue})]'},
+		    {width:'*',		name:'fieldColSpan',			title:'[(#{fieldColSpan})]'},
+		    {width:'*',		name:'isEnabled',				title:'[(#{isEnabled})]',type:"boolean",defaultValue:true},
+		    {
+				width:'*', 
+				name:'options',					
+				title:'<b>选项值列表</b>',								
+				type:'editGrid',
+				colSpan:4,
+				editGridProperties:{
+					height: 200,
+					filterPropertyName:'defId',
+					autoFetchData:false,
+					dataSource: ratingSelectValuesConfigDS,
+					defaultFields:RatingSelectValuesConfigFields.showGrid,
+					actionMembers:[
+			    		'refresh','add','remove'
+			    	],
+					editWindow: {
+						titleSuffix: '值',
+				        form: {
+				            dataSource: ratingSelectValuesConfigDS,
+				            fields: RatingSelectValuesConfigFields.edit
+				        },
+						afterShow:function(action){
+							this.Super("afterShow",arguments);
+							var record = ratingAdditItemConfigListGrid.getSelectedRecord();
+							if(record){
+								this.getForm().setValue("defId",record.id);
+							}
+				        }
+					}
+				}
+			}
+	]
+};
+
+//补录项 数据源
+isc.FwRestDataSource.create({
+	ID: 'ratingAdditItemConfig_DS',
+    fields: RatingAdditItemConfigFields.grid,
+    dataURL: '[(@{/irs/ratingAdditItemConfig/isc})]'
+});
+
+//补录项 列表
+isc.FwListGrid.create({
+	ID: 'ratingAdditItemConfigListGrid',
+	title: '<b>补录项配置</b>',
+	dataSource: ratingAdditItemConfig_DS,
+	sortField: 'fieldTitle',
+	canHover:true,
+	canPageable:false,
+	autoDraw: true,
+	autoFetchData:false,
+	fields: RatingAdditItemConfigFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	editWindow: {
+		width:900,
+		height:600,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: ratingAdditItemConfig_DS,
+            fields: RatingAdditItemConfigFields.edit
+        },
+        afterShow: function(action){
+        	this.Super("afterShow",arguments);
+        	//赋值配置主表ID
+        	var configRecord = ratingConfigListGrid.getSelectedRecord();
+       		if(configRecord){
+       			this.getForm().setValue('ratingConfig',configRecord);
+       		}
+        },
+        actionMembers:[
+               		'ok','close'
+               	]
+	},
+	actionMembers:[
+		'refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		var configRecord = ratingConfigListGrid.getSelectedRecord();
+		this.setActionMemberButtonStatus('disable',['add']);
+		this.setActionMemberButtonStatus('disable',['update']);
+		this.setActionMemberButtonStatus('disable',['remove']);
+		if(configRecord && configRecord.configStatus == "DRAFT"){
+			this.setActionMemberButtonStatus('enable',['add']);
+			this.setActionMemberButtonStatus('enable',['update']);
+			this.setActionMemberButtonStatus('enable',['remove']);
+		}
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+
+//定性指标字段定义
+var RatingQualiItemConfigFields ={
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{name:"ratingConfig",hidden:true},
+		    {width:100,		name:'qualiCode',			title:'[(#{qualiCode})]'},
+		    {width:150,		name:'qualiCategory',		title:'[(#{qualiCategory})]'},
+		    {width:'*',		name:'qualiName',			title:'[(#{qualiName})]'},
+		    {width:80,		name:'isHis',				title:'[(#{isHis})]',type:"boolean"}
+	],
+	edit: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{name:"ratingConfig",hidden:true},
+		    {width:'*',		name:'qualiCode',			title:'[(#{qualiCode})]'},
+		    {width:'*',		name:'qualiCategory',		title:'[(#{qualiCategory})]'},
+		    {width:'*',		name:'qualiName',			title:'[(#{qualiName})]'},
+		    {
+				width:'*', 
+				name:'options',					
+				title:'<b>选项值列表</b>',								
+				type:'editGrid',
+				canEdit: true,
+				colSpan:4,
+				editGridProperties:{
+					height: 200,
+					ID:"editGridListByQualiValues",
+					autoFetchData:false,
+					dataSource: ratingSelectValuesConfigDS,
+					defaultFields:RatingSelectValuesConfigFields.showGrid,
+					actionMembers:[
+			    		'refresh','add'
+			    	]
+				}
+			}
+	]
+};
+
+//定性指标 数据源
+isc.FwRestDataSource.create({
+	ID: 'ratingQualiItemConfig_DS',
+    fields: RatingQualiItemConfigFields.grid,
+    dataURL: '[(@{/irs/ratingQualiItemConfig/isc})]'
+});
+
+//定性指标 列表
+isc.FwListGrid.create({
+	ID: 'ratingQualiItemConfigListGrid',
+	title: '<b>定性指标配置</b>',
+	dataSource: ratingQualiItemConfig_DS,
+	sortField: 'qualiCode',
+	canHover:true,
+	canPageable:false,
+	autoDraw: true,
+	autoFetchData:false,
+	fields: RatingQualiItemConfigFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	canEdit: false,									
+    	    readOnlyDisplay: 'static',							
+    	    readOnlyTextBoxStyle: 'readOnlyStaticTextItem',
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: ratingQualiItemConfig_DS,
+            fields: RatingQualiItemConfigFields.edit
+        },
+        afterShow: function(action){
+        	var qualiItemRecord = ratingQualiItemConfigListGrid.getSelectedRecord();
+        	if(qualiItemRecord){
+        		editGridListByQualiValues.fetchData({defId:qualiItemRecord.id});
+        	}else{
+        		editGridListByQualiValues.fetchData({defId:"none"});
+        	}
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh','update'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		var configRecord = ratingConfigListGrid.getSelectedRecord();
+		this.setActionMemberButtonStatus('disable',['update']);
+		if(configRecord && configRecord.configStatus == "DRAFT"){
+			this.setActionMemberButtonStatus('enable',['update']);
+		}
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+//模型列表字段定义
+var RatingConfigFields ={
+	query: [
+			{width:'100%',	name:'modelCode',				title:'[(#{modelCode})]',	type: 'select',valueMap:ModelList,allowEmptyValue:true,autoFetchData:false},
+			{width:'*',		name:'isValided',					type: 'boolean',					title:'[(#{isValided})]'},
+	],
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{width:'100%',	name:'modelCode',			title:'[(#{modelCode})]',	type: 'select',valueMap:ModelList,allowEmptyValue:true,autoFetchData:false},
+			{
+				width:'100',	
+				name:'modelScaleId',				
+				title:'[(#{modelScale})]',	
+				type: 'select',
+				optionDataSource:allModelScaleDs, 
+			    displayField:"scaleName", 
+			    valueField:"id"
+			},
+			{width:'80',	name:'configStatus',			title:'[(#{configStatus})]',	type: 'select',valueMap:RatingConfigStatus,allowEmptyValue:true,autoFetchData:false},
+			{width:'80',	name:'configVersion',			title:'[(#{configVersion})]'},
+			{width:'80',		name:'isValided',				type: 'boolean',			title:'[(#{isValided})]'}
+	],
+	edit: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{width:'100%',	name:'modelCode',			title:'[(#{modelCode})]',	type: 'select',valueMap:ModelList,allowEmptyValue:true,autoFetchData:false},
+			{
+				width:'100%',	
+				name:'modelScaleId',				
+				title:'[(#{modelScale})]',	
+				type: 'select',
+				valueMap:ModelList,
+				allowEmptyValue:true,
+				autoFetchData:false,
+				optionDataSource:allModelScaleDs, 
+				wrapTitle: false,
+			    displayField:"scaleName", 
+			    valueField:"id",
+			},
+			{width:'*',	align:"left",name:'isValided',type: 'boolean',defaultValue:true, required:true}
+	]
+};
+
+//模型列表数据源
+isc.FwRestDataSource.create({
+	ID: 'ratingConfigDS',
+    fields: RatingConfigFields.grid,
+    dataURL: '[(@{/irs/ratingConfig/isc})]'
+});
+
+//模型列表
+isc.FwListGrid.create({
+	ID: 'ratingConfigListGrid',
+	title: '<b>模型列表</b>',
+	dataSource: ratingConfigDS,
+	sortField: 'modelCode',
+	fields: RatingConfigFields.grid,
+	groupStartOpen:"all",
+	groupByField: 'modelCode',
+	canPageable:false,
+	showFilterEditor :true,
+	initialCriteria:{
+		enable: true
+	},
+	editWindow: {
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:2,
+        	titleWidth:150,
+            dataSource: ratingConfigDS,
+            fields: RatingConfigFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh','add','update','remove',
+		{
+    		type: 'menu',
+    		group: 'moreGroup',
+    		menus:[
+    			{
+    				title:"<span class='fa fa-database'></span> 初始化配置",
+    				name:"INTI_MODEL_CONFIG",
+    				click:function(){
+    					isc.ask("此操作会将现有配置删除，并从模型系统获取最新模型列表。您确定要初始化配置吗？",function(value){
+    						if(value){
+    							isc.FwRPCManager.post({
+    		                       	url:'[(@{/irs/ratingConfig/isc/initRatingConfig})]',
+    		                        callback: function(){
+    		                        	ratingConfigListGrid.invalidateCache();
+    		                        	isc.say("初始化模型配置成功！");
+    		                        }
+    		                    });
+    						}
+    					})
+    				}
+    			},
+    			{
+    				title:'<span class="fa fa-clone"></span> 复制',
+    				click:function(){
+    					var ratingConfig = ratingConfigListGrid.getSelectedRecord();
+    					if(ratingConfig){
+    						isc.FwRPCManager.post({
+    		                   	url:'[(@{/irs/ratingConfig/isc/copyRatingConfig})]',
+    		                   	urlParameters:{
+    		                   		ratingConfigId: ratingConfig.id
+    		                    },
+    		                    callback: function(){
+    		                    	isc.say("复制配置成功！");
+    		                    	ratingConfigListGrid.invalidateCache();
+    		                    }
+    		                });
+    					}else{
+    						isc.say("请选择要复制的评级配置记录！");
+    					}
+    				}
+    			},
+    			{
+    				title:'<span class="fa fa-check-circle"></span> 发布',
+    				name:"RELEASE_CONFIG",
+    				click:function(){
+    					var ratingConfig = ratingConfigListGrid.getSelectedRecord();
+    					if(ratingConfig){
+    						if(ratingConfig.modelScaleId){
+    							isc.FwRPCManager.post({
+    			                   	url:'[(@{/irs/ratingConfig/isc/releaseRatingConfig})]',
+    			                   	urlParameters:{
+    			                   		ratingConfigId: ratingConfig.id
+    			                    },
+    			                    callback: function(){
+    			                    	isc.say("发布配置成功！");
+    			                    	ratingConfigListGrid.invalidateCache();
+    			                    }
+    			                });
+    						}else{
+    							isc.say("请先配置模型标尺！");
+    						}
+    					}else{
+    						isc.say("请选择要发布的评级配置记录！");
+    					}
+    				}
+    			}
+    		]
+    	}
+	],
+	moreActionMembers:[
+		
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+		if(record){
+			//加载步骤列表数据
+			stepConfigListGrid.fetchData({"ratingConfig.id":record.id});
+			//加载调整项列表数据
+			ratingAdjItemConfigListGrid.fetchData({"ratingConfig.id":record.id});
+			//加载外部支持列表数据
+			ratingSuppItemConfigListGrid.fetchData({"ratingConfig.id":record.id});
+			//加载补录项列表数据
+			ratingAdditItemConfigListGrid.fetchData({"ratingConfig.id":record.id});
+			//加载定性列表数据
+			ratingQualiItemConfigListGrid.fetchData({"ratingConfig.id":record.id});
+		}
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		/* this.setActionMemberButtonStatus('disable',['remove']);
+		this.setActionMemberButtonStatus('disable',['update']);
+		if(record && record.configStatus == "DRAFT"){
+			this.setActionMemberButtonStatus('enable',['remove']);
+			this.setActionMemberButtonStatus('enable',['update']);
+		}
+		this.Super('changeActionMemberButtonStatus',arguments); */
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.VLayout.create({
+					showResizeBar: true,
+				    width: '50%',
+				    members: [ratingConfigListGrid]     
+				}),
+				isc.TabSet.create({
+					ID: 'tabSet',
+					tabs:[
+						{name:'steps',title: '步骤',pane: stepConfigListGrid},
+						{name:'adjitems',title: '调整项',pane: ratingAdjItemConfigListGrid},
+						{name:'suppitems',title: '外部支持',pane: ratingSuppItemConfigListGrid},
+						{name:'addititems',title: '补录项',pane: ratingAdditItemConfigListGrid},
+						{name:'qualiitems',title: '定性指标',pane: ratingQualiItemConfigListGrid}
+					]
+				})
+			]
+		})
+	}
+});
+</script>
+</html>

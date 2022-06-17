@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+//企业分类
+var riskTypeEntitys =[(${@jacksonObjectMapper.writeValueAsString(@RiskTypeService.findByIsStart("true"))})];
+//字段定义
+var DebtRatingBHSXSParamFields ={
+	query: [
+			{width:'*',			name:'ctmNo',              	title:'客户编号'},
+			{width:'*',			name:'ctmName',            	title:'客户名称'},
+			{width:'*',			name:'riskTypeEntity.code', title:'风险暴露分类',type:"select",valueMap:riskTypeEntitys},
+		],
+	grid: [
+			{width:240,		name:'ctmNo',	title:'客户编号',primaryKey:true},
+			{width:240,		name:'ctmName',	title:'客户名称'},
+			{width:240,		name:'riskTypeEntity.code',		title:'风险暴露分类编码'},
+			{width:240,		name:'riskTypeEntity.detailType',	title:'风险暴露分类类型',	
+				formatCellValue : function(value, record, rowNum, colNum){
+				 if(record.riskTypeEntity!=null){
+					 return record.riskTypeEntity.type+"-"+record.riskTypeEntity.detailType;
+				 }   
+    	}},
+			{width:'*',		name:'createDate',	title:'登记时间'},
+			{width:'*',		name:'lastModifyDate',	title:'修改时间'}
+	],
+	edit: [
+			{validators:[
+	            {
+	                expression:"^[0-9a-zA-Z]+$",
+	                type:"regexp"
+	            }
+	        ],width:200,		name:'ctmNo',	title:'客户编号',primaryKey:true,canEdit:true,required:true},
+			{width:200,		name:'ctmName',	title:'客户名称',validators:[
+	            {
+	                expression:"^[A-Za-z0-9\u4e00-\u9fa5]+$",
+	                type:"regexp"
+	            }
+	        ],required:true},
+			{width:200,		name:'riskTypeEntity.code',title:'风险暴露类型',type:"select",valueMap:riskTypeEntitys,required:true}
+	]
+};
+
+//保证人回收调整系数数据源
+isc.FwRestDataSource.create({
+	ID: 'debtRatingBHSXSParamDS',
+    fields: DebtRatingBHSXSParamFields.grid,
+    dataURL: '[[@{/irs/risk/ctm/isc}]]'
+});
+
+//保证人回收调整系数列表
+isc.FwListGrid.create({
+	ID: 'debtRatingBHSXSParamListGrid',
+	title: '<b>风险暴露分类</b>',
+	dataSource: debtRatingBHSXSParamDS,
+	sortField:"lastModifyDate",
+	sortDirection: 'descending',
+	fields: DebtRatingBHSXSParamFields.grid,
+	queryForm: {
+	    colWidths:['10%','20%','20%','20%'],
+	    fields: DebtRatingBHSXSParamFields.query
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	ID: "riskForm",
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: debtRatingBHSXSParamDS,
+            fields: DebtRatingBHSXSParamFields.edit
+        },
+        afterShow: function(action){
+        	if(action=="add"){
+        		this.getForm().getField("ctmNo").setDisabled(false);
+        	}
+        	if(action=="update"){
+        		this.getForm().getField("ctmNo").setDisabled(true);
+        	}
+        },
+        actionMembers:[
+               		'ok','close'
+        ],
+        okButtonClick: function(){
+        	var targetObject = this;
+          	if(riskForm.validate()){
+          		if(this._fwAction=='add'){
+          			isc.FwRPCManager.get({
+                       	url:'[(@{/irs/risk/ctm/isExistsRiskTypeCtmEntity})]',
+                       	urlParameters: {ctmNo:riskForm.getValues().ctmNo},
+                        callback: function(response, rawData, request){
+                        	if(rawData == "1"){
+                        		isc.say("存在相同客户,无法发起新增!");
+                        		return;
+                        	}else{
+                        		targetObject.Super('okButtonClick',arguments);	
+                        	}
+                        }
+                     });
+          		}else{
+          			targetObject.Super('okButtonClick',arguments);	
+          		}
+          	}
+          },
+          afterFormSubmit: function(dsResponse, data, dsRequest){
+        	  debtRatingBHSXSParamListGrid.invalidateCache();
+        	  this.Super('afterFormSubmit',arguments);	
+          }
+	},
+	actionMembers:[
+		'query','refresh','reset','add','update','remove'
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				debtRatingBHSXSParamListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

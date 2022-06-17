@@ -1,0 +1,28 @@
+[
+	/*ESB*/
+	{"id":"parameter.ESB","order":0},
+		/*ESB/ESB服务地址*/
+		{
+			"id"			:"parameter.ESB.IP", 
+			"parentId"		:"parameter.ESB",
+			"code"			:"ESB_IP",
+			"defaultValue"	:"192.168.40.10",
+			"order"			: 10
+		},
+		/*ESB/ESB服务端口*/
+		{
+			"id"			:"parameter.ESB.port", 
+			"parentId"		:"parameter.ESB",
+			"code"			:"ESB_PORT",
+			"defaultValue"	:"39362",
+			"order"			: 20
+		},
+		/*ESB/ESB超时时间*/
+		{
+			"id"			:"parameter.ESB.timeout", 
+			"parentId"		:"parameter.ESB",
+			"code"			:"TIMEOUT",
+			"defaultValue"	:"50000",
+			"order"			: 30
+		}
+]

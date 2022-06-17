@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html th:replace="template/bootstrap/bootstrap.html::html">
+<head>
+	<title>登录</title>
+</head>
+<body>
+	<div class="container">
+      <form class="form-signin" th:action="@{/login}" method="post">
+        <h2 class="form-signin-heading">登录</h2>
+        <label for="username" class="sr-only">用户名</label>
+        <input type="text" id="username" class="form-control" name="username" th:placeholder="#{security.impl.jpa.i18n.label.username.placeholder}">
+        <label for="password" class="sr-only">密码</label>
+        <input type="password" id="password" class="form-control" name="password" th:placeholder="#{security.impl.jpa.i18n.label.password.placeholder}">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me">记住我
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+        	<span th:text="#{security.impl.jpa.i18n.button.login}">登录</span>
+        </button>
+      </form> 
+	<!--
+		<form class="form-horizontal" th:action="@{/login}" method="post">
+			<div class="form-group">
+				<label for="username" class="control-label" th:text="#{security.impl.jpa.i18n.label.username}">用户名</label>
+				<input type="text" class="form-control" id="username" name="username" th:placeholder="#{security.impl.jpa.i18n.label.username.placeholder}" autofocus="autofocus"/>
+			</div>
+			<div class="form-group">
+				<label for="password" class="control-label" th:text="#{security.impl.jpa.i18n.label.password}">密码</label>
+				<input type="password" class="form-control" id="password" name="password" th:placeholder="#{security.impl.jpa.i18n.label.password.placeholder}"/>
+			</div>
+			<div class="form-group">
+				<div class="text-right">
+					<button type="reset" class="btn btn-primary" click="wsp();" style="border:1px solid">
+						<span th:text="#{security.impl.jpa.i18n.button.reset}">重置</span>
+					</button>
+					<button type="submit" class="btn btn-success" style="border:1px solid">
+						<span th:text="#{security.impl.jpa.i18n.button.login}">登录</span>
+					</button>
+				</div>
+			</div>
+		</form>
+		-->
+    </div>
+</body>
+</html>

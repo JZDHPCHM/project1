@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>中关村租赁客户主体成长性评级报告</title>
+<style type="text/css">
+body {
+	min-width: 1280px;
+	overflow: auto !important;
+}
+
+.title {
+	color: #333;
+	font-size: 18px;
+	font-weight: normal;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #f2f2f2;
+}
+
+.top-navigation {
+	display: none;
+}
+
+table {
+	width: 100%;
+	font-size: 12px;
+	border: 1px solid #DDDDDD;
+	margin-bottom: 20px;
+}
+
+.ordinary tr {
+	height: 30px;
+	background: #D9E5FF;
+}
+
+.ordinary tr td {
+	padding: 6px;
+}
+
+.ordinary tr td.ziduan {
+	font-weight: bolder;
+	color: #000;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default {
+	font-weight: normal;
+	font-size: 12px;
+}
+
+.ui-state-highlight, .ui-widget-content .ui-state-highlight {
+	background: #fff;
+}
+
+.comp-name {
+	font-size: 24px;
+	font-weight: bolder;
+	display: inline-block;
+	color: #333;
+	margin-right: 12px;
+}
+
+.info-head {
+	padding: 34px 0 10px;
+	text-align: center;
+}
+
+.info-span {
+	padding: 2px 6px;
+	color: #666;
+	font-size: 14px;
+}
+
+.info-span.front-three {
+	background: #f0f4fe;
+}
+
+.info-span.behind-two {
+	background: #fef0f0;
+}
+
+.ziduan {
+	width: 121px;
+	display: block;
+	font-weight: bolder;
+	color: #333;
+	float: left;
+	height: 40px;
+}
+
+.ziduan-txt {
+	color: #666;
+	font-size: 14px;
+	display: table-cell;
+	height: 38px;
+}
+
+.level {
+	color: #4680ff;
+	font-size: 40px;
+	font-weight: bolder;
+	height: 100px;
+	line-height: 100px;
+}
+
+.dateTime {
+	font-size: 16px;
+	height: 100px;
+	line-height: 100px;
+}
+
+.score {
+	color: #333;
+	font-size: 30px;
+	font-weight: bolder;
+	height: 100px;
+	line-height: 100px;
+}
+
+.name {
+	color: #666;
+	font-size: 20px;
+	font-weight: normal;
+	height: 100px;
+	line-height: 100px;
+}
+
+.right-content {
+	display: inline-block;
+	padding: 10px 40px 5px 5px;
+}
+
+.right-content .pointer {
+	margin-left: 32%;
+	margin-top: -5px;
+	padding-bottom: 3px;
+}
+
+.info-block, .info-list, .right-info-list, .info-div {
+	display: inline-block;
+}
+
+.info-block1 {
+	width: 22%;
+	float: left;
+}
+
+.info-block2 {
+	width: 78%;
+	padding-left: 1%;
+}
+
+.bottom-info-left {
+	display: inline-block;
+	width: 33%;
+	height: 80px;
+	border: 1px solid #d8e0f0;
+	border-radius: 5px;
+	margin-right: 8px;
+}
+
+.inner-info-left {
+	display: inline-block;
+	padding: 0 10px;
+	border-right: 1px solid #e6e6e6;
+	width: 38%;
+	height: 80px;
+	line-height: 80px;
+	position: relative;
+	top: -23px;
+}
+
+.info-detailed {
+	height: 40px;
+	line-height: 40px;
+	padding-left: 10px;
+}
+
+.inner-info-right {
+	display: inline-block;
+	width: 60%;
+}
+
+.bottom-info-right {
+	display: inline-block;
+	width: 235px;
+	height: 80px;
+	border: 1px solid #d8e0f0;
+	border-radius: 5px;
+	margin-right: 8px;
+}
+
+.bottom-info-right .info-inner-left {
+	display: inline-block;
+	width: 175px;
+	border-right: 1px solid #e6e6e6;
+	padding: 0 10px;
+}
+
+.bottom-info-right .info-inner-right {
+	display: inline-block;
+	width: 54px;
+	text-align: center;
+}
+
+.kailong {
+	width: 0;
+	height: 0;
+	border-right: 8px solid transparent;
+	border-left: 8px solid transparent;
+	border-bottom: 8px solid #666;
+	position: relative;
+}
+
+.info-block .left-info {
+	float: left;
+	text-align: center;
+	border-right: 1px solid #e6e6e6;
+}
+
+.info-block .right-info {
+	display: inline-block;
+	color: #333;
+	font-weight: 700;
+	padding: 0 15px;
+	margin-right: 10px;
+	position: relative;
+	float: left;
+}
+
+.info-level {
+	padding-right: 10px;
+	font-size: 16px;
+	width: 53px;
+	display: inline-block;
+}
+
+.info-txt {
+	font-size: 16px;
+	letter-spacing: 2px;
+	padding-bottom: 20px;
+}
+
+.bottom-info-right .info-inner-left .block-diff {
+	display: inline-block;
+	width: 30px;
+	height: 25px;
+	float: left;
+}
+
+.bottom-info-right .info-inner-left .progress-line {
+	width: 2px;
+	height: 25px;
+	background-color: #fff;
+	display: inline-block;
+	position: relative;
+	right: 150px;
+}
+
+.bottom-info-right .info-inner-left .block1 {
+	background-color: #FACD91;
+}
+
+.bottom-info-right .info-inner-left .block2 {
+	background-color: #F59A23;
+}
+
+.bottom-info-right .info-inner-left .block3 {
+	width: 60px;
+	background-color: #D9001B;
+}
+
+.info-inner-txt {
+	height: 40px;
+	line-height: 40px;
+}
+
+.sort-progress {
+	width: 120px;
+	height: 25px;
+	background: -moz-linear-gradient(left, #6ee802, #6ae100, #67d902, #61cd00, #5abf00,
+		#55b400, #50aa01, #4a9c00, #479501, #418a00);
+	background: -webkit-linear-gradient(left, #6ee802, #6ae100, #67d902, #61cd00,
+		#5abf00, #55b400, #50aa01, #4a9c00, #479501, #418a00);
+	background: -o-linear-gradient(left, #6ee802, #6ae100, #67d902, #61cd00, #5abf00,
+		#55b400, #50aa01, #4a9c00, #479501, #418a00);
+}
+
+.right-txt {
+	height: 40px;
+	line-height: 40px;
+}
+
+.diff-list {
+	font-size: 12px;
+}
+
+.diff-list .diff-txt {
+	display: inline-block;
+}
+
+.right-info-list .diff-count {
+	display: inline-block;
+	position: relative;
+	top: -7px;
+}
+
+.score-table {
+	margin-bottom: -1px;
+}
+
+.score-table tr {
+	height: 33px;
+	background: #1b62fe;
+	color: #fff;
+}
+/* .jqgrid_table_score .ui-widget-content .ui-state-default {
+		background: #e3ecff;
+	} */
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="tabs-container">
+							<ul class="nav nav-tabs">
+								<li class="active"><a data-toggle="tab" href="#tab-1"
+									style="color: #000 !important;">评级报告</a></li>
+								<li class=""><a data-toggle="tab" href="#tab-2"
+									style="color: #000 !important;">评级明细</a></li>
+							</ul>
+							<div class="tab-content">
+								<div id="tab-1" class="tab-pane active">
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="title">中关村租赁客户主体成长性评级报告</div>
+												<div class="info-head">
+													<div class="comp-name" id="custName"></div>
+													<div class="info-div">
+														<span class="info-span front-three" id="modelName"></span>
+														<span class="info-span front-three" id="park"></span> <span
+															class="info-span front-three" id="ratingType"></span> <span
+															class="info-span behind-two" id="dif"></span> <span
+															class="info-span behind-two" id="order"></span>
+													</div>
+												</div>
+												<div class="row" style="padding-bottom: 10px;">
+													<div>
+														<div class="info-block info-block1">
+															<div class="left-info" style="width: 58%;">
+																<div class="level" id="endLevel"></div>
+																<div class="dateTime" id="internDate"></div>
+															</div>
+															<div class="left-info" style="width: 40%; border: 0;">
+																<div class="score" id="sco"></div>
+																<div class="name" id="finalName2"></div>
+															</div>
+														</div>
+														<div class="info-block info-block2">
+															<div class="info-txt">
+																<span class="ziduan">等级描述</span><span
+																	id="admissionSuggest" class="ziduan-txt"></span>
+															</div>
+															<div class="info-txt">
+																<span class="ziduan">复核人意见</span><span id="finalAdvice"
+																	class="ziduan-txt"></span>
+															</div>
+															<div class="bottom-three-block">
+																<div class="bottom-info-left">
+																	<div class="inner-info-left">
+																		<div>初评复核差异</div>
+																	</div>
+																	<div class="inner-info-right">
+																		<!-- 初评 -->
+																		<div class="info-detailed"
+																			style="border-bottom: 1px solid #e6e6e6;">
+																			<span class="info-level" id="internLevel"></span> <span
+																				style="padding-right: 10px;">初评人</span> <span
+																				id="internName"></span>
+																		</div>
+																		<!-- 复评 -->
+																		<div class="info-detailed">
+																			<span class="info-level" id="finalLevel"></span> <span
+																				style="padding-right: 10px;">复核人</span> <span
+																				id="finalName"></span>
+																		</div>
+																	</div>
+																</div>
+																<div class="bottom-info-right">
+																	<div class="info-inner-left">
+																		<div class="info-inner-txt">定性定量差异</div>
+																		<div style="display: inline-flex; width: 150px;"
+																			id="DifPosi">
+																			<div class="block-diff block1" style="width: 20%"></div>
+																			<div class="block-diff block2" style="width: 20%"></div>
+																			<div class="block-diff block3" style="width: 60%"></div>
+																			<div class="progress-line" id="differencesLine"></div>
+																		</div>
+																		<div style="width: 150px;">
+																			<div class="kailong" id="differencesTriangle"></div>
+																		</div>
+																	</div>
+																	<div class="info-inner-right">
+																		<div id="cyjd" class="right-txt"
+																			style="border-bottom: 1px solid #e6e6e6;"></div>
+																		<div id="bl" class="right-txt"></div>
+																	</div>
+																</div>
+																<div class="bottom-info-right">
+																	<div class="info-inner-left">
+																		<div class="info-inner-txt">排序分位数</div>
+																		<div style="display: inline-flex;">
+																			<div class="sort-progress" style="width: 150px;"></div>
+																			<div class="progress-line" id="sortingLine"></div>
+																		</div>
+																		<div style="width: 150px;">
+																			<div class="kailong" id="sorting"></div>
+																		</div>
+
+
+																	</div>
+																	<div class="info-inner-right">
+																		<div id="" class="right-txt"
+																			style="border-bottom: 1px solid #e6e6e6;">排名</div>
+																		<div id="ranking" class="right-txt"></div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="jqGrid_wrapper">
+													<table id="table_list"></table>
+													<div id="pager_list"></div>
+												</div>
+												<!-- 模态窗口 -->
+												<div class="modal inmodal fade" id="modalScoringDetails"
+													tabindex="-1" role="dialog" aria-hidden="true">
+													<div class="modal-dialog modal-lg">
+														<div class="modal-content" style="height: 100%;">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal">
+																	<span aria-hidden="true">&times;</span><span
+																		class="sr-only">Close</span>
+																</button>
+																<h4 class="modal-title"></h4>
+															</div>
+															<div class="modal-body">
+																<table border="1" class="score-table">
+																	<tbody>
+																		<tr>
+																			<td style="width: 15%;" align="center">一级指标</td>
+																			<td style="width: 35%;" align="center" id="zblx"></td>
+																			<td style="width: 15%;" align="center">二级指标</td>
+																			<td style="width: 35%;" align="center" id="zbname"></td>
+																		</tr>
+																	</tbody>
+																</table>
+																<div class="jqGrid_wrapper jqgrid_table_score">
+																	<table id="score_table"></table>
+																</div>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-danger"
+																	data-dismiss="modal">关闭</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="tab-2" class="tab-pane">
+									<div class="panel-body">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="jqGrid_wrapper">
+													<table id="table_list_detail"></table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+var yq = [(${@clockDictionary.dicIndustryToString("03")})];
+
+$('.chosen-select').chosen({width: "100%"});
+$(document).ready(function(){
+	if("[[${custNo}]]"==""){
+		swal({
+			title : "禁止访问",
+			type : "success",
+			text : "请通过台账查询页面访问！"
+		});
+	}
+	var mydata = [];
+	  $.ajax({
+		url: "/irs/ratingMainStep/custInfo", 
+		data:{Custno:"[[${custNo}]]",type:"[[${type}]]"},
+		async:false,
+		success: function(result){
+		
+			$("#custName").text(result.response.data[0].custName);
+			$("#modelName").text(result.response.data[0].type);
+			if(result.response.data[0].finalLevel){
+				$("#endLevel").text(result.response.data[0].finalLevel);
+			}else{
+				$("#endLevel").text(result.response.data[0].internLevel);
+			}
+			
+			var sco = result.response.data[0].sco;
+			if(sco){
+				sco = sco*1;  // 输出结果为 2.45
+				$("#sco").text(sco.toFixed(2));
+			}else{
+				$("#sco").text(NaN);
+			}
+			
+			$("#admissionSuggest").text(result.response.data[0].admissionSuggest);
+			$("#finalLevel").text(result.response.data[0].finalLevel);
+			$("#internName").text(result.response.data[0].internName);
+			$("#finalName").text(result.response.data[0].finalName);
+			$("#internDate").text(result.response.data[0].internDate);
+			$("#internLevel").text(result.response.data[0].internLevel);
+			
+			if(result.response.data[0].finalLevel&&result.response.data[0].internLevel){
+				if(result.response.data[0].finalLevel!=result.response.data[0].internLevel){
+					$("#finalLevel").css("color","red");
+				}
+			}
+			$("#finalAdvice").text(result.response.data[0].finalAdvice);
+			$("#firRep").text(result.response.data[0].firRep);
+			//$("#ratingType").text(result.response.data[0].ratingType);
+			if(result.response.data[0].ratingType){
+				$("#ratingType").text(result.response.data[0].ratingType);
+			}else{
+				$("#ratingType").hide();
+			}
+			if(result.response.data[0].park){
+				var valuePark=result.response.data[0].park;
+				$("#park").text(yq[valuePark]);
+			}else{
+				$("#park").hide();
+			}
+			$("#park").hide();
+			if(result.response.data[0].type){
+				if(result.response.data[0].type=='UNIVERSAL_S_SODEL2'){
+					$("#modelName").text("生产型");
+				}else if(result.response.data[0].type=='UNIVERSAL_S_SODEL'){
+					$("#modelName").text("服务型");
+				}else{
+					$("#modelName").text("新建型");
+				}
+			}
+			$("#finalName2").text(result.response.data[0].internName);
+			var bl = result.response.data[0].bl;
+			
+			if(bl){
+				if(bl>0.4){
+					$("#dif").css("color","red");
+				}else{
+					$("#dif").text("");
+				}
+				bl = bl*100;  // 输出结果为 2.45
+				if(bl>40){
+					$("#cyjd").text("较大");
+					
+				}
+				$("#bl").text(bl.toFixed(2)+"%");
+				$("#differencesTriangle").css("left",(150*(bl/100))-7+"px");
+				$("#differencesLine").css("right",150-(150*(bl/100))-2+"px");
+			}else{
+				$("#bl").text("NaN");
+			}
+			var ranking = result.response.data[0].ranking;
+			
+			if(ranking){
+				ranking = ranking*100;  // 输出结果为 2.45
+				$("#ranking").text(ranking.toFixed(2)+"%");
+				$("#sorting").css("left",(150*(ranking/100))-7+"px");
+				$("#sortingLine").css("right",150-(150*(ranking/100))+"px");
+				
+				if(bl>40){
+					$("#dif").text("定量定性差异大");
+				}else{
+					$("#dif").hide();
+				}
+				if(ranking>((2/3)*100)){
+					$("#order").text("排序分位数较低");
+					$("#order").css("color","red");
+				}else{
+					$("#order").hide();
+				}
+				
+				
+			}else{
+				$("#ranking").text("NaN");
+				//$("#order").hide();
+			}
+			
+			mydata=result.response.data[0].generate;
+      }}) 
+		$("#table_list").jqGrid({
+			url : "/irs/ratingMainStep/custInfo",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        //datatype: "json",
+	        data: mydata,
+	        datatype: "local",
+	        height: "100%",
+	        autowidth: true,
+	        shrinkToFit: true,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['','一级指标','二级指标','得分','标准分值','得分比例','同业存量平均得分比例', '行业偏离度', '得分明细'],
+	        colModel:[
+	        	{name:'id',index:'id', sortable: false,hidden:true},
+	        	{name:'indextype',index:'indextype', sortable: false,
+					cellattr: function(rowId, tv, rawObject, cm, rdata) {
+					//合并单元格（跨行）
+					return 'id=\'indextype' + rowId + "\'";
+				}},
+				{name:'name',index:'name', editable: true, sortable: false, formatter:function(rowId, index, rawObjec){
+	            	var result =rawObjec.score/rawObjec.standardScore;
+            		result=result*100;
+            		result=result.toFixed(2); 
+            		if(result<40){
+            			var html ="<span>"+rawObjec.name+"</span>"
+            			return html;
+            		}else{
+            			return rawObjec.name;
+            		}
+	            }},
+	            {name:'score',index:'score', editable: true, sortable: false, formatter:function(rowId, index, rawObjec){
+	            	var result =rawObjec.score/rawObjec.standardScore;
+            		result=result*100;
+            		result=result.toFixed(2); 
+            		var result1=rowId*1.0;
+	            	result1=result1.toFixed(2); 
+            		if(result<40){
+    	            	var html ="<span>"+result1+"</span>"
+            			return html;
+            		}else{
+            			return result1;
+            		}
+            	}},
+	            {name:'standardScore',index:'standardScore', editable: true, sortable: false, formatter:function(rowId, index, rawObjec){
+	            	
+	            	var result =rawObjec.score/rawObjec.standardScore;
+            		result=result*100;
+            		result=result.toFixed(2); 
+            		var result1=rowId*1.0;
+	            	result1=result1.toFixed(2); 
+            		if(result<40){
+    	            	var html ="<span>"+result1+"</span>"
+            			return html;
+            		}else{
+            			return result1;
+            		}
+            	}},
+	            {name:'scoreProportion',index:'scoreProportion', editable: true, sortable: false,
+	            	formatter:function(rowId, index, rawObjec){
+	            		var result =rawObjec.score/rawObjec.standardScore;
+	            		result=result*100;
+	            		result=result.toFixed(2);
+	            		if(result<40){
+	            			var html ="<span style='color:red;'>"+result+"%</span>"
+	            			return html;
+	            		}else{
+	            			return result+"%";
+	            		}
+	            	}},
+	            {name:'scoreAvg',index:'scoreAvg', editable: true, sortable: false, formatter:function(rowId, index, rawObjec){
+	            	var result=rowId*100;
+	            	result=result.toFixed(2); 
+            		return result+"%";
+            	}},
+	            {name:'scoreDivergence',index:'scoreDivergence', editable: true, sortable: false,
+	            	formatter:function(rowId, index, rawObjec){
+	            		var f9=rawObjec.scoreAvg;
+	            		var f10=rawObjec.score/rawObjec.standardScore;
+	            		var result =(f10-f9)/f9;
+	            		result=result*100;
+	            		result=result.toFixed(2); 
+	            		if(rawObjec.score==0){
+	            			return   "<span style='color:red;'>-100%</span>";
+	            		}
+	            		if(result<-30){
+	            			var html ="<span style='color:red;'>"+result+"%</span>"
+	            			return html;
+	            		}else{
+	            			return result+"%";
+	            		}
+	            	}},
+	            {name:'name',index:'name', editable: true, sortable: false, formatter:function(rowId, index, rawObjec){
+	            	var result =rawObjec.score/rawObjec.standardScore;
+            		result=result*100;
+            		result=result.toFixed(2); 
+            		if(result<50){
+            			var html ="<span style='text-decoration: underline;cursor: pointer;' onclick='showMoreInfo(\""+rawObjec.indextype+"\",\""+rawObjec.name+"\",\""+rawObjec.id+"\")'>"+rawObjec.name+"</span>"
+            			return html;
+            		}else{
+            			var html ="<span style='text-decoration: underline;cursor: pointer;' onclick='showMoreInfo(\""+rawObjec.indextype+"\",\""+rawObjec.name+"\",\""+rawObjec.id+"\")'>"+rawObjec.name+"</span>"
+            			return html;
+            			//return rawObjec.name;
+            		}
+	            }}
+	        ],
+	        //pager: "#pager_list",
+	        sortable: false,
+	        viewrecords: true,
+	        caption: "",
+	        gridComplete: function() {
+				//在gridComplete调用合并方法
+				var gridName = "table_list";
+				MergerRowspan(gridName, 'indextype');//跨行
+			},
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        //rownumbers: true,
+	        //rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "data",
+	        	records: "recordsTotal",
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		
+		$("#score_table").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+		// Setup buttons
+        $("#table_list").jqGrid('navGrid', '#pager_list',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        /* $("#table_list").jqGrid('setGroupHeaders', {
+       	    useColSpanStyle: true,
+       	    groupHeaders:[
+       	        {startColumnName:'indextype', numberOfColumns:2, titleText: '评价维度'}
+       	    ]  
+       	}) */
+        // Add responsive to jqGrid
+        $(window).bind('resize', function () {
+            var width = $('.jqGrid_wrapper').width();
+            $('#table_list').setGridWidth(width);
+        });
+	});
+	  $("#score_table").jqGrid({
+		  	url:"/irs/ratingMainStep/findScore",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    async:false,
+			mtype : "get",
+	        datatype: "json",
+	        width: 836,
+	        height: "100%",
+	        autowidth: false,
+	        shrinkToFit: true,
+	        colNames:['指标名称','指标值','指标得分','指标值描述'],
+	        colModel:[
+	        	{name:'FD_INDEXNAME',index:'FD_INDEXCATEGORY', sortable: false, sortable: false},
+				{name:'FD_INDEXVALUE',index:'FD_INDEXVALUE', editable: true, sortable: false,width: 60,formatter:function(value,row,index){
+					if(value == -666666){
+						 return 'Null'; 
+					}else if(value == -777777){
+						 return 'Min'; 
+					}else if(value == -888888){
+						 return 'Max'; 
+					}else if(value == -999999){
+						 return 'Avg'; 
+					}else if(!isNaN(value)){　　　
+						var result=value*1.0;
+		            	result=result.toFixed(2);
+	            		return numToMoneyField(result);
+					}else{
+						 return value;
+					}
+				}},
+	            {name:'FD_SCORE',index:'FD_SCORE', editable: true, sortable: false,width: 40,formatter:function(value,row,index){
+	            	if(!isNaN(value)){　　　
+						var result=value*1.0;
+		            	result=result.toFixed(2); 
+	            		return result;
+						}else{
+							 return value; 
+						}
+	            }},
+	            {name:'FD_QUALITATIVE_OPTIONS',index:'FD_QUALITATIVE_OPTIONS', editable: true, sortable: false}
+	        ],
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        rownumWidth: 60,
+	        hidegrid: false,
+	    });  
+	function showMoreInfo(zblx,zbname,indexP){
+					$("#zblx").text(zblx);
+					$("#zbname").text(zbname);
+					  $("#score_table").jqGrid('setGridParam', 
+					    		{postData:{"id":indexP}}
+					    ).trigger("reloadGrid");
+					  $("#modalScoringDetails").modal();
+		
+	}
+	//评级明细
+	var dataDetail = [];
+	 $.ajax({
+		url: "/irs/ratingMainStep/scoreDetail", 
+		async:false,
+		data:{Custno:"[[${custNo}]]",type:"[[${type}]]"},
+		success: function(result){
+			dataDetail=result.response.data[0];
+      }}) 
+	$("#table_list_detail").jqGrid({
+		url : "",
+		recordtext: "显示：{0} - {1}，总数：{2} ",
+	    emptyrecords: "本次查询无数据！",
+	    loadtext: "读取中...",
+	    pgtext : "第 {0}页， 共{1}页",
+		mtype : "post",
+        //datatype: "json",
+        data: dataDetail,
+        datatype: "local",
+        //height: 250,
+        width: 1300,
+        height: '100%',
+        autowidth: false,
+        shrinkToFit: true,
+        prmNames: {
+            page: "page"   // 表示请求页码的参数名称
+        },
+        rowNum: 100,
+        rowList: [100, 20, 30],
+        colNames:['一级指标','二级指标','三级指标','四级指标','指标选项','初评选项','复评选项'],
+        colModel:[
+        	{name:'indexType',index:'indexType', width: 30,
+				cellattr: function(rowId, tv, rawObject, cm, rdata) {
+				//合并单元格
+				return 'id=\'indexType' + rowId + "\'";
+			}},
+        	{name:'inOutType',index:'inOutType', width: 40,
+				cellattr: function(rowId, tv, rawObject, cm, rdata) {
+				//合并单元格
+				return 'id=\'inOutType' + rowId + "\'";
+			}},
+			{name:'indexParentName',index:'indexParentName', width: 50,
+				cellattr: function(rowId, tv, rawObject, cm, rdata) {
+				//合并单元格
+				return 'id=\'indexParentName' + rowId + "\'";
+			}},
+        	{name:'indexName',index:'indexName', width: 60},
+        	{name:'indexOption',index:'indexOption', width: 250},
+        	{name:'oldValue',index:'oldValue', width: 40},
+        	{name:'indexValue',index:'indexValue', width: 40,formatter:function(value,index,row){
+        		if(row.oldValue==row.indexValue){
+        			return  row.indexValue;
+        		}else{
+        			if(row.indexValue){
+        				return  "<span style='color:red;'>"+row.indexValue+"</span>";
+        			}else{
+        				return  "<span style='color:red;'></span>";
+        			}
+        		}
+        		
+        	}},
+        ],
+        viewrecords: true,
+        caption: "",
+        gridComplete: function() {
+			//在gridComplete调用合并方法
+			var gridName = "table_list_detail";
+			MergerRowspan(gridName, 'indexType');//跨行
+			MergerRowspan(gridName, 'inOutType');//跨行
+			MergerRowspan(gridName, 'indexParentName');//跨行
+		},
+        add: true,
+        edit: true,
+        addtext: 'Add',
+        edittext: 'Edit',
+        rownumbers: false,
+        hidegrid: false
+    });
+</script>
+</html>

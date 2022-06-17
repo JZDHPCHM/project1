@@ -1,0 +1,119 @@
+[
+	/*评级*/
+	{"id":"parameter.rating","order":0},
+		/*评级/评级有效时间(单位：月)*/
+		{
+			"id"			:"parameter.rating.rating_period_of_validity", 
+			"parentId"		:"parameter.rating",
+			"code"			:"rating_period_of_validity",
+			"defaultValue"	:"12",
+			"order"			: 40
+		},
+		/*评级/评级准入标准*/
+		{
+			"id"			:"parameter.rating.rating_admit_level", 
+			"parentId"		:"parameter.rating",
+			"code"			:"rating_admit_level",
+			"defaultValue"	:"BBB",
+			"order"			: 50
+		},
+		/*评级/是否启用试算*/
+		{
+			"id"			:"parameter.rating.rating_trial_enable", 
+			"parentId"		:"parameter.rating",
+			"code"			:"rating_trial_enable",
+			"defaultValue"	:"true",
+			"order"			: 60
+		},
+		/*评级/每月试算次数*/
+		{
+			"id"			:"parameter.rating.rating_trial_num_limit", 
+			"parentId"		:"parameter.rating",
+			"code"			:"rating_trial_num_limit",
+			"defaultValue"	:"3",
+			"order"			: 70
+		}
+		,
+		/*评级/金融小企业机构ID*/
+		{
+			"id"			:"parameter.rating.org_id_jrxqy", 
+			"parentId"		:"parameter.rating",
+			"code"			:"org_id_jrxqy",
+			"defaultValue"	:"1009699",
+			"order"			: 80
+		},
+		/*评级/总行授信机构ID*/
+		{
+			"id"			:"parameter.rating.org_id_zhsx", 
+			"parentId"		:"parameter.rating",
+			"code"			:"org_id_zhsx",
+			"defaultValue"	:"1008799",
+			"order"			: 90
+		},
+		{
+			"id"			:"parameter.rating.org_id_kjjrb", 
+			"parentId"		:"parameter.rating",
+			"code"			:"org_id_kjjrb",
+			"defaultValue"	:"1007599",
+			"order"			: 80
+		},
+		/*评级/总行大客户机构ID*/
+		{
+			"id"			:"parameter.rating.org_id_zhdkh", 
+			"parentId"		:"parameter.rating",
+			"code"			:"org_id_zhdkh",
+			"defaultValue"	:"1007399",
+			"order"			: 100
+		},
+		{
+			"id"			:"parameter.rating.Front_page_load", 
+			"parentId"		:"parameter.rating",
+			"code"			:"Front_page_load",
+			"defaultValue"	:"1",
+			"order"			: 100
+		}
+		
+		/*风险限额*/
+		,{"id":"parameter.risk.limit","order":101},
+			/*授信限额最小值
+			*/
+			{
+				"id"			:"parameter.risk.limit.credit.limit.min", 
+				"parentId"		:"parameter.risk.limit",
+				"code"			:"credit_limit_min",
+				"defaultValue"	:"0.3",
+				"order"			: 110
+			},
+			/*授信限额最大值*/
+			{
+				"id"			:"parameter.risk.limit.credit.limit.max", 
+				"parentId"		:"parameter.risk.limit",
+				"code"			:"credit_limit_max",
+				"defaultValue"	:"1.2",
+				"order"			: 120
+			},
+			/*单一客户限额最大值*/
+			{
+				"id"			:"parameter.risk.limit.single.customer.quota.max", 
+				"parentId"		:"parameter.risk.limit",
+				"code"			:"single_customer_quota_max",
+				"defaultValue"	:"2500000000",
+				"order"			: 130
+			},
+			/*单一客户限额最小值*/
+			{
+				"id"			:"parameter.risk.limit.single.customer.quota.min", 
+				"parentId"		:"parameter.risk.limit",
+				"code"			:"single_customer_quota_min",
+				"defaultValue"	:"0",
+				"order"			: 140
+			},
+			/*单一客户限额最小值*/
+			{
+				"id"			:"parameter.risk.limit.upstream.IP", 
+				"parentId"		:"parameter.risk.limit",
+				"code"			:"upstream_IP",
+				"defaultValue"	:"192.168.4.133",
+				"order"			: 150
+			}
+]

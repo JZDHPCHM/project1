@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_INFO_DISCLOSURE" author="framework">
+
+        <!-- 信息披露主体 -->
+        <createTable tableName="FB_INFO_DISCLOSURE" remarks="信息披露">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="URL" type="java.sql.Types.VARCHAR(100)" remarks="URL"></column>
+            <column name="EVENT_DATE" type="java.sql.Types.VARCHAR(20)" remarks="事件时间"></column>
+            <column name="CODE" type="java.sql.Types.VARCHAR(1000)" remarks="代码"></column>
+            <column name="ANNOUNCEMENT_DATE" type="java.sql.Types.VARCHAR(20)" remarks="公告时间"></column>
+            <column name="ORIGINAL_LINK" type="java.sql.Types.VARCHAR(500)" remarks="原文链接"></column>
+            <column name="PUBLIC_DATE" type="java.sql.Types.VARCHAR(20)" remarks="发布时间"></column>
+            <column name="TITLE" type="java.sql.Types.VARCHAR(1000)" remarks="标题"></column>
+            <column name="SHORT_SECURITIES" type="java.sql.Types.VARCHAR(50)" remarks="证券简称"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 信息披露公告来源 -->
+        <createTable tableName="FB_INFO_DISCLOSURE_SOURCE" remarks="信息披露公告来源">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="INFO_DISCLOSURE_ID" type="java.sql.Types.VARCHAR(36)" remarks="信息披露ID"></column>
+            <column name="SOURCE" type="java.sql.Types.VARCHAR(50)" remarks="公告来源"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 信息披露公告类别 -->
+        <createTable tableName="FB_INFO_DISCLOSURE_TYPE" remarks="信息披露公告类别">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="INFO_DISCLOSURE_ID" type="java.sql.Types.VARCHAR(36)" remarks="信息披露ID"></column>
+            <column name="TYPE" type="java.sql.Types.VARCHAR(50)" remarks="公告类别"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 信息披露当事人  -->
+        <createTable tableName="FB_INFO_DISCLOSURE_PARTY" remarks="信息披露当事人">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="INFO_DISCLOSURE_ID" type="java.sql.Types.VARCHAR(36)" remarks="信息披露ID"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="当事人"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 信息披露摘要  -->
+        <createTable tableName="FB_INFO_DISCLOSURE_ABSTRACT" remarks="信息披露摘要">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="INFO_DISCLOSURE_ID" type="java.sql.Types.VARCHAR(36)" remarks="信息披露ID"></column>
+            <column name="DIGEST" type="java.sql.Types.VARCHAR(500)" remarks="摘要"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+    </changeSet>
+</databaseChangeLog>

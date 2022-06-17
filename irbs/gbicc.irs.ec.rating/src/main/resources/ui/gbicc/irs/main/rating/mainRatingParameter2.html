@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>主体台账查询</title>
+<style type="text/css">
+	.form-group {
+	    margin-bottom: 10px;
+	}
+	.form-group:last-child {
+	    margin-bottom: 0;
+	}
+	.ibox-content{
+		padding: 10px;
+	}
+	.modal-show{
+		color: #199fff;
+		cursor: pointer;
+	}
+	.modal-body {
+    	padding: 20px 30px;
+	}
+	.bottom-btn{
+		text-align: center;
+    	padding-top: 20px;
+	}
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+	                <div class="col-lg-12">
+	                	<div class="ibox float-e-margins">
+	                		<div class="ibox-title">
+	                            <h5>主体评级管理&nbsp;&nbsp;/&nbsp;&nbsp;主体台账查询</h5>
+	                            <!-- <div class="ibox-tools">
+	                                <a class="collapse-link">
+	                                    <i class="fa fa-chevron-up"></i>
+	                                </a>
+	                            </div> -->
+	                        </div>
+	                        <div class="ibox-content" style="padding-bottom: 0;">
+	                        	<form class="form-horizontal" id="formSearch">
+									<div class="form-group">
+										<label class="col-sm-1 control-label">承租人名称</label>
+										<div class="col-sm-2">
+											<input id="lesseeName" name="custName" type="text" placeholder="模糊查找" class="form-control" autocomplete="off" data-provide="typeahead">
+										</div>
+										<!-- <label class="col-sm-1 control-label">承租人编号</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" id="SearchBpMasterCode" class="form-control">
+										</div> -->
+										<label class="col-sm-1 control-label">评级模板</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="" name="fdType">
+														<option value=''>请选择</option>
+										<option
+											th:each="option: ${@frSystemDictionaryService.getDictionaryMap('RatingTemplate',#locale)}"
+											th:value="${option.key}" th:text="${option.value}"></option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">国标行业</label>
+										<div class="col-sm-2">
+											 <select class="chosen-select" id="" name="industry">
+												<option value="">请选择</option>
+												<option th:each="option: ${@clockDictionary.dicIndustry('01')}" th:value="${option.key}" th:text="${option.value}"></option>
+
+											</select> 
+<!-- 											<input type="text" id="" name="" placeholder="模糊查找" class="form-control">
+ -->										</div>
+										<label class="col-sm-1 control-label">高精尖产业分类</label>
+										<div class="col-sm-2">
+											<!-- <input type="text" placeholder="精确查找" class="form-control"> -->
+											<select class="chosen-select" id="" name="highprecision">
+												<option value="">请选择</option>
+												<option th:each="option: ${@clockDictionary.dicIndustry('02')}" th:value="${option.key}" th:text="${option.value}"></option>
+											</select>
+										</div>
+									</div>
+									<!-- <div class="form-group">
+										<label class="col-sm-1 control-label">高新技术企业类型</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="" name="enterprisehonor">
+												<option value="">请选择</option>
+												<option th:each="option: ${@clockDictionary.esAlStType('ENTERPRISE_HONOR')}" th:value="${option.key}" th:text="${option.value}"></option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">经济类型</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="" name="economic">
+												<option value="">请选择</option>
+												<option th:each="option: ${@clockDictionary.dicEconomic()}" th:value="${option.key}" th:text="${option.value}"></option>
+											</select>
+										</div>
+										
+									</div> -->
+									<div class="form-group">
+										<!-- <label class="col-sm-1 control-label">项目状态</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="">请选择</option>
+												<option value="分公司">项目通过</option>
+												<option value="分公司">项目拒绝</option>
+											</select>
+										</div> -->
+										<label class="col-sm-1 control-label">项目经理</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" id="projectManager" class="form-control" name="employee" autocomplete="off" data-provide="typeahead">
+										</div>
+										<label class="col-sm-1 control-label">评审经理</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" id="reviewManager" class="form-control" name="finalName" autocomplete="off" data-provide="typeahead">
+										</div>
+										<label class="col-sm-1 control-label">所属部门</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="" name="leaseOrganization">
+												<option value="">请选择</option>
+												<option th:each="option: ${@clockDictionary.dicOrg()}" th:value="${option.key}" th:text="${option.value}"></option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">评级类型</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" name='method'>
+											    <option value="">请选择</option>
+											    <option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('RatingMethods','')}"
+                                            th:value="${option.key}" th:text="${option.value}"></option>
+											</select>
+										</div>
+										<!-- <label class="col-sm-1 control-label">评级类型</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="">请选择</option>
+												<option value="">直租</option>
+												<option value="">回租</option>
+											</select>
+										</div> -->										
+									</div>
+									<div class="form-group">
+										<!-- <label class="col-sm-1 control-label">业务类型</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="精确查找" class="form-control">
+											<select class="chosen-select" id="">
+												<option value="请选择">请选择</option>
+												<option value="分公司">直租</option>
+												<option value="分公司">回租</option>
+											</select>
+										</div> -->
+										<label class="col-sm-1 control-label">评级生效日期</label>
+										<div class="col-sm-3">
+											<div class="input-daterange input-group" id="datepicker">
+												<input id="date1" type="text" class="form-control"
+													name="date1" placeholder="请选择开始日期" readonly /> <span
+													class="input-group-addon">至</span> <input id="date2"
+													type="text" class="form-control" name="date2"
+													placeholder="请选择结束日期" readonly />
+											</div>
+										</div>
+										<!-- <label class="col-sm-1 control-label">评级编号</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" class="form-control">
+										</div> -->
+										<div class="col-sm-3">
+											<b id="btn-query" class="btn btn-success">查询</b>
+											<b id="btn-reset" class="btn btn-success">重置</b>
+											<b id="btn-download" class="btn btn-success">下载</b>
+										</div>
+									</div>
+								</form>
+	                        </div>
+	                	</div>
+						<div class="jqGrid_wrapper">
+                            <table id="table_list"></table>
+                            <div id="pager_list"></div>
+                        </div>    	    
+	                </div>
+		        </div>
+		        <!-- 历史评级模态窗口 -->
+						<div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog"  aria-hidden="true">
+                             <div class="modal-dialog modal-lg">
+                                 <div class="modal-content">
+                                     <div class="modal-header">
+                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                         <h4 class="modal-title">历史评级</h4>
+                                     </div>
+                                     <div class="modal-body">
+										<div class="jqGrid_wrapper">
+				                            <table id="table_historylist"></table>
+				                            <div id="pager_historylist"></div>
+				                        </div>
+				                        <div class="bottom-btn">
+				                        	<!-- <b id="btn-download" class="btn btn-success">下载</b> -->
+				                        	<b data-dismiss="modal" class="btn btn-default">返回</b>
+				                        </div>                                     		    
+                                     </div>
+                                     <div class="modal-footer" style="padding: 0;">
+                                         
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	$("input").blur(function(){
+		$(".typeahead.dropdown-menu").css("display","none");
+	});			
+//重置按钮
+$("#btn-reset").click(function(){
+	$("#formSearch input").val("");
+	$("#formSearch select").val("");
+	$("#formSearch select").trigger("chosen:updated");
+	$('#date1').datepicker('setEndDate', new Date());
+	$('#date2').datepicker('setEndDate', new Date());  
+	$('#date2').datepicker('setStartDate', null);
+});
+</script>
+<script type="text/javascript">
+    var historyCustCode='';
+	$('.chosen-select').chosen({width: "100%"});
+	$('#date1').datepicker({
+		  autoclose : true,
+	      todayHighlight : true,
+	      endDate : new Date()
+	   }).on('show',function(e){
+	      if ($('#date2').val() == '') {
+	         //$('#date2').datepicker('setEndDate', null);
+	      }
+	   }).on('changeDate',function(e){
+	      if (e.date) {
+	         $('#date2').datepicker('setStartDate', new Date(e.date.valueOf()));
+	      } else {
+	         $('#date2').datepicker('setStartDate', null);
+	      }
+	   });
+	   
+	   $('#date2').datepicker({
+	      autoclose : true,
+	      todayHighlight : true,
+	      endDate : new Date()
+	   }).on('show',function(e){
+	      if ($('#date1').val() == '') {
+	         //$('#date1').datepicker('setStartDate', null);
+	      }
+	   }).on('changeDate',function(e){
+	      if (e.date) {
+	         $('#date1').datepicker('setEndDate', new Date(e.date.valueOf()));
+	      } else {
+	         $('#date1').datepicker('setEndDate', null);
+	      }
+	   });
+	
+	var form="";
+	$('#btn-query').click(function(){
+		form = $('#formSearch').serializeObject();
+	    $("#table_list").jqGrid('setGridParam', {postData:form,page:1}).trigger("reloadGrid");
+	});
+	
+	function historyRatingRefresh(custCode){
+	    $("#table_historylist").jqGrid('setGridParam', 
+	    		{postData:{"custCode":custCode,"ratingStatus":'010',vailds:'all',page:1}}
+	    ).trigger("reloadGrid");
+	}
+	
+	function showHistoryModal(custCode){
+        $("#myModal").modal("show");
+        historyRatingRefresh(custCode);
+    }
+	
+	$(document).ready(function(){
+		$("#table_list").jqGrid({
+			url : "/irs/mainRating/parameterQueryHistory2",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "GET",
+	        datatype: "json",
+	        height: ($(window).height()-$(".float-e-margins").height()-140),//屏幕高度-查询框高度-140的偏差值
+	        scrollOffset : 0,
+	        autowidth: true,
+	        shrinkToFit:false,
+	 	   	autoScroll: false,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [20, 30, 40],
+	        //colNames:['评级编号','承租人编号','承租人名称','承租人类型','国标行业','高精尖产业分类','高新技术企业类型', '经济类型', '评级类型','初评等级','复核等级','违约概率','评级类型','评级日期'],
+	       	colNames:['评级编号','客户名称','客户编号','客户类型','企业规模','国标行业门类','	国标行业','注册日期','评级模板','复核等级','复核得分','评级生效日期','评级到期日','当前违约状态','	业务经理','所属部门','	初评等级','初评得分','	评审经理','违约概率','	评级类型','评级版本'],
+	        //colNames:['评级编号','门类','承租人编号','承租人名称','评级模板','国标行业','高精尖产业分类','业务部','业务经理','评审经理','初评等级','初评得分','复核等级','复评得分','违约概率','评级类型','评级版本','评级生效日期'],
+	        colModel:[
+	        	 {name:'id',index:'id', editable: true,hidden:true},
+	             {name:'custname',index:'custName', editable: true,sortable:false, width: 185},
+	             {name:'custcode',index:'custCode', editable: true,sortable:false, width: 90},
+	             {name:'description',index:'description', editable: true,sortable:false, width: 80, align: 'center'},
+		         {name:'enterpriseScale',index:'enterpriseScale', editable: true,sortable:false, width: 90, align: 'center'},
+	        	 {name:'segmentIndustryTop',index:'segmentIndustryTop', editable: true, width: 120},
+	             {name:'segmentindustry',index:'segmentindustry', editable: true,sortable:false, width: 200,
+	             	formatter:function(value,row,index){
+	             		if([(${@clockDictionary.dicIndustryToString('01')})][value]){
+	             			return [(${@clockDictionary.dicIndustryToString('01')})][value]; 
+	             		}else{
+	             			return "";
+	             		}
+	             	           
+	             	}
+	             },
+	        	 {name:'foundenDate',index:'foundenDate', editable: true,width: 80},
+	             
+	             {name:'type',index:'type', editable: true,sortable:false,align: 'center', width: 80,
+	        		 formatter:function(value,row,index){
+		                	if([(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingTemplate','')})][value]){
+		                    	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingTemplate','')})][value];
+		                	}else{
+		                		return "";
+		                	}
+		                }},
+	             {name:'finallevel',index:'finallevel', editable: true,sortable:false,align: 'center', width: 80,
+	            	 formatter:function(value,index,row){
+	            		 if(value==null || value==''){
+	            			 return '';
+	            		 }
+	            		 return "<span style='color: #199fff;text-decoration: underline;cursor: pointer;' onclick='showHistoryModal(\""+row.custcode+"\")'>"+value+"</span>";
+	            	 }
+	             },
+	             {name:'finaSco',index:'finaSco', editable: true,sortable: false,align: 'center', width: 80,
+                	 formatter:function(value,index,row){
+                		 if(value==null || value==''){
+    	            		 return '';
+    	            	 }
+                    	 return (value*1).toFixed(2);
+	            	 }	 
+                 },
+	             {name:'finaldate',index:'finaldate', editable: true,sortable:false,align: 'center', width: 80},
+	             {name:'fDate',index:'fDate', editable: true,sortable:false,align: 'center', width: 80},
+	             {name:'treatN',index:'treatN', editable: true,sortable:false,align: 'center', width: 100},
+	             {name:'employeeId',index:'employeeId', editable: true,sortable:false,align: 'center', width: 80,
+		             	formatter:function(value,row,index){
+		             		if([(${@clockDictionary.fuzzySearchUser('')})][value]){
+		             			return 	[(${@clockDictionary.fuzzySearchUser('')})][value]; 
+		             		}else{
+		             			return "";
+		             		}
+		             	}
+		             },
+	             {name:'orgName',index:'orgName', editable: true,sortable:false,align: 'center', width: 100},
+
+	             /* {name:'enterprisehonor',index:'enterprisehonor', editable: true,sortable:false,
+	            	 formatter:function(value,row,index){
+	             	if([(${@clockDictionary.esAlStTypeToString("ENTERPRISE_HONOR")})][value]){
+	         			return [(${@clockDictionary.esAlStTypeToString("ENTERPRISE_HONOR")})][value]; 
+	         		}else{
+	         			return "";
+	         		}
+	             }},
+	             {name:'economic',index:'economic', editable: true,sortable:false,
+	            	 formatter:function(value,row,index){
+	             	if([(${@clockDictionary.dicEconomicToString()})][value]){
+	         			return [(${@clockDictionary.dicEconomicToString()})][value]; 
+	         		}else{
+	         			return "";
+	         		}
+	             }},
+	            
+	             {name:'type',index:'type', editable: true,sortable:false,formatter:function(value,row,index){
+	                	if([(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingTemplate','')})][value]){
+	                    	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingTemplate','')})][value];
+	                	}else{
+	                		return "";
+	                	}
+	                }}, */
+	             {name:'internlevel',index:'internlevel', editable: true,sortable:false,align: 'center', width: 80},
+	             {name:'initSco',index:'initSco', editable: true,sortable: false,align: 'center', width: 80,
+                	 formatter:function(value,index,row){
+                		 if(value==null || value==''){
+    	            		 return '';
+    	            	 }
+                    	 return (value*1).toFixed(2);
+	            	 }	 
+                 },
+	             {name:'finalName',index:'finalName', editable: true,sortable:false,align: 'center', width: 80},
+
+	             {name:'pd',index:'pd', editable: true,sortable:false,align: 'center', width: 80,
+	            	 formatter:function(value,index,row){
+	            	 if(value==null || value==''){
+	            		 return '';
+	            	 }
+	            	 return (value*100).toFixed(2)+"%";
+	             }},
+	             {name:'ratingstatus',index:'ratingstatus', editable: true,sortable:false,align: 'center', width: 100,
+	            	 formatter:function(value,row,index){
+	             	if([(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingMethods','')})][value]){
+	                	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingMethods','')})][value];
+	            	}else{
+	            		return "";
+	            	}
+	            }},
+	             {name:'version',index:'version', editable: true,sortable:false,align: 'center', width: 70},
+
+	            ],
+	        pager: "#pager_list",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	            root: "response.data",
+	            records: "response.totalRows",
+	            //page: "response.currPage", // 当前第几页
+	            total: "response.totalPages", // 总共多少页
+	            repeatitems: false,
+	            id: "0"
+	        }
+	    });
+		$("#table_list").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+		// Setup buttons
+        $("#table_list").jqGrid('navGrid', '#pager_list',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        // Add responsive to jqGrid
+        $(window).bind('resize', function () {
+            var width = $('.jqGrid_wrapper').width();
+            $('#table_list').setGridWidth(width);
+        });
+        
+        
+        $("#table_historylist").jqGrid({
+            url : "/irs/mainRating/parameterQueryHistory2",
+            recordtext: "显示：{0} - {1}，总数：{2} ",
+            emptyrecords: "本次查询无数据！",
+            loadtext: "读取中...",
+            pgtext : "第 {0}页， 共{1}页",
+            mtype : "GET",
+            datatype: "json",
+            width: 838,
+            height: 300,
+            scrollOffset : 0,
+            autowidth: false,
+            shrinkToFit: true,
+            //autoScroll: false,//当autoScroll和shrinkToFit均为false时，会出现行滚动条
+            //shrinkToFit: false,//是否列宽度自适应。true=适应 false=不适应
+            prmNames: {
+                page: "page"   // 表示请求页码的参数名称
+            },
+            rowNum: 20,
+            rowList: [10, 20, 30],
+            //colNames:['承租人名称','承租人编号','评级模板', '评级编号', '评级类型','初评等级','复核等级','违约概率','评级类型','评级日期'],
+            colNames:['承租人名称','评级模板', '评级编号', '初评等级','复核等级','违约概率','评级类型','评级日期'],
+            colModel:[
+                {name:'custname',index:'custname', editable: true,sortable: false},
+                //{name:'scoretemplateid',index:'scoretemplateid', editable: true,sortable: false},
+                {name:'scoretemplateid',index:'scoretemplateid', editable: true,sortable: false,align: 'center',formatter:function(value,row,index){
+                	if([(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingTemplate','')})][value]){
+                    	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingTemplate','')})][value];
+                	}else{
+                		return "";
+                	}
+                }
+                 },
+                 {name:'id',index:'id', editable: true,hidden:true},
+                 //{name:'type',index:'type', editable: true,sortable: false},
+                 {name:'internlevel',index:'internlevel', editable: true,sortable: false,align: 'center'},
+                 {name:'finallevel',index:'finallevel', editable: true,sortable: false,align: 'center',
+                	 formatter:function(value,index,row){
+	            		 if(value==null || value==''){
+	            			 return '';
+	            		 }
+	            		 return "<span style='color: #199fff;text-decoration: underline;cursor: pointer;' onclick='enterReport(\""+row.id+"\")'>"+value+"</span>";
+	            	 }	 
+                 },
+                 {name:'pd',index:'pd', editable: true,sortable: false,align: 'center',formatter:function(value,row,index){
+                	 if(value==null || value==''){
+	            		 return '';
+	            	 }
+                	 return (value*100).toFixed(2)+"%";
+                 }},
+                 {name:'ratingstatus',index:'ratingstatus', editable: true,sortable: false,align: 'center',formatter:function(value,row,index){
+                    if([(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingMethods','')})][value]){
+                        return [(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingMethods','')})][value];
+                    }else{
+                        return "";
+                    }
+                }},
+                 {name:'finaldate',index:'finaldate', editable: true,sortable: false,align: 'center'}
+            ],
+            pager: "#pager_historylist",
+            viewrecords: true,
+            caption: "",
+            add: true,
+            edit: true,
+            addtext: 'Add',
+            edittext: 'Edit',
+            rownumbers: true,
+            rownumWidth: 60,
+            hidegrid: false,
+            jsonReader: {
+                root: "response.data",
+                records: "response.totalRows",
+                //page: "response.currPage", // 当前第几页
+                total: "response.totalPages", // 总共多少页
+                repeatitems: false,
+                id: "0"
+            }
+        });
+        $("#table_historylist").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+        // Setup buttons
+        $("#table_historylist").jqGrid('navGrid', '#pager_historylist',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        
+	});
+	
+	
+	function post(URL, PARAMS) {
+        var temp_form = document.createElement("form");
+        temp_form.action = URL;
+        temp_form.target = "_blank";
+        temp_form.method = "post";
+        temp_form.style.display = "none";
+        for (var x in PARAMS) {
+            var opt = document.createElement("textarea");
+            opt.name = x;
+            opt.value = PARAMS[x];
+            temp_form .appendChild(opt);
+        }
+        document.body.appendChild(temp_form);
+        temp_form.submit();
+    }
+	
+	function enterReport(id){
+		/* debugger
+		  $.ajax({
+			  url : "/bpMaster/encryption",
+			  type:'POST',
+			  async : false,
+			  success : function(result) {
+				  var url="/irs/mainRating/enterReport?custNo="+id+"&key="+result;
+				  window.open(url);
+			  }
+		  }); */
+		  
+		/*   $.ajax({
+			  url : "/irs/mainRating/enterReport",
+			  type:'GET',
+			  data:{custNo:id},
+			  async : false,
+			  success : function(result) {
+				  window.open("/irs/mainRating/enterReport");
+				 /*  var url="/irs/mainRating/enterReport?custNo="+id+"&key="+result;
+				  window.open(url); */
+			 // }
+		  //});  */
+		  
+		// var url="/irs/mainRating/enterReport?custNo="+id;
+		post('/irs/mainRating/enterReport2',{custNo :id});
+		 // window.open(url);
+		
+	}
+	
+	  var lesseeNames = [];
+	  $.ajax({
+		  url : "/bpMaster/SearchBpMasterName",
+		  type:'GET',
+		  dataType:'json',
+		  async : false,
+		  success : function(result) {
+		  	  lesseeNames=result;
+		  }
+	  });
+	  $('#lesseeName').typeahead({
+		  source: lesseeNames,
+		  minLength: 0,//键入字数多少开始补全
+		  showHintOnFocus: true,//一旦输入得到焦点，就可以在适用时显示提示。
+		  fitToElement: true,//选项框宽度与输入框一致
+		  items: 'all',//下拉选项中出现条目的最大数量。也可以设置为“all”
+		  autoSelect: true,//允许你决定是否自动选择第一个建议
+	});  	  
+	  
+	  var projectManagers = [];
+	  $.ajax({
+		  url : "/bpMaster/userSearch",
+		  type:'GET',
+		  dataType:'json',
+		  async : false,
+		  success : function(result) {
+			  projectManagers=result;
+		  }
+	  });
+	  $('#projectManager').typeahead({
+		  source: projectManagers,
+		  minLength: 0,//键入字数多少开始补全
+		  showHintOnFocus: true,//一旦输入得到焦点，就可以在适用时显示提示。
+		  fitToElement: true,//选项框宽度与输入框一致
+		  items: 'all',//下拉选项中出现条目的最大数量。也可以设置为“all”
+		  autoSelect: true,//允许你决定是否自动选择第一个建议
+	});
+	  
+	  var reviewManagers = [];
+	  $.ajax({
+		  url : "/bpMaster/userSearch",
+		  type:'GET',
+		  dataType:'json',
+		  async : false,
+		  success : function(result) {
+			  reviewManagers=result;
+		  }
+	  });
+	  $('#reviewManager').typeahead({
+		  source: reviewManagers,
+		  minLength: 0,//键入字数多少开始补全
+		  showHintOnFocus: true,//一旦输入得到焦点，就可以在适用时显示提示。
+		  fitToElement: true,//选项框宽度与输入框一致
+		  items: 'all',//下拉选项中出现条目的最大数量。也可以设置为“all”
+		  autoSelect: true,//允许你决定是否自动选择第一个建议
+	});
+	  
+	//下载
+      $("#btn-download").click(function(){
+          var params = {
+                  "custName":$("input[name='custName']").val(),
+                  "fdType":$("select[name='fdType']").val(),
+                  "industry":$("select[name='industry']").val(),
+                  "highprecision":$("select[name='highprecision']").val(),
+                  "employee":$("input[name='employee']").val(),
+                  "finalName":$("input[name='finalName']").val(),
+                  "leaseOrganization":$("select[name='leaseOrganization']").val(),
+                  "method":$("select[name='method']").val(),
+                  "date1":$("input[name='date1']").val(),
+                  "date2":$("input[name='date2']").val()
+              };
+          
+          var flag = true;
+          //判断查询条件下是否有结果
+          $.ajax({
+              url: "/irs/mainRating/queryCount.action",
+              async:false,
+              type:"POST",
+              data:params,
+              success:function(data){
+                  if(!data.flag){
+                      swal('提示',data.data,'warning');
+                      flag = false;
+                  }
+              },
+              error:function(xhr,status,error){
+                  swal('错误',error,'error');
+              }
+          })
+          //如果没有记录
+          if(!flag){
+              return false;
+          }
+          
+          swal({
+                  title: "导出数据",
+                  text: "请输入下载文件名称",
+                  type: "input",
+                  showCancelButton: true,
+                  confirmButtonText: "确定",
+                  cancelButtonText : "取消",
+                  inputPlaceholder:"文件名称",
+                  closeOnConfirm: false
+              },
+              function(inputValue){
+                  if(inputValue){
+                      if(inputValue==null || inputValue==''){
+                          swal('提示','请输入文件名称','warning');
+                          return false;
+                      }
+                      params.fileName = inputValue;
+                      $.ajax({
+                          url: "/irs/mainRating/exportData.action",
+                          async:true,
+                          type:"POST",
+                          data:params,
+                          success:function(data){
+                              swal('提示','数据导出中\n请稍后点击右上角用户名进入下载中心下载','warning');
+                          },
+                          error:function(xhr,status,error){
+                              swal('错误',error,'error');
+                          }
+                      })
+                  }else{
+                      swal('提示','请输入文件名称','warning');
+                  }
+              }
+          )
+      })
+	
+	$.fn.serializeObject = function() {  
+	    var o = {};  
+	    var a = this.serializeArray();  
+	    $.each(a, function() {  
+	        if (o[this.name]) {  
+	            if (!o[this.name].push) {  
+	                o[this.name] = [ o[this.name] ];  
+	            }  
+	            o[this.name].push(this.value || '');  
+	        } else {  
+	            o[this.name] = this.value || '';  
+	        }  
+	    });  
+	    return o;  
+	}
+	
+</script>
+</html>

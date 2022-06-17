@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+// 客户信用等级
+var creditRatingType = [(${@frSystemDictionaryService.getDictionaryMapJsonString('CREDIT_RATING_TYPE',#locale)})];
+// 机构列表
+var orgList = [(${@jacksonObjectMapper.writeValueAsString(@newOrgServiceImpl.findAll())})];
+//企业规模类型
+var EnterpriseTypeEnum = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.EnterpriseTypeEnum),#locale)})];
+var roleList = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.RatingRoleEnum),#locale)})];
+
+var UserFields ={
+	ds:[
+		{name:'id',						primaryKey:true}, 
+		{name:'loginName'},
+	    {name:'userName'}
+	]
+};
+
+//用户列表数据源
+isc.FwRestDataSource.create({
+	ID: 'userDS',
+	autoFetchData: false,
+	fields: UserFields.ds,
+	dataURL: '[(@{/system/users/isc})]'
+});
+
+//所有机构数据源(下拉框选项)
+isc.FwRestDataSource.create({
+  ID: 'allOrgDs',
+  fields:[
+  	{name:'id',primaryKey:true},
+  	{name:'code'},
+  	{name:'name'},
+  	{name:'parent',foreignKey:'allOrgDs.id'}
+  	
+  ],
+  fetchDataURL: '[(@{/system/orgs/isc/fetch})]'
+});
+
+//字段定义
+var ratingAuthorizationFields ={
+	query: [
+			/* {
+				width:'*',	
+				name:'orgId',					
+				title:'[(#{orgId})]',
+				optionDataSource: allOrgDs,	
+				dataSetType: "tree",
+				autoFetchData:false,
+				loadDataOnDemand:true,
+				displayField:'name',
+				valueField:'code',
+				pickListProperties:{
+					nodeIcon: '[SKIN]/folder_open.png'
+				},
+				specialValues: {"": ""},
+			    separateSpecialValues: true
+			}, */
+			{	width:'*',	
+				name:'roleId',					
+				title:'[(#{roles})]',							
+				type: 'select',     
+				valueMap:roleList
+				/* multiple:false,
+				optionDataSource: allRoleDs,
+				displayField:'name',
+				valueField:'code',
+				allowEmptyValue:true,
+				autoFetchData:false */
+			}
+	],
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{width:'*',		name:'enterpriseType',	title:'企业规模类型',type: 'select',valueMap:EnterpriseTypeEnum,allowEmptyValue:true,autoFetchData:false},
+			/* {width:'*',		name:'userId',			title:'用户',
+				type:'select',
+		    	multiple:false,
+		    	optionDataSource:userDS,
+		    	autoFetchData:false, 
+		    	displayField:'userName',
+		    	valueField:'loginName' 
+		    	},
+			{
+		    		width:'*',		
+		    		name:'orgId',			
+		    		title:'[(#{orgId})]',
+		    		type: 'select',
+		    		valueMap:orgList,
+		    		allowEmptyValue:true,
+		    		autoFetchData:false}, */
+			{
+				width:'*',		
+				name:'roleId',			
+				title:'[(#{roles})]',							
+				type: 'select',     
+				valueMap:roleList
+				/* multiple:false,
+				optionDataSource: allRoleDs,
+				displayField:'name',
+				valueField:'code',
+				allowEmptyValue:true,
+				autoFetchData:false */
+			},
+		    {width:'*',		name:'ratingLevel',	title:'评级结果上限',type: 'select',valueMap:creditRatingType},
+		    {
+		    	width:'*',		
+		    	name:'creator',	
+		    	title:'创建人员',
+		    	type:'select',
+		    	multiple:false,
+		    	optionDataSource:userDS,
+		    	autoFetchData:false, 
+		    	displayField:'userName',
+		    	valueField:'loginName'}
+		    ,{
+		    	width:'*',		
+		    	name:'lastModifier',	
+		    	title:'更改人员',
+		    	type:'select',
+		    	multiple:false,
+		    	optionDataSource:userDS,
+		    	autoFetchData:false, 
+		    	displayField:'userName',
+		    	valueField:'loginName'}
+	],
+	edit: [
+			{name:'id',		primaryKey:true,hidden:true},
+			/* {
+				width:200,		
+				name:'userId',			
+				title:'用户',
+				type:'text',
+				required:true,
+				changed : function(form,item, value) {
+					var forms = this.form;
+					if(value != null){
+						// 根据用户联动
+						 isc.FwRPCManager.get({
+					       	url:FrameworkUiInterface.webContextPath + "/irs/ratingAuthorization/getOrgAndRole",
+					       	urlParameters:{userId:value},
+					        callback: function(response,rawData,request){
+					        	forms.setValue("orgId",rawData.response.data[0].orgId);
+					        	forms.setValue("roleId",rawData.response.data[0].roleId);
+					        }
+				    	}); 
+					}
+				}
+			},
+			{
+				width:'*',	
+				name:'orgId',					
+				title:'[(#{orgId})]',
+				type: 'select',
+	    		valueMap:orgList, 
+				optionDataSource: allOrgDs, 	
+				required:true,
+				dataSetType: "tree",
+				autoFetchData:false,
+				loadDataOnDemand:true, 
+				displayField:'name',
+				valueField:'code',
+				 pickListProperties:{
+					nodeIcon: '[SKIN]/folder_open.png'
+				},
+				specialValues: {"": ""},
+			    separateSpecialValues: true, 
+			    canEdit:false
+			},*/
+			{
+				width:'*',		
+				name:'enterpriseType',	
+				title:'企业规模类型',
+				type: 'select',
+				valueMap:EnterpriseTypeEnum,
+				allowEmptyValue:true,
+				autoFetchData:false,
+				canEdit:false,
+				required:true
+			},
+			{
+				width:200,		
+				name:'roleId',			
+				title:'[(#{roles})]',
+				required:true,
+				canEdit:false,
+				type: 'select',
+				valueMap:roleList
+				/* type: 'select',     
+				multiple:false,
+				optionDataSource: allRoleDs, 
+				displayField:'name',
+				valueField:'code',
+				required:true,
+				allowEmptyValue:true,
+				autoFetchData:false,
+				canEdit:false */
+			}, 
+		    {
+		    	width:200,		
+		    	name:'ratingLevel',		
+		    	title:'评级结果上限',
+		    	required:true,
+		    	type: 'select',
+		    	valueMap:creditRatingType,
+		    	autoFetchData:false
+		    }
+	]
+};
+
+// 评级授权数据源
+isc.FwRestDataSource.create({
+	ID: 'ratingAuthorizationDS',
+    fields: ratingAuthorizationFields.edit,
+    dataURL: '[(@{/irs/ratingAuthorization/isc})]'
+});
+
+// 评级授权列表
+isc.FwListGrid.create({
+	ID: 'ratingAuthorizationGrid',
+	title: '<b>评级授权列表</b>',
+	dataSource: ratingAuthorizationDS,
+	sortField: 'orgId',
+	canHover:true,
+	fields: ratingAuthorizationFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: ratingAuthorizationFields.query
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+      form: {
+    	ID: "ratingAuthorizationForm",
+      	numCols:4,
+      	titleWidth:150,
+      	colWidths: [190, "*"],
+        dataSource: ratingAuthorizationDS,
+        fields: ratingAuthorizationFields.edit
+      },
+      afterShow: function(action){
+     	
+      },
+      actionMembers:[
+             		'ok','close'
+      ],
+     /*  okButtonClick: function(){
+      	 alert(ratingAuthorizationForm.getValues().orgId);
+      	alert(ratingAuthorizationForm.getValues().roleId);
+      	alert(ratingAuthorizationForm.getValues().modelType);
+      	alert(ratingAuthorizationForm.getValues().userId); 
+      	var ok = this;
+      	isc.FwRPCManager.get({
+           	url:'[(@{/irs/ratingAuthorization/isExistsRatingAuthorization})]',
+           	urlParameters: ratingAuthorizationForm.getValues(),
+            callback: function(response, rawData, request){
+            	if(rawData == "1"){
+            		isc.say("已存在相同配置！");
+            		return;
+            	}
+            	ok.Super('okButtonClick',arguments);;	
+            }
+         });
+      } */
+	},
+	actionMembers:[
+		'query','reset','refresh'/* ,'add' */,'update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+  },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				ratingAuthorizationGrid
+			]
+		})
+	}
+});
+
+</script>
+</html>

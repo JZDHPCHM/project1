@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+//主要担保方式
+var tableTypes = [(${@frSystemDictionaryService.getDictionaryMapJsonString('DEBTRATING_TABLE_TYPE',#locale)})];
+
+//字段定义
+var DebtRatingBHSXSParamFields ={
+	grid: [
+			{width:'*',		name:'id',	primaryKey:true,	hidden:true},
+			{width:'*',		name:'type',		 title:'类别'},
+			{width:'*',		name:'productNo',	 title:'产品编号'},
+			{width:'*',		name:'productName',	 title:'产品名称'},
+			{width:'*',		name:'tableType',	 title:'表内/表外',type: 'select',valueMap:tableTypes},
+			{width:'*',		name:'isTradeFinancing',title:'是否贸易融资',type:'boolean'},
+			{width:'*',		name:'isTurnMouth', title:'是否转敞口',type:'boolean'},
+			{width:'*',		name:'thurdleRate',	 title:'基准回收率',
+				formatCellValue : function(value, record, rowNum, colNum){
+				       return (value*100)+"%";
+     		}	
+			},
+			{width:'*',		name:'ProcessingInstructions',	 title:'过渡模板中处理说明',hidden:true}
+	],
+	edit: [
+		{width:'*',		name:'id',	primaryKey:true,	hidden:true,canEdit:true,required:true},
+		{width:200,		name:'productNo',	 title:'产品编号',required:true},
+		{width:200,		name:'productName',	 title:'产品名称',required:true},
+		{width:200,		name:'type',		 title:'类别',required:true},
+		{width:200,		name:'tableType',	 title:'表内/表外',type: 'select',valueMap:tableTypes,required:true},
+		{width:100,		name:'isTradeFinancing',title:'是否贸易融资',type:'boolean'},
+		{width:100,		name:'isTurnMouth', title:'是否转敞口',type:'boolean'},
+		{width:200,		name:'thurdleRate',	 title:'基准回收率',required:true}
+			
+	]
+};
+
+//保证人回收调整系数数据源
+isc.FwRestDataSource.create({
+	ID: 'debtRatingBHSXSParamDS',
+    fields: DebtRatingBHSXSParamFields.grid,
+    dataURL: '[[@{/irs/config/productthurdlerate/isc}]]'
+});
+
+//保证人回收调整系数列表
+isc.FwListGrid.create({
+	ID: 'debtRatingBHSXSParamListGrid',
+	title: '<b>产品基准回收率</b>',
+	dataSource: debtRatingBHSXSParamDS,
+	sortField:"bzTypeCode",
+	fields: DebtRatingBHSXSParamFields.grid,
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: debtRatingBHSXSParamDS,
+            fields: DebtRatingBHSXSParamFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh','update','remove','add'
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				debtRatingBHSXSParamListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

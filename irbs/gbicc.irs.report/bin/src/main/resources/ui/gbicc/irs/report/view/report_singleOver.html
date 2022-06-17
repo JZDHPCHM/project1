@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+</head>
+<body>
+</body>
+<script>
+    var newData=[];
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQueryQuarter,
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{
+				name:'area',					
+				title:'地区',
+				getGridSummary:function (records, summaryField) {
+					return "合计";
+	            }
+			},
+			{name:'fdKindName',			title:'分支机构',summaryFunction:  function() {return "--";}},//客户数目
+			{name:'fdCustomNum',			title:'客户数目',summaryFunction:  function() {return sumData['fdCustomNum'];}},//客户数目
+		    {name:'fdGrantNum',			title:'授信额度',summaryFunction: function() {return sumData['fdGrantNum'];}},//占比
+			{name:'fdSingleLimitNum',			title:'单一客户限额合计',summaryFunction: function() {return sumData['fdSingleLimitNum'];}},//客户数目
+		    {name:'fdAvgLimitUse',			title:'平均限额占用率',summaryFunction: function() {return formatPer(sumData['fdAvgLimitUse']);}},//占比
+		    {name:'fdOverLimitPer',			title:'超限额客户比例',summaryFunction: function() {return formatPer(sumData['fdOverLimitPer']);}}//占比
+	]
+};
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields: BorrowKeyBussFields.grid,
+    fetchDataURL: '[[@{/irs/report_singleOver/isc/fetchData}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>单一客户限额设定管理报告--分支机构单一客户限额使用情况</b>',
+	dataSource: report_borrowKeyBussDS,
+	sortField: 'area',
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	canPageable: false,
+	fields: BorrowKeyBussFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	exportFilename:'整体借款人评级分布',
+	//exportActionMembers:['export2Excel','exportAll2Excel'],
+	actionMembers:[
+		'query','reset',
+		{
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+					url:"[(@{/irs/report_singleOver/isc/fetchData/Results.csv})]",
+                    "year":year,"quarter":quarter,
+					fileName:  "单一客户限额设定管理报告--分支机构单一客户限额使用情况",
+                    sortBy: "area"
+				});
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+	afterQuery:function(dsResponse,data,dsRequest){
+		borrowKeyBussFieldsListGrid.setData(newData);
+	},
+    query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_singleOver/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year,"quarter":quarter},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                sumData = [];
+                newData=[];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.area==='全行'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                borrowKeyBussFieldsListGrid.setData(newData);
+            }
+        });
+    },
+	formatCellValue:function(value, record, rowNum, colNum){
+		var formatVal = value;
+		if( colNum==6 || colNum==5){
+			formatVal = formatPer(value);
+		}
+		return formatVal;
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+
+</script>
+</html>

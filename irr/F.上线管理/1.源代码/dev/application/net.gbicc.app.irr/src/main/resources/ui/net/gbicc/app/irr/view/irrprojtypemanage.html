@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+<body style='background-color: white'>
+	<div class="wrapper" style="margin:10px 0 0 0">
+		<div class="wrapper wrapper-content animated fadeInRight">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title">
+							<div class="row" style="margin:0 0 0 10px">
+		                    	<button class="btn btn-primary" id="addProjBtn">新增</button>
+								<div class="modal inmodal fade" id="addProjType" tabindex="-1" role="dialog"
+									aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal">
+													<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+												</button>
+												<h4 class="modal-title">新增评估项目</h4>
+											</div>
+											<div class="modal-body">
+					                            <form class="form-horizontal" action="/irr/projType/addProjType.action" method="POST" id="projForm">
+					                            	<input type="hidden" name="id" id="projId"/>
+					                            	<input type="hidden" name="pId" id="pId"/>
+					                            	<input type="hidden" name="pCode" id="pCode"/>
+					                                <div class="form-group">
+					                                	<label class="col-lg-4 control-label">类型编码</label>
+					                                    <div class="col-lg-8">
+					                                    	<input type="text" id="typeCode" name="typeCode" placeholder="请输入评估项目编码" class="form-control" required>
+					                                    </div>
+					                                </div>
+					                                <div class="form-group">
+					                                	<label class="col-lg-4 control-label">类型名称</label>
+					                                    <div class="col-lg-8">
+					                                    	<input type="text" id="typeName" name="typeName" placeholder="请输入评估项目名称" class="form-control" required>
+					                                    </div>
+					                                </div>
+					                                <div class="form-group">
+					                                	<label class="col-lg-4 control-label">评分标准</label>
+					                                    <div class="col-lg-8">
+					                                    	<input type="number" id="stanScore" name="stanScore" placeholder="请输入评分标准" class="form-control">
+					                                    </div>
+					                                </div>
+					                                <div class="form-group">
+					                                	<label class="col-lg-4 control-label">A类评分标准</label>
+					                                    <div class="col-lg-8">
+					                                    	<input type="number" id="aStanScore" name="aStanScore" placeholder="请输入A类评分标准" class="form-control">
+					                                    </div>
+					                                </div>
+					                                <div class="form-group">
+					                                	<label class="col-lg-4 control-label">是否启用</label>
+					                                    <div class="col-lg-8">
+					                                    	<select class="form-control" name="isUse" id="isUse">
+							                                     <option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('isUse',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+					                                		</select>
+					                                    </div>
+					                                </div>
+					                                <div class="form-group">
+					                                	<label class="col-lg-4 control-label">银保监会权重</label>
+					                                    <div class="col-lg-8">
+					                                    	<input type="text" id="circRate" name="circRate" placeholder="请输入银保监会权重" class="form-control">
+					                                    </div>
+					                                </div>
+					                                <div class="form-group">
+					                                	<label class="col-lg-4 control-label">银保监局权重</label>
+					                                    <div class="col-lg-8">
+					                                    	<input type="text" id="bureauRate" name="bureauRate" placeholder="请输入银保监局权重" class="form-control">
+					                                    </div>
+					                                </div>
+					                                <div class="form-group">
+					                                	<label class="col-lg-4 control-label">占本类风险的比重</label>
+					                                    <div class="col-lg-8">
+					                                    	<input type="text" id="theRiskRate" name="theRiskRate" placeholder="请输入占本类风险的比重" class="form-control">
+					                                    </div>
+					                                </div>
+					                                <div class="form-group">
+					                                	<label class="col-lg-4 control-label">占难以资本化风险的比重</label>
+					                                    <div class="col-lg-8">
+					                                    	<input type="text" id="pdqRiskRate" name="pdqRiskRate" placeholder="请输入占难以资本化风险的比重" class="form-control">
+					                                    </div>
+					                                </div>
+					                                <div class="form-group">
+					                                	<label class="col-lg-4 control-label">占总风险的比重</label>
+					                                    <div class="col-lg-8">
+					                                    	<input type="text" id="totalRiskRate" name="totalRiskRate" placeholder="请输入占总风险的比重" class="form-control">
+					                                    </div>
+					                                </div>
+					                                <div class="form-group">
+					                                	<label class="col-lg-4 control-label">加权后评分标准</label>
+					                                    <div class="col-lg-8">
+					                                    	<input type="text" id="weigScorStand" name="weigScorStand" placeholder="请输入加权后评分标准" class="form-control">
+					                                    </div>
+					                                </div>
+					                                <div class="modal-footer">
+														<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+														<button type="submit" class="btn btn-primary" id='submitBtn'>保存</button>
+													</div>
+					                            </form>
+											</div>
+										</div>
+									</div>
+								</div>		      
+		                    	
+		                        <button class="btn btn-primary" id="projEditBtn">修改</button>
+		                        <button class="btn btn-primary" id="projCloseBtn">启用/禁用</button>
+		                	</div>
+						</div>
+						<div class="ibox-content">
+							<div class="row">
+				                <div class="col-lg-12">
+						            <table id="projTypeGrid"></table>
+				                </div>								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>		
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		/*刷新表格树*/
+		function refreshGrid(){
+			$("#projTypeGrid").jqGrid('clearGridData');
+			$("#projTypeGrid").trigger("reloadGrid");
+		}
+		/*添加*/
+		$('#addProjBtn').click(function(){
+			var rowId = $("#projTypeGrid").jqGrid("getGridParam","selrow");
+			if(isEmpty(rowId)){
+				$('#pCode').val('#');
+				$('#addProjType').modal('show');
+			}else{
+				$.ajax({
+					type : 'POST',
+					url : '[(@{/irr/projType/findByTypeCode.action})]',
+					dataType : 'json',
+					data : 'id='+rowId,
+					success : function(data, textStatus){
+						if(textStatus == 'success'){
+							if(isNotEmpty(data)){
+								$('#pId').val(data.data.id);
+						        $('#pCode').val(data.data.typeCode);
+							}
+							$('#addProjType').modal('show');
+						}
+					},
+					error : function(data, textStatus){
+						swal({
+			                title: '提示',
+			                text: '新增失败！',
+			            });
+					}
+				});
+			}
+		});
+		
+		/*修改*/
+		$('#projEditBtn').click(function(){
+			var rowId = $("#projTypeGrid").jqGrid("getGridParam","selrow");
+			if(isEmpty(rowId)){
+				swal('提示','请先选择一条记录','warning');
+				return false;
+			}
+			$.ajax({
+				type : 'POST',
+				url : '[(@{/irr/projType/findByTypeCode.action})]',
+				dataType : 'json',
+				data : 'id='+rowId,
+				success : function(data, textStatus){
+					if(textStatus == 'success'){
+				        $('#projForm').loadJson(data.data);
+						$('#addProjType').modal('show');
+					}
+				},
+				error : function(data, textStatus){
+					swal({
+		                title: '提示',
+		                text: '修改失败！',
+		            });
+				}
+			});
+		});
+		
+		/*启用/禁用*/
+		$('#projCloseBtn').click(function(){
+			var rowId = $("#projTypeGrid").jqGrid("getGridParam","selrow");
+			if(isEmpty(rowId)){
+				swal({
+	                title: '提示',
+	                text: '请先选择一条记录！',
+	            });
+				return;
+			}
+			$.ajax({
+				type : 'POST',
+				url : '[(@{/irr/projType/changeIsUse.action})]',
+				dataType : 'json',
+				data : 'id=' + rowId,
+				success : function(data, textStatus){
+					if(data.flag == 'true'){
+						refreshGrid();
+						swal({
+			                title: '提示',
+			                text: '更改成功！',
+			                type: 'success'
+			            });
+					}else{
+						swal({
+			                title: '提示',
+			                text: '更改失败！',
+			            });
+					}
+				},
+				error : function(data, textStatus){
+					swal({
+		                title: '提示',
+		                text: '更改失败！',
+		            });
+				}
+			});
+		});
+		
+		/*评估项目表格树*/
+		$('#projTypeGrid').jqGrid({
+			treeGrid: true,//启用树型Grid功能 
+			shrinkToFit: true, //自适应宽度
+			treeGridModel: "adjacency",//表示返回数据的读取类型，分为两种：nested和adjacency,默认值：nested 
+			ExpandColumn: "typeCode",//树型结构在哪列显示
+			url: "/irr/projType/findProjTypeTree.action",//要访问的后台地址
+			height: '100%',
+			datatype: "json",
+			autowidth: true,
+			rownumbers: true,
+			colNames: ['主键','编码','名称','父编码','父ID','评分标准','A类评分标准','是否启用',
+				'银保监会权重','银保监局权重','占本类风险的比重','占难以资本化风险的比重','占总风险的比重','加权后评分标准'],
+			colModel: [
+				{name:'obj.id',index:'obj.id',hidden:true},
+				{name:'obj.typeCode',index:'obj.typeCode', sortable: false, key: true},
+				{name:'obj.typeName',index:'obj.typeName', sortable: false},
+				{name:'obj.pCode',index:'obj.pCode',hidden:true,sortable:false},
+				{name:'obj.pId',index:'obj.pId',hidden:true,sortable:false},
+				{name:'obj.stanScore',index:'obj.stanScore',hidden:false,sortable:false},
+				{name:'obj.aStanScore',index:'obj.aStanScore',hidden:false,sortable:false},
+				{name:'obj.isUse',index:'obj.isUse',hidden:false,sortable:false,
+					formatter : function(cellValue,options,rowObject){
+		        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('isUse',#locale)})][cellValue];
+		        	}
+				},
+				{name:'obj.circRate',index:'obj.circRate',hidden:false,sortable:false},
+				{name:'obj.bureauRate',index:'obj.bureauRate',hidden:false,sortable:false},
+				{name:'obj.theRiskRate',index:'obj.theRiskRate',hidden:false,sortable:false},
+				{name:'obj.pdqRiskRate',index:'obj.pdqRiskRate',hidden:false,sortable:false},
+				{name:'obj.totalRiskRate',index:'obj.totalRiskRate',hidden:false,sortable:false},
+				{name:'obj.weigScorStand',index:'obj.weigScorStand',hidden:false,sortable:false}
+			],
+			pager: "false",
+	        jsonReader: {  
+	             repeatitems : false  
+	        },  
+	        treeReader : {  
+	             level_field : "level",  
+	             parent_id_field : "parent",  
+	             leaf_field : "isLeaf",  
+	             expanded_field : "expanded",
+	             loaded_field : 'loaded'
+	        }
+		});
+		
+		
+	});
+</script>
+</html>

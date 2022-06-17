@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html
+	th:replace="template/bootstrap/bootstrap.html::html(removeNavbar=true)">
+<head>
+	<title
+		th:text="#{org.wsp.framework.installer.i18n.title(#{application.title})}"></title>
+		
+	<link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.css}" rel="stylesheet">
+    <link th:href="@{/portlet/css/style.css}" rel="stylesheet">
+	<link th:href="@{/portlet/css/plugins/chosen/bootstrap-chosen.css}" rel="stylesheet">
+	<!-- 当前页面样式 -->
+	<link th:href="@{/portlet/css/portlet.css?t=8}" rel="stylesheet">
+	<script type="text/javascript" th:src="@{/webjars/echarts/js/echarts.min.js}"></script>
+	<script th:src="@{/portlet/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/portlet/js/bootstrap.min.js}"></script>
+    <script th:src="@{/portlet/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/portlet/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+    <script th:src="@{/portlet/js/inspinia.js}"></script>
+    <script th:src="@{/portlet/js/plugins/pace/pace.min.js}"></script>
+    <script th:src="@{/portlet/js/plugins/chosen/chosen.jquery.js}"></script>
+	<script th:src="@{/portlet/js/echarts.js}"></script>
+
+</head>
+<body >
+
+<!-- 弹框 -->
+<div class="modal fade" id="msgModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel3">
+                        	
+                    </h4>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+      </div>
+ 
+
+<!-- 消息详情 -->
+<div class="modal fade" id="msgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        信息详情
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="lastname" class="col-sm-3 control-label">发送人</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="fd_sender" value="" id="fd_sender" >
+                            </div>
+                        </div>
+                        
+                      <div class="form-group">
+                            <label for="lastname" class="col-sm-3 control-label">接收人</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="fd_receiver" value="" id="fd_receiver" >
+                            </div>
+                        </div>
+                       <div class="form-group">
+                            <label for="lastname" class="col-sm-3 control-label">标题</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="fd_title" value="" id="fd_title" >
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="remark" class="col-sm-3 control-label">内容</label>
+                            <div class="col-sm-9 content" name="fd_content" id="fd_content"  ></div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+      </div>
+ 
+ <!-- 公告详情 -->
+<div class="modal fade" id="boardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel2">
+                        公告详情
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="lastname" class="col-sm-3 control-label">标题</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="board_title" value="" id="board_title" >
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastname" class="col-sm-3 control-label">最后修改人</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="fd_last_modifier" value="" id="fd_last_modifier" >
+                            </div>
+                        </div>
+                        
+                       <div class="form-group">
+                            <label for="remark" class="col-sm-3 control-label">内容</label>
+                            <div class="col-sm-9 content" name="board_content" id="board_content"></div>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+      </div>
+
+<div id="wrapper">
+
+	<div id="page-wrapper" class="gray-bg">
+		<div class="row">
+
+			<div class="col-lg-1 index-nav " >
+			<div class="ibox-title">
+					<h5 class="ibox-title-h5">常用功能</h5>
+			</div>
+				<div class="ibox-content">
+					<div class=" index-left">
+
+								<div class="row" style="padding-top: 5px;">
+									<div class="function bg-red" onclick="goPJ()"><i class="fa fa-rating fa-4x" style="display: block;color: #005491;"></i>客户评级发起</div>
+								</div>
+								<div class="row" style="padding: 0px;">
+									<div class="function bg-green" onclick="goPJSP()"><i class="fa fa-approval fa-4x" style="display: block;color: #e2dd34;"></i>客户评级审批</div>
+								</div>
+								<div class="row" style="padding: 0px;">
+									<div class="function bg-purple" onclick="goPJCX()"><i class="fa rating-search fa-4x" style="display: block;color: #348fe2;"></i>客户评级查询</div>
+								</div>
+								<div class="row" style="padding: 0px;">
+									<div class="function bg-blue" onclick="goWY()"><i class="fa rating-coffee fa-4x" style="display: block;color: #2bc0d1;"></i>违约认定发起</div>
+								</div>
+								<div class="row" style="padding: 0px;">
+									<div class="function bg-amber" onclick="goCS()"><i class="fa fa-handshake-o fa-4x" style="display: block;color: #07846b;"></i>违约重生发起</div>
+								</div>
+							</div>
+				</div>
+			</div>
+
+
+			<table class="index-table">
+			<tr class="index-row">
+				<td style="width: 67%;">						
+				<div class="rating-content">
+					<div class="ibox-title bank-rating">
+						<h5 class="ibox-title-h5" id="bank-title">公司客户评级分布</h5>
+						<span id="updateDate1"></span>
+						<div style="width:150px;" id="bank-select" th:if="${zhFlag == false}">
+							<select data-placeholder="请选择统计范围..." class="chosen-select" id="bank-type">
+								<option value="1"  >本行</option>
+								<option value="2">全行</option>
+							</select>
+						</div>
+					</div>
+					<div class="ibox-content comp-charts">
+						<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+						<div id="ratingDistribution" ></div>
+					</div>
+				</div>
+				</td>
+				<td>
+				<div class="index-tasks task-1">
+						<div class="ibox-title">
+							<h5 class="ibox-title-h5">任务栏</h5>
+						</div>
+						<div class="ibox-content task-content">
+							<div class="tabs-container">
+								<ul class="nav nav-tabs task-ul">
+									<li class="active"><a data-toggle="tab" href="#tab-1">待办任务<span class="label label-warning" id="" th:if="${taskList != null}" th:text="${taskList.get(0).total}"> </span></a></li>
+									<li class=""><a data-toggle="tab" href="#tab-2">已办任务<!-- <span class="label label-warning" id="" th:if="${doneTaskList != null}" th:text="${doneTaskList.get(0).total}"> </span> --></a></li>
+									<li class=""><a data-toggle="tab" href="#tab-3">已完成任务<!-- <span class="label label-warning tab-3" id="" th:if="${completeTaskList != null}" th:text="${completeTaskList.get(0).total}"> </span> --></a></li>
+								</ul>
+								<div class="tab-content">
+									<div id="tab-1" class="tab-pane active">
+										<div class="panel-body">
+
+											<table class="table table-hover margin bottom" style="margin-bottom: 0;" th:if="${taskList != null}">
+												<thead>
+												<tr>
+													<th class="notice-index">序号</th>
+													<th class="task-url">客户名称</th>
+													<th class="task-type">任务类型</th>
+													<th class="task-time">任务时间</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr th:each="task,iterStat : ${taskList}" >
+													<td th:text="${iterStat.count}"></td>
+													<td class="task-url" th:text="${task.FD_CUSTNAME}" th:title="${task.FD_CUSTNAME}" th:onclick="'javascript:goUrl(\''+${task.URL}+'\')'" ></td>
+													<td th:text="${task.TYPE}" th:title="${task.TYPE}" class="task-type"></td>
+													<td th:text="${{task.TASKDATE}}" th:title="${{task.TASKDATE}}" class="task-time"></td>
+												</tr>
+												</tbody>
+											</table>
+											<div th:if="${taskList == null}" style="height:210px;"><span class="fa fa-coffee">&nbsp;&nbsp;暂无待办任务...</span></div>
+											<div style="text-align: right;"><span class="task-url" onclick="parent.window.location.href=''+FrameworkUiInterface.webContextPath+'/commom/index/task?skin=Tahoe&type=0'">更多</span></div>
+										</div>
+									</div>
+									<div id="tab-2" class="tab-pane">
+										<div class="panel-body">
+											<table class="table table-hover margin bottom" style="margin-bottom: 0;" th:if="${doneTaskList != null}">
+												<thead>
+												<tr>
+													<th class="notice-index">序号</th>
+													<th class="task-url">客户名称</th>
+													<th class="task-type">任务类型</th>
+													<th class="task-time">任务时间</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr th:each="task,iterStat : ${doneTaskList}" >
+													<td th:text="${iterStat.count}"></td>
+													<td class="task-url2" th:text="${task.FD_CUSTNAME}" th:title="${task.FD_CUSTNAME}" ></td>
+													<td th:text="${task.TYPE}" th:title="${task.TYPE}" class="task-type"></td>
+													<td th:text="${{task.TASKDATE}}" th:title="${{task.TASKDATE}}" class="task-time"></td>
+												</tr>
+												</tbody>
+											</table>
+											<div th:if="${doneTaskList == null}" style="height:210px;"><span class="fa fa-coffee">&nbsp;&nbsp;暂无已办任务...</span></div>
+											<div style="text-align: right;"><span class="task-url" onclick="parent.window.location.href=''+FrameworkUiInterface.webContextPath+'/commom/index/task?skin=Tahoe&type=1'">更多</span></div>
+										</div>
+									</div>
+									<div id="tab-3" class="tab-pane">
+										<div class="panel-body">
+											<table class="table table-hover margin bottom" style="margin-bottom: 0;" th:if="${completeTaskList != null}">
+												<thead>
+												<tr>
+													<th  class="notice-index">序号</th>
+													<th class="task-url">客户名称</th>
+													<th class="task-type">任务类型</th>
+													<th class="task-time">任务时间</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr th:each="task,iterStat : ${completeTaskList}" >
+													<td th:text="${iterStat.count}"></td>
+													<td class="task-url2" th:text="${task.FD_CUSTNAME}" th:title="${task.FD_CUSTNAME}" ></td>
+													<td th:text="${task.TYPE}" class="task-type"></td>
+													<td th:text="${{task.TASKDATE}}" th:title="${{task.TASKDATE}}" class="task-time"></td>
+												</tr>
+												</tbody>
+											</table>
+											<div th:if="${completeTaskList == null}" style="height:210px;"><span class="fa fa-coffee">&nbsp;&nbsp;暂无已完成任务...</span></div>
+											<div style="text-align: right;"><span class="task-url" onclick="parent.window.location.href=''+FrameworkUiInterface.webContextPath+'/commom/index/task?skin=Tahoe&type=2'">更多</span></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr class="index-row">
+			<td>
+				<div class="ibox-title top5-title">
+					<h5 class="ibox-title-h5">客户风险分析（TOP5）</h5>
+					<span class="ibox-tools">信息更新时间：</span>
+					<span id="QwdDate"></span>
+				</div>
+			<div class="index-fxfx ">
+				<div class=" index-fx-charts ibox-content" >
+								<div class="top5-content-top index-value">
+									<div class="cust-txt">
+										<select data-placeholder="请选择..." class="chosen-select"  tabindex="2" id="orderCust">
+											<option th:each="cust : ${custOreder}"
+													th:value="${cust.FD_CUSTNO}" th:text="${cust.FD_CUSTNAME}"></option>
+										</select>
+									</div>
+									<div class="cust-txt">授信额度(千万元)：<span id="amt"></span></div>
+									<div class="cust-txt">当前评级：<span id="dqpj"></span></div>
+									<div class="cust-txt">违约概率：<span id="wygl"></span></div>
+									<div class="cust-txt">RAROC：<span id="raroc"></span></div>
+								</div>
+								<div class="row" >
+									<div class="col-lg-12">
+										<div class="col-lg-4 dlld">
+											<div>
+												<div class="ibox-title dlld-title" >
+													<h5><i class="fa fa-pie-chart" style="color: #3399ff;"></i>&nbsp;&nbsp;&nbsp;定量分析</h5>
+												</div>
+												<div class="ibox-content" >
+													<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+													<div id="DLIndex" ></div>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-4 dxld">
+											<div>
+												<div class="ibox-title dxld-title " >
+													<h5><i class="fa fa-pie-chart" style="color: #3399ff;"></i>&nbsp;&nbsp;&nbsp;定性分析</h5>
+												</div>
+												<div class="ibox-content">
+													<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+													<div id="DXIndex" ></div>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-4 gzd">
+											<div>
+												<div class="ibox-title gzd-title" >
+													<h5><i class="fa fa-comment" style="color: #FF6600;"></i>&nbsp;&nbsp;&nbsp;风险关注点</h5>
+												</div>
+												<div id="fxContent" class="ibox-content" style="padding-left: 0; padding-right: 0; padding-top: 2px;">
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+			</div>
+			
+			</td>
+			<td>
+				<div class="index-tasks">
+						<div class="ibox-title">
+							<h5 class="ibox-title-h5">消息公告栏</h5>
+						</div>
+						<div class="ibox-content index-notices">
+							<div class="tabs-container">
+								<ul class="nav nav-tabs task-ul">
+									<li class="active"><a data-toggle="tab" href="#tab-4">我的消息<span class="label label-warning" id="myMsgCnt" th:if="${massageInfoListCnt != null and massageInfoListCnt!=0}" th:text="${massageInfoListCnt}"> </span></a></li>
+									<li class=""><a data-toggle="tab" href="#tab-5">我的公告<span class="label label-warning" id="annoCnt" th:if="${announceInfoListCnt  != null and announceInfoListCnt!=0}" th:text="${announceInfoListCnt}"></a></li>
+								</ul>
+								<div class="tab-content">
+									<div id="tab-4" class="tab-pane active msg_reresh" th:fragment="msg_reresh">
+										<div class="panel-body">
+
+											<table class="table table-hover margin bottom" style="margin-bottom: 0;" th:if="${massageInfoList != null}">
+												<thead>
+												<tr>
+													<th>序号</th>
+													<th>标题</th>
+													<th>推送时间</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr th:each="massageInfo,iterStat : ${massageInfoList}" >
+													<td th:text="${iterStat.count}"></td>
+													<td>
+														<!-- 利用themleaf格式化时间 -->
+														<a th:text="${massageInfo.FD_TITLE}"  href="javascript:;"
+														   th:onclick="'javascript:showMsg({\'FD_ID\':\''+${massageInfo.FD_ID}+'\',\'FD_TITLE\':\''+${massageInfo.FD_TITLE}+
+														   '\',\'FD_RECEIVER\':\''+${massageInfo.FD_RECEIVER}+'\',\'FD_CONTENT\':\''+${massageInfo.FD_CONTENT}+'\',\'FD_SENDER\':\''+${massageInfo.FD_SENDER}+
+														   '\',\'FD_CREATOR\':\''+${massageInfo.FD_CREATOR}+'\',\'FD_CREATE_DATE\':\''+${massageInfo.FD_CREATE_DATE}+'\'})'" ></a>
+													</td>
+													<td th:text="${{massageInfo.FD_CREATE_DATE}}"></td>
+												</tr>
+												</tbody>
+											</table>
+											<div th:if="${massageInfoList == null}" style="height:210px;"><span class="fa fa-coffee">&nbsp;&nbsp;暂无消息...</span></div>
+											<div style="text-align: right;">
+												<span class="task-url" onclick="parent.window.location.href=''+FrameworkUiInterface.webContextPath+'/system/notification/my-notification.html'">更多</span></div>
+										</div>
+									</div>
+									<div id="tab-5" class="tab-pane announce_reresh" th:fragment="announce_reresh">
+										<div class="panel-body">
+											<table class="table table-hover margin bottom" style="margin-bottom: 0;" th:if="${announceInfoList != null}">
+																				<thead>
+												<tr>
+													<th>序号</th>
+													<th>标题</th>
+													<th>推送时间</th>
+												</tr>
+												</thead>
+												<tbody>
+												<tr th:each="msg,iterStat : ${announceInfoList}" >
+													<td th:text="${iterStat.count}"></td>
+													<td>
+														<a th:text="${msg.FD_TITLE}"  href="javascript:;"
+														   th:onclick="'javascript:showBoard({\'FD_TITLE\':\''+${msg.FD_TITLE}+'\',\'FD_ID\':\''+${msg.FD_ID}+'\',\'FD_CONTENT\':\''+${msg.FD_CONTENT}+'\',\'FD_LAST_MODIFIER\':\''+${msg.FD_LAST_MODIFIER}+'\'},\''+${{msg.FD_CREATE_DATE}}+'\')'" ></a>
+													</td>
+													<td th:text="${{msg.FD_CREATE_DATE}}"></td>
+												</tr>
+												</tbody>
+											</table>
+											<div th:if="${announceInfoList == null}" style="height:210px;"><span class="fa fa-coffee">&nbsp;&nbsp;暂无公告...</span></div>
+											<div style="text-align: right;"><span class="task-url" onclick="parent.window.location.href=''+FrameworkUiInterface.webContextPath+'/system/announcement/announcement.html'">更多</span></div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+			</td>
+			</tr>
+			</table>
+
+		</div>
+	</div>
+</div>
+
+	
+	<script th:inline="javascript">
+	    //用户角色列表
+	  //  var roles = [[${roles}]]
+	    var zhFlag =[[${zhFlag}]];
+	    var roleCode = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+	</script>
+</body>
+<script>
+
+
+$(document).ready(function(){
+	var wHeight = $("#wrapper").height();
+	var rowH = (wHeight - 20) / 2;
+
+	$(".index-nav .ibox-content").css({height: rowH*2 - 20});
+	
+	$(".index-row").css({height: rowH});
+	$(".rating-content").css({height: rowH });
+	$(".comp-charts").css({height: rowH-30});
+	$(".index-tasks").css({height: rowH});
+	$(".index-tasks .tab-content").css({height: rowH-77});
+	
+	$(".index-fxfx").css({height: 'auto' });
+	$(".index-fx-charts").css({height: rowH- 18});
+	$(".index-notices").css({height: rowH -20 });
+	$(".tab-content.index-notice").css({height: rowH -114 });
+	
+	$("#ratingDistribution").css({height: rowH - 30});
+	$("#DXIndex").css({height: rowH- 80});
+	$("#DLIndex").css({height: rowH- 80});
+	//加载消息公告
+	$(".announce_reresh").load("[(@{/commom/index/queryAnnouncement})]");
+	$(".msg_reresh").load("[(@{/commom/index/queryMsg})]");
+});
+
+$('.chosen-select').chosen({width: "100%"});
+function goUrl(url){
+	parent.window.location.href=FrameworkUiInterface.webContextPath+url;
+}
+
+function showMsg(obj){
+
+	if(obj.FD_RECEIVE_DATE==null){
+    $.ajax({
+        type:"POST",
+        url: "[(@{/system/notification/isc/update?isc_dataFormat=json})]",
+        contentType: "application/json",   
+        data: JSON.stringify({
+    	    "dataSource":"notificationDS", 
+    	    "operationType":"update", 
+    	    "data": {
+    	    	"id": obj.FD_ID,
+    	    	"sender" : obj.FD_SENDER,
+    	    	"readed": true,
+    	    	"title":obj.FD_TITLE, 
+    	    	"receiver":obj.FD_RECEIVER, 
+    	    	"content":obj.FD_CONTENT,
+    	    	"creator":obj.FD_CREATOR, 
+    	        "createDate":obj.FD_CREATE_DATE
+    	    }
+    	}),  
+        success: function (jsonResult) {  
+        	$(".msg_reresh").load("[(@{/commom/index/queryMsg})]");
+			//更新条数
+       		$.post('[(@{/commom/index/queryMsgCnt})]', {
+       		}, function(data) {
+       			if(data==0)
+       				$("#myMsgCnt").html("");
+       			else
+       			$("#myMsgCnt").html(data);
+       		});
+
+        }
+    
+    });
+	}
+	
+	$("#fd_sender").val(obj.FD_SENDER);
+	$("#fd_receiver").val(obj.FD_RECEIVER);
+	$("#fd_title").val(obj.FD_TITLE);
+	$("#fd_content").html(obj.FD_CONTENT);
+    $('#msgModal').modal();
+}
+
+function showBoard(obj,d1){
+	//var obj = boardLst[index];
+	$.post('[(@{/commom/index/saveAnno})]', {
+		aId : obj.FD_ID
+	}, function(data) {
+		//异步刷新界面
+		$(".announce_reresh").load("[(@{/commom/index/queryAnnouncement})]");
+
+		//更新条数
+   		$.post('[(@{/commom/index/queryAnnoCnt})]', {
+   		}, function(data) {
+   			if(data==0)
+   				$("#annoCnt").html("");
+   			else
+   			$("#annoCnt").html(data);
+   		});
+	});
+	
+	$("#board_title").val(obj.FD_TITLE);
+	$("#board_content").html(obj.FD_CONTENT);
+	$("#fd_last_modifier").val(obj.FD_LAST_MODIFIER);
+
+	$('#boardModal').modal();
+}
+
+
+function changeLible(value) {
+	$.post('[(@{/commom/index/findCustNo})]', {
+		custNo : value
+	}, function(data) {
+		if(data!=''){
+			$("#amt").html(formate(data.FD_CRDT_AMT/1000/10000));
+			$("#dqpj").html(data.FD_FIN_LEVEL);
+			$("#wygl").html(formate(data.FD_PD*100)+'%');
+			$("#raroc").html("8%");
+			$("#QwdDate").html(data.qudUpdateDate);
+		}
+		else{
+			$("#amt").html('');
+			$("#dqpj").html('');
+			$("#wygl").html('');
+			$("#raroc").html("");
+			$("#QwdDate").html('');
+		}
+	});
+}
+
+$("#orderCust").change(function() {
+	var value = $("#orderCust").val();
+	changeLible(value);
+	custScore(value);
+})
+
+function splitTitle(data){
+	if(data.length==0)
+		return [""];
+	var arr=[];
+	var mx=0;
+	for(var i=0;i<data.indexNames.length;i++){
+		var obj = {};
+		var tmp;
+		var t = data.indexNames[i];
+		var name ='';
+		while(t.name.length>4){
+			name+= t.name.substring(0,4)+"\n";
+			t.name = t.name.substring(4);
+		}
+		name +=t.name;
+		var a = typeof data.custScore[i]=='undefined'?0:Number(data.custScore[i]);
+		var b = typeof data.insScore[i]=='undefined'?0:Number(data.insScore[i]);
+		tmp = a>b?a:b;
+		mx = mx > tmp?mx:tmp;
+		obj={"name":name,"max":tmp};
+		arr.push(obj);
+	}
+	for(var i=0;i<arr.length;i++){
+		arr[i].max = mx+1;
+	}
+	return arr;
+}
+
+function custScore(value) {
+		$.post('[(@{/commom/index/custScore})]', {
+			custNo : value
+		}, function(data) {
+			var html = "";
+			for(var i=0; i<data.risk.length;i++){
+				html+='<div class="ibox-txt">'+data.risk[i]+'</div>';
+			}
+			$("#fxContent").html(html);
+
+			var DLIndexOption ;
+			if(data.dl.indexNames.length!=0)
+				DLIndexOption= 
+			{
+					tooltip: {},
+					legend: {
+						data: ['目标企业', '行业中位值'],
+						bottom: 0
+					},
+					radar: {
+						name: {
+							textStyle: {
+								color: '#333',
+								fontSize:10
+						   }
+						},
+						indicator: splitTitle(data.dl),
+						radius: 42
+					},
+					series: [{
+						name: '',
+						type: 'radar',
+						data : [ {
+							value : data.dl.custScore,
+							name : '目标企业'
+						}, {
+							value : data.dl.insScore,
+							name : '行业中位值'
+						} ]
+					}]
+				};
+			else
+				DLIndexOption = {};
+
+			var DLIndex = echarts.init(document.getElementById('DLIndex'),
+					'light');
+			DLIndex.setOption(DLIndexOption,true);
+			
+			var DXIndexOption ;
+			if(data.dx.indexNames.length !=0)
+			 DXIndexOption = {
+				tooltip: {},
+				legend: {
+					data: ['目标企业', '行业均值'],
+					bottom: 0
+				},
+				radar: {
+					name: {
+						textStyle: {
+							color: '#333',
+							fontSize:10
+					   }
+					},
+					indicator: splitTitle(data.dx),
+					radius: 42
+				},
+				series: [{
+					name: '',
+					type: 'radar',
+					data : [ {
+						value : data.dx.custScore,
+						name : '目标企业'
+					}, {
+						value : data.dx.insScore,
+						name : '行业均值'
+					} ]
+				}]
+			};
+			else
+				DXIndexOption = {};
+			var DXIndex = echarts.init(document.getElementById('DXIndex'),
+					'light');
+			DXIndex.setOption(DXIndexOption,true);
+
+		});
+	}
+
+
+
+function initPage(){
+	var value = $("#orderCust").val();
+	changeLible(value);
+	custScore(value);
+	
+	$.post('[(@{/commom/index/parameter})]', {
+	}, function(data) {
+		if(data=="1"){
+			ratingGroup(null);
+		}else{
+			ratingFxfb();
+		}
+	});
+	
+	$("#bank-type").bind("change", function(){
+		ratingGroup( $(this).val());
+	});
+}
+
+function ratingGroup(type) {
+	type= (type==null?1:type);
+	$.post('[(@{/commom/index/ratingGroup})]', {"type":type}, function(data) {
+
+		var title = zhFlag?"全行":data[0];
+		$("#bank-title").text('公司客户评级分布');
+		// $("#updateDate1").text(data[3]);
+		$("#bank-select").show();
+		var dataAxis = data[1];
+		var data = data[2];
+		var yMax = 20;
+		var ratingDistributionOption = {
+		  title: {
+			  	text: title,
+			    left:300
+			 }, 
+			toolbox : {
+			},
+			tooltip: {},
+			xAxis : {
+				name : '等级',
+				data : dataAxis,
+				z : 10,
+				axisLabel: {
+					interval:0,  
+					rotate:55,
+					textStyle: {  
+			            fontSize:10
+			        }
+				}
+			},
+			yAxis : {
+				name : '客户数'
+				//minInterval: 1
+			},
+			series : [ {
+				type : 'bar',
+				//barWidth : 30,//柱图宽度
+				data : data
+			} ]
+		};
+		var ratingDistribution = echarts.init(document
+				.getElementById('ratingDistribution'), 'light');
+		ratingDistribution.setOption(ratingDistributionOption,true);
+	});
+
+}
+
+
+function ratingFxfb() {
+	$.post('[(@{/commom/index/ratingFxfb})]', {}, function(data) {
+		var dataAxis = data[0];
+		$("#bank-title").text('风险调整后收益率分布');
+		// $("#updateDate1").text(data[2]);
+		$("#bank-select").hide();
+		var data = data[1];
+		var yMax = 20;
+		var ratingDistributionOption = {
+			/*  title: {
+			     text: 'XX分行评级分布'
+			 }, */
+				toolbox : {
+				},
+				tooltip: {},
+			xAxis : {
+				name : '分行',
+				data : dataAxis,
+				show: false,
+				z : 10
+			},
+			yAxis : {
+				name : '',
+				axisLabel:{
+					formatter:'{value}%'
+				}
+			},
+			series : [ {
+				type : 'bar',
+				data : data
+			} ]
+		};
+		var ratingDistribution = echarts.init(document
+				.getElementById('ratingDistribution'), 'light');
+		ratingDistribution.setOption(ratingDistributionOption);
+	});
+
+}
+
+initPage();
+
+function formate(val){
+	val = val*1.0;
+	return val.toFixed(2);
+}
+
+function formate2(val){
+    return (val*100).toFixed(2)+"%";
+}
+
+function goPJ(){
+	var handleRoles = ['CUSTOMER_MANAGER'];
+	if(canHadleFlag(handleRoles))
+		goUrl('/irs/companyRating/companyRating.html?skin=Tahoe');
+	else
+		showTips("您不是“客户经理”，客户评级发起功能仅对“客户经理”开放!");
+}
+		
+function goPJSP(){
+	var handleRoles = ['CREDIT_PRELIMINARY_EXAMINATION','BRANCHBRANCH_PRESIDENT','HEAD_OFFICE_APPROVER',
+	                   'HEAD_OFFICE_DISTRIBUTOR','CREDIT_COMMITTEE_COMPREHENSIVE_DIRECTOR',
+	                   'CREDIT_COMMITTEE_COMPREHENSIVE_SECRETARY'];
+	if(canHadleFlag(handleRoles))
+		goUrl('/irs/companyRating/ratingMain_task.html?skin=Tahoe');
+	else
+		showTips("您不是“公司客户评级审批人”，公司客户评级审批功能仅对“公司客户评级审批人”开放!");
+}	
+
+
+function goPJCX(){
+	var handleRoles = ['admin','QUERY_POST'];
+	if(canHadleFlag(handleRoles))
+		goUrl('/irs/companyRatingQuery/companyRatingQuery.html?skin=Tahoe');
+	else
+		showTips("您不是“查询岗”或“系统管理员”，客户评级查询功能仅对“查询岗”和“系统管理员”开放!");
+}	
+
+function goWY(){
+	var handleRoles = ['CUSTOMER_MANAGER','DETERMINATION_COGNIZANCEP_APPLY'];
+	if(canHadleFlag(handleRoles))
+		goUrl('/irs/defaultCustomerMan/defaultCustomerStart.html?skin=Tahoe');
+	else
+		showTips("您不是“客户经理”或“违约认定申请岗”,违约认定发起功能仅对“客户经理”和“违约认定申请岗”开放！");
+}	
+
+function goCS(){
+	var handleRoles = ['CUSTOMER_MANAGER'];
+	if(canHadleFlag(handleRoles))
+		goUrl('/irs/rebirthDefaultCustomerMan/rebirthDefaultCustomerStart.html?skin=Tahoe');
+	else
+		showTips("您不是“客户经理”，违约重生发起功能仅对“客户经理”开放!");
+}	
+
+function canHadleFlag(handleRoles){
+	//for(var obj of roles){
+		for(var role of handleRoles){
+			if(roleCode == role)
+				return true;
+		}
+	//}
+	return false;
+}
+
+function showTips(msg){
+	$('#myModalLabel3').html(msg);
+	$('#msgModal3').modal();
+}
+</script>
+</html>

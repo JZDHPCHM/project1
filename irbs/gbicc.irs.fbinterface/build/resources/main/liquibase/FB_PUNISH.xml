@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_PUNISH" author="framework">
+
+        <!-- 行政处罚 -->
+        <createTable tableName="FB_PUNISH" remarks="行政处罚">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="EVENT_DATE" type="java.sql.Types.VARCHAR(20)" remarks="事件时间"></column>
+            <column name="PUBLIC_DATE" type="java.sql.Types.VARCHAR(20)" remarks="发布时间"></column>
+            <column name="PUNISH_NO" type="java.sql.Types.VARCHAR(100)" remarks="处罚决定书文号"></column>
+            <column name="PUNISH_DECISION_DATE" type="java.sql.Types.VARCHAR(20)" remarks="处罚决定日期"></column>
+            <column name="SOURCE" type="java.sql.Types.VARCHAR(500)" remarks="来源"></column>
+            <column name="TITLE" type="java.sql.Types.VARCHAR(1000)" remarks="标题"></column>
+            <column name="CASE_NAME" type="java.sql.Types.VARCHAR(500)" remarks="案件名称"></column>
+            <column name="CONTENT" type="CLOB" remarks="正文"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 处罚事由-->
+        <createTable tableName="FB_PUNISH_REASON" remarks="处罚事由">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="PUNISH_ID" type="java.sql.Types.VARCHAR(36)" remarks="行政处罚ID"></column>
+            <column name="REASON" type="java.sql.Types.VARCHAR(2000)" remarks="处罚事由"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 处罚依据-->
+        <createTable tableName="FB_PUNISH_BASIS" remarks="处罚依据">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="PUNISH_ID" type="java.sql.Types.VARCHAR(36)" remarks="行政处罚ID"></column>
+            <column name="REASON" type="java.sql.Types.VARCHAR(2000)" remarks="处罚依据"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 处罚决定-->
+        <createTable tableName="FB_PUNISH_RESULT" remarks="处罚决定">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="PUNISH_ID" type="java.sql.Types.VARCHAR(36)" remarks="行政处罚ID"></column>
+            <column name="RESULT" type="java.sql.Types.VARCHAR(2000)" remarks="处罚决定"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 处罚决定机关 -->
+        <createTable tableName="FB_PUNISH_ORGAN" remarks="处罚决定机关">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="PUNISH_ID" type="java.sql.Types.VARCHAR(36)" remarks="行政处罚ID"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="处罚决定机关"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 处罚表格 -->
+        <createTable tableName="FB_PUNISH_TABLE" remarks="处罚表格">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="PUNISH_ID" type="java.sql.Types.VARCHAR(36)" remarks="行政处罚ID"></column>
+            <column name="MODIFY_DATE" type="java.sql.Types.VARCHAR(20)" remarks="修改日期"></column>
+            <column name="PUBLIC_DATE" type="java.sql.Types.VARCHAR(20)" remarks="发布时间"></column>
+            <column name="AREA_CODE" type="java.sql.Types.VARCHAR(10)" remarks="地区代码"></column>
+            <column name="PUNISH_REASON" type="java.sql.Types.VARCHAR(2000)" remarks="处罚事由"></column>
+            <column name="PUNISH_BASIS" type="java.sql.Types.VARCHAR(1000)" remarks="处罚依据"></column>
+            <column name="PUNISH_CONTENT" type="java.sql.Types.VARCHAR(1000)" remarks="处罚内容"></column>
+            <column name="PUNISH_DECISION_DATE" type="java.sql.Types.VARCHAR(20)" remarks="处罚决定日期"></column>
+            <column name="PUNISH_NAME" type="java.sql.Types.VARCHAR(500)" remarks="处罚名称"></column>
+            <column name="PUNISH_AREA_CODE" type="java.sql.Types.VARCHAR(10)" remarks="处罚地方编码"></column>
+            <column name="PUNISH_STATUS" type="java.sql.Types.VARCHAR(10)" remarks="处罚状态"></column>
+            <column name="PUNISH_TYPE_ONE" type="java.sql.Types.VARCHAR(30)" remarks="处罚类别"></column>
+            <column name="PUNISH_TYPE_TWO" type="java.sql.Types.VARCHAR(30)" remarks="处罚类别2"></column>
+            <column name="PUNISH_DEPART" type="java.sql.Types.VARCHAR(100)" remarks="处罚部门"></column>
+            <column name="PARTY" type="java.sql.Types.VARCHAR(100)" remarks="当事人"></column>
+            <column name="LEGAL_PERSON" type="java.sql.Types.VARCHAR(100)" remarks="法定代表人"></column>
+            <column name="COUNTER_PART_CODE" type="java.sql.Types.VARCHAR(20)" remarks="相对人社会信用码"></column>
+            <column name="PUNISH_NO" type="java.sql.Types.VARCHAR(100)" remarks="行政处罚决定书文号"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 当事人 -->
+        <createTable tableName="FB_PUNISH_PARTY" remarks="当事人">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="PUNISH_ID" type="java.sql.Types.VARCHAR(36)" remarks="行政处罚ID"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="名称"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 当事人处罚详情 -->
+        <createTable tableName="FB_PUNISH_PARTY_DETAIL" remarks="当事人处罚详情">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="PUNISH_ID" type="java.sql.Types.VARCHAR(36)" remarks="行政处罚ID"></column>
+            <column name="PUNISH_PARTY" type="java.sql.Types.VARCHAR(36)" remarks="当事人ID"></column>
+            <column name="PUNISH_DATE" type="java.sql.Types.VARCHAR(20)" remarks="时间"></column>
+            <column name="TYPE" type="java.sql.Types.VARCHAR(50)" remarks="类别"></column>
+            <column name="AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="金额"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+    </changeSet>
+</databaseChangeLog>

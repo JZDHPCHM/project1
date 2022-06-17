@@ -1,0 +1,10 @@
+[
+  {
+    "category": "install",
+    "order": 24500,
+    "description": "评级报表数据库表创建",
+    "locations": [
+      "classpath:/liquibase/MV_1.0.0_20190506__DataBase Report Database Schema DDL.xml"
+    ]
+  }
+]

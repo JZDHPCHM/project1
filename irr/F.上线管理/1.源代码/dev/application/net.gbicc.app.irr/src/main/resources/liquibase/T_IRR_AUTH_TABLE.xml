@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="T_IRR_AUTH_TABLE" author="fc">
+    
+        <createTable tableName="T_IRR_AUTH" remarks="授权管理表">
+			<column name="ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键ID">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="USER_ID"        	type="java.sql.Types.VARCHAR(36)"      remarks="授权人ID"></column>
+			<column name="AUTH_ID"        	type="java.sql.Types.VARCHAR(36)"      remarks="被授权人ID"></column>
+        </createTable>
+        
+        <createTable tableName="T_IRR_AUTH_TASK_LOG" remarks="授权任务日志表">
+			<column name="ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键ID">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="TASK_ID"        	type="java.sql.Types.VARCHAR(36)"      remarks="任务ID"></column>
+			<column name="TASK_CODE"        type="java.sql.Types.VARCHAR(36)"      remarks="任务编码"></column>
+			<column name="TASK_NAME"        type="java.sql.Types.VARCHAR(90)"      remarks="任务名称"></column>
+			<column name="USER_ID"        	type="java.sql.Types.VARCHAR(36)"      remarks="授权人ID"></column>
+			<column name="USER_NAME"        type="java.sql.Types.VARCHAR(90)"      remarks="授权人名称"></column>
+			<column name="AUTH_ID"        	type="java.sql.Types.VARCHAR(36)"      remarks="被授权人ID"></column>
+			<column name="AUTH_NAME"        type="java.sql.Types.VARCHAR(90)"      remarks="被授权人名称"></column>
+			<column name="DEAL_RESULT"      type="java.sql.Types.VARCHAR(300)"     remarks="处理结果"></column>
+			<column name="FD_CREATOR"           	type="VARCHAR(255)"  			remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"       	type="DATETIME"                 remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"     	type="VARCHAR(50)"  			remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"   	type="DATETIME"                 remarks="最后修改日期"></column>
+        </createTable>
+        
+    </changeSet>
+</databaseChangeLog>

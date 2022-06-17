@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script th:src="@{/portlet/js/jquery-3.1.1.min.js}"></script>
+</head>
+<body>
+</body>
+<script>
+$(document).ready(function(){
+	isc.FwPage.create({
+		removeTab:true,
+		tab: {
+			title: '[[#{welcome}]]', 
+			pane: isc.HTMLPane.create({
+		        height:'100%',
+		        width: $(document).width(),
+		        contentsURL: '[(@{/commom/index/portal})]',
+		        contentsType:"page"
+		    })
+		}
+	});
+});
+
+</script>
+</html>

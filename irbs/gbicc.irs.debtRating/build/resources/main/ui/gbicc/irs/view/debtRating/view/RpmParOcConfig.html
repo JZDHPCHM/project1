@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+
+isc.FwRestDataSource.create({
+    ID: 'allOrgDs',
+    fields:[
+    	{name:'id',		title:'唯一标识',			primaryKey:true},
+    	{name:'code',	title:'代码'},
+    	{name:'name',	title:'名称'},
+    	{name:'parent',	title:'父机构唯一标识',	foreignKey:'allOrgDs.id'}
+    	
+    ],
+    fetchDataURL: '[[@{/system/orgs/isc/fetch}]]'
+});
+
+//字段定义
+var DebtRatingBHSXSParamFields ={
+	grid: [
+			{width:'*',		name:'id',	primaryKey:true,	hidden:true},
+			//{width:'*',		name:'branch',	 title:'机构'},
+			
+			{
+				name:'orgNo',     	
+				title:'机构',
+				optionDataSource: allOrgDs,
+				displayField:'name',
+				valueField:'id',
+				allowEmptyValue:true,
+				autoFetchData:false,
+			    getPickListFilterCriteria : function () {
+		            var topLevel = this.form.getValue("orgNo");
+		            return {id:topLevel};
+		            
+		        },
+			},
+			{width:'*',		name:'maPrdNo',	 title:'产品'},
+			/* {width:'*',		name:'custSize', title:'客户规模'}, */
+			{width:'*',		name:'ocRate',	 title:'费用率'},
+			/* {width:'*',		name:'manualOc', title:'手工值'}, */
+			{width:'*',		name:'ocFlag',   title:'是否可用'},
+			{width:'*',		name:'startDate',	 title:'生效时间'},
+			{width:'*',		name:'updateDate',	 title:'更新日期'},
+			{width:'*',		name:'numOne',	 title:'待定3',hidden:true}
+	],
+	edit: [
+		{width:'*',		name:'id',	primaryKey:true,hidden:true,canEdit:true},
+		//{width:'*',		name:'branch',	 title:'机构'},
+		{
+			width:'*',	
+			name:'branch',					
+			title:'机构',
+			optionDataSource: allOrgDs,	
+			dataSetType: "tree",
+			autoFetchData:false,
+			loadDataOnDemand:true,
+			displayField:'name',
+			valueField:'id',
+			pickListProperties:{
+				nodeIcon: '[SKIN]/folder_open.png'
+			},
+			specialValues: {"": ""},
+		    separateSpecialValues: true
+		},
+		{width:'*',		name:'product',	 title:'产品'},
+		/* {width:'*',		name:'custSize', title:'客户规模'}, */
+		{width:'*',		name:'autoOc',	 title:'费用率'},
+	/* 	{width:'*',		name:'manualOc', title:'手工值'}, */
+		/* {width:'*',		name:'status',   title:'状态'}, */
+		{width:'*',		name:'chrOne',	 title:'待定1',hidden:true},
+		{width:'*',		name:'chrTwo',	 title:'待定2',hidden:true},
+		{width:'*',		name:'numOne',	 title:'待定3',hidden:true}
+	]
+};
+
+//保证人回收调整系数数据源
+isc.FwRestDataSource.create({
+	ID: 'debtRatingBHSXSParamDS',
+    fields: DebtRatingBHSXSParamFields.grid,
+    dataURL: '[[@{/irs/RpmParOc/isc}]]'
+});
+
+//保证人回收调整系数列表
+isc.FwListGrid.create({
+	ID: 'debtRatingBHSXSParamListGrid',
+	title: '<b>运营成本配置</b>',
+	dataSource: debtRatingBHSXSParamDS,
+	sortField:"bzTypeCode",
+	fields: DebtRatingBHSXSParamFields.grid,
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: debtRatingBHSXSParamDS,
+            fields: DebtRatingBHSXSParamFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh'
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				debtRatingBHSXSParamListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

@@ -1,0 +1,1163 @@
+= 非零售内部评级产品系统表设计 
+Doc Writer <doc.writer@asciidoctor.org>
+
+:showtitle: true
+:icons: font
+:doctype: book
+:revdate: 10-02-2013
+:toc: macro
+:toc-title: 目录
+:toclevels: 5
+:sectnums:
+:header_footer: true
+
+****
+[big]##
+作者:寇鹏阳 <koupengyang@gbicc.net>
+##
+****
+
+[WARNING]
+====
+*数据库设计规范*
+
+. 表名需加前缀 NS:代表非零售系统，RS零售评级系统
+. 表名，字段名必须全部大写
+. 考虑到表名，字段名长度限制问题，命名时尽量使用缩写表示
+. 表字段名称加FD前缀
+. 表描述和字段描述必须齐全
+. 表名按模块功能加前缀予以区分，前缀需有意义，使人容易区分理解
+. 每张表需添加一下字段
+        FD_CORPORATION       VARCHAR2(255)    多法人类型
+        FD_CREATOR           VARCHAR2(255)    创建人
+        FD_CREATE_DATE       TIMESTAMP(6)     创建日期
+        FD_LAST_MODIFIER     VARCHAR2(255)    最后修改人
+        FD_LAST_MODIFYDATE   TIMESTAMP(6)     最后修改日期
+. 避免使用某数据库特性，考虑跨数据库移植
+. 键命名规范
+	主键使用 PK_表名_字段名
+	外键使用 FK_本表名_引用表名_字段名
+	联合键使用 UK_表名_字段名
+. 索引命名规范
+	IDX_表名_字段名
+. 视图命名规范
+	V_名称
+====
+
+== 数据库表设计
+
+=== 系统基础表
+
+==== 地区信息表(FR_DIC_AREA) [[FR_DIC_AREA]]
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_AREA_CODE		|区域代码		|VARCHAR2(100)		|N| <<PK_FR_DIC_AREA_FD_AREA_CODE>> |||
+|FD_AREA_EN			|区域英文名	|VARCHAR2(100)		|Y||||
+|FD_AREA_CN			|区域中文名	|VARCHAR2(500)		|Y||||
+|FD_AREA_TYPE		|区域类型		|VARCHAR2(20)		|Y|||COUNTRY:国家,PROVINCE:省份,CITY:城市,COUNTY:区县|
+|FD_AREA_PARENT		|上级区域		|VARCHAR2(100)		|Y||<<FK_FR_DIC_AREA_FD_AREA_PARENT>>||
+|FD_CORPORATION		|多法人类型	|VARCHAR2(255)		|Y||||
+|FD_CREATOR			|创建人		|VARCHAR2(255)		|Y||||
+|FD_CREATE_DATE		|创建日期		|TIMESTAMP(6)		|Y||||
+|FD_LAST_MODIFIER	|最后修改人	|VARCHAR2(255)		|Y||||
+|FD_LAST_MODIFYDATE	|最后修改日期	|TIMESTAMP(6)		|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_FR_DIC_AREA_FD_AREA_CODE]]PK_FR_DIC_AREA_FD_AREA_CODE | 主键 | FD_AREA_CODE |  |  |  
+| [[FK_FR_DIC_AREA_FD_AREA_PARENT]]FK_FR_DIC_AREA_FD_AREA_PARENT | 外键 | FD_AREA_PARENT | <<FR_DIC_AREA>> | FD_AREA_CODE | Cascad
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 国民经济行业分类(FR_DIC_NATIONAL_INDUSTRIAL) [[FR_DIC_NATIONAL_INDUSTRIAL]]
+
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_IND_CODE		|行业代码		|VARCHAR2(100)		|N| <<PK_FR_DIC_NI_FD_IND_CODE>> |||
+|FD_IND_NAME		|行业名称		|VARCHAR2(100)		|Y||||
+|FD_IND_REMARK		|行业描述		|VARCHAR2(1000)		|Y||||
+|FD_IND_HIE			|行业层级		|VARCHAR2(20)		|Y|||CATEGORY:门类,BT:大类,MT:中类,ST:小类|
+|FD_IND_PARENT		|父行业		|VARCHAR2(100)		|Y||<<FK_FR_DIC_NI_FD_IND_PARENT>>||
+|FD_CORPORATION		|多法人类型	|VARCHAR2(255)		|Y||||
+|FD_CREATOR			|创建人		|VARCHAR2(255)		|Y||||
+|FD_CREATE_DATE		|创建日期		|TIMESTAMP(6)		|Y||||
+|FD_LAST_MODIFIER	|最后修改人	|VARCHAR2(255)		|Y||||
+|FD_LAST_MODIFYDATE	|最后修改日期	|TIMESTAMP(6)		|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_FR_DIC_NI_FD_IND_CODE]]PK_FR_DIC_NI_FD_IND_CODE | 主键 | FD_IND_CODE |  |  |  
+| [[FK_FR_DIC_NI_FD_IND_PARENT]]FK_FR_DIC_NI_FD_IND_PARENT | 外键 | FD_PARENT | <<FR_DIC_NATIONAL_INDUSTRIAL>> | FD_IND_CODE | Cascad
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+
+=== 客户信息管理模块
+
+==== 公司客户基本信息表(NS_CUSTOMER) [[NS_CUSTOMER]]
+
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID					|主键ID			|VARCHAR2(36)		|N| <<PK_NS_CUSTOMER_FD_ID>> |||
+|FD_CUSTNO				|信贷客户号		|VARCHAR2(100)		|N||||
+|FD_UNCUSTNO			|统一客户号		|VARCHAR2(100)		|Y||||
+|FD_CUSTNAME			|中文客户名称_全称	|VARCHAR2(500)		|Y||||
+|FD_SIMPLENAME			|中文简称			|VARCHAR2(500)		|Y||||
+|FD_ALL_ENAME			|客户英文名称_全称	|VARCHAR2(500)		|Y||||
+|FD_SIMPLE_ENAME		|客户英文简称		|VARCHAR2(500)		|Y||||
+|FD_REG_AMOUNT			|注册金额			|NUMBER(20,2)		|Y||||
+|FD_REG_ADDRESS			|注册地址描述		|VARCHAR2(500)		|Y||||
+|FD_COUNTRY				|所属国家			|VARCHAR2(100)		|Y|||地区表数据|
+|FD_PROVINCE			|所属省份			|VARCHAR2(100)		|Y|||地区表数据|
+|FD_CITY				|所属城市			|VARCHAR2(100)		|Y|||地区表数据|
+|FD_DISTRICT			|所属区			|VARCHAR2(100)		|Y|||地区表数据|
+|FD_IND_BC				|行业大类			|VARCHAR2(100)		|Y|||国民经济行业分类数据|
+|FD_IND_MC				|行业中类			|VARCHAR2(100)		|Y|||国民经济行业分类数据|
+|FD_IND_SC				|行业小类			|VARCHAR2(100)		|Y|||国民经济行业分类数据|
+|FD_ENTERPRISE_TYPE		|企业分类			|VARCHAR2(10)		|Y|||GOV:政府融资平台,GUA:担保公司,SCH:学校,HOSP:医院,COM:一般企业|
+|FD_BUS_LICENSE			|营业执照号		|VARCHAR2(18)		|Y||||
+|FD_EMP_COUNT			|员工数量			|NUMBER(7)			|Y||||
+|FD_LEGAL_REP			|法人代表名称		|VARCHAR2(255)		|Y||||
+|FD_MANAGER				|客户经理			|VARCHAR2(255)		|Y||||
+|FD_MANAGER_CODE		|客户经理编号		|VARCHAR2(255)		|Y||||
+|FD_BUS_SCOPE			|经营范围			|VARCHAR2(1000)		|Y||||
+|FD_OFFC_ADDR			|办公地址			|VARCHAR2(500)		|Y||||
+|FD_OFFC_ADDR_ZIP		|办公地址邮编		|VARCHAR2(6)		|Y||||
+|FD_CRDT_AMT			|授信金额			|NUMBER(20,4)		|Y||||
+|FD_ISFOCUS				|是否关注客户		|NUMBER(5)			|Y|||0:false,1:true|
+|FD_REMOTE_CORP_MARK	|异地企业标识		|NUMBER(5)			|Y|||0:fasle,1:true|
+|FD_OVERSEAS_CORP_MARK	|境外企业标识		|NUMBER(5)			|Y|||0:fasle,1:true|
+|FD_GOVER_INST_MARK		|事业单位标识		|NUMBER(5)			|Y|||0:fasle,1:true|
+|FD_LISTING_MARK		|上市标识			|NUMBER(5)			|Y|||0:fasle,1:true|
+|FD_ENTERPRISE_SCALE	|企业规模			|VARCHAR2(10)		|Y|||B:大型，M:中小型|
+|FD_ESTABLISHMENT_TIME	|成立时间			|TIMESTAMP(6)		|Y||||
+|FD_NEW_MARK			|新建企业标识		|NUMBER(5)			|Y|||0:fasle,1:true|
+|FD_SOURCE_TYPE			|数据来源			|VARCHAR2(10)		|Y|||SYS:系统数据,HAN:人工数据|
+|FD_CORPORATION			|多法人类型		|VARCHAR2(255)		|Y||||
+|FD_CREATOR				|创建人			|VARCHAR2(255)		|Y||||
+|FD_CREATE_DATE			|创建日期			|TIMESTAMP(6)		|Y||||
+|FD_LAST_MODIFIER		|最后修改人		|VARCHAR2(255)		|Y||||
+|FD_LAST_MODIFYDATE		|最后修改日期		|TIMESTAMP(6)		|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_CUSTOMER_FD_ID]]PK_NS_CUSTOMER_FD_ID | 主键 | FD_ID |  |  |  
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 公司客户财报主表 (NS_FIN_STAT) [[NS_FIN_STAT]]
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键		|VARCHAR2(36)	|N|<<PK_NS_FIN_STAT_FD_ID>>|||
+|FD_CUST_ID					|客户ID		|VARCHAR2(36)	|N|<<FK_NS_CUSTOMER_FD_ID>>|||
+|FD_CUST_NO					|客户编号		|VARCHAR2(100)	|Y||||
+|FD_REPORT_BUSS_DATE		|财报期数		|VARCHAR2(10)	|Y||||
+|FD_REPORT_SPECIFICATIONS	|财报口径		|VARCHAR2(10)	|Y|||PS:母公司报表，CS:合并报表|			
+|FD_REPORT_CURRENCY			|财报币种		|VARCHAR2(10)	|Y|||CNY:人民币,USD:美元|
+|FD_AUDIT_ORGANIZATION		|审计单位		|VARCHAR2(255)	|Y||||
+|FD_AUDIT_OPINION			|审计意见		|VARCHAR2(2000)	|Y||||
+|FD_VAILD					|是否有效		|NUMBER(5)		|Y|||0:false,1:true|
+|FD_IS_AUDIT				|是否审计		|NUMBER(5)		|Y|||0:false,1:true|
+|FD_REPORT_CYCLE			|财报周期		|VARCHAR2(10)	|Y|||QR:季报,HY:半年报,FY:年报|			
+|FD_REPORT_SOURCE			|财报来源		|VARCHAR2(10)	|Y|||SYS:系统数据,HAN:人工数据|			
+|FD_REPORT_TYPE				|财报类型		|VARCHAR2(10)	|Y|||B:银行,SC:证券,IN:保险,GC:企业,CU:通用|
+|FD_CORPORATION				|多法人类型	|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人		|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期		|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人	|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期	|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_FIN_STAT_FD_ID]]PK_NS_FIN_STAT_FD_ID | 主键 | FD_ID |  |  |  
+| [[FK_NS_CUSTOMER_FD_ID]]FK_NS_CUSTOMER_FD_ID | 外键 | FD_CUST_ID | <<NS_CUSTOMER>> | FD_ID | Cascad
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 财报报表_资产负债表(NS_FIN_BS)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_FIN_BS_FD_ID>>|||
+|FD_REPORT_ID				|财报ID			|VARCHAR2(100)	|N||<<FK_NS_FIN_BS_FIN_STAT_FD_REPORT_ID>>||
+|FD_LINE_CODE				|行号代码			|VARCHAR2(10)	|Y||||
+|FD_DATAITEM_CODE			|数据项代码		|VARCHAR2(10)	|Y||||
+|FD_DATAITEM_NAME			|数据项名称		|VARCHAR2(10)	|Y||||
+|FD_BEGING_VALUE			|期初值			|NUMBER(20,4)	|Y||||
+|FD_END_VALUE				|期末值			|NUMBER(20,4)	|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_FIN_BS_FD_ID]]PK_NS_FIN_BS_FD_ID | 主键 | FD_ID |  |  |  
+| [[FK_NS_FIN_BS_FIN_STAT_FD_REPORT_ID]]FK_NS_FIN_BS_FIN_STAT_FD_REPORT_ID | 外键 | FD_REPORT_ID | <<NS_FIN_STAT>> | FD_ID | Cascad
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 财报报表_损益表(NS_FIN_IS)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_FIN_IS_FD_ID>>|||
+|FD_REPORT_ID				|财报ID			|VARCHAR2(100)	|N||<<FK_NS_FIN_IS_FIN_STAT_FD_REPORT_ID>>||
+|FD_LINE_CODE				|行号代码			|VARCHAR2(10)	|Y||||
+|FD_DATAITEM_CODE			|数据项代码		|VARCHAR2(10)	|Y||||
+|FD_DATAITEM_NAME			|数据项名称		|VARCHAR2(10)	|Y||||
+|FD_BEGING_VALUE			|期初值			|NUMBER(20,4)	|Y||||
+|FD_END_VALUE				|期末值			|NUMBER(20,4)	|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_FIN_IS_FD_ID]]PK_NS_FIN_IS_FD_ID | 主键 | FD_ID |  |  | 
+| [[FK_NS_FIN_IS_FIN_STAT_FD_REPORT_ID]]FK_NS_FIN_IS_FIN_STAT_FD_REPORT_ID | 外键 | FD_REPORT_ID | <<NS_FIN_STAT>> | FD_ID | Cascad 
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 财报报表_现金流量表(NS_FIN_CF)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_FIN_CF_FD_ID>>|||
+|FD_REPORT_ID				|财报ID			|VARCHAR2(100)	|N||<<FK_NS_FIN_CF_FIN_STAT_FD_REPORT_ID>>||
+|FD_LINE_CODE				|行号代码			|VARCHAR2(10)	|Y||||
+|FD_DATAITEM_CODE			|数据项代码		|VARCHAR2(10)	|Y||||
+|FD_DATAITEM_NAME			|数据项名称		|VARCHAR2(10)	|Y||||
+|FD_BEGING_VALUE			|期初值			|NUMBER(20,4)	|Y||||
+|FD_END_VALUE				|期末值			|NUMBER(20,4)	|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_FIN_CF_FD_ID]]PK_NS_FIN_CF_FD_ID | 主键 | FD_ID |  |  | 
+| [[FK_NS_FIN_CF_FIN_STAT_FD_REPORT_ID]]FK_NS_FIN_CF_FIN_STAT_FD_REPORT_ID | 外键 | FD_REPORT_ID | <<NS_FIN_STAT>> | FD_ID | Cascad  
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+=== 客户评级模块
+==== 评级配置_评级步骤定义(NS_R_CFG_STEPS)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_R_CFG_STEPS_FD_ID>>|||
+|FD_RATINGCFG_ID			|评级配置主表ID	|VARCHAR2(36)	|N||<<FK_NS_R_CFG_STEPS_FD_CFG_ID>>||
+|FD_STEPCODE				|步骤编号			|VARCHAR2(50)	|N||||
+|FD_STEPNAME				|步骤名称			|VARCHAR2(255)	|Y||||
+|FD_STEPNUM					|步骤序号			|NUMBER(2)		|Y||||
+|FD_STEPTYPE				|步骤类型			|VARCHAR2(20)	|Y|||CUST_INFO:客户信息,ADDITIONAL:补录信息,QUANTITATIVE:定量信息,QUALITATIVE_EDIT:定性指标录入,QUALITATIVE_SHOW:定性指标展示,ADJUST_ITEM:调整项 ,SUPPORT_ITEM:外部支持项,REPORT_INFO:评级报告展示,OTHER:其它|
+|FD_RESOURCEPATH			|步骤资源路径		|VARCHAR2(1000)	|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_R_CFG_STEPS_FD_ID]]PK_NS_R_CFG_STEPS_FD_ID | 主键 | FD_ID |  |  | 
+| [[FK_NS_R_CFG_STEPS_FD_CFG_ID]]FK_NS_R_CFG_STEPS_FD_CFG_ID | 外键 | FD_RATINGCFG_ID | <<NS_R_CFG_RATING>> | FD_ID | CASCADE
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+==== 评级配置_调整项定义(NS_R_CFG_ADJ_ITEM)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_R_CFG_ADJ_ITEM_FD_ID>>|||
+|FD_RATINGCFG_ID			|评级配置主表ID	|VARCHAR2(36)	|N||<<FK_NS_R_CFG_ADJ_FD_CFG_ID>>||
+|FD_ADJITEM_CODE			|调整项编号		|VARCHAR2(50)	|N||||
+|FD_ADJITEM_NAME			|调整项名称		|VARCHAR2(255)	|Y||||
+|FD_ADJITEM_DES				|调整项描述		|VARCHAR2(500)	|Y||||
+|FD_IS_HIS					|是否历史版本		|NUMBER(5)		|Y|||0:false,1:true|
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_R_CFG_ADJ_ITEM_FD_ID]]PK_NS_R_CFG_ADJ_ITEM_FD_ID | 主键 | FD_ID |  |  | 
+| [[FK_NS_R_CFG_ADJ_FD_CFG_ID]]FK_NS_R_CFG_ADJ_FD_CFG_ID | 外键 | FD_RATINGCFG_ID | <<NS_R_CFG_RATING>> | FD_ID | CASCADE
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 评级配置_外部支持定义(NS_R_CFG_SUPP_ITEM)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_R_CFG_SUPP_ITEM_FD_ID>>|||
+|FD_RATINGCFG_ID			|评级配置主表ID	|VARCHAR2(36)	|N||<<FK_NS_R_CFG_SUPP_FD_CFG_ID>>||
+|FD_SUPPITEM_CODE			|外部支持编号		|VARCHAR2(50)	|N||||
+|FD_SUPPITEM_NAME			|外部支持名称		|VARCHAR2(255)	|Y||||
+|FD_SUPPITEM_DES			|外部支持描述		|VARCHAR2(500)	|Y||||
+|FD_IS_HIS					|是否历史版本		|NUMBER(5)		|Y|||0:false,1:true|
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_R_CFG_SUPP_ITEM_FD_ID]]PK_NS_R_CFG_SUPP_ITEM_FD_ID | 主键 | FD_ID |  |  | 
+| [[FK_NS_R_CFG_SUPP_FD_CFG_ID]]FK_NS_R_CFG_SUPP_FD_CFG_ID | 外键 | FD_RATINGCFG_ID | <<NS_R_CFG_RATING>> | FD_ID | CASCADE
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+
+==== 评级配置_补录字段定义(NS_R_CFG_ADDIT_ITEM)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_R_CFG_ADDIT_ITEM_FD_ID>>|||
+|FD_RATINGCFG_ID			|评级配置主表ID	|VARCHAR2(36)	|N||<<FK_NS_R_CFG_ADDIT_FD_CFG_ID>>||
+|FD_FIELD_TITLE				|字段标题			|VARCHAR2(50)	|N||||
+|FD_FIELD_NAME				|字段名称			|VARCHAR2(50)	|Y||||
+|FD_FIELD_TYPE				|组件类型			|VARCHAR2(10)	|Y||||
+|FD_VALUE_TYPE				|值类型			|VARCHAR2(10)	|Y||||
+|FD_FIELD_DEF_VAL			|默认值			|VARCHAR2(255)	|Y||||
+|FD_FIELD_COLSPAN			|组件占用列数		|NUMBER(5)		|Y||||
+|FD_ENABLED					|是否生效			|NUMBER(5)		|Y|||0:false,1:true|
+|FD_IS_HIS					|是否历史版本		|NUMBER(5)		|Y|||0:false,1:true|
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_R_CFG_ADDIT_ITEM_FD_ID]]PK_NS_R_CFG_ADDIT_ITEM_FD_ID | 主键 | FD_ID |  |  | 
+| [[FK_NS_R_CFG_ADDIT_FD_CFG_ID]]FK_NS_R_CFG_ADDIT_FD_CFG_ID | 外键 | FD_RATINGCFG_ID | <<NS_R_CFG_RATING>> | FD_ID |CASCADE
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+
+==== 模型配置_定性指标定义表(NS_R_CFG_QUALI_ITEM) [[NS_R_CFG_QUALI_ITEM]]
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_R_CFG_QUALI_ITEM_FD_ID>>|||
+|FD_RATINGCFG_ID			|评级配置主表ID	|VARCHAR2(36)	|N||<<FK_NS_R_CFG_QUALI_FD_CFG_ID>>||
+|FD_QUALI_ID			    |定性ID		    |VARCHAR2(50)	|Y||||
+|FD_QUALI_CODE				|定性定义编号		|VARCHAR2(50)	|Y||||
+|FD_QUALI_CATEGORY			|定性指标分类		|VARCHAR2(500)	|Y||||
+|FD_QUALI_NAME				|定性名称			|VARCHAR2(1000)	|Y||||
+|FD_QUALI_WIDTH				|定性权重			|NUMBER(8,4)	|Y||||
+|FD_IS_HIS					|是否历史版本		|NUMBER(5)		|Y|||0:false,1:true|
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_R_CFG_QUALI_ITEM_FD_ID]]PK_NS_R_CFG_QUALI_ITEM_FD_ID | 主键 | FD_ID |  |  | 
+| [[FK_NS_R_CFG_QUALI_FD_CFG_ID]]FK_NS_R_CFG_QUALI_ITEM_FD_CFG_ID | 外键 | FD_RATINGCFG_ID | NS_R_CFG_RATING | FD_ID |
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+
+==== 评级配置_候选值定义(NS_R_CFG_VALUES)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_R_CFG_VALUES_FD_ID>>|||
+|FD_DEF_ID					|问题定义ID		|VARCHAR2(36)	|N||||
+|FD_DEF_CODE				|问题定义编号		|VARCHAR2(50)	|N||||
+|FD_ORDER_NUM				|选项序号			|NUMBER(4)		|N||||
+|FD_DIS_VAL					|显示值			|VARCHAR2(500)	|Y||||
+|FD_VAL						|使用值			|VARCHAR2(200)	|Y||||
+|FD_WEIGHT					|权重			|VARCHAR2(50)	|Y|||DOWN_ONE:向下调整一级,DOWN_TWO:向下调整二级,UP_ONE:向上调整一级,UNDER_ACCESSLEVEL:低于准入级别 |
+|FD_ADDIT_ID				|补录项ID			|VARCHAR2(36)	|Y||||
+|FD_REMARKS					|备注			|VARCHAR2(1000)	|Y||||
+|FD_IS_HIS					|是否历史版本		|NUMBER(5)		|Y|||0:false,1:true|
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_R_CFG_VALUES_FD_ID]]PK_NS_R_CFG_VALUES_FD_ID | 主键 | FD_ID |  |  | 
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 评级配置_模型标尺主表(NS_R_CFG_SCALE) [[NS_R_CFG_SCALE]]
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_R_CFG_SCALE_FD_ID>>|||
+|FD_SCALE_CODE				|标尺编号			|VARCHAR2(50)	|N||||
+|FD_SCALE_NAME				|标尺名称			|VARCHAR2(255)	|N||||
+|FD_SCALE_DESC				|标尺描述			|VARCHAR2(500)	|N||||
+|FD_STATUS					|标尺状态			|VARCHAR2(20)	|Y|||DRAFT:草稿,RELEASE:发布,HISTORY:历史|
+|FD_VERSION					|标尺版本号		|NUMBER(5)		|Y||||
+|FD_ISVAILD					|是否生效			|NUMBER(5)		|Y|||0:false,1:true|
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_R_CFG_SCALE_FD_ID]]PK_NS_R_CFG_SCALE_FD_ID | 主键 | FD_ID |  |  | 
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+
+==== 评级配置_模型标尺配置表(NS_R_CFG_SCALE_DETAIL)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_R_CFG_SCALE_DETAIL_FD_ID>>|||
+|FD_SCALE_ID				|主标尺ID			|VARCHAR2(36)	|N||<<FK_NS_R_CFG_SCALE_FD_SCALE_ID>>||
+|FD_SNUM					|序号			|NUMBER(4)		|N||||
+|FD_LOWER_LIMIT				|区间下限			|NUMBER(10,4)	|N||||
+|FD_UPPER_LIMIT				|区间上限			|NUMBER(10,4)	|Y||||
+|FD_PD_LEVEL				|信用级别			|VARCHAR2(5)	|Y||||
+|FD_LEVEL_SP				|标普信用级别		|VARCHAR2(5)	|Y||||
+|FD_REMARK					|备注			|VARCHAR2(400)	|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_R_CFG_SCALE_DETAIL_FD_ID]]PK_NS_R_CFG_SCALE_DETAIL_FD_ID | 主键 | FD_ID |  |  | 
+| [[FK_NS_R_CFG_SCALE_FD_SCALE_ID]]FK_NS_R_CFG_SCALE_FD_SCALE_ID | 外键 | FD_SCALE_ID | <<NS_R_CFG_SCALE>> | FD_ID | CASCADE
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 评级配置_评级推翻范围配置表(NS_R_CFG_ADJUST_RANGE)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_R_CFG_ADJUST_RANGE_FD_ID>>|||
+|FD_ROLEID					|角色ID			|VARCHAR2(36)	|N||||
+|FD_MODELCODE				|模型编号			|VARCHAR2(50)	|N||||
+|FD_UP_LIMIT				|上调限制			|NUMBER(4)		|N||||
+|FD_DOWN_LIMIT				|下调限制			|NUMBER(4)		|Y||||
+|FD_ENABLED					|是否生效			|NUMBER(5)		|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_R_CFG_ADJUST_RANGE_FD_ID]]PK_NS_R_CFG_ADJUST_RANGE_FD_ID | 主键 | FD_ID |  |  | 
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 评级配置_模型选择路径配置表(NS_R_CFG_MODEL_SELECTOR)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_R_CFG_MODEL_SELECTOR_FD_ID>>|||
+|FD_SEL_NAME				|选择路径名称		|VARCHAR2(255)	|N||<<FK_FR_AA_ROLE_FD_ROLEID>>||
+|FD_SEL_CONENT				|选择路径内容		|CLOB			|N||||
+|FD_SEL_VERSION				|选择路径版本号		|NUMBER(5)		|N||||
+|FD_SEL_DESCRIBE			|选择路径描述		|VARCHAR2(1000)	|Y||||
+|FD_SEL_STATUS				|选择路径状态		|VARCHAR2(20)	|Y|||DRAFT:草稿,RELEASE:发布,HISTORY:历史|
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_R_CFG_MODEL_SELECTOR_FD_ID]]PK_NS_R_CFG_MODEL_SELECTOR_FD_ID | 主键 | FD_ID |  |  | 
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 评级配置_财报选择规则配置表(NS_R_CFG_REPORT_RULE)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_R_CFG_REPORT_RULE_FD_ID>>|||
+|FD_PRIORITY_LEVEL			|规则优先级		|NUMBER(4)		|N||||
+|FD_RULE_NAME				|规则名称			|VARCHAR2(255)	|N|||RULE_ONE:连续两年财报,RULE_TWO:连续最近两年财报,RULE_THREE:人工选取|
+|FD_RULE_DESCRIBE			|规则描述			|VARCHAR2(1000)	|Y||||
+|FD_ENABLED					|是否生效			|NUMBER(5)		|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_R_CFG_REPORT_RULE_FD_ID]]PK_NS_R_CFG_REPORT_RULE_FD_ID | 主键 | FD_ID |  |  | 
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 评级配置_评级配置主表(NS_R_CFG_RATING) [[NS_R_CFG_RATING]]
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_R_CFG_RATING_FD_ID>>|||
+|FD_MODELID				    |模型ID			|VARCHAR2(50)	|N||||
+|FD_MODELCODE				|模型编号			|VARCHAR2(50)	|N
+|FD_MODEL_VERSION			|模型版本			|VARCHAR2(50)	|N||||
+|FD_SCALEID					|标尺ID			|VARCHAR2(36)	|N|||<<FK_NS_R_CFG_SCALE_FD_SCALEID>>|
+|FD_STATUS					|配置状态			|VARCHAR2(20)	|N||||
+|FD_VERSION					|配置版本号		|NUMBER(5)		|Y||||
+|FD_ISVAILD					|是否生效			|NUMBER(5)		|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_R_CFG_RATING_FD_ID]]PK_NS_R_CFG_RATING_FD_ID | 主键 | FD_ID |  |  | 
+| [[FK_NS_R_CFG_SCALE_FD_SCALEID]]FK_NS_R_CFG_SCALE_FD_SCALEID | 外键 | FD_SCALEID | <<NS_R_CFG_SCALE>> | FD_ID | No Action
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 评级数据_客户数据表(NS_RATING_CUSTOMER) [[NS_RATING_CUSTOMER]]
+
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID					|主键ID			|VARCHAR2(36)		|N| <<PK_NS_RATING_CUSTOMER_FD_ID>> |||
+|FD_CUSTNO				|信贷客户号		|VARCHAR2(100)		|N||||
+|FD_UNCUSTNO			|统一客户号		|VARCHAR2(100)		|Y||||
+|FD_CUSTNAME			|中文客户名称_全称	|VARCHAR2(500)		|Y||||
+|FD_SIMPLENAME			|中文简称			|VARCHAR2(500)		|Y||||
+|FD_ALL_ENAME			|客户英文名称_全称	|VARCHAR2(500)		|Y||||
+|FD_SIMPLE_ENAME		|客户英文简称		|VARCHAR2(500)		|Y||||
+|FD_REG_AMOUNT			|注册金额			|NUMBER(20,2)		|Y||||
+|FD_REG_ADDRESS			|注册地址描述		|VARCHAR2(500)		|Y||||
+|FD_COUNTRY				|所属国家			|VARCHAR2(100)		|Y|||地区表数据|
+|FD_PROVINCE			|所属省份			|VARCHAR2(100)		|Y|||地区表数据|
+|FD_CITY				|所属城市			|VARCHAR2(100)		|Y|||地区表数据|
+|FD_DISTRICT			|所属区			|VARCHAR2(100)		|Y|||地区表数据|
+|FD_IND_BC				|行业大类			|VARCHAR2(100)		|Y|||国民经济行业分类数据|
+|FD_IND_MC				|行业中类			|VARCHAR2(100)		|Y|||国民经济行业分类数据|
+|FD_IND_SC				|行业小类			|VARCHAR2(100)		|Y|||国民经济行业分类数据|
+|FD_ENTERPRISE_TYPE		|企业分类			|VARCHAR2(10)		|Y|||GOV:政府融资平台,GUA:担保公司,SCH:学校,HOSP:医院,COM:一般企业|
+|FD_BUS_LICENSE			|营业执照号		|VARCHAR2(18)		|Y||||
+|FD_EMP_COUNT			|员工数量			|NUMBER(7)			|Y||||
+|FD_LEGAL_REP			|法人代表名称		|VARCHAR2(255)		|Y||||
+|FD_MANAGER				|客户经理			|VARCHAR2(255)		|Y||||
+|FD_MANAGER_CODE		|客户经理编号		|VARCHAR2(255)		|Y||||
+|FD_BUS_SCOPE			|经营范围			|VARCHAR2(1000)		|Y||||
+|FD_OFFC_ADDR			|办公地址			|VARCHAR2(500)		|Y||||
+|FD_OFFC_ADDR_ZIP		|办公地址邮编		|VARCHAR2(6)		|Y||||
+|FD_CRDT_AMT			|授信金额			|NUMBER(20,4)		|Y||||
+|FD_ISFOCUS				|是否关注客户		|NUMBER(5)			|Y|||0:false,1:true|
+|FD_REMOTE_CORP_MARK	|异地企业标识		|NUMBER(5)			|Y|||0:fasle,1:true|
+|FD_OVERSEAS_CORP_MARK	|境外企业标识		|NUMBER(5)			|Y|||0:fasle,1:true|
+|FD_GOVER_INST_MARK		|事业单位标识		|NUMBER(5)			|Y|||0:fasle,1:true|
+|FD_LISTING_MARK		|上市标识			|NUMBER(5)			|Y|||0:fasle,1:true|
+|FD_ENTERPRISE_SCALE	|企业规模			|VARCHAR2(10)		|Y|||B:大型，M:中小型|
+|FD_ESTABLISHMENT_TIME	|成立时间			|TIMESTAMP(6)		|Y||||
+|FD_NEW_MARK			|新建企业标识		|NUMBER(5)			|Y|||0:fasle,1:true|
+|FD_SOURCE_TYPE			|数据来源			|VARCHAR2(10)		|Y|||SYS:系统数据,HAN:人工数据|
+|FD_CORPORATION			|多法人类型		|VARCHAR2(255)		|Y||||
+|FD_CREATOR				|创建人			|VARCHAR2(255)		|Y||||
+|FD_CREATE_DATE			|创建日期			|TIMESTAMP(6)		|Y||||
+|FD_LAST_MODIFIER		|最后修改人		|VARCHAR2(255)		|Y||||
+|FD_LAST_MODIFYDATE		|最后修改日期		|TIMESTAMP(6)		|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_RATING_CUSTOMER_FD_ID]]PK_NS_RATING_CUSTOMER_FD_ID | 主键 | FD_ID |  |  |  
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 评级数据_财报主表 (NS_RATING_FIN_STAT) [[NS_RATING_FIN_STAT]]
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键		|VARCHAR2(36)	|N|<<PK_NS_RATING_FIN_STAT_FD_ID>>|||
+|FD_CUST_ID					|客户ID		|VARCHAR2(36)	|N||||
+|FD_CUST_NO					|客户编号		|VARCHAR2(100)	|Y||||
+|FD_REPORT_BUSS_DATE		|财报期数		|VARCHAR2(10)	|Y||||
+|FD_REPORT_SPECIFICATIONS	|财报口径		|VARCHAR2(10)	|Y|||PS:母公司报表，CS:合并报表|			
+|FD_REPORT_CURRENCY			|财报币种		|VARCHAR2(10)	|Y|||CNY:人民币,USD:美元|
+|FD_AUDIT_ORGANIZATION		|审计单位		|VARCHAR2(255)	|Y||||
+|FD_AUDIT_OPINION			|审计意见		|VARCHAR2(2000)	|Y||||
+|FD_VAILD					|是否有效		|NUMBER(5)		|Y|||0:false,1:true|
+|FD_IS_AUDIT				|是否审计		|NUMBER(5)		|Y|||0:false,1:true|
+|FD_REPORT_CYCLE			|财报周期		|VARCHAR2(10)	|Y|||QR:季报,HY:半年报,FY:年报|			
+|FD_REPORT_SOURCE			|财报来源		|VARCHAR2(10)	|Y|||SYS:系统数据,HAN:人工数据|			
+|FD_REPORT_TYPE				|财报类型		|VARCHAR2(10)	|Y|||B:银行,SC:证券,IN:保险,GC:企业,CU:通用|
+|FD_CORPORATION				|多法人类型	|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人		|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期		|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人	|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期	|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_FIN_STAT_FD_ID]]PK_NS_FIN_STAT_FD_ID | 主键 | FD_ID |  |  |  
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 评级数据_资产负债表(NS_RATING_FIN_BS)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_RATING_FIN_BS_FD_ID>>|||
+|FD_REPORT_ID				|财报ID			|VARCHAR2(100)	|N||||
+|FD_LINE_CODE				|行号代码			|VARCHAR2(10)	|Y||||
+|FD_DATAITEM_CODE			|数据项代码		|VARCHAR2(10)	|Y||||
+|FD_DATAITEM_NAME			|数据项名称		|VARCHAR2(10)	|Y||||
+|FD_BEGING_VALUE			|期初值			|NUMBER(20,4)	|Y||||
+|FD_END_VALUE				|期末值			|NUMBER(20,4)	|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_RATING_FIN_BS_FD_ID]]PK_NS_RATING_FIN_BS_FD_ID | 主键 | FD_ID |  |  |  
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 评级数据_损益表(NS_RATING_FIN_IS)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_RATING_FIN_IS_FD_ID>>|||
+|FD_REPORT_ID				|财报ID			|VARCHAR2(100)	|N||||
+|FD_LINE_CODE				|行号代码			|VARCHAR2(10)	|Y||||
+|FD_DATAITEM_CODE			|数据项代码		|VARCHAR2(10)	|Y||||
+|FD_DATAITEM_NAME			|数据项名称		|VARCHAR2(10)	|Y||||
+|FD_BEGING_VALUE			|期初值			|NUMBER(20,4)	|Y||||
+|FD_END_VALUE				|期末值			|NUMBER(20,4)	|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_RATING_FIN_IS_FD_ID]]PK_NS_RATING_FIN_IS_FD_ID | 主键 | FD_ID |  |  | 
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 评级数据_现金流量表(NS_RATING_FIN_CF)
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_RATING_FIN_CF_FD_ID>>|||
+|FD_REPORT_ID				|财报ID			|VARCHAR2(100)	|N||||
+|FD_LINE_CODE				|行号代码			|VARCHAR2(10)	|Y||||
+|FD_DATAITEM_CODE			|数据项代码		|VARCHAR2(10)	|Y||||
+|FD_DATAITEM_NAME			|数据项名称		|VARCHAR2(10)	|Y||||
+|FD_BEGING_VALUE			|期初值			|NUMBER(20,4)	|Y||||
+|FD_END_VALUE				|期末值			|NUMBER(20,4)	|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_RATING_FIN_CF_FD_ID]]PK_NS_RATING_FIN_CF_FD_ID | 主键 | FD_ID |  |  | 
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+
+==== 公司客户评级主表(NS_COMPANY_RATING) [[NS_COMPANY_RATING]]
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_COMPANY_RATING_FD_ID>>|||
+|FD_RATING_CUSID			|评级客户ID		|VARCHAR2(36)	|N||<FK_NS_COMPANY_RATING_CUSTID>||
+|FD_CUSTNO					|客户编号			|VARCHAR2(100)	|N||||
+|FD_CUSTNAME				|客户中文名称		|VARCHAR2(500)	|Y||||
+|FD_MODELID					|评级模型ID		|VARCHAR2(36)	|Y||||
+|FD_MODELCODE				|评级模型编号		|VARCHAR2(50)	|Y||||
+|FD_RATING_CFGID			|评级配置ID		|VARCHAR2(36)	|N||||
+|FD_FIR_REP					|模型使用财报_第一年	|VARCHAR2(36)	|Y||||
+|FD_SEC_REP					|模型使用财报_第二年	|VARCHAR2(36)	|Y||||
+|FD_THIRD_REP				|模型使用财报_第三年	|VARCHAR2(36)	|Y||||
+|FD_MANAGER_NAME			|客户经理名称		|VARCHAR2(255)	|Y||||
+|FD_MANAGER_CODE			|客户经理编号		|VARCHAR2(255)	|Y||||
+|FD_LAUNCH_USER				|发起人			|VARCHAR2(255)	|Y||||
+|FD_QUAN_SCO				|定量得分(财务得分)	|NUMBER(20,8)	|Y||||
+|FD_QUAL_SCO				|定性得分(非财务得分)|NUMBER(20,8)	|Y||||
+|FD_SCO						|评级得分(模型计算总得分)|NUMBER(20,8)|Y||||
+|FD_PD						|违约概率			|NUMBER(20,8)	|Y||||
+|FD_RISK_LIMIT				|风险限额			|NUMBER(20,8)	|Y||||
+|FD_RISK_TYPE				|风险暴露类型		|VARCHAR2(255)	|Y||||
+|FD_MODEL_LEVEL				|模型评级级别		|VARCHAR2(10)	|Y||||
+|FD_ADJ_LEVEL				|调整项级别		|VARCHAR2(10)	|Y||||
+|FD_SUPP_LEVEL				|外部支持级别		|VARCHAR2(10)	|Y||||
+|FD_PD_LEVEL				|初始级别			|VARCHAR2(10)	|Y||||
+|FD_SP_LEVEL				|标普级别			|VARCHAR2(10)	|Y||||
+|FD_FIN_LEVEL				|最终认定级别		|VARCHAR2(10)	|Y||||
+|FD_PROCESS_STATUS			|流程状态			|VARCHAR2(50)	|Y|||NOT_SUBMIT:待提交,IN_APPROVAL:审批中,COMPLETED:已审核,SEND_BACK:退回,UNDONE:已撤销|
+|FD_RATE_STATUS				|评级状态			|VARCHAR2(50)	|Y|||NOT_ACTIVE:未生效,EFFECTIVE:已生效,EXPIRED:已失效|
+|FD_TRIGGER_TYPE			|评级任务触发类型	|VARCHAR2(50)	|Y|||MANUALLY:人工发起,SYSTEM:系统发起|		
+|FD_TRIGGER_REA				|评级任务触发原因	|VARCHAR2(255)	|Y||||重新评级,评级更新,财报变化等...	
+|FD_RATE_TYPE				|评级类型			|VARCHAR2(10)	|Y|||NORMAL:一般评级,DEFAULT:违约,REBIRTH:重生,DESIGNATION:直接认定|	
+|FD_RATE_TYPE_DES			|评级类型描述		|VARCHAR2(255)	|Y||||低风险业务系统直接认定，低风险业务人工审批认定，模型未覆盖人工认定	
+|FD_COMPLETION_TIME			|任务完成时间		|TIMESTAMP(6)	|Y||||	
+|FD_EFFECTIVE_TIME			|评级生效时间		|TIMESTAMP(6)	|Y||||	
+|FD_DUE_TIME				|评级到期时间		|TIMESTAMP(6)	|Y||||	
+|FD_DEAD_TIME				|评级失效日期		|TIMESTAMP(6)	|Y||||	
+|FD_VAILD					|是否有效			|NUMBER(5)		|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_COMPANY_RATING_FD_ID]]PK_NS_COMPANY_RATING_FD_ID | 主键 | FD_ID |  |  | 
+| [[FK_NS_COMPANY_RATING_CUSTID]]FK_NS_COMPANY_RATING_CUSTID | 外键 | FD_RATING_CUSID | <<NS_RATING_CUSTOMER>> | FD_ID | CASCADE
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+			<column name=""  
+			
+
+==== 公司客户评级步骤表(NS_RATING_STEP) [[NS_RATING_STEP]]
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_COMPANY_RATING_STEP_FD_ID>>|||
+|FD_RATEID					|评级ID			|VARCHAR2(36)	|N||<<FK_NS_RATING_STEP_RATINGID>>||
+|FD_MODEL_ID				|模型ID(用于记录定性/定量模型的ID)		|VARCHAR2(36)	|N||||
+|FD_SNO						|步骤序号			|NUMBER(4)		|Y||||
+|FD_STEP_NAME				|步骤名称			|VARCHAR2(50)	|Y||||
+|FD_STEP_RESOURCES			|步骤资源			|VARCHAR2(500)	|Y||||
+|FD_LAST_STEP				|上一步骤			|VARCHAR2(36)	|Y||||
+|FD_NEXT_STEP				|下一步骤			|VARCHAR2(36)	|Y||||
+|FD_STEP_TYPE				|步骤类型			|VARCHAR2(50)	|Y|||CUST_INFO:客户信息,QUANTITATIVE:定量信息,QUALITATIVE_EDIT:定性指标录入,QUALITATIVE_SHOW:定性指标展示,ADJUST_ITEM:调整项 ,SUPPORT_ITEM:外部支持项,REPORT_INFO:评级报告展示,OTHER:其它|
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_COMPANY_RATING_STEP_FD_ID]]PK_NS_COMPANY_RATING_STEP_FD_ID | 主键 | FD_ID |  |  | 
+| [[FK_NS_RATING_STEP_RATINGID]]FK_NS_RATING_STEP_RATINGID | 外键 | FD_RATEID | <<NS_COMPANY_RATING>> | FD_ID | CASCADE 
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 客户评级指标表(NS_RATING_INDEXES) [[NS_RATING_INDEXES]]
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_RATING_INDEXES_FD_ID>>|||
+|FD_STEPID					|评级步骤ID	|VARCHAR2(36)	|N||<<FK_NS_RATING_INDEXES_STEPID>>||
+|FD_INDEXTYPE				|指标类型			|VARCHAR2(20)	|Y|||(定性,定量，调整项，外部支持，补录)|
+|FD_INDEXCATEGORY			|指标分类			|VARCHAR2(500)	|Y||||
+|FD_INDEXNAME				|指标名称			|VARCHAR2(500)	|Y||||
+|FD_CONFIGID				|配置ID			|VARCHAR2(36)	|Y||||
+|FD_INDEXID					|指标ID			|VARCHAR2(36)	|Y||||
+|FD_INDEXCODE				|指标编号			|VARCHAR2(50)	|Y||||
+|FD_INDEXVALUE				|指标值			|VARCHAR2(100)	|Y||||
+|FD_WEIGHT					|权重			|NUMBER(20,8)	|Y||||
+|FD_SCORE					|指标得分			|NUMBER(20,8)	|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_RATING_INDEXES_FD_ID]]PK_NS_RATING_INDEXES_FD_ID | 主键 | FD_ID |  |  | 
+| [[FK_NS_RATING_INDEXES_STEPID]]FK_NS_RATING_INDEXES_STEPID | 外键 | FD_STEPID | <<NS_RATING_STEP>> | FD_ID | CASCADE 
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****
+
+==== 客户评级推翻记录表(NS_RATING_OVERTURN) [[NS_RATING_OVERTURN]]
+===== 表结构
+[width="100%",options="header,footer"]
+|====================
+| 字段英文名 | 字段中文名 | 字段类型 | 是否可为空 | 主键 | 外键  |可选项 | 备注
+|FD_ID						|主键			|VARCHAR2(36)	|N|<<PK_NS_RATING_OVERTURN_FD_ID>>|||
+|FD_RATEID					|评级ID			|VARCHAR2(36)	|N||<<FK_NS_RATING_OVERTURN_RATINGID>>||
+|FD_ROLE_NAME				|角色名称			|VARCHAR2(500)	|Y||||
+|FD_ROLE_CODE				|角色编号			|VARCHAR2(255)	|Y||||
+|FD_USER_CODE				|用户编号			|VARCHAR2(255)	|Y||||
+|FD_USER_NAME				|用户名称			|VARCHAR2(500)	|Y||||
+|FD_SUGG_LEVEL				|建议级别			|VARCHAR2(50)	|Y||||
+|FD_ADJ_REASON				|调整原因			|VARCHAR2(500)	|Y||||
+|FD_CORPORATION				|多法人类型		|VARCHAR2(255)	|Y||||
+|FD_CREATOR					|创建人			|VARCHAR2(255)	|Y||||
+|FD_CREATE_DATE				|创建日期			|TIMESTAMP(6)	|Y||||
+|FD_LAST_MODIFIER			|最后修改人		|VARCHAR2(255)	|Y||||
+|FD_LAST_MODIFYDATE			|最后修改日期		|TIMESTAMP(6)	|Y||||
+|==================== 
+===== 键
+****
+[width="100%",options="header,footer"]
+|====================
+| 键名称 | 键类型 | 列名 | 引用表 | 引用字段 | ON Delete 
+| [[PK_NS_RATING_OVERTURN_FD_ID]]PK_NS_RATING_OVERTURN_FD_ID | 主键 | FD_ID |  |  | 
+| [[FK_NS_RATING_OVERTURN_RATINGID]]FK_NS_RATING_OVERTURN_RATINGID | 外键 | FD_RATEID | <<NS_COMPANY_RATING>> | FD_ID | CASCADE 
+|====================
+****
+===== 索引
+****
+[width="100%",options="header,footer"]
+|====================
+| 索引名称 | 索引类型 | 列名 
+| - | - | -
+|====================
+****

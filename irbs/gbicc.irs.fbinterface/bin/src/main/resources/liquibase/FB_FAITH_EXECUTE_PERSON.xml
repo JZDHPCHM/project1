@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_FAITH_EXECUTE_PERSON" author="framework">
+
+        <!-- 失信被执行人结果表 -->
+        <createTable tableName="FB_FAITH_EXECUTE_PERSON" remarks="失信被执行人">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="DECISION_AUTHORITY" type="java.sql.Types.VARCHAR(100)" remarks="做出执行依据单位"></column>
+            <column name="PUBLIC_DATE" type="java.sql.Types.VARCHAR(20)" remarks="发布时间"></column>
+            <column name="EXECUTE_DETAIL" type="java.sql.Types.VARCHAR(300)" remarks="失信被执行人行为具体情形"></column>
+            <column name="HAVE_PERFORMED" type="java.sql.Types.VARCHAR(20)" remarks="已履行"></column>
+            <column name="AGE" type="NUMBER(3)" remarks="年龄"></column>
+            <column name="EXECUTION_NUMBER" type="java.sql.Types.VARCHAR(100)" remarks="执行依据文号"></column>
+            <column name="EXECUTION_COURT" type="java.sql.Types.VARCHAR(100)" remarks="执行法院"></column>
+            <column name="NO_PERFORMED" type="java.sql.Types.VARCHAR(20)" remarks="未履行"></column>
+            <column name="CASE_NUMBER" type="java.sql.Types.VARCHAR(36)" remarks="案号"></column>
+            <column name="CHARGE_PERSON" type="java.sql.Types.VARCHAR(30)" remarks="法定代表人或者负责人姓名"></column>
+            <column name="EFFECT_OBLIGATIONS" type="java.sql.Types.VARCHAR(4000)" remarks="生效法律文书确定的义务"></column>
+            <column name="PROVINCE" type="java.sql.Types.VARCHAR(20)" remarks="省份"></column>
+            <column name="CASE_DATE" type="java.sql.Types.VARCHAR(20)" remarks="立案时间"></column>
+            <column name="EXECUTION_NAME" type="java.sql.Types.VARCHAR(500)" remarks="被执行人姓名/名称"></column>
+            <column name="EXECUTION_RESULT" type="java.sql.Types.VARCHAR(30)" remarks="被执行人的履行情况"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

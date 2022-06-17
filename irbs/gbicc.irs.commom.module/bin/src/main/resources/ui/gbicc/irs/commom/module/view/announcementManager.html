@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html th:replace="${@frSystemParameterService.getParameter('uiTemplate')}::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+/**
+ * ====================================================================================================================
+ * 系统公告列表
+ * ====================================================================================================================
+**/
+//字段定义
+var AnnouncementFields ={
+	ds:[
+		{name:'id',				primaryKey:true,hidden:true},
+	    {name:'title',			title:'[(#{mvc.i18n.announcement.entity.title})]'},
+	    {name:'content',		title:'[(#{mvc.i18n.announcement.entity.content})]'},
+	    {name:'lastModifier',	title:'[(#{lastModifier})]'},
+	    {name:'lastModifyDate',	title:'[(#{lastModifyDate})]'}
+	],
+	query:[
+		{width:'*',name:'title',			title:'[(#{mvc.i18n.announcement.entity.title})]'},
+		{width:'*',name:'lastModifier',		title:'[(#{lastModifier})]'},
+		{width:'*',name:'lastModifyDate',	title:'[(#{lastModifyDate})]',type:'miniDateRange',dateDisplayFormat:'yyyy-MM-dd HH:mm:ss',allowRelativeDates:false}
+	],
+	grid: [
+		{width:200,				name:'title',			title:'[(#{mvc.i18n.announcement.entity.title})]'},
+	    {width:'*',				name:'content',			title:'[(#{mvc.i18n.announcement.entity.content})]',canSort:false},
+	    {width:100,				name:'lastModifier',	title:'[(#{lastModifier})]'},
+	    {width:120,				name:'lastModifyDate',	title:'[(#{lastModifyDate})]'}
+	],
+	edit: [
+		{width:'*',					name:'id',               		title:'[(#{mvc.i18n.announcement.entity.id})]',				type: 'text',		primaryKey:true,canEdit:false,hidden:true,},
+		{width:'*',					name:'title',               	title:'[(#{mvc.i18n.announcement.entity.title})]',			type: 'text',		required:true,validators:[{type:'lengthRange',max:254}]},
+		{width:'*',					name:'content',      			title:'[(#{mvc.i18n.announcement.entity.content})]',		type: 'richText',	required:true,height:200}
+	]
+};
+
+//系统公告列表数据源
+isc.FwRestDataSource.create({
+	ID: 'announcementDS',
+    fields: AnnouncementFields.ds,
+    dataURL: '[(@{/system/announcement/isc})]'
+});
+
+//系统公告列表
+isc.FwListGrid.create({
+	ID: 'announcementListGrid',
+	title: '<b>[(#{mvc.i18n.announcement.grid.title})]</b>',
+	dataSource: announcementDS,
+	initialSort:[
+        {property:'lastModifyDate',direction:'descending'}
+    ],
+	defaultFields: AnnouncementFields.grid,
+	queryForm: {
+	    fields: AnnouncementFields.query
+	},
+	
+	actionMembers:[
+		'query','reset','seperator','refresh','seperator','add','clone','update','remove','seperator','info',
+	],
+	editWindow: {
+		titleSuffix: '[(#{mvc.i18n.announcement.editWindow.title.suffix})]',
+		width: 700,
+		height: 350,
+		autoSize: false,
+        form: {
+            dataSource: announcementDS,
+            fields: AnnouncementFields.edit
+        }
+	},
+	rowDoubleClick: function (record, recordNum, fieldNum){
+		if(record){
+			this.info();
+		}
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: announcementListGrid
+	}
+});
+</script>
+</html>

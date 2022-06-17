@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>文件下载中心</title>
+<style type="text/css">
+	.form-group {
+	    margin-bottom: 10px;
+	}
+	.form-group:last-child {
+	    margin-bottom: 0;
+	}
+	.ibox-content{
+		padding: 10px;
+	}
+	/* .chosen-search{
+		display: none;
+	} */
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<div class="wrapper wrapper-content">
+				<div class="row">
+	                <div class="col-lg-12">
+	                	<div class="ibox float-e-margins">
+	                		<div class="ibox-title">
+	                            <h5>下载中心</h5>
+	                        </div>
+	                        <div class="ibox-content">
+	                        	<form class="form-horizontal" id="formSearch">
+									<div class="form-group">
+									    <div class="col-sm-1" style="text-align: center;">
+                                            <b id="btn-delete" class="btn btn-warning">删除</b>
+                                        </div>
+										<label class="col-sm-1 control-label">文件名称</label>
+										<div class="col-sm-2">
+											<input id="fileName" name="fileName" type="text" placeholder="输入文件名称查询" class="form-control">
+										</div>
+										<label class="col-sm-1 control-label">文件类型</label>
+                                        <div class="col-sm-2">
+                                            <select name="fileType" id="fileType" class="chosen-select">
+                                                <option value=''>请选择</option>
+                                                <option
+                                                    th:each="option: ${@frDownloadFileServiceImpl.getFileType()}"
+                                                    th:value="${option.key}" th:text="${option.value}"></option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-1 control-label">导出状态</label>
+                                        <div class="col-sm-2">
+                                            <select name="exportStatus" id="exportStatus" class="chosen-select">
+                                                <option value=''>请选择</option>
+                                                <option
+                                                    th:each="option: ${@frDownloadFileServiceImpl.getExportStatus()}"
+                                                    th:value="${option.key}" th:text="${option.value}"></option>
+                                            </select>
+                                        </div>
+										<div class="col-sm-2" style="text-align: center;">
+                                            <b id="btn-query" class="btn btn-success">查询</b>
+                                            <b id="btn-reset" class="btn btn-success">重置</b>
+                                        </div>
+									</div>
+								</form>
+	                        </div>
+	                	</div>
+						<div class="jqGrid_wrapper">
+                            <table id="table_list"></table>
+                            <div id="pager_list"></div>
+                        </div>
+	                </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="/js/seachList.js?t=2"></script>
+<script type="text/javascript">
+
+$('.chosen-select').chosen({width: "100%"});
+
+function downloadFile(id){
+    location.href = "/downloadFile/download.action?id="+id;
+}
+
+$(document).ready(function(){
+	var height = window.innerHeight;
+	var width = window.innerWidth;
+	// 列表数据展示
+    $("#table_list").jqGrid({
+        url : "[(@{/downloadFile/getDownloadFile.action})]",
+        recordtext : "显示：{0} - {1}，总数：{2} ",
+        emptyrecords : "本次查询无数据！",
+        loadtext : "读取中...",
+        loadui : "block",
+        pgtext : "第 {0}页， 共{1}页",
+        mtype : "get",
+        datatype : "json",
+        height : height-250,
+        //autowidth : false,
+        width:width-20,
+        shrinkToFit : false,
+        autoScroll : true,
+        //表示请求页码的参数名称
+        prmNames : {
+            page: "page"
+        },
+        rowNum : 20,
+        rowList : [ 10, 20, 30 ],
+        multiselect: true,
+        colModel : [ {
+            label : 'id',
+            name : 'id',
+            index : 'id',
+            editable : false,
+            search : true,
+            hidden : true
+        },{
+            label : '文件名',
+            name : 'fileName',
+            index : 'fileName',
+            editable : false,
+            search : true,
+        },{
+            label : '导出状态',
+            name : 'exportStatus',
+            index : 'exportStatus',
+            editable : false,
+            search : true,
+            formatter:function(value,index,row){
+            	if(value==null || value==''){
+            		return '';
+            	}
+                return [(${@frDownloadFileServiceImpl.getExportStatusMapJsonString()})][value];
+            }
+        },{
+            label : '导出时间',
+            name : 'exportTime',
+            index : 'exportTime',
+            editable : false,
+            search : true
+        },{
+            label : '导出用户',
+            name : 'exportUser',
+            index : 'exportUser',
+            editable : false,
+            search : true
+        }, {
+            label : '操作',
+            name : '',
+            index : '',
+            editable : false,
+            search : true,
+            align:"center",
+            formatter:function(value,index,row){
+            	return "<a href='javascript:void(0)' style='cursor:pointer;text-decoration:underline;color:blue' onclick='downloadFile(\""+row.id+"\")'>下载</a>";
+            }
+        }],
+        pager : "#pager_list",
+        viewrecords : true,
+        caption : "",
+        add : true,
+        edit : true,
+        addtext : 'Add',
+        edittext : 'Edit',
+        rownumbers : true,
+        hidegrid : true,
+        jsonReader : {
+            root:"data",
+            records: "recordsTotal",
+            repeatitems: false,
+            id: "0"
+        }
+    });
+	
+    $("#table_list").jqGrid('navGrid', '#factorPage', {
+        edit : false,
+        add : false,
+        del : false,
+        search : false
+    }, {
+        height : 200,
+        reloadAfterSubmit : true
+    });
+	
+    $(window).bind('resize', function() {
+        var w = window.innerWidth;
+        $('#table_list').setGridWidth(w-20);
+        var h = window.innerHeight;
+        $("#table_list").setGridHeight(h-250);
+    });
+    
+    //查询
+    $("#btn-query").click(function(){
+    	searchFunction();
+    })
+    
+    //查询函数
+    function searchFunction(){
+        $("#table_list").jqGrid('setGridParam',{
+            datatype : 'json',
+            postData : {
+            	"fileName":$("#fileName").val(),
+                "fileType":$("#fileType").val(),
+                "exportStatus":$("#exportStatus").val()
+            },
+            page : 1
+        }).trigger("reloadGrid");
+    }
+    
+    //删除
+    $("#btn-delete").click(function(){
+    	//获取多选到的id集合
+        var rowIds = $("#table_list").jqGrid("getGridParam", "selarrrow");
+        if(rowIds.length==0){
+            swal('提示','请选择有效记录','warning');
+            return false;
+        }else{
+            var paramIds = "";
+            $(rowIds).each(function (index, rowId){
+                 //由id获得对应数据行
+                var row = $("#table_list").jqGrid('getRowData', rowId);
+                paramIds = paramIds + row.id + ",";
+            })
+            paramIds = paramIds.substring(0,paramIds.length-1);
+            
+            swal(
+                    {
+                        title: "确定删除选中的记录?",
+                        text: "删除之后无法恢复该数据!",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "确定",
+                        cancelButtonText : "取消",
+                        closeOnConfirm: false
+                    },
+                    function(isConfirm){
+                        if(isConfirm){
+                            $.ajax({
+                                url:"[(@{/downloadFile/delete.action})]",
+                                type: 'POST',  
+                                data : {
+                                    "paramIds":paramIds
+                                },
+                                async : false,
+                                dataType:'json',
+                                success : function(data) {
+                                    if(data.flag){
+                                        swal('提示','删除成功','success');
+                                    }else{
+                                        swal('提示','删除失败','error');
+                                    }
+                                },
+                                error : function(data) {
+                                    swal('提示',data.responseJSON.message,'error');
+                                }
+                            })
+                            searchFunction();
+                        }
+                    }
+                )
+        }
+    })
+})
+
+</script>
+</html>

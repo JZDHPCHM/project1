@@ -1,0 +1,11 @@
+[
+	{
+		"type"			:"file",
+		"name"			:"DataDictionary.json",
+		"description"	:"DataDictionary.json",
+		"sources"		:[
+							"classpath:/gbicc/irs/basicComponent/dataDictionary/DataDictionary.json"
+						 ],
+		"target"		:"${dir.home}/config/DataDictionary.json"
+	}
+]

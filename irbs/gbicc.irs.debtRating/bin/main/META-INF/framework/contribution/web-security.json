@@ -1,0 +1,32 @@
+/*
+ * 认证贡献项配置示例
+ * 功能: 该贡献项配置为框架提供不进行认证某些资源的功能
+ * 使用说明:
+ * ignoredSecurityControllerUrlMatchers	: 不进行安全认证检查的 url 模式
+ */
+
+
+{
+	"ignoredSecurityControllerUrlMatchers": [
+		"/irs/DebtRatingResults/enterReport",
+		"/irs/DebtRatingResults/enterReport2",
+		"/irs/DebtStep/projectInfo",
+		"/irs/DebtStep/bigType",
+		"/irs/DebtRatingResults/debtReport",
+		"/irs/DebtIndexController/getFacilityHeader",
+		"/irs/DebtIndexController/getFacilityLevel",
+		"/irs/DebtIndexController/getAssetsDescribe",
+		"/irs/DebtIndexController/getFacilityMainInfo",
+		"/irs/DebtIndexController/getFacilityAssetsInfo",
+		"/irs/DebtIndexController/getFacilityCredit",
+		"/irs/DebtIndexController/getFacilityWarning",
+		"/irs/DebtIndexController/getFacilityCompare",
+		"/irs/DebtIndexController/getFacilityTrait",
+		"/irs/DebtIndexController/getFacilityAssetsScore",
+		"/irs/DebtIndexController/getFacilityMainScore",
+		"/irs/DebtIndexController/getFacilityToAssets",
+		"/irs/DebtIndexController/getFacilityToMain",
+		"/irs/DebtIndexController/**"
+	]
+}
+

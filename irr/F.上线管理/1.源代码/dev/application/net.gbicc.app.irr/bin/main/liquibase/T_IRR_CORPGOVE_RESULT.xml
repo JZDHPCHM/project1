@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="T_IRR_CORPGOVE_RESULT" author="fc">
+        <createTable tableName="T_IRR_CORPGOVE_RESULT" remarks="公司治理结果表">
+			<column name="ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键ID">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="INDEX_ID"       			type="VARCHAR(36)"      	 	remarks="指标ID"></column>
+			<column name="INDEX_NAME" 				type="VARCHAR(300)" 			remarks="指标名称"></column>
+			<column name="EVAL_POINT" 				type="VARCHAR(500)" 			remarks="评价点"></column>
+			<column name="INDEX_CODE"      			type="VARCHAR(50)"      	 	remarks="指标编码"></column>
+			<column name="EVAL_CRIT" 				type="VARCHAR(500)" 			remarks="评价标准"></column>
+			<column name="INDEX_SCORE"    			type="VARCHAR(300)"      		remarks="指标得分"></column>
+			<column name="SELF_EVAL"    			type="VARCHAR(10)"      		remarks="自我评价"></column>
+			<column name="TASK_BATCH"     			type="VARCHAR(10)"      	 	remarks="任务期次"></column>
+			<column name="DATA_BODY"      			type="VARCHAR(50)"      		remarks="主体编码"></column>
+			<column name="FD_CREATOR"           	type="VARCHAR(255)"  			remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"       	type="DATETIME"                 remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"     	type="VARCHAR(50)"  			remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"   	type="DATETIME"                 remarks="最后修改日期"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

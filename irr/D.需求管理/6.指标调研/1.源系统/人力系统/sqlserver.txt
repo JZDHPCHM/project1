@@ -1,0 +1,10 @@
+﻿IP：172.19.1.12
+name:HRMusers
+pwd:C@mid201
+试图的名字：
+uvw_hasl_Employeecountbydep1
+uvw_hasl_Employeecountbydep2
+uvw_hasl_Employeecountbydep3
+
+
+数据库名：has18

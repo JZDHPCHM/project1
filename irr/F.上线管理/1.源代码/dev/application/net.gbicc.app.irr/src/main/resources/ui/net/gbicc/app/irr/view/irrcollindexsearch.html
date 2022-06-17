@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+<style>
+	.formMargin{
+		margin : 0 0 0 5px
+	}
+	.form-group{
+		margin-top : 3px 
+	}
+</style>
+</head>
+<body style='background-color:white'>
+	<div class="wrapper">
+		<div class="row">
+     		<div class="col-lg-12">
+                 <div class="float-e-margins">
+                     <div class="ibox-content">
+                     	<div class="row">
+	                     	<div class="col-lg-12">
+	                     		<div class="row" style='margin:0 0 0 0;'>
+	                     			<form role="form" class="form-inline" id="searchForm">
+		                     		    <div class="form-group">
+			                              <label for="taskName" class="control-label">评估计划</label>
+			                              <select class="form-control" name="taskId" id="taskId">
+			                               	<option value=''>请选择</option>
+			                               	<option th:each="option: ${@irrTaskServiceImpl.getTaskMap('')}" th:value="${option.key}" th:text="${option.value}"></option>
+			                          	  </select>
+			                          	</div>
+			                          	<div class="form-group formMargin">
+			                                 <label class="control-label" for="sourceProjId">评估项目</label>
+		                                	 <select class="form-control" name="sourceProjId" id="sourceProjId">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@irrProjTypeServiceImpl.projTypeSelect(4)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label class="control-label" for="sourceOrgId">采集机构/部门</label>
+		                                	 <select class="form-control" name="sourceOrgId" id="sourceOrgId">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@irrUploadResultServiceImpl.findAllOrgs()}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label for="searchSplitCode" class="control-label">指标编码</label>
+			                                 <input type="text" placeholder="模糊查询" id="searchSplitCode" name="splitCode" class="form-control">
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label for="searchSplitName" class="control-label">指标名称</label>
+			                                 <input type="text" placeholder="模糊查询" id="searchSplitName" name="splitName" class="form-control">
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label class="control-label" for="searchCollectionWay">采集方式</label>
+		                                	 <select class="form-control" name="collectionWay" id="searchCollectionWay">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('collWay',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label for="searchCollName" class="control-label">采集人姓名</label>
+			                                 <input type="text" placeholder="模糊查询" id="searchCollName" name="collName" class="form-control">
+			                             </div>
+			                         </form>
+	                     		</div>
+	                     		<div class="row" style='margin:5px 0 0 0;'>
+	                     		<button class="btn btn-primary btn-sm" id="searchBtn">查询</button>
+	                     		<button class="btn btn-primary btn-sm" id="resetBtn">重置</button>
+	                     		<button class="btn btn-primary btn-sm" id="exportBtn">导出</button>
+	                     			<!-- 表格 -->
+		                     		<div class="jqGrid_wrapper">
+					                    <table id="indexTable"></table>
+					                    <div id="indexPage"></div>
+					                </div>		                            		                            
+	                     		</div>
+	                     	</div>
+                     	</div>
+                     </div>
+                 </div>
+             </div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">	
+	$(document).ready(function(){
+		/*配置指标表格*/
+		$("#indexTable").jqGrid({
+			url:"[(@{/irr/uploadResult/searCollchIndex.action})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 350,
+	        autowidth: true,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 1,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['ID','拆分指标ID','任务期次','拆分指标编码','拆分指标名称','任务ID','主体编码','本期指标结果','本期指标得分','上期指标结果',
+	        	'上期指标得分','采集方式','格式化前采集方式','采集机构','采集机构名称','是否人工改动',
+	        	'结果类型','是否填写原因','采集人名称','数据说明'],
+	        colModel:[{
+	        	name:'ID',
+	        	index:'ID',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITID',
+	        	index:'SPLITID',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'TASKBATCH',
+	        	index:'TASKBATCH',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITCODE',
+	        	index:'SPLITCODE',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITNAME',
+	        	index:'SPLITNAME',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'TASKID',
+	        	index:'TASKID',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'DATABODY',
+	        	index:'DATABODY',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITRESULTQ2',
+	        	index:'SPLITRESULTQ2',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITSCOREQ2',
+	        	index:'SPLITSCOREQ2',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITRESULTQ1',
+	        	index:'SPLITRESULTQ1',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITSCOREQ1',
+	        	index:'SPLITSCOREQ1',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'COLLWAY',
+	        	index:'COLLWAY',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('collWay',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'COLLWAY',
+	        	index:'COLLWAY',
+	        	hidden : true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'COLLORGID',
+	        	index:'COLLORGID',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'COLLORGNAME',
+	        	index:'COLLORGNAME',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'ISHANDCHANGE',
+	        	index:'ISHANDCHANGE',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'RESULTTYPENAME',
+	        	index:'RESULTTYPENAME',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'ISFILLREASON',
+	        	index:'ISFILLREASON',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'COLLUSERNAME',
+	        	index:'COLLUSERNAME',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'DATADESC',
+	        	index:'DATADESC',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        }],
+	        pager: "#indexPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }	        
+	    });
+	    $("#indexTable").jqGrid('navGrid', '#indexPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#indexTable').setGridWidth(width);
+	    });
+	    $("#searchBtn").click(function(){
+	    	var splitCode = $('#searchSplitCode').val();
+	    	var splitName = $('#searchSplitName').val();
+	    	var taskId = $('#taskId').val();
+	    	var collectionWay = $('#searchCollectionWay').val();
+	    	var sourceProjId = $('#sourceProjId').val();
+	    	var sourceOrgId = $('#sourceOrgId').val();
+	    	var collName = $('#searchCollName').val();
+	    	$("#indexTable").jqGrid('clearGridData');//清空表格
+			$("#indexTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',					
+				postData : {
+					splitCode : splitCode,
+					splitName : splitName,
+					taskId : taskId,
+					collectionWay : collectionWay,
+					sourceProjId : sourceProjId,
+					sourceOrgId : sourceOrgId,
+					collName : collName
+				},
+				page : 1
+			},true).trigger("reloadGrid");
+	    });
+	    	    	    
+	});
+   
+	/*重置按钮点击事件*/
+	$('#resetBtn').click(function(){
+		defineResetForm('#searchForm');
+	});
+	
+	/*导出按钮点击事件*/
+	$('#exportBtn').click(function(){
+		var formJson = $('#searchForm').getJson();
+		window.location.href = '[(@{/irr/uploadResult/exportCollResult.action?param='+encodeURIComponent(JSON.stringify(formJson))+'})]';
+	});
+    
+</script>
+</html>

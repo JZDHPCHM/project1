@@ -1,0 +1,6 @@
+{
+    "includes":[
+        "gbicc.irs.defaultcustomer.entity",
+        "gbicc.irs.defaultcustomer.repository"
+    ]
+}

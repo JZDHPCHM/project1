@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script type="text/javascript"
+	th:src="@{/webjars/jquery/1.12.4/js/jquery.js}"></script>
+<script>
+var users=[(${@DefaultCustomerService.findUserNames()})];
+//当前登录人
+var currUserName = "[(${T(org.wsp.framework.security.util.SecurityUtil).getUserName()})]";
+//当前登录人账号
+var userAccout = "[(${T(org.wsp.framework.security.util.SecurityUtil).getLoginName()})]";
+//当前登录人默认角色
+var defaultRole = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+var userAccoutAndRole = defaultRole + userAccout;
+//模型列表(从模型系统获取)
+var AllModelList = [(${@frSystemDictionaryService.getDictionaryMapJsonString('MODEL_TYPE',#locale)})];
+//过滤金融同业模型
+var ModelList = {};
+for( modelCode in AllModelList){
+	if(modelCode.startsWith("F")){
+		ModelList[modelCode]=AllModelList[modelCode];
+	}
+}
+var configId=[];
+//公司客户评级类型
+var RatingType = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.RatingType),#locale)})];
+//公司客户评级流程状态
+var RatingProcessStatus = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.RatingProcessStatus),#locale)})];
+var ratingStatus={};
+for( modelCode in RatingProcessStatus){
+	if(!modelCode.startsWith("SEND_BACK") && !modelCode.startsWith("UNDONE")){
+		ratingStatus[modelCode]=RatingProcessStatus[modelCode];
+	}
+}
+RatingProcessStatus=ratingStatus;
+
+//评级状态
+var RatingStatus = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.RatingStatus),#locale)})];
+
+
+var isShow=false;
+var roleCode = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+if(roleCode=="FINANCIAL_MARKETS_OPERATOR"){
+	isShow = true;
+}
+
+
+/**
+ *需配置字典
+**/
+
+var whetherStatus={
+		 "0" : "否",
+		  "1" : "是"
+}
+
+var levelMap={
+
+}
+
+
+
+isc.defineClass("RatingWindow", "Window").addProperties({
+	step : new Object,			//当前步骤对象
+	RatingObject : new Object,	//评级对象
+	qualStepId : "",			//定性步骤ID
+	quanStepId : "",			//定量步骤ID
+	editable : false,
+	editable1_3 : false,
+	leftBtnDis : false
+});
+
+
+isc.DynamicForm.create({
+	ID : "ManualDecisionResultFormsPl",
+	width:"100%",
+	fields : [
+	          	{
+	          		name:'reason',   
+	          		title:"意见说明",
+	          		type:'textArea',
+	          		width:'100%',	
+	          		validators:[{type:'lengthRange',max:800}]	
+	          	}
+	]
+});
+
+isc.defineClass('SelectAssigneeWindow','FwWindow').addProperties({
+	title:I18n['org.wsp.framework.flowable.window.selectAssignee.title'],
+	width: 400,
+	//自定义属性
+	assignees: null,			//候选处理人列表
+	
+	actionMembers:[
+		{
+			name:'confirm',
+			title:I18n['ok'],
+			click: function(){
+				isc.FwUtil.closeMaskWindow();
+				isc.FwUtil.showMaskWindow();
+				if(this.target.afterSelectedAssignee){
+					this.target.afterSelectedAssignee(this.target._fwForm.getValue("assignee"));
+				}
+				this.target.close();
+	        }
+		},
+		'close'
+	],
+	close:function(){
+		isc.FwUtil.closeMaskWindow();
+		this.Super('close',arguments);
+	},
+	initWidget: function () {
+		this._fwForm =isc.FwDynamicForm.create({
+		    fields:[
+		    	{showTitle:false,type:'staticText',value:I18n['org.wsp.framework.flowable.task.tip.selectAssignee'],colSpan:4,shouldSaveValue:false},
+		    	{showTitle:false,type:'spacer',colSpan:4,shouldSaveValue:false},
+		    	{name:'assignee',title:I18n['org.wsp.framework.flowable.task.entity.assignee'],type:'select',valueMap:this.assignees,defaultToFirstOption:true}
+		    ]
+		});
+		this.items =[this._fwForm];
+		this.Super("initWidget", arguments);
+	}
+});
+
+
+
+isc.RatingWindow.create({
+	ID : "rateWindowPl",
+	title : "",
+	width : "30%",
+	height : "30%",
+	autoCenter : true,
+	isModal : true,
+	visiable : false,
+	showModalMask : true,
+	autoDraw : false,
+	//headerControls : ["headerLabel", "closeButton"],
+	items : [	
+			isc.VLayout.create({
+				widht:"100%",
+					height:"60%",
+					members:[
+						ManualDecisionResultFormsPl,
+						isc.FwWorkflowAction.create({
+							ID:"process_action_pl",
+							taskId:null,
+				    		actionUrl: "[[@{/irs/InterbankDataRating/startProcess}]]",
+				    		//actionUrl: "[[@{/irs/IssueBondsRating/subTask}]]",
+				    		getData: function(){
+				    			return {
+				    	        	transientVariables	: {
+				    	        		user:userAccout,
+				    	        		taskId:null,
+				    	        		ratingId:configId,
+				    	        		reason:ManualDecisionResultFormsPl.getValue("reason"),
+				    	        	},
+				    	        	autoCompleteFirstTask: true
+				    			}
+				    		},doSubmit:function(){
+				    			isc.FwUtil.closeMaskWindow();
+				    			isc.FwUtil.showMaskWindow();
+				    			this.Super('doSubmit',arguments);
+				    		},
+				    		erorrCallback: function(){
+				    			
+				    		},successCallback: function(){
+				    			isc.say('操作成功！');
+				    			companyRatingListGrid.invalidateCache();
+				    			rateWindowPl.close();
+				    			isc.FwUtil.closeMaskWindow();
+				    			isc.SelectAssigneeWindow.close();
+				    		}
+				    	})
+					]
+				}),
+			 
+			],
+	closeClick : function() {
+		isStart = false;
+		noFinStepId = ""; 	// 定性步骤id
+		finStepId = ""; 	// 定量步骤id
+		rateWindowPl.hide();
+		//刷新评级列表数据
+		companyRatingListGrid.invalidateCache();
+	}
+});
+
+
+isc.FwRestDataSource.create({
+	  ID: 'allModelScaleDetailDs',
+	  fields:[
+	  	{name:'id'},
+	  	{name:'scaleLevel'}
+	  ],
+	  // fetchDataURL: '[[@{/irs/financialOrIssueBonds/ratingResult}]]'
+	   fetchDataURL:'[[@{/irs/companyRating/getMainScaleLevel?type=020}]]',     //用于指定自定义查询链接
+	});
+//上传组件
+isc.defineClass('FwUploadWindow','FwWindow').addProperties({
+	width:600,
+	title: '上传数据',
+	isModal: false,					//模式窗口
+	actionMembers:[		{
+			name:'import',
+			title:'确定',
+			click: function(){
+				if(this.target._uploadForm.validate()){
+					isc.FwUtil.showMaskWindow();
+					this.target._uploadForm.submit();
+				}
+			}
+		},
+		'close'
+	],
+	initWidget: function () {
+		this._uploadForm =isc.FwDynamicForm.create({
+			width:'100%',
+			canSubmit:true,
+			requiredMessage:'请选择需要评级的文件！',
+			action: '[[@{/irs/InterbankDataRating/fileUploadF/}]]',
+			method:'POST',
+			encoding:'multipart',
+			target: 'uploadIframe',
+			numCols:3,
+			colWidths:[150,'*'],
+			fields:[				{
+					width:300,
+					name: 'file',
+					title: '选择文件',
+					type:'upload',
+					required:true
+				}
+			]
+		});
+		this._uploadIframe =isc.HTMLFlow.create({
+			contents:'<iframe name="uploadIframe" id="uploadIframe" style="width:0px;height:0px;border:0px;"></iframe>'
+		});
+    	this.items =[this._uploadForm,this._uploadIframe];
+    	this.Super("initWidget", arguments);
+    }
+});
+
+var InterbankDataRatingLogFields ={
+		DataSource: [
+			{name:'id'},
+			{name:'attachment'},
+			{name:'maintainDt'},
+			{name:'maintainResult'},
+			{name:'opinion'},
+			{name:'interbankRating'},
+			{name:'proposedRoles'},
+			{name:'suggestPeople'}
+		],
+		grid: [
+			{name:'proposedRoles',title:"建议角色"},
+			{name:'org',title:"机构"},
+			{name:'suggestPeople',title:"建议人员"},
+			/* {name:'maintainDt',title:"意见说明"}, */
+			{name:'maintainResult',title:"建议级别"},
+			{name:'opinion',title:"建议"},
+			{name:'operation',title:"操作动作"},
+			{name:'attachment',title:"附件",formatCellValue:function (value, record, rowNum, colNum, grid) {
+				if(record && record.attachment){
+					return "<a href =  \"#\" onclick=\"downLoadAttachment('" + record.attachment + "')\">下载附件</a >";
+				}else{
+					return "";
+				}
+            }}
+		]
+};
+
+isc.FwRestDataSource.create({
+	ID: 'InterbankDataRatingLogDS',
+	autoFetchData:false,
+    fields: InterbankDataRatingLogFields.DataSource,
+    dataURL: '[(@{/irs/interbankDataRatingLog/isc})]'
+});
+
+isc.FwListGrid.create({
+	ID: 'InterbankDataRatingLogGrid',
+	title: '<b>意见历史列表</b>',
+	autoFetchData:false,
+	border:0,
+	height:200,
+	width:"100%",
+	canPageable:false,
+	canSort:false,
+	dataSource: InterbankDataRatingLogDS,	
+	fields: InterbankDataRatingLogFields.grid,
+});
+
+isc.ViewLoader.create({
+	ID : "rateWindowLoader",
+	autoDraw : false,
+	loadingMessage : "",
+	redrawOnStateChange : true,
+	overflow : 'auto'
+});
+//创建编辑列表
+ isc.FwDynamicForm.create({
+	ID : "ManualDecisionResultForms",
+	width:"100%",
+	fields : [
+				{	
+					width:200,		
+					name:'opinionResult',    	
+					title:'建议等级',		
+					type: 'select',
+					required:true,
+			    	autoFetchData:false,
+			    	optionDataSource:allModelScaleDetailDs,
+			    	displayField:'scaleLevel',
+					valueField:'scaleLevel',
+					getPickListFilterCriteria : function () {
+						  return {"pdLevel":fdSystemEvaluationGrade};
+			        }
+				},
+	          	{
+	          		name:'reason',   
+	          		title:"意见说明",
+	          		type:'textArea',
+	          		width:'100%',	
+	          		validators:[{type:'lengthRange',max:500}]	
+	          	}
+	]
+}); 
+
+
+
+
+//上传表单
+isc.FwDynamicForm.create({
+	ID:"fileUplode",
+		width:'100%',
+		canSubmit:true,
+		action: '[[@{/irs/InterbankDataRating/subTask}]]',
+		method:'POST',
+		encoding:'multipart',
+		target: 'uploadIframe',
+		numCols:3,
+		colWidths:[150,'*'],
+		fields:[
+			{
+				width:300,
+				name: 'file',
+				title: '附件上传',
+				type:'upload',
+				required:false
+			}
+		]
+});
+
+//创建操作按钮 方法
+var fdModelName="";
+var fdSystemEvaluationGrade="";
+function createOperationButton(record, colNum){
+	var fieldName = companyRatingListGrid.getFieldName(colNum); 
+	  fdModelName =  record.fdModelname;
+      fdSystemEvaluationGrade =  record.fdSystemEvaluationGrade;
+    if (fieldName == "operationField") {
+        var recordCanvas = isc.HLayout.create({
+            height: 22,
+            width: "100%",
+            align: "left"
+        });
+        
+      
+        if(record.fdProcessState=="NOT_SUBMIT"&&record.fdWhetherStatus==1&&isShow){
+        	
+        	 var editImg = isc.IButton.create({
+             	name:"editImg",
+                 title: "编辑",
+                 width:50,
+                 grid: this,
+                 click : function () {
+                	 fdSystemEvaluationGrade =  record.fdSystemEvaluationGrade;
+                	 ManualDecisionResultForms.reset();
+                		isc.FwWindow.create({
+                			title : "编辑评级",
+                			width : "40%",
+                			height : "60%",
+                			ID:"eiditWindow",
+                			autoSize: true,
+                			showActionBar:false,
+                			closeAndDestroy:false,
+                			items : [	
+                					isc.VLayout.create({
+                						width:"100%",
+                						members:[
+                							InterbankDataRatingLogGrid,
+                							ManualDecisionResultForms,
+                							fileUplode,
+                							isc.HTMLFlow.create({
+                								contents:'<iframe name="uploadIframe" id="uploadIframe" style="width:0px;height:0px;border:0px;"></iframe>'
+                							}),
+                							isc.HLayout.create({
+                					    		width:'100%',
+                					    		layoutTopMargin:15,
+                					    		layoutBottomMargin:10,
+                					    		members:[
+                					    			isc.LayoutSpacer.create({width:"100%"}),  //间距
+                					    			isc.FwWorkflowAction.create({
+                										ID:"process_action",
+                										taskId:null,
+                							    		actionUrl: "[[@{/irs/InterbankDataRating/startProcess}]]",
+                							    		getData: function(){
+                							    			return {
+                							    	        	transientVariables	: {
+                							    	        		user:userAccout,
+                							    	        		taskId:null,
+                							    	        		ratingId:configId,
+                							    	        		filePath:"",
+                							    	        		file:fileUplode.getValue("file"),
+                							    	        		reason:ManualDecisionResultForms.getValue("reason"),
+                							    	        		opinionResult:ManualDecisionResultForms.getValue("opinionResult")
+                							    	        	},
+                							    	        	autoCompleteFirstTask: true
+                							    			}
+                							    		},doSubmit:function(flage,path){
+                							    			isc.FwUtil.closeMaskWindow();
+                							    			if(!fileCheck()){
+                							    				isc.say('该文件不可上传！');
+                							    			}else{
+                							    				isc.FwUtil.showMaskWindow();
+                							    				this.Super('doSubmit',arguments);
+                							    			}
+                							    		},
+                							    		successCallback: function(param){
+                							    			var values = fileUplode.getValue("file");
+                							    			if(values){
+                							    			    reAction = '[(@{/irs/InterbankDataRating/subTask})]?ratingLogId='+param.data.strCode,
+                							    				fileUplode.action = reAction;
+                    							    			fileUplode.submit();
+                    							    			fileUplode.reset();
+                							    			}else{
+                							    				isc.say('操作成功！');
+                    							    			var paramter=process_action.getData();
+                    							    			paramter.transientVariables.filePath="";
+                    							    			companyRatingListGrid.invalidateCache();
+                    							    			eiditWindow.close();
+                							    			}
+                							    			isc.FwUtil.closeMaskWindow();
+                							    			isc.SelectAssigneeWindow.close();
+                							    		},
+                							    		erorrCallback: function(){
+                							    			isc.say('附件上传失败！');
+                							    			isc.FwUtil.closeMaskWindow();
+                							    		}
+                							    	}),
+                					    	    	isc.LayoutSpacer.create({width:"100%"})  //间距
+                					    		]
+                					    	})
+                						]
+                					})
+                			]
+                		}).show();
+                		var tempArray = new Array();
+                		tempArray.push(record.id);
+                		configId=tempArray;
+                		InterbankDataRatingLogGrid.fetchData({"interbankRating":record.id});
+                		ManualDecisionResultForms.setValue("opinionResult",record.fdSystemEvaluationGrade);
+                 }
+             });      
+             recordCanvas.addMember(editImg);
+        } 
+        var trialImg = isc.IButton.create({
+			name:"trialImg",   
+			title:"查看意见",
+			width:100,
+            grid: this,
+            click : function () {
+            	isc.FwWindow.create({
+        			title : "查看意见",
+        			width:500,
+        			autoSize: true,
+        			closeAndDestroy:false,
+        			items : [InterbankDataRatingLogGrid]
+        		}).show();
+        		InterbankDataRatingLogGrid.fetchData({"interbankRating":record.id});
+            }
+        });
+        recordCanvas.addMember(trialImg);
+        return recordCanvas;  
+    }else {  
+        return null;  
+    }  
+}
+//字段定义
+var CompanyRatingFields ={
+	query: [
+			{width:'*',		name:'fdCustid',							title:'客户编号'},
+			{width:'*',		name:'fdCustname',							title:'客户名称'},
+			{width:'*',		name:'fdModelname',							title:'模型名称',type: 'select',valueMap:ModelList,allowEmptyValue:true,autoFetchData:false},
+			{width:'*',		name:'fdProcessState',	title:'流程状态',type:"select",valueMap:RatingProcessStatus},
+			{width:'*',		name:'fdRatingState',						title:'评级状态',type:"select",valueMap:RatingStatus}
+	],
+	grid: [
+			{minWidth:100,		name:'fdCustid',		title:'客户编号'},
+			{minWidth:100,	name:'fdCustname',		title:'客户名称'},
+			{width:90,		name:'fdModelname',		title:'模型名称',	type: 'select',valueMap:ModelList},
+			{width:120,		name:'fdSystemEvaluationScore',title:'系统评估得分',type: 'float',format:"0.00"},
+			{width:120,		name:'fdSystemEvaluationGrade',	title:'系统评估等级'},
+			{width:105,		name:'fdSpecialLevel',	title:'特例调整等级'},
+			{width:120,		name:'fdRecommendedLevel',	title:'建议认定等级'},
+			{width:120,		name:'fdFinalapprovalLevel',title:'最终审定等级'},
+			{width:120,		name:'fdFinalDefaultProbability',title:'最终违约概率'},
+			{width:75,		name:'fdRatingState',title:'评级状态',valueMap:RatingStatus},
+			{width:160,		name:'fdLaunchDate',title:'发起日期 '},
+			{width:80,		name:'fdOriginator',title:'发起人'},
+			{width:100,		name:'fdWhetherStatus',title:'评级是否成功',valueMap:whetherStatus},
+			{width:100,		name:'fdProcessState',title:'流程状态',valueMap:RatingProcessStatus},
+			{width:100,		name:'fdProcessStateSort',hidden:true},
+			{width:100,		name:'fdCurrentHandler',title:'当前处理人',type: 'select', valueMap:users},
+			{width:100,      name:'filePath',		title:"附件",formatCellValue:function (value, record, rowNum) {
+				
+				if(value){
+					return "<a href =  \"#\" onclick=\"downLoadAttachment('" + value + "')\">下载附件</a >";
+				}else{
+					return "";
+				}
+            }},
+			{width:400,	name:'operationField',	title:'操作',canSort:false}
+	]
+};
+
+//客户评级列表数据源
+isc.FwRestDataSource.create({
+	ID: 'companyRatingDS',
+    fields: CompanyRatingFields.grid,
+    fetchDataURL: '[[@{/irs/InterbankDataRating/queryInterRating}]]'
+});
+function fileSub(){
+	if($("#formUpload").submit()){
+		isc.say("评级计算中，请稍等刷新页面，查看并确认评级结果！");
+		return false;
+	}
+	return false;
+}
+function fileSubLog(){
+	if($("#formUploadLog").submit()){
+		return false;
+	}
+	return false;
+}
+
+function fileCheck(){
+	var result = true;
+	var file = fileUplode.getValue("file");
+	if(file){
+		var fileName = file.substring(file.lastIndexOf(".")+1).toLowerCase();
+		if("jsp" == fileName || "exe" == fileName){
+			result = false;
+		}
+	}
+	return result;
+}
+
+//客户评级列表
+isc.FwListGrid.create({
+	ID: 'companyRatingListGrid',
+	title: '<b>金融同业评级申请</b>',
+	dataSource: companyRatingDS,
+	sortField: 'fdProcessStateSort',
+	cellHeight: 30,
+	canSort:true,
+	showRecordComponents: true,
+    showRecordComponentsByCell: true,
+    recordComponentPoolingMode: "recycle",
+	fields: CompanyRatingFields.grid,
+	initialCriteria:{
+		enable: true,
+		"creator" : userAccout
+	},
+	actionMembers:[
+		'query','reset','refresh',{
+			type: 'menu',
+			group: 'exportGroup',
+			menus:['export2Excel'/* ,'exportAll2Excel' */]
+		},
+		{
+			title:'<span class="fa fa-sitemap">下载模板',
+			name:'diagram',
+			click: function(){
+				isc.FwWindow.create({
+					ID:"downloadWindow",
+					title: '下载模板',
+					autoSize: true,
+					items:[
+							 isc.DynamicForm.create({
+									ID : "downModel",
+									width:'100%',
+									height:'100%',
+									fields : [ 
+												{	
+													name:'down',
+													multiple:true,
+													required:true,
+													title:'下载模板',		
+													type: 'select',
+													valueMap:ModelList
+												}
+									]
+								})
+					],
+					actionMembers:[
+						{	
+							name:'determine',
+							title:'确定',
+							click: function(){
+								if(downModel.validate()){
+									window.open("[(@{/irs/financialOrIssueBonds/downloadRatingTemplate})]?templateType="+downModel.getValue("down"));
+									downloadWindow.hide();
+								}
+							}
+						}
+					]
+				}).show();
+			}
+			
+		},{
+			title:'<span class="fa fa-sitemap"></span>上传数据',
+			name:'diagram',
+			click: function(){
+				isc.FwUploadWindow.create({
+					ID:"uploadWindow"
+				}).show();
+			}
+		},{
+			title:'<span class="fa fa-sitemap"></span>批量提交',
+			name:'pltj',
+			click: function(){
+				var configRecord = companyRatingListGrid.getSelectedRecords();
+				if(configRecord.length==0){
+					isc.say('请选择要提交的记录！');
+					return false;
+				}
+				ManualDecisionResultFormsPl.reset();
+				var recordIdArr=[];
+				for(var z=0;z<configRecord.length;z++){
+					if(configRecord[z].fdProcessState != "NOT_SUBMIT"){
+						isc.say('"未提交"的申请任务才可以进行批量提交操作');
+						return false;
+					}
+				}
+				for(var z=0;z<configRecord.length;z++){
+					recordIdArr.push(configRecord[z].id);
+				}
+				configId=recordIdArr;
+				rateWindowPl.show();
+			}
+		}/* ,
+		{
+			title:'<span class="fa fa-sitemap"></span>批量提交',
+			name:'diagram',
+			click: function(){
+				isc.VLayout.create({
+					widht:"100%",
+						height:"30%",
+						members:[
+
+						]
+					})
+			}
+		} */
+	],
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: CompanyRatingFields.query
+	},
+	createRecordComponent : function (record, colNum) {  
+		return createOperationButton(record, colNum);
+    },
+    updateRecordComponent: function (record, colNum, component, recordChanged) {
+    	return createOperationButton(record, colNum);
+    },
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		var status=isShow==true?'enable':'disable';
+   		this.setActionMemberButtonStatus(status,['pltj']);
+    },
+	rowDoubleClick: function(record, recordNum,fieldNum){
+	}
+});
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				companyRatingListGrid
+			]
+		})
+	}
+});
+
+
+//附件上传后的回调方法
+function fileUploadCallBack(path){
+	var values = fileUplode.getValues();
+	delete values["file"];
+		
+	isc.say('操作成功！');
+	companyRatingListGrid.invalidateCache();
+	eiditWindow.close();
+	
+}
+//下载附件
+function downLoadAttachment(path){
+	if(path && path.length > 0){
+		var index = path.lastIndexOf("\/");
+		 
+	    var urlName = path.substring(index+1,path.length);
+		
+		window.open("[[@{/irs/InterbankDataRating/downloadFile}]]?&fileName="+urlName+"&filePath="+encodeURI(path));
+	}
+}
+
+</script>
+</html>

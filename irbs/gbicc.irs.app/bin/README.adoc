@@ -1,0 +1,18 @@
+# 项目介绍
+本项目是整个应用的入口模块。
+
+# 目的
+1. 该项目是应用的入口模块，即可通过执行该项目中的 gbicc.irs.app.Application 类启动应用。
+2. 该项目也是最终打包发布的项目，即通过 build 该模块，实现对整个应用的打包，形成 war 文件。
+
+# 打包方法
+在该项目所在文件夹执行:
+
+    gradle build
+    
+执行成功后，会在当前工程目录的 build/libs 目中产生名为 gbicc.irs.app-xxx.war 文件，其中 xxx 代表版本号。
+
+# 生成的 war 的发布与运行
+1. 可直接通过 java -jar gbicc.irs.app-xxx.war 命令运行。
+2. 可将 war 文件部署到应用服务器如: tomcat 中运行。
+3. 在 linux 或类 unix 系统直接通过 ./gbicc.irs.app-xxx.war 命令运行。

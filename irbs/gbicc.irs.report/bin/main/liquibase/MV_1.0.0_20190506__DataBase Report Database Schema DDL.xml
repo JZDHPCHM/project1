@@ -1,0 +1,814 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="MV_1.0.0_20180102__ DataBase Report Database Schema DDL" author="framework">
+
+        <!--  评级固定报表 -->
+        <!-- 3.1.1 整体借款人评级分布1 -->
+        <createTable tableName="IRS_REPORT_RATING_DISTRIBUTION" remarks="整体借款人评级集中度分布">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_GUEST_GR" type="java.sql.Types.VARCHAR(200)" remarks="客户评级"></column>
+            <column name="FD_CUSTOMER_NUM" type="java.sql.Types.VARCHAR(200)" remarks="客户数目"></column>
+            <column name="FD_LAST_MONTH_MINUS" type="java.sql.Types.VARCHAR(200)" remarks="较上月增减额"></column>
+            <column name="FD_BEGIN_YEAR_MINUS" type="java.sql.Types.VARCHAR(200)" remarks="比年初增减额"></column>
+            <column name="FD_CUSTOMER_NUM_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="客户数目占比"></column>
+            <column name="FD_LAST_MONTH_CHANGE" type="java.sql.Types.VARCHAR(200)" remarks="占比较上月变动"></column>
+            <column name="FD_BEGIN_YEAR_CHANGE" type="java.sql.Types.VARCHAR(200)" remarks="占比比年初变动"></column>
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_TYPE" type="java.sql.Types.VARCHAR(10)" remarks="类型：1、客户数目、2、授信金额、3、业务余额"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_MONTH" type="java.sql.Types.VARCHAR(10)" remarks="月份"></column>
+        </createTable>
+
+        <!-- 3.1.2 整体借款人评级分布__重点行业 -->
+        <createTable tableName="IRS_REPORT_RATING_IMPORTANT" remarks="整体借款人评级集中度分布--重点行业">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_GUEST_GR" type="java.sql.Types.VARCHAR(200)" remarks="客户评级"></column>
+            <column name="FD_CUSTOMER_NUM1" type="java.sql.Types.VARCHAR(200)" remarks="房地产业_客户数目"></column>
+            <column name="FD_PERCENT1" type="java.sql.Types.VARCHAR(200)" remarks="房地产业_占比"></column>
+            <column name="FD_CUSTOMER_NUM2" type="java.sql.Types.VARCHAR(200)" remarks="建筑业_客户数目"></column>
+            <column name="FD_PERCENT2" type="java.sql.Types.VARCHAR(200)" remarks="建筑业_占比"></column>
+            <column name="FD_CUSTOMER_NUM3" type="java.sql.Types.VARCHAR(200)" remarks="批发零售业_客户数目"></column>
+            <column name="FD_PERCENT3" type="java.sql.Types.VARCHAR(200)" remarks="批发零售业_占比"></column>
+            <column name="FD_CUSTOMER_NUM4" type="java.sql.Types.VARCHAR(200)" remarks="制造业_客户数目"></column>
+            <column name="FD_PERCENT4" type="java.sql.Types.VARCHAR(200)" remarks="制造业_占比"></column>
+            <column name="FD_CUSTOMER_NUM5" type="java.sql.Types.VARCHAR(200)" remarks="租赁、商务服务业_客户数目"></column>
+            <column name="FD_PERCENT5" type="java.sql.Types.VARCHAR(200)" remarks="租赁、商务服务业_占比"></column>
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_TYPE" type="java.sql.Types.VARCHAR(10)" remarks="类型：1、客户数目、2、授信金额、3、业务余额"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_MONTH" type="java.sql.Types.VARCHAR(10)" remarks="月份"></column>
+        </createTable>
+
+        <!-- 3.1.3 整体借款人评级分布__门类行业 -->
+        <createTable tableName="IRS_REPORT_RATING_KINDS" remarks="整体借款人评级集中度分布--门类行业">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_KIND_NAME" type="java.sql.Types.VARCHAR(200)" remarks="行业名称"></column>
+
+            <column name="FD_AAA_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="AAA 占比"></column>
+            <column name="FD_AAA_NUM" type="java.sql.Types.VARCHAR(200)" remarks="AAA 客户数目"></column>
+            <column name="FD_AA_P_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="AA+ 占比"></column>
+            <column name="FD_AA_P_NUM" type="java.sql.Types.VARCHAR(200)" remarks="AA+ 客户数目"></column>
+
+            <column name="FD_AA_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="AA 占比"></column>
+            <column name="FD_AA_NUM" type="java.sql.Types.VARCHAR(200)" remarks="AA 客户数目"></column>
+            <column name="FD_AA_M_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="AA- 占比"></column>
+            <column name="FD_AA_M_NUM" type="java.sql.Types.VARCHAR(200)" remarks="AA- 客户数目"></column>
+
+            <column name="FD_A_P_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="A+ 占比"></column>
+            <column name="FD_A_P_NUM" type="java.sql.Types.VARCHAR(200)" remarks="A+ 客户数目"></column>
+            <column name="FD_A_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="A 占比"></column>
+            <column name="FD_A_NUM" type="java.sql.Types.VARCHAR(200)" remarks="A 客户数目"></column>
+            <column name="FD_A_M_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="A- 占比"></column>
+            <column name="FD_A_M_NUM" type="java.sql.Types.VARCHAR(200)" remarks="A- 客户数目"></column>
+
+            <column name="FD_BBB_P_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="BBB+ 占比"></column>
+            <column name="FD_BBB_P_NUM" type="java.sql.Types.VARCHAR(200)" remarks="BBB+ 客户数目"></column>
+            <column name="FD_BBB_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="BBB 占比"></column>
+            <column name="FD_BBB_NUM" type="java.sql.Types.VARCHAR(200)" remarks="BBB 客户数目"></column>
+            <column name="FD_BBB_M_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="BBB- 占比"></column>
+            <column name="FD_BBB_M_NUM" type="java.sql.Types.VARCHAR(200)" remarks="BBB- 客户数目"></column>
+
+            <column name="FD_BB_P_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="BB+ 占比"></column>
+            <column name="FD_BB_P_NUM" type="java.sql.Types.VARCHAR(200)" remarks="BB+ 客户数目"></column>
+            <column name="FD_BB_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="BB 占比"></column>
+            <column name="FD_BB_NUM" type="java.sql.Types.VARCHAR(200)" remarks="BB 客户数目"></column>
+
+            <column name="FD_BB_M_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="BB- 占比"></column>
+            <column name="FD_BB_M_NUM" type="java.sql.Types.VARCHAR(200)" remarks="BB- 客户数目"></column>
+            <column name="FD_B_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="B 占比"></column>
+            <column name="FD_B_NUM" type="java.sql.Types.VARCHAR(200)" remarks="B 客户数目"></column>
+
+            <column name="FD_C_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="C 占比"></column>
+            <column name="FD_C_NUM" type="java.sql.Types.VARCHAR(200)" remarks="C 客户数目"></column>
+            <column name="FD_D_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="D 占比"></column>
+            <column name="FD_D_NUM" type="java.sql.Types.VARCHAR(200)" remarks="D 客户数目"></column>
+
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_TYPE" type="java.sql.Types.VARCHAR(10)" remarks="类型：1、客户数目、2、授信金额、3、业务余额"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_MONTH" type="java.sql.Types.VARCHAR(10)" remarks="月份"></column>
+        </createTable>
+
+        <!-- 3.1.4 整体借款人评级分布__分支机构 -->
+        <createTable tableName="IRS_REPORT_RATING_BRANCH" remarks="整体借款人评级集中度分布--分支机构">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_AREA" type="java.sql.Types.VARCHAR(200)" remarks="地区"></column>
+            <column name="FD_KIND_NAME" type="java.sql.Types.VARCHAR(200)" remarks="分支机构"></column>
+
+
+            <column name="FD_AAA_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="AAA 占比"></column>
+            <column name="FD_AAA_NUM" type="java.sql.Types.VARCHAR(200)" remarks="AAA 客户数目"></column>
+            <column name="FD_AA_P_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="AA+ 占比"></column>
+            <column name="FD_AA_P_NUM" type="java.sql.Types.VARCHAR(200)" remarks="AA+ 客户数目"></column>
+
+            <column name="FD_AA_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="AA 占比"></column>
+            <column name="FD_AA_NUM" type="java.sql.Types.VARCHAR(200)" remarks="AA 客户数目"></column>
+            <column name="FD_AA_M_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="AA- 占比"></column>
+            <column name="FD_AA_M_NUM" type="java.sql.Types.VARCHAR(200)" remarks="AA- 客户数目"></column>
+
+            <column name="FD_A_P_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="A+ 占比"></column>
+            <column name="FD_A_P_NUM" type="java.sql.Types.VARCHAR(200)" remarks="A+ 客户数目"></column>
+            <column name="FD_A_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="A 占比"></column>
+            <column name="FD_A_NUM" type="java.sql.Types.VARCHAR(200)" remarks="A 客户数目"></column>
+            <column name="FD_A_M_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="A- 占比"></column>
+            <column name="FD_A_M_NUM" type="java.sql.Types.VARCHAR(200)" remarks="A- 客户数目"></column>
+
+            <column name="FD_BBB_P_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="BBB+ 占比"></column>
+            <column name="FD_BBB_P_NUM" type="java.sql.Types.VARCHAR(200)" remarks="BBB+ 客户数目"></column>
+            <column name="FD_BBB_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="BBB 占比"></column>
+            <column name="FD_BBB_NUM" type="java.sql.Types.VARCHAR(200)" remarks="BBB 客户数目"></column>
+            <column name="FD_BBB_M_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="BBB- 占比"></column>
+            <column name="FD_BBB_M_NUM" type="java.sql.Types.VARCHAR(200)" remarks="BBB- 客户数目"></column>
+
+            <column name="FD_BB_P_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="BB+ 占比"></column>
+            <column name="FD_BB_P_NUM" type="java.sql.Types.VARCHAR(200)" remarks="BB+ 客户数目"></column>
+            <column name="FD_BB_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="BB 占比"></column>
+            <column name="FD_BB_NUM" type="java.sql.Types.VARCHAR(200)" remarks="BB 客户数目"></column>
+
+            <column name="FD_BB_M_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="BB- 占比"></column>
+            <column name="FD_BB_M_NUM" type="java.sql.Types.VARCHAR(200)" remarks="BB- 客户数目"></column>
+            <column name="FD_B_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="B 占比"></column>
+            <column name="FD_B_NUM" type="java.sql.Types.VARCHAR(200)" remarks="B 客户数目"></column>
+
+            <column name="FD_C_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="C 占比"></column>
+            <column name="FD_C_NUM" type="java.sql.Types.VARCHAR(200)" remarks="C 客户数目"></column>
+            <column name="FD_D_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="D 占比"></column>
+            <column name="FD_D_NUM" type="java.sql.Types.VARCHAR(200)" remarks="D 客户数目"></column>
+            <column name="FD_SUM_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="分支机构合计 占比"></column>
+            <column name="FD_SUM_NUM" type="java.sql.Types.VARCHAR(200)" remarks="分支机构合计  客户数目"></column>
+
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_TYPE" type="java.sql.Types.VARCHAR(10)" remarks="类型：1、客户数目、2、授信金额、3、业务余额"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_MONTH" type="java.sql.Types.VARCHAR(10)" remarks="月份"></column>
+        </createTable>
+
+
+        <!-- 3.1.5	借款人评级与风险调整收益率总体情况-->
+        <createTable tableName="IRS_REPORT_PROFIT_ALL" remarks="借款人评级与风险调整收益率总体情况">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_GUEST_GR" type="java.sql.Types.VARCHAR(200)" remarks="客户评级"></column>
+            <column name="FD_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="本月"></column>
+            <column name="FD_LAST_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="上月"></column>
+            <column name="FD_LAST_YEAR_RATE" type="java.sql.Types.VARCHAR(200)" remarks="上年同期"></column>
+            <column name="FD_COMPARE_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="较上月变动"></column>
+            <column name="FD_COMPARE_YEAR_RATE" type="java.sql.Types.VARCHAR(200)" remarks="较上年同期变动"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_MONTH" type="java.sql.Types.VARCHAR(10)" remarks="月份"></column>
+        </createTable>
+
+
+        <!-- 3.1.6	借款人评级与风险调整收益率分布—重点行业-->
+        <createTable tableName="IRS_REPORT_PROFIT_IMPORTANT" remarks="借款人评级与风险调整收益率分布—重点行业">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_GUEST_GR" type="java.sql.Types.VARCHAR(200)" remarks="客户评级"></column>
+            <column name="FD_MONTH_RATE1" type="java.sql.Types.VARCHAR(200)" remarks="房地产业_本月"></column>
+            <column name="FD_COMPARE_MONTH1" type="java.sql.Types.VARCHAR(200)" remarks="房地产业_较上月变动"></column>
+            <column name="FD_COMPARE_YEAR1" type="java.sql.Types.VARCHAR(200)" remarks="房地产业_较上年同期变动"></column>
+            <column name="FD_MONTH_RATE2" type="java.sql.Types.VARCHAR(200)" remarks="建筑业_本月"></column>
+            <column name="FD_COMPARE_MONTH2" type="java.sql.Types.VARCHAR(200)" remarks="建筑业_较上月变动"></column>
+            <column name="FD_COMPARE_YEAR2" type="java.sql.Types.VARCHAR(200)" remarks="建筑业_较上年同期变动"></column>
+            <column name="FD_MONTH_RATE3" type="java.sql.Types.VARCHAR(200)" remarks="批发零售业_本月"></column>
+            <column name="FD_COMPARE_MONTH3" type="java.sql.Types.VARCHAR(200)" remarks="批发零售业_较上月变动"></column>
+            <column name="FD_COMPARE_YEAR3" type="java.sql.Types.VARCHAR(200)" remarks="批发零售业_较上年同期变动"></column>
+            <column name="FD_MONTH_RATE4" type="java.sql.Types.VARCHAR(200)" remarks="制造业_本月"></column>
+            <column name="FD_COMPARE_MONTH4" type="java.sql.Types.VARCHAR(200)" remarks="制造业_较上月变动"></column>
+            <column name="FD_COMPARE_YEAR4" type="java.sql.Types.VARCHAR(200)" remarks="制造业_较上年同期变动"></column>
+            <column name="FD_MONTH_RATE5" type="java.sql.Types.VARCHAR(200)" remarks="租赁、商务服务业_本月"></column>
+            <column name="FD_COMPARE_MONTH5" type="java.sql.Types.VARCHAR(200)" remarks="租赁、商务服务业_较上月变动"></column>
+            <column name="FD_COMPARE_YEAR5" type="java.sql.Types.VARCHAR(200)" remarks="租赁、商务服务业_较上年同期变动"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_MONTH" type="java.sql.Types.VARCHAR(10)" remarks="月份"></column>
+        </createTable>
+
+
+        <!-- 3.1.7 借款人评级与风险调整收益率分布—门类行业 -->
+        <createTable tableName="IRS_REPORT_PROFIT_KINDS" remarks="借款人评级与风险调整收益率分布—门类行业">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_KIND_NAME" type="java.sql.Types.VARCHAR(200)" remarks="行业名称"></column>
+            <column name="FD_AAA_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="AAA房地产业_本月"></column>
+            <column name="FD_AAA_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="AAA房地产业_较上月变动"></column>
+            <column name="FD_AAA_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="AAA房地产业_较上年同期变动"></column>
+
+            <column name="FD_AA_P_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="AA+房地产业_本月"></column>
+            <column name="FD_AA_P_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="AA+房地产业_较上月变动"></column>
+            <column name="FD_AA_P_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="AA+房地产业_较上年同期变动"></column>
+
+            <column name="FD_AA_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="AA房地产业_本月"></column>
+            <column name="FD_AA_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="AA房地产业_较上月变动"></column>
+            <column name="FD_AA_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="AA房地产业_较上年同期变动"></column>
+
+            <column name="FD_AA_M_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="AA-房地产业_本月"></column>
+            <column name="FD_AA_M_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="AA-房地产业_较上月变动"></column>
+            <column name="FD_AA_M_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="AA-房地产业_较上年同期变动"></column>
+
+            <column name="FD_A_P_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="A+房地产业_本月"></column>
+            <column name="FD_A_P_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="A+房地产业_较上月变动"></column>
+            <column name="FD_A_P_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="A+房地产业_较上年同期变动"></column>
+
+            <column name="FD_A_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="A房地产业_本月"></column>
+            <column name="FD_A_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="A房地产业_较上月变动"></column>
+            <column name="FD_A_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="A房地产业_较上年同期变动"></column>
+
+            <column name="FD_A_M_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="A-房地产业_本月"></column>
+            <column name="FD_A_M_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="A-房地产业_较上月变动"></column>
+            <column name="FD_A_M_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="A-房地产业_较上年同期变动"></column>
+
+            <column name="FD_BBB_P_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="BBB+房地产业_本月"></column>
+            <column name="FD_BBB_P_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="BBB+房地产业_较上月变动"></column>
+            <column name="FD_BBB_P_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="BBB+房地产业_较上年同期变动"></column>
+
+            <column name="FD_BBB_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="BBB房地产业_本月"></column>
+            <column name="FD_BBB_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="BBB房地产业_较上月变动"></column>
+            <column name="FD_BBB_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="BBB房地产业_较上年同期变动"></column>
+
+            <column name="FD_BBB_M_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="BBB-房地产业_本月"></column>
+            <column name="FD_BBB_M_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="BBB-房地产业_较上月变动"></column>
+            <column name="FD_BBB_M_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="BBB-房地产业_较上年同期变动"></column>
+
+            <column name="FD_BB_P_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="BB+房地产业_本月"></column>
+            <column name="FD_BB_P_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="BB+房地产业_较上月变动"></column>
+            <column name="FD_BB_P_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="BB+房地产业_较上年同期变动"></column>
+
+            <column name="FD_BB_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="BB房地产业_本月"></column>
+            <column name="FD_BB_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="BB房地产业_较上月变动"></column>
+            <column name="FD_BB_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="BB房地产业_较上年同期变动"></column>
+
+            <column name="FD_BB_M_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="BB-房地产业_本月"></column>
+            <column name="FD_BB_M_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="BB-房地产业_较上月变动"></column>
+            <column name="FD_BB_M_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="BB-房地产业_较上年同期变动"></column>
+
+            <column name="FD_B_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="B房地产业_本月"></column>
+            <column name="FD_B_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="B房地产业_较上月变动"></column>
+            <column name="FD_B_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="B房地产业_较上年同期变动"></column>
+
+            <column name="FD_C_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="C房地产业_本月"></column>
+            <column name="FD_C_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="C房地产业_较上月变动"></column>
+            <column name="FD_C_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="C房地产业_较上年同期变动"></column>
+
+            <column name="FD_D_MONTH_RATE" type="java.sql.Types.VARCHAR(200)" remarks="D房地产业_本月"></column>
+            <column name="FD_D_COMPARE_MONTH" type="java.sql.Types.VARCHAR(200)" remarks="D房地产业_较上月变动"></column>
+            <column name="FD_D_COMPARE_YEAR" type="java.sql.Types.VARCHAR(200)" remarks="D房地产业_较上年同期变动"></column>
+
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_MONTH" type="java.sql.Types.VARCHAR(10)" remarks="月份"></column>
+        </createTable>
+
+        <!-- 3.1.8  借款人评级与风险调整收益率分布—分支机构 -->
+        <createTable tableName="IRS_REPORT_PROFIT_BRANCH" remarks="借款人评级与风险调整收益率分布—分支机构">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_AREA" type="java.sql.Types.VARCHAR(200)" remarks="地区"></column>
+            <column name="FD_KIND_NAME" type="java.sql.Types.VARCHAR(200)" remarks="分支机构"></column>
+
+            <column name="FD_AAA_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="AAA 收益"></column>
+            <column name="FD_AA_P_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="AA+ 收益"></column>
+            <column name="FD_AA_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="AA 收益"></column>
+            <column name="FD_AA_M_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="AA- 收益"></column>
+            <column name="FD_A_P_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="A+ 收益"></column>
+            <column name="FD_A_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="A 收益"></column>
+            <column name="FD_A_M_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="A- 收益"></column>
+            <column name="FD_BBB_P_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="BBB+ 收益"></column>
+            <column name="FD_BBB_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="BBB 收益"></column>
+            <column name="FD_BBB_M_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="BBB- 收益"></column>
+            <column name="FD_BB_P_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="BB+ 收益"></column>
+            <column name="FD_BB_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="BB 收益"></column>
+            <column name="FD_BB_M_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="BB- 收益"></column>
+            <column name="FD_B_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="B 收益"></column>
+            <column name="FD_C_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="C 收益"></column>
+            <column name="FD_D_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="D 收益"></column>
+            <column name="FD_AVG_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="平均收益率"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_MONTH" type="java.sql.Types.VARCHAR(10)" remarks="月份"></column>
+        </createTable>
+
+
+        <!-- 3.1.9  贷款五级分类分布表 -->
+        <createTable tableName="IRS_REPORT_LOAN_FIVE" remarks="贷款五级分类分布表">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_KIND_NAME" type="java.sql.Types.VARCHAR(200)" remarks="分支机构"></column>
+
+            <column name="FD_AAA_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="AAA 收益"></column>
+            <column name="FD_AA_P_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="AA+ 收益"></column>
+            <column name="FD_AA_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="AA 收益"></column>
+            <column name="FD_AA_M_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="AA- 收益"></column>
+            <column name="FD_A_P_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="A+ 收益"></column>
+            <column name="FD_A_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="A 收益"></column>
+            <column name="FD_A_M_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="A- 收益"></column>
+            <column name="FD_BBB_P_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="BBB+ 收益"></column>
+            <column name="FD_BBB_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="BBB 收益"></column>
+            <column name="FD_BBB_M_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="BBB- 收益"></column>
+            <column name="FD_BB_P_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="BB+ 收益"></column>
+            <column name="FD_BB_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="BB 收益"></column>
+            <column name="FD_BB_M_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="BB- 收益"></column>
+            <column name="FD_B_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="B 收益"></column>
+            <column name="FD_C_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="C 收益"></column>
+            <column name="FD_D_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="D 收益"></column>
+            <column name="FD_AVG_PROFIT" type="java.sql.Types.VARCHAR(200)" remarks="平均收益率"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_QUARTER" type="java.sql.Types.VARCHAR(10)" remarks="季度：值为：1、2 、3 、4"></column>
+            <column name="FD_TYPE" type="java.sql.Types.VARCHAR(10)" remarks="类型：1、客户数目、2、授信金额、3、预期损失"></column>
+        </createTable>
+
+
+        <!-- 3.2.1 新增客户评级集中度分布 -->
+        <createTable tableName="IRS_REPORT_ANALYSE_DIS" remarks="新增客户评级集中度分布">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_GUEST_GR" type="java.sql.Types.VARCHAR(200)" remarks="客户评级"></column>
+            <column name="FD_CUSTOMER_NUM" type="java.sql.Types.VARCHAR(200)" remarks="新增客户数目_客户数目"></column>
+            <column name="FD_CUSTOMER_NUM_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="新增客户数目_占比"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_MONTH" type="java.sql.Types.VARCHAR(10)" remarks="月份"></column>
+        </createTable>
+
+
+        <!-- 3.2.2 违约客户集中度分布——门类行业-->
+        <createTable tableName="IRS_REPORT_ANALYSE_KINDS" remarks="违约客户集中度分布——门类行业">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_NAME" type="java.sql.Types.VARCHAR(200)" remarks="门类行业"></column>
+            <column name="FD_CUSTOMER_NUM" type="java.sql.Types.VARCHAR(200)" remarks="新增客户数目"></column>
+            <column name="FD_CUSTOMER_NUM_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="新增客户数目_占比"></column>
+            <column name="FD_GRANT_NUM" type="java.sql.Types.VARCHAR(200)" remarks="表内授信余额"></column>
+            <column name="FD_GRANT_NUM_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="表内授信余额_占比"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_MONTH" type="java.sql.Types.VARCHAR(10)" remarks="月份"></column>
+        </createTable>
+
+
+        <!-- 3.2.3 违约客户集中度分布——分支机构-->
+        <createTable tableName="IRS_REPORT_ANALYSE_BRANCH" remarks="违约客户集中度分布——分支机构">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_AREA" type="java.sql.Types.VARCHAR(200)" remarks="地区"></column>
+            <column name="FD_NAME" type="java.sql.Types.VARCHAR(200)" remarks="分支机构"></column>
+            <column name="FD_CUSTOMER_NUM" type="java.sql.Types.VARCHAR(200)" remarks="新增客户数目"></column>
+            <column name="FD_CUSTOMER_NUM_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="新增客户数目_占比"></column>
+            <column name="FD_GRANT_NUM" type="java.sql.Types.VARCHAR(200)" remarks="表内授信余额"></column>
+            <column name="FD_GRANT_NUM_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="表内授信余额_占比"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_MONTH" type="java.sql.Types.VARCHAR(10)" remarks="月份"></column>
+        </createTable>
+
+
+        <!-- 3.2.4 新增违约客户集中度分布—门类行业-->
+        <createTable tableName="IRS_REPORT_NEW_ANAL_KINDS" remarks="新增违约客户集中度分布——门类行业">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_NAME" type="java.sql.Types.VARCHAR(200)" remarks="门类行业"></column>
+            <column name="FD_CUSTOMER_NUM" type="java.sql.Types.VARCHAR(200)" remarks="新增客户数目"></column>
+            <column name="FD_CUSTOMER_NUM_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="新增客户数目_占比"></column>
+            <column name="FD_GRANT_NUM" type="java.sql.Types.VARCHAR(200)" remarks="表内授信余额"></column>
+            <column name="FD_GRANT_NUM_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="表内授信余额_占比"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_MONTH" type="java.sql.Types.VARCHAR(10)" remarks="月份"></column>
+        </createTable>
+
+
+        <!-- 3.2.5 新增违约客户集中度分布—分支机构-->
+        <createTable tableName="IRS_REPORT_NEW_ANAL_BRANCH" remarks="新增违约客户集中度分布——分支机构">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_AREA" type="java.sql.Types.VARCHAR(200)" remarks="地区"></column>
+            <column name="FD_NAME" type="java.sql.Types.VARCHAR(200)" remarks="分支机构"></column>
+            <column name="FD_CUSTOMER_NUM" type="java.sql.Types.VARCHAR(200)" remarks="新增客户数目"></column>
+            <column name="FD_CUSTOMER_NUM_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="新增客户数目_占比"></column>
+            <column name="FD_GRANT_NUM" type="java.sql.Types.VARCHAR(200)" remarks="表内授信余额"></column>
+            <column name="FD_GRANT_NUM_PERCENT" type="java.sql.Types.VARCHAR(200)" remarks="表内授信余额_占比"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_MONTH" type="java.sql.Types.VARCHAR(10)" remarks="月份"></column>
+        </createTable>
+
+        <!-- 3.2.6	整体客户评级趋势分布 -->
+        <createTable tableName="IRS_REPORT_ANALYSE_TREND" remarks="整体客户评级趋势分布">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_GUEST_GR" type="java.sql.Types.VARCHAR(200)" remarks="客户评级"></column>
+            <column name="FD_GRANT_NUM" type="java.sql.Types.VARCHAR(200)" remarks="授信余额"></column>
+            <column name="FD_COMP_QUARTER_GRANT_NUM" type="java.sql.Types.VARCHAR(200)" remarks="授信余额较上季末变动度"></column>
+            <column name="FD_COMP_YEAR_GRANT_NUM" type="java.sql.Types.VARCHAR(200)" remarks="授信余额较去年同季度变动度"></column>
+            <column name="FD_GRANT_PER" type="java.sql.Types.VARCHAR(200)" remarks="授信余额"></column>
+            <column name="FD_COMP_QUARTER_GRANT_PER" type="java.sql.Types.VARCHAR(200)"
+                    remarks="授信余额占比较上季末变动度"></column>
+            <column name="FD_COMP_YEAR_GRANT_PER" type="java.sql.Types.VARCHAR(200)" remarks="授信余额占比较去年同季度变动度"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_QUARTER" type="java.sql.Types.VARCHAR(10)" remarks="季度"></column>
+            <column name="FD_TYPE" type="java.sql.Types.VARCHAR(10)" remarks="类型：1、表内授信余额；2、表外授信余额"></column>
+        </createTable>
+
+        <!-- 3.2.7	借款人评级迁徙表（客户数目）-->
+        <createTable tableName="IRS_REPORT_MOVE_CUSTOM" remarks="借款人评级迁徙表（客户数目）">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_KIND_NAME" type="java.sql.Types.VARCHAR(200)" remarks="分布情况"></column>
+
+            <column name="FD_AAA_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="AAA 分布"></column>
+            <column name="FD_AA_P_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="AA+ 分布"></column>
+            <column name="FD_AA_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="AA 分布"></column>
+            <column name="FD_AA_M_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="AA- 分布"></column>
+            <column name="FD_A_P_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="A+ 分布"></column>
+            <column name="FD_A_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="A 分布"></column>
+            <column name="FD_A_M_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="A- 分布"></column>
+            <column name="FD_BBB_P_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="BBB+ 分布"></column>
+            <column name="FD_BBB_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="BBB 分布"></column>
+            <column name="FD_BBB_M_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="BBB- 分布"></column>
+            <column name="FD_BB_P_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="BB+ 分布"></column>
+            <column name="FD_BB_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="BB 分布"></column>
+            <column name="FD_BB_M_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="BB- 分布"></column>
+            <column name="FD_B_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="B 分布"></column>
+            <column name="FD_C_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="C 分布"></column>
+            <column name="FD_D_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="D 分布"></column>
+            <column name="FD_LAST_SUM_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="上期合计"></column>
+
+            <column name="FD_MOVE_UP_NUM" type="java.sql.Types.VARCHAR(200)" remarks="向上迁移总数"></column>
+            <column name="FD_MOVE_UP_PER" type="java.sql.Types.VARCHAR(200)" remarks="向上迁移占比"></column>
+            <column name="FD_MOVE_DOWN_NUM" type="java.sql.Types.VARCHAR(200)" remarks="向下迁移总数"></column>
+            <column name="FD_MOVE_DOWN_PER" type="java.sql.Types.VARCHAR(200)" remarks="向下迁移占比"></column>
+            <column name="FD_MOVE_POINT" type="java.sql.Types.VARCHAR(200)" remarks="迁移指数"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_QUARTER" type="java.sql.Types.VARCHAR(10)" remarks="季度：值为：1、2 、3 、4"></column>
+        </createTable>
+
+        <!-- 3.2.8	借款人评级迁徙表（授信余额）-->
+        <createTable tableName="IRS_REPORT_MOVE_GRANT" remarks="借款人评级迁徙表（授信余额）">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_KIND_NAME" type="java.sql.Types.VARCHAR(200)" remarks="分布情况"></column>
+
+            <column name="FD_AAA_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="AAA 分布"></column>
+            <column name="FD_AA_P_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="AA+ 分布"></column>
+            <column name="FD_AA_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="AA 分布"></column>
+            <column name="FD_AA_M_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="AA- 分布"></column>
+            <column name="FD_A_P_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="A+ 分布"></column>
+            <column name="FD_A_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="A 分布"></column>
+            <column name="FD_A_M_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="A- 分布"></column>
+            <column name="FD_BBB_P_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="BBB+ 分布"></column>
+            <column name="FD_BBB_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="BBB 分布"></column>
+            <column name="FD_BBB_M_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="BBB- 分布"></column>
+            <column name="FD_BB_P_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="BB+ 分布"></column>
+            <column name="FD_BB_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="BB 分布"></column>
+            <column name="FD_BB_M_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="BB- 分布"></column>
+            <column name="FD_B_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="B 分布"></column>
+            <column name="FD_C_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="C 分布"></column>
+            <column name="FD_D_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="D 分布"></column>
+            <column name="FD_LAST_SUM_DISTRI" type="java.sql.Types.VARCHAR(200)" remarks="上期合计"></column>
+
+            <column name="FD_MOVE_UP_NUM" type="java.sql.Types.VARCHAR(200)" remarks="向上迁移总数"></column>
+            <column name="FD_MOVE_UP_PER" type="java.sql.Types.VARCHAR(200)" remarks="向上迁移占比"></column>
+            <column name="FD_MOVE_DOWN_NUM" type="java.sql.Types.VARCHAR(200)" remarks="向下迁移总数"></column>
+            <column name="FD_MOVE_DOWN_PER" type="java.sql.Types.VARCHAR(200)" remarks="向下迁移占比"></column>
+            <column name="FD_MOVE_POINT" type="java.sql.Types.VARCHAR(200)" remarks="迁移指数"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_QUARTER" type="java.sql.Types.VARCHAR(10)" remarks="季度：值为：1、2 、3 、4"></column>
+        </createTable>
+
+        <!-- 3.2.9 PD估值与实际值比较情况 年报-->
+        <createTable tableName="IRS_REPORT_PD_COMPARE" remarks="PD估值与实际值比较情况">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_GUEST_GR" type="java.sql.Types.VARCHAR(200)" remarks="客户评级"></column>
+
+            <column name="FD_PD_AVG" type="java.sql.Types.VARCHAR(200)" remarks="PD平均值"></column>
+            <column name="FD_CUSTOM_NUM" type="java.sql.Types.VARCHAR(200)" remarks="客户数目"></column>
+            <column name="FD_ILEGAL_CUSTOM_NUM" type="java.sql.Types.VARCHAR(200)" remarks="违约客户数目"></column>
+            <column name="FD_ACTUAL_ILEGAL_PER" type="java.sql.Types.VARCHAR(200)" remarks="实际违约率"></column>
+            <column name="FD_EAD_NUM" type="java.sql.Types.VARCHAR(200)" remarks="EAD金额"></column>
+            <column name="FD_EAD_PER" type="java.sql.Types.VARCHAR(200)" remarks="EAD占比"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+        </createTable>
+
+
+        <!-- 3.2.10 LGD/EAD估值与实际值比较情况年报 半年报-->
+        <createTable tableName="IRS_REPORT_LGD_COMPARE" remarks="LGD/EAD估值与实际值比较情况年报">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_GUEST_GR" type="java.sql.Types.VARCHAR(200)" remarks="客户评级"></column>
+
+            <column name="FD_LGD_MIN" type="java.sql.Types.VARCHAR(200)" remarks="LGD最小值"></column>
+            <column name="FD_LGD_MIDDLE" type="java.sql.Types.VARCHAR(200)" remarks="LGD中位数"></column>
+            <column name="FD_LGD_MAX" type="java.sql.Types.VARCHAR(200)" remarks="LGD最大值"></column>
+            <column name="FD_LGD_AVG" type="java.sql.Types.VARCHAR(200)" remarks="LGD平均值"></column>
+            <column name="FD_LGD_ILEGAL" type="java.sql.Types.VARCHAR(200)" remarks="LGD实际违约损失率"></column>
+            <column name="FD_EAD_AVG_EXP" type="java.sql.Types.VARCHAR(200)" remarks="EAD估计值平均"></column>
+            <column name="FD_EAD_AVG_ACT" type="java.sql.Types.VARCHAR(200)" remarks="EAD实际值平均"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_HALF" type="java.sql.Types.VARCHAR(10)" remarks="值为：1、上半年、2、下半年 "></column>
+        </createTable>
+
+
+        <!-- 3.3.1	单一客户限额设定管理报告__整体单一客户限额使用情况 -->
+        <createTable tableName="IRS_REPORT_SINGLE_LIMIT" remarks="单一客户限额设定管理报告--整体单一客户限额使用情况">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_GUEST_GR" type="java.sql.Types.VARCHAR(200)" remarks="客户评级"></column>
+
+            <column name="FD_CUSTOM_NUM" type="java.sql.Types.VARCHAR(200)" remarks="客户数目"></column>
+            <column name="FD_GRANT_NUM" type="java.sql.Types.VARCHAR(200)" remarks="授信额度"></column>
+            <column name="FD_SINGLE_LIMIT_NUM" type="java.sql.Types.VARCHAR(200)" remarks="单一客户限额合计"></column>
+            <column name="FD_AVG_LIMIT_USE" type="java.sql.Types.VARCHAR(200)" remarks="平均限额占用率"></column>
+            <column name="FD_OVER_LIMIT_PER" type="java.sql.Types.VARCHAR(200)" remarks="平均限额占用率"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_QUARTER" type="java.sql.Types.VARCHAR(10)" remarks="季度：值为：1、2 、3 、4"></column>
+        </createTable>
+
+        <!-- 3.3.2	单一客户限额设定管理报告__分支机构单一客户限额使用情况-->
+        <createTable tableName="IRS_REPORT_SINGLE_OVER" remarks="单一客户限额设定管理报告__分支机构单一客户限额使用情况">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_AREA" type="java.sql.Types.VARCHAR(200)" remarks="地区"></column>
+            <column name="FD_KIND_NAME" type="java.sql.Types.VARCHAR(200)" remarks="分支机构"></column>
+
+            <column name="FD_CUSTOM_NUM" type="java.sql.Types.VARCHAR(200)" remarks="客户数目"></column>
+            <column name="FD_GRANT_NUM" type="java.sql.Types.VARCHAR(200)" remarks="授信额度"></column>
+            <column name="FD_SINGLE_LIMIT_NUM" type="java.sql.Types.VARCHAR(200)" remarks="单一客户限额合计"></column>
+            <column name="FD_AVG_LIMIT_USE" type="java.sql.Types.VARCHAR(200)" remarks="平均限额占用率"></column>
+            <column name="FD_OVER_LIMIT_PER" type="java.sql.Types.VARCHAR(200)" remarks="平均限额占用率"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_QUARTER" type="java.sql.Types.VARCHAR(10)" remarks="季度：值为：1、2 、3 、4"></column>
+        </createTable>
+
+        <!-- 3.3.3	单一客户限额设定管理报告__不同规模下单一客户限额使用情况-->
+        <createTable tableName="IRS_REPORT_SINGLE_MANAGE" remarks="单一客户限额设定管理报告__不同规模下单一客户限额使用情况">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_KIND_NAME" type="java.sql.Types.VARCHAR(200)" remarks="客户规模"></column>
+
+            <column name="FD_CUSTOM_NUM" type="java.sql.Types.VARCHAR(200)" remarks="客户数目"></column>
+            <column name="FD_GRANT_NUM" type="java.sql.Types.VARCHAR(200)" remarks="授信额度"></column>
+            <column name="FD_SINGLE_LIMIT_NUM" type="java.sql.Types.VARCHAR(200)" remarks="单一客户限额合计"></column>
+            <column name="FD_AVG_LIMIT_USE" type="java.sql.Types.VARCHAR(200)" remarks="平均限额占用率"></column>
+            <column name="FD_OVER_LIMIT_PER" type="java.sql.Types.VARCHAR(200)" remarks="平均限额占用率"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_QUARTER" type="java.sql.Types.VARCHAR(10)" remarks="季度：值为：1、2 、3 、4"></column>
+        </createTable>
+
+        <!-- 3.3.4	风险定价管理报告—超定价幅度 -->
+        <createTable tableName="IRS_REPORT_PRICE_LIMIT" remarks="风险定价管理报告—超定价幅度">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_GUEST_GR" type="java.sql.Types.VARCHAR(200)" remarks="客户评级"></column>
+
+            <column name="FD_LOAN_SUM" type="java.sql.Types.VARCHAR(200)" remarks="总债项数目"></column>
+            <column name="FD_OVER_LOAN_SUM" type="java.sql.Types.VARCHAR(200)" remarks="超定价债项数目"></column>
+            <column name="FD_LIMIT_10" type="java.sql.Types.VARCHAR(200)" remarks="超定价幅度 0%~10%（含）"></column>
+            <column name="FD_LIMIT_30" type="java.sql.Types.VARCHAR(200)" remarks="超定价幅度 10%~30%（含）"></column>
+            <column name="FD_LIMIT_50" type="java.sql.Types.VARCHAR(200)" remarks="超定价幅度 30%~50%（含）"></column>
+            <column name="FD_LIMIT_GREAT_50" type="java.sql.Types.VARCHAR(200)" remarks="超定价幅度 50%以上"></column>
+            <column name="FD_OVER_LIMIT_SUM" type="java.sql.Types.VARCHAR(200)" remarks="总体超定价幅度"></column>
+
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_QUARTER" type="java.sql.Types.VARCHAR(10)" remarks="季度：值为：1、2 、3 、4"></column>
+            <column name="FD_TYPE" type="java.sql.Types.VARCHAR(255)" remarks="类型：机构名称"></column>
+        </createTable>
+
+        <!-- 3.3.5	评级模型推翻报告 -->
+        <createTable tableName="IRS_REPORT_MODE_RUFUSE" remarks="评级模型推翻报告">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_GUEST_GR" type="java.sql.Types.VARCHAR(200)" remarks="模型类别"></column>
+            <column name="FD_CUSTOM_NUM" type="java.sql.Types.VARCHAR(200)" remarks="客户数目"></column>
+            <column name="FD_JUDGE_TIMES" type="java.sql.Types.VARCHAR(200)" remarks="评级认定次数"></column>
+            <column name="FD_JUDGE_REFUSE_TIMES" type="java.sql.Types.VARCHAR(200)" remarks="评级推翻次数"></column>
+            <column name="FD_UP_ONE_PER" type="java.sql.Types.VARCHAR(200)" remarks="评级上调占比 一级"></column>
+            <column name="FD_UP_TWO_PER" type="java.sql.Types.VARCHAR(200)" remarks="评级上调占比 二级"></column>
+            <column name="FD_UP_GREAT_TWO_PER" type="java.sql.Types.VARCHAR(200)" remarks="评级上调占比 二级以上"></column>
+            <column name="FD_UP_TOATAL_PER" type="java.sql.Types.VARCHAR(200)" remarks="评级上调占比 合计"></column>
+            <column name="FD_DOWN_ONE_PER" type="java.sql.Types.VARCHAR(200)" remarks="评级下调占比 一级"></column>
+            <column name="FD_DOWN_TWO_PER" type="java.sql.Types.VARCHAR(200)" remarks="评级下调占比 二级"></column>
+            <column name="FD_DOWN_THREE_PER" type="java.sql.Types.VARCHAR(200)" remarks="评级下调占比 三级"></column>
+            <column name="FD_DOWN_LESS_THREE_PER" type="java.sql.Types.VARCHAR(200)" remarks="评级下调占比 三级以上"></column>
+            <column name="FD_DOWN_TOATAL_PER" type="java.sql.Types.VARCHAR(200)" remarks="评级下调占比 合计"></column>
+            <column name="FD_JUDGE_REFUSE_PER" type="java.sql.Types.VARCHAR(200)" remarks="评级推翻率"></column>
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_QUARTER" type="java.sql.Types.VARCHAR(10)" remarks="季度：值为：1、2 、3 、4"></column>
+        </createTable>
+
+        <!-- 3.3.6	评级模型推翻幅度报告 -->
+        <createTable tableName="IRS_REPORT_REFUSE_TREND" remarks="评级模型推翻报告">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_AREA" type="java.sql.Types.VARCHAR(200)" remarks="地区"></column>
+            <column name="FD_NAME" type="java.sql.Types.VARCHAR(200)" remarks="分支机构名称"></column>
+            <column name="FD_RANGE_NAME" type="java.sql.Types.VARCHAR(200)" remarks="评级推翻幅度 名称"></column>
+            <column name="FD_RANGE_ORDER" type="java.sql.Types.VARCHAR(200)" remarks="评级推翻幅度 排序"></column>
+            <column name="FD_LOCAL_RUFUSE_TIMES" type="java.sql.Types.VARCHAR(200)" remarks="本分支机构权限内 推翻次数"></column>
+            <column name="FD_LOCAL_RUFUSE_PER" type="java.sql.Types.VARCHAR(200)" remarks="本分支机构权限内 占比"></column>
+            <column name="FD_LOCAL_RUFUSE_COMP_Q" type="java.sql.Types.VARCHAR(200)" remarks="本分支机构权限内 较上季变动"></column>
+            <column name="FD_LOCAL_RUFUSE_COMP_Y" type="java.sql.Types.VARCHAR(200)" remarks="本分支机构权限内 比年初变动"></column>
+
+            <column name="FD_UPPER_RUFUSE_TIMES" type="java.sql.Types.VARCHAR(200)" remarks="总行权限内 推翻次数"></column>
+            <column name="FD_UPPER_RUFUSE_PER" type="java.sql.Types.VARCHAR(200)" remarks="总行权限内 占比"></column>
+            <column name="FD_UPPER_RUFUSE_COMP_Q" type="java.sql.Types.VARCHAR(200)" remarks="总行权限内 较上季变动"></column>
+            <column name="FD_UPPER_RUFUSE_COMP_Y" type="java.sql.Types.VARCHAR(200)" remarks="总行权限内 比年初变动"></column>
+            <column name="FD_SUM_REFUSE_PER" type="java.sql.Types.VARCHAR(200)" remarks="推翻次数合计"></column>
+            <column name="FD_REP_TIME" type="java.sql.Types.VARCHAR(200)" remarks="报表时间"></column>
+            <column name="FD_CORPORATION" type="java.sql.Types.VARCHAR(255)" remarks="多法人类型"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+            <column name="FD_YEAR" type="java.sql.Types.VARCHAR(10)" remarks="年份"></column>
+            <column name="FD_QUARTER" type="java.sql.Types.VARCHAR(10)" remarks="季度：值为：1、2 、3 、4"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

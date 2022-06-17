@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head></head>
+<body>
+</body>
+<script th:inline="javascript">	
+
+var FinancialBasicsLibFields = {
+		query:[
+			{name:'basicsCode'	,title:"基础指标编号"},
+			{name:'basicsName'	,title:"基础指标名称"}
+		],
+		dataSourceGrid: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{name:'basicsCode'},
+				{name:'basicsName'},
+				{name:'basicsDescribe'},
+			    {name:'smallenterprise'},
+			    {name:'smallenterpriseold'},
+			    {name:"generalenterprise"},
+			    {name:"generalenterpriseold"},
+			    {name:"institution"},
+			    {name:"institutionold"}
+		],
+		grid:[
+				{name:'id',		primaryKey:true,hidden:true},
+				{name:'basicsCode'	,title:"基础指标编号"},
+				{name:'basicsName'	,title:"基础指标名称"},
+			    {name:'smallenterprise',title:"小企业一般准则公式"},
+			    {name:'smallenterpriseold',title:"小企业简易准则公式"},
+			    {name:"generalenterprise",title:"一般企业新准则公式"},
+			    {name:"generalenterpriseold",title:"一般企业旧准则公式"},
+			    {name:"institution",title:"事业单位新准则公式"},
+			    {name:"institutionold",title:"事业单位旧准则公式"}
+			 ],
+		edit:[
+				{name:'id',		primaryKey:true,hidden:true},
+				{name:'basicsCode'	,title:"基础指标编号",required:true},
+				{name:'basicsName'	,title:"基础指标名称",required:true},
+			    {name:'smallenterprise',title:"小企业一般准则公式",type:"textArea",required:true},
+			    {name:'smallenterpriseold',title:"小企业简易准则公式",type:"textArea",required:true},
+			    {name:"generalenterprise",title:"一般企业新准则公式",type:"textArea",required:true},
+			    {name:"generalenterpriseold",title:"一般企业旧准则公式",type:"textArea",required:true},
+			    {name:"institution",title:"事业单位新准则公式",type:"textArea",required:true},
+			    {name:"institutionold",title:"事业单位旧准则公式",type:"textArea",required:true} 	
+			]
+}
+
+//基础指标数据源
+isc.FwRestDataSource.create({
+	ID: 'financialBasicsLibDS',
+	autoFetchData:false,
+    fields:FinancialBasicsLibFields.dataSourceGrid,
+    dataURL: '[(@{/reportTemplate/financialBasicsLib/isc})]'
+});
+
+//基础指标列表
+isc.FwListGrid.create({
+	ID: 'financialBasicsLibGrid',
+	title: '<b>基础数据项列表</b>',
+	dataSource: financialBasicsLibDS,
+	canPageable:true,
+	fields:FinancialBasicsLibFields.grid,
+	queryForm: {
+	    fields:FinancialBasicsLibFields.query
+	},
+	editWindow: {
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	width:700,
+            dataSource: financialBasicsLibDS,
+            fields: FinancialBasicsLibFields.edit
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+    }
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				financialBasicsLibGrid
+			]
+		})
+	}
+});
+</script>
+</html>

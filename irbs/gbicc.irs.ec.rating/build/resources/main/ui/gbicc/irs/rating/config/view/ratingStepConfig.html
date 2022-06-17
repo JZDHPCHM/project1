@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+//评级步骤类型
+var RatingStepTypes = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.RatingStepType),#locale)})];
+
+//字段定义
+var StepConfigFields ={
+	query: [
+			{width:'*',		name:'stepCode',				title:'[(#{stepCode})]',			type: 'text',	operator:'equals'},
+			{width:'*',		name:'stepName',				title:'[(#{stepName})]',			type: 'text'},
+	],
+	grid: [
+			{width:150,		name:'id',						primaryKey:true,hidden:true},
+			{width:80,		name:'stepNum',					title:'[(#{stepNum})]',type: 'text'},
+			{width:150,		name:'stepCode',				title:'[(#{stepCode})]'},
+			{width:150,		name:'stepType',				title:'[(#{stepType})]',type:'select',valueMap: RatingStepTypes,defaultValue:''},
+		    {width:200,		name:'stepName',				title:'[(#{stepName})]'},
+		    {width:'100%',	name:'stepResourcePath',		title:'[(#{stepResourcePath})]'}
+	],
+	edit: [
+			{width:150,		name:'id',						primaryKey:true,hidden:true},
+			{width:'100%',		name:'stepNum',					title:'[(#{stepNum})]',	type: 'text',		required:true},
+			{width:'100%',		name:'stepCode',				title:'[(#{stepCode})]',type: 'text',		validators:[{type:'lengthRange',max:25}], required:true,canEdit:true},
+			{width:'100%',		name:'stepType',				title:'[(#{stepType})]',type:'select',valueMap: RatingStepTypes,defaultValue:''},
+			{width:'100%',		name:'stepName',				title:'[(#{stepName})]',type: 'text',		validators:[{type:'lengthRange',max:100}], required:true},
+			{width:'100%',		name:'stepResourcePath',		title:'[(#{stepResourcePath})]',validators:[{type:'lengthRange',max:500}], required:true,type:'textArea',colSpan:3}
+	]
+};
+
+//评级步骤列表数据源
+isc.FwRestDataSource.create({
+	ID: 'stepConfigDS',
+    fields: StepConfigFields.grid,
+    dataURL: '[(@{/irs/stepConfig/isc})]'
+});
+
+//评级步骤列表
+isc.FwListGrid.create({
+	ID: 'stepConfigListGrid',
+	title: '<b>评级步骤定义列表</b>',
+	dataSource: stepConfigDS,
+	sortField: 'stepNum',
+	fields: StepConfigFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: StepConfigFields.query
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: stepConfigDS,
+            fields: StepConfigFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+               	]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove',
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				stepConfigListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

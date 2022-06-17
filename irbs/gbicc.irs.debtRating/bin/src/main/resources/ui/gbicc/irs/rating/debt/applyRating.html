@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+//申请类型
+//var shqingType =[(${@CodeLibraryService.findByItemCode("ApplyType")})];
+var shqingType = {
+		"1":"额度项下",
+		"2":"单笔单批"
+};
+//产品类型
+var productType =[(${@CodeLibraryService.findByItemCode("BI_LOAN_BUSINESS_TYPE")})];
+//保证人所有制
+var bzr =[(${@GuarantorFactorService.queryBzr()})];
+var gbhy =[(${@CodeLibraryService.findByItemCode("IndustryType2")})];
+
+//当前登录人账号
+var userAccout = "[(${T(org.wsp.framework.security.util.SecurityUtil).getLoginName()})]";
+
+//细类--主要担保方式
+var VouchType = [(${@CodeLibraryService.findByItemCode("VouchType")})];
+
+
+
+//信用证类型
+var creditType = {
+		"0":"一年以下信用证",
+		"1":"一年以上信用证"
+}
+
+function formatterPercent(value,row,index){
+	if(!value){
+		value=0;
+	}
+ value=value*100;
+ value=value.toFixed(2);
+ return value+"%";
+}
+
+function formatterDecimal(value,row,index){
+	if(!value){
+		value=0;
+	}
+	value=value*1;
+    value=value.toFixed(2);
+    return value+"";
+}
+
+var StepConfigFields ={
+	query: [
+		{name:'id',						primaryKey:true,hidden:true,width:'90px'},
+			{name:'applicationNumber',title:'申请流水号',type: 'text'},//,operator:'equals'
+			{name:'applicationType',title:'申请类型',type: 'select',valueMap:shqingType,operator:'equals'},
+			{name:'customerNumber',title:'客户编号',type: 'text'},
+			{name:'customerName',title:'客户名称',type: 'text'},
+			//{name:'productType',title:'产品类型', type:'select',valueMap:productType},
+			{name:'byTime',title:'发起时间',type: 'miniDateRange',dateDisplayFormat:'yyyy-MM-dd HH:mm:ss',allowRelativeDates:false}
+	
+			],
+	grid: [
+		{name:'id',						primaryKey:true,hidden:true,width:'90px'},
+		{name:'applicationNumber',	   title:'申请流水号',width:'90px'},
+		{name:'applicationType',   title:'申请类型',type: 'select',valueMap:shqingType,width:'90px'},
+		{name:'customerNumber',	   title:'客户编号',  type: 'text',width:'90px'},
+		{name:'customerName',		   title:'客户名称',  type:'select',width:'160px'},
+		{name:'typeCredit',		   title:'信用类型' , type: 'select', valueMap:creditType,width:'90px'},
+		{name:'productName',	   title:'产品名称',  type: 'text',width:'90px'},
+		{name:'businessTypes',		   title:'业务类型',  type:'select',width:'90px'},
+		{name:'businessDeadline',		   title:'申请期限（月）',  type: 'text',width:'110px'},
+		{name:'contractAmount',		   title:'申请金额（元）',  type: 'text',width:'110px',formatCellValue:formatterDecimal},
+		{name:'applicationRate',		   title:'申请利率／实际利率',width:'220px'},
+		{name:'pdProbability',		   title:'PD（违约概率）'      ,width:'140px',formatCellValue:formatterPercent},
+		{name:'ead',   title:'EAD(违约风险暴露)（元）',  type: 'text',width:'170px',formatCellValue:formatterDecimal},
+		{name:'lgd',	   title:'LGD（违约损失率）',  type: 'text',width:'140px',formatCellValue:formatterPercent},
+		//{name:'raroc',		   title:'目标利率（内评法）',  type:'select',width:'140px',formatCellValue:formatterPercent},
+		//{name:'economiccapital',		   title:'RAROC(内评法)',  type: 'text',width:'140px',formatCellValue:formatterPercent},
+		//{name:'eva',		   title:'经济资本（内评法）（元）',width:'140px',formatCellValue:formatterDecimal},
+		{name:'byTime',		   title:'发起时间'         ,width:'90px'},
+		/* {name:'creator',   title:'创建人',  type: 'text',width:'90px'},
+		{name:'createDate',	   title:'创建日期',  type: 'text',width:'90px'},
+		{name:'lastModifier',		   title:'最后修改人',  type:'select',width:'90px'},
+		{name:'lastModifier',		   title:'最后修改日期',  type: 'text',width:'90px'}, */
+		{name:'operationField',	title:'操作',canSort:false,width:'90px'}
+
+],debtsDetails: [
+		{name:'id',						primaryKey:true,hidden:true},
+		{name:'customerNumber',	   title:'客户编号',  type: 'text'},
+		{name:'customerName',		   title:'客户名称',  type:'text'},
+		{name:'applicationNumber',	   title:'申请流水号'	},
+		{name:'applicationType',   title:'申请类型',type: 'select',valueMap:shqingType},
+		{name:'typeCredit',		   title:'信用类型' ,type: 'select', valueMap:creditType },
+		{name:'productName',	   title:'产品名称',  type: 'text'},
+		{name:'principalModeGuarantee',	   title:'主要担保方式',  type: 'select',valueMap:VouchType},
+		{name:'businessTypes',		   title:'业务类型',  type:'select'},
+		{name:'contractAmount',		   title:'申请金额（元）',type: 'float',format:"0.00"},
+		{name:'applicationRate',		   title:'申请利率／实际利率',type: 'float',format:"0.00/0.00"},
+		{name:'pdProbability',		   title:'PD（违约概率）',type: 'float',format:"0.00%"},
+		{name:'coefficientK',		   title:'K（内评法资本要求系数）',type: 'float',format:"0.00"},
+		{name:'ead',   title:'EAD(违约风险暴露)（元）',  type: 'float',format:"0.00"},
+		{name:'lgd',	   title:'LGD（违约损失率）',  type: 'float',format:"0.00%"},
+		//{name:'raroc',		   title:'目标利率（内评法）',  type: 'float',format:"0.00%"},
+		//{name:'economiccapital',	title:'RAROC(内评法)',  type: 'float',format:"0.00%"},
+		//{name:'eva',		   title:'经济资本（内评法）（元）',type: 'float',format:"0.00"},
+		{name:'byTime',		   title:'发起时间'         },
+		/* {name:'creator',   title:'创建人',  type: 'text'},
+		{name:'createDate',	   title:'创建日期',  type: 'text'},
+		{name:'lastModifier',		   title:'最后修改人',  type:'text'},
+		{name:'lastModifyDate',		   title:'最后修改日期',  type: 'text'}, */
+	],
+	correlationProductList:[
+		{name:'id',						primaryKey:true,hidden:true},
+		{name:'guarName',	   title:'押品类型名称',  type: 'text'	},
+		{name:'guarTypelCode',   title:'担保品代码',  type: 'text'},
+		{name:'guarTypel',	   title:'担保品名称',  type: 'text'},
+		{name:'operationField',	title:'操作',canSort:false}
+	],
+	appGuarantorList:[
+		{name:'id',						primaryKey:true,hidden:true},
+		{name:'guarCustId',	   title:'保证人客户编号',type: 'text'},
+		{name:'guarCustName',   title:'保证人客户名称',  	  type: 'text'},
+		{name:'ownership',   title:'保证人所有制', type: 'select', valueMap:bzr},
+		//{name:'guarCustPd',	   title:'信用等级',     type: 'text'},
+		//{name:'guarGuarantee',	   title:'担保金额',     type: 'text'},
+		//{name:'validityLaw',	   title:'保证法律有效性',     type: 'text'},
+		{name:'operationField',	title:'操作',canSort:false}
+	],
+	appGuarantorDetailDS:[
+		{name:'id',						primaryKey:true,hidden:true},
+		{name:'guarCustId',	   title:'保证人客户编号',type: 'text'},
+		{name:'guarCustName',   title:'保证人客户名称',  	  type: 'text'},
+		{name:'contractNumber',	   title:'担保合同编号',     type: 'text'},
+		{name:'guarCustPd',   title:'信用等级',  	  type: 'text'},
+		{name:'guarGuarantee',	   title:'担保金额（元）',type: 'float',format:"0.00"},
+		{name:'guarGbIndustry',	   title:'国标行业',     type: 'select',valueMap:gbhy},
+		{name:'guarAreaName',	   title:'所在地区',     type: 'text'}, 
+		{name:'ownership',   title:'保证人所有制',type: 'select', valueMap:bzr}
+	],
+	producteDtailsDS:[
+	/* 	{name:'appDebtRating.applicationNumber',	   title:'申请流水号  ',type: 'text'},
+		{name:'contractNumber',   title:'担保合同流水号',  	  type: 'text'}, */
+		{name:'productNumber',	   title:'押品编号',     type: 'text'},
+		{name:'rightNumber',	   title:'权证号',type: 'text'},
+		{name:'cardType',   title:'权证类型',  	  type: 'text'},
+		
+		{name:'guarTypelCode',	   title:'担保品类型',     type: 'text'},
+		{name:'guarName',	   title:'担保品名称',type: 'text'},
+		{name:'guarTypel',   title:'担保品名称',  	  type: 'text'},
+		
+		{name:'assessmentTime',	   title:'押品价值评估时间',     type: 'text'},
+		{name:'assessedPledge',	   title:'押品评估价值（元）',type: 'float',format:"0.00"},
+		{name:'determinedPledge',   title:'押品认定价值（元）',type: 'float',format:"0.00"},
+		{name:'businessPledge',	   title:'担保品权利价值（元）',type: 'float',format:"0.00"},
+		{name:'businessCoverage',   title:'业务（合同层）覆盖率',type: 'float',format:"0.00%"},
+		{name:'adjustedCoverage',	   title:'调整后业务（合同层）覆盖率',type: 'float',format:"0.00%"},
+		
+		{name:'benchmarkRecovery',   title:'基准回收率',type: 'float',format:"0.00%"},
+		{name:'registrar',	   title:'登记人',     type: 'text'},
+		{name:'registration',	   title:'登记机构',type: 'text'},
+		{name:'registrationdate',   title:'登记日期',  	  type: 'text'},
+		{name:'updateTime',	   title:'更新日期',     type: 'text'}
+	],
+	appProductDetailList:[
+		{name:'appDebtRating',	   title:'申请流水号  ',type: 'text'},
+		{name:'contractNumber',   title:'担保合同流水号',  	  type: 'text'},
+		{name:'currency',	   title:'担保币种',     type: 'text'},
+		{name:'guaranteeAmount',	   title:'担保金额（元）',type: 'float',format:"0.00"},
+		{name:'guaranteeType',	   title:'担保类型',type: 'text'},
+		{name:'guaranteeName',   title:'担保名称',  	  type: 'text'},
+		{name:'guarGuarantee',	   title:'担保金额（元）',type: 'float',format:"0.00"},
+		{name:'guaranteeSubject',	   title:'担保主体名称',type: 'text'},
+		{name:'guaranteeCode',	   title:'担保主体代码',type: 'text'},
+	]
+};
+
+function createOperationButton(record, colNum){
+	var fieldName = stepConfigListGrid.getFieldName(colNum);  
+    if (fieldName == "operationField") {
+        var recordCanvas = isc.HLayout.create({
+            height: 22,
+            width: "100%",
+            align: "left"
+        });
+        var trialImg = isc.IButton.create({
+        	name:"trialImg",   
+			title:"查看详情",
+			width:100,
+            grid: this,
+            click : function () {
+            	//业务申请信息
+            	debugger
+          		customerVieweForm.fetchData({"id":record.id});
+          		appGuarantorGrid.fetchData({"appDebtRating":record.id}); 
+          		productDtailGrid.fetchData({"appDebtRating":record.id});
+          		//押品信息
+          		//customerVieweForm.setValues(record.appProductDetailList);
+            	//productDtailGrid.fetchData({"":record.id});
+          		//保证人信息
+            	//appGuarantorGrid.fetchData({"contractNumber":record.id});
+          		//customerVieweForm.setValues(record.appGuarantorList);
+            	rateWindow.show();
+            }
+        });
+        recordCanvas.addMember(trialImg);
+        return recordCanvas;  
+    }else {  
+        return null;  
+    }  
+}
+
+//债项详情--数据源
+isc.FwRestDataSource.create({
+	ID: 'debtsEditDS',
+	autoFetchData:false,
+    fields: StepConfigFields.debtsDetails,
+    dataURL: '[(@{/irs/AppDebtRatingController/isc})]'
+});
+//债项详情
+isc.FwReadOnlyDynamicForm.create({
+	ID:"customerVieweForm",
+	title: '<b>债项详情</b>',
+	titleWidth:250,
+	numCols : 4,
+	width:'100%',
+	height:'100%',
+	autoDraw : true,
+	overflow : "auto",
+	autoFocus : false,
+	dataSource:debtsEditDS,
+	fields:StepConfigFields.debtsDetails
+}); 
+//数据源--押品
+isc.FwRestDataSource.create({
+	ID: 'productDtailDS',
+	autoFetchData:false,
+    fields: StepConfigFields.correlationProductList,
+    dataURL: '[(@{/irs/AppProductDetailController/isc})]'
+});
+//数据列表--押品
+isc.FwListGrid.create({
+	ID: 'productDtailGrid',
+	title: '<b>债项关联的抵质押品</b>',
+	autoFetchData:true,
+	border:0,
+	width:"40%",
+	canPageable:false,
+	canSort:false,
+	dataSource: productDtailDS,	
+	showRecordComponents: true,
+    showRecordComponentsByCell: true,
+	fields: StepConfigFields.correlationProductList,
+	createRecordComponent : function (record, colNum) {  
+		var fieldName = productDtailGrid.getFieldName(colNum);  
+	    if (fieldName == "operationField") {
+	        var recordCanvas = isc.HLayout.create({
+	            height: 22,
+	            width: "100%",
+	            align: "left"
+	        });
+	        var trialImg = isc.IButton.create({
+	        	name:"trialImg",   
+				title:"查看详情",
+				width:100,
+	            grid: this,
+	            click : function () {
+ 					appProductDetails.fetchData({"id":record.id});
+ 					appProductDetails.show();
+	            	debtsDetaiByIdYP.show();
+	            }
+	        });
+	        recordCanvas.addMember(trialImg);
+	        return recordCanvas; 
+	    }else{
+	    	return null;
+	    }
+    }
+});
+
+//押品详情
+isc.FwReadOnlyDynamicForm.create({
+	ID:"appProductDetails",
+	title: '<b>押品详情</b>',
+	titleWidth:250,
+	numCols : 4,
+	width:'100%',
+	height:'100%',
+	autoDraw : true,
+	dataSource:productDtailDS,
+	overflow : "auto",
+	autoFocus : false,
+	showOperateSuccessMessage: true,
+	fields:StepConfigFields.producteDtailsDS
+});
+appProductDetails.hide();
+
+//数据源--关联人
+isc.FwRestDataSource.create({
+	ID: 'AppGuarantorDS',
+	autoFetchData:false,
+    fields: StepConfigFields.correlationProductList,
+    dataURL: '[(@{/irs/AppGuarantorController/isc})]'
+});
+//数据列表--保证人
+isc.FwListGrid.create({
+	ID: 'appGuarantorGrid',
+	title: '<b>债项关联的保证人信息</b>',
+	autoFetchData:true,
+	border:0,
+	width:"40%",
+	canPageable:false,
+	canSort:false,
+	dataSource: AppGuarantorDS,	
+	fields: StepConfigFields.appGuarantorList,
+	showRecordComponents: true,
+    showRecordComponentsByCell: true,
+	createRecordComponent : function (record, colNum) {
+		var fieldName = appGuarantorGrid.getFieldName(colNum);  
+	    if (fieldName == "operationField") {
+	        var recordCanvas = isc.HLayout.create({
+	            height: 22,
+	            width: "100%",
+	            align: "left"
+	        });
+	        var trialImg = isc.IButton.create({
+	        	name:"trialImg",   
+				title:"查看详情",
+				width:100,
+	            grid: this,
+	            click : function () {
+	            	appGuarantorDetail.fetchData({"id":record.id});
+	            	appGuarantorInfo.show();
+	            }
+	        });
+	        recordCanvas.addMember(trialImg);
+	        return recordCanvas; 
+	    }else{
+	    	return null;
+	    }
+		
+    }
+});
+//保证人信息
+isc.FwReadOnlyDynamicForm.create({
+	ID:"appGuarantorDetail",
+	title: '<b>保证人详情</b>',
+	titleWidth:250,
+	numCols : 3,
+	width:'100%',
+	height:'100%',
+	autoDraw : true,
+	dataSource:AppGuarantorDS,
+	overflow : "auto",
+	autoFocus : false,
+	showOperateSuccessMessage: true,
+	fields:StepConfigFields.appGuarantorDetailDS
+});
+
+
+isc.defineClass("RatingWindow", "Window").addProperties({
+	step : new Object,			//当前步骤对象
+	RatingObject : new Object,	//评级对象
+	qualStepId : "",			//定性步骤ID
+	quanStepId : "",			//定量步骤ID
+	editable : false,
+	editable1_3 : false,
+	leftBtnDis : false
+});
+//编辑页面布局
+isc.RatingWindow.create({
+	ID : "rateWindow",
+	title : "<b>债项详情</b>",
+	width : "85%",
+	height : "90%",
+	autoCenter : true,
+	isModal : true,
+	visiable : false,
+	showModalMask : true,
+	autoDraw : false,
+	headerControls : ["headerLabel", "closeButton"],
+	items : [	
+		isc.VLayout.create({
+			widht:"100%",
+				height:"55%",
+				members:[
+					customerVieweForm
+				]
+			}),
+			isc.HLayout.create({
+					widht:"100%",
+					height:"40%",
+					members:[
+						productDtailGrid,
+						isc.LayoutSpacer.create({width:'3'}),
+						appGuarantorGrid
+					]
+				}),
+			isc.LayoutSpacer.create({height:'30'}),  //间距
+			],
+	closeClick : function() {
+		isStart = false;
+		noFinStepId = ""; 	// 定性步骤id
+		finStepId = ""; 	// 定量步骤id
+		rateWindow.hide();
+		//刷新评级列表数据
+		//companyRatingListGrid.invalidateCache();
+	}
+});
+
+/**
+ * @押品详情页面
+ */
+ isc.RatingWindow.create({
+ 	ID : "debtsDetaiByIdYP",
+ 	title : "<b>押品详情</b>",
+ 	width : "60%",
+ 	height : "70%",
+ 	autoCenter : true,
+ 	isModal : true,
+ 	visiable : false,
+ 	showModalMask : true,
+ 	autoDraw : false,
+ 	headerControls : ["headerLabel", "closeButton"],
+ 	items : [	
+ 		isc.VLayout.create({
+ 			widht:"100%",
+ 				height:"55%",
+ 				members:[
+ 					appProductDetails
+ 				]
+ 			}),
+ 			isc.LayoutSpacer.create({height:'30'}),  //间距
+ 			],
+ 	closeClick : function() {
+ 		isStart = false;
+ 		noFinStepId = ""; 	// 定性步骤id
+ 		finStepId = ""; 	// 定量步骤id
+ 		debtsDetaiByIdYP.hide();
+ 		//刷新评级列表数据
+ 	}
+ });
+/**
+ * @保证人
+ */
+ isc.RatingWindow.create({
+	 	ID : "appGuarantorInfo",
+	 	title : "<b>保证人详情</b>",
+	 	width : "60%",
+	 	height : "70%",
+	 	autoCenter : true,
+	 	isModal : true,
+	 	visiable : false,
+	 	showModalMask : true,
+	 	autoDraw : false,
+	 	headerControls : ["headerLabel", "closeButton"],
+	 	items : [	
+	 		isc.VLayout.create({
+	 			widht:"100%",
+	 				height:"55%",
+	 				members:[
+	 					appGuarantorDetail
+	 				]
+	 			}),
+	 			isc.LayoutSpacer.create({height:'30'}),  //间距
+	 			],
+	 	closeClick : function() {
+	 		isStart = false;
+	 		noFinStepId = ""; 	// 定性步骤id
+	 		finStepId = ""; 	// 定量步骤id
+	 		appGuarantorInfo.hide();
+	 		//刷新评级列表数据
+	 	}
+	 });
+	 
+isc.FwRestDataSource.create({
+	ID: 'ratingConfigListGrid',
+	autoFetchData:false,
+    fields:StepConfigFields.dataSourceGrid,
+    //dataURL: '[(@{/irs/AppDebtRatingController/isc})]',
+   	fetchDataURL: '[(@{/irs/AppDebtRatingController/queryApp})]'
+});
+
+//模型步骤列表
+isc.FwListGrid.create({
+	ID: 'stepConfigListGrid',
+	title: '<b>申请债项评级</b>',
+	dataSource: ratingConfigListGrid,
+	sortField: 'stepNum',
+	cellHeight: 30,
+	fields: StepConfigFields.grid,
+	canPageable:true,
+	autoFetchData:true,
+	showRecordComponents: true,
+    showRecordComponentsByCell: true,
+	initialCriteria:{
+		/* enable: true,
+		"creator" : userAccout, */
+		ratingConfigId:null
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: StepConfigFields.query
+	},
+	createRecordComponent : function (record, colNum) {  
+		return createOperationButton(record, colNum);
+    },
+    updateRecordComponent: function (record, colNum, component, recordChanged) {
+    	return createOperationButton(record, colNum);
+    },
+	actionMembers:[
+		'reset','query','refresh'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+
+
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.VLayout.create({
+					showResizeBar: true,
+				    width: '100%',
+				    members: [stepConfigListGrid]     
+				})
+			]
+		})
+	}
+});
+
+</script>
+</html>

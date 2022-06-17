@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+<body style='background-color:white'>
+	<div class="wrapper"  style="margin:10px 0 0 0">
+		<div class="row">
+     		<div class="col-lg-12">
+                 <div class="float-e-margins">
+                     <div class="ibox-content">
+                         <form role="form" class="form-inline">
+                             <div class="form-group">
+                                 <label for="taskInput" class="control-label">评价计划</label>
+                                 <input type="text" placeholder="模糊查询" id="searchTaskName" class="form-control">
+                             </div>
+                             <div class="form-group">
+                             	<label class="control-label" for="taskStatus">执行状态</label>
+                                	<select class="form-control" name="taskStatus" id="searchTaskStatus">
+                                     	<option value=''>请选择</option>
+		                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('taskStatus',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+                                	</select>
+                             </div>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+		</div>
+		
+		<div class="row" style="margin:0px 0px 10px 0px">
+			<button class="btn btn-primary btn-sm" id="searchBtn">查询</button>
+            <button class="btn btn-primary btn-sm" id="searchClear">重置</button>
+			<button type="button" class="btn btn-primary btn-sm" id="handCreateTaskBtn">手动生成任务</button>
+			<div class="modal inmodal fade" id="handCreateTaskModal" tabindex="-1" role="dialog"
+				aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+							</button>
+							<h4 class="modal-title">创建任务</h4>
+							<small class="font-bold">您填写完信息，点击提交后，会给用户发送任务！</small>
+						</div>
+						<div class="modal-body">
+                            <form class="form-horizontal" id="taskForm">
+                                <div class="form-group">
+                                	<label class="col-lg-2 control-label">计划名称</label>
+                                    <div class="col-lg-10">
+                                    	<input type="text" id="handCreateTaskName" name="taskName" placeholder="请输入计划名称" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+    	                            <label class="col-lg-2 control-label">计划期次</label>
+                                    <div class="col-lg-10">
+                                    	<input type="text" id="handCreateTaskBatch" name="taskBatch" placeholder="格式:YYYYQX(几年Q几)" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group" id="deadPlanDatePicker">
+                                	<label class="col-lg-2 control-label">截止时间</label>
+                                    <div class="col-lg-10">
+                                    	<div class="input-group date">
+                                    		<span class="input-group-addon">
+                                    			<i class="fa fa-calendar"></i>
+                                    		</span>
+                                    		<input type="text" class="form-control" name="deadPlanDate" id="handCreateDeadPlanDate">
+                                		</div>
+                                    </div>
+                                </div>
+                            </form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+							<button type="button" class="btn btn-primary ladda-button" id="handCreateTaskSubmit" data-style="zoom-out">提交</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<button class="btn btn-primary btn-sm" id="deleteTaskPlanBtn">删除计划</button>
+			<button class="btn btn-primary btn-sm" id="lookProcessBtn">查看流程</button>
+	        <div class="modal inmodal fade" id="lookProcessModal" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-body">
+							<div class='row' style='margin:0 0 0 20px'>
+								<table id='processCommentTable'></table>
+								<div id='processCommentPage'></div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+						</div>
+					</div>
+				</div>
+			</div>
+						
+			<button class="btn btn-primary btn-sm" id="downloadCommentBtn">审批记录下载</button>
+			<button class="btn btn-primary btn-sm hidden" id="testSendMail">测试发送邮件</button>
+			<button class="btn btn-primary btn-sm hidden" id="testSendOARemind">测试发送OA提醒</button>
+		</div>
+		
+		<div class="row">
+	        <div class="col-lg-12">
+	        	<div class="jqGrid_wrapper">
+                    <table id="taskTable"></table>
+                    <div id="taskPager"></div>
+                </div>
+	        </div>		
+		</div>
+		
+	</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		/*评估计划*/
+		$("#taskTable").jqGrid({
+			url:"[(@{/irr/task/isc/fetch?isc_dataFormat=json})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+		    postData:{
+		    	sortBy : "-taskBatch"
+		    },
+			mtype : "get",
+	        datatype: "json",
+	        height: 350,
+	        autowidth: true,
+	        shrinkToFit: true,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['ID','任务名称','任务期次','任务状态', '开始时间','截止时间','结束时间'],
+	        colModel:[{
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'taskName',
+	        	index:'taskName',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'taskBatch',
+	        	index:'taskBatch',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'taskStatus',
+	        	index:'taskStatus',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('taskStatus',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'createDate',
+	        	index:'createDate',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'deadPlanDate',
+	        	index:'deadPlanDate',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'endDate',
+	        	index:'endDate',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        }],
+	        pager: "#taskPager",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }
+	    });
+	    $("#taskTable").jqGrid('navGrid', '#taskPager',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    
+	    /*审批记录*/
+	    $("#processCommentTable").jqGrid({
+			url:"[(@{/irr/task/findProcessComment.action})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "local",
+	        height: 300,
+	        width : 800,
+	        autowidth: false,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['ID','任务名称','任务人', '审批意见','创建时间','完成时间'],
+	        colModel:[{
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'name',
+	        	index:'name',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'ownerInfo',
+	        	index:'ownerInfo',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'taskComment',
+	        	index:'taskComment',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'createDate',
+	        	index:'createDate',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'finishDate',
+	        	index:'finishDate',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        }],
+	        pager: "#processCommentPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }
+	    });
+	    $("#processCommentTable").jqGrid('navGrid', '#processCommentPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#taskTable').setGridWidth(width);
+	        $('#processCommentTable').setGridWidth(width);
+	    });
+	    
+	    /*时间组件*/
+		$('#deadPlanDatePicker .input-group.date').datepicker({
+		    todayBtn: "linked",
+		    keyboardNavigation: false,
+		    forceParse: false,
+		    calendarWeeks: true,
+		    autoclose: true
+		});
+		
+	    /*主页面手动创建任务按钮*/
+	    $('#handCreateTaskBtn').click(function(){
+	    	$('#taskForm')[0].reset();
+	    	$('#handCreateTaskModal').modal('show');
+	    });
+	    
+	    /*手动生成计划提交按钮*/
+		$('#handCreateTaskSubmit').click(function(){
+			var handCreateTaskSubmitLadda = Ladda.create(this);
+			handCreateTaskSubmitLadda.start();
+			var taskName = $('#handCreateTaskName').val();
+			var taskBatch = $('#handCreateTaskBatch').val();
+			var deadPlanDate = $('#handCreateDeadPlanDate').val();
+			if(isEmpty(taskName) || isEmpty(taskBatch) || isEmpty(deadPlanDate)){
+				swal('提示','请完善填写的信息！','warning');
+				return false;
+			}
+			if(taskBatch.length != 6){
+				swal('提示','请按照格式填写正确的期次！','warning');
+				return false;
+			}
+			var year = taskBatch.substr(0,4);
+			if(isNaN(year)){
+				swal('提示','年只能为数字！','warning');
+				return false;
+			}
+			var suffix = taskBatch.substr(taskBatch.length - 2,1);
+			if(suffix != 'q' && suffix != 'Q'){
+				swal('提示','期次标识只能为Q或者q','warning');
+				return false;
+			}
+			var many = taskBatch.substring(taskBatch.length - 1);
+			if(isNaN(many) || many < 0 || many > 4){
+				swal('提示','期次只能为1,2,3,4！','warning');
+				return false;
+			}
+			$.ajax({
+				type : 'POST',
+				url : '[(@{/irr/task/startTask.action})]',
+				dataType : 'json',
+				data : {
+					taskName : taskName,
+					taskBatch : taskBatch,
+					deadPlanDate : deadPlanDate
+				},
+				success : function(data, textStatus){
+					handCreateTaskSubmitLadda.stop();
+					if(data.flag == true){
+						$('#handCreateTaskModal').modal('hide');
+						$("#taskTable").jqGrid('clearGridData');//清空表格
+						$("#taskTable").jqGrid('setGridParam',{//重新加载数据
+							datatype : 'json',
+							page : 0
+						},true).trigger("reloadGrid");
+						swal({title: '提示',text: '发送成功！',type: 'success'});
+					}else{
+						swal({title: '提示',text: data.data,type:'error'});
+					}
+				},
+				error : function(data, textStatus){
+					handCreateTaskSubmitLadda.stop();
+					swal({title: '提示',text: '发送失败！',type:'error'});
+				}
+			});
+		});
+		
+	    /*删除任务按钮*/
+		$('#deleteTaskPlanBtn').click(function(){
+			var rowId = $("#taskTable").jqGrid("getGridParam","selrow");
+			if(isEmpty(rowId)){
+				swal('提示','请先选择一条记录!','warning');
+				return false;
+			}
+			swal({
+                title: "确定删除?",
+                text: "您正在执行删除操作，请确定是否删除？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "删除",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+            	$.ajax({
+    				type : 'POST',
+    				url : '[(@{/irr/task/deletePlan.action})]',
+    				dataType : 'json',
+    				data : {
+    					taskId : rowId
+    				},
+    				success : function(data, textStatus){
+    					if(data.flag == true){
+    						$("#taskTable").jqGrid('clearGridData');//清空表格
+    						$("#taskTable").jqGrid('setGridParam',{//重新加载数据
+	    						datatype : 'json',
+	    						page : 0
+    						},true).trigger("reloadGrid");
+    						swal({
+    			                title: '提示',
+    			                text: data.data,
+    			                type: 'success'
+    			            });
+    					}else{
+    						swal({
+    			                title: '提示',
+    			                text: data.data,
+    			            });
+    					}
+    				},
+    				error : function(data, textStatus){
+    					swal({
+    		                title: '提示',
+    		                text: '删除失败！',
+    		            });
+    				}
+    			});
+            });
+		});
+		
+		/*主页面查询按钮*/
+		$('#searchBtn').click(function(){
+			var taskNameVal = $('#searchTaskName').val();
+			var taskStatusVal = $('#searchTaskStatus').val();
+			console.log(taskStatusVal);
+			var iscRequest = {
+				operationType : 'fetch',
+				textMatchStyle : 'substring'
+			};
+			if(isNotEmpty(taskNameVal)){
+				iscRequest.taskName = taskNameVal;
+			}
+			if(isNotEmpty(taskStatusVal)){
+				iscRequest.taskStatus = taskStatusVal;
+			}
+			iscRequest.sortBy = "-taskBatch";
+			$("#taskTable").jqGrid('clearGridData');//清空表格
+			$("#taskTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : iscRequest,
+				page : 0
+			},true).trigger("reloadGrid");
+		});	
+		
+		/*主页面重置按钮*/
+		$('#searchClear').click(function(){
+			$('#searchTaskName').val('');
+			$('#searchTaskStatus').val('');
+		});
+		
+		/*主界面查看流程按钮*/
+		$('#lookProcessBtn').click(function(){
+			var rowId = $("#taskTable").jqGrid("getGridParam","selrow");
+			if(isEmpty(rowId)){
+				swal('提示','请先选择一条记录!','warning');
+				return false;
+			}
+			$("#processCommentTable").jqGrid('clearGridData');//清空表格
+			$("#processCommentTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				page : 1,
+				postData : {
+					id : rowId
+				},
+			},true).trigger("reloadGrid");
+			$('#lookProcessModal').modal('show');
+		});
+		
+		/*主界面审批记载按钮*/
+		$('#downloadCommentBtn').click(function(){
+			var rowId = $("#taskTable").jqGrid("getGridParam","selrow");
+			if(isEmpty(rowId)){
+				swal('提示','请先选择一条记录!','warning');
+				return false;
+			}
+			window.location.href = '[(@{/irr/task/downloadProcessComment.action?id='+rowId+'})]';
+		});
+		
+		/*测试发送邮件*/
+		$('#testSendMail').click(function(){
+			window.location.href = '[(@{/irr/task/testSendMail.action})]';
+		});
+		/*测试发送OA提醒*/
+		$('#testSendOARemind').click(function(){
+			window.location.href = '[(@{/irr/task/testSendOARemind.action})]';
+		});
+	});
+</script>
+</html>

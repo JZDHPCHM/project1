@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FR_DOWNLOAD_FILE" author="framework">
+
+        <!-- 文件导出下载记录表 -->
+        <createTable tableName="FR_DOWNLOAD_FILE" remarks="文件导出下载记录表">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FILE_NAME" type="java.sql.Types.VARCHAR(100)" remarks="文件名称"></column>
+            <column name="FILE_PATH" type="java.sql.Types.VARCHAR(500)" remarks="文件地址"></column>
+            <column name="FILE_TYPE" type="java.sql.Types.VARCHAR(100)" remarks="文件类型"></column>
+            <column name="EXPORT_STATUS" type="java.sql.Types.VARCHAR(30)" remarks="导出状态"></column>
+            <column name="EXPORT_TIME" type="DATETIME" remarks="导出时间"></column>
+            <column name="EXPORT_USER" type="java.sql.Types.VARCHAR(100)" remarks="导出用户"></column>
+            <column name="EXPORT_MSG" type="CLOB" remarks="导出信息"></column>
+            <column name="DOWNLOAD_MSG" type="CLOB" remarks="下载信息"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,73 @@
+SELECT ROUND(SUM(ROUND((END_TIME - APP_TIME), 2)) * 24 * 60 / COUNT(*), 2) AS "件均花费时间（分钟）"
+
+  FROM (
+        
+        SELECT T.REPORT_ID,
+                SUBSTR(CLAIMS.ORG_CODE, 1, 1) AS T2,
+                APP_TIME,
+                (CASE
+                  WHEN NOT_PAY.REPORT_ID IS NOT NULL THEN
+                   T.END_TIME
+                  WHEN PAYEE.PAY_DATE IS NOT NULL THEN
+                   PAYEE.PAY_DATE
+                  ELSE
+                   NULL
+                END) AS END_TIME
+        
+        /*,
+        END_TIME,
+        ROUND((END_TIME - APP_TIME) * 24 * 60, 2) AS "花费时间（分钟）"*/
+          FROM (SELECT DISTINCT T1.REPORT_ID, T2.APP_TIME, T3.END_TIME
+                   FROM (
+                         
+                         SELECT T.REPORT_ID
+                           FROM TC_CLAIMSAUDIT T
+                          WHERE T.CONCLUSION IN ('01', '02', '03', '04')
+                            AND T.HIS_TAG = '0') T1,
+                        --T2审批时间增加小额自动理赔 add by jason 20171009
+                        (SELECT T.REPORT_ID, MAX(T.END_TIME) AS APP_TIME
+                           FROM TC_TASKTIME T
+                          WHERE T.CODE = 'ClaimWf001_06'
+                          GROUP BY T.REPORT_ID
+                         UNION
+                         SELECT T.REPORT_ID, MAX(T.END_TIME) AS APP_TIME
+                           FROM TC_TASKTIME T, TC_SMALL_AUTO_CLAIMS SAC
+                          WHERE T.CODE = 'ClaimWf001_08'
+                            AND T.REPORT_ID = SAC.REPORT_ID
+                            AND SAC.IS_VALID = '1'
+                          GROUP BY T.REPORT_ID) T2,
+                        (SELECT T.REPORT_ID, MAX(T.END_TIME) AS END_TIME
+                           FROM TC_TASKTIME T
+                          WHERE T.CODE = 'ClaimWf001_08'
+                          GROUP BY T.REPORT_ID) T3
+                  WHERE T1.REPORT_ID = T2.REPORT_ID
+                    AND T1.REPORT_ID = T3.REPORT_ID
+                 --  AND TRUNC(T3.END_TIME) BETWEEN
+                 --       TO_DATE('2017-04-01', 'YYYY-MM-DD') AND
+                 --      TO_DATE('2017-06-30', 'YYYY-MM-DD')
+                 ) T,
+                TC_CLAIMS CLAIMS
+        --支付号
+          LEFT JOIN (SELECT REPORT_ID,
+                            MAX(PAYEE.PAY_SEND_TIME) AS PAY_DATE　FROM (SELECT DISTINCT REPORT_ID,
+                                                                                       SUBSTR(ENTITY,
+                                                                                              1,
+                                                                                              1) ||
+                                                                                       REQNO AS PAY_NO,
+                                                                                       FPAY.*
+                                                                         FROM TC_PAYMENT
+                                                                         LEFT JOIN TC_FINANCIAL_PAY FPAY
+                                                                           ON SUBSTR(ENTITY,
+                                                                                     1,
+                                                                                     1) ||
+                                                                              REQNO =
+                                                                              FPAY.PAY_NO
+                                                                        WHERE REQNO IS NOT NULL) PAYEE GROUP BY REPORT_ID) PAYEE
+            ON PAYEE.REPORT_ID = CLAIMS.REPORT_ID
+          LEFT JOIN TC_LOAN_NOT_PAY_REPORTS NOT_PAY
+            ON NOT_PAY.REPORT_ID = CLAIMS.REPORT_ID
+         WHERE T.REPORT_ID = CLAIMS.REPORT_ID) M
+ WHERE TRUNC(M.END_TIME) BETWEEN
+       ADD_MONTHS(TO_DATE('2018-06-30', 'YYYY-MM-DD') + 1, -3) AND
+       TO_DATE('2018-06-30', 'YYYY-MM-DD')
+ GROUP BY T2

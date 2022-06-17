@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+<body style='background-color:white'>
+	<div class='wrapper'>
+		<div class='wrapper wrapper-content animated fadeInRight'>
+			<div class='row'>
+				<div class='col-lg-3'>
+					<div id='projTypeTree'></div>
+				</div>
+				<div class='col-lg-9'>
+					<div class='row'>
+						<form class='form-inline' id='dataSuppSearchForm'>
+							<div class="form-group">
+	                            <label class="control-label" for="pfmLevel">补录层级</label>
+	                          	<select class="form-control" name="pfmLevel" id="pfmLevel">
+	                         		<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('pfmLevel',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+	                          	</select>
+	                        </div>
+							<div class="form-group">
+	                            <label class="control-label" for="planId">评价计划</label>
+	                          	 <select class="form-control" name="planId" id="searchPlanId">
+	                               	<option value=''>请选择</option>
+	                         		<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('indexStatus',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+	                          	 </select>
+	                        </div>
+							<div class="form-group">
+	                            <label for="indexCode" class="control-label">指标编码</label>
+	                            <input type="text" placeholder="模糊查询" id="indexCode" name="indexCode" class="form-control">
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="indexName" class="control-label">指标名称</label>
+	                            <input type="text" placeholder="模糊查询" id="indexName" name="indexName" class="form-control">
+	                        </div>
+						</form>
+						<div class='row' style='margin:5px 0 0 0'>
+							<div class='col-lg-offset-5'>
+								<button type='button' class='btn btn-primary' id='searchBtn'>查询</button>
+								<button type='button' class='btn btn-primary' id='resetBtn'>重置</button>
+							</div>
+						</div>
+					</div>
+					<div class='row' style="margin:5px 0 0 -10px;" id='pfmDataSuppTableDiv'>
+						<table id='pfmDataSuppTable'></table>
+						<div id='pfmDataSuppPage'></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var headOneColNames = ['计划期次','评估项目名称','指标名称','投资部','精算部','财务管理部','会计运营部','IT'];
+	var headOneColModel = [{
+		name : 'taskBatch',
+    	index : 'taskBatch',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	},{
+		name : 'projTypeName',
+    	index : 'projTypeName',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	},{
+		name : 'indexName',
+    	index : 'indexName',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	},{
+		name : 'tzb',
+    	index : 'tzb',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	},{
+		name : 'jsb',
+    	index : 'jsb',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	},{
+		name : 'cwglb',
+    	index : 'cwglb',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	},{
+		name : 'kjyyb',
+    	index : 'kjyyb',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	},{
+		name : 'IT',
+    	index : 'IT',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	}];
+	$(document).ready(function(){
+		/*评估项目树*/
+		$('#projTypeTree').jstree({
+			  "core" : {
+			    "animation" : 0,
+			    "check_callback" : true,
+			    "themes" : { "stripes" : false },
+			    'data' : {
+			      'url' : function (node) {
+			        return '/irr/projType/findJsTreeNode.action';
+			      },
+			      "datatype": "json",
+			      'data' : function (node) {
+			        return { 'id' : node.id };
+			      }
+			    }
+			  },
+			  "types" : {
+			    "#" : {
+			      "max_children" : 5,
+			      "max_depth" : 4,
+			      "valid_children" : ["root"]
+			    },
+			    "root" : {
+			      "valid_children" : ["default"]
+			    },
+			    "default" : {
+			      "valid_children" : ["default","file"]
+			    },
+			    "file" : {
+			      "icon" : "glyphicon glyphicon-file",
+			      "valid_children" : []
+			    }
+			  },
+			  "plugins" : [
+			    "contextmenu", "dnd", "search",
+			    "state", "types", "wholerow"
+			  ]
+		});
+		/*所有的节点加载完后*/
+		$('#projTypeTree').bind("ready.jstree", function (obj, e) {
+			$('#projTypeTree').jstree(true).deselect_all(false);
+			$('#projTypeTree').jstree(true).refresh();
+		});
+		/*点击tree节点事件*/
+		$('#projTypeTree').bind("activate_node.jstree", function (obj, e) {
+			
+		});
+		
+		/*进入页面jqGrid配置*/
+		jqGridConfig('#pfmDataSuppTable','#pfmDataSuppPage','[(@{/irr/indexOption/isc/fetch?isc_dataFormat=json})]',headOneColNames,headOneColModel);
+
+	    /*补录层级下拉框改变事件*/
+	    $('#pfmLevel').change(function(){
+	    	var pfmLevel = $('#pfmLevel').val();
+	    	if(isEmpty(pfmLevel)){
+	    		swal('提示','请先选择补录层级!','warnning');
+	    		return false;
+	    	}
+	    	var colNameParam = null;
+	    	var colModelParam = null;
+	    	if(pfmLevel == 'HEAD1'){
+	    		colNameParam = headOneColNames;
+	    		colModelParam = headOneColModel;
+	    	}else if(pfmLevel == 'HEAD2'){
+	    		colNameParam = ['计划期次','评估项目名称','指标名称','客服','个险','团险','银保','多元','续期'];
+	    		colModelParam = [{
+	    			name : 'taskBatch',
+	    	    	index : 'taskBatch',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'projTypeName',
+	    	    	index : 'projTypeName',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'indexName',
+	    	    	index : 'indexName',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'KF',
+	    	    	index : 'KF',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'FC',
+	    	    	index : 'FC',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'GP',
+	    	    	index : 'GP',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'BK',
+	    	    	index : 'BK',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'AD',
+	    	    	index : 'AD',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'RP',
+	    	    	index : 'RP',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		}];
+	    	}else if(pfmLevel == 'BRANCH'){
+	    		colNameParam = ['计划期次','评估项目名称','指标名称','北京','天津','辽宁','大连','江苏','山东','青岛','河南','广东','四川'];
+	    		colModelParam = [{
+	    			name : 'taskBatch',
+	    	    	index : 'taskBatch',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'projTypeName',
+	    	    	index : 'projTypeName',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'indexName',
+	    	    	index : 'indexName',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'BJ',
+	    	    	index : 'BJ',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'TJ',
+	    	    	index : 'TJ',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'LN',
+	    	    	index : 'LN',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'DL',
+	    	    	index : 'DL',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'JS',
+	    	    	index : 'JS',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'SD',
+	    	    	index : 'SD',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'QD',
+	    	    	index : 'QD',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'HN',
+	    	    	index : 'HN',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'GD',
+	    	    	index : 'GD',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'SC',
+	    	    	index : 'SC',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		}];
+	    	}
+	    	jqGridConfig('#pfmDataSuppTable','#pfmDataSuppPage','[(@{/irr/indexOption/isc/fetch?isc_dataFormat=json})]',colNameParam,colModelParam);
+	    });
+	    
+	});	
+</script>
+</html>

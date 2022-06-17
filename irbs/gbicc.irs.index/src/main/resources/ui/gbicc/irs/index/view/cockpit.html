@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>驾驶舱</title>
+		<link href="" media="screen, projection" rel="stylesheet" type="text/css" charset="UTF-8">
+		<style>
+			article,
+			aside,
+			blockquote,
+			body,
+			button,
+			code,
+			dd,
+			details,
+			div,
+			dl,
+			dt,
+			fieldset,
+			figcaption,
+			figure,
+			footer,
+			form,
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6,
+			header,
+			hgroup,
+			hr,
+			input,
+			legend,
+			li,
+			menu,
+			nav,
+			ol,
+			p,
+			pre,
+			section,
+			td,
+			textarea,
+			th,
+			ul {
+				margin: 0;
+				padding: 0;
+			}
+			
+			body,
+			html {
+				width: 100%;
+				height: 100%;
+			}
+			body{
+				background-image: url(/image/bj.png);
+			    background-color: rgb(2, 15, 38);
+			    background-size: 100%;
+			    background-repeat: round;
+			    margin-top: 0;
+			    height: 100%;
+			    overflow-x: hidden;
+			}
+			.type-txt{
+				color: rgba(218, 232, 255, 0.44);
+			    width: 20px;
+			    display: inline-block;
+			    position: relative;
+			    left: 390px;
+			    top: 35px;
+			    font-size: 12px;
+			    transform: scale(0.9);
+			}
+			.widget {
+				contain: strict;
+				height: 100%;
+				overflow: hidden;
+				border-radius: 1px;
+				box-sizing: border-box;
+				color: #404040;
+				margin-bottom: 10px;
+				position: relative;
+			}
+			
+			.widget header {
+				height: 30px;
+				line-height: 30px;
+				font-weight: 600;
+				display: -ms-flexbox;
+				display: flex;
+				-ms-flex: 0 0 auto;
+				flex: 0 0 auto;
+			}
+			
+			.widget header .title {
+				max-width: 100%;
+				-ms-flex: 1 1 auto;
+				flex: 1 1 auto;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				/*text-align: left;*/
+				width: 100%;
+				height: 30px;
+				position: absolute;
+				padding: 0 10px;
+				font-size: 14px;
+				font-weight: 700;
+			}
+			
+			.echarts-div {
+				position: absolute;
+				left: 0px;
+				top: 30px;
+				width: 100%;
+				/*height: 149px;*/
+				user-select: none;
+				-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+				padding: 0px;
+				margin: 0px;
+				border-width: 0px;
+			}
+			.widget .body {
+			    height: 100%;
+			}
+			.react-grid-layout {
+			    position: absolute;
+			    transition: height .2s ease;
+			    width: 100%;
+			    height: 100%;
+			}
+		</style>
+		<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/echarts.js}"></script>
+	</head>
+
+	<body>
+		<div style="height: 100%;">
+			<div style="background-color: rgba(64, 162, 118, 0); width: 100%; height: 25px; transform: translate(0, 20px);text-align: center;">
+								<section class="widget">
+									<header style="color: rgb(218, 232, 255);">
+										<span class="title">
+											<a>主体评级</a>
+										</span>
+									</header>
+								</section>
+							</div>
+			<div class="type-txt">当年</div>				
+			<div style="background-image: url(/image/icon.png); background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(410px, 42px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;">
+										<span style="font-size: 12px;">平均得分</span>
+										<h1>87.23</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div style="background-image: url(/image/icon.png); background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(530px, 42px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;">
+										<span style="font-size: 12px;">数量</span>
+										<h1>400</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div class="type-txt" style="left: 695px;">累计</div>
+			<div style="background-image: url(/image/icon.png); background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(740px, 42px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;">
+										<span style="font-size: 12px;">平均得分</span>
+										<h1>87.23</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div style="background-image: url(/image/icon.png); background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(860px, 42px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;">
+										<span style="font-size: 12px;">数量</span>
+										<h1>400</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div style="background-color: rgba(64, 162, 118, 0); width: 100%; height: 25px; transform: translate(0, 65px);text-align: center;">
+								<section class="widget">
+									<header style="color: rgb(218, 232, 255);">
+										<span class="title">
+											<a>债项评级</a>
+										</span>
+									</header>
+								</section>
+							</div>
+			<div class="type-txt" style="top: 75px;">当年</div>				
+			<div style="background-image: url(/image/icon.png); background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(410px, 145px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;">
+										<span style="font-size: 12px;">平均倍数</span>
+										<h1>87.23</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div style="background-image: url(/image/icon.png); background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(530px, 145px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;">
+										<span style="font-size: 12px;">数量</span>
+										<h1>400</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div class="type-txt" style="top: 75px;left: 695px;">累计</div>
+			<div style="background-image: url(/image/icon.png); background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(740px, 145px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;">
+										<span style="font-size: 12px;">平均倍数</span>
+										<h1>87.23</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div style="background-image: url(/image/icon.png); background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(860px, 145px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;">
+										<span style="font-size: 12px;">数量</span>
+										<h1>400</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div style="background-color: rgba(64, 162, 118, 0); width: 100%; height: 25px; transform: translate(0, 106px);text-align: center;">
+								<section class="widget">
+									<header style="color: rgb(218, 232, 255);">
+										<span class="title">
+											<a>风险预警</a>
+										</span>
+									</header>
+								</section>
+							</div>
+			<div class="type-txt" style="top: 115px;">当月</div>
+			<div style="background-image: url(/image/icon.png); background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(410px, 245px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;">
+										<span style="font-size: 12px;">合计</span>
+										<h1>25</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div style="background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(485px, 255px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;font-size: 12px;">
+										<span style="font-size: 12px;">高风险</span>
+										<h1>12</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div style="background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(540px, 255px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;font-size: 12px;">
+										<span style="font-size: 12px;">中风险</span>
+										<h1>13</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<!--<div style="background-color: rgba(64, 162, 118, 0); border-image-source: url(/image/blueBorder2.gif); border-image-width: 1; border-image-slice: 8; border-style: solid; width: 320px; height: 125px; position: absolute; background-size: 320px 125px; z-index: 1; touch-action: none; transform: translate(350px, 180px);">-->
+			<div style="background-color: rgba(64, 162, 118, 0); width: 320px; height: 155px; position: absolute; background-size: 320px 155px; z-index: 1; touch-action: none; transform: translate(350px, 130px);">	
+				<section style="padding: 0px 5px 5px;" class="widget">
+					<div style="position: relative; overflow: hidden; width: 320px; height: 155px; padding: 0px; margin: 0px; border-width: 0px;">
+						<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+						<div id="pie3" style="width: 100%;height: 155px;padding: 0;"></div>
+					</div>
+				</section>
+			</div>
+			<div class="type-txt" style="top: 115px;left: 695px;">累计</div>
+			<div style="background-image: url(/image/icon.png); background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(740px, 245px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;">
+										<span style="font-size: 12px;">合计</span>
+										<h1>25</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div style="background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(815px, 255px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;font-size: 12px;">
+										<span style="font-size: 12px;">高风险</span>
+										<h1>12</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div style="background-color: rgba(64, 162, 118, 0); width: 105px; height: 87px; position: absolute; transform: translate(870px, 255px); background-size: 105px 87px; z-index: 0; touch-action: none;top: -25px;">
+				<section style="height: 100%;">
+					<div>
+						<div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 110px; height: 45px; position: absolute; z-index: 1; touch-action: none; transform: translate(10px, 37px);">
+								<section>
+									<div style="position: absolute; left: -7px; top: -10px; width: 100px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;color: #1CF3D6; text-align: center;font-size: 12px;">
+										<span style="font-size: 12px;">中风险</span>
+										<h1>13</h1>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<!--<div style="background-color: rgba(64, 162, 118, 0); border-image-source: url(/image/blueBorder1.gif); border-image-width: 1; border-image-slice: 8; border-style: solid; width: 300px; height: 125px; position: absolute; background-size: 300px 125px; z-index: 1; touch-action: none; transform: translate(692px, 180px);">-->
+			<div style="background-color: rgba(64, 162, 118, 0); width: 320px; height: 155px; position: absolute; background-size: 320px 155px; z-index: 1; touch-action: none; transform: translate(692px, 130px);">	
+				<section style="padding: 0px 5px 5px;" class="widget">
+					<div style="position: relative; overflow: hidden; width: 320px; height: 155px; padding: 0px; margin: 0px; border-width: 0px;">
+						<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+						<div id="pie4" style="width: 100%;height: 155px;padding: 0;"></div>
+					</div>
+				</section>
+			</div>
+			<div style="background-image: url(/image/borderBox.png); background-color: rgba(64, 162, 118, 0); width: 329px; height: 214px; position: absolute; transform: translate(10px, 38px); background-size: 329px 214px; z-index: 1; touch-action: none;top: -35px;">
+				<section style="padding: 0px 5px 5px;" class="widget">
+					<header style="color: rgb(218, 232, 255);">
+						<span style="text-align: center;vertical-align: middle;" class="title">
+							<a style="vertical-align: inherit;">主体评级等级分析</a>
+						</span>
+					</header>
+					<div class="echarts-div">
+						<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+						<div id="histogram1" style="width: 100%;height: 180px;padding: 0;"></div>
+					</div>
+				</section>
+			</div>
+			<div style="background-image: url(/image/borderBox.png); background-color: rgba(64, 162, 118, 0); width: 329px; height: 220px; position: absolute; transform: translate(10px, 236px); background-size: 329px 220px; z-index: 1; touch-action: none;top: -15px;">
+				<section style="padding: 0px 5px 5px;" class="widget">
+					<header style="color: rgb(218, 232, 255);">
+						<span style="text-align: center;vertical-align: middle;" class="title">
+							<a style="vertical-align: inherit;">总保障倍数分析(存量)</a>
+						</span>
+					</header>
+					<div class="echarts-div" style="top: -10px;">
+						<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+						<div id="histogram2" style="width: 100%;height: 230px;padding: 0;"></div>
+					</div>
+				</section>
+			</div>
+			<div style="background-image: url(/image/borderBox.png); background-color: rgba(64, 162, 118, 0); width: 329px; height: 212px; position: absolute; transform: translate(10px, 459px); background-size: 329px 212px; z-index: 1; touch-action: none;top: -15px;">
+				<section style="padding: 0px 5px 5px;" class="widget">
+					<header style="color: rgb(218, 232, 255);">
+						<span style="text-align: center;vertical-align: middle;" class="title">
+							<a style="vertical-align: inherit;">近半年风险预警数据分析</a>
+						</span>
+					</header>
+					<div class="echarts-div" style="top: -20px;">
+						<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+						<div id="histogram3" style="width: 100%;height: 235px;padding: 0;"></div>
+					</div>
+				</section>
+			</div>
+			<div style="background-color: rgba(36, 65, 109, 0); background-image: url(/image/borderBox.png); width: 329px; height: 214px; position: absolute; transform: translate(1010px, 38px); background-size: 329px 214px; z-index: 0; touch-action: none;top: -35px;">
+				<section style="padding: 0px 5px 5px;" class="widget">
+					<header style="color: rgb(218, 232, 255);">
+						<span style="text-align: center;vertical-align: middle;" class="title">
+							<a style="vertical-align: inherit;">事业部主体评级分析</a>
+						</span>
+					</header>
+					<div class="echarts-div" style="top: -20px;">
+						<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状图 -->
+						<div id="mixlinebar1" style="width: 100%;height: 230px;padding: 0;"></div>
+					</div>
+				</section>
+			</div>
+			<div style="background-image: url(/image/borderBox.png); background-color: rgba(64, 162, 118, 0); width: 329px; height: 220px; position: absolute; transform: translate(1010px, 236px); background-size: 329px 220px; z-index: 1; touch-action: none;top: -15px;">
+				<section style="padding: 0px 5px 5px;" class="widget">
+					<header style="color: rgb(218, 232, 255);">
+						<span style="text-align: center;vertical-align: middle;" class="title">
+							<a style="vertical-align: inherit;">事业部总保障倍数分析</a>
+						</span>
+					</header>
+					<div class="echarts-div" style="top: -15px;">
+						<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状图 -->
+						<div id="mixlinebar2" style="width: 100%;height: 230px;padding: 0;"></div>
+					</div>
+				</section>
+			</div>
+			<div style="background-color: rgba(64, 162, 118, 0); background-image: url(/image/borderBox.png); width: 329px; height: 212px; position: absolute; transform: translate(1010px, 459px); background-size: 329px 212px; z-index: 1; touch-action: none;top: -15px;">
+				<section style="padding: 0px 5px 5px;" class="widget">
+					<header style="color: rgb(218, 232, 255);">
+						<span style="text-align: center;vertical-align: middle;" class="title">
+							<a style="vertical-align: inherit;">事业部风险预警分析</a>
+						</span>
+					</header>
+					<div class="echarts-div" style="top: -15px;">
+						<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+						<div id="histogram4" style="width: 100%;height: 230px;padding: 0;"></div>
+					</div>
+				</section>
+			</div>
+			<div style="background-image: url(/image/borderBox.png); background-color: rgba(64, 162, 118, 0); width: 329px; height: 184px; position: absolute; transform: translate(10px, 674px); background-size: 329px 184px; z-index: 1; touch-action: none;top: -15px;">
+				<section style="padding: 0px 5px 5px;" class="widget">
+					<header style="color: rgb(218, 232, 255);">
+						<span style="text-align: center;vertical-align: middle;" class="title">
+							<a style="vertical-align: inherit;">主体评级数量占比分析</a>
+						</span>
+					</header>
+					<div class="echarts-div">
+						<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+						<div id="pie1" style="width: 100%;height: 149px;padding: 0;"></div>
+					</div>
+				</section>
+			</div>
+			<div style="background-image: url(/image/borderBox.png); background-color: rgba(64, 162, 118, 0); width: 329px; height: 184px; position: absolute; transform: translate(10px, 861px); background-size: 329px 184px; z-index: 1; touch-action: none;top: -15px;">
+				<section style="padding: 0px 5px 5px;" class="widget">
+					<header style="color: rgb(218, 232, 255);">
+						<span style="text-align: center;vertical-align: middle;" class="title">
+							<a style="vertical-align: inherit;">预警数量行业占比分析</a>
+						</span>
+					</header>
+					<div class="echarts-div">
+						<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+						<div id="pie2" style="width: 100%;height: 149px;padding: 0;"></div>
+					</div>
+				</section>
+			</div>
+			<div style="background-image: url(/image/borderBox.png); background-color: rgba(64, 162, 118, 0); width: 329px; height: 184px; position: absolute; transform: translate(1010px, 674px); background-size: 329px 184px; z-index: 1; touch-action: none;top: -15px;">
+				<section style="padding: 0px 5px 5px;" class="widget">
+					<header style="color: rgb(218, 232, 255);">
+						<span style="text-align: center;vertical-align: middle;" class="title">
+							<a style="vertical-align: inherit;">通用型</a>
+						</span>
+					</header>
+					<div class="echarts-div">
+						<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+						<div id="radarMap1" style="width: 100%;height: 149px;padding: 0;"></div>
+					</div>
+				</section>
+			</div>
+			<div style="background-image: url(/image/borderBox.png); background-color: rgba(64, 162, 118, 0); width: 329px; height: 184px; position: absolute; transform: translate(1010px, 861px); background-size: 329px 184px; z-index: 1; touch-action: none;top: -15px;">
+				<section style="padding: 0px 5px 5px;" class="widget">
+					<header style="color: rgb(218, 232, 255);">
+						<span style="text-align: center;vertical-align: middle;" class="title">
+							<a style="vertical-align: inherit;">新建型</a>
+						</span>
+					</header>
+					<div class="echarts-div">
+						<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+						<div id="radarMap2" style="width: 100%;height: 149px;padding: 0;"></div>
+					</div>
+				</section>
+			</div>
+			<!--<div style="background-color: rgba(64, 162, 118, 0);border-image-source: url(/image/blueBorder.gif); border-image-width: 1; border-image-slice: 8; border-style: solid; width: 645px; height: 580px; position: absolute; transform: translate(349px, 520px); z-index: 0; touch-action: none;top: -15px;">-->
+			<div style="background-color: rgba(64, 162, 118, 0); width: 645px; height: 580px; position: absolute; transform: translate(349px, 470px); z-index: 0; touch-action: none;top: -15px;">	
+				<section class="widget">
+					<div class="body">
+						<div class="react-grid-layout layout">
+							<div style="background-color: rgba(64, 162, 118, 0); width: 642px; height: 200px; position: absolute; background-size: 642px 200px; z-index: 1; touch-action: none; transform: translate(10px, 10px);">
+								<section class="widget">
+									<header style="color: rgb(218, 232, 255);">
+										<span class="title">
+											<a>|    近12月主体评级变化趋势</a>
+										</span>
+									</header>
+									<div>
+										<div>
+											<div>
+												<div>
+													<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状混合图 -->
+													<div id="mixlinebar3" style="width: 100%;height: 200px;padding: 0;margin-top: -40px;"></div>
+												</div>
+											</div>	
+										</div>
+									</div>
+								</section>
+							</div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 642px; height: 200px; position: absolute; background-size: 642px 200px; z-index: 1; touch-action: none; transform: translate(10px, 195px);">
+								<section class="widget">
+									<header style="color: rgb(218, 232, 255);">
+										<span class="title">
+											<a>|    近12月债项评级变化趋势</a>
+										</span>
+									</header>
+									<div>
+										<div>
+											<div>
+												<div>
+													<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状混合图 -->
+													<div id="mixlinebar4" style="width: 100%;height: 200px;padding: 0;margin-top: -40px;"></div>
+												</div>
+											</div>	
+										</div>
+									</div>
+								</section>
+							</div>
+							<div style="background-color: rgba(64, 162, 118, 0); width: 622px; height: 200px; position: absolute; background-size: 622px 200px; z-index: 1; touch-action: none; transform: translate(10px, 380px);">
+								<section class="widget">
+									<header style="color: rgb(218, 232, 255);">
+										<span class="title">
+											<a>|    风险预警类型数据分析</a>
+										</span>
+									</header>
+									<div>
+										<div>
+											<div>
+												<div>
+													<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线图 -->
+													<div id="lineChart" style="width: 100%;height: 200px;padding: 0;margin-top: -40px;"></div>
+												</div>
+											</div>	
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>	
+				</section>		
+			</div>
+		</div>
+		<script src="js/echarts.js"></script>
+		<script>
+			// 基于准备好的dom，初始化ECharts实例
+			var histogram1 = echarts.init(document.getElementById('histogram1'));
+			var histogram2 = echarts.init(document.getElementById('histogram2'));
+			var histogram3 = echarts.init(document.getElementById('histogram3'));
+			var mixlinebar1 = echarts.init(document.getElementById('mixlinebar1'));
+			var mixlinebar2 = echarts.init(document.getElementById('mixlinebar2'));
+			var histogram4 = echarts.init(document.getElementById('histogram4'));
+			var mixlinebar3 = echarts.init(document.getElementById('mixlinebar3'));
+			var mixlinebar4 = echarts.init(document.getElementById('mixlinebar4'));
+			var pie1 = echarts.init(document.getElementById('pie1'));
+			var pie2 = echarts.init(document.getElementById('pie2'));
+			var radarMap1 = echarts.init(document.getElementById('radarMap1'));
+			var radarMap2 = echarts.init(document.getElementById('radarMap2'));
+			var lineChart = echarts.init(document.getElementById('lineChart'));
+			var pie3 = echarts.init(document.getElementById('pie3'));
+			var pie4 = echarts.init(document.getElementById('pie4'));
+			// 指定图表的配置项和数据
+			var option1 = {
+				color: ['#7A46CC', '#5A58C3', '#7079C4', '#5B8AC0', '#68A7C6', '#66BAAD', '#49AF87', '#3BC673', '#3AC699', '#39C6B6'], //环形图每块的颜色
+				tooltip: {
+					trigger: 'item',
+					formatter: "{b}: {c}"
+				},
+				legend: [
+	                {
+	                    //data: ['A', 'B', 'C', 'D', 'E'],
+						data: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
+						//orient: 'vertical',
+	                    x : 'center',
+						bottom: -5,
+						itemWidth: 10, //图例的宽度
+						itemHeight: 10, //图例的高度
+						textStyle: { //图例文字的样式
+							color: '#FFF',
+							//fontSize: 16
+						}
+	                }
+					/*{
+	                    data: ['F', 'G', 'H', 'I', 'J'],
+						orient: 'vertical',
+	                    x : 'right',
+						itemWidth: 10, //图例的宽度
+						itemHeight: 10, //图例的高度
+						textStyle: { //图例文字的样式
+							color: '#FFF',
+							fontSize: 16
+						}	
+	                }*/
+	            ],
+				/*legend: {
+					orient: 'vertical',
+					x: 'left',
+					data: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
+					itemWidth: 10, //图例的宽度
+					itemHeight: 10, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF',
+						fontSize: 16
+					}
+				},*/
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '12%',
+					containLabel: true
+				},
+				series: [{
+					//name:'访问来源',
+					type: 'pie',
+					radius: ['50%', '70%'],
+					avoidLabelOverlap: false,
+					label: {
+						normal: {
+							show: true,
+							formatter: '{c}'
+							//position: 'center'
+						},
+						emphasis: {
+							show: true
+						}
+					},
+					labelLine: {
+						normal: {
+							show: true
+						}
+					},
+					data: [{
+							value: 135,
+							name: 'A'
+						},
+						{
+							value: 110,
+							name: 'B'
+						},
+						{
+							value: 134,
+							name: 'C'
+						},
+						{
+							value: 135,
+							name: 'D'
+						},
+						{
+							value: 148,
+							name: 'E'
+						},
+						{
+							value: 128,
+							name: 'F'
+						},
+						{
+							value: 118,
+							name: 'G'
+						},
+						{
+							value: 158,
+							name: 'H'
+						},
+						{
+							value: 105,
+							name: 'I'
+						},
+						{
+							value: 150,
+							name: 'J'
+						}
+					]
+				}]
+			};
+			var option2 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						type: 'shadow'
+					}
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'value',
+					axisLabel: {
+						show: true,
+						textStyle: {
+							color: '#fff'
+						}
+					},
+					splitLine: {　　　　
+						show: false　　
+					},
+					boundaryGap: [0, 0.01]
+				},
+				yAxis: {
+					type: 'category',
+					axisLabel: {
+						formatter: '{value}',
+						textStyle: {
+							color: '#fff'
+						}
+					},
+					splitLine: {
+						show: false
+					},
+					data: ['VI(0,0.76]', 'V(0.76,1.57]', 'IV(1.57,2.97]', 'III(2.97,6.1]', 'II(6.1,21.57]', 'I(21.57,∞]']
+				},
+				series: [{
+					type: 'bar',
+					/*color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{                           
+						offset: 0,
+						color: '#7ea8ee'                       
+					}, {                           
+						offset: 1,
+						color: '#5d87f4'                       
+					}]),*/
+					itemStyle: {
+		                normal: {
+		                	label: {
+						            show: true,
+						            position: 'right',
+						            textStyle: {
+						                color: 'white'
+						        }
+						    },
+		                    color: new echarts.graphic.LinearGradient(
+		                        0, 0, 0, 1,
+		                        [
+		                            {offset: 0, color: '#83bff6'},
+		                            {offset: 0.5, color: '#188df0'},
+		                            {offset: 1, color: '#188df0'}
+		                        ]
+		                    )
+		                },
+		                emphasis: {
+		                    color: new echarts.graphic.LinearGradient(
+		                        0, 0, 0, 1,
+		                        [
+		                            {offset: 0, color: '#2378f7'},
+		                            {offset: 0.7, color: '#2378f7'},
+		                            {offset: 1, color: '#83bff6'}
+		                        ]
+		                    )
+		                }
+		            },
+			        barBorderRadius: 5, //柱状角成椭圆形
+					barWidth: 12,
+					data: [22, 18, 14.5, 9.5, 7, 7]
+				}]
+			};
+			var option3 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend: {
+			        data:['高风险','中风险'],
+			        //bottom: -10,
+			        x: 'center',
+					bottom: 0,
+			        itemWidth:10,//图例的宽度
+        			itemHeight:10,//图例的高度
+			        textStyle:{  //图例文字的样式
+			            color:'#fff'
+			        }
+			    },
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '9%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'value',
+					axisLabel: {
+						show: true,
+						textStyle: {
+							color: '#fff'
+						}
+					},
+					splitLine: {　　　　
+						show: false　　
+					}
+				},
+				yAxis: {
+					type: 'category',
+					axisLabel: {
+						formatter: '{value}',
+						textStyle: {
+							color: '#fff'
+						}
+					},
+					data: ['201909', '201908', '201907', '201906', '201905', '201904']
+				},
+				series: [{
+						name: '高风险',
+						type: 'bar',
+						color: '#6dd8da',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [7, 7, 9, 14, 18, 22]
+					},
+					{
+						name: '中风险',
+						type: 'bar',
+						color: '#b6a2de',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [4, 4, 6, 9, 12, 15]
+					}
+				]
+			};
+			var option4 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						//type: 'cross',
+						crossStyle: {
+							color: '#999'
+						}
+					}
+				},
+				legend: {
+					x: 'center',
+					bottom: -5,
+					data: ['数量', '平均分'],
+					/*itemWidth: 10, //图例的宽度
+					itemHeight: 10, //图例的高度*/
+					textStyle: { //图例文字的样式
+						color: '#FFF'
+					}
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#fff', //更改坐标轴文字颜色
+							fontSize: 10 //更改坐标轴文字大小
+						},
+						interval: 0,
+						//rotate: -30 //-30度角倾斜显示
+					},
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: ['大消费', '大环境', '大制造', '大健康', '大数据'],
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+						type: 'value',
+						splitLine: {
+							show: false
+						},
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff'
+							}
+						}
+						/*name: '水量',
+						min: 0,
+						max: 250,
+						interval: 50,
+						axisLabel: {
+						    formatter: '{value} ml'
+						}*/
+					},
+					{
+						type: 'value',
+						splitLine: {
+							show: false
+						},
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff'
+							}
+						}
+						/*name: '温度',
+						min: 0,
+						max: 25,
+						interval: 5,
+						axisLabel: {
+						    formatter: '{value} °C'
+						}*/
+					}
+				],
+				series: [{
+						name: '数量',
+						type: 'bar',
+						itemStyle: {
+				                normal: {
+				                	label: {
+							            show: true,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#83bff6'},
+			                            {offset: 0.5, color: '#188df0'},
+			                            {offset: 1, color: '#188df0'}
+			                        ]
+			                    )
+			                },
+			                emphasis: {
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#2378f7'},
+			                            {offset: 0.7, color: '#2378f7'},
+			                            {offset: 1, color: '#83bff6'}
+			                        ]
+			                    )
+			                }
+			            },
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						data: [70, 70, 95, 75, 73]
+					},
+					{
+						name: '平均分',
+						type: 'line',
+						yAxisIndex: 1,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: true,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#fff', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#fff' //改变折线颜色
+								} 
+							} 
+						},
+						data: [1.0, 2.2, 3.3, 4.5, 4.0]
+					}
+				]
+			};
+			var option5 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						//type: 'cross',
+						crossStyle: {
+							color: '#999'
+						}
+					}
+				},
+				legend: {
+					x: 'center',
+					bottom: -5,
+					data: ['数量', '平均分'],
+					/*itemWidth: 10, //图例的宽度
+					itemHeight: 10, //图例的高度*/
+					textStyle: { //图例文字的样式
+						color: '#FFF'
+					}
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#fff', //更改坐标轴文字颜色
+							fontSize: 10 //更改坐标轴文字大小
+						},
+						interval: 0,
+						//rotate: -30 //-30度角倾斜显示
+					},
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: ['大消费', '大环境', '大制造', '大健康', '大数据'],
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+						type: 'value',
+						splitLine: {
+							show: false
+						},
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff'
+							}
+						}
+						/*name: '水量',
+						min: 0,
+						max: 250,
+						interval: 50,
+						axisLabel: {
+						    formatter: '{value} ml'
+						}*/
+					},
+					{
+						type: 'value',
+						splitLine: {
+							show: false
+						},
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff'
+							}
+						}
+						/*name: '温度',
+						min: 0,
+						max: 25,
+						interval: 5,
+						axisLabel: {
+						    formatter: '{value} °C'
+						}*/
+					}
+				],
+				series: [{
+						name: '数量',
+						type: 'bar',
+						itemStyle: {
+			                normal: {
+			                		label: {
+							            show: true,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#83bff6'},
+			                            {offset: 0.5, color: '#188df0'},
+			                            {offset: 1, color: '#188df0'}
+			                        ]
+			                    )
+			                },
+			                emphasis: {
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#2378f7'},
+			                            {offset: 0.7, color: '#2378f7'},
+			                            {offset: 1, color: '#83bff6'}
+			                        ]
+			                    )
+			                }
+			            },
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						data: [70, 70, 95, 75, 73]
+					},
+					{
+						name: '平均分',
+						type: 'line',
+						yAxisIndex: 1,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: true,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#fff', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#fff' //改变折线颜色
+								} 
+							} 
+						},
+						data: [1.0, 2.2, 3.3, 4.5, 4.0]
+					}
+				]
+			};
+			var option6 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend: {
+			        data:['高风险','中风险'],
+			        //bottom: -10,
+			        x: 'center',
+					bottom: 0,
+			        itemWidth:10,//图例的宽度
+        			itemHeight:10,//图例的高度
+			        textStyle:{  //图例文字的样式
+			            color:'#fff'
+			        }
+			    },
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#fff', //更改坐标轴文字颜色
+							fontSize: 10 //更改坐标轴文字大小
+						},
+						interval: 0,
+						//rotate: -30 //-30度角倾斜显示
+					},
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: ['大消费', '大环境', '大制造', '大健康', '大数据'],
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+					type: 'value',
+				    /*axisLine:{  //设置坐标轴字体颜色和宽度
+				        lineStyle:{
+				            color:'white',
+				            width:1
+				        }
+				    },*/
+					axisLabel: {
+						formatter: '{value}',
+						textStyle: {
+							color: '#fff'
+						}
+					},
+					splitLine: {
+						show: false
+					}
+				}],
+				series: [{
+						name: '高风险',
+						type: 'bar',
+						color: '#6dd8da',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [7, 7, 9, 14, 18]
+					},
+					{
+						name: '中风险',
+						type: 'bar',
+						color: '#b6a2de',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [4, 4, 6, 9, 12]
+					}
+				]
+			};
+			var option7 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						//type: 'cross',
+						crossStyle: {
+							color: '#999'
+						}
+					}
+				},
+				legend: {
+					x: 'center',
+					bottom: -5,
+					data: ['数量', '平均分'],
+					/*itemWidth: 10, //图例的宽度
+					itemHeight: 10, //图例的高度*/
+					textStyle: { //图例文字的样式
+						color: '#FFF'
+					}
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#fff'
+						},
+						interval: 0,
+						rotate: "45"
+					},
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: ['201810', '201811', '201812', '201901', '201902', '201903', '201904', '201905', '201906', '201907', '201908', '201909'],
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+						type: 'value',
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff'
+							}
+						},
+						splitLine: {
+							show: false
+						}
+						/*name: '水量',
+						min: 0,
+						max: 250,
+						interval: 50,
+						axisLabel: {
+						    formatter: '{value} ml'
+						}*/
+					},
+					{
+						type: 'value',
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff'
+							}
+						},
+						splitLine: {
+							show: false
+						}
+						/*name: '温度',
+						min: 0,
+						max: 25,
+						interval: 5,
+						axisLabel: {
+						    formatter: '{value} °C'
+						}*/
+					}
+				],
+				series: [{
+						name: '数量',
+						type: 'bar',
+						itemStyle: {
+			                normal: {
+			                		label: {
+							            show: true,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#83bff6'},
+			                            {offset: 0.5, color: '#188df0'},
+			                            {offset: 1, color: '#188df0'}
+			                        ]
+			                    )
+			                },
+			                emphasis: {
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#2378f7'},
+			                            {offset: 0.7, color: '#2378f7'},
+			                            {offset: 1, color: '#83bff6'}
+			                        ]
+			                    )
+			                }
+			            },
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						data: [105, 108, 115, 120, 110, 125, 135, 162, 172, 200, 184, 153]
+					},
+					{
+						name: '平均分',
+						type: 'line',
+						yAxisIndex: 1,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: true,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#fff', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#fff' //改变折线颜色
+								} 
+							} 
+						},
+						data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20, 13, 17, 16.5, 12.0, 6.2]
+					}
+				]
+			};
+			var option8 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						//type: 'cross',
+						crossStyle: {
+							color: '#999'
+						}
+					}
+				},
+				legend: {
+					x: 'center',
+					bottom: -5,
+					data: ['数量', '平均分'],
+					/*itemWidth: 10, //图例的宽度
+					itemHeight: 10, //图例的高度*/
+					textStyle: { //图例文字的样式
+						color: '#FFF'
+					}
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#fff'
+						},
+						interval: 0,
+						rotate: "45"
+					},
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: ['201810', '201811', '201812', '201901', '201902', '201903', '201904', '201905', '201906', '201907', '201908', '201909'],
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+						type: 'value',
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff'
+							}
+						},
+						splitLine: {
+							show: false
+						}
+						/*name: '水量',
+						min: 0,
+						max: 250,
+						interval: 50,
+						axisLabel: {
+						    formatter: '{value} ml'
+						}*/
+					},
+					{
+						type: 'value',
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff'
+							}
+						},
+						splitLine: {
+							show: false
+						}
+						/*name: '温度',
+						min: 0,
+						max: 25,
+						interval: 5,
+						axisLabel: {
+						    formatter: '{value} °C'
+						}*/
+					}
+				],
+				series: [{
+						name: '数量',
+						type: 'bar',
+						itemStyle: {
+			                normal: {
+			                		label: {
+							            show: true,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#83bff6'},
+			                            {offset: 0.5, color: '#188df0'},
+			                            {offset: 1, color: '#188df0'}
+			                        ]
+			                    )
+			                },
+			                emphasis: {
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#2378f7'},
+			                            {offset: 0.7, color: '#2378f7'},
+			                            {offset: 1, color: '#83bff6'}
+			                        ]
+			                    )
+			                }
+			            },
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						data: [105, 108, 115, 120, 110, 125, 135, 162, 172, 200, 184, 153]
+					},
+					{
+						name: '平均分',
+						type: 'line',
+						yAxisIndex: 1,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: true,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#fff', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#fff' //改变折线颜色
+								} 
+							} 
+						},
+						data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20, 13, 17, 16.5, 12.0, 6.2]
+					}
+				]
+			};
+			var option9 = {
+				tooltip: {
+					trigger: 'item',
+					formatter: "{b}: {d}%"
+				},
+				color: ['#55ACEE', '#4CDFC0', '#FF9945', '#FACF2A', '#788CF0', '#2DCA93'], //环形图每块的颜色
+				//color: ['#35C788', '#3DB5D7', '#2B8FFE', '#DBC22A', '#F3642A', '#BE59E5'], //环形图每块的颜色
+				legend: {
+				    x: 'center',
+				    bottom: 0,
+				    itemWidth: 10, //图例的宽度
+					itemHeight: 10, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF'
+					},
+				    data:['房地产','医疗','电力','零售','批发','其他']
+				},
+				series: [{
+					type: 'pie',
+					radius: ['20%', '50%'],
+					label: {
+						normal: {
+							formatter: '{d}%'
+						}
+					},
+					data: [{
+							value: 335,
+							name: '房地产'
+						},
+						{
+							value: 310,
+							name: '医疗'
+						},
+						{
+							value: 234,
+							name: '电力'
+						},
+						{
+							value: 135,
+							name: '零售'
+						},
+						{
+							value: 1048,
+							name: '批发'
+						},
+						{
+							value: 251,
+							name: '其他'
+						}
+					],
+					// itemStyle 设置饼状图扇形区域样式
+					itemStyle: {
+						// emphasis：英文意思是 强调;着重;（轮廓、图形等的）鲜明;突出，重读
+						// emphasis：设置鼠标放到哪一块扇形上面的时候，扇形样式、阴影
+						emphasis: {
+							shadowBlur: 10,
+							shadowOffsetX: 0,
+							shadowColor: 'rgba(30, 144, 255，0.5)'
+						}
+					}
+				}]
+			};
+			var option10 = {
+				tooltip: {
+					trigger: 'item',
+					formatter: "{b}: {d}%"
+				},
+				color: ['#55ACEE', '#4CDFC0', '#FF9945', '#FACF2A', '#788CF0', '#2DCA93'], //环形图每块的颜色
+				//color: ['#35C788', '#3DB5D7', '#2B8FFE', '#DBC22A', '#F3642A', '#BE59E5'], //环形图每块的颜色
+				legend: {
+				    x: 'center',
+				    bottom: 0,
+				    itemWidth: 10, //图例的宽度
+					itemHeight: 10, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF'
+					},
+				    data:['房地产','医疗','电力','零售','批发','其他']
+				},
+				series: [{
+					type: 'pie',
+					radius: ['20%', '50%'],
+					label: {
+						normal: {
+							formatter: '{d}%'
+						}
+					},
+					data: [{
+							value: 335,
+							name: '房地产'
+						},
+						{
+							value: 310,
+							name: '医疗'
+						},
+						{
+							value: 234,
+							name: '电力'
+						},
+						{
+							value: 135,
+							name: '零售'
+						},
+						{
+							value: 1048,
+							name: '批发'
+						},
+						{
+							value: 251,
+							name: '其他'
+						}
+					],
+					// itemStyle 设置饼状图扇形区域样式
+					itemStyle: {
+						// emphasis：英文意思是 强调;着重;（轮廓、图形等的）鲜明;突出，重读
+						// emphasis：设置鼠标放到哪一块扇形上面的时候，扇形样式、阴影
+						emphasis: {
+							shadowBlur: 10,
+							shadowOffsetX: 0,
+							shadowColor: 'rgba(30, 144, 255，0.5)'
+						}
+					}
+				}]
+			};
+			var option11 = {
+				tooltip: {
+					position: ['22%', '0%'] 
+			    },
+				radar: {
+					name: {
+						textStyle: {
+							color: '#333'
+						}
+					},
+					indicator: [{
+							name: '规模类指标',
+							max: 100
+						},
+						{
+							name: '成长类指标',
+							max: 100
+						},
+						{
+							name: '运营能力',
+							max: 100
+						},
+						{
+							name: '盈利能力',
+							max: 100
+						},
+						{
+							name: '偿债能力',
+							max: 100
+						},
+						{
+							name: '流动性水平',
+							max: 100
+						},
+						{
+							name: '政策导向分析',
+							max: 100
+						},
+						{
+							name: '市场规模及发展预测分析',
+							max: 100
+						},
+						{
+							name: '企业竞争地位分析',
+							max: 100
+						},
+						{
+							name: '竞争能力',
+							max: 100
+						},
+						{
+							name: '管理能力',
+							max: 100
+						},
+						{
+							name: '资金情况',
+							max: 100
+						},
+						{
+							name: '企业信誉',
+							max: 100
+						}
+					],
+					radius: 45,
+					name: {
+			            //formatter: '{value}',
+			            textStyle: {
+			                color: '#fff' // 文字颜色
+			            }
+			        }
+				},
+				series: [{
+					name: '通用型',
+					type: 'radar',
+					data: [{
+						value: [50, 14, 28, 31, 42, 21, 82, 62, 72, 92, 55, 66, 98],
+						label: {
+		                    normal: {
+		                        show: true,
+		                        formatter:function(params) {
+		                            return params.value;
+		                        }
+		                    }
+			            },
+						itemStyle: {
+							normal: {
+								color: 'white',
+								lineStyle: {
+									color: 'white',
+								}
+							}
+						}
+					}]
+				}]
+			};
+			var option12 = {
+				tooltip: {
+					position: ['22%', '0%'] 
+			    },
+				radar: {
+					name: {
+						textStyle: {
+							color: '#333'
+						}
+					},
+					indicator: [{
+							name: '规模类指标',
+							max: 100
+						},
+						{
+							name: '成长类指标',
+							max: 100
+						},
+						{
+							name: '运营能力',
+							max: 100
+						},
+						{
+							name: '盈利能力',
+							max: 100
+						},
+						{
+							name: '偿债能力',
+							max: 100
+						},
+						{
+							name: '流动性水平',
+							max: 100
+						},
+						{
+							name: '政策导向分析',
+							max: 100
+						},
+						{
+							name: '市场规模及发展预测分析',
+							max: 100
+						},
+						{
+							name: '企业竞争地位分析',
+							max: 100
+						},
+						{
+							name: '竞争能力',
+							max: 100
+						},
+						{
+							name: '管理能力',
+							max: 100
+						},
+						{
+							name: '资金情况',
+							max: 100
+						},
+						{
+							name: '企业信誉',
+							max: 100
+						}
+					],
+					radius: 45,
+					name: {
+			            //formatter: '{value}',
+			            textStyle: {
+			                color: '#fff' // 文字颜色
+			            }
+			        }
+				},
+				series: [{
+					name: '新建型',
+					type: 'radar',
+					data: [{
+						value: [50, 14, 28, 31, 42, 21, 82, 62, 72, 92, 55, 66, 98],
+						label: {
+		                    normal: {
+		                        show: true,
+		                        formatter:function(params) {
+		                            return params.value;
+		                        }
+		                    }
+			            },
+						itemStyle: {
+							normal: {
+								color: '#fff',
+								//color: 'rgb(117, 232, 242)',
+								lineStyle: {
+									color: '#fff',
+									//color: 'rgb(117, 232, 242)',
+								},
+							},
+						}
+					}]
+				}]
+			};
+			var option13 = {
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data: ['工商', '司法', '舆情'],
+					textStyle: { //图例文字的样式
+						color: '#FFF'
+					},
+					bottom: 0
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '12%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'category',
+					axisLabel: {
+						show: true,
+						textStyle: {
+							color: '#fff'
+						}
+					},
+					boundaryGap: false,
+					data: ['201904', '201905', '201906', '201907', '201908', '201909']
+				},
+				yAxis: {
+					type: 'value',
+					axisLabel: {
+						formatter: '{value}',
+						textStyle: {
+							color: '#fff'
+						}
+					},
+					splitLine: {
+						show: false
+					}
+				},
+				series: [{
+						name: '工商',
+						type: 'line',
+						symbol: 'circle',     //设定为实心点
+                        //symbolSize: 10,   //设定实心点的大小
+                        animation: true,
+                        animationEasing: "ExponentialOut",
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: true,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'rgb(75, 126, 254)', //改变折线点的颜色
+								lineStyle:{ 
+									color:'rgb(75, 126, 254)' //改变折线颜色
+								} 
+							} 
+						},
+						data: [120, 132, 101, 134, 90, 230]
+					},
+					{
+						name: '司法',
+						type: 'line',
+						symbol: 'circle',     //设定为实心点
+						animation: true,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: true,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'rgb(117, 232, 242)', //改变折线点的颜色
+								lineStyle:{ 
+									color:'rgb(117, 232, 242)' //改变折线颜色
+								} 
+							} 
+						},
+						data: [220, 182, 191, 234, 290, 330]
+					},
+					{
+						name: '舆情',
+						type: 'line',
+						symbol: 'circle',     //设定为实心点
+						animation: true,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: true,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'rgb(255, 184, 0)', //改变折线点的颜色
+								lineStyle:{ 
+									color:'rgb(255, 184, 0)' //改变折线颜色
+								} 
+							} 
+						},
+						data: [150, 232, 201, 154, 190, 330]
+					}
+				]
+			};
+			var option14 = {
+				color: ['#6dd8da', '#b6a2de', '#58afed'], //环形图每块的颜色
+				tooltip: {
+					trigger: 'item',
+					formatter: "{b}: {c}"
+				},
+				legend: {
+					x: 'center',
+					bottom: -5,
+					data: ['待解决', '处理中', '已处理'],
+					itemWidth: 10, //图例的宽度
+					itemHeight: 10, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF'
+					}
+				},
+				series: [{
+					//name:'访问来源',
+					type: 'pie',
+					//radius: ['30%', '50%'],
+					radius : '65%',
+            		center: ['50%', '50%'],
+					avoidLabelOverlap: false,
+					label: {
+						normal: {
+							show: true,
+							formatter: '{c}'
+							//position: 'center'
+						},
+						emphasis: {
+							show: true
+						}
+					},
+					labelLine: {
+						normal: {
+							show: true
+						}
+					},
+					data: [{
+							value: 135,
+							name: '待解决'
+						},
+						{
+							value: 110,
+							name: '处理中'
+						},
+						{
+							value: 150,
+							name: '已处理'
+						}
+					]
+				}]
+			};
+			var option15 = {
+				color: ['#6dd8da', '#b6a2de', '#58afed'], //环形图每块的颜色
+				tooltip: {
+					trigger: 'item',
+					formatter: "{b}: {c}"
+				},
+				legend: {
+					x: 'center',
+					bottom: -5,
+					data: ['待解决', '处理中', '已处理'],
+					itemWidth: 10, //图例的宽度
+					itemHeight: 10, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF'
+					}
+				},
+				series: [{
+					//name:'访问来源',
+					type: 'pie',
+					//radius: ['30%', '50%'],
+					radius : '65%',
+            		center: ['50%', '50%'],
+					avoidLabelOverlap: false,
+					label: {
+						normal: {
+							show: true,
+							formatter: '{c}'
+							//position: 'center'
+						},
+						emphasis: {
+							show: true
+						}
+					},
+					labelLine: {
+						normal: {
+							show: true
+						}
+					},
+					data: [{
+							value: 135,
+							name: '待解决'
+						},
+						{
+							value: 110,
+							name: '处理中'
+						},
+						{
+							value: 150,
+							name: '已处理'
+						}
+					]
+				}]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+			histogram1.setOption(option1);
+			histogram2.setOption(option2);
+			histogram3.setOption(option3);
+			mixlinebar1.setOption(option4);
+			mixlinebar2.setOption(option5);
+			histogram4.setOption(option6);
+			mixlinebar3.setOption(option7);
+			mixlinebar4.setOption(option8);
+			pie1.setOption(option9);
+			pie2.setOption(option10);
+			radarMap1.setOption(option11);
+			radarMap2.setOption(option12);
+			lineChart.setOption(option13);
+			pie3.setOption(option14);
+			pie4.setOption(option15);
+		</script>
+	</body>
+
+</html>

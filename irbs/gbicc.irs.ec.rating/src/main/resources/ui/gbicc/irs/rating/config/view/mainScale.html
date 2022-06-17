@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+var scaleType = [(${@frSystemDictionaryService.getDictionaryMapJsonString('SCALE_TYPE',#locale)})];
+
+
+isc.FwRestDataSource.create({
+	  ID: 'allRoleDs',
+	  fields:[
+	  	{name:'key',			title:'key'},
+	  	{name:'value',			title:'value'}
+	  ],
+	  fetchDataURL: '[(@{/irs/dataCheckController/linkage})]'
+	});
+
+function formatterPercent(value,row,index){
+	 if(!value){
+	  value=null;
+	 }
+	 value=value*100;
+	 value=value.toFixed(2);
+	 return value+"%";
+}
+
+//字段定义
+var mainScaleFields ={
+		query: [
+			{
+				width:200,		
+				name:'type',		
+				title:'标尺类型',
+				type: 'select',
+				valueMap:scaleType,
+				allowEmptyValue:true,
+				autoFetchData:false,	
+				operator:'equals'}
+		],
+		grid: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{width:'*',name:'type',				title:'标尺类型',type: 'select',valueMap:scaleType},
+			    {width:'*',name:'scaleLevel',		title:'标尺等级'},
+				{width:'*',name:'pd',				title:'违约概率',formatCellValue:formatterPercent},
+				{width:'*',name:'admissionSuggest',	title:'准入建议'},
+				{width:'*',name:'sort',				title:'排序'}
+				
+		],
+		edit: [
+				{name:'id',		primaryKey:true,hidden:true},
+				{width:200,name:'type',				title:'标尺类型',required:true,type: 'select',valueMap:scaleType},
+				{width:200,name:'scaleLevel',		title:'标尺等级',required:true,type:'select'
+			    	,autoFetchData:false,
+			    	optionDataSource:allRoleDs,
+			    	displayField:'key',
+					valueField:'key',
+					getPickListFilterCriteria : function () {
+						 var type = this.form.getValue("type");
+						if(type=="010"){
+							 return {code:"CREDIT_RATING_TYPE"};
+						}else if(type=="020"){
+							return {code:"FINANCIAL_SCALE_TYPE"};
+						}else{
+							isc.say("请选择标尺类型！");
+							return {code:"not"};
+						}
+			           
+			           
+			        }},
+			    {width:200,name:'pd',				title:'违约概率',required:true},
+			    {width:'*',name:'admissionSuggest',	title:'准入建议'}
+		]
+};
+
+// 杠杆系数行业平均值数据源
+isc.FwRestDataSource.create({
+	 ID: 'mainScaleDS',
+ 	 fields: mainScaleFields.grid,
+ 	 dataURL: '[(@{/irs/mainScale/isc})]'
+});
+
+
+isc.FwListGrid.create({
+	ID: 'mainScaleId',
+	title: '<b>主标尺配置</b>',
+	dataSource: mainScaleDS,
+	sortField: 'sort',
+	canHover:true,
+	fields: mainScaleFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: mainScaleFields.query
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+      form: {
+    	  ID: "ratingAuthorizationForm",
+      	numCols:4,
+      	titleWidth:150,
+      	colWidths: [190, "*"],
+          dataSource: mainScaleDS,
+          fields: mainScaleFields.edit
+      },
+      afterShow: function(action){
+     	
+      },
+      actionMembers:[
+             		'ok','close'
+      ],
+      /* okButtonClick: function(){
+        	var scaleLevel= ratingAuthorizationForm.getValues().scaleLevel;
+        	var type= ratingAuthorizationForm.getValues().type;
+        	var ok = this;
+        	isc.FwRPCManager.get({
+             	url:'[(@{/irs/dataCheckController/checkData})]',
+             	urlParameters:{tableName:"NS_CFG_MAIN_SCALE",file:"fd_scale_level=?,FD_type=?",data:scaleLevel+","+type},
+              callback: function(response, rawData, request){
+              	if(rawData){
+              		isc.say("已存在相同配置！");
+              		return;
+              	}
+              	ok.Super('okButtonClick',arguments);;	
+              }
+           });
+        } */
+	},
+	actionMembers:[
+		'query','reset','refresh','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+  },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+    
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				mainScaleId
+			]
+		})
+	}
+});
+
+</script>
+</html>

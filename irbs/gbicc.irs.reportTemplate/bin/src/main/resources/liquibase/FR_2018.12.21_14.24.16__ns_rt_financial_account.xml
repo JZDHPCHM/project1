@@ -1,0 +1,6565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FR_2018.12.21_14.24.16__ns_rt_financial_account.xml -->
+<export>
+  <summary>
+    <t name="ns_rt_financial_account">select * from ns_rt_financial_account</t>
+  </summary>
+  <table name="ns_rt_financial_account">
+    <sql>select * from ns_rt_financial_account</sql>
+      <fields>
+        <field name="FD_ID"                        type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_FA_NUMBER"                 type="3"                  typeName="java.sql.Types.DECIMAL"/>
+        <field name="FD_FA_CODE"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_FA_NAME"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_FA_CATEGORY"               type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_FA_STATEMENT_TEMPLATE"     type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATOR"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATE_DATE"               type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+        <field name="FD_LAST_MODIFIER"             type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_LAST_MODIFYDATE"           type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+      </fields>
+    <resultset>
+      <row>
+        <f>4ef3c23804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>B001</f>
+        <f>货币资金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3c5c404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>B002</f>
+        <f>短期投资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3c7f104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>B003</f>
+        <f>应收票据</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3c91e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>B004</f>
+        <f>应收账款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3c9d004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>B005</f>
+        <f>预付账款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3ca6a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>B006</f>
+        <f>其他应收款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3cafc04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>B007</f>
+        <f>应收股利</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3cbaa04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>B008</f>
+        <f>应收利息</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3cc3c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>10</f>
+        <f>B009</f>
+        <f>存货</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      
+      <row>
+        <f>4ef3ce0604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>15</f>
+        <f>B011</f>
+        <f>其他流动资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3ce9804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>16</f>
+        <f>B012</f>
+        <f>流动资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3cf2e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>18</f>
+        <f>B013</f>
+        <f>长期债券投资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3d04704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>19</f>
+        <f>B014</f>
+        <f>长期股权投资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3d17b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>22</f>
+        <f>B015</f>
+        <f>固定资产账面价值</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3d2d304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>27</f>
+        <f>B016</f>
+        <f>无形资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3d35d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>28</f>
+        <f>B017</f>
+        <f>开发支出</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3d4fc04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>29</f>
+        <f>B018</f>
+        <f>长期待摊费用</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3d61404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>32</f>
+        <f>B019</f>
+        <f>资产总计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3d72904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>34</f>
+        <f>B020</f>
+        <f>短期借款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3d86904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>35</f>
+        <f>B021</f>
+        <f>应付票据</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3d9a504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>36</f>
+        <f>B022</f>
+        <f>应付账款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3dabd04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>37</f>
+        <f>B023</f>
+        <f>预收账款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3db4c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>44</f>
+        <f>B024</f>
+        <f>流动负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3dbd204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>46</f>
+        <f>B025</f>
+        <f>长期借款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3dcdf04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>47</f>
+        <f>B026</f>
+        <f>长期应付款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3ddef04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>50</f>
+        <f>B027</f>
+        <f>非流动负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3de7d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>51</f>
+        <f>B028</f>
+        <f>负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3df9604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>59</f>
+        <f>B029</f>
+        <f>实收资本（或股本）</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3e02004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>61</f>
+        <f>B030</f>
+        <f>盈余公积</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3e0aa04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>62</f>
+        <f>B031</f>
+        <f>未分配利润</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3e13104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>63</f>
+        <f>B032</f>
+        <f>所有者权益（或股东权益）合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3e25504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>20</f>
+        <f>B033</f>
+        <f>固定资产原价</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3e37104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>21</f>
+        <f>B034</f>
+        <f>减：累计折旧</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3e48604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>23</f>
+        <f>B035</f>
+        <f>在建工程</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3e58f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>24</f>
+        <f>B036</f>
+        <f>工程物资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3e61504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>25</f>
+        <f>B037</f>
+        <f>固定资产清理</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3e72204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>26</f>
+        <f>B038</f>
+        <f>生产性生物资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3e7ac04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>30</f>
+        <f>B039</f>
+        <f>其他非流动资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3e83604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>31</f>
+        <f>B040</f>
+        <f>非流动资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3e94704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>38</f>
+        <f>B041</f>
+        <f>应付职工薪酬</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3e9d504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>39</f>
+        <f>B042</f>
+        <f>应交税费</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3ea5f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>40</f>
+        <f>B043</f>
+        <f>应付利息</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3eaea04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>41</f>
+        <f>B044</f>
+        <f>应付利润</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3ebfa04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>42</f>
+        <f>B045</f>
+        <f>其他应付款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3ec8404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>43</f>
+        <f>B046</f>
+        <f>其他流动负债</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3ed0b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>48</f>
+        <f>B047</f>
+        <f>递延收益</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3ed9504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>49</f>
+        <f>B048</f>
+        <f>其他非流动负债</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3ee1f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>60</f>
+        <f>B049</f>
+        <f>资本公积</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3ef3404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>64</f>
+        <f>B050</f>
+        <f>负债和所有者权益（或股东权益）总计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:17:06.0</f>
+      </row>
+      <row>
+        <f>4ef3efc204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>1</f>
+        <f>I001</f>
+        <f>营业收入</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:49:17.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:49:17.0</f>
+      </row>
+      <row>
+        <f>4ef3f04c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>I002</f>
+        <f>营业成本</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+      </row>
+      <row>
+        <f>4ef3f1c004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>11</f>
+        <f>I003</f>
+        <f>销售费用</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+      </row>
+      <row>
+        <f>4ef3f28504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>I004</f>
+        <f>营业税金及附加</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+      </row>
+      <row>
+        <f>4ef3f31b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>14</f>
+        <f>I005</f>
+        <f>管理费用</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+      </row>
+      <row>
+        <f>4ef3f3ae04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>18</f>
+        <f>I006</f>
+        <f>财务费用</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+      </row>
+      <row>
+        <f>4ef3f44004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>20</f>
+        <f>I007</f>
+        <f>投资收益</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+      </row>
+      <row>
+        <f>4ef3f4ca04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>21</f>
+        <f>I008</f>
+        <f>营业利润</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+      </row>
+      <row>
+        <f>4ef3f5e604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>30</f>
+        <f>I009</f>
+        <f>利润总额</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+      </row>
+      <row>
+        <f>4ef3f67904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>31</f>
+        <f>I010</f>
+        <f>所得税费用</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+      </row>
+      <row>
+        <f>4ef4589304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>32</f>
+        <f>I011</f>
+        <f>净利润</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+      </row>
+      <row>
+        <f>4ef459ab04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>22</f>
+        <f>I012</f>
+        <f>加：营业外收入</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+      </row>
+      <row>
+        <f>4ef45a4d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>24</f>
+        <f>I013</f>
+        <f>减：营业外支出</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+        <f>admin</f>
+        <f>2018-12-20 16:56:44.0</f>
+      </row>
+      <row>
+        <f>4ef45ae304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>M001</f>
+        <f>销售产成品、商品、提供劳务收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef45b8104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>M002</f>
+        <f>经营活动产生的现金流量净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef45c1304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>15</f>
+        <f>M003</f>
+        <f>投资活动产生的现金流量净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef45ca604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>22</f>
+        <f>M004</f>
+        <f>筹资活动产生的现金流量净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef45d3404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>23</f>
+        <f>M005</f>
+        <f>现金净增加额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef45dc204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>M006</f>
+        <f>收到其他与经营活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef45e4c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>M007</f>
+        <f>购买原材料、商品、接受劳务支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef45edb04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>M008</f>
+        <f>支付的职工薪酬</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef45f6504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>M009</f>
+        <f>支付的税费</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef45ff304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>M010</f>
+        <f>支付其他与经营活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef4607d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>10</f>
+        <f>M011</f>
+        <f>收回短期投资、长期债券投资和长期股权投资收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef4611b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>11</f>
+        <f>M012</f>
+        <f>取得投资收益收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef461a604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>12</f>
+        <f>M013</f>
+        <f>处置固定资产、无形资产和其他非流动资产收回的现金净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef4623404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>13</f>
+        <f>M014</f>
+        <f>短期投资、长期债券投资和长期股权投资支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef462be04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>14</f>
+        <f>M015</f>
+        <f>购建固定资产、无形资产和其他非流动资产支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef4634c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>17</f>
+        <f>M016</f>
+        <f>取得借款收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef463d704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>18</f>
+        <f>M017</f>
+        <f>吸收投资者投资收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef4646504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>19</f>
+        <f>M018</f>
+        <f>偿还借款本金支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef464ef04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>20</f>
+        <f>M019</f>
+        <f>偿还借款利息支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef4657d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>21</f>
+        <f>M020</f>
+        <f>分配利润支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef4660804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>24</f>
+        <f>M021</f>
+        <f>加：期初现金余额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef4669204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>25</f>
+        <f>M022</f>
+        <f>五、期末现金余额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:06:51.0</f>
+      </row>
+      <row>
+        <f>4ef4672004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>B001</f>
+        <f>货币资金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef467aa04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>B002</f>
+        <f>短期投资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4683c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>B004</f>
+        <f>应收帐款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef468cb04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>B006</f>
+        <f>其他应收款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4695904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>B009</f>
+        <f>存货</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef469e704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>B011</f>
+        <f>其他流动资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46a7504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>B012</f>
+        <f>流动资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46b0004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>16</f>
+        <f>B015</f>
+        <f>固定资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46b5b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>18</f>
+        <f>B019</f>
+        <f>资产总计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46be904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>20</f>
+        <f>B020</f>
+        <f>银行借款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46c3c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>23</f>
+        <f>B021</f>
+        <f>应付票据（敞口）</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46c9304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>24</f>
+        <f>B022</f>
+        <f>应付帐款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46ce604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>26</f>
+        <f>B024</f>
+        <f>流动负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46d3c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>28</f>
+        <f>B025</f>
+        <f>银行按揭贷款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46d8f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>29</f>
+        <f>B027</f>
+        <f>长期负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46de204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>30</f>
+        <f>B028</f>
+        <f>负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46e3504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>32</f>
+        <f>B029</f>
+        <f>实收资本</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46e8404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>33</f>
+        <f>B030</f>
+        <f>盈余公积</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46ed704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>34</f>
+        <f>B031</f>
+        <f>未分配利润</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef46fbc04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>35</f>
+        <f>B032</f>
+        <f>所有者权益合计：</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4700f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>25</f>
+        <f>B045</f>
+        <f>其他应付款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4706204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>36</f>
+        <f>B050</f>
+        <f>负债及所有者权益合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef470b504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>10</f>
+        <f>B051</f>
+        <f>长期投资：</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4710c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>11</f>
+        <f>B052</f>
+        <f>投资企业净资产：</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4715f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>14</f>
+        <f>B053</f>
+        <f>动产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef471b204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>15</f>
+        <f>B054</f>
+        <f>不动产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4720504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>17</f>
+        <f>B055</f>
+        <f>其它资产：</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4725804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>22</f>
+        <f>B056</f>
+        <f>社会集资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef472a704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>1</f>
+        <f>I001</f>
+        <f>业务收入（必输）</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef472fa04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>I002</f>
+        <f>减：业务成本</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4734d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>I004</f>
+        <f>业务税金及附加</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef473a004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>I008</f>
+        <f>业务利润</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef473f304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>I009</f>
+        <f>利润总额（必输）</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4744604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>I014</f>
+        <f>加：其他收入</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4749904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>I015</f>
+        <f>减：其他支出</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef474ec04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>I016</f>
+        <f>股东个人收入合并</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4753b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>I017</f>
+        <f>股东个人支出合并</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4759204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>13</f>
+        <f>M005</f>
+        <f>收支净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef475e904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>1</f>
+        <f>M023</f>
+        <f>收入总计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4764004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>M024</f>
+        <f>经营收入</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4769304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>M025</f>
+        <f>经营支出</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef476e604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>M026</f>
+        <f>家庭收入</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4773904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>M027</f>
+        <f>新增贷款</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4778804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>M028</f>
+        <f>投资收入</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef477de04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>M029</f>
+        <f>支出总计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4783504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>M030</f>
+        <f>家庭支出</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4788804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>M031</f>
+        <f>还款支出</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef478db04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>10</f>
+        <f>M032</f>
+        <f>利息支出</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4792e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>11</f>
+        <f>M033</f>
+        <f>投资支出</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef4798504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>12</f>
+        <f>M034</f>
+        <f>其它支出</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;SMALLENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+        <f>admin</f>
+        <f>2018-12-20 17:32:53.0</f>
+      </row>
+      <row>
+        <f>4ef479d804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>A001</f>
+        <f>货币资金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47a3304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>A002</f>
+        <f>交易性金融资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47a8604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>A004</f>
+        <f>应收票据</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47add04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>A005</f>
+        <f>应收账款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47b3004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>A007</f>
+        <f>预付款项</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47b8304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>A008</f>
+        <f>其他应收款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47bda04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>A009</f>
+        <f>应收股利</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47c2d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>A010</f>
+        <f>应收利息</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47c8004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>10</f>
+        <f>A012</f>
+        <f>存货</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47cd304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>11</f>
+        <f>A015</f>
+        <f>一年内到期的非流动资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47d2a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>12</f>
+        <f>A016</f>
+        <f>其他流动资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47d7c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>13</f>
+        <f>A017</f>
+        <f>流动资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47dcf04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>20</f>
+        <f>A019</f>
+        <f>固定资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47e2604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>26</f>
+        <f>A020</f>
+        <f>无形资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47e7904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>29</f>
+        <f>A021</f>
+        <f>长期待摊费用</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47ed004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>30</f>
+        <f>A022</f>
+        <f>递延所得税资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47f3304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>33</f>
+        <f>A023</f>
+        <f>资产总计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47f8a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>35</f>
+        <f>A024</f>
+        <f>短期借款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef47fdd04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>37</f>
+        <f>A025</f>
+        <f>应付票据</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4804004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>38</f>
+        <f>A026</f>
+        <f>应付账款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4809e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>39</f>
+        <f>A027</f>
+        <f>预收款项</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef480ed04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>45</f>
+        <f>A028</f>
+        <f>一年内到期的非流动负债</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4814804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>47</f>
+        <f>A029</f>
+        <f>流动负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4819b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>49</f>
+        <f>A030</f>
+        <f>长期借款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef481f204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>50</f>
+        <f>A031</f>
+        <f>应付债券</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4824504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>51</f>
+        <f>A032</f>
+        <f>长期应付款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4829c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>56</f>
+        <f>A033</f>
+        <f>非流动负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef482ef04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>57</f>
+        <f>A034</f>
+        <f>负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4834204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>59</f>
+        <f>A035</f>
+        <f>实收资本（股本）</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4839904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>62</f>
+        <f>A036</f>
+        <f>盈余公积</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef483ec04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>63</f>
+        <f>A037</f>
+        <f>未分配利润</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4843f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>65</f>
+        <f>A038</f>
+        <f>所有者权益（或股东权益）合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4849204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>28</f>
+        <f>A039</f>
+        <f>商誉</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef484e504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>27</f>
+        <f>A040</f>
+        <f>开发支出</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4853804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>18</f>
+        <f>A041</f>
+        <f>长期股权投资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4858b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>15</f>
+        <f>A043</f>
+        <f>可供出售金融资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef485de04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>16</f>
+        <f>A044</f>
+        <f>持有至到期投资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4862d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>23</f>
+        <f>A058</f>
+        <f>固定资产清理</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4868004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>21</f>
+        <f>A059</f>
+        <f>在建工程</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef486d704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>44</f>
+        <f>A067</f>
+        <f>其他应付款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4872a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>40</f>
+        <f>A068</f>
+        <f>应付职工薪酬</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4877904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>42</f>
+        <f>A073</f>
+        <f>应付利息</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef487c804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>46</f>
+        <f>A076</f>
+        <f>其他流动负债</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4882204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>55</f>
+        <f>A078</f>
+        <f>其他非流动负债</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4887504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>54</f>
+        <f>A079</f>
+        <f>递延所得税负债</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef488c404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>64</f>
+        <f>A080</f>
+        <f>少数股东权益</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4891704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>60</f>
+        <f>A081</f>
+        <f>资本公积</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4896a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>66</f>
+        <f>A082</f>
+        <f>负债和所有者权益（或股东权益）总计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef489b904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>17</f>
+        <f>A083</f>
+        <f>长期应收款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48a0c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>19</f>
+        <f>A084</f>
+        <f>投资性房地产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48a5b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>22</f>
+        <f>A085</f>
+        <f>工程物资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48aae04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>24</f>
+        <f>A086</f>
+        <f>生产性生物资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48b0104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>25</f>
+        <f>A087</f>
+        <f>油气资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48b5004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>31</f>
+        <f>A088</f>
+        <f>其他非流动资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48ba304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>32</f>
+        <f>A089</f>
+        <f>非流动资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48bfa04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>36</f>
+        <f>A090</f>
+        <f>交易性金融负债</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48c4904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>41</f>
+        <f>A091</f>
+        <f>应交税费</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48ca004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>43</f>
+        <f>A092</f>
+        <f>应付股利</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48cef04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>52</f>
+        <f>A093</f>
+        <f>专项应付款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48d4204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>53</f>
+        <f>A094</f>
+        <f>预计负债</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48d9104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>61</f>
+        <f>A095</f>
+        <f>减：库存股</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48de004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>1</f>
+        <f>P001</f>
+        <f>营业总收入</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48e3304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>P002</f>
+        <f>营业成本</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48e8604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>P003</f>
+        <f>销售费用</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48ed504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>P004</f>
+        <f>营业税金及附加</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48f2404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>P005</f>
+        <f>管理费用</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48f7704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>P006</f>
+        <f>财务费用</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef48fca04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>11</f>
+        <f>P007</f>
+        <f>营业利润</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4901904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>P008</f>
+        <f>投资收益</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4906804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>15</f>
+        <f>P009</f>
+        <f>利润总额</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef490bb04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>16</f>
+        <f>P010</f>
+        <f>所得税费用</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4910a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>17</f>
+        <f>P011</f>
+        <f>净利润</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4915d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>P012</f>
+        <f>公允价值变动净收益</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef491b004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>12</f>
+        <f>P017</f>
+        <f>加：营业外收入</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4920304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>13</f>
+        <f>P018</f>
+        <f>减：营业外支出</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4925204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>P021</f>
+        <f>资产减值损失</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef492a104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>C001</f>
+        <f>销售商品、提供劳务收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef492f404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>11</f>
+        <f>C002</f>
+        <f>经营活动产生的现金流量净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4934704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>34</f>
+        <f>C003</f>
+        <f>投资活动产生的现金流量净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4939a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>50</f>
+        <f>C004</f>
+        <f>筹资活动产生的现金流量净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef493ed04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>52</f>
+        <f>C005</f>
+        <f>现金及现金等价物增加额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4943c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>C009</f>
+        <f>收到其他与经营活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4948f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>C010</f>
+        <f>经营活动现金流入小计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef494e604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>C011</f>
+        <f>购买商品、接受劳务支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4953504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>C013</f>
+        <f>支付给职工以及为职工支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4958804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>C017</f>
+        <f>支付其他与经营活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef495db04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>10</f>
+        <f>C018</f>
+        <f>经营活动现金流出小计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4963904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>22</f>
+        <f>C019</f>
+        <f>收回投资收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4969404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>24</f>
+        <f>C022</f>
+        <f>处置固定资产、无形资产和其他长期资产收回的现金净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef496e704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>26</f>
+        <f>C023</f>
+        <f>收到其他与投资活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4973a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>27</f>
+        <f>C024</f>
+        <f>投资活动现金流入小计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4979104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>28</f>
+        <f>C025</f>
+        <f>购建固定资产、无形资产和其他长期资产支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef497e404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>32</f>
+        <f>C028</f>
+        <f>支付其他与投资活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4983704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>33</f>
+        <f>C029</f>
+        <f>投资活动现金流出小计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4988e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>43</f>
+        <f>C032</f>
+        <f>取得借款收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef498dd04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>44</f>
+        <f>C033</f>
+        <f>收到其他与筹资活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4995304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>45</f>
+        <f>C034</f>
+        <f>筹资活动现金流入小计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef499aa04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>46</f>
+        <f>C035</f>
+        <f>偿还债务支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef499fd04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>47</f>
+        <f>C037</f>
+        <f>分配股利、利润或偿付利息支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49a5404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>48</f>
+        <f>C040</f>
+        <f>支付其他与筹资活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49aa704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>49</f>
+        <f>C041</f>
+        <f>筹资活动现金流出小计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49afa04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>51</f>
+        <f>C042</f>
+        <f>四、汇率变动对现金及现金等价物的影响</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49b5104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>54</f>
+        <f>C043</f>
+        <f>六、期末现金及现金等价物余额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49ba404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>53</f>
+        <f>C044</f>
+        <f>加：期初现金及现金等价物余额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49bf304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>C045</f>
+        <f>收到的税费返还</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49c4604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>C046</f>
+        <f>支付的各项税费</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49c9504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>23</f>
+        <f>C047</f>
+        <f>取得投资收益收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49ce804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>25</f>
+        <f>C048</f>
+        <f>处置子公司及其他营业单位收到的现金净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49d5704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>29</f>
+        <f>C049</f>
+        <f>投资支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49daa04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>30</f>
+        <f>C050</f>
+        <f>取得子公司及其他营业单位支付的现金净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49dfc04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>42</f>
+        <f>C051</f>
+        <f>吸收投资收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISE&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49e4b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>A001</f>
+        <f>货币资金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49e9e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>A002</f>
+        <f>短期投资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49ef104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>A003</f>
+        <f>短期投资减值准备</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49f4004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>A004</f>
+        <f>应收票据</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49f9704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>A005</f>
+        <f>应收帐款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef49fe604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>11</f>
+        <f>A006</f>
+        <f>应收帐款净额</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a03904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>12</f>
+        <f>A007</f>
+        <f>预付货款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a08c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>16</f>
+        <f>A008</f>
+        <f>其它应收款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a0df04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>17</f>
+        <f>A009</f>
+        <f>应收股利</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a13204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>18</f>
+        <f>A010</f>
+        <f>应收利息</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a18104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>19</f>
+        <f>A011</f>
+        <f>应收补贴款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a1e804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>20</f>
+        <f>A012</f>
+        <f>存货</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a23f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>22</f>
+        <f>A013</f>
+        <f>存货净额</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a29204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>23</f>
+        <f>A014</f>
+        <f>待摊费用</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a2e504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>25</f>
+        <f>A015</f>
+        <f>一年内到期的长期债券投资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a33804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>26</f>
+        <f>A016</f>
+        <f>其它流动资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a38704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>27</f>
+        <f>A017</f>
+        <f>流动资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a3d604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>33</f>
+        <f>A018</f>
+        <f>长期投资合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a42d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>38</f>
+        <f>A019</f>
+        <f>固定资产净值</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a47c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>46</f>
+        <f>A020</f>
+        <f>无形资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a4cf04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>48</f>
+        <f>A021</f>
+        <f>递延资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a52204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>54</f>
+        <f>A022</f>
+        <f>递延税款借项</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a57104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>55</f>
+        <f>A023</f>
+        <f>资产总计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a5c004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>58</f>
+        <f>A024</f>
+        <f>短期借款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a61e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>59</f>
+        <f>A025</f>
+        <f>应付票据</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a68504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>60</f>
+        <f>A026</f>
+        <f>应付帐款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a6d804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>61</f>
+        <f>A027</f>
+        <f>预收账款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a72b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>71</f>
+        <f>A028</f>
+        <f>一年内到期的长期负债</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a78204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>73</f>
+        <f>A029</f>
+        <f>流动负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a7d104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>83</f>
+        <f>A030</f>
+        <f>长期借款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a82404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>84</f>
+        <f>A031</f>
+        <f>应付债券</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a87704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>85</f>
+        <f>A032</f>
+        <f>长期应付款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a8ca04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>89</f>
+        <f>A033</f>
+        <f>长期负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a91904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>95</f>
+        <f>A034</f>
+        <f>负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a96c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>105</f>
+        <f>A035</f>
+        <f>实收资本</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4a9bb04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>107</f>
+        <f>A036</f>
+        <f>盈余公积</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4aa0e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>109</f>
+        <f>A037</f>
+        <f>未分配利润</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4aa5d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>110</f>
+        <f>A038</f>
+        <f>所有者权益合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4aab004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>44</f>
+        <f>A042</f>
+        <f>固定资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4ab1304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>A045</f>
+        <f>一年内应收帐款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4ab6a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>A046</f>
+        <f>一至三年应收帐款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4abb904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>A047</f>
+        <f>三年以上应收帐款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4ac0b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>13</f>
+        <f>A048</f>
+        <f>一年内其他应收款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4ac5e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>14</f>
+        <f>A049</f>
+        <f>一至三年其他应收款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4acb504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>15</f>
+        <f>A050</f>
+        <f>三年以上其他应收款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4ad1004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>24</f>
+        <f>A051</f>
+        <f>待处理流动资产损益</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4ad5f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>29</f>
+        <f>A052</f>
+        <f>长期投资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4adb604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>30</f>
+        <f>A053</f>
+        <f>减：长期投资减值准备</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4ae0904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>31</f>
+        <f>A054</f>
+        <f>委托贷款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4ae6004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>32</f>
+        <f>A055</f>
+        <f>减：委托贷款减值准备</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4aeb304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>36</f>
+        <f>A056</f>
+        <f>固定资产原价</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4af8804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>37</f>
+        <f>A057</f>
+        <f>减：累计折旧</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4aff304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>39</f>
+        <f>A058</f>
+        <f>固定资产清理</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b04604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>40</f>
+        <f>A059</f>
+        <f>在建工程</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b09d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>41</f>
+        <f>A060</f>
+        <f>减：在建工程减值准备</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b0f404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>42</f>
+        <f>A061</f>
+        <f>减：固定资产减值准备</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b14304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>43</f>
+        <f>A062</f>
+        <f>待处理固定资产损益</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b19604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>47</f>
+        <f>A063</f>
+        <f>减：无形资产减值准备</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b1e904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>49</f>
+        <f>A064</f>
+        <f>无形及递延资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b23804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>51</f>
+        <f>A065</f>
+        <f>其它长期资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b28b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>52</f>
+        <f>A066</f>
+        <f>长期待摊费用</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b2da04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>62</f>
+        <f>A067</f>
+        <f>其他应付款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b32d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>63</f>
+        <f>A068</f>
+        <f>应付工资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b38004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>64</f>
+        <f>A069</f>
+        <f>应付福利费</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b3d304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>65</f>
+        <f>A070</f>
+        <f>未交税金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b42604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>66</f>
+        <f>A071</f>
+        <f>未交包干利润</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b48404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>67</f>
+        <f>A072</f>
+        <f>未付利润</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b4db04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>68</f>
+        <f>A073</f>
+        <f>应付利息</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b52e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>69</f>
+        <f>A074</f>
+        <f>其他未交款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b57d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>70</f>
+        <f>A075</f>
+        <f>预提费用</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b5d404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>72</f>
+        <f>A076</f>
+        <f>其他流动负债</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b62704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>86</f>
+        <f>A077</f>
+        <f>递延出租收入</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b67a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>87</f>
+        <f>A078</f>
+        <f>其他长期负债</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b6cd04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>94</f>
+        <f>A079</f>
+        <f>递延税款贷项</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b71c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>96</f>
+        <f>A080</f>
+        <f>少数股东权益</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b76f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>106</f>
+        <f>A081</f>
+        <f>资本公积</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b7c204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>111</f>
+        <f>A082</f>
+        <f>负债及所有者权益总计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b81104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>1</f>
+        <f>P001</f>
+        <f>主营业务收入</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b86404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>P002</f>
+        <f>营业成本</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b8c704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>P003</f>
+        <f>营业费用</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b91a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>P004</f>
+        <f>营业税金及附加</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b96904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>P005</f>
+        <f>管理费用</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4b9b804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>P006</f>
+        <f>财务费用</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4ba0b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>12</f>
+        <f>P007</f>
+        <f>经营利润</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4ba5e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>13</f>
+        <f>P008</f>
+        <f>投资收益</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4baad04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>20</f>
+        <f>P009</f>
+        <f>利润总额</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4bafc04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>21</f>
+        <f>P010</f>
+        <f>所得税</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4bb4f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>23</f>
+        <f>P011</f>
+        <f>净利润</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4bba204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>P013</f>
+        <f>主营业务经营利润</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4bbf504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>P014</f>
+        <f>加：其它业务利润（亏损以&quot;-&quot;号表示）</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4bc4404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>14</f>
+        <f>P015</f>
+        <f>期货收益（损失以&quot;-&quot;号表示）</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4bc9704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>15</f>
+        <f>P016</f>
+        <f>补贴收入</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4bcea04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>16</f>
+        <f>P017</f>
+        <f>营业外收入</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4bd4c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>17</f>
+        <f>P018</f>
+        <f>减：营业外支出</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4bda304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>18</f>
+        <f>P019</f>
+        <f>加：以前年度损益调整（调减负号表示）</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4bdf604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>22</f>
+        <f>P020</f>
+        <f>少数股东损益</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4be4904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>C001</f>
+        <f>销售商品、提供劳务收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4be9c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>16</f>
+        <f>C002</f>
+        <f>经营活动产生的现金流量净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4beeb04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>30</f>
+        <f>C003</f>
+        <f>投资活动产生的现金流量净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4bf4204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>45</f>
+        <f>C004</f>
+        <f>融资活动产生的现金净流量</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4bf9104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>48</f>
+        <f>C005</f>
+        <f>现金及现金等价物净增加额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4bfe404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>C006</f>
+        <f>收到的租金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c03704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>C007</f>
+        <f>收到的增值税销项税额和退回的增值税款</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c08604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>C008</f>
+        <f>收到的除增值税以外的其他税费返还</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c0dd04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>C009</f>
+        <f>收到的其他与经营活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c13c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>C010</f>
+        <f>经营活动产生现金流入小计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c19304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>C011</f>
+        <f>购买商品、接受劳务支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c1e604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>C012</f>
+        <f>经营费用现金支出</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c23904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>10</f>
+        <f>C013</f>
+        <f>支付给职工以及为职工支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c28804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>11</f>
+        <f>C014</f>
+        <f>支付的增值税款</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c2da04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>12</f>
+        <f>C015</f>
+        <f>支付的所得税款</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c32a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>13</f>
+        <f>C016</f>
+        <f>支付的除增值税、所得税以外的其他税费</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c37c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>14</f>
+        <f>C017</f>
+        <f>支付的其他与经营活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c3cb04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>15</f>
+        <f>C018</f>
+        <f>经营活动产生现金流出小计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c41e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>19</f>
+        <f>C019</f>
+        <f>收回投资所收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c47104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>20</f>
+        <f>C020</f>
+        <f>分得股利或利润所收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c4c404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>21</f>
+        <f>C021</f>
+        <f>取得债券利息收入所收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c51b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>22</f>
+        <f>C022</f>
+        <f>处置固定资产、无形资产和其他长期资产而收到的现金净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c57e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>23</f>
+        <f>C023</f>
+        <f>收到其他与投资活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c5d504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>24</f>
+        <f>C024</f>
+        <f>投资活动现金流入小计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c62804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>25</f>
+        <f>C025</f>
+        <f>购建固定资产、无形资产和其他长期资产所支付的现金净额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c67f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>26</f>
+        <f>C026</f>
+        <f>权益性投资所支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c6ce04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>27</f>
+        <f>C027</f>
+        <f>债权性投资所支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c72104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>28</f>
+        <f>C028</f>
+        <f>支付的其他与投资活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c77404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>29</f>
+        <f>C029</f>
+        <f>投资活动现金流出小计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c7c704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>33</f>
+        <f>C030</f>
+        <f>吸收权益性投资所收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c81604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>34</f>
+        <f>C031</f>
+        <f>发行债券所收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c86904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>35</f>
+        <f>C032</f>
+        <f>借款所收到的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c8bc04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>36</f>
+        <f>C033</f>
+        <f>收到其他与筹资活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c90f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>37</f>
+        <f>C034</f>
+        <f>筹资活动现金流入小计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c97104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>38</f>
+        <f>C035</f>
+        <f>偿还债务所支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4c9c404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>39</f>
+        <f>C036</f>
+        <f>发生筹资费用所支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4ca1704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>40</f>
+        <f>C037</f>
+        <f>分配股利、利润、偿付利息所支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4ca6a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>41</f>
+        <f>C038</f>
+        <f>融资租赁所支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4cabd04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>42</f>
+        <f>C039</f>
+        <f>减少注册资本所支付的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4cb1004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>43</f>
+        <f>C040</f>
+        <f>支付的其他与筹资活动有关的现金</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4cb6704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>44</f>
+        <f>C041</f>
+        <f>筹资活动现金流出小计</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4cbba04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>46</f>
+        <f>C042</f>
+        <f>四、汇率变动对现金的影响额</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>[ &quot;GENERALENTERPRISEOLD&quot; ]</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+        <f>admin</f>
+        <f>2018-12-21 09:33:26.0</f>
+      </row>
+      <row>
+        <f>4ef4cc1904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>11</f>
+        <f>AS01</f>
+        <f>流动资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4cc7404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>AS02</f>
+        <f>存货</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4cd0e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>14</f>
+        <f>AS03</f>
+        <f>固定资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4cd6104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>17</f>
+        <f>AS04</f>
+        <f>在建工程</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4cdb404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>18</f>
+        <f>AS05</f>
+        <f>无形资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ce2204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>21</f>
+        <f>AS06</f>
+        <f>待处置资产损益</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ce7d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>22</f>
+        <f>AS07</f>
+        <f>非流动资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ced404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>29</f>
+        <f>AS08</f>
+        <f>资产总计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4cf1f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>31</f>
+        <f>AS09</f>
+        <f>短期借款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4cf7204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>41</f>
+        <f>AS10</f>
+        <f>流动负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4cfc504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>43</f>
+        <f>AS11</f>
+        <f>长期借款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d01804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>46</f>
+        <f>AS12</f>
+        <f>负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d06704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>57</f>
+        <f>AS13</f>
+        <f>净资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d0ba04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>AS14</f>
+        <f>货币资金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d10904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>AS16</f>
+        <f>应收票据</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d15404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>AS17</f>
+        <f>应收账款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d19f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>AS18</f>
+        <f>预付账款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d1ea04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>AS19</f>
+        <f>其他应收款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d23d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>AS22</f>
+        <f>短期投资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d28804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>13</f>
+        <f>AS23</f>
+        <f>长期投资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d2eb04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>36</f>
+        <f>AS36</f>
+        <f>应付票据</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d33a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>37</f>
+        <f>AS37</f>
+        <f>应付账款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d38504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>38</f>
+        <f>AS38</f>
+        <f>预收账款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d3d004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>35</f>
+        <f>AS39</f>
+        <f>应付职工薪酬</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d42304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>39</f>
+        <f>AS40</f>
+        <f>其他应付款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d47604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>33</f>
+        <f>AS41</f>
+        <f>应缴国库款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d4c904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>34</f>
+        <f>AS42</f>
+        <f>应缴财政专户款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d51c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>32</f>
+        <f>AS43</f>
+        <f>应缴税费</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d56704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>49</f>
+        <f>AS46</f>
+        <f>非流动资产基金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d5ba04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>50</f>
+        <f>AS47</f>
+        <f>专用基金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d60504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>55</f>
+        <f>AS48</f>
+        <f>1.事业结余</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d65804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>56</f>
+        <f>AS49</f>
+        <f>2.经营结余</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d6ab04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>58</f>
+        <f>AS59</f>
+        <f>负债和净资产总计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d6fe04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>AS60</f>
+        <f>财政应返还额度</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d76504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>10</f>
+        <f>AS61</f>
+        <f>其他流动资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d7bc04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>15</f>
+        <f>AS62</f>
+        <f>固定资产原价</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d80f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>16</f>
+        <f>AS63</f>
+        <f>减：累计折旧</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d86204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>19</f>
+        <f>AS64</f>
+        <f>无形资产原价</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d8b504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>20</f>
+        <f>AS65</f>
+        <f>减：累计摊销</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d90404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>40</f>
+        <f>AS66</f>
+        <f>其他流动负债</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d95704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>44</f>
+        <f>AS67</f>
+        <f>长期应付款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d9a904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>45</f>
+        <f>AS68</f>
+        <f>非流动负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4d9fc04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>48</f>
+        <f>AS69</f>
+        <f>事业基金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4da4804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>51</f>
+        <f>AS70</f>
+        <f>财政补助结转</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4da9a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>52</f>
+        <f>AS71</f>
+        <f>财政补助结余</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4daed04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>53</f>
+        <f>AS72</f>
+        <f>非财政补助结转</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4db3c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>54</f>
+        <f>AS73</f>
+        <f>非财政补助结余</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4db8f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>1</f>
+        <f>IE01</f>
+        <f>一、本期财政补助结转结余</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4dbe204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>IE02</f>
+        <f>财政补助收入</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4dc4904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>IE03</f>
+        <f>二、本期事业结转结余</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4dca404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>IE04</f>
+        <f>（一）事业类收入</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4dcf304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>IE05</f>
+        <f>1.事业收入</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4dd4604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>17</f>
+        <f>IE06</f>
+        <f>经营收入</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4dd9904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>IE07</f>
+        <f>4.其他收入</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ddec04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>IE08</f>
+        <f>减：事业支出（财政补助支出）</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4de3f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>12</f>
+        <f>IE09</f>
+        <f>1.事业支出（非财政补助支出）</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4de9204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>IE11</f>
+        <f>3.附属单位上缴收入</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4dee104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>16</f>
+        <f>IE12</f>
+        <f>三、本期经营结余</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4df3404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>22</f>
+        <f>IE13</f>
+        <f>六、本年非财政补助结余</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4df8704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>IE14</f>
+        <f>2.上级补助收入</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4dfda04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>13</f>
+        <f>IE15</f>
+        <f>2.上缴上级支出</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e02904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>14</f>
+        <f>IE16</f>
+        <f>3.对附属单位补助支出</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e08b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>23</f>
+        <f>IE35</f>
+        <f>减：应缴企业所得税</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e0de04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>24</f>
+        <f>IE36</f>
+        <f>减：提取专用基金</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e13104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>25</f>
+        <f>IE37</f>
+        <f>七、转入事业基金</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e18404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>11</f>
+        <f>IE40</f>
+        <f>减：（二）事业类支出</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e1d704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>15</f>
+        <f>IE41</f>
+        <f>4.其他支出</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e22604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>19</f>
+        <f>IE42</f>
+        <f>四、弥补以前年度亏损后的经营结余</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e28104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>20</f>
+        <f>IE43</f>
+        <f>五、本年非财政补助结转结余</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e2d004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>21</f>
+        <f>IE44</f>
+        <f>减：非财政补助结转</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e32304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>18</f>
+        <f>IE45</f>
+        <f>减：经营支出</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTION&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e37604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>13</f>
+        <f>AS03</f>
+        <f>固定资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e3c904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>14</f>
+        <f>AS04</f>
+        <f>在建工程</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e41c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>15</f>
+        <f>AS05</f>
+        <f>无形资产</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e46f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>16</f>
+        <f>AS06</f>
+        <f>待处理资产损失</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e4de04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>17</f>
+        <f>AS08</f>
+        <f>资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e53904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>37</f>
+        <f>AS09</f>
+        <f>短期借入款项</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e58b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>38</f>
+        <f>AS11</f>
+        <f>长期借入款项</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e5de04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>48</f>
+        <f>AS12</f>
+        <f>负债合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e63104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>58</f>
+        <f>AS13</f>
+        <f>净资产合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e68404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>AS14</f>
+        <f>现金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e6d304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>AS15</f>
+        <f>银行存款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e72a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>AS16</f>
+        <f>应收票据</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e77904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>6</f>
+        <f>AS17</f>
+        <f>应收帐款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e7cc04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>AS18</f>
+        <f>预付帐款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e81b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>AS19</f>
+        <f>其它应收款（暂付款）</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e86e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>AS20</f>
+        <f>材料</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e8bd04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>10</f>
+        <f>AS21</f>
+        <f>产成品</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e90804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>11</f>
+        <f>AS22</f>
+        <f>短期对外投资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e95b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>12</f>
+        <f>AS23</f>
+        <f>长期对外投资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4e9ca04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>23</f>
+        <f>AS24</f>
+        <f>拨出经费</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ea1d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>24</f>
+        <f>AS25</f>
+        <f>拨出专款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ea7004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>25</f>
+        <f>AS26</f>
+        <f>专款支出</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4eac304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>26</f>
+        <f>AS27</f>
+        <f>事业支出（经费支出）</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4eb1604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>27</f>
+        <f>AS28</f>
+        <f>经营支出</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4eb6504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>28</f>
+        <f>AS29</f>
+        <f>成本费用</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ebb404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>29</f>
+        <f>AS30</f>
+        <f>销售税金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ec0704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>30</f>
+        <f>AS31</f>
+        <f>上缴上级支出</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ec5a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>31</f>
+        <f>AS32</f>
+        <f>对附属单位补助</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ecad04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>32</f>
+        <f>AS33</f>
+        <f>结转自筹基建</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ecfc04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>33</f>
+        <f>AS34</f>
+        <f>支出合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ed4f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>34</f>
+        <f>AS35</f>
+        <f>资产部类总计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ed9e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>39</f>
+        <f>AS36</f>
+        <f>应付票据</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4edf104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>40</f>
+        <f>AS37</f>
+        <f>应付帐款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ee5304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>41</f>
+        <f>AS38</f>
+        <f>预收帐款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4eeaa04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>42</f>
+        <f>AS39</f>
+        <f>应付工资</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4eefd04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>43</f>
+        <f>AS40</f>
+        <f>其他应付款（暂存款）</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ef4c04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>44</f>
+        <f>AS41</f>
+        <f>应缴预算款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ef9f04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>45</f>
+        <f>AS42</f>
+        <f>应缴财政专户款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4eff204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>46</f>
+        <f>AS43</f>
+        <f>应交税金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f04104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>47</f>
+        <f>AS44</f>
+        <f>预提费用</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f09404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>50</f>
+        <f>AS45</f>
+        <f>事业基金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f0e304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>53</f>
+        <f>AS46</f>
+        <f>固定基金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f13604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>54</f>
+        <f>AS47</f>
+        <f>专用基金</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f18504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>55</f>
+        <f>AS48</f>
+        <f>事业结余</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f1d804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>56</f>
+        <f>AS49</f>
+        <f>经营结余</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f22b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>57</f>
+        <f>AS50</f>
+        <f>结余分配</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f27a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>60</f>
+        <f>AS51</f>
+        <f>财政补助收入（拨入经费）</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f2cd04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>61</f>
+        <f>AS52</f>
+        <f>上级补助收入</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f33004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>62</f>
+        <f>AS53</f>
+        <f>拨入专款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f38704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>63</f>
+        <f>AS54</f>
+        <f>事业收入</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f3d604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>64</f>
+        <f>AS55</f>
+        <f>经营收入（预算外资金收入）</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f42904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>65</f>
+        <f>AS56</f>
+        <f>附属单位缴款</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f47804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>66</f>
+        <f>AS57</f>
+        <f>其他收入</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f4cb04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>68</f>
+        <f>AS58</f>
+        <f>收入合计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f52604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>69</f>
+        <f>AS59</f>
+        <f>负债部类总计</f>
+        <f>BALANCE_SHEET</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f57904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>2</f>
+        <f>IE02</f>
+        <f>财政补助收入（拨入经费）</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f5cb04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>31</f>
+        <f>IE03</f>
+        <f>事业结余</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f61a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>5</f>
+        <f>IE05</f>
+        <f>事业收入</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f66d04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>9</f>
+        <f>IE06</f>
+        <f>经营收入（预算外资金收入）</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f6c004cf11e9b5fa80fa5b3bd5f1</f>
+        <f>7</f>
+        <f>IE07</f>
+        <f>其他收入</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f71704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>18</f>
+        <f>IE08</f>
+        <f>其中：财政补助支出</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f77a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>19</f>
+        <f>IE09</f>
+        <f>预算外资金支出</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f7cd04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>23</f>
+        <f>IE10</f>
+        <f>经营支出</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f82404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>4</f>
+        <f>IE11</f>
+        <f>附属单位缴款</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f87304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>34</f>
+        <f>IE12</f>
+        <f>经营结余</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f8c204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>3</f>
+        <f>IE14</f>
+        <f>上级补助收入</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f91504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>15</f>
+        <f>IE15</f>
+        <f>上缴上级支出</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f96404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>16</f>
+        <f>IE16</f>
+        <f>对附属单位补助</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4f9b704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>12</f>
+        <f>IE17</f>
+        <f>收入总计</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4fa0604cf11e9b5fa80fa5b3bd5f1</f>
+        <f>8</f>
+        <f>IE18</f>
+        <f>小计1</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4fa5904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>11</f>
+        <f>IE19</f>
+        <f>小计2</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4faac04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>14</f>
+        <f>IE20</f>
+        <f>拨出经费</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4fafb04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>17</f>
+        <f>IE21</f>
+        <f>事业支出</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4fb4a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>20</f>
+        <f>IE22</f>
+        <f>销售税金1</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4fb9904cf11e9b5fa80fa5b3bd5f1</f>
+        <f>21</f>
+        <f>IE23</f>
+        <f>结转自筹基建</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4fbf804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>22</f>
+        <f>IE24</f>
+        <f>小计3</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4fc4b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>24</f>
+        <f>IE25</f>
+        <f>销售税金2</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4fc9e04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>25</f>
+        <f>IE26</f>
+        <f>小计4</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4fd6b04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>26</f>
+        <f>IE27</f>
+        <f>拨出专款</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4fdc204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>27</f>
+        <f>IE28</f>
+        <f>专款支出</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4fe1504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>28</f>
+        <f>IE29</f>
+        <f>小计5</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4fe6404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>29</f>
+        <f>IE30</f>
+        <f>支出总计</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4feb704cf11e9b5fa80fa5b3bd5f1</f>
+        <f>32</f>
+        <f>IE31</f>
+        <f>正常收支结余</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ff0a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>33</f>
+        <f>IE32</f>
+        <f>收回以前年度事业支出</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ff6104cf11e9b5fa80fa5b3bd5f1</f>
+        <f>35</f>
+        <f>IE33</f>
+        <f>以前年度亏损(一)</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef4ffb404cf11e9b5fa80fa5b3bd5f1</f>
+        <f>36</f>
+        <f>IE34</f>
+        <f>结余分配</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef5000304cf11e9b5fa80fa5b3bd5f1</f>
+        <f>37</f>
+        <f>IE35</f>
+        <f>应交所得税</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef5005204cf11e9b5fa80fa5b3bd5f1</f>
+        <f>38</f>
+        <f>IE36</f>
+        <f>提取专用基金</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef500b504cf11e9b5fa80fa5b3bd5f1</f>
+        <f>39</f>
+        <f>IE37</f>
+        <f>转入事业基金</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef5010804cf11e9b5fa80fa5b3bd5f1</f>
+        <f>40</f>
+        <f>IE38</f>
+        <f>其他</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+      <row>
+        <f>4ef5015a04cf11e9b5fa80fa5b3bd5f1</f>
+        <f>10</f>
+        <f>IE39</f>
+        <f>拨入专款</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>[&quot;INSTITUTIONOLD&quot;]</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+        <f>admin</f>
+        <f>2018-12-21 11:09:48.0</f>
+      </row>
+    </resultset>
+  </table>
+</export>

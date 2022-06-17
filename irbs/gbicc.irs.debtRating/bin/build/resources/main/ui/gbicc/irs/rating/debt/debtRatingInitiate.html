@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>债项评级发起</title>
+<link rel="stylesheet" href="/css/debtRatingInitiate.css?t=2" type="text/css">
+</head>
+<body>
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+	                <div class="col-lg-12">
+	                	<div class="ibox float-e-margins">
+	                		<div class="ibox-title">
+	                            <h5>查询</h5>
+	                            <!-- <div class="ibox-tools">
+	                                <a class="collapse-link">
+	                                    <i class="fa fa-chevron-up"></i>
+	                                </a>
+	                            </div> -->
+	                        </div>
+	                        <div class="ibox-content" style="padding-bottom: 0;">
+	                        	<form class="form-horizontal" id="formSearch">
+								<div class="form-group">
+										<label class="col-sm-1 control-label">承租人名称</label>
+										<div class="col-sm-2">
+											<input id="lesseeName" type="text" placeholder="模糊查找" name="custName" class="form-control">
+										</div>
+										<label class="col-sm-1 control-label">承租人编号</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" name="custCode" class="form-control">
+										</div>
+										<label class="col-sm-1 control-label">承租人类型</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="">请选择</option>
+												<option value="">生产型</option>
+												<option value="">服务型</option>
+												<option value="">新建型</option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">项目名称</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" class="form-control" name="">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label">项目编号</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="精确查找" class="form-control">
+										</div>
+										<label class="col-sm-1 control-label">业务经理/协办经理</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" class="form-control" name="">
+										</div>
+										<label class="col-sm-1 control-label">评审经理</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" class="form-control" name="finalName">
+										</div>
+										<label class="col-sm-1 control-label">项目状态</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="">请选择</option>
+												<option value="">项目通过</option>
+												<option value="">项目拒绝</option>
+											</select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label">业务部</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="" name="leaseOrganization">
+												<option value="">请选择</option>
+												<option th:each="option: ${@clockDictionary.dicOrg()}" th:value="${option.key}" th:text="${option.value}"></option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">业务类别</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="">请选择</option>
+												<option value="">直租</option>
+												<option value="">回租</option>
+											</select>
+										</div>	
+										<label class="col-sm-1 control-label">业务类型</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="">
+												<option value="">请选择</option>
+												<option value="">标准项目</option>
+												<option value="">用信项目</option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">评级模型编号</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" class="form-control">
+										</div>
+										<!-- <label class="col-sm-1 control-label">评级流水号</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" class="form-control">
+										</div> -->									
+									</div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label">评级模型版本编号</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" class="form-control">
+										</div>
+										<label class="col-sm-1 control-label">评级状态</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" class="form-control">
+										</div>
+										<label class="col-sm-1 control-label">创建日期</label>
+										<div class="col-sm-3">
+											<div class="input-daterange input-group" id="datepicker">
+												<input id="date2" type="text" class="form-control"
+													name="date2" placeholder="请选择开始日期" readonly /> <span
+													class="input-group-addon">至</span> <input id="date1"
+													type="text" class="form-control" name="date1"
+													placeholder="请选择结束日期" readonly />
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<b id="btn-query" class="btn btn-success">查询</b>
+											<b id="btn-reset" class="btn btn-success">重置</b>
+										</div>
+									</div>
+								</form>
+	                        </div>
+	                	</div>
+						<div class="jqGrid_wrapper">
+                            <table id="table_list"></table>
+                            <div id="pager_list"></div>
+                        </div>    	    
+	                </div>
+		        </div>
+		        <!-- 模态窗口 -->
+						<div class="modal inmodal fade" id="myModal" tabindex="-1" role="dialog"  aria-hidden="true">
+                             <div class="modal-dialog modal-lg">
+                                 <div class="modal-content" style="height: 100%;">
+                                     <div class="modal-header">
+                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                         <h4 class="modal-title"></h4>
+                                     </div>
+                                     <div class="modal-body">
+										<div class="row">
+				                        	<div class="col-lg-12">
+				                        		<div class="col-lg-2">
+				                        			<div class="progress-left">
+				                        				<div class='progress-left-head'>评级步骤</div>
+				                        				<div id="dlTxt" class="progress-name">定量分析</div>
+				                        				<div id="dxTxt" class="progress-name">定性分析</div>
+				                        				<div id="reportTxt" class="progress-name">评级报告</div>
+				                        			</div>
+				                        		</div>
+				                        		<form id="dxDl">
+				                        		<div id="dingliang" class="col-lg-10">
+				                        			<div class="progress-head" id="dlAnalysis">定量分析</div>
+				                        			<table class="progress-table" id="dlListof">
+													</table>
+												</div>
+												<div id="dingxing" class="col-lg-10" style="display: none;">
+				                        			<div class="progress-head" id="dxAnalysis">定性分析</div>
+												</div>
+												</form>
+												<div id="report" class="col-lg-10" style="display: none;">
+				                        			<div class="progress-head">评级报告</div>
+				                        			<div class="tabs-container" style="padding-top: 15px;">
+								                        <ul class="nav nav-tabs">
+								                            <li class="active"><a data-toggle="tab" href="#tab-1">评级报告</a></li>
+								                            <li class=""><a data-toggle="tab" href="#tab-2">评级明细</a></li>
+								                            <!-- <li class="" ><a data-toggle="tab"  href="#tab-3" id="tab_sheet_3_Title">得分明细</a></li> -->
+								                        </ul>
+								                        <div class="tab-content">
+								                            <div id="tab-1" class="tab-pane active">
+								                            <iframe id="tab_sheet_1" style="width:100%;height:1000px" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+								                            </div>
+								                            <div id="tab-2" class="tab-pane">
+								                            <iframe id="tab_sheet_2" style="width:100%;height:1300px" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+								                            </div>
+								                            <!-- <div id="tab-3" class="tab-pane">
+								                             <iframe id="tab_sheet_3"  width="100%" height="580"></iframe>
+								                            </div> -->
+								                        </div>
+								                    </div>
+													<!-- <div class="score">定量得分：<span id="">35.25</span></div> -->
+												</div>
+				                        	</div>    
+				                        </div>                                     		    
+                                     </div>
+                                     <div class="modal-footer" id="footer1">
+                                         <button type="button" class="btn btn-success" id="btn_next1">下一步</button>
+                                     </div>
+                                     <div class="modal-footer" id="footer2" style="display: none;">
+                                     	 <div id="scoreInfo" style="padding-right: 40px;font-size: 16px;display: none;">
+                                     	 	<span>定量得分：</span><span class="cale-score" id="dlScore"></span>
+                                     	 	<span>定性得分：</span><span class="cale-score" id="dxScore"></span>
+                                     	 	<span>总得分：</span><span  class="cale-score" id="sumScore"></span>
+                                     	 </div>
+                                     	 <button type="button" class="btn btn-success" id="btn_calculate" >评级测算</button>
+                                     	 <button type="button" class="btn btn-success" id="btn_prev1">上一步</button> 	
+                                         <button type="button" class="btn btn-success" id="btn_next2">下一步</button>
+                                     </div>
+                                     <div class="modal-footer" id="footer3" style="display: none;">
+                                     	 <button type="button" class="btn btn-success" id="btn_download">下载</button>
+                                         <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript" src="/bootstrap/js/listOfDebtRating.js?t=2"></script>
+<script type="text/javascript" src="/bootstrap/js/debtRatingInitiate.js?t=2"></script>
+<script type="text/javascript" src="/bootstrap/js/stepsDebtRating.js?t=2"></script>
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="T_IRR_SPLIT_INDEX" author="fc">
+        <createTable tableName="T_IRR_SPLIT_INDEX" remarks="拆分指标信息表">
+			<column name="ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键ID">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="SPLIT_CODE"       	type="varchar(50)"      	 			remarks="拆分指标编码"></column>
+			<column name="SPLIT_NAME"       	type="varchar(300)"      	 			remarks="拆分指标名称"></column>
+			<column name="SPLIT_LEVEL"       	type="varchar(15)"      	 			remarks="拆分层级"></column>
+			<column name="SOURCE_INDEX_ID"      type="varchar(36)"      	 			remarks="源指标ID"></column>
+			<column name="SOURCE_INDEX_NAME"    type="varchar(300)"      	 			remarks="源指标名称"></column>
+			<column name="SOURCE_PROJ_ID"    	type="varchar(36)"      	 			remarks="评估项目ID"></column>
+			<column name="SOURCE_PROJ_NAME"     type="varchar(150)"      	 			remarks="评估项目名称"></column>
+			<column name="SPLIT_FORMULA" 		type="varchar(4000)" 					remarks="拆分指标公式"></column>
+			<column name="SPLIT_FORMULA_CODE" 	type="varchar(4000)" 					remarks="拆分指标公式编码"></column>
+			<column name="SPLIT_EVAL_FORM"      type="varchar(4000)"       				remarks="拆分指标可执行公式"></column>
+			<column name="IS_USE"       		type="varchar(15)"      	 			remarks="是否启用"></column>
+			<column name="COLL_WAY"  			type="varchar(15)"  					remarks="采集方式"></column>
+			<column name="RESULT_TYPE"  		type="varchar(15)"  					remarks="结果类型"></column>
+			<column name="SUB_PROCESS_CODE" 	type="varchar(15)" 						remarks="子流程编码"></column>
+			<column name="COLL_USER_ID" 		type="varchar(36)" 						remarks="采集人ID"></column>
+			<column name="COLL_USER_LOGINNAME" 	type="varchar(36)" 						remarks="采集人账号"></column>
+			<column name="COLL_USER_NAME" 		type="varchar(60)" 						remarks="采集人名称"></column>
+			<column name="EXAM_USER_ID" 		type="varchar(36)" 						remarks="审核人ID"></column>
+			<column name="EXAM_USER_LOGINNAME" 	type="varchar(36)" 						remarks="审核人账号"></column>
+			<column name="EXAM_USER_NAME" 		type="varchar(60)" 						remarks="审核人名称"></column>
+			<column name="REVIEW_USER_ID" 		type="varchar(36)" 						remarks="复核人ID"></column>
+			<column name="REVIEW_USER_LOGINNAME" type="varchar(36)" 					remarks="复核人账号"></column>
+			<column name="REVIEW_USER_NAME" 	type="varchar(60)" 						remarks="复核人名称"></column>
+			<column name="CHANNEL_FLAG"  		type="varchar(36)" 						remarks="渠道标识"></column>
+			<column name="ORG_ID"  				type="varchar(36)" 						remarks="所属机构ID"></column>
+			<column name="ORG_CODE" 			type="varchar(30)" 						remarks="所属机构编码"></column>
+			<column name="ORG_NAME" 			type="varchar(90)" 						remarks="所属机构名称"></column>
+			<column name="DATA_BODY"      		type="varchar(50)"      				remarks="主体编码"></column>
+			<column name="FD_CREATOR"           type="varchar(255)"  					remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"       type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"     type="varchar(50)"  					remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"   type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

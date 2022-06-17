@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+	
+//候选值权重
+var ItemValueWeights =[(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.ItemValueWeight),#locale)})];
+//调整类型
+var adjustmentTypes = [(${@frSystemDictionaryService.getDictionaryMapJsonString('ADJUSTMENT_TYPE',#locale)})];
+	
+//选择补录项数据源
+isc.FwRestDataSource.create({
+	ID: 'additItemsForSelectDS',
+	autoFetchData:true,
+    fields:[
+    	{width:80,		name:'id'},
+    	{width:120,		name:'fieldTitle',				title:'[(#{fieldTitle})]'},
+		{width:150,		name:'fieldName',				title:'[(#{fieldName})]'}
+    ],
+    fetchDataURL:'[(@{/irs/ratingAdditItemConfig/getAllAdditemsSelectList})]'
+});
+	
+	
+//***********************************************问题选项数据源 start ************************************
+//补录项数据源
+isc.FwRestDataSource.create({
+	ID: 'additItemsForSelectDS',
+	autoFetchData:true,
+  fields:[
+  	{width:80,		name:'id'},
+  	{width:120,		name:'fieldTitle',				title:'[(#{fieldTitle})]'},
+		{width:150,		name:'fieldName',				title:'[(#{fieldName})]'}
+  ],
+  fetchDataURL:'[(@{/irs/ratingAdditItemConfig/getAllAdditemsSelectList})]'
+});
+	
+	
+var RatingSelectValuesConfigFields = {
+		dataSourceGrid: [
+				{width:80,		name:'id',					title:'[(#{id})]',type: 'text',primaryKey:true},
+				{width:80,		name:'defId',				title:'[(#{defId})]'},
+				{width:150,		name:'defCode',				title:'[(#{defCode})]'},
+				{width:'*',		name:'orderNum',			title:'[(#{orderNum})]'},
+			    {width:'*',		name:'displayValue',		title:'[(#{displayValue})]'},
+			    {width:'*',		name:'realValue',			title:'[(#{realValue})]'},
+			    {width:'*',		name:'adjustmentType',		title:'[(#{adjustmentType})]'},
+			    {width:'*',		name:'weight',				title:'[(#{weight})]'},
+			    {width:'*',		name:'adjustmentFraction',	title:'[(#{adjustmentFraction})]'},
+			    {width:'*',		name:'additID',				title:'[(#{additID})]'},
+			    {width:'*',		name:'reMarks',				title:'[(#{reMarks})]'},
+			    {width:300,		name:'isHis',				title:'[(#{isHis})]',type:"boolean"}
+		 ],
+		 showGrid:[
+			 	{width:80,		name:'id',					title:'[(#{id})]',type: 'text',hidden:true},
+			 	{width:50,		name:'orderNum',			title:'[(#{orderNum})]',type:"integer"},
+			 	{width:60,		name:'realValue',			title:'[(#{realValue})]'},
+			 	{width:60,		name:'displayValue',		title:'[(#{displayValue})]'},
+			 	{width:80,		name:'adjustmentType',		title:'[(#{adjustmentType})]',type: 'select',valueMap:adjustmentTypes},
+			    {width:80,		name:'weight',				title:'[(#{weight})]',type:"select",valueMap:ItemValueWeights},
+			    {width:80,		name:'adjustmentFraction',	title:'[(#{adjustmentFraction})]'},
+			    {
+			    	width:170,		
+			    	name:'additID',				
+			    	title:'[(#{additID})]',
+			    	type: "select",
+			    	optionDataSource: additItemsForSelectDS,
+			    	displayField:'fieldTitle',
+					valueField:'id',
+					pickListFields: [
+			              { name:"fieldName",width:80},
+			              { name:"fieldTitle",width:80}
+			        ]
+			    }, 
+			    {width:'*',		name:'reMarks',				title:'[(#{reMarks})]'}
+		 ],
+		 edit:[
+			 	{width:80,		name:'id',					title:'[(#{id})]',type: 'text',hidden:true},
+			 	{width:'*',		name:'defId',				hidden:true},
+			 	{width:'*',		name:'orderNum',			title:'[(#{orderNum})]',type:"integer"},
+			 	{width:'*',		name:'realValue',			title:'[(#{realValue})]'},
+			 	{width:'*',		name:'displayValue',		title:'[(#{displayValue})]'},
+			 	{width:'*',		name:'adjustmentType',		title:'[(#{adjustmentType})]',
+			 		type:"select",
+			 		valueMap:adjustmentTypes,
+			 	   changed:function(form, item, value){
+			    		if(form.getField("adjustmentType").getValue()=='01'){
+			    			form.getField("weight").hide();
+			    			form.getField("adjustmentFraction").show();
+			    		}else if(form.getField("adjustmentType").getValue()=='02'){
+			    			form.getField("adjustmentFraction").hide();
+			    			form.getField("weight").show();
+			    		}
+				    	//form.getField("cityName").setValue(null);
+				    	//form.getField("districtName").setValue(null);
+				    }},
+			    {width:'*',		name:'weight',				title:'[(#{weight})]',type:"select",valueMap:ItemValueWeights},
+			    {width:'*',		name:'adjustmentFraction',	title:'[(#{adjustmentFraction})]'},
+			    {
+			    	width:'*',		
+			    	name:'additID',				
+			    	title:'[(#{additID})]',
+			    	type: "select",
+			    	optionDataSource: additItemsForSelectDS,
+			    	displayField:'fieldTitle',
+					valueField:'id',
+					pickListFields: [
+			              { name:"fieldName",width:'50%'},
+			              { name:"fieldTitle",width:'50%'}
+			        ]
+			    }, 
+			    {width:'*',		name:'reMarks',				title:'[(#{reMarks})]'}
+		 ]
+}
+
+//问题选项数据源
+isc.FwRestDataSource.create({
+	ID: 'ratingSelectValuesConfigDS',
+  	fields:RatingSelectValuesConfigFields.dataSourceGrid,
+  	dataURL: '[(@{/irs/ratingSelectValuesConfig/isc})]'
+});
+//***********************************************问题选项数据源 end ************************************
+
+
+//字段定义
+var AdjustItemConfigFields ={
+	query: [
+			{width:'*',		name:'adjItemCode',				title:'[(#{adjItemCode})]',type: 'text'},
+			{width:'*',		name:'adjItemName',				title:'[(#{adjItemName})]',type: 'text'},
+	],
+	grid: [
+			{width:80,		name:'id',							title:'[(#{id})]',type: 'text',primaryKey:true,hidden:true},
+			{width:120,		name:'adjItemCode',					title:'[(#{adjItemCode})]'},
+			{width:150,		name:'adjItemName',					title:'[(#{adjItemName})]'},
+		    {width:'*',		name:'adjItemDescribe',				title:'[(#{adjItemDescribe})]'},
+		    {width:300,		name:'isHis',						title:'[(#{isHis})]',type:"boolean"}
+		  ],
+	edit: [
+			{name:'id',						primaryKey:true,hidden:true},
+			{width:'*',		name:'adjItemCode',					title:'[(#{adjItemCode})]',		type:'text'},
+			{width:'*',		name:'adjItemName',					title:'[(#{adjItemName})]',		type:'text'},
+		    {width:'*',		name:'adjItemDescribe',				title:'[(#{adjItemDescribe})]',	type:'textArea',		colSpan:3},
+		    {
+				width:'*', 
+				name:'options',					
+				title:'<b>选项值列表</b>',								
+				type:'editGrid',
+				colSpan:4,
+				editGridProperties:{
+					height: 200,
+					filterPropertyName:'defId',
+					autoFetchData:false,
+					dataSource: ratingSelectValuesConfigDS,
+					defaultFields:RatingSelectValuesConfigFields.showGrid,
+					actionMembers:[
+			    		'refresh','add','remove'
+			    	],
+					editWindow: {
+						titleSuffix: '值',
+				        form: {
+				            dataSource: ratingSelectValuesConfigDS,
+				            fields: RatingSelectValuesConfigFields.edit
+				        },
+						afterShow:function(action){
+							this.Super("afterShow",arguments);
+				        	this.getForm().setValue("defId",adjustItemConfigGrid.getSelectedRecord().id);
+				        	//this.getForm().
+				        }
+					}
+				}
+			}
+	]
+};
+
+//调整项定义数据源
+isc.FwRestDataSource.create({
+	ID: 'adjustItemConfigDS',
+    fields: AdjustItemConfigFields.grid,
+    dataURL: '[(@{/irs/ratingAdjItemConfig/isc})]'
+});
+
+//调整项定义列表
+isc.FwListGrid.create({
+	ID: 'adjustItemConfigGrid',
+	title: '<b>评级调整项定义列表</b>',
+	dataSource: adjustItemConfigDS,
+	sortField: 'adjItemCode',
+	canHover:true,
+	fields: AdjustItemConfigFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: AdjustItemConfigFields.query
+	},
+	editWindow: {
+		width:800,
+		height:600,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: adjustItemConfigDS,
+            fields: AdjustItemConfigFields.edit
+        },
+        actionMembers:[
+               		'ok','close'
+               	]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				adjustItemConfigGrid
+			]
+		})
+	}
+});
+</script>
+</html>

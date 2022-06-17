@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html th:replace="template/bootstrap/bootstrap.html::html(removeNavbar=true)">
+<head>
+	<title th:text="#{security.impl.jpa.i18n.title}">登录</title>
+	<style>
+	body{
+		background-image: url([[@{/public/common.page.images/login_background.jpg}]]);
+	}
+	</style>
+	<script th:inline="javascript">
+		if(window.parent!=window){
+			window.parent.location.href ='[(@{/})]';
+		}
+	</script>
+</head>
+<body>
+<div id="_navbar" class="nav navbar-default">
+	<div class="navbar-header">
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+			<span class="sr-only"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand navbar-brand-img" th:href="@{/}"><img alt="Brand" th:src="@{/public/common.page.images/loginPage_logo.png}"></a>
+		<a class="navbar-brand" href="#" th:utext="|#{welcomeUse}#{application.title}|"></a>
+	</div>
+</div>
+<div style="height:270px"></div>
+<div class="container" >    
+	<div class="mainbox col-md-5 col-md-offset-7 col-sm-5 col-sm-offset-7">	
+		<div class="panel panel-info" style="background-color:rgba(255, 255, 255, 0.5)">
+			<div class="panel-heading" th:text="#{security.impl.jpa.i18n.title}"></div>
+			<div class="panel-body">
+				<div th:if="${error}" class="alert alert-danger" role="alert">
+					<span th:utext="#{security.impl.jpa.i18n.message.error}">登陆认证失败!<br/>请检查您输入的登录名和密码是否正确,然后重试一次。 </span>
+				</div>
+				<div class="row">
+					<div class="col-xs-2"></div>
+					<div class="col-xs-8">
+				    	<form class="form-horizontal" th:action="@{/login}" method="post">
+							<div class="form-group">
+								<label for="username" class="control-label" th:text="#{security.impl.jpa.i18n.label.username}">用户名</label>
+								<input type="text" required oninvalid="setCustomValidity('请输入您的用户名');" oninput="setCustomValidity('');" class="form-control" id="username" name="username" th:placeholder="#{security.impl.jpa.i18n.label.username.placeholder}" autofocus="autofocus"/>
+							</div>
+							<div class="form-group">
+								<label for="password" class="control-label" th:text="#{security.impl.jpa.i18n.label.password}">密码</label>
+								<input type="password" required oninvalid="setCustomValidity('请输入您的密码');" oninput="setCustomValidity('');" class="form-control" id="password" name="password" th:placeholder="#{security.impl.jpa.i18n.label.password.placeholder}"/>
+							</div>
+							<div class="form-group">
+								<div class="text-right">
+									<button type="reset" class="btn btn-primary" click="wsp();" style="border:1px solid">
+										<span th:text="#{security.impl.jpa.i18n.button.reset}">重置</span>
+									</button>
+									<button type="submit" class="btn btn-success" style="border:1px solid">
+										<span th:text="#{security.impl.jpa.i18n.button.login}">登录</span>
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-xs-2"></div>
+				</div>
+				<div class="row">
+					<div class="col-xs-11">
+						<div id="tip-content"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-4"></div>
+</div>
+</body>
+<script>
+	var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+	var isOpera = userAgent.indexOf("Opera") > -1; //判断是否Opera浏览器  
+	var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
+	var isEdge = userAgent.indexOf("Windows NT 6.1; Trident/7.0;") > -1 && !isIE; //判断是否IE的Edge浏览器
+	
+	function IEVersion(){
+		var reIE = new RegExp("MSIE (\\d+\\.\\d+);");  
+        reIE.test(userAgent);  
+        var fIEVersion = parseFloat(RegExp["$1"]);  
+        if(fIEVersion == 7)  
+        { return 7;}  
+        else if(fIEVersion == 8)  
+        { return 8;}  
+        else if(fIEVersion == 9)  
+        { return 9;}  
+        else if(fIEVersion == 10)  
+        { return 10;}  
+        else if(fIEVersion == 11)  
+        { return 11;}  
+        else  
+        { return -1}//IE版本过低  
+	}
+	$(function() {
+		if(isIE && IEVersion()<10){
+			$('#tip-content').html('* 请下载 谷歌 Chrome 浏览器<a href="[(@{/commom/fileManager/downloadChromeBorwser_64})]">64位</a> <a href="[(@{/commom/fileManager/downloadChromeBorwser_32})]">32位</a> 获得最佳用户体验。');
+		}
+	});
+</script>
+</html>

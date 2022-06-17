@@ -1,0 +1,12 @@
+dependencies {
+	compile(
+		"org.wsp:org.wsp.framework.core:${framework_version}",
+		"org.wsp:org.wsp.framework.installer:${framework_version}",
+		"org.wsp:org.wsp.framework.datasource:${framework_version}",
+		"org.wsp:org.wsp.framework.jpa:${framework_version}",
+	    "org.wsp:org.wsp.framework.jpa.model:${framework_version}",
+		"org.wsp:org.wsp.framework.security:${framework_version}",
+		"org.wsp:org.wsp.framework.security.util:${framework_version}",
+		"com.novell.ldap:jldap:2009-10-07"
+	)
+}

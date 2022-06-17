@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_TRIAL_PROCESS" author="framework">
+
+        <!-- 审判流程 -->
+        <createTable tableName="FB_TRIAL_PROCESS" remarks="审判流程">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="PRESIDING_JUDGE" type="java.sql.Types.VARCHAR(30)" remarks="主审法官"></column>
+            <column name="NOTICE_PEOPLE" type="java.sql.Types.VARCHAR(100)" remarks="公告人"></column>
+            <column name="NOTICE_TYPE" type="java.sql.Types.VARCHAR(30)" remarks="公告类型"></column>
+            <column name="PUBLIC_DATE" type="java.sql.Types.VARCHAR(20)" remarks="发布时间"></column>
+            <column name="COLLEGIAL_MEMBER" type="java.sql.Types.VARCHAR(100)" remarks="合议庭成员"></column>
+            <column name="WORD_NUMBER" type="java.sql.Types.VARCHAR(30)" remarks="字号"></column>
+            <column name="TRIAL_PROCEDURE" type="java.sql.Types.VARCHAR(30)" remarks="审判程序"></column>
+            <column name="TRIAL_JUDGE" type="java.sql.Types.VARCHAR(30)" remarks="审判长"></column>
+            <column name="TRIAL_DATE" type="java.sql.Types.VARCHAR(20)" remarks="审判日期"></column>
+            <column name="FILING_DATE" type="java.sql.Types.VARCHAR(20)" remarks="归档日期"></column>
+            <column name="UNDERTAKE_DEPART" type="java.sql.Types.VARCHAR(100)" remarks="承办部门"></column>
+            <column name="UNDERLY_AMOUNT" type="NUMBER(24,4)" remarks="标的金额"></column>
+            <column name="CASE_TYPE" type="java.sql.Types.VARCHAR(30)" remarks="案件类别"></column>
+            <column name="CASE_PROGRESS" type="java.sql.Types.VARCHAR(50)" remarks="案件进度"></column>
+            <column name="CASE_NO" type="java.sql.Types.VARCHAR(36)" remarks="案号"></column>
+            <column name="CASE_REASON" type="java.sql.Types.VARCHAR(500)" remarks="案由"></column>
+            <column name="PUT_ON_RECORD_DATE" type="java.sql.Types.VARCHAR(20)" remarks="立案日期"></column>
+            <column name="PUT_ON_RECORD_TIME" type="java.sql.Types.VARCHAR(20)" remarks="立案时间"></column>
+            <column name="SETTLEMENT_WAY" type="java.sql.Types.VARCHAR(50)" remarks="结案方式"></column>
+            <column name="SETTLEMENT_DATE" type="java.sql.Types.VARCHAR(20)" remarks="结案日期"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 当事人详情 -->
+        <createTable tableName="FB_TRIAL_PROCESS_PARTY" remarks="当事人详情">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="TRIAL_PROCESS_ID" type="java.sql.Types.VARCHAR(36)" remarks="审判流程ID"></column>
+            <column name="COMPANY_NAME" type="java.sql.Types.VARCHAR(100)" remarks="公司名"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="名字"></column>
+            <column name="LEGAL_PERSON" type="java.sql.Types.VARCHAR(100)" remarks="法定代表人"></column>
+            <column name="TYPE" type="java.sql.Types.VARCHAR(50)" remarks="类型"></column>
+            <column name="ORGANIZATION_NAME" type="java.sql.Types.VARCHAR(100)" remarks="组织名"></column>
+            <column name="ROLE" type="java.sql.Types.VARCHAR(50)" remarks="角色"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 其他角色 -->
+        <createTable tableName="FB_TRIAL_PROCESS_OTHER" remarks="其他角色">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="TRIAL_PROCESS_ID" type="java.sql.Types.VARCHAR(36)" remarks="审判流程ID"></column>
+            <column name="TRIAL_PROCESS_PARTY_ID" type="java.sql.Types.VARCHAR(36)" remarks="当事人详情ID"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="名称"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

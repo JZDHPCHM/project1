@@ -1,0 +1,13 @@
+
+dependencies {
+    compile(
+    	project(":gbicc.irs.customer"),
+        "org.wsp:org.wsp.framework.core:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa:${framework_version}",
+        "org.wsp:org.wsp.framework.mvc:${framework_version}",
+        "com.googlecode.aviator:aviator:${aviator_version}",
+        
+        "org.wsp:org.wsp.engine.model.client:${framework_version}",
+        "org.wsp:org.wsp.engine.model.client.spring:${framework_version}",
+	)
+}

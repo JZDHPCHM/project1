@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FR_2019.01.24_16.58.10__FR_SYS_FIX_CODE.xml -->
+<export>
+  <summary>
+    <t name="FR_SYS_FIX_CODE">select * from FR_SYS_FIX_CODE</t>
+  </summary>
+  <table name="FR_SYS_FIX_CODE">
+    <sql>select * from FR_SYS_FIX_CODE</sql>
+      <fields>
+        <field name="FD_CODE_NO"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CODE_NAME"                 type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_ITEM_CODE"                 type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_ITEM_NAME"                 type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_SORT_NO"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_IS_INUSE"                  type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATOR"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATE_DATE"               type="91"                 typeName="java.sql.Types.DATE"/>
+        <field name="FD_LAST_MODIFIER"             type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_LAST_MODIFYDATE"           type="91"                 typeName="java.sql.Types.DATE"/>
+      </fields>
+    <resultset>
+      <row>
+        <f>1</f>
+        <f>111</f>
+        <f>1</f>
+        <f>1111</f>
+        <f/>
+        <f/>
+        <f/>
+        <f/>
+        <f/>
+        <f/>
+      </row>
+      <row>
+        <f>2</f>
+        <f>222</f>
+        <f>1</f>
+        <f>2222</f>
+        <f/>
+        <f/>
+        <f/>
+        <f/>
+        <f/>
+        <f/>
+      </row>
+      <row>
+        <f>3</f>
+        <f>333</f>
+        <f>1</f>
+        <f>3333</f>
+        <f/>
+        <f/>
+        <f/>
+        <f/>
+        <f/>
+        <f/>
+      </row>
+      <row>
+        <f>4</f>
+        <f>444</f>
+        <f>4</f>
+        <f>4444</f>
+        <f/>
+        <f/>
+        <f/>
+        <f/>
+        <f/>
+        <f/>
+      </row>
+    </resultset>
+  </table>
+</export>

@@ -1,0 +1,164 @@
+@charset "UTF-8";
+.form-group {
+	    margin-bottom: 10px;
+	}
+	.form-group:last-child {
+	    margin-bottom: 0;
+	}
+	.ibox-content{
+		padding: 10px;
+	}
+	.modal-show{
+		color: #199fff;
+		cursor: pointer;
+	}
+	.modal-body {
+    	padding: 20px 30px;
+	}
+	.bottom-btn{
+		text-align: center;
+    	padding-top: 20px;
+	}
+	.btn-small{
+		padding: 3px;
+	}
+	.modal-lg {
+    	width: 100%;
+    	height: 100%;
+	}
+	.inmodal .modal-body {
+	    height: 84%;
+	    overflow: auto;
+	}
+	.progress-name{
+		text-align: center;
+	    background-color: rgb(21, 127, 204);
+	    width: 120px;
+	    height: 25px;
+	    line-height: 25px;
+	    margin: 0 auto;
+	    margin-top: 10px;
+    	color: #fff;
+	}
+	.progress-next{
+		color: #9e9e9e;
+    	background-color: #dadada;
+	}
+	.progress-left {
+	    width: 10%;
+    	height: 80%;
+	    border: 1px solid #ddd;
+    	position: fixed;
+	}
+	.progress-left-head, .progress-head{
+		background: #199fff;
+	    color: #fff;
+	    height: 35px;
+	    line-height: 35px;
+	    padding-left: 15px;
+	    font-size: 16px;
+	}
+	.progress-table{
+		width: 100.1%;
+    	margin-top: 15px;
+    	overflow-y: auto;
+	}
+	.progress-table tr{
+		height: 25px;
+	}
+	.progress-table tr td input {
+		border: 0;
+	    background: #c9eafb;
+	    outline: 0;
+	    text-align: right;
+	}
+	.table-head{
+		background: #199fff;
+	    color: #fff;
+	    height: 25px;
+	}
+	.index-name{
+		color:  #000;
+	    font-weight: bolder;
+	    font-size: 15px;
+	    border-bottom: 1px solid #ddd;
+	}
+	.index-name img{
+		padding-right: 5px;
+    	margin-top: -3px;
+	}
+	.score{
+		display: inline-block;
+	    float: right;
+	    padding-top: 20px;
+	}
+	#steps2 label, #steps3 label, #steps4 label, #steps5 label {
+	    display: block;
+	    margin-bottom: 0;
+	    font-weight: normal;
+	    text-indent: 2em;
+	    color: #000;
+	    font-size: 14px;
+	}
+	.options-directory{
+		height: 25px;
+    	padding-top: 5px;
+    	color: #000;
+	}
+	.ordinary tr{
+		height: 30px;
+		background: #D9E5FF;
+	}
+	.ordinary tr td {
+		padding: 6px;
+	}
+	.ordinary tr td.ziduan {
+		font-weight: bolder;
+    	color: #000;
+	}
+	.ordinary tr td span.indicators-value{
+		font-weight: normal;
+	}
+	.title{
+		color: #000;
+	    font-size: 18px;
+	    font-weight: 700;
+	    text-align: center;
+	    padding-bottom: 10px;
+	}
+	.cale-score{
+		color: red;
+	    font-weight: 700;
+	    font-size: 20px;
+	}
+	.ordinary {
+		width: 100.4%;
+	    font-size: 12px;
+	    border: 1px solid #DDD;
+	    margin-bottom: -1px;
+	}
+	
+	input[type=radio] {
+    	margin-right: 5px;
+	}
+	.hide{
+	   display:hide;
+	}
+	.input-group label.error{
+	    position: absolute;
+	    bottom: -30px;
+	    right: 0;
+	    width: 100px;
+	    height: 30px;
+	    line-height: 30px;
+	    color:#cc5965;
+	}
+	.list-group-item label.error{ 
+	    position: absolute;
+	    right: 4px;
+	    top:-50px;
+	    width: 100px;
+	    height: 30px;
+	    line-height: 30px;
+	    color:#cc5965;
+	}

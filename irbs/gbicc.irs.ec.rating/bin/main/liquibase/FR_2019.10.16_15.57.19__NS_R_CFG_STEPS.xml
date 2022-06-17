@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?><!--FR_2019.10.16_15.57.19__NS_R_CFG_STEPS.xml--><export>
+    <summary>
+        <t name="NS_R_CFG_STEPS">select * from NS_R_CFG_STEPS</t>
+    </summary>
+    <table name="NS_R_CFG_STEPS">
+        <sql>select * from NS_R_CFG_STEPS</sql>
+        <fields>
+            <field name="FD_ID" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_RATINGCFG_ID" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_STEPCODE" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_STEPNAME" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_STEPNUM" type="2" typeName="java.sql.Types.NUMERIC"/>
+            <field name="FD_STEPTYPE" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_RESOURCEPATH" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_CREATOR" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_LAST_MODIFIER" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_CREATE_DATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+            <field name="FD_LAST_MODIFYDATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+        </fields>
+        <resultset>
+            <row>
+                <f>515678a2-5c8c-4123-8582-4b69d6445727</f>
+                <f>0d9c582a-f41b-434a-a811-2cbda5d6bc67</f>
+                <f>1</f>
+                <f>定量分析</f>
+                <f>1</f>
+                <f>QUANTITATIVE</f>
+                <f>/main/js/ratingStep_QuantitativeResult.js</f>
+                <f>admin</f>
+                <f>admin</f>
+                <f>2019-07-16 10:02:20.616</f>
+                <f>2019-07-16 10:02:20.616</f>
+            </row>
+            <row>
+                <f>bb3138b6-d1fa-484f-bb9c-667609c8ba83</f>
+                <f>0d9c582a-f41b-434a-a811-2cbda5d6bc67</f>
+                <f>2</f>
+                <f>定性分析</f>
+                <f>2</f>
+                <f>QUALITATIVE_EDIT</f>
+                <f>/main/js/ratingStep_QualitativeEdit.js</f>
+                <f>admin</f>
+                <f>admin</f>
+                <f>2019-07-16 10:02:20.619</f>
+                <f>2019-07-16 10:02:20.619</f>
+            </row>
+            <row>
+                <f>868734e4-e0d6-4bb6-8d12-dc573c0678ae</f>
+                <f>0d9c582a-f41b-434a-a811-2cbda5d6bc67</f>
+                <f>3</f>
+                <f>评级报告</f>
+                <f>3</f>
+                <f>REPORT_INFO</f>
+                <f>/main/js/ratingStep_RatingReport.js</f>
+                <f>admin</f>
+                <f>admin</f>
+                <f>2019-07-16 10:02:20.887</f>
+                <f>2019-07-16 10:02:20.887</f>
+            </row>
+        </resultset>
+    </table>
+</export>

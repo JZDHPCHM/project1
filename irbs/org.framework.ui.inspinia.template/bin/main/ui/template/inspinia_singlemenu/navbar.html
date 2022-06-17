@@ -1,0 +1,239 @@
+<!--/* 导航条 */-->
+<style type="text/css">
+.ibox-content.menuBox{
+	padding-right: 0;
+}
+.menuBox{
+	position: relative;
+	padding-left: 200px;
+	
+}
+.menuLeft{
+	position: absolute;
+	left: 0;
+	width: 180px;
+	
+}
+.menuRight{
+	border-left: 1px solid #ccc;
+}
+
+
+.nav > li > a {
+  color: #676a6c;
+  font-weight: 600;
+  padding: 10px 20px;
+}
+
+.navbar-default .nav > li > a:hover,
+.navbar-default .nav > li > a:focus {
+    background-color: #fff;
+    color: #0776ad;
+}
+.top-navigation .nav > li > a {
+  padding: 5px 20px;
+  color: #676a6c;
+}
+body {
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  font-size: 13px;
+  color: #676a6c;
+  overflow-x: hidden;
+}
+.wrapper-content {
+  padding: 10px 10px 40px;
+}
+#page-wrapper {
+  padding: 0 15px;
+ 
+  position: relative !important;
+}
+@media (min-width: 768px) {
+  #page-wrapper {
+    position: inherit;
+    margin: 0 0 0 240px;
+
+  }
+}
+.logoImg {
+	width: 154px;
+    height: 40px;
+    display: inline-block !important;
+    margin: 0 18px;
+    position: relative;
+}
+
+.navbar-brand {
+	padding-top: 12px !important;
+}
+
+.modal-footer {
+	text-align: center;
+}
+
+.ibox-title-grid {
+	background-color: #fff;
+	border-color: #e7eaec;
+	border-image: none;
+	border-style: solid solid none;
+	border-width: 0;
+	color: inherit;
+	margin-bottom: 0;
+	padding: 8px 8px 8px;
+	min-height: 35px;
+}
+
+.mlr15 {
+	margin: 0 10px;
+}
+
+.fbt {
+	vertical-align: sub;
+	font-size: 1.4em;
+	font-weight: bold;
+	letter-spacing: 1px;
+	padding: 2px;
+}
+
+#page-wrapper {
+	margin-left: 0 !important;
+}
+.hover-style{
+	display: none;
+	background: #ED695C;
+    color: #fff;
+    font-size: 12px;
+    padding: 3px 6px;
+    position: absolute;
+    margin-top: 4px;
+    border-radius: 4px;
+}
+.nav .open > a.dropright{
+  
+   background-color:#98c5f4;
+}
+</style>
+<div class="top-navigation" style="min-width: 1349px;">
+	<div class="row border-bottom white-bg">
+		<!-- <div class="navbar-header"> -->
+		<div class="mlr15">
+			<button aria-controls="navbar" aria-expanded="false"
+				data-target="#navbar" data-toggle="collapse"
+				class="navbar-toggle collapsed" type="button">
+				<i class="fa fa-reorder"></i>
+			</button>
+			<!-- 	<div class="navbar-brand"> -->
+			<div class="fbt">
+				<a th:href="@{/}" ><img alt="Brand" th:src="@{${@frSystemParameterService.getParameter('logo')}}" class="logoImg"></a>
+				<!-- <span th:text="#{application.title}" style="color: #333; font-size: 20px;"></span>  -->
+				<!-- <ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="/profile/profile.html" tabindex="0" class="dropdown-toggle" >
+							<span style="font-size: 13px;"th:text='${T(org.wsp.framework.security.util.SecurityUtil).getUserName()}'>UserName</span>
+						</a>
+					</li>
+					<li class="dropdown" ><a tabindex="0" class="dropdown-toggle" href="#" ><span style="font-size: 13px;">|</span></a></li>			
+					<li class="dropdown"><a tabindex="0" class="dropdown-toggle"
+							href="javascript:FrameworkUiInterface.logout();"> <span style="font-size: 13px;">退出系统</span>
+						</a>
+					</li>
+				</ul> -->
+				<div class="navbar-right" style="background: #ED695C; color: #fff; border-radius: 4px; font-size: 12px; padding: 3px 12px;font-weight: normal;display: none;">
+					<span>欢迎&nbsp;</span><span th:text='${T(org.wsp.framework.security.util.SecurityUtil).getUserName()}'> UserName </span><span>！</span>
+					<span>|</span>
+					<a style="color: #fff;" href="javascript:window.history.back();"><i class="fa fa-angle-double-left"></i></a>
+					<a style="color: #fff;" href="javascript:window.history.forward();"><i class="fa fa-angle-double-right"></i></a>
+					<span>|</span>
+					<a style="color: #fff;" href="javascript:FrameworkUiInterface.logout();"><span>退出</span></a>
+					<div class="hover-style" id="goback" style="margin-left: 107px;">后退</div>
+					<div class="hover-style" id="forward" style="margin-left: 128px;">前进</div>
+				</div>
+			</div>
+			<span style="font-size: 20px; color: #000; font-weight: bolder; position: relative; margin-left: 12px; top: 6px;">风险管理系统</span>
+			<nav class="mlr15 navbar-static-top" role="navigation"
+				style="margin-bottom: 0px;">
+
+
+
+				<div class="navbar-collapse collapse" id="navbar">
+					<th:block
+						th:if="${
+		(!T(org.wsp.framework.core.Environment).isInstallerNeeded() || T(org.wsp.framework.core.Environment).isInstalled()) 
+		&& (#httpServletRequest.remoteUser!=null)
+	}">
+						<div class="collapse navbar-collapse">
+							<th:block
+								th:each="menu : ${@frSmartClientMenuService.getSmartClientMenus(#request,#response)}">
+								<ul class="nav navbar-nav"
+									th:classappend="${menu.align==T(org.wsp.framework.jpa.model.menu.support.MenuAlign).RIGHT}?'navbar-right'">
+									<th:block th:replace="::showMenuItem(${menu},true)"></th:block>
+								</ul>
+							</th:block>
+						</div>
+					</th:block>
+				</div>
+		</div>
+		</nav>
+	</div>
+</div>
+<th:block th:fragment="showMenuItem(menu,firstLevel)">
+	<th:block th:if="${menu!=null}">
+		<!--/* 子菜单 */-->
+		<th:block
+			th:if="${T(org.wsp.framework.jpa.model.menu.support.MenuType).CATEGORY==menu.menuType && menu.getSubmenu()!=null && menu.getSubmenu().size()>0}">
+			<li th:class="${firstLevel}?'dropdown':'dropdown-submenu  '"><th:block
+					th:if="${T(org.wsp.framework.jpa.model.menu.support.MenuType).CATEGORY==menu.getMenuType()}">
+					<a href="#" tabindex="0" th:class="${firstLevel}?'dropdown-toggle  dropright':'dropdown-toggle'"
+						data-toggle="dropdown" data-submenu="true"> [(${menu.title})]
+						<span class="caret" th:if="${firstLevel}"></span>
+					</a>
+				</th:block>
+				 <!-- style="transform:translate3d(108px, 0px, 0px);left:0px;top:auto;will-change:transform;" -->
+				<ul class="dropdown-menu" th:style="${firstLevel}?'':'transform:translate3d(108px, -45px, 0px);left:50px;top:auto;will-change:transform;'">
+					<th:block th:each="child : ${menu.getSubmenu()}">
+						<th:block th:replace="::showMenuItem(${child},false)"></th:block>
+					</th:block>
+				</ul></li>
+		</th:block>
+		<!--/* 菜单分割条 */-->
+		<li class="divider"
+			th:if="${T(org.wsp.framework.jpa.model.menu.support.MenuType).SEPERATOR==menu.menuType}"></li>
+		<!--/* URL菜单项 */-->
+		<li
+			th:if="${T(org.wsp.framework.jpa.model.menu.support.MenuType).URL==menu.menuType}">
+			<a tabindex="0" class="dropdown-toggle" th:href="@{${menu.url}}"
+			th:target="${menu.urlOpenType==T(org.wsp.framework.jpa.model.menu.support.UrlOpenType).NEW_WINDOW}?'about:blank;'">
+				<span th:text="${menu.title}">菜单项标题</span>
+		</a>
+		</li>
+		<!--/* JavaScript菜单项 */-->
+		<li
+			th:if="${T(org.wsp.framework.jpa.model.menu.support.MenuType).JAVASCRIPT==menu.menuType}">
+			<a tabindex="0" class="dropdown-toggle"
+			th:href="|javascript:${menu.javaScript}|"> <span
+				th:text="${menu.title}">菜单项标题</span>
+		</a>
+		</li>
+	</th:block>
+</th:block>
+<script>
+	//首页
+	$(".home").hover(function (){  
+	    $("#home").show();  
+	},function (){  
+	    $("#home").hide();  
+	}); 
+	//后退
+	$(".goback").hover(function (){  
+	    $("#goback").show();  
+	},function (){  
+	    $("#goback").hide();  
+	});
+	//前进
+	$(".forward").hover(function (){  
+	    $("#forward").show();  
+	},function (){  
+	    $("#forward").hide();  
+	});
+</script>

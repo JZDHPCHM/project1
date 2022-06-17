@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8'?><!--FR_2019.07.15_16.56.47__MV_CFG_MODEL.xml--><export>
+    <summary>
+        <t name="MV_CFG_MODEL">select * from MV_CFG_MODEL</t>
+    </summary>
+    <table name="MV_CFG_MODEL">
+        <sql>select * from MV_CFG_MODEL</sql>
+        <fields>
+            <field name="FD_ID" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_MODEL_ID" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_MODEL_NAME" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_TYPE" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_CREATOR" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_CREATE_DATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+            <field name="FD_LAST_MODIFIER" type="12" typeName="java.sql.Types.VARCHAR"/>
+            <field name="FD_LAST_MODIFYDATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+        </fields>
+        <resultset>
+            <row>
+                <f>1e623b19-60ba-47ba-b829-b23a7c22ed12</f>
+                <f>C1</f>
+                <f>大中型批发零售业</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:51:38.123</f>
+                <f>admin</f>
+                <f>2019-07-15 16:51:38.123</f>
+            </row>
+            <row>
+                <f>28c76336-6889-4d7d-a979-07e80928755c</f>
+                <f>C2</f>
+                <f>大中型轻资产工业</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:51:52.533</f>
+                <f>admin</f>
+                <f>2019-07-15 16:51:52.533</f>
+            </row>
+            <row>
+                <f>6d122524-61aa-4563-a7d4-589e2232786c</f>
+                <f>C3</f>
+                <f>大中型重资产工业</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:52:03.99</f>
+                <f>admin</f>
+                <f>2019-07-15 16:52:03.99</f>
+            </row>
+            <row>
+                <f>b42a1410-66e8-4020-ac09-ad95a56c6a80</f>
+                <f>C4</f>
+                <f>大中型综合</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:52:17.78</f>
+                <f>admin</f>
+                <f>2019-07-15 16:52:17.78</f>
+            </row>
+            <row>
+                <f>d94b4f73-1e14-4923-86c7-4abb1d57c466</f>
+                <f>C5</f>
+                <f>房地产主体评级</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:52:29.035</f>
+                <f>admin</f>
+                <f>2019-07-15 16:52:29.035</f>
+            </row>
+            <row>
+                <f>2cde8be6-cdc6-4294-970f-1f7813b258c4</f>
+                <f>C6</f>
+                <f>建筑业</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:52:51.934</f>
+                <f>admin</f>
+                <f>2019-07-15 16:52:51.934</f>
+            </row>
+            <row>
+                <f>56140605-a88e-4706-b9b3-5c0a981804c4</f>
+                <f>C7</f>
+                <f>基础设施业</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:53:02.084</f>
+                <f>admin</f>
+                <f>2019-07-15 16:53:02.084</f>
+            </row>
+            <row>
+                <f>3373ca49-bed2-4d46-9420-7ebcde1a1a91</f>
+                <f>C8</f>
+                <f>小型批发零售业</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:53:21.327</f>
+                <f>admin</f>
+                <f>2019-07-15 16:53:21.327</f>
+            </row>
+            <row>
+                <f>6028fdeb-8059-4d21-baef-1b6d059f549d</f>
+                <f>C9</f>
+                <f>小型制造业</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:53:32.38</f>
+                <f>admin</f>
+                <f>2019-07-15 16:53:32.38</f>
+            </row>
+            <row>
+                <f>ea58061e-eab2-4c8a-aed8-8a17cf27896a</f>
+                <f>C10</f>
+                <f>小型综合</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:53:43.384</f>
+                <f>admin</f>
+                <f>2019-07-15 16:53:43.384</f>
+            </row>
+            <row>
+                <f>c6e93af8-3a6c-4618-b7e5-56d7782783ab</f>
+                <f>S1</f>
+                <f>政府融资平台</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:54:02.695</f>
+                <f>admin</f>
+                <f>2019-07-15 16:54:02.695</f>
+            </row>
+            <row>
+                <f>801cb28a-9e44-4e81-9b03-d5883d8c7176</f>
+                <f>S2</f>
+                <f>新建企业</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:54:15.689</f>
+                <f>admin</f>
+                <f>2019-07-15 16:54:15.689</f>
+            </row>
+            <row>
+                <f>a1381161-4102-4ee2-bbdb-ec65e640f71e</f>
+                <f>S3</f>
+                <f>房地产项目贷款</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:54:25.135</f>
+                <f>admin</f>
+                <f>2019-07-15 16:54:25.135</f>
+            </row>
+            <row>
+                <f>c121ceb9-8b8e-4b3b-a7b5-fee9cd8f2839</f>
+                <f>P1</f>
+                <f>教育</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:54:36.808</f>
+                <f>admin</f>
+                <f>2019-07-15 16:54:36.808</f>
+            </row>
+            <row>
+                <f>eec006fa-44c4-45d8-bd90-0d9f706de570</f>
+                <f>P2</f>
+                <f>卫生</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:54:47.657</f>
+                <f>admin</f>
+                <f>2019-07-15 16:54:47.657</f>
+            </row>
+            <row>
+                <f>274ad521-ec1e-4c1a-8269-99c3237cc967</f>
+                <f>P3</f>
+                <f>其他事业单位</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:54:58.758</f>
+                <f>admin</f>
+                <f>2019-07-15 16:54:58.758</f>
+            </row>
+            <row>
+                <f>90f8d1ae-1e33-4903-bf94-359774093f3a</f>
+                <f>W1</f>
+                <f>微型企业</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:55:08.773</f>
+                <f>admin</f>
+                <f>2019-07-15 16:55:08.773</f>
+            </row>
+            <row>
+                <f>8cc69608-4983-4c98-a472-9612e46b4c0a</f>
+                <f>G1</f>
+                <f>担保公司</f>
+                <f>MANUAL</f>
+                <f>admin</f>
+                <f>2019-07-15 16:55:18.699</f>
+                <f>admin</f>
+                <f>2019-07-15 16:55:18.699</f>
+            </row>
+        </resultset>
+    </table>
+</export>

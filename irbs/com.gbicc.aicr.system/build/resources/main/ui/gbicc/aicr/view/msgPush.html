@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>移动端月报推送</title>
+<style type="text/css">
+	.form-group, .float-e-margins .btn {
+	    margin-bottom: 0;
+	}
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<div class="wrapper wrapper-content">
+				<div class="row">
+	                <div class="col-lg-12">
+	                	<div class="ibox float-e-margins">
+	                		<div class="ibox-title">
+	                            <h5>移动端月报推送</h5>
+	                        </div>
+	                        <div class="ibox-content">
+	                        	<form class="form-horizontal" id="formSearch">
+									<div class="form-group">
+									    <div class="col-sm-12" style="text-align: center;">
+                                            <b id="mainSend" class="btn btn-success">主体评级月报</b>
+                                            <b id="debtSend" class="btn btn-success">债项评级月报</b>
+                                            <b id="warnSend" class="btn btn-success">预警信息月报</b>
+                                        </div>
+									</div>
+								</form>
+	                        </div>
+	                         <div class="ibox-content">
+	                        	<form class="form-horizontal" id="formSearch">
+									<div class="form-group">
+									    <div class="col-sm-12" style="text-align: center;">
+                                            <b id="mainSendB" class="btn btn-success">主体评级月报预览</b>
+                                            <b id="debtSendB" class="btn btn-success">债项评级月报预览</b>
+                                            <b id="warnSendB" class="btn btn-success">预警信息月报预览</b>
+                                        </div>
+									</div>
+								</form>
+	                        </div>
+	                	</div>
+	                </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+$("#mainSend").click(function(){
+	swal({
+        title: "提示",
+        text: "确认推送主体评级月报？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1c84c6",
+        cancelButtonText: "取消",
+        confirmButtonText: "确认",
+        closeOnConfirm: false
+    }, function () {
+  	  $.ajax({
+	  		url: "/wechat/sendMainMsg", 
+			async:false,
+			success: function(result){
+				swal({
+	                title: "提示",
+	                text: "推送成功！",
+	                type: "success"
+	            });
+	      	},
+            error: function(result) {
+                // 请求失败函数
+            	swal({
+	                title: "提示",
+	                text: "推送失败！",
+	                type: "error"
+	            });
+            }
+  	  	})
+    });
+	
+	/* $.ajax({
+		url: "/wechat/sendMainMsg", 
+		async:false,
+		success: function(result){
+	  }}) */
+})
+$("#debtSend").click(function(){
+	
+	swal({
+        title: "提示",
+        text: "确认推送债项评级月报？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1c84c6",
+        cancelButtonText: "取消",
+        confirmButtonText: "确认",
+        closeOnConfirm: false
+    }, function () {
+  	  $.ajax({
+	  		url: "/wechat/sendDebtMsg", 
+	  		async:false,
+			success: function(result){
+				swal({
+	                title: "提示",
+	                text: "推送成功！",
+	                type: "success"
+	            });
+	      	},
+            error: function(result) {
+                // 请求失败函数
+            	swal({
+	                title: "提示",
+	                text: "推送失败！",
+	                type: "error"
+	            });
+            }
+  	  	})
+    });
+	
+	/* $.ajax({
+		url: "/wechat/sendDebtMsg", 
+		async:false,
+		success: function(result){
+	  }}) */
+})
+$("#warnSend").click(function(){
+	
+	swal({
+        title: "提示",
+        text: "确认推送预警信息月报？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1c84c6",
+        cancelButtonText: "取消",
+        confirmButtonText: "确认",
+        closeOnConfirm: false
+    }, function () {
+  	  $.ajax({
+	  		url: "/wechat/sendWarnMsg", 
+	  		async:false,
+			success: function(result){
+				swal({
+	                title: "提示",
+	                text: "推送成功！",
+	                type: "success"
+	            });
+	      	},
+            error: function(result) {
+                // 请求失败函数
+            	swal({
+	                title: "提示",
+	                text: "推送失败！",
+	                type: "error"
+	            });
+            }
+  	  	})
+    });
+	
+	/* $.ajax({
+		url: "/wechat/sendWarnMsg", 
+		async:false,
+		success: function(result){
+	  }}) */
+})
+
+
+
+
+
+
+
+
+
+
+$("#mainSendB").click(function(){
+	swal({
+        title: "提示",
+        text: "确认推送主体评级月报？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1c84c6",
+        cancelButtonText: "取消",
+        confirmButtonText: "确认",
+        closeOnConfirm: false
+    }, function () {
+  	  $.ajax({
+	  		url: "/wechat/sendMainMsgB", 
+			async:false,
+			success: function(result){
+				swal({
+	                title: "提示",
+	                text: "推送成功！",
+	                type: "success"
+	            });
+	      	},
+            error: function(result) {
+                // 请求失败函数
+            	swal({
+	                title: "提示",
+	                text: "推送失败！",
+	                type: "error"
+	            });
+            }
+  	  	})
+    });
+	
+	/* $.ajax({
+		url: "/wechat/sendMainMsg", 
+		async:false,
+		success: function(result){
+	  }}) */
+})
+$("#debtSendB").click(function(){
+	
+	swal({
+        title: "提示",
+        text: "确认推送债项评级月报？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1c84c6",
+        cancelButtonText: "取消",
+        confirmButtonText: "确认",
+        closeOnConfirm: false
+    }, function () {
+  	  $.ajax({
+	  		url: "/wechat/sendDebtMsgB", 
+	  		async:false,
+			success: function(result){
+				swal({
+	                title: "提示",
+	                text: "推送成功！",
+	                type: "success"
+	            });
+	      	},
+            error: function(result) {
+                // 请求失败函数
+            	swal({
+	                title: "提示",
+	                text: "推送失败！",
+	                type: "error"
+	            });
+            }
+  	  	})
+    });
+	
+	/* $.ajax({
+		url: "/wechat/sendDebtMsg", 
+		async:false,
+		success: function(result){
+	  }}) */
+})
+$("#warnSendB").click(function(){
+	
+	swal({
+        title: "提示",
+        text: "确认推送预警信息月报？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1c84c6",
+        cancelButtonText: "取消",
+        confirmButtonText: "确认",
+        closeOnConfirm: false
+    }, function () {
+  	  $.ajax({
+	  		url: "/wechat/sendWarnMsgB", 
+	  		async:false,
+			success: function(result){
+				swal({
+	                title: "提示",
+	                text: "推送成功！",
+	                type: "success"
+	            });
+	      	},
+            error: function(result) {
+                // 请求失败函数
+            	swal({
+	                title: "提示",
+	                text: "推送失败！",
+	                type: "error"
+	            });
+            }
+  	  	})
+    });
+	
+	/* $.ajax({
+		url: "/wechat/sendWarnMsg", 
+		async:false,
+		success: function(result){
+	  }}) */
+})
+
+
+
+
+	$(document).ready(function(){
+		var height = window.innerHeight;
+		var width = window.innerWidth;
+		
+	})
+</script>
+</html>

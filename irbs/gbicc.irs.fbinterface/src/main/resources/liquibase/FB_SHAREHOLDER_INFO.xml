@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_SHAREHOLDER_INFO" author="framework">
+
+        <!-- 股东信息 -->
+        <createTable tableName="FB_SHAREHOLDER_INFO" remarks="股东信息">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="PAID_AMOUNT" type="java.sql.Types.VARCHAR(500)" remarks="实缴额"></column>
+            <column name="SHAREHOLD_RATIO" type="NUMBER(18,17)" remarks="持股比"></column>
+            <column name="SHAREHOLDER" type="java.sql.Types.VARCHAR(100)" remarks="股东"></column>
+            <column name="SHAREHOLDER_TYPE" type="java.sql.Types.VARCHAR(100)" remarks="股东类型"></column>
+            <column name="SUBSCRIBED_AMOUNT" type="java.sql.Types.VARCHAR(500)" remarks="认缴额"></column>
+            <column name="LIABILITY_FORM" type="java.sql.Types.VARCHAR(100)" remarks="责任形式"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 实缴明细 -->
+        <createTable tableName="FB_SHAREHOLDER_PAID_DETAIL" remarks="实缴明细">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="SHAREHOLDER_INFO_ID" type="java.sql.Types.VARCHAR(36)" remarks="股东信息ID"></column>
+            <column name="PAID_CURRENCY" type="java.sql.Types.VARCHAR(20)" remarks="实缴出资币种"></column>
+            <column name="PAID_TYPE" type="java.sql.Types.VARCHAR(20)" remarks="实缴出资方式"></column>
+            <column name="PAID_DATE" type="java.sql.Types.VARCHAR(20)" remarks="实缴出资日期"></column>
+            <column name="PAID_AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="实缴出资额"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 认缴明细 -->
+        <createTable tableName="FB_SHAREHOLDER_SUBSCRIBED_INFO" remarks="认缴明细">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="SHAREHOLDER_INFO_ID" type="java.sql.Types.VARCHAR(36)" remarks="股东信息ID"></column>
+            <column name="SUBSCRIBED_CURRENCY" type="java.sql.Types.VARCHAR(20)" remarks="认缴出资币种"></column>
+            <column name="SUBSCRIBED_TYPE" type="java.sql.Types.VARCHAR(20)" remarks="认缴出资方式"></column>
+            <column name="SUBSCRIBED_DATE" type="java.sql.Types.VARCHAR(20)" remarks="认缴出资日期"></column>
+            <column name="SUBSCRIBED_AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="认缴出资额"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

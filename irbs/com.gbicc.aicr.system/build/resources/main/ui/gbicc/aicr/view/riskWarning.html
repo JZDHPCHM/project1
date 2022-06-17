@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>风险预警报告</title>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/jquery-3.1.1.min.js}"></script>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+			box-sizing:border-box;
+			outline:0;
+			-webkit-tap-highlight-color:transparent
+		}
+		html{-webkit-text-size-adjust:none;-webkit-font-smoothing:antialiased}
+		body,html{height:100%;background-color:#d8ddfd}
+		a{text-decoration:none}
+		.report-covers{
+			position: relative;
+		}
+		.report-date{
+			position: absolute;
+		    color: #fff;
+		    top: 20.3rem;
+		    left: 3.5rem;
+		    font-size: 1.6rem;
+		    background: #8795f1;
+		    border-radius: 2rem;
+		    height: 2.5rem;
+		    line-height: 2.5rem;
+		    padding: 0 3rem;
+		}
+		.report-block{
+			background: #fff;
+		    margin: 0 2rem;
+    		border-radius: 1.5rem;
+    		margin-top: -5px;
+    		margin-bottom: 2.5rem;
+    		padding-bottom: 2rem;
+		}
+		.border-img{
+			background: url(/images/border_img_mobile1.png) top left no-repeat;
+		    background-size: 100% 100%;
+		    width: 100%;
+		    height: 10rem;
+		    position: relative;
+		    top: 2rem;
+		}
+		.info-div{
+			float: left;
+		    font-size: 20px;
+		    color: #666;
+		    position: relative;
+		    top: 2.6rem;
+		}
+		.top-strong{
+			font-size: 54px;
+		    color: #4d4d4d;
+		    display: inline-block;
+		    min-width: 10rem;
+		    text-align: right;
+		    margin-right: 1rem;
+		}
+		.title-head{
+			text-align: center;
+			padding-top: 3rem;
+		}
+		.line-div{
+			display: inline-block;
+		    width: 2rem;
+		    height: 3px;
+		    background: #447cf3;
+		    position: relative;
+		    top: -6px;
+		}
+		.echarts-title{
+			color: #447cf3;
+		    font-size: 28px;
+		    font-weight: bolder;
+		    display: inline-block;
+		    padding: 0 10px;
+		}
+		.dotted-line{
+			width: 90%;
+		    border-bottom: 2px dotted #b7bae0;
+		    margin: 4rem 5% 2rem;
+		    display: inline-block;
+		}
+		.detailed-information{
+			color: #666;
+		    font-size: 1.8rem;
+		    margin: 0 2rem 0 8rem;
+		    font-weight: bolder;
+		}
+		ul li{
+			line-height: 60px;
+		}
+		.numerical{
+			font-size: 2.5rem;
+    		padding: 0 10px;
+		}
+	</style>
+	</head>
+
+	<body>
+		<div class="report-covers">
+			<img src="/images/risk_warning_img.png" width="100%" />
+			<div class="report-date"><span id="currentYear"></span><span>评级报告</span></div>
+		</div>
+		<div class="report-block">
+			<div class="border-img">
+				<div class="info-div" style="left: 1.5rem;">
+					<div><strong id="haveTo" class="top-strong">0</strong><span>已处理</span></div>
+				</div>
+				<div class="info-div" style="left: 5rem;">
+					<div><strong id="inTheProcessing" class="top-strong">0</strong><span >处理中</span></div>
+				</div>
+				<div class="info-div" style="left: 8rem;">
+					<div><strong id="untreated" class="top-strong">0</strong><span >未处理</span></div>
+				</div>
+			</div>
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">风险预警数据分析</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 横向柱状图 -->
+			<div id="histogram3" style="width: 100%;height: 520px;margin: 0 auto;"></div>
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">预警信息事业部分布</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+			<div id="histogram4" style="width: 100%;height: 520px;margin: 0 auto;"></div>
+			<div class="dotted-line"></div>
+			<div class="detailed-information">
+				<ul>
+					<li id="warnYc">截止本月预警已处理<span id="" class="numerical">0</span>条，处理中<span id="" class="numerical">0</span>条，未处理<span id="" class="numerical">0</span>条</li>
+					<li id="warnInfo">本月推送预警信息<span id="" class="numerical">0</span>条，其中高风险<span id="" class="numerical">0</span>条，中风险<span id="" class="numerical">0</span>条</li>
+				<li id="warnshot"></li>
+				</ul>
+			</div>
+		</div>
+		<div class="report-block">
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">风险预警类别分布</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线图 -->
+			<div id="lineChart" style="width: 100%;height: 520px;margin: 0 auto;"></div>
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">预警信息行业分布</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 圆饼图 -->
+			<div id="pie2" style="width: 100%;height: 750px;margin: 0 auto;margin-top: -8%;"></div>
+			<div class="dotted-line"></div>
+			<div class="detailed-information">
+				<ul>
+					<li id="addType">本月新增工商预警0条、司法预警0条、舆情预警0条。</li>
+					<li id="shotFive"></li>				
+				</ul>
+			</div>
+		</div>
+		<script src="js/echarts.js"></script>
+		<script>
+		var myDate="[[${sj}]]";
+		$("#currentYear").text(myDate.substring(0,4)+"年"+myDate.substring(4)+"月");
+		 $.ajax({
+				url: "/indexReport/queryWarnNumSj", 
+				data:{sj:"[[${sj}]]"},
+				async:false,
+				success: function(result){
+					var allWarn = Number(result[1])+Number(result[3]);
+					$("#warnInfo").text("本月推送预警信息"+allWarn+"条，其中高风险"+result[1]+"条，中风险"+result[3]+"条");
+		      }})
+		
+		$.ajax({
+			url: "/indexReport/disposalNumSj", 
+			data:{sj:"[[${sj}]]"},
+			async:false,
+			success: function(result){
+				$("#untreated").text(result[0]);
+				$("#inTheProcessing").text(result[1]);
+				$("#haveTo").text(result[2]);
+				$("#warnYc").text("截止本月预警已处理"+result[2]+"条，处理中"+result[1]+"条，未处理"+result[0]+"条");
+	      }})
+	      $.ajax({
+			url: "/indexReport/debtShotSj", 
+			data:{sj:"[[${sj}]]"},
+			async:false,
+			success: function(result){
+				var fist=result[0].NUM;
+				var end=result[result.length-1].NUM;
+				var html="高风险预警数量最多的是";
+				$.each(result,function(i,row){
+					if(fist==row.NUM){
+						html+=row.FD_NAME+"、";
+					}
+				})
+				html=html.substring(0,html.length-1)+"（"+fist+"），最少的是";
+				$.each(result,function(i,row){
+					if(end==row.NUM){
+						html+=row.FD_NAME+"、";
+					}
+				})
+				html=html.substring(0,html.length-1)+"（"+end+"）";
+				$("#warnshot").text(html);
+	      }})
+	      
+	      
+	      
+		
+			// 基于准备好的dom，初始化ECharts实例
+			var histogram3 = echarts.init(document.getElementById('histogram3'));
+			var histogram4 = echarts.init(document.getElementById('histogram4'));
+			var pie2 = echarts.init(document.getElementById('pie2'));
+			var lineChart = echarts.init(document.getElementById('lineChart'));
+			// 指定图表的配置项和数据
+			
+			 var option3Data0=[];
+			 var option3Data1=[];
+			 var option3Data2=[];
+			 $.ajax({
+					url: "/indexReport/queryWarnSj", 
+					data:{sj:"[[${sj}]]"},
+					async:false,
+					success: function(result){
+						option3Data0=result[0];
+						option3Data1=result[1];
+						option3Data2=result[2];
+			      }})
+			
+			var option3 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend: {
+			        data:['高风险','中风险'],
+		            x: 'center', 
+		            bottom: 0, 
+			        itemWidth: 22, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#999',
+						fontSize: 21
+					}
+			    },
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '15%',
+					containLabel: true
+				},
+				xAxis: {
+					type: 'value',
+					axisLabel: {
+						show: false,
+						textStyle: {
+							color: '#999'
+						}
+					},
+					axisLine:{
+		                lineStyle:{color:'#999'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false　　
+					}
+				},
+				yAxis: {
+					type: 'category',
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+			        axisLine:{  //设置坐标轴字体颜色和宽度
+				        lineStyle:{
+				            color:'#999',
+				            width:1
+				        }
+				    },
+					axisLabel: {
+						formatter: '{value}',
+						textStyle: {
+							color: '#999',
+							fontSize: 21
+						}
+					},
+					data: option3Data0
+				},
+				series: [{
+						name: '高风险',
+						type: 'bar',
+						color: '#f19500',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 35,
+						stack: '总量',
+						label: {
+							normal: {
+								show: false,
+								fontSize: 21,
+								position: 'insideRight'
+							}
+						},
+						data: option3Data1
+					},
+					{
+						name: '中风险',
+						type: 'bar',
+						color: '#1d53ff',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 35,
+						stack: '总量',
+						label: {
+							normal: {
+								show: false,
+								fontSize: 21,
+								position: 'insideRight'
+							}
+						},
+						data: option3Data2
+					}
+				]
+			};
+			 
+			 var option8Data0=[];
+				var option8Data1=[];
+				var option8Data2=[];
+				var option8Data3=[];
+				 $.ajax({
+						url: "/indexReport/queryWarnTrendSj",
+						data:{sj:"[[${sj}]]"},
+						async:false,
+						success: function(result){
+							option8Data0=result[0];
+							$("#addType").text("本月新增工商预警"+result[1][11]+"条、司法预警"+result[2][11]+"条、舆情预警"+result[3][11]+"条。");
+							option8Data1=result[1];
+							option8Data2=result[2];
+							option8Data3=result[3];
+				      }})
+			 
+			var option8 = {
+			    tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					data: ['工商', '司法', '舆情'],
+					itemWidth: 22, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#999',
+						fontSize: 21
+					},
+					x: 'center',
+					y: 'bottom'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '10%',
+					containLabel: true
+				},
+			    xAxis: {
+			        type: 'category',
+			        axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#999',
+							fontSize: 21
+						},
+						interval: 0,
+						rotate: "30"
+					},
+					axisLine:{
+		                lineStyle:{color:'#999'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false　　
+					},
+			        data: option8Data0
+			    },
+			    yAxis: {
+			        type: 'value',
+			        axisLine:{
+		                lineStyle:{color:'#999'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+			        axisLabel: {
+						formatter: '{value}',
+						textStyle: {
+							color: '#999',
+							fontSize: 21
+						}
+					},
+					splitLine: {
+						show: false
+					}
+			    },
+			    series: [
+			        {
+			            name: '工商',
+						type: 'line',
+						symbol: 'circle',     //设定为实心点
+			            symbolSize: 5,   //设定实心点的大小
+			            animation: true,
+			            animationEasing: "ExponentialOut",
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#01bc71', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#01bc71' //改变折线颜色
+								} 
+							} 
+						},
+						data: option8Data1
+			        },
+			        {
+			            name: '司法',
+						type: 'line',
+						symbol: 'circle',     //设定为实心点
+						symbolSize: 5,   //设定实心点的大小
+						animation: true,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#d85d39', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#d85d39' //改变折线颜色
+								} 
+							} 
+						},
+						data: option8Data2
+			        },
+			        {
+			            name: '舆情',
+						type: 'line',
+						symbol: 'circle',     //设定为实心点
+						symbolSize: 5,   //设定实心点的大小
+						animation: true,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#2961d7', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#2961d7' //改变折线颜色
+								} 
+							} 
+						},
+						data: option8Data3
+			        },
+			    ]
+			};
+				 
+				 
+				 var option10Data0=[];
+					var option10Data1=[];
+					 $.ajax({
+							url: "/indexReport/warnIndustrySj", 
+							data:{sj:"[[${sj}]]"},
+							async:false,
+							success: function(result){
+								option10Data0=result[0];
+								option10Data1=result[1];
+								$("#shotFive").text("截止本月预警行业排在前五位的是"+option10Data0[0]+"（"+(option10Data1[0].valuez)+"个,"+(option10Data1[0].value*100).toFixed(0)+"%）、"+option10Data0[1]+"（"+(option10Data1[1].valuez)+"个,"+(option10Data1[1].value*100).toFixed(0)+"%）、"+option10Data0[2]+"（"+(option10Data1[2].valuez)+"个,"+(option10Data1[2].value*100).toFixed(0)+"%）、"+option10Data0[3]+"（"+(option10Data1[3].valuez)+"个,"+(option10Data1[3].value*100).toFixed(0)+"%）和"+option10Data0[4]+"（"+(option10Data1[4].valuez)+"个,"+(option10Data1[4].value*100).toFixed(0)+"%）");
+								
+								
+					      }})
+			var option10 = {
+				 tooltip: {
+						trigger: 'item',
+						formatter:function(data){
+							return data.name+': '+data.percent.toFixed(1)+'%';
+						}
+					},
+				color: ['#0c4685', '#0e69cd', '#4da2ff', '#68affe', '#a7d0fd', '#79ade6'], //环形图每块的颜色
+				series: [
+		            {
+		                type: 'pie',
+		                minAngle: 5,           　　 //最小的扇区角度（0 ~ 360），用于防止某个值过小导致扇区太小影响交互
+		                avoidLabelOverlap: true,   //是否启用防止标签重叠策略
+		                radius: ['48%', '65%'],
+		                data: option10Data1,
+		                label:{
+		                    align: 'left',
+		                    normal:{
+		                        formatter(v) {
+		                            let text = v.name.slice(0,2) + '：' + v.percent.toFixed(1)+'%';
+		                            if(text.length <= 8)
+		                            {
+		                                return text;
+		                            }else if(text.length > 8 && text.length <= 16){
+		                                return text = `${text.slice(0,8)}\n${text.slice(8)}`
+		                            }else if(text.length > 16 && text.length <= 24){
+		                                return text = `${text.slice(0,8)}\n${text.slice(8,16)}\n${text.slice(16)}`
+		                            }else if(text.length > 24 && text.length <= 30){
+		                                return text = `${text.slice(0,8)}\n${text.slice(8,16)}\n${text.slice(16,24)}\n${text.slice(24)}`
+		                            }else if(text.length > 30){
+		                                return text = `${text.slice(0,8)}\n${text.slice(8,16)}\n${text.slice(16,24)}\n${text.slice(24,30)}\n${text.slice(30)}`
+		                            }
+		                        },
+		    				    tooltip: {
+		    				        show: true
+		    				    },
+		                        textStyle : {
+		                        	color: '#999',
+		                            fontSize : 21
+		                        }
+		                    }
+		                },
+		                labelLine: {
+			                normal: {
+			                    lineStyle: {
+			                        color: '#999'
+			                    },
+			                    smooth: 0.2,
+			                    length: 10,
+			                    length2: 20
+			                }
+			            },
+		             	// itemStyle 设置饼状图扇形区域样式
+						itemStyle: {
+							// emphasis：英文意思是 强调;着重;（轮廓、图形等的）鲜明;突出，重读
+							// emphasis：设置鼠标放到哪一块扇形上面的时候，扇形样式、阴影
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(30, 144, 255，0.5)'
+							}
+						}
+		            }
+		        ]
+			};
+					 var option13Data0=[];
+						var option13Data1=[];
+						var option13Data2=[];
+							 $.ajax({
+									url: "/indexReport/warnRatingDepartSj", 
+									data:{sj:"[[${sj}]]"},
+									async:false,
+									success: function(result){
+										option13Data0=result[0];
+										option13Data1=result[1];
+										option13Data2=result[2];
+							      }})
+			var option13 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend: {
+			        data:['高风险','中风险'],			            
+		            x: 'center', 
+		            y: 'bottom',
+			        itemWidth: 22, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#999',
+						fontSize: 21
+					}
+			    },
+			    grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '10%',
+					containLabel: true
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#999', //更改坐标轴文字颜色
+							fontSize: 21 //更改坐标轴文字大小
+						},
+						interval: 0
+					},
+					axisLine:{
+		                lineStyle:{color:'#999'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: option13Data0,
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+					type: 'value',
+				    axisLine:{  //设置坐标轴字体颜色和宽度
+				        lineStyle:{
+				            color:'#999',
+				            width:1
+				        }
+				    },
+				    axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					axisLabel: {
+						formatter: '{value}',
+						textStyle: {
+							color: '#999', //更改坐标轴文字颜色
+							fontSize: 21 //更改坐标轴文字大小
+						}
+					},
+					splitLine: {
+						show: false
+					}
+				}],
+				series: [{
+						name: '高风险',
+						type: 'bar',
+						color: '#f19500',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 35,
+						stack: '总量',
+						label: {
+							normal: {
+								show: false,
+								fontSize: 21,
+								position: 'inside'
+							}
+						},
+						data: option13Data1
+					},
+					{
+						name: '中风险',
+						type: 'bar',
+						color: '#1d53ff',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 35,
+						stack: '总量',
+						label: {
+							normal: {
+								show: false,
+								fontSize: 21,
+								position: 'inside'
+							}
+						},
+						data: option13Data2
+					}
+				]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+			histogram3.setOption(option3);
+			lineChart.setOption(option8);
+			pie2.setOption(option10);
+			histogram4.setOption(option13);			
+		</script>
+	</body>
+</html>

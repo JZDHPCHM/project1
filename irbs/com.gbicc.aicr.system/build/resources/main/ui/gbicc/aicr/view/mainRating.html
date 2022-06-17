@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>主体评级报告</title>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/jquery-3.1.1.min.js}"></script>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+			box-sizing:border-box;
+			outline:0;
+			-webkit-tap-highlight-color:transparent
+		}
+		html{-webkit-text-size-adjust:none;-webkit-font-smoothing:antialiased}
+		body,html{height:100%;background-color:#d8e1fe}
+		a{text-decoration:none}
+		.report-covers{
+			position: relative;
+		}
+		.report-date{
+			position: absolute;
+		    color: #fff;
+		    top: 18.5rem;
+		    left: 19.5rem;
+		    font-size: 1.5rem;
+		    font-weight: bolder;
+		}
+		.report-block{
+			background: #fff;
+		    margin: 0 2rem;
+    		border-radius: 1.5rem;
+    		margin-top: -5px;
+    		margin-bottom: 2.5rem;
+    		padding-bottom: 2rem;
+		}
+		.border-img{
+			background: url(/images/border_img_mobile.png) top left no-repeat;
+		    background-size: 100% 100%;
+		    width: 100%;
+		    height: 17rem;
+		    position: relative;
+    		top: 2rem;
+		}
+		.info-div{
+			float: left;
+		    font-size: 20px;
+		    color: #666;
+		    position: relative;
+		    top: 4rem;
+		}
+		.top-div{
+			padding-bottom: 1.5rem;
+		}
+		.top-strong{
+			font-size: 54px;
+		    color: #4d4d4d;
+		    display: inline-block;
+		    min-width: 15rem;
+		    text-align: right;
+		    margin-right: 1rem;
+		}
+		.title-head{
+			text-align: center;
+			padding-top: 3rem;
+		}
+		.line-div{
+			display: inline-block;
+		    width: 2rem;
+		    height: 3px;
+		    background: #447cf3;
+		    position: relative;
+		    top: -6px;
+		}
+		.echarts-title{
+			color: #447cf3;
+		    font-size: 28px;
+		    font-weight: bolder;
+		    display: inline-block;
+		    padding: 0 10px;
+		}
+		.dotted-line{
+			width: 90%;
+		    border-bottom: 2px dotted #b7bae0;
+		    margin: 4rem 5% 2rem;
+		    display: inline-block;
+		}
+		.detailed-information{
+			color: #666;
+		    font-size: 1.8rem;
+		    margin: 0 2rem 0 8rem;
+		    font-weight: bolder;
+		}
+		ul li{
+			line-height: 60px;
+		}
+		.numerical{
+			font-size: 2.5rem;
+    		padding: 0 10px;
+		}
+		#title_head1, #title_head2, #title_head3, #title_head4 {
+			display: none;
+		}
+	</style>
+	</head>
+
+	<body>
+		<div class="report-covers">
+			<img src="/images/main_rating_img.png" width="100%" />
+			<div class="report-date">——<span id="currentYear"></span></div>
+		</div>
+		<div class="report-block">
+			<div class="border-img">
+				<div class="info-div">
+					<div class="top-div"><strong id="moAll" class="top-strong">0</strong><span>当月评级</span></div>
+					<div><strong id="avgAll" class="top-strong" style="font-size: 32px;">0</strong><span>平均得分</span></div>
+				</div>
+				<div class="info-div" style="left: 7rem;">
+					<div class="top-div"><strong id="sumAll" class="top-strong">0</strong><span>累计评级</span></div>
+					<div><strong id="previous" class="top-strong" style="font-size: 32px;">0</strong><span>平均得分</span></div>
+				</div>
+			</div>
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体评级变化趋势</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状混合图 -->
+			<div id="mixlinebar3" style="width: 100%;height: 520px;margin: 0 auto;"></div>
+			<div class="dotted-line"></div>
+			<div class="detailed-information">
+				<ul>
+					<li id="benyueBL">本月有<span id="" class="numerical">0</span>个客户进行主体评级，是上个月同期的<span id="" class="numerical">0%</span></li>
+					<li id="benyueAvg">评级平均分为<span id="" class="numerical">0</span>，是存量客户平均分的<span id="" class="numerical">0%</span></li>
+				</ul>
+			</div>
+		</div>
+		<div class="report-block">
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体评级等级分布</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+			<div id="columnar" style="width: 100%;height: 520px;margin: 0 auto;"></div>
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体评级行业分布</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 圆饼图 -->
+			<div id="pie1" style="width: 100%;height: 750px;margin: 0 auto;margin-top: -8%;"></div>
+			<div class="dotted-line"></div>
+			<div class="detailed-information">
+				<ul>
+					<li id="blfenB">本月主体评级集中分布在<span id="">xxx</span>级（<span id="">11.22</span>%）、<span id="">xxx</span>级（<span id="">11.22</span>%）、<span id="">xxx</span>级（<span id="">11.22</span>%）、<span id="">xxx</span>级（<span id="">11.22</span>%）、<span id="">xxx</span>级（<span id="">11.22</span>%）</li>
+					<li id="hangye">截止本月行业排在前几位的是<span id=""></span>（<span id="">xx</span>%）、<span id=""></span>（<span id="">xx</span>%）、<span id=""></span>（<span id="">xx</span>%）、<span id=""></span>（<span id="">xx</span>%）、<span id=""></span>（<span id="">xx</span>%）</li>
+				</ul>
+			</div>
+		</div>
+		<div class="report-block">
+			<div class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体评级事业部分布</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状混合图 -->
+			<div id="mixlinebar1" style="width: 100%;height: 520px;margin: 0 auto;"></div>
+			<div id="title_head1" class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体新建2.0模型指标得分</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+			<div id="radarMap1" style="width: 100%;height: 600px;margin: 0 auto;"></div>
+			<div id="title_head2" class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体通用2.0模型指标得分</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+			<div id="radarMap2" style="width: 100%;height: 600px;margin: 0 auto;"></div>
+			<div id="title_head3" class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体新建1.0模型指标得分</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+			<div id="radarMap3" style="width: 100%;height: 600px;margin: 0 auto;"></div>
+			<div id="title_head4" class="title-head">
+				<div class="line-div"></div>
+				<div class="echarts-title">主体通用1.0模型指标得分</div>
+				<div class="line-div"></div>
+			</div>
+			<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+			<div id="radarMap4" style="width: 100%;height: 600px;margin: 0 auto;"></div>
+			<div class="dotted-line"></div>
+			<div class="detailed-information">
+				<ul>
+					<li id="mainDes"></li>
+				</ul>
+			</div>
+		</div>
+		<script src="js/echarts.js"></script>
+		<script>
+		var myDate="[[${sj}]]";
+		$("#currentYear").text(myDate.substring(0,4)+"年"+myDate.substring(4)+"月");
+		 $.ajax({
+				url: "/indexReport/mainDesBlSj", 
+				data:{sj:"[[${sj}]]"},
+				async:false,
+				success: function(result){
+					var html ="本月主体评级集中分布在";
+					$.each(result,function(i,row){
+						if(i>=2&&i<3){
+							html+="和"+row.FD_FINAL_LEVEL+"级"+"（"+row.NUM+"条,"+row.BL+"）";
+						}else if(i<2){
+								html+=row.FD_FINAL_LEVEL+"级"+"（"+row.NUM+"条,"+row.BL+"）、";
+						}
+						$("#blfenB").html(html);
+					})
+					//$("#blfenB").html(result[0].FD_FINAL_LEVEL+"级（"+(result[0].BL).toFixed(2)+"%）、"+result[1].FD_FINAL_LEVEL+"级（"+(result[1].BL).toFixed(2)+"%）、"+result[2].FD_FINAL_LEVEL+"级（"+(result[2].BL).toFixed(2)+"%）和"+result[3].FD_FINAL_LEVEL+"级（"+(result[3].BL).toFixed(2)+"%）、"+result[4].FD_FINAL_LEVEL+"级（"+(result[3].BL).toFixed(2)+"）");
+		      }})
+		
+		 $.ajax({
+				url: "/indexReport/mainShotSj", 
+				data:{sj:"[[${sj}]]"},
+				async:false,
+				success: function(result){
+					$("#mainDes").html("本月评级客户最多的是"+result[0].NAME+"（"+result[0].NUM+"个），平均分得分最高的是"+result[1].NAME+"（"+Number(result[1].SCO).toFixed(2)+"分），平均分最低的是"+result[2].NAME+"（"+Number(result[2].SCO).toFixed(2)+"分）");
+		      }})
+		 $.ajax({
+				url: "/indexReport/mainDashboardSj", 
+				data:{sj:"[[${sj}]]"},
+				async:false,
+				success: function(result){
+					$("#avgAll").html(result[0]);
+					$("#moAll").html(result[1]);
+					$("#sumAll").html(result[2]);
+					$("#previous").html(result[3]);
+					var dany=0;
+					if(result[5]!=0){
+						dany=((Number(result[1]-result[5]))/result[5])*100; 
+					}
+					var bey=0;
+					if(result[3]!=0){
+						bey=((Number(result[0]-result[3]))/result[3])*100;
+					}
+					if(dany>0){
+						$("#benyueBL").html("本月有"+result[1]+"个客户进行主体评级，环比增加"+dany.toFixed(0)+"%");
+					}else if(dany<0){
+						$("#benyueBL").html("本月有"+result[1]+"个客户进行主体评级，环比减少"+Math.abs(dany.toFixed(0))+"%");
+					}else{
+						$("#benyueBL").html("本月有"+result[1]+"个客户进行主体评级，与上月持平");
+					}
+					if(result[5]==0){
+						$("#benyueBL").html("本月有"+result[1]+"个客户进行主体评级，上个月主体评级数量为0。");
+					}
+					//
+					if(bey>0){
+						$("#benyueAvg").html("评级平均分为"+(Number(result[0])).toFixed(2)+"，比累计评级平均分高"+bey.toFixed(0)+"%");
+					}else if(bey<0){
+						$("#benyueAvg").html("评级平均分为"+(Number(result[0])).toFixed(2)+"，比累计评级平均分低"+Math.abs(bey.toFixed(0))+"%");
+					}else{
+						$("#benyueAvg").html("评级平均分为"+(Number(result[0])).toFixed(2)+"，与累计评级平均分持平");
+					}
+					//$("#benyueAvg").html("评级平均分为"+(Number(result[0])).toFixed(2)+"，是存量客户平均分的"+bey.toFixed(2)+"%");
+
+		      }})
+		
+			// 基于准备好的dom，初始化ECharts实例
+			var columnar = echarts.init(document.getElementById('columnar'));
+			var mixlinebar1 = echarts.init(document.getElementById('mixlinebar1'));
+			var mixlinebar3 = echarts.init(document.getElementById('mixlinebar3'));
+			var pie1 = echarts.init(document.getElementById('pie1'));
+			var radarMap1 = echarts.init(document.getElementById('radarMap1'));
+			var radarMap2 = echarts.init(document.getElementById('radarMap2'));
+			var radarMap3 = echarts.init(document.getElementById('radarMap3'));
+			var radarMap4 = echarts.init(document.getElementById('radarMap4'));
+			
+			var optionData0 = [];
+			var optionData1 = [];
+			var optionData2 = [];
+			var optionData3 = [];
+			 $.ajax({
+					url: "/indexReport/queryMainLevelSj", 
+					data:{sj:"[[${sj}]]"},
+					async:false,
+					success: function(result){
+						optionData0=result[0];
+						optionData1=result[1];
+						optionData2=result[2];
+						optionData3=result[3];
+			      }})
+			// 指定图表的配置项和数据
+			var option1 = {
+			    tooltip : {
+			        trigger: 'axis',
+			        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+			            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			        },
+			        formatter: function (params) {
+			            var tar = params[1];
+			            return tar.name + ' : ' + tar.value;
+			        }
+			    },
+			    grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '10%',
+					containLabel: true
+				},
+			    xAxis: {
+			        type : 'category',
+			        splitLine: {show:false},
+			        axisLine:{  //设置坐标轴字体颜色和宽度
+				        lineStyle:{
+				            color:'#999999',
+				            width:1
+				        }
+				    },
+	                axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+			        axisLabel: { //坐标轴刻度标签的相关设置。
+			        	interval:0,//代表显示所有x轴标签
+						textStyle: {
+							color: '#999999',
+							fontSize: 21
+						},
+						formatter: function (value, index) {
+						    //console.log(value,index)
+						    if(optionData2[index]){
+						    	  return optionData2[index]+"%"+"\n"+value;
+						    }else{
+						    	return "0%"+"\n"+value;
+						    }
+						  
+						},
+					},
+			        data : optionData0
+			    },
+			    yAxis : [
+			        {
+			            type : 'value',
+			            axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'#999',
+					            width:1
+					        }
+					    },
+			            axisLabel : {
+			            	formatter: function(){
+				                return "";
+				            }
+				        },
+				        axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+			            splitLine: {　　　　
+							show: false
+						}
+			        }
+			    ],
+			    series: [
+			        {
+			            name: '辅助',
+			            type: 'bar',
+			            stack:  '总量',
+			            itemStyle: {
+			                normal: {
+			                    barBorderColor: 'rgba(0,0,0,0)',
+			                    color: 'rgba(0,0,0,0)'
+			                },
+			                emphasis: {
+			                    barBorderColor: 'rgba(0,0,0,0)',
+			                    color: 'rgba(0,0,0,0)'
+			                }
+			            },
+			            barWidth: 35,
+			            data: optionData3
+			        },
+			        {
+			            name: '等级',
+			            type: 'bar',
+			            color: '#447cf3',
+			            itemStyle: {
+			                normal: {
+			                		label: {
+							            show: true,
+							            position: 'top',
+							            textStyle: {
+							                color: '#999',
+							                fontSize: 21
+							        }
+							    }
+			                }
+			            },
+			            stack: '总量',
+			            label: {
+			                normal: {
+			                    show: true,
+			                    fontSize: 21,
+			                    position: 'top'
+			                }
+			            },
+			            barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 35,
+						data:optionData1
+			        }
+			    ]
+			};
+			
+			var option6Data0=[];
+			var option6Data1=[];
+			var option6Data2=[];
+			 $.ajax({
+					url: "/indexReport/queryMainChangeSj", 
+					data:{sj:"[[${sj}]]"},
+					async:false,
+					success: function(result){
+						option6Data0=result[0];
+						option6Data1=result[1];
+						option6Data2=result[2];
+			      }})
+			
+			var option6 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						//type: 'cross',
+						crossStyle: {
+							color: '#999'
+						}
+					}
+				},
+				legend: {
+		            x: 'center', 
+		            y: 'bottom',
+					data: ['数量', '平均分'],
+					itemWidth: 22, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#999',
+						fontSize: 21
+					}
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '10%',
+					containLabel: true
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#999',
+							fontSize: 21
+						},
+						interval: 0,
+						rotate: "30"
+					},
+					axisLine:{
+		                lineStyle:{color:'#999'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: option6Data0,
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'#999999',
+					            width:1
+					        }
+					    },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#999',
+								fontSize: 21
+							}
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						splitLine: {
+							show: false
+						}
+						/*name: '水量',
+						min: 0,
+						max: 250,
+						interval: 50,
+						axisLabel: {
+						    formatter: '{value} ml'
+						}*/
+					},
+					{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'#999999',
+					            width:1
+					        }
+					    },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#999',
+								fontSize: 21
+							}
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						splitLine: {
+							show: false
+						}
+						/*name: '温度',
+						min: 0,
+						max: 25,
+						interval: 5,
+						axisLabel: {
+						    formatter: '{value} °C'
+						}*/
+					}
+				],
+				series: [{
+						name: '数量',
+						type: 'bar',
+						color: '#447cf3',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 35,
+						data: option6Data1
+					},
+					{
+						name: '平均分',
+						type: 'line',
+						symbol: 'circle',     //设定为实心点
+						yAxisIndex: 1,
+						itemStyle : { 
+							normal : {
+								color:'#f4ac59', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#f4ac59' //改变折线颜色
+								} 
+							} 
+						},
+						data: option6Data2
+					}
+				]
+			};
+			 
+			 
+			 var option9Data0=[];
+				var option9Data1=[];
+				 $.ajax({
+						url: "/indexReport/mainIndustrySj", 
+						data:{sj:"[[${sj}]]"},
+						async:false,
+						success: function(result){
+							$("#hangye").html("截止本月行业排在前几位的是"+result[1][0].name+"（"+result[1][0].valuez+"条,"+(result[1][0].value*100).toFixed(0)+"%）、"+result[1][1].name+"（"+result[1][1].valuez+"条,"+(result[1][1].value*100).toFixed(0)+"%）、"+result[1][2].name+"（"+result[1][2].valuez+"条,"+(result[1][2].value*100).toFixed(0)+"%）、"+result[1][3].name+"（"+result[1][3].valuez+"条,"+(result[1][3].value*100).toFixed(0)+"%）、"+result[1][4].name+"（"+result[1][4].valuez+"条,"+(result[1][4].value*100).toFixed(0)+"%）");
+							option9Data0=result[0];
+							option9Data1=result[1];
+				      }})
+			 
+			var option9 = {
+				 tooltip: {
+						trigger: 'item',
+						formatter:function(data){
+							return data.name+': '+data.percent.toFixed(1)+'%';
+						}
+					},
+				color: ['#0c4685', '#0e69cd', '#4da2ff', '#68affe', '#a7d0fd', '#79ade6'], //环形图每块的颜色
+				series: [
+		            {
+		                type: 'pie',
+		                minAngle: 5,           　　 //最小的扇区角度（0 ~ 360），用于防止某个值过小导致扇区太小影响交互
+		                avoidLabelOverlap: true,   //是否启用防止标签重叠策略
+		                radius: ['48%', '65%'],
+		                data: option9Data1,
+		                label:{
+		                    align: 'left',
+		                    normal:{
+		                        formatter(v) {
+		                            let text = v.name.slice(0,2) + '：' + v.percent.toFixed(1)+'%';
+		                            if(text.length <= 8)
+		                            {
+		                                return text;
+		                            }else if(text.length > 8 && text.length <= 16){
+		                                return text = `${text.slice(0,8)}\n${text.slice(8)}`
+		                            }else if(text.length > 16 && text.length <= 24){
+		                                return text = `${text.slice(0,8)}\n${text.slice(8,16)}\n${text.slice(16)}`
+		                            }else if(text.length > 24 && text.length <= 30){
+		                                return text = `${text.slice(0,8)}\n${text.slice(8,16)}\n${text.slice(16,24)}\n${text.slice(24)}`
+		                            }else if(text.length > 30){
+		                                return text = `${text.slice(0,8)}\n${text.slice(8,16)}\n${text.slice(16,24)}\n${text.slice(24,30)}\n${text.slice(30)}`
+		                            }
+		                        },
+		    				    tooltip: {
+		    				        show: true
+		    				    },
+		                        textStyle : {
+		                        	color: '#999',
+		                            fontSize : 21
+		                        }
+		                    }
+		                },
+		                labelLine: {
+			                normal: {
+			                    lineStyle: {
+			                        color: '#999'
+			                    },
+			                    smooth: 0.2,
+			                    length: 10,
+			                    length2: 20
+			                }
+			            },
+		             	// itemStyle 设置饼状图扇形区域样式
+						itemStyle: {
+							// emphasis：英文意思是 强调;着重;（轮廓、图形等的）鲜明;突出，重读
+							// emphasis：设置鼠标放到哪一块扇形上面的时候，扇形样式、阴影
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(30, 144, 255，0.5)'
+							}
+						}
+		            }
+		        ]
+			};
+				 
+				 
+					var option11Data0=[];
+					var option11Data1=[];
+					var option11Data2=[];
+					 $.ajax({
+							url: "/indexReport/mainRatingDepartSj", 
+							data:{sj:"[[${sj}]]"},
+							async:false,
+							success: function(result){
+								option11Data0=result[0];
+								option11Data1=result[1];
+								option11Data2=result[2];
+					      }})
+			var option11 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						//type: 'cross',
+						crossStyle: {
+							color: '#999'
+						}
+					}
+				},
+				legend: {
+		            x: 'center', 
+		            y: 'bottom',    
+					data: ['数量', '平均分'],
+					itemWidth: 22, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#999',
+						fontSize: 21
+					}
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					bottom: '10%',
+					containLabel: true
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#999', //更改坐标轴文字颜色
+							fontSize: 21 //更改坐标轴文字大小
+						},
+						interval: 0
+					},
+					axisLine:{
+		                lineStyle:{color:'#999'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: option11Data0,
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'#999',
+					            width:1
+					        }
+					    },
+						splitLine: {
+							show: false
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#999',
+								fontSize: 21
+							}
+						}
+					},
+					{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'#999',
+					            width:1
+					        }
+					    },
+						splitLine: {
+							show: false
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#999',
+								fontSize: 21
+							}
+						}
+					}
+				],
+				series: [{
+						name: '数量',
+						type: 'bar',
+						color: '#447cf3',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 35,
+						data: option11Data1
+					},
+					{
+						name: '平均分',
+						type: 'line',
+						symbol: 'circle',     //设定为实心点
+						yAxisIndex: 1,
+						itemStyle : { 
+							normal : {
+								color:'#f4ac59', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#f4ac59' //改变折线颜色
+								} 
+							} 
+						},
+						data: option11Data2
+					}
+				]
+			};
+			
+			
+			var option14Date0=[];
+			var option14Date1=[];
+			 $.ajax({
+					url: "/indexReport/newRadarSj", 
+					data:{sj:"[[${sj}]]"},
+					async:false,
+					success: function(result){
+						option14Date0=result[0];
+						option14Date1=result[1];
+						if(result[1].length==0 || result[1]==null){
+							$("#title_head1").hide();
+							$("#radarMap1").hide();
+						}else{
+							$("#title_head1").show();
+							$("#radarMap1").show();
+						}
+			      }})
+			var option14 = {
+				tooltip: {
+					position: ['22%', '0%'],
+					textStyle: { //文字的样式
+						color: '#FFF',
+						fontSize: 21
+					} 
+			    },			 	
+				radar: {
+					name: {
+						textStyle: {
+							color: '#333'
+						}
+					},
+					splitArea: {
+			            areaStyle: {
+			                color: ['#fff', '#d9eaf5', '#fff', '#d9eaf5', '#fff'], //圆环颜色
+			                //shadowColor: 'aqua', // 圆颜色
+			                //shadowBlur: 10
+			            }
+			        },
+			        axisLine: {
+			            lineStyle: {
+			                color: '#a7d0fd' // 分割线
+			            }
+			        },
+			        splitLine: {
+			            lineStyle: {
+			                color: '#a7d0fd' //圆线
+			            }
+			        },
+					indicator: option14Date0,
+					radius: 220,
+					name: {
+			            //formatter: '{value}',
+			            textStyle: {
+			                color: '#999', // 文字颜色
+			                fontSize: 21  //文字大小
+			            }
+			        }
+				},
+				series: [{
+					name: '主体新建2.0模型指标得分',
+					type: 'radar',
+					data: [{
+						value: option14Date1,
+						areaStyle: {
+			                normal: {
+			                    color: 'rgb(30, 114, 255, .4)' // 选择区域颜色
+			                }
+			            },
+						label: {
+		                    normal: {
+		                        show: false,
+		                        formatter:function(params) {
+		                            return params.value;
+		                        }
+		                    }
+			            },
+						itemStyle: {
+							normal: {
+								color: '#005fff',
+								lineStyle: {
+									color: '#005fff',
+								}
+							}
+						}
+					}]
+				}]
+			};
+			
+			
+			 var option15Date0=[];
+				var option15Date1=[];
+				 $.ajax({
+						url: "/indexReport/TyRadarSj",
+						data:{sj:"[[${sj}]]"},
+						async:false,
+						success: function(result){
+							option15Date0=result[0];
+							option15Date1=result[1];
+							if(result[1].length==0 || result[1]==null){
+								$("#title_head2").hide();
+								$("#radarMap2").hide();
+							}else{
+								$("#title_head2").show();
+								$("#radarMap2").show();
+							}
+				      }})
+			
+			var option15 = {
+				tooltip: {
+					position: ['22%', '0%'],
+					textStyle: { //文字的样式
+						color: '#FFF',
+						fontSize: 21
+					} 
+			    },
+				radar: {
+					name: {
+						textStyle: {
+							color: '#333'
+						}
+					},
+					splitArea: {
+			            areaStyle: {
+			                color: ['#fff', '#d9eaf5', '#fff', '#d9eaf5', '#fff'], //圆环颜色
+			                //shadowColor: 'aqua', // 圆颜色
+			                //shadowBlur: 10
+			            }
+			        },
+			        axisLine: {
+			            lineStyle: {
+			                color: '#a7d0fd' // 分割线
+			            }
+			        },
+			        splitLine: {
+			            lineStyle: {
+			                color: '#a7d0fd' //圆线
+			            }
+			        },
+					indicator: option15Date0,
+					radius: 220,
+					name: {
+			            //formatter: '{value}',
+			            textStyle: {
+			                color: '#999', // 文字颜色
+			                fontSize: 21  //文字大小
+			            }
+			        }
+				},
+				series: [{
+					name: '主体通用2.0模型指标得分',
+					type: 'radar',
+					data: [{
+						value: option15Date1,
+						areaStyle: {
+			                normal: {
+			                    color: 'rgb(30, 114, 255, .4)' // 选择区域颜色
+			                }
+			            },
+						label: {
+		                    normal: {
+		                        show: false,
+		                        formatter:function(params) {
+		                            return params.value;
+		                        }
+		                    }
+			            },
+						itemStyle: {
+							normal: {
+								color: '#005fff',
+								lineStyle: {
+									color: '#005fff',
+								}
+							}
+						}
+					}]
+				}]
+			};
+				 var option16Date0=[];
+					var option16Date1=[];
+					 $.ajax({
+						 	url: "/indexReport/newRadarSj1",
+						 	data:{sj:"[[${sj}]]"},
+							async:false,
+							success: function(result){
+								option16Date0=result[0];
+								option16Date1=result[1];
+								if(result[1].length==0 || result[1]==null){
+									$("#title_head3").hide();
+									$("#radarMap3").hide();
+								}else{
+									$("#title_head3").show();
+									$("#radarMap3").show();
+								}
+					      }})
+				
+				var option16 = {
+					tooltip: {
+						position: ['22%', '0%'],
+						textStyle: { //文字的样式
+							color: '#FFF',
+							fontSize: 21
+						} 
+				    },
+					radar: {
+						name: {
+							textStyle: {
+								color: '#333'
+							}
+						},
+						splitArea: {
+				            areaStyle: {
+				                color: ['#fff', '#d9eaf5', '#fff', '#d9eaf5', '#fff'], //圆环颜色
+				                //shadowColor: 'aqua', // 圆颜色
+				                //shadowBlur: 10
+				            }
+				        },
+				        axisLine: {
+				            lineStyle: {
+				                color: '#a7d0fd' // 分割线
+				            }
+				        },
+				        splitLine: {
+				            lineStyle: {
+				                color: '#a7d0fd' //圆线
+				            }
+				        },
+						indicator: option16Date0,
+						radius: 220,
+						name: {
+				            //formatter: '{value}',
+				            textStyle: {
+				                color: '#999', // 文字颜色
+				                fontSize: 21  //文字大小
+				            }
+				        }
+					},
+					series: [{
+						name: '主体新建1.0模型指标得分',
+						type: 'radar',
+						data: [{
+							value: option16Date1,
+							areaStyle: {
+				                normal: {
+				                    color: 'rgb(30, 114, 255, .4)' // 选择区域颜色
+				                }
+				            },
+							label: {
+			                    normal: {
+			                        show: false,
+			                        formatter:function(params) {
+			                            return params.value;
+			                        }
+			                    }
+				            },
+							itemStyle: {
+								normal: {
+									color: '#005fff',
+									lineStyle: {
+										color: '#005fff',
+									}
+								}
+							}
+						}]
+					}]
+				};
+					 var option17Date0=[];
+						var option17Date1=[];
+						 $.ajax({
+								url: "/indexReport/TyRadarSj1", 
+								data:{sj:"[[${sj}]]"},
+								async:false,
+								success: function(result){
+									option17Date0=result[0];
+									option17Date1=result[1];
+									if(result[1].length==0 || result[1]==null){
+										$("#title_head4").hide();
+										$("#radarMap4").hide();
+									}else{
+										$("#title_head4").show();
+										$("#radarMap4").show();
+									}
+						      }})
+					
+					var option17 = {
+						tooltip: {
+							position: ['22%', '0%'],
+							textStyle: { //文字的样式
+								color: '#FFF',
+								fontSize: 21
+							} 
+					    },
+						radar: {
+							name: {
+								textStyle: {
+									color: '#333'
+								}
+							},
+							splitArea: {
+					            areaStyle: {
+					                color: ['#fff', '#d9eaf5', '#fff', '#d9eaf5', '#fff'], //圆环颜色
+					                //shadowColor: 'aqua', // 圆颜色
+					                //shadowBlur: 10
+					            }
+					        },
+					        axisLine: {
+					            lineStyle: {
+					                color: '#a7d0fd' // 分割线
+					            }
+					        },
+					        splitLine: {
+					            lineStyle: {
+					                color: '#a7d0fd' //圆线
+					            }
+					        },
+							indicator: option17Date0,
+							radius: 220,
+							name: {
+					            //formatter: '{value}',
+					            textStyle: {
+					                color: '#999', // 文字颜色
+					                fontSize: 21  //文字大小
+					            }
+					        }
+						},
+						series: [{
+							name: '主体通用1.0模型指标得分',
+							type: 'radar',
+							data: [{
+								value: option17Date1,
+								areaStyle: {
+					                normal: {
+					                    color: 'rgb(30, 114, 255, .4)' // 选择区域颜色
+					                }
+					            },
+								label: {
+				                    normal: {
+				                        show: false,
+				                        formatter:function(params) {
+				                            return params.value;
+				                        }
+				                    }
+					            },
+								itemStyle: {
+									normal: {
+										color: '#005fff',
+										lineStyle: {
+											color: '#005fff',
+										}
+									}
+								}
+							}]
+						}]
+					};		 
+			// 使用刚指定的配置项和数据显示图表。
+			columnar.setOption(option1);
+			mixlinebar3.setOption(option6);
+			pie1.setOption(option9);
+			mixlinebar1.setOption(option11);
+			radarMap1.setOption(option14);
+			radarMap2.setOption(option15);
+			radarMap3.setOption(option16);
+			radarMap4.setOption(option17);
+		</script>
+	</body>
+</html>

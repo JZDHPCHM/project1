@@ -1,0 +1,16 @@
+/*
+ * 自动创建目录贡献项配置示例
+ * 功能: 该贡献项配置为框架提供自动创建目录功能
+ * 使用说明:
+ * name			: 目录的名称
+ * path			: 目录的相对路径,相对于应用 home 目录
+ * autoCreate	: 是否自动创建
+ */
+
+/*
+[
+	{"name":"dir.config"			,"path":"/config"			,"autoCreate":true},
+	{"name":"dir.log"				,"path":"/logs"				,"autoCreate":true},
+	{"name":"dir.tmp"               ,"path":"/tmp"              ,"autoCreate":true}
+]
+*/

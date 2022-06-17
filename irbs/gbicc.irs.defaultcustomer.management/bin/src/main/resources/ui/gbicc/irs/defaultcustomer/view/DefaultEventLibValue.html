@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+/**
+ * ====================================================================================================================
+ * 区域树
+ * ====================================================================================================================
+**/
+var Fields ={
+	ds:[
+		{name:'id',primaryKey:true},
+    	{name:'name'},
+    	{name:'code'},
+		{name:'remark'},
+		{name:'parent',		foreignKey:"nationalIndustryDS.id"}
+	],
+	grid:[
+		{width:'*',	minWidth:200,	name:'name', title:'名称', showHover :false},
+		{width:100,	name:'code',  	title:'code',	showHover :false},
+		{width:400,	name:'remark',	title:'remark', showHover :true}
+	],
+	edit: [
+		{width:'*',	name:'code',        title:'code',  	type: 'text',		primaryKey:true,canEdit:true},
+		{width:'*',name:'name',    		title:'名称',	type: 'text',		required: true},
+		{width:'*',name:'remark',    	title:'备注',	type: 'text',		required: true},
+		{width:'*',name:'parent',  		type: 'text',	hidden: true},
+	]
+}
+
+//地区数据源
+isc.FwRestDataSource.create({
+	ID: 'nationalIndustryDS',
+	fields: Fields.ds,
+	fetchDataURL:'[(@{/irs/defaulteventlibvalue/defaulteventlibvalue.html})]',
+    dataURL: '[(@{/irs/defaulteventlibvalue/isc})]'
+});
+
+//地区树
+isc.FwDragDropReparentTreeGrid.create({
+	ID: 'nationalIndustryTreeGrid',
+	dataSource: nationalIndustryDS,
+	canHover:true,
+	hoverWidth :300,
+    fields: Fields.grid,
+    sortField: 'indCode',
+    nodeIcon: '[SKIN]/folder_open.png',
+    actionMembers: [
+    	'query','refresh','seperator'
+    ],
+    moreActionMembers:[
+    	'addTop','addChild','update','remove','seperator'
+    ],
+    moreActionMenuTitleSuffix: '行业',
+    editFormParentIdFieldName:'parent.indCode',
+    queryForm: {
+    	colWidths:[100,200,'15%','15%','15%','15%'],
+	    fields: Fields.query
+	},
+	editWindow: {
+		titleSuffix: '区域',
+		form: {
+            ID: 'form',
+            dataSource: nationalIndustryDS,
+            fields: Fields.edit,
+            numCols:2
+        }
+    },
+    selectionUpdated: function(record, recordList){
+    	if(record){
+			
+    	}
+	},
+	afterQuery: function(){
+		this.Super('afterQuery',arguments);
+	},
+	afterRemove: function(){
+		this.Super('afterRemove',arguments);
+	}
+});
+
+
+isc.FwPage.create({
+	tab: {
+		pane:nationalIndustryTreeGrid
+	}
+});
+
+</script>
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  FR_2019.03.11_10.43.10__FR_SYS_DICTIONARY.xml  -->
+<export>
+<summary>
+<t name="FR_SYS_DICTIONARY">
+select * from FR_SYS_DICTIONARY where fd_code ='WORK_FLOW'
+</t>
+</summary>
+<table name="FR_SYS_DICTIONARY">
+<sql>
+select * from FR_SYS_DICTIONARY where fd_code ='WORK_FLOW'
+</sql>
+<fields>
+<field name="FD_ID" type="12" typeName="java.sql.Types.VARCHAR"/>
+<field name="FD_CODE" type="12" typeName="java.sql.Types.VARCHAR"/>
+<field name="FD_KEY" type="12" typeName="java.sql.Types.VARCHAR"/>
+<field name="FD_ORDER" type="2" typeName="java.sql.Types.NUMERIC"/>
+<field name="FD_CREATOR" type="12" typeName="java.sql.Types.VARCHAR"/>
+<field name="FD_CREATE_DATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+<field name="FD_LAST_MODIFIER" type="12" typeName="java.sql.Types.VARCHAR"/>
+<field name="FD_LAST_MODIFYDATE" type="93" typeName="java.sql.Types.TIMESTAMP"/>
+</fields>
+<resultset>
+<row>
+<f>7353eb73-c3a5-46f4-9eea-f261cbfe1d44</f>
+<f>WORK_FLOW</f>
+<f>Financial_Trade</f>
+<f>1</f>
+<f>admin</f>
+<f>2019-03-08 09:11:44.522</f>
+<f>admin</f>
+<f>2019-03-08 09:11:44.522</f>
+</row>
+<row>
+<f>b8bb44b1-92fb-489e-a3a4-b677cb7d9744</f>
+<f>WORK_FLOW</f>
+<f>RISK_EXPOSURE</f>
+<f>1</f>
+<f>admin</f>
+<f>2019-03-08 09:11:44.522</f>
+<f>admin</f>
+<f>2019-03-08 09:11:44.522</f>
+</row>
+</resultset>
+</table>
+</export>

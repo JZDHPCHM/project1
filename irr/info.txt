@@ -1,0 +1,170 @@
+恒安标准人寿风险综合评级数据报送系统项目
+
+恒安标准人寿保险有限公司
+中国天津市和平区南京路189号津汇广场2座18层
+（营口道B3口）
+
+OA地址
+http://172.19.50.70
+密码
+pass2wd@
+
+
+业务
+PE0931
+pass2wd@
+（田颖）
+
+科技
+PE0816
+pass2wd@
+（李木）
+ 
+
+如果有需要杀掉进程，比如重新启动。
+执行查询进程命令：ps –ef|grep java
+查询出具有java的进程，找到想要杀掉的进程号，第一串数字就是进程号。
+注意杀掉上一个irrcas版本进程
+杀掉命令：kill -9 进程号
+
+进入项目war包所在目录，然后使用如下命令启动项目
+nohup ./irrcas20201012.war &
+
+
+select * from T_IRR_CASEMANA_RESULT t where t.task_batch='2020Q3'
+select * from user_source where type='PROCEDURE' and text like '%OR13006%'; 
+
+
+vpn
+https://111.160.216.84
+irr01/wsx-5678
+irr03/haOr-3627
+
+
+172.19.1.183:8080 - 8080
+172.19.1.13:1522 - 1522
+172.19.50.134:22 - 22
+172.19.50.134:8080 - 8080
+172.19.50.134:8060 - 8060
+172.19.50.139:22 - 22
+172.19.50.139:3389 - 3389
+
+
+IT负责人
+李木  17612280408 
+IT负责人组长
+牛跃松  13752089128
+
+业务负责
+田颖
+
+
+oracle财务总账
+IT负责人 王占江
+
+
+
+收展→续期
+
+FC  个险   GP 团险  RP续期 AD多元 BK银保
+RP_BD
+现在叫续期
+
+
+-	86		Hasl
+1	8601	北京
+2	8602	天津
+3	8603	青岛
+4	8604	山东
+5	8605	江苏
+6	8606	辽宁
+7	8607	四川
+8	8608	河南
+A	8609	大连
+B	8610	广东
+C	8611	河北
+
+
+
+1	86	总公司
+2	8605	江苏分公司
+3	8611	河北分公司
+4	8603	青岛分公司
+5	8607	四川分公司
+6	8606	辽宁分公司
+7	8608	河南分公司
+8	8610	广东分公司
+9	8609	大连分公司
+10	8604	山东分公司
+11	8601	北京分公司
+12	8602	天津分公司
+
+OR1	理赔业务线
+OR2	财务管理
+OR6	资金运用业务线
+OR4	公司治理业务线
+ORA 销售、承保、保全业务线
+OR5	准备金、再保险管理
+OR7	信息系统
+OR8	案件管理
+OR9	战略风险
+
+
+
+
+20190816
+imp、view权限
+铂金人力月末离职人数会不准（月底抽数）
+每个月初12 1点号提取上个月的 期初、期末人力（在职、离职）
+开发程序需要调整。
+''b,-月初在职人数（6月）（''c1,--月末在职人数（5月））  a
+''b1,--月末在职人数（6月）                               a1
+''b2,--月当月入职人数（6月）                            a2
+''b3,--月当月离职人数（6月）                           b3
+
+uvw_hasl_Employeecountbydep1
+uvw_hasl_Employeecountbydep2
+uvw_hasl_Employeecountbydep3
+   
+
+http://sso.hengansl.com
+
+
+生产地址
+http://172.19.88.57:8080/
+E_BDS_CLAIMS_FINANCIAL_PAY
+
+
+提数SQL
+SELECT
+  T.INDEX_ID,
+  T2.INDEX_NAME,
+  T1.FD_NAME,
+  CASE WHEN T.CHANNEL_ID = 'BK' THEN '银保'
+       WHEN T.CHANNEL_ID = 'GP' THEN '团险'
+       WHEN T.CHANNEL_ID = 'CS' THEN '客服'
+       WHEN T.CHANNEL_ID = 'FC' THEN '个险'
+       WHEN T.CHANNEL_ID = 'AD' THEN '多元'
+       WHEN T.CHANNEL_ID = 'RP' THEN '续期' ELSE T.CHANNEL_ID END AS CHANNEL_ID,
+  T.INDEX_VALUE,
+  T.EVAL_DATE,
+  T.LOAD_DT
+FROM E_ADS_IRR_INDEX_VALUE T
+LEFT JOIN FR_AA_ORG T1
+ON T.ORG_ID = T1.FD_CODE
+LEFT JOIN T_IRR_INDEX_INFO T2
+ON T.INDEX_ID = T2.INDEX_CODE
+WHERE T.EVAL_DATE = '2019Q3'
+AND INDEX_ID = 'OR04020'
+AND TO_CHAR(LOAD_DT,'YYYYMMDD') = 20191015
+ORDER BY T1.FD_NAME
+
+
+10人天需求单
+create table FR_AA_USER_ORG_0915 as 
+select  * from FR_AA_USER_ORG
+
+
+
+
+

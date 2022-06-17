@@ -1,0 +1,24 @@
+[
+	{"id":"parameter.weixin","order":0},
+		{
+			"id"			:"parameter.weixin.Send", 
+			"parentId"		:"parameter.weixin",
+			"code"			:"sendUrl",
+			"defaultValue"	:"http://9fqxvt.natappfree.cc",
+			"order"			: 50
+		},
+		{
+			"id"			:"parameter.weixin.User", 
+			"parentId"		:"parameter.weixin",
+			"code"			:"User",
+			"defaultValue"	:"",
+			"order"			: 50
+		},
+		{
+			"id"			:"parameter.weixin.UserYl", 
+			"parentId"		:"parameter.weixin",
+			"code"			:"UserYl",
+			"defaultValue"	:"",
+			"order"			: 50
+		}
+]

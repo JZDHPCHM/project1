@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+<script type="text/javascript" th:src="@{/webjars/echarts/js/echarts.min.js}"></script>
+<script type="text/javascript" th:src="@{/org.wsp.framework.mvc.ui.template.smartclient/js/smartclient-echarts.js}"></script>
+</head>
+<body>
+</body>
+<script>
+//当前登录人账号
+var roleCode = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+
+var orgCode=[(${@userService2.findByOrgCode()})];
+var roleShow=false;
+if(roleCode=="FINANCIAL_MARKETS_MAINTAINER"&&orgCode=="1008899"){//总行金融市场部信息维护岗
+	 roleShow=true;
+}
+//查询岗
+if("QUERY_POST"==roleCode){
+	roleShow=false;
+}
+//模型类型
+var mxs = [(${@frSystemDictionaryService.getDictionaryMapJsonString('MODEL_TYPE',#locale)})];
+
+//过滤金融同业模型
+var mxTypes = {};
+for( modelCode in mxs){
+	if(modelCode.startsWith("F")){
+		mxTypes[modelCode]=mxs[modelCode];
+	}
+}
+/**
+ * ====================================================================================================================
+ * 金融同业列表
+ * ====================================================================================================================
+**/
+//字段定义
+var FinancialIndustryFields ={
+	query: [
+			{width:'*',			name:'custNo',              title:'[[#{custNo}]]'},
+			{width:'*',			name:'custName',            title:'[[#{custName}]]'},
+			{width:'*',		    name:'mxType',     			title:'[[#{mxType}]]', type: 'select',valueMap:mxTypes}
+	],
+	grid: [
+			{width:'200',		name:'custNo',              title:'[[#{custNo}]]',primaryKey:true},
+			{width:'400',		name:'custName',            title:'[[#{custName}]]'},
+			{width:'200',		name:'mxType',     		title:'[[#{mxType}]]',	type: 'select',valueMap:mxTypes,allowEmptyValue:true,autoFetchData:false},
+			{width:'170',		name:'djName',            title:'[[#{djName}]]',type: 'select'},
+			{width:'170',		name:'djTime',    		title:'[[#{djTime}]]'},
+			{width:'200',		name:'updateName',   			title:'[[#{updateName}]]',type: 'select'},
+			{width:'200',		name:'updateTime',    		title:'[[#{updateTime}]]'}
+			
+	],
+	edit: [
+		{validators:[
+            {
+                expression:"^[0-9a-zA-Z]+$",
+                type:"regexp"
+            }
+        ],width:200,		name:'custNo',		title:'[[#{custNo}]]',primaryKey:true,canEdit:true,required:true},
+		{width:200,		name:'mxType',		title:'[[#{mxType}]]',required:true,type: 'select',valueMap:mxTypes,allowEmptyValue:true,autoFetchData:false},
+	    {width:200,		name:'custName',			title:'[[#{custName}]]',required:true}
+]
+};
+//金融同业列表数据源
+isc.FwRestDataSource.create({
+	ID: 'financialIndustryDS',
+    fields: FinancialIndustryFields.grid,
+   	fetchDataURL: '[[@{/irs/financialIndustry/queryFinancialIndustry}]]',
+    dataURL: '[[@{/irs/financialIndustry/isc}]]'
+});
+
+//公司客户列表
+isc.FwListGrid.create({
+	ID: 'financialIndustryListGrid',
+	title: '<b>金融同业列表</b>',
+	dataSource: financialIndustryDS,
+	fields: FinancialIndustryFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%'],
+	    fields: FinancialIndustryFields.query
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	ID: "financialIndustryForm",
+        	numCols:4,
+        	titleWidth:150,
+        	colWidths: [190, "*"],
+        	dataSource: financialIndustryDS,
+            fields: FinancialIndustryFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+        ],
+        okButtonClick: function(){
+        		if(financialIndustryForm.validate()){
+        			if(this._fwAction=='add'){
+              		isc.FwRPCManager.get({
+                       	url:'[(@{/irs/financialIndustry/isExistsFinancialIndustry})]',
+                       	urlParameters:{custNo:financialIndustryForm.getValues().custNo},
+                        callback: function(response, rawData, request){
+                        	if(rawData == "1"){
+                        		isc.say("客户已存在，无法保存!");
+                        		return;
+                        	}
+                        }
+                     });
+        			}
+                 this.Super('okButtonClick',arguments);	
+              	}
+         },
+         afterFormSubmit: function(dsResponse, data, dsRequest){
+        	 financialIndustryListGrid.invalidateCache();
+        	 this.Super('afterFormSubmit',arguments);	
+         }
+	},
+	actionMembers:[ 
+		'query','reset','refresh','add','update','remove'
+	],
+	changeActionMemberButtonStatus: function(record, recordList){
+		var status=roleShow==true?'enable':'disable';
+   		this.setActionMemberButtonStatus(status,['add']);
+   		this.setActionMemberButtonStatus(status,['update']);
+   		this.setActionMemberButtonStatus(status,['remove']);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+	}
+});
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				financialIndustryListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

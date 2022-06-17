@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+//主要担保方式
+var tableTypes = [(${@frSystemDictionaryService.getDictionaryMapJsonString('DEBTRATING_TABLE_TYPE',#locale)})];
+
+//字段定义
+var DebtRatingBHSXSParamFields ={
+	grid: [
+		{width:'*',		name:'id',	primaryKey:true,	hidden:true},
+		{width:'*',		name:'collateralType',	 title:'担保品类型'},
+		{width:'*',		name:'splittingOrder',	 title:'担保品拆分顺序'},
+		{width:'*',		name:'collateralCode',	 title:'担保品名称代码'},
+		{width:'*',		name:'collateralName',	 title:'担保品名称'},
+		{width:'*',		name:'collateralMainCode',title:'担保品主体代码'},
+		{width:'*',		name:'collateralMainName',title:'担保品主体名称'},
+		{width:'*',		name:'compositeCodeName',title:'组合代码名称'}
+			
+	],
+	edit: [
+		{width:'*',		name:'id',	primaryKey:true,	hidden:true,canEdit:200,required:true},
+		{width:200,		name:'collateralType',	  title:'担保品类型',required:true},
+		{width:200,		name:'splittingOrder',	  title:'担保品拆分顺序',required:true},
+		{width:200,		name:'collateralCode',	  title:'担保品名称代码',required:true},
+		{width:200,		name:'collateralName',	  title:'担保品名称',required:true},
+		{width:200,		name:'collateralMainCode',title:'担保品主体代码',required:true},
+		{width:200,		name:'collateralMainName',title:'担保品主体名称',required:true},
+		{width:200,		name:'compositeCodeName', title:'组合代码名称',required:true}
+			
+	]
+};
+
+//保证人回收调整系数数据源
+isc.FwRestDataSource.create({
+	ID: 'debtRatingBHSXSParamDS',
+    fields: DebtRatingBHSXSParamFields.grid,
+    dataURL: '[[@{/irs/config/pledgecoveragerate/isc}]]'
+});
+
+//保证人回收调整系数列表
+isc.FwListGrid.create({
+	ID: 'debtRatingBHSXSParamListGrid',
+	title: '<b>担保品分配表</b>',
+	dataSource: debtRatingBHSXSParamDS,
+	sortField:"bzTypeCode",
+	fields: DebtRatingBHSXSParamFields.grid,
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: debtRatingBHSXSParamDS,
+            fields: DebtRatingBHSXSParamFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh','update','remove','add'
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				debtRatingBHSXSParamListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

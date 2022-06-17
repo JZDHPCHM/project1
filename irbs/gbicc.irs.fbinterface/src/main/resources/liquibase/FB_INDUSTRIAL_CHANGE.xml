@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_INDUSTRIAL_CHANGE" author="framework">
+
+        <!-- 工商变更结果表 -->
+        <createTable tableName="FB_INDUSTRIAL_CHANGE" remarks="工商变更">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="CHANGE_CONTENT" type="java.sql.Types.VARCHAR(100)" remarks="变更事项"></column>
+            <column name="CHANGE_DETAIL" type="java.sql.Types.VARCHAR(2000)" remarks="变更事项详情"></column>
+            <column name="CHANGE_BEFORE" type="CLOB" remarks="变更前"></column>
+            <column name="CHANGE_AFTER" type="CLOB" remarks="变更后"></column>
+            <column name="CHANGE_DATE" type="java.sql.Types.VARCHAR(20)" remarks="变更日期"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

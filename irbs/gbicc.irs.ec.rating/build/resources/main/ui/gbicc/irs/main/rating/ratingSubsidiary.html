@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>生产评级明细</title>
+<style type="text/css">
+ 	.top-navigation{
+		display: none;
+	}
+</style>
+</head>
+<body>
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+			    <div class="row">
+	                <div class="col-lg-12">
+	                	<div class="jqGrid_wrapper">
+                           	<table id="table_list"></table>
+                       	</div>	    
+	                </div>
+	            </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$('.chosen-select').chosen({width: "100%"});
+	var mydata = [];
+	 $.ajax({
+		url: "/irs/ratingMainStep/scoreDetail", 
+		async:false,
+		data:{Custno:"[[${custNo}]]"},
+		success: function(result){
+			mydata=result.response.data[0];
+      }}) 
+	$("#table_list").jqGrid({
+		url : "",
+		recordtext: "显示：{0} - {1}，总数：{2} ",
+	    emptyrecords: "本次查询无数据！",
+	    loadtext: "读取中...",
+	    pgtext : "第 {0}页， 共{1}页",
+		mtype : "post",
+        //datatype: "json",
+        data: mydata,
+        datatype: "local",
+        //height: 250,
+        height: '100%',
+        autowidth: true,
+        shrinkToFit: true,
+        prmNames: {
+            page: "page"   // 表示请求页码的参数名称
+        },
+        rowNum: 100,
+        rowList: [100, 20, 30],
+        colNames:['一级指标','二级指标','三级指标','四级指标','指标选项','初评选项','复评选项'],
+        colModel:[
+        	{name:'indexType',index:'indexType', width: 30,
+				cellattr: function(rowId, tv, rawObject, cm, rdata) {
+				//合并单元格
+				return 'id=\'indexType' + rowId + "\'";
+			}},
+        	{name:'inOutType',index:'inOutType', width: 40,
+				cellattr: function(rowId, tv, rawObject, cm, rdata) {
+				//合并单元格
+				return 'id=\'inOutType' + rowId + "\'";
+			}},
+			{name:'indexParentName',index:'indexParentName', width: 50,
+				cellattr: function(rowId, tv, rawObject, cm, rdata) {
+				//合并单元格
+				return 'id=\'indexParentName' + rowId + "\'";
+			}},
+        	{name:'indexName',index:'indexName', width: 60},
+        	{name:'indexOption',index:'indexOption', width: 250},
+        	{name:'oldValue',index:'oldValue', width: 40},
+        	{name:'indexValue',index:'indexValue', width: 40,formatter:function(value,index,row){
+        		if(row.oldValue==row.indexValue){
+        			return  row.indexValue;
+        		}else{
+        			if(row.indexValue){
+        				return  "<span style='color:red;'>"+row.indexValue+"</span>";
+        			}else{
+        				return  "<span style='color:red;'></span>";
+        			}
+        		}
+        		
+        	}},
+        ],
+        viewrecords: true,
+        caption: "",
+        gridComplete: function() {
+			//在gridComplete调用合并方法
+			var gridName = "table_list";
+			MergerRowspan(gridName, 'indexType');//跨行
+			MergerRowspan(gridName, 'indexParentName');//跨行
+			MergerRowspan(gridName, 'inOutType');//跨行
+		},
+        add: true,
+        edit: true,
+        addtext: 'Add',
+        edittext: 'Edit',
+        rownumbers: false,
+        hidegrid: false
+    });
+    $(window).bind('resize', function () {
+        var width = $('.jqGrid_wrapper').width();
+        $('#table_list').setGridWidth(width);
+    });
+
+    setTimeout(function(){
+        $('.wrapper-content').removeClass('animated fadeInRight');
+    },700);
+</script>
+</html>

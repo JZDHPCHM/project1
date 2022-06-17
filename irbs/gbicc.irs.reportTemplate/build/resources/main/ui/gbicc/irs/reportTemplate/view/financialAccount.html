@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head></head>
+<body>
+</body>
+<script th:inline="javascript">	
+
+//财报科目分类
+var FinanciaAccountCategory = [(${@frSystemDictionaryService.getDictionaryMapJsonString('ACCOUNT_CLASSIFICATION',#locale)})]
+//系统标准财报模板
+var FinancialStatementTemplateType = [(${@frSystemDictionaryService.getDictionaryMapJsonString('FinancialStatementTemplateType',#locale)})];
+
+var FinancialAccountFields = {
+		query:[
+				{name:'faCode',				title:'[(#{faCode})]'},
+				{name:'faName',				title:'[(#{faName})]'},
+		    	{name:'faCategory',			title:'[(#{faCategory})]',type:'select',valueMap:FinanciaAccountCategory}
+		],
+		dataSourceGrid: [
+				{name:'id',		primaryKey:true,type: 'text',hidden:true},
+				{name:'faNumber'},
+				{name:'faCode'},
+				{name:'faName'},
+			    {name:'faCategory',			type:'select',valueMap:FinanciaAccountCategory},
+			    {name:'faInstitutionUse',	type:"boolean"},
+			    {name:"statementTemplate" ,type:"select",multiple:true,multipleAppearance:"picklist",valueMap: FinancialStatementTemplateType}
+		],
+		grid:[
+			 	{width:100,	name:'faNumber',			title:'[(#{faNumber})]'},
+			 	//{width:100,	name:'faCategory',			title:'[(#{faCategory})]',		type:'select',valueMap:FinanciaAccountCategory},
+				{width:100,	name:'faCode',				title:'[(#{faCode})]'},
+				{width:200,	name:'faName',				title:'[(#{faName})]'},
+				{width:'*',name:"statementTemplate",	title:"[(#{statementTemplate})]",type:"select",multiple:true,multipleAppearance:"picklist",valueMap: FinancialStatementTemplateType}
+		],
+		edit:[
+			 	{name:'id',								title:'[(#{id})]',				type: 'text',hidden:true},
+			 	{width:150,name:'faCategory',			title:'[(#{faCategory})]',		type:'select',valueMap:FinanciaAccountCategory},
+			 	{width:150,name:'faNumber',				title:'[(#{faNumber})]'},
+			 	{width:150,name:'faCode',				title:'[(#{faCode})]'},
+				{width:150,name:'faName',				title:'[(#{faName})]'},
+			    {name:"statementTemplate",				title:"[(#{statementTemplate})]",type:"select",multiple:true,multipleAppearance:"picklist",valueMap: FinancialStatementTemplateType}
+		]
+}
+
+//财报模板科目数据源
+isc.FwRestDataSource.create({
+	ID: 'financialAccountDS',
+	autoFetchData:false,
+    fields:FinancialAccountFields.dataSourceGrid,
+    dataURL: '[(@{/reportTemplate/financialAccount/isc})]'
+});
+
+//财报模板科目列表
+isc.FwListGrid.create({
+	ID: 'financialAccountGrid',
+	title: '<b>财报科目列表</b>',
+	dataSource: financialAccountDS,
+	sortField: 'faNumber',
+	groupByField: 'faCategory',
+	groupStartOpen:"all",
+	canPageable:false,
+	fields: FinancialAccountFields.grid,
+	queryForm: {
+	    fields:FinancialAccountFields.query
+	},
+	editWindow: {
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	width:500,
+            dataSource: financialAccountDS,
+            fields: FinancialAccountFields.edit
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+    }
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				financialAccountGrid
+			]
+		})
+	}
+});
+</script>
+</html>

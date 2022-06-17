@@ -1,0 +1,10 @@
+@C:\oracle\sql_all\IRR_CREATE_TABLE.sql
+@C:\oracle\sql_all\IRR_FUN.sql
+@C:\oracle\sql_all\IRR_SP.sql
+@C:\oracle\sql_all\E_BDS_HRM_EMPLOYEEDEGREE.sql
+@C:\oracle\sql_all\E_BDS_HRM_EMPLOYEESTATE.sql
+@C:\oracle\sql_all\E_BDS_HRM_MANAGESTATE.sql
+@C:\oracle\sql_all\E_BDS_CLAIMS_FINANCIAL_PAY.sql
+@C:\oracle\sql_all\E_BDS_FIN_GL.sql
+@C:\oracle\sql_all\E_BDS_HRM_ORG.sql
+exit

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+<body style='background-color:white'>
+	<div class="wrapper">
+		<div class="wrapper wrapper-content animated fadeInRight">
+			<div class="row">
+				<div class="col-lg-2">
+					<div id="orgTree"></div>
+				</div>
+				<div class="col-lg-10">
+					<div class="row">
+						<button type="button" class="btn btn-primary" id="exportBtn">导出</button>
+						<button type='button' class='btn btn-primary' id='createXBRL'>生成XBRL</button>
+						<button type='button' class='btn btn-primary' id='lookXBRL'>查看XBRL</button>
+					</div>
+					<div class="row" style="margin-top:10px">
+						<form class="form-inline" >
+                           	<div class="form-group">
+                              <label for="taskName" class="control-label">评估计划</label>
+                              <select class="form-control" name="taskId" id="taskId">
+                               	<option value=''>请选择</option>
+                               	<option th:each="option: ${@irrTaskServiceImpl.getTaskMap('YWC')}" th:value="${option.key}" th:text="${option.value}"></option>
+                          	  </select>
+                          	</div>							
+						</form>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		/*机构树*/
+		$('#orgTree').jstree({
+			  "core" : {
+			    "animation" : false,
+			    'multiple':false,
+			    "check_callback" : true,
+			    'expand_selected_onload':true,
+			    "themes" : { "stripes" : false },
+			    'data' : {
+			      'url' : function (node) {
+			        return '/irr/indexInfo/findOrg.action';
+			      },
+			      "datatype": "json",
+			      'data' : function (node) {
+			        return { 'id' : node.id };
+			      }
+			    }
+			  },
+			  "types" : {
+			    "#" : {
+			      "max_children" : 5,
+			      "max_depth" : 4,
+			      "valid_children" : ["root"]
+			    },
+			    "root" : {
+			      "valid_children" : ["default"]
+			    },
+			    "default" : {
+			      "valid_children" : ["default","file"]
+			    },
+			    "file" : {
+			      "icon" : "glyphicon glyphicon-file",
+			      "valid_children" : []
+			    }
+			  },
+			  "plugins" : [
+			    "contextmenu", "dnd", "search",
+			    "state", "types", "wholerow","checkbox"
+			  ],
+			  "checkbox": {
+                  "keep_selected_style": false,//是否默认选中
+                  "three_state": true,//父子级别级联选择
+                  "tie_selection": false
+              }
+		});
+		$('#orgTree').bind("ready.jstree", function (obj, e) {
+			$('#orgTree').jstree(true).deselect_all(false);
+			$('#orgTree').jstree(true).refresh();
+		});
+		/*点击tree节点事件*/
+		$('#orgTree').bind("activate_node.jstree", function (obj, e) {
+			
+		});
+		
+		/*首页面导出按钮*/
+		$('#exportBtn').click(function(){
+			var selectNode = $('#orgTree').jstree(true).get_checked();
+			$.each(selectNode,function(i,nd){
+				
+			});
+			var taskId = $('#taskId').val();
+			if(isSelect(taskId)){
+				swal('提示','请先选择一条评估计划','warning');
+				return false;
+			}
+			window.location.href = '[(@{/irr/orgResult/exportExcelReport.action?id='+taskId+'})]';
+		});
+		
+	});
+</script>
+</html>

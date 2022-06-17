@@ -1,0 +1,42 @@
+<html th:fragment="html" th:with="
+			isMultiCorporationMode=${T(org.wsp.framework.core.Environment).isEnableMultiCorporation()},
+			corporationName=${T(org.wsp.framework.security.util.SecurityUtil).getCorporationName()},
+			isPrimaryCorporationName=${corporationName=='primary'}">
+<head th:insert="::fragment_header(
+		title=  ~{::/html/head/title},
+		base=   ~{::/html/head/base},
+		meta=   ~{::/html/head/meta},
+		link=   ~{::/html/head/link},
+		object= ~{::/html/head/object},
+		style=  ~{::/html/head/style},
+		script= ~{::/html/head/script}
+	)">
+</head>
+<th:block th:replace="::fragment_body(body=~{::/html/body})"/>
+<th:block th:replace="::fragment_script(script=~{::/html/script})"/>
+</html>
+
+<th:block th:fragment="fragment_header">
+	<th:block th:if="${title}"><th:block th:replace="${title}" /></th:block><!--/* 页面定义了标题 */-->
+	<th:block th:unless="${title}"><!--/* 页面未定义标题，采用默认标题 */-->
+		<th:block th:if="${isMultiCorporationMode && !isPrimaryCorporationName}"><title th:text="|${corporationName} - #{application.title}|"></title></th:block>
+		<th:block th:unless="${isMultiCorporationMode && !isPrimaryCorporationName}"><title th:text="#{application.title}"></title></th:block>
+	</th:block>
+	<!--/* base   */--><th:block th:if="${base}"><th:block th:replace="${base}" /></th:block>
+	<!--/* meta   */--><th:block th:replace="template/inspinia/meta.html" />
+	<!--/* meta   */--><th:block th:if="${meta}"><th:block th:replace="${meta}" /></th:block>
+	<!--/* link   */--><th:block th:replace="template/inspinia/css.html" />
+	<!--/* link   */--><th:block th:if="${link}"><th:block th:replace="${link}" /></th:block>
+	<!--/* style  */--><th:block th:if="${style}"><th:block th:replace="${style}" /></th:block>
+	<!--/* object */--><th:block th:if="${object}"><th:block th:replace="${object}" /></th:block>
+	<!--/* script */--><th:block th:replace="template/inspinia/javascript.html"/>
+	<!--/* script */--><th:block th:if="${script}"><th:block th:replace="${script}" /></th:block>
+</th:block>
+
+<th:block th:fragment="fragment_body">
+<div th:replace="template/inspinia/navbar.html"></div>
+<th:block th:if="${body}"><th:block th:replace="${body}"/></th:block>
+<th:block th:replace="template/inspinia/body.html"/>
+</th:block>
+	
+<th:block th:fragment="fragment_script"><th:block th:if="${script}"><th:block th:replace="${script}" /></th:block></th:block>

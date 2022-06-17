@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+<body style='background-color:white'>
+	<div class="wrapper">
+		<div class="wrapper wrapper-content animated fadeInRight">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="row" style="margin-top:10px">
+						<form class="form-inline" >
+                           	<div class="form-group">
+                              <label for="taskName" class="control-label">评估计划</label>
+                              <select class="form-control" name="taskId" id="taskId">
+                               	<option value=''>请选择</option>
+                               	<option th:each="option: ${@irrTaskServiceImpl.getTaskMap('YWC')}" th:value="${option.key}" th:text="${option.value}"></option>
+                          	  </select>
+                          	</div>
+                          	<div class="form-group">
+                                <label class="control-label" for="orgId">部门/机构</label>
+                              	<select class="form-control" name="orgId" id="orgId">
+                                   	<option value=''>请选择</option>
+                             		<option th:each="option: ${@irrTaskServiceImpl.getOrgMapByName('公司')}" th:value="${option.key}" th:text="${option.value}"></option>
+                              	</select>
+                            </div>							
+						</form>
+					</div>
+					<div class="row" style='margin-top:5px;'>
+						<button type="button" class="btn btn-primary btn-sm" id="exportBtn">导出</button>
+						<button type='button' class='btn btn-primary btn-sm' id='createXBRL'>生成XBRL</button>
+						<button type='button' class='btn btn-primary btn-sm' id='lookXBRL'>查看XBRL</button>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		/*首页面导出按钮*/
+		$('#exportBtn').click(function(){
+			var taskId = $('#taskId').val();
+			if(isSelect(taskId)){
+				swal('提示','请先选择一条评估计划','warning');
+				return false;
+			}
+			window.location.href = '[(@{/irr/orgResult/exportExcelReport.action?id='+taskId+'})]';
+		});
+		
+		/*生成XBRL*/
+		$('#createXBRL').click(function(){
+			var taskId = $('#taskId').val();
+			var orgId = $('#orgId').val();
+			if(isEmpty(taskId) || isEmpty(orgId)){
+				swal('提示','请先选择评估计划和机构！','warning');
+				return false;
+			}
+			$.ajax({
+				url : '[(@{/irr/task/findXbrlRequestInfo.action})]',
+				type : "post",
+				dataType : "json",
+				data : {
+					taskId : taskId,
+					orgId : orgId
+				},
+				success : function(data,textStatus) {
+					if(data.flag == true){
+						$.ajax({
+							url : '[(@{/xbrl/irr/initReport.action})]',
+							type : "post",
+							dataType : "json",
+							data : {
+								companyCode : data.org.code,
+								taskBatch : data.task.taskBatch
+							},
+							success : function(data,textStatus) {
+								if(data.flag == true){
+									window.open(data.xbrlUrl);
+								}else{
+									swal('提示',data.data,'error');
+								}
+							},
+							error : function(data, textStatus){
+								swal('提示','请求失败！','error');
+							}
+						});
+					}else{
+						swal('提示',data.data,'error');
+					}
+				},
+				error : function(data, textStatus){
+					swal('提示','请求失败！','error');
+				}
+			});
+		});
+		
+		/*查看xbrl*/
+		$('#lookXBRL').click(function(){
+			var taskId = $('#taskId').val();
+			var orgId = $('#orgId').val();
+			if(isEmpty(taskId) || isEmpty(orgId)){
+				swal('提示','请先选择评估计划和机构！','warning');
+				return false;
+			}
+			$.ajax({
+				url : '[(@{/irr/task/findXbrlRequestInfo.action})]',
+				type : "post",
+				dataType : "json",
+				data : {
+					taskId : taskId,
+					orgId : orgId
+				},
+				success : function(data,textStatus) {
+					if(data.flag == true){
+						$.ajax({
+							url : '[(@{/xbrl/irr/viewReport.action})]',
+							type : "post",
+							dataType : "json",
+							data : {
+								companyCode : data.org.code,
+								taskBatch : data.task.taskBatch
+							},
+							success : function(data,textStatus) {
+								if(data.flag == true){
+									window.open(data.xbrlUrl);
+								}else{
+									swal('提示',data.data,'error');
+								}
+							},
+							error : function(data, textStatus){
+								swal('提示','请求失败！','error');
+							}
+						});
+					}else{
+						swal('提示',data.data,'error');
+					}
+				},
+				error : function(data, textStatus){
+					swal('提示','请求失败！','error');
+				}
+			});
+		});
+		
+	});
+</script>
+</html>

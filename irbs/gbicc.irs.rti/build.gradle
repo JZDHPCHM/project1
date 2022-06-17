@@ -1,0 +1,14 @@
+group='org.wsp'
+
+dependencies {
+    compile(
+    	project(":gbicc.irs.assetsRating"),
+    	project(":gbicc.irs.debtRating"),
+    	project(":gbicc.irs.customer"),
+    	project(":gbicc.irs.fbinterface"),
+    	project(":gbicc.irs.warning"),
+        "org.wsp:org.wsp.framework.core:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa:${framework_version}",
+        "org.wsp:org.wsp.framework.mvc:${framework_version}",
+	)
+}

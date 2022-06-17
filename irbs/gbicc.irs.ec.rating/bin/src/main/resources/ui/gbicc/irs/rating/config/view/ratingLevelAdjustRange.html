@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+
+//模型列表(从模型系统获取)
+var ModelList = [(${@frSystemDictionaryService.getDictionaryMapJsonString('MODEL_TYPE',#locale)})];
+//机构列表
+var orgList = [(${@jacksonObjectMapper.writeValueAsString(@newOrgServiceImpl.findAll())})];
+var roleList = 
+{
+	"CREDIT_PRELIMINARY_EXAMINATION":"信用等级初审岗",
+	"BRANCHBRANCH_PRESIDENT":"分/支行行长",
+	"HEAD_OFFICE_APPROVER":"总行部门审批人",
+	"CREDIT_COMMITTEE_COMPREHENSIVE_DIRECTOR":"贷审会主任",
+	"FINANCIAL_MARKETS_APPROVER":"总行金融市场部评级审批人"
+};
+
+//所有角色数据源(下拉框选项)
+isc.FwOptionRestDataSource.create({
+    ID: 'allRoleDs',
+    fields:[
+    	{name:'id',				title:'[(#{ID})]'},
+    	{name:'code',			title:'[(#{code})]'},
+    	{name:'name',			title:'[(#{roleName})]'}
+    ],
+    fetchDataURL: '[(@{/system/roles/isc/fetch})]'
+});
+
+//所有组织架构数据源(下拉框选项)
+isc.FwRestDataSource.create({
+    ID: 'allOrgDs',
+    fields:[
+    	{name:'id',primaryKey:true},
+    	{name:'code'},
+    	{name:'name'},
+    	{name:'parent',foreignKey:'allOrgDs.id'}
+    	
+    ],
+    fetchDataURL: '[(@{/system/orgs/isc/fetch})]'
+});
+
+
+//字段定义
+var ratingLevelAdjustRangeFields ={
+	query: [
+			{
+				width:'*',	
+				name:'orgId',					
+				title:'[(#{orgId})]',
+				optionDataSource: allOrgDs,	
+				dataSetType: "tree",
+				autoFetchData:false,
+				loadDataOnDemand:true,
+				displayField:'name',
+				valueField:'id',
+				pickListProperties:{
+					nodeIcon: '[SKIN]/folder_open.png'
+				},
+				specialValues: {"": ""},
+			    separateSpecialValues: true
+			},
+			{	width:'*',	
+				name:'roleCode',					
+				title:'[(#{roles})]',							
+				type: 'select',     
+				/* multiple:false, */
+				/* optionDataSource: allRoleDs, */
+				valueMap:roleList
+				/* displayField:'name',
+				valueField:'code',
+				allowEmptyValue:true,
+				autoFetchData:false */
+			}
+			/* {width:200,		name:'modelCode',				title:'模型',type: 'select',valueMap:ModelList,allowEmptyValue:true,autoFetchData:false}, */
+			/* {width:'*',		name:'enabled',					title:'是否可用',type: 'boolean',	operator:'equals'} */
+	],
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{
+				width:200,		
+				name:'roleCode',			
+				title:'[(#{roles})]',							
+				type: 'select',     
+				multiple:false,
+				/* optionDataSource: allRoleDs, */
+				valueMap:roleList
+				/* displayField:'name',
+				valueField:'code',
+				allowEmptyValue:true,
+				autoFetchData:false */
+			},
+			{width:'*',		name:'orgId',			title:'[(#{orgId})]',type: 'select',valueMap:orgList,allowEmptyValue:true,autoFetchData:false},
+		    /* {width:'*',		name:'modelCode',		title:'模型',type: 'select',valueMap:ModelList,allowEmptyValue:true,autoFetchData:false}, */
+		    {width:'*',		name:'upLimit',			title:'上调限制'},
+		    {width:'*',		name:'downLimit',		title:'下调限制'}
+		    /* {width:'*',		name:'enabled',			title:'是否可用',type: 'boolean'} */
+	],
+	edit: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{
+				width:200,		
+				name:'roleCode',			
+				title:'[(#{roles})]',							
+				type: 'select',     
+				/* multiple:false, */
+				/* optionDataSource: allRoleDs, */
+				valueMap:roleList,
+				//defaultValue:'CREDIT_PRELIMINARY_EXAMINATION',
+				//canEdit: false,
+				/* displayField:'name',
+				valueField:'code',
+				allowEmptyValue:true,
+				autoFetchData:false, */
+				required:true
+			},
+			{
+				width:'*',	
+				name:'orgId',					
+				title:'[(#{orgId})]',
+				optionDataSource: allOrgDs,	
+				dataSetType: "tree",
+				autoFetchData:false,
+				loadDataOnDemand:true,
+				displayField:'name',
+				valueField:'id',
+				pickListProperties:{
+					nodeIcon: '[SKIN]/folder_open.png'
+				},
+				specialValues: {"": ""},
+			    separateSpecialValues: true
+			    //required:true
+			},
+		    /* {width:200,		name:'modelCode',		title:'模型',required:true,type: 'select',valueMap:ModelList,allowEmptyValue:true,autoFetchData:false}, */
+		    {width:200,		name:'upLimit',			title:'上调限制',type:"integer",required:true},
+		    {width:200,		name:'downLimit',		title:'下调限制',type:"integer"}
+		    /* {width:'*',		name:'enabled',			title:'是否可用',type: 'boolean',defaultValue:true} */
+	]
+};
+
+//财报选取规则数据源
+isc.FwRestDataSource.create({
+	ID: 'ratingLevelAdjustRangeDS',
+    fields: ratingLevelAdjustRangeFields.grid,
+    dataURL: '[(@{/irs/ratingLevelAdjustRange/isc})]'
+});
+
+//财报选取规则列表
+isc.FwListGrid.create({
+	ID: 'ratingLevelAdjustRangeGrid',
+	title: '<b>评级推翻规则列表</b>',
+	dataSource: ratingLevelAdjustRangeDS,
+	sortField: 'roleCode',
+	canHover:true,
+	fields: ratingLevelAdjustRangeFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: ratingLevelAdjustRangeFields.query
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	ID: "ratingAuthorizationForm",
+        	numCols:4,
+        	titleWidth:150,
+        	colWidths: [190, "*"],
+            dataSource: ratingLevelAdjustRangeDS,
+            fields: ratingLevelAdjustRangeFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+        ],
+      /*   okButtonClick: function(){
+        	var roleCode= ratingAuthorizationForm.getValues().roleCode;
+        	var result = roleCode;
+        	var file="FD_ROLEID=?";
+        	var orgId= ratingAuthorizationForm.getValues().orgId;
+        	if(orgId){
+        		result+=","+orgId;
+        		file+=",FD_ORGID=?";
+        	}else{
+        		file+=",FD_ORGID is null";
+        	}
+        	
+        	var ok = this;
+        	isc.FwRPCManager.get({
+             	url:'[(@{/irs/dataCheckController/checkData})]',
+             	urlParameters:{tableName:"NS_R_CFG_ADJUST_RANGE",file:file,data:result},
+              callback: function(response, rawData, request){
+              	if(rawData){
+              		isc.say("已存在相同配置！");
+              		return;
+              	}
+              	ok.Super('okButtonClick',arguments);;	
+              }
+           });
+        } */
+	},
+	actionMembers:[
+		'query','reset','refresh',/* 'add', */'update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				ratingLevelAdjustRangeGrid
+			]
+		})
+	}
+});
+</script>
+</html>

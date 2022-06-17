@@ -1,0 +1,184 @@
+/*
+ * 数据库建表 Liquibase ChangeLog XML 贡献项配置示例
+ * 功能: 该贡献项配置为框架提供数据库无关的建表脚本
+ * 使用说明:
+ * category: 建表脚本分类,可能的值包括: 
+ * 		install : 系统安装时自动执行
+ *		manual  : 系统安装时不自动执行,可通过 '开发者工具'-->'导入示例数据' 功能菜单执行
+ * order: 执行顺序
+ * description: 描述信息
+ * locations: 建表 liquibase changelog xml 文件位置
+ */
+ 
+
+[
+    {
+        "category" : "install",
+        "order"    : 30000,
+        "description":"工商资料",
+        "locations":[
+            "classpath:/liquibase/MV_1.0.0_20190506__DataBase IC_INF Database Schema DDL.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30001,
+        "description":"经营异常结果表",
+        "locations":[
+            "classpath:/liquibase/FB_ABNORMAL_OPERATION.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30002,
+        "description":"年报结果表",
+        "locations":[
+            "classpath:/liquibase/FB_ANNUAL_REPORT.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30003,
+        "description":"股权出质结果表",
+        "locations":[
+            "classpath:/liquibase/FB_EQUITY_PLEDGED.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30004,
+        "description":"事件检索",
+        "locations":[
+            "classpath:/liquibase/FB_EVENT.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30005,
+        "description":"被执行人结果表",
+        "locations":[
+            "classpath:/liquibase/FB_EXECUTE_PERSON.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30006,
+        "description":"失信被执行人结果表",
+        "locations":[
+            "classpath:/liquibase/FB_FAITH_EXECUTE_PERSON.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30007,
+        "description":"工商变更结果表",
+        "locations":[
+            "classpath:/liquibase/FB_INDUSTRIAL_CHANGE.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30008,
+        "description":"裁判文书",
+        "locations":[
+            "classpath:/liquibase/FB_JUDGE_DOC.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30009,
+        "description":"司法协助结果表",
+        "locations":[
+            "classpath:/liquibase/FB_JUDICIAL_ASSISTANCE.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30010,
+        "description":"涉诉公告",
+        "locations":[
+            "classpath:/liquibase/FB_LITIGATION_NOTICE.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30011,
+        "description":"重大税收违法结果表",
+        "locations":[
+            "classpath:/liquibase/FB_MAJOR_TAX_VIOLATION.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30012,
+        "description":"开庭公告",
+        "locations":[
+            "classpath:/liquibase/FB_OPENING_NOTICE.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30013,
+        "description":"催缴/欠税结果表",
+        "locations":[
+            "classpath:/liquibase/FB_OVERDUE_TAX_CALL.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30014,
+        "description":"行政处罚",
+        "locations":[
+            "classpath:/liquibase/FB_PUNISH.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30015,
+        "description":"股东信息",
+        "locations":[
+            "classpath:/liquibase/FB_SHAREHOLDER_INFO.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30016,
+        "description":"税务非正常户结果表",
+        "locations":[
+            "classpath:/liquibase/FB_TAX_IRREFULAR_ACCOUNT.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30017,
+        "description":"审判流程",
+        "locations":[
+            "classpath:/liquibase/FB_TRIAL_PROCESS.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30018,
+        "description":"债券公告",
+        "locations":[
+            "classpath:/liquibase/FB_BOUND_ANNOUNCEMENT.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30019,
+        "description":"评级记录",
+        "locations":[
+            "classpath:/liquibase/FB_RATING_RECORD.xml"
+        ]
+    },
+    {
+        "category" : "install",
+        "order"    : 30020,
+        "description":"信息披露",
+        "locations":[
+            "classpath:/liquibase/FB_INFO_DISCLOSURE.xml"
+        ]
+    }
+]
+

@@ -1,0 +1,2754 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>领导驾驶舱</title>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/swiper.min.css">
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/jquery-3.1.1.min.js}"></script>
+    <script src="/js/swiper.jquery.min.js"></script>
+	<style>
+html, body {
+	width: 100%;
+	height: 100%;
+	min-width: 1024px;
+	overflow: auto;
+}
+
+body {
+	background: url(/images/jscBg.png) bottom center no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.page-div {
+	height: 100%;
+}
+
+.col-lg-12 {
+	height: 100%;
+	padding: 15px;
+}
+
+.content-left, .content-middle, .content-right {
+	float: left;
+	width: 25%;
+	height: 100%;
+}
+
+.content-middle-info {
+	width: 50%;
+	padding: 0 1%;
+}
+
+.content-left-echarts, .content-right-echarts {
+	width: 100%;
+	height: 32.5%;
+	margin-bottom: 3%;
+}
+
+.right-echarts-block {
+	height: 30%;
+}
+
+.right-echarts-block-last {
+	height: 37.5%;
+}
+
+.content-middle-echarts {
+	width: 100%;
+	height: 66.4%;
+	margin-bottom: 1.6%;
+}
+
+.middle-echarts-bottom {
+	height: 32.5%;
+}
+
+.echarts-left-block, .echarts-right-block {
+	background: url(/images/border_img.png) top left no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.echarts-middle-block {
+	background: url(/images/border_middle_img.png) top left no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.inner-middle-block {
+	height: 100%;
+	padding: 2%;
+}
+
+.inner-top-block {
+	height: 38%;
+	padding-bottom: 2%;
+}
+
+.inner-top-block .echarts-title, .inner-bottom-block .echarts-title {
+	padding: 2% 0;
+	text-align: center;
+}
+
+.inner-top-content {
+	float: left;
+	height: 100%;
+}
+
+.content-one {
+	width: 30%;
+}
+
+.content-two {
+	width: 45%;
+	padding: 0 1.5%;
+}
+
+.content-three {
+	width: 25%;
+}
+
+.inner-echarts-block-one {
+	background: url(/images/border_bg1.png) top left no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.inner-echarts-block-two {
+	background: url(/images/border_bg2.png) top left no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.inner-echarts-block-three {
+	background: url(/images/border_bg3.png) top left no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.inner-bottom-block {
+	height: 62%;
+}
+
+.inner-bottom-content {
+	width: 49%;
+	height: 100%;
+	float: left;
+	margin-right: 2%;
+}
+
+.inner-bottom-content:last-child {
+	margin-right: 0;
+}
+
+.inner-echarts-block-bottom {
+	background: url(/images/border_rating.png) top left no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.echarts-middle-block-bottom {
+	background: url(/images/border_img_bottom.png) top left no-repeat;
+	background-size: 100% 100%;
+	width: 100%;
+	height: 100%;
+}
+
+.echarts-title {
+	padding: 12px 15px;
+}
+
+.echarts-title img {
+	width: 10px;
+	position: relative;
+	top: -1px;
+}
+
+.echarts-title span {
+	color: #04bec7;
+	font-size: 15px;
+	padding-left: 12px;
+	font-weight: bolder;
+	/* font-family: cursive; */
+}
+
+.totality {
+	color: #ffac1f;
+	font-size: 37px;
+	text-align: center;
+	padding: 22px 0 10px;
+	font-family: 'DIN';
+	font-weight: bolder;
+}
+
+.bottom-info {
+	text-align: center;
+	height: 22px;
+	line-height: 22px;
+}
+
+.small-txt {
+	color: #fff;
+	font-size: 12px;
+	transform: scale(0.8);
+	display: inline-block;
+}
+
+.during-totality {
+	color: #ffac1f;
+	padding: 0 2%;
+	font-size: 15px;
+	display: inline-block;
+	min-width: 20%;
+}
+
+.arrow-icon {
+	width: 10px;
+}
+
+.number-warning-block {
+	color: #fff;
+	text-align: center;
+	margin: 9.5% 2%;
+}
+
+.warning-account {
+	margin: 12% 2%;
+}
+
+.warning-txt {
+	font-size: 12px;
+}
+
+.number-risk {
+	font-size: 25px;
+	color: #ffac1f;
+	font-family: 'DIN';
+	font-weight: bolder;
+	padding: 0 5%;
+	min-width: 50%;
+	display: inline-block;
+}
+
+.total-number {
+	font-size: 15px;
+	padding-left: 2%;
+	display: inline-block;
+	min-width: 22%;
+	text-align: right;
+	color: #ffac1f;
+}
+
+.disposal-state-block {
+	color: #fff;
+	text-align: center;
+	margin: 3.5% 15%;
+}
+
+.state-number {
+	font-size: 25px;
+	color: #ffac1f;
+	font-family: 'DIN';
+	font-weight: bolder;
+	padding-left: 10%;
+	display: inline-block;
+	min-width: 70%;
+	text-align: right;
+}
+
+.rating-block {
+	color: #fff;
+	text-align: center;
+	padding: 2% 0;
+}
+
+.rating-number {
+	font-size: 25px;
+	color: #ffac1f;
+	font-family: 'DIN';
+	font-weight: bolder;
+	padding: 0 12px;
+}
+
+.rating-total {
+	font-size: 13px;
+}
+
+.dashboard-info {
+	color: #fff;
+	text-align: center;
+	position: relative;
+	top: -33%;
+	left: 3.5%;
+}
+
+.rating-totality {
+	color: #fff;
+}
+
+@media (max-height: 900px) {
+   .number-warning-block {
+  color: #fff;
+  text-align: center;
+  margin: 6.5% 2%;
+ }
+ .warning-account{
+ 	margin: 10% 2%;
+ }
+ .disposal-state-block {
+     color: #fff;
+     text-align: center;
+     margin: 3.5% 8%;
+ }
+ .dashboard-info{
+ 	left: 3%;
+ }
+ #pie1, #pie2 {
+ 	top: -25% !important;
+ }
+}
+
+@media (max-height: 700px) {
+   .number-warning-block {
+  color: #fff;
+  text-align: center;
+  margin: 3% 2%;
+ }
+ .warning-account{
+ 	margin: 5% 2%;
+ }
+ .disposal-state-block {
+     color: #fff;
+     text-align: center;
+     margin: -2% 8%;
+ }
+ .rating-block {
+ 	padding: 1% 0;
+ 	margin-top: -2%;
+ }
+ .dashboard-info{
+ 	left: 5%;
+ }
+ .another-dashboard{
+ 	left: 4.5%;
+ }
+ /* #mixlinebar1, #mixlinebar2, #histogram4 {
+ 	height: 118% !important;
+ 	margin: -60px auto !important;
+ } */
+ #pie1, #pie2 {
+ 	height: 92% !important;
+ 	top: -22% !important;
+ }
+ #radarMap1, #radarMap2, #radarMap3, #radarMap4 {
+ 	height: 90% !important;
+ 	margin: -7% auto 0 !important;
+ }
+}
+</style>
+	</head>
+
+	<body>
+		<div class="page-div">
+			<div class="col-lg-12">
+				<!-- 左边部分 -->
+				<div class="content-left">
+					<div class="content-left-echarts">
+						<div class="echarts-left-block">
+							<div class="echarts-title"><img src="/images/line_icon.png"><span>主体评级等级分布</span></div>
+							<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+							<div id="columnar" style="width: 100%;height: 100%;margin: -50px auto;"></div>
+						</div>
+					</div>
+					<div class="content-left-echarts">
+						<div class="echarts-left-block">
+							<div class="echarts-title"><img src="/images/line_icon.png"><span>债项评级等级分布</span></div>
+							<!-- 为ECharts准备一个具备大小（宽高）的Dom 面积图 -->
+							<div id="area" style="width: 100%;height: 100%;margin: -50px auto;"></div>
+						</div>
+					</div>
+					<div class="content-left-echarts">
+						<div class="echarts-left-block">
+							<div class="echarts-title"><img src="/images/line_icon.png"><span>风险预警数据分析</span></div>
+							<!-- 为ECharts准备一个具备大小（宽高）的Dom 横向柱状图 -->
+							<div id="histogram3" style="width: 100%;height: 100%;margin: -50px auto;"></div>
+						</div>
+					</div>
+				</div>
+				<!-- 中间部分 -->
+				<div class="content-middle content-middle-info">
+					<div class="content-middle-echarts">
+						<div class="echarts-middle-block">
+							<div class="inner-middle-block">
+								<div class="inner-top-block">
+									<div class="inner-top-content content-one">
+										<div class="inner-echarts-block-one">
+											<div class="echarts-title"><img src="/images/line_icon.png"><span>预警企业数</span></div>
+											<div class="number-warning-block warning-account">
+												<span class="warning-txt">监控</span><span class="number-risk" id="allY">0</span><span class="during-totality" id="currentY">0</span><span id="yUp"><img  src="/images/arrow_green.png" class="arrow-icon"></span> 
+											</div>
+											<div class="number-warning-block warning-account">
+												<span class="warning-txt">预警</span><span class="number-risk" id="allF">0</span><span class="during-totality" id="currentF">0</span> <span id="fUp"><img  src="/images/arrow_green.png" class="arrow-icon"></span>
+											</div>
+										</div>
+									</div>
+									<div class="inner-top-content content-two">
+										<div class="inner-echarts-block-two">
+											<div class="echarts-title"><img src="/images/line_icon.png"><span>预警信息数</span></div>
+											<div class="number-warning-block">
+												<span class="warning-txt">高风险</span><span class="number-risk" id="nowHigh">0</span><span class="small-txt">累计</span><span class="total-number" id="allHigh">0</span>
+											</div>
+											<div class="number-warning-block">
+												<span class="warning-txt">中风险</span><span class="number-risk" id="nowMed">0</span><span class="small-txt">累计</span><span class="total-number" id="allMed">0</span>
+											</div>
+										</div>
+									</div>
+									<div class="inner-top-content content-three">
+										<div class="inner-echarts-block-three">
+											<div class="echarts-title"><img src="/images/line_icon.png"><span>预警处置情况</span></div>
+											<div class="disposal-state-block"><span class="warning-txt">已处理</span><span class="state-number" id="haveTo">0</span></div>
+											<div class="disposal-state-block"><span class="warning-txt">处理中</span><span class="state-number" id="inTheProcessing">0</span></div>
+											<div class="disposal-state-block"><span class="warning-txt">未处理</span><span class="state-number" id="untreated">0</span></div>
+										</div>
+									</div>
+								</div>
+								<div class="inner-bottom-block">
+									<div class="inner-bottom-content">
+										<div class="inner-echarts-block-bottom">
+											<div class="echarts-title"><img src="/images/line_icon.png"><span>主体评级分数</span></div>
+											<div class="rating-block"><span class="warning-txt">当月</span><span class="rating-number" id="moAll">0</span><span class="rating-total" id="sumAll">0</span></div>
+											<!-- 为ECharts准备一个具备大小（宽高）的Dom 仪表盘 -->
+											<div id="dashboard1" style="width: 100%;height:90%;text-align: center;position: relative;top: -14%;"></div>
+											<div class="dashboard-info"><span class="warning-txt">累计</span><span class="during-totality rating-totality" id="avgAll">0</span>
+											<span id="mainUp">
+												<img src="/images/arrow_green.png" class="arrow-icon">
+											</span>
+											<span class="small-txt" id="previous">(0)</span></div>
+										</div>
+									</div>
+									<div class="inner-bottom-content">
+										<div class="inner-echarts-block-bottom">
+											<div class="echarts-title"><img src="/images/line_icon.png"><span>债项评级倍数</span></div>
+											<div class="rating-block"><span class="warning-txt">当月</span><span class="rating-number" id="debtMo">0</span><span class="rating-total" id="debtAll">0</span></div>
+											<!-- 为ECharts准备一个具备大小（宽高）的Dom 仪表盘 -->
+											<div id="dashboard2" style="width: 100%;height:90%;text-align: center;position: relative;top: -14%;"></div>
+											<div class="dashboard-info another-dashboard"><span class="warning-txt">累计</span><span class="during-totality rating-totality" id="allSco">0</span>
+											<span id="debtUp"></span>
+											<span class="small-txt" id="bj">(0)</span></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="content-middle-echarts middle-echarts-bottom">
+						<div class="echarts-middle-block-bottom">							
+							<div class="swiper-container mySwiperContent1" style="height: 100%" id="mySwiperContent1">
+							    <div class="swiper-wrapper" style="height: 100%">
+							        <div class="swiper-slide">
+										<div class="echarts-title"><img src="/images/line_icon.png"><span>主体评级变化趋势</span></div>
+										<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状混合图 -->
+										<div id="mixlinebar3" style="width: 100%;height: 106%;margin: -60px auto;"></div>			        	
+							        </div>
+							        <div class="swiper-slide">
+							        	<div class="echarts-title"><img src="/images/line_icon.png"><span>债项评级变化趋势</span></div>
+										<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状混合图 -->
+										<div id="mixlinebar4" style="width: 100%;height: 106%;margin: -60px auto;"></div>
+							        </div>
+							        <div class="swiper-slide">
+							        	<div class="echarts-title"><img src="/images/line_icon.png"><span>风险预警类别分布</span></div>
+										<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线图 -->
+										<div id="lineChart" style="width: 100%;height: 106%;margin: -60px auto;"></div>
+							        </div>
+							    </div>
+							    <!-- 如果需要分页器 -->
+							    <div class="swiper-pagination"></div>
+							    <!-- 如果需要导航按钮 -->
+							    <div class="swiper-button-prev"></div>
+							    <div class="swiper-button-next"></div>
+							    <!-- 如果需要滚动条 -->
+							    <!-- <div class="swiper-scrollbar"></div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 右边部分 -->
+				<div class="content-right">
+					<div class="content-right-echarts right-echarts-block">
+						<div class="echarts-right-block">
+							<div class="swiper-container mySwiperContent2" style="height: 100%" id="mySwiperContent2">
+							    <div class="swiper-wrapper" style="height: 100%">
+							        <div class="swiper-slide">
+										<div class="echarts-title"><img src="/images/line_icon.png"><span>主体评级行业分布</span></div>
+										<!-- 为ECharts准备一个具备大小（宽高）的Dom 圆饼图 -->
+										<div id="pie1" style="width: 100%;height: 100%;margin: 0 auto;top: -20%"></div>
+							        </div>
+							        <div class="swiper-slide">
+							        	<div class="echarts-title"><img src="/images/line_icon.png"><span>预警信息行业分布</span></div>
+										<!-- 为ECharts准备一个具备大小（宽高）的Dom 圆饼图 -->
+										<div id="pie2" style="width: 100%;height: 100%;margin: 0 auto;top: -20%"></div>
+							        </div>
+							    </div>
+							    <!-- 如果需要分页器 -->
+							    <div class="swiper-pagination"></div>
+							    <!-- 如果需要导航按钮 -->
+							    <div class="swiper-button-prev"></div>
+							    <div class="swiper-button-next"></div>
+							    <!-- 如果需要滚动条 -->
+							    <!-- <div class="swiper-scrollbar"></div> -->
+							</div>
+						</div>
+					</div>
+					<div class="content-right-echarts right-echarts-block">
+						<div class="echarts-right-block">
+							<div class="swiper-container mySwiperContent3" style="height: 100%" id="mySwiperContent3">
+							    <div class="swiper-wrapper" style="height: 100%">
+							        <div class="swiper-slide">
+										<div class="echarts-title"><img src="/images/line_icon.png"><span>主体评级事业部分布</span></div>
+										<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状图 -->
+										<div id="mixlinebar1" style="width: 85%;height: 100%;margin: -50px auto;"></div>			        	
+							        </div>
+							        <div class="swiper-slide">
+							        	<div class="echarts-title"><img src="/images/line_icon.png"><span>债项评级事业部分布</span></div>
+										<!-- 为ECharts准备一个具备大小（宽高）的Dom 折线柱状图 -->
+										<div id="mixlinebar2" style="width: 85%;height: 100%;margin: -50px auto;"></div>
+							        </div>
+							        <div class="swiper-slide">
+							        	<div class="echarts-title"><img src="/images/line_icon.png"><span>预警信息事业部分布</span></div>
+										<!-- 为ECharts准备一个具备大小（宽高）的Dom 柱状图 -->
+										<div id="histogram4" style="width: 90%;height: 100%;margin: -50px auto;left: 5%;"></div>
+							        </div>
+							    </div>
+							    <!-- 如果需要分页器 -->
+							    <div class="swiper-pagination"></div>
+							    <!-- 如果需要导航按钮 -->
+							    <div class="swiper-button-prev"></div>
+							    <div class="swiper-button-next"></div>
+							    <!-- 如果需要滚动条 -->
+							    <!-- <div class="swiper-scrollbar"></div> -->
+							</div>
+						</div>
+					</div>
+					<div class="content-right-echarts right-echarts-block-last">
+						<div class="echarts-right-block">
+							<div class="swiper-container mySwiperContent4" style="height: 100%" id="mySwiperContent4">
+							    <div class="swiper-wrapper" style="height: 100%">
+							        <div class="swiper-slide">
+										<div class="echarts-title"><img src="/images/line_icon.png"><span>主体新建2.0模型指标得分</span></div>
+										<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+										<div id="radarMap1" style="width: 100%;height: 100%;margin: -10% auto 0;"></div>			        	
+							        </div>
+							        <div class="swiper-slide">
+							        	<div class="echarts-title"><img src="/images/line_icon.png"><span>主体通用2.0模型指标得分</span></div>
+										<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+										<div id="radarMap2" style="width: 100%;height: 100%;margin: -10% auto 0;"></div>
+							        </div>
+							        <div class="swiper-slide">
+							        	<div class="echarts-title"><img src="/images/line_icon.png"><span>主体新建1.0模型指标得分</span></div>
+										<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+										<div id="radarMap3" style="width: 100%;height: 100%;margin: -10% auto 0;"></div>
+							        </div>
+							        <div class="swiper-slide">
+							        	<div class="echarts-title"><img src="/images/line_icon.png"><span>主体通用1.0模型指标得分</span></div>
+										<!-- 为ECharts准备一个具备大小（宽高）的Dom 雷达图 -->
+										<div id="radarMap4" style="width: 100%;height: 100%;margin: -10% auto 0;"></div>
+							        </div>
+							    </div>
+							    <!-- 如果需要分页器 -->
+							    <div class="swiper-pagination"></div>
+							    <!-- 如果需要导航按钮 -->
+							    <div class="swiper-button-prev"></div>
+							    <div class="swiper-button-next"></div>
+							    <!-- 如果需要滚动条 -->
+							    <!-- <div class="swiper-scrollbar"></div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="/js/echarts.js"></script>		
+		<script>
+		 $.ajax({
+				url: "/indexReport/focusOn", 
+				async:false,
+				success: function(result){
+					$("#currentF").text(result[1]);
+					$("#allF").text(result[0]);
+					$("#allY").text(result[2]);
+					$("#currentY").text(result[3]);
+					if(result[3]>=0){
+						$("#yUp").html('<img src="/images/arrow_green.png" class="arrow-icon">');
+					}else{
+						$("#yUp").html('<img src="/images/arrow_red.png" class="arrow-icon">');
+					}
+					if(result[1]>=0){
+						$("#fUp").html('<img src="/images/arrow_green.png" class="arrow-icon">');
+					}else{
+						$("#fUp").html('<img src="/images/arrow_red.png" class="arrow-icon">');						
+					}
+		      }})
+		 $.ajax({
+				url: "/indexReport/queryWarnNum", 
+				async:false,
+				success: function(result){
+					$("#nowHigh").text(result[1]);
+					$("#allHigh").text(result[0]);
+					$("#nowMed").text(result[3]);
+					$("#allMed").text(result[2]);
+		      }})
+		 $.ajax({
+				url: "/indexReport/disposalNum", 
+				async:false,
+				success: function(result){
+					$("#untreated").text(result[0]);
+					$("#inTheProcessing").text(result[1]);
+					$("#haveTo").text(result[2]);
+		      }})
+			$(document).ready(function(){
+			  	var mySwiper1=inintSwiper(".mySwiperContent1",function(s,i){//回调函数
+				    //console.log("mySwiper1 index",s.activeIndex);//下标
+				    //解决swiper3向下轮播 下标大于个数，向上轮播会小于1的bug
+				    if(i>3){mySwiper1.slideTo(1);}
+				    if(i==0){mySwiper1.slideTo(3);}
+			  	})
+			  	var mySwiper2=inintSwiper(".mySwiperContent2",function(s,i){//回调函数
+			  		if(i>2){mySwiper2.slideTo(1);}
+				    if(i==0){mySwiper2.slideTo(2);}
+			  	})
+			  	var mySwiper3=inintSwiper(".mySwiperContent3",function(s,i){//回调函数
+			  		if(i>3){mySwiper3.slideTo(1);}
+				    if(i==0){mySwiper3.slideTo(3);}
+			  	})
+			  	var mySwiper4=inintSwiper(".mySwiperContent4",function(s,i){//回调函数
+			  		if(i>4){mySwiper4.slideTo(1);}
+				    if(i==0){mySwiper4.slideTo(4);}
+			  	})
+			  	mouseEvent("mySwiperContent1",mySwiper1);
+		      	mouseEvent("mySwiperContent2",mySwiper2);
+		      	mouseEvent("mySwiperContent3",mySwiper3);
+		      	mouseEvent("mySwiperContent4",mySwiper4);
+			});
+			/*鼠标移入停止轮播，鼠标离开 继续轮播*/
+			function mouseEvent(tagDomName,swiperObj){
+				var comtainer = document.getElementById(tagDomName);
+		      comtainer.onmouseenter = function () {
+		        swiperObj.stopAutoplay();
+		      };
+		      comtainer.onmouseleave = function () {
+		        swiperObj.startAutoplay();
+		      }
+			}
+			//初始化Swiper
+			function inintSwiper(tagDomName,callback){
+				var mySwiper = new Swiper (tagDomName, {
+				    // 滚动方向 horizontal/vertical
+				    direction: 'horizontal',
+				    // 自动播放时间
+			        autoplay:10000,
+			        // 播放的速度
+			        //speed:2000,
+				    // 是否循环播放
+				    loop: true,
+				    // 如果需要分页器（小圆点）
+				    // 是否需要分页器
+				    pagination: (tagDomName+' .swiper-pagination'),
+				    // 点击分页器是否切换到对应的图片 是 true 否 false
+				    paginationClickable:true,
+
+				    // 如果需要前进后退按钮
+				    nextButton: (tagDomName+' .swiper-button-next'),
+				    prevButton: (tagDomName+' .swiper-button-prev'),
+
+				    // 用户操作swiper之后，是否禁止autoplay。默认为true：停止。
+				    // 如果设置为false，用户操作swiper之后自动切换不会停止，每次都会重新启动autoplay。
+				    // 操作包括触碰，拖动，点击pagination等。
+				    autoplayDisableOnInteraction:false,
+			    	//swiper从一个slide过渡到另一个slide结束时执行
+				    onSlideChangeEnd: function(s){
+				      	callback(s,s.activeIndex);//回调函数，返回swiper对象和下标值
+				    }
+				})
+				return mySwiper;//返回swiper对象
+			}
+			// 基于准备好的dom，初始化ECharts实例
+			var columnar = echarts.init(document.getElementById('columnar'));
+			var area = echarts.init(document.getElementById('area'));
+			var histogram3 = echarts.init(document.getElementById('histogram3'));
+			var mixlinebar1 = echarts.init(document.getElementById('mixlinebar1'));
+			var mixlinebar2 = echarts.init(document.getElementById('mixlinebar2'));
+			var histogram4 = echarts.init(document.getElementById('histogram4'));
+			var dashboard1 = echarts.init(document.getElementById('dashboard1'));
+			var dashboard2 = echarts.init(document.getElementById('dashboard2'));
+			var mixlinebar3 = echarts.init(document.getElementById('mixlinebar3'));
+			var mixlinebar4 = echarts.init(document.getElementById('mixlinebar4'));
+			var pie1 = echarts.init(document.getElementById('pie1'));
+			var pie2 = echarts.init(document.getElementById('pie2'));
+			var radarMap1 = echarts.init(document.getElementById('radarMap1'));
+			var radarMap2 = echarts.init(document.getElementById('radarMap2'));
+			var radarMap3 = echarts.init(document.getElementById('radarMap3'));
+			var radarMap4 = echarts.init(document.getElementById('radarMap4'));
+			var lineChart = echarts.init(document.getElementById('lineChart'));
+			var colorTemplate1 = [
+				[0.6183, "#fd584f"], 
+				[0.7471, "#50a3fd"], 
+				[1, "#23f604"]
+			];
+			var colorTemplate2 = [
+				[0.2, "#fd584f"], 
+				[0.8, "#50a3fd"], 
+				[1, "#23f604"]
+			];
+			var optionData0 = [];
+			var optionData1 = [];
+			var optionData2 = [];
+			var optionData3 = [];
+			 $.ajax({
+					url: "/indexReport/queryMainLevel", 
+					async:false,
+					success: function(result){
+						optionData0=result[0];
+						optionData1=result[1];
+						optionData2=result[2];
+						optionData3=result[3];
+			      }})
+			
+			// 指定图表的配置项和数据
+			var option1 = {
+			    tooltip : {
+			        trigger: 'axis',
+			        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+			            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			        },
+			        formatter: function (params) {
+			            var tar = params[1];
+			            return tar.name + ' : ' + tar.value;
+			        }
+			    },
+			    grid: {
+			        left: '3%',
+			        right: '4%',
+			        bottom: '3%',
+			        containLabel: true
+			    },
+			    xAxis: {
+			        type : 'category',
+			        splitLine: {show:false},
+
+			        axisLine:{
+	                    lineStyle:{color:'#fff'}  //y轴坐标轴颜色
+	                },
+	                axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+			        axisLabel: { //坐标轴刻度标签的相关设置。
+			        	interval:0,//代表显示所有x轴标签
+						textStyle: {
+							color: '#fff',
+							fontSize: 8
+						},
+						formatter: function (value, index) {
+						    //console.log(value,index)
+						    //var valuePer = optionData2;
+						    return optionData2[index]+"%"+"\n"+value;
+						},
+					},
+			        data : optionData0
+			    },
+			    yAxis : [
+			        {
+			            type : 'value',
+			            axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'white',
+					            width:1
+					        }
+					    },
+			            axisLabel : {
+			            	formatter: function(){
+				                return "";
+				            }
+				        },
+				        axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+			            splitLine: {　　　　
+							show: false
+						}
+			        }
+			    ],
+			    series: [
+			        {
+			            name: '辅助',
+			            type: 'bar',
+			            stack:  '总量',
+			            itemStyle: {
+			                normal: {
+			                    barBorderColor: 'rgba(0,0,0,0)',
+			                    color: 'rgba(0,0,0,0)'
+			                },
+			                emphasis: {
+			                    barBorderColor: 'rgba(0,0,0,0)',
+			                    color: 'rgba(0,0,0,0)'
+			                }
+			            },
+			            data: optionData3
+			        },
+			        {
+			            name: '等级',
+			            type: 'bar',
+			            itemStyle: {
+			                normal: {
+			                		label: {
+							            show: true,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#83bff6'},
+			                            {offset: 0.5, color: '#188df0'},
+			                            {offset: 1, color: '#188df0'}
+			                        ]
+			                    )
+			                },
+			                emphasis: {
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#2378f7'},
+			                            {offset: 0.7, color: '#2378f7'},
+			                            {offset: 1, color: '#83bff6'}
+			                        ]
+			                    )
+			                }
+			            },
+			            stack: '总量',
+			            label: {
+			                normal: {
+			                    show: true,
+			                    fontSize: 8,
+			                    position: 'top'
+			                }
+			            },
+			            barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+			            data:optionData1
+			        }
+			    ]
+			};
+			 
+			 
+			 $.ajax({
+					url: "/indexReport/queryDebtLevel", 
+					async:false,
+					success: function(result){
+						optionData0=result[0];
+						optionData1=result[1];
+			      }})
+			 
+			var option2 = {
+				 tooltip: {
+				        trigger: 'axis'
+				    },
+				    grid: {
+				        left: '3%',
+				        right: '4%',
+				        bottom: '3%',
+				        containLabel: true
+				    },
+				    xAxis: {
+				        type: 'category',
+				        boundaryGap: false,
+				        axisLine:{
+			                lineStyle:{color:'#fff'}    // x轴坐标轴颜色
+			            },
+			            axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+				    	data : optionData0
+				    },
+				    yAxis: {
+				    	type : 'value',
+			            axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'white',
+					            width:1
+					        }
+					    },
+			            axisLabel : {
+			            	formatter: function(){
+				                return "";
+				            }
+				        },
+				        axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+			            splitLine: {　　　　
+							show: false
+						}
+				    },
+				    series: [{
+				        data: optionData1,
+				        type: 'line',
+				        smooth: true,
+				        itemStyle: {  
+			                normal: { //颜色渐变函数 前四个参数分别表示四个位置依次为左、下、右、上
+			                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1,[{
+			                            offset: 0, color: 'rgb(60, 153, 255, 1)' // 0% 处的颜色
+			                        }, {
+			                            offset: 0.4, color: 'rgb(60, 153, 255, .8)' // 40% 处的颜色
+			                        }, {
+			                            offset: 1, color: 'rgb(60, 153, 255, 0)' // 100% 处的颜色
+			                        }]
+			                    ), //背景渐变色    
+			                    lineStyle: {        // 系列级个性化折线样式  
+			                        width: 3,  
+			                        type: 'solid',  
+			                        color: "#0180ff" //折线的颜色
+			                    }  
+			                },  
+			                emphasis: {
+			                    color: '#0180ff',   
+			                    lineStyle: {        // 系列级个性化折线样式  
+			                        width: 2,  
+			                        type: 'dotted',  
+			                        color: "#fff" 
+			                    }  
+			                }  
+			            },//线条样式
+			            label: {
+			                normal: {
+			                    show: true,
+			                    color: 'white',
+			                    position: 'top'
+			                }
+			            },
+				        areaStyle: {}
+				    }]
+			};
+			 var option3Data0=[];
+			 var option3Data1=[];
+			 var option3Data2=[];
+			 $.ajax({
+					url: "/indexReport/queryWarn", 
+					async:false,
+					success: function(result){
+						option3Data0=result[0];
+						option3Data1=result[1];
+						option3Data2=result[2];
+			      }})
+			 
+			var option3 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend: {
+			        data:['高风险','中风险'],
+			        //orient: 'vertical',  //垂直显示
+		            x: 'right', //居右显示
+		            y: '6%',    //延Y轴居上
+			        itemWidth: 12, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF',
+						fontSize: 10
+					}
+			    },
+			    grid: {
+			        left: '3%',
+			        right: '4%',
+			        bottom: '3%',
+			        containLabel: true
+			    },
+				xAxis: {
+					type: 'value',
+					axisLabel: {
+						show: false,
+						textStyle: {
+							color: '#fff'
+						}
+					},
+					axisLine:{
+		                lineStyle:{color:'#fff'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false　　
+					}
+				},
+				yAxis: {
+					type: 'category',
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+			        axisLine:{  //设置坐标轴字体颜色和宽度
+				        lineStyle:{
+				            color:'white',
+				            width:1
+				        }
+				    },
+					axisLabel: {
+						formatter: '{value}',
+						textStyle: {
+							color: '#fff'
+						}
+					},
+					data: option3Data0
+				},
+				series: [{
+						name: '高风险',
+						type: 'bar',
+						color: '#f19500',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						stack: '总量',
+						label: {
+							normal: {
+								show: false,
+								position: 'insideRight'
+							}
+						},
+						data: option3Data1
+					},
+					{
+						name: '中风险',
+						type: 'bar',
+						color: '#1d53ff',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						stack: '总量',
+						label: {
+							normal: {
+								show: false,
+								position: 'insideRight'
+							}
+						},
+						data: option3Data2
+					}
+				]
+			};			
+			 
+			 var option4Data0="";
+			 var option4Data1="";
+			 var option4Data2="";
+			 var option4DataRed="";
+			 var option4DataBule="";
+			 $.ajax({
+					url: "/indexReport/mainDashboard", 
+					async:false,
+					success: function(result){
+						option4Data0=result[0];
+						option4Data0=result[0];
+						option4Data1=result[0];
+						if(option4Data0>100){
+							option4Data2=option4Data1;
+						}
+						
+						if(option4Data0<=60){
+							option4Data2=(option4Data0/60)*20;
+						} else if(option4Data0>60&&option4Data0<=80){
+							option4Data2=20+((option4Data0-60)*3);
+						}
+						if(option4Data0>80){
+							option4Data2=result[0];
+						}
+						
+							option4DataRed=(20+((61.83-60)*3))/100;
+							option4DataBule=(20+((74.71-60)*3))/100;
+							colorTemplate1 = [
+							[option4DataRed, "#fd584f"], 
+							[option4DataBule, "#50a3fd"], 
+							[1, "#23f604"]
+						];
+						$("#moAll").html(result[1]);
+						$("#sumAll").html("("+result[2]+")");
+						$("#avgAll").html(result[3]);
+						
+						if(result[4]>=0){
+							$("#mainUp").html('<img src="/images/arrow_green.png" class="arrow-icon">');
+						}else{
+							$("#mainUp").html('<img src="/images/arrow_red.png" class="arrow-icon">');
+						}
+						
+						$("#previous").html("("+result[4]+")");
+			      }})
+			 
+			 
+			var option4 = {
+				 tooltip : {
+			        formatter: function(){
+			        	return option4Data1;
+			        }
+			    },
+			    series: [
+			        {
+			            name: '',
+			            clockwise:true, //仪表盘刻度顺时针增长
+			            min: 0,                 // 最小的数据值,默认 0 。映射到 minAngle。
+			            max: 100,               // 最大的数据值,默认 100 。映射到 maxAngle。
+			            //splitNumber: 3,        // 仪表盘刻度的分割段数,默认 10。
+			            type: 'gauge',
+			            //startAngle: 180,
+		                //endAngle: 0,
+			            radius: '70%',
+			            axisLabel: {            // 坐标轴小标记
+			                textStyle: {       // 属性lineStyle控制线条样式			                    
+			                    color: '#fff',
+			                    fontSize: 10,
+			                    shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                },
+			                formatter:function(v){
+			                	debugger
+	                		    switch (v+'') {
+			                        case '0' : return '0';
+			                        case '20' : return '60';
+			                        case '50' : return '70';
+			                        case '80' : return '80';
+			                        case '100' : return '100';
+			                    }
+	                		}
+			            },
+						axisLine: {             // 仪表盘轴线(轮廓线)相关配置。
+		                    show: true,             // 是否显示仪表盘轴线(轮廓线),默认 true。
+		                    lineStyle: {            // 仪表盘轴线样式。
+		                        color: colorTemplate1,  //仪表盘的轴线可以被分成不同颜色的多段。每段的  结束位置(范围是[0,1]) 和  颜色  可以通过一个数组来表示。
+		                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+		                        width: 5,                  //轴线宽度,默认 30。
+		                        shadowBlur: 5,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。 
+		                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+		                    }
+		                },
+						splitLine: {            // 分隔线样式。
+		                    show: true,             // 是否显示分隔线,默认 true。
+		                    length: 13,             // 分隔线线长。支持相对半径的百分比,默认 30。
+		                    lineStyle: {            // 分隔线样式。
+		                        color: "#fff",              //线的颜色,默认 #eee。
+		                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+		                        width: 2,                   //线度,默认 2。
+		                        type: "solid",              //线的类型,默认 solid。 此外还有 dashed,dotted
+		                        shadowBlur: 5,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。 
+		                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+		                    }
+		                },
+		                axisTick: {            // 坐标轴小标记
+			                length: 8,        // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: 'auto'
+			                }
+			            },
+			            pointer: { //指针粗细
+							length: "70%",          // 指针长度，可以是绝对数值，也可以是相对于半径的百分比,默认 80%。
+                    		width: 4               // 指针宽度,默认 8。
+						},
+						itemStyle: {            // 仪表盘指针样式。
+		                    color: "auto",          // 指针颜色，默认(auto)取数值所在的区间的颜色
+		                    opacity: 1,             // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+		                    borderWidth: 0,         // 描边线宽,默认 0。为 0 时无描边。
+		                    borderType: "solid",    // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+		                    borderColor: "#000",    // 图形的描边颜色,默认 "#000"。支持的颜色格式同 color，不支持回调函数。
+		                    shadowBlur: 5,         // (发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。 
+		                    shadowColor: "#fff",    // 阴影颜色。支持的格式同color。
+		                },
+		                title: {                // 仪表盘标题。
+		                    color: "#fff",          // 文字的颜色,默认 #333。
+		                    fontSize: 12,           // 文字的字体大小,默认 15。
+		                },
+			            detail: {               // 仪表盘详情，用于显示数据。
+		                    show: true,             // 是否显示详情,默认 true。
+		                    offsetCenter: [0,"65%"],// 相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+		                    color: "auto",          // 文字的颜色,默认 auto。
+		                    fontSize: 16,           // 文字的字体大小,默认 15。
+		                    formatter: function(value){
+		                    	return option4Data1;
+		                    }  // 格式化函数或者字符串
+		                },
+			            data: [{value:option4Data2, name: '当月'}]
+			        }
+			    ]
+			};
+			 
+			 var colorTemplateDebt =[];
+			 var option5Data0="";
+			 var option5Data1="";
+			 var option5Data2="";
+			 var option5DataRed="";
+			 var option5DataBule="";
+			 $.ajax({
+					url: "/indexReport/debtDashboard", 
+					async:false,
+					success: function(result){
+						option5Data0=result[0];
+						option5Data1=result[0];
+						if(option5Data0>100){
+							option5Data2=option5Data1;
+						}
+						if(option5Data0>21.57&&option5Data0<=100){
+							option5Data2=20+(((option5Data0-21.57)/(100-21.57))*4);
+						} else if(option5Data0>6.1&&option5Data0<=21.57){
+							option5Data2=16+(((option5Data0-6.1)/(21.57-6.1))*4);
+						}else
+						if(option5Data0>2.97&&option5Data0<=6.1){
+							option5Data2=12+(((option5Data0-2.97)/(6.1-2.97))*4);
+						}else
+						if(option5Data0>1.57&&option5Data0<=2.97){
+							option5Data2=8+(((option5Data0-1.57)/(2.97-1.57))*4);
+						}else
+						if(option5Data0>0.76&&option5Data0<=1.57){
+							option5Data2=4+(((option5Data0-0.76)/(1.57-0.76))*4);
+						}else
+							if(option5Data0<=0.76){
+								option5Data2=(option5Data0/0.76)*4;
+							}
+						
+							option5DataRed=(4+(((1.55-0.76)/(1.57-0.76))*4))/24;
+							option5DataBule=(16+(((11.60-6.1)/(21.57-6.1))*4))/24;
+						colorTemplateDebt = [
+							[option5DataRed, "#fd584f"], 
+							[option5DataBule, "#50a3fd"], 
+							[1, "#23f604"]
+						];
+						//debugger
+						
+						$("#debtMo").html(result[1]);
+						$("#debtAll").html("("+result[2]+")");
+						$("#allSco").html(result[3]);
+						if(result[4]>=0){
+							$("#debtUp").html('<img src="/images/arrow_green.png" class="arrow-icon">');
+						}else{
+							$("#debtUp").html('<img src="/images/arrow_red.png" class="arrow-icon">');
+						}
+						$("#bj").html("("+result[4]+")");
+			      }})
+			 
+			var option5 = {
+			    tooltip : {
+			        formatter: function(){
+			        	return option5Data1;
+			        }
+			    },
+			    series: [
+			        {
+			            name: '',
+			            clockwise:true, //仪表盘刻度顺时针增长
+			            min: 0,                 // 最小的数据值,默认 0 。映射到 minAngle。
+			            max: 24,               // 最大的数据值,默认 100 。映射到 maxAngle。
+			            splitNumber: 6,        // 仪表盘刻度的分割段数,默认 10。
+			            type: 'gauge',
+			            radius: '70%',
+						axisLine: {             // 仪表盘轴线(轮廓线)相关配置。
+		                    lineStyle: {            // 仪表盘轴线样式。
+		                        color: colorTemplateDebt,  //仪表盘的轴线可以被分成不同颜色的多段。每段的  结束位置(范围是[0,1]) 和  颜色  可以通过一个数组来表示。
+		                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+		                        width: 5,                  //轴线宽度,默认 30。
+		                        shadowBlur: 5,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。 
+		                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+		                    }
+		                },
+		                axisLabel: {
+		                	textStyle: {       // 属性lineStyle控制线条样式			                    
+			                    color: '#fff',
+			                    fontSize: 10,
+			                    shadowColor : '#fff', //默认透明
+			                    shadowBlur: 10
+			                },
+			                formatter:function(v){
+			                		    switch (v+'') {
+				                        case '0' : return '0';
+				                        case '4' : return '0.76';
+				                        case '8' : return '1.57';
+				                        case '12' : return '2.97';
+				                        case '16' : return '6.1';
+				                        case '20' : return '21.57';
+				                        case '24' : return '+∞';
+				                    }  
+			                  
+			                }
+			            },
+						splitLine: {            // 分隔线样式。
+		                    show: true,             // 是否显示分隔线,默认 true。
+		                    length: 13,             // 分隔线线长。支持相对半径的百分比,默认 30。
+		                    lineStyle: {            // 分隔线样式。
+		                        color: "#fff",              //线的颜色,默认 #eee。
+		                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+		                        width: 2,                   //线度,默认 2。
+		                        type: "solid",              //线的类型,默认 solid。 此外还有 dashed,dotted
+		                        shadowBlur: 5,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。 
+		                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+		                    }
+		                },
+		                axisTick: {            // 坐标轴小标记
+			                length: 8,        // 属性length控制线长
+			                lineStyle: {       // 属性lineStyle控制线条样式
+			                    color: 'auto'
+			                }
+			            },
+			            pointer: { //指针粗细
+							length: "70%",          // 指针长度，可以是绝对数值，也可以是相对于半径的百分比,默认 80%。
+                    		width: 4               // 指针宽度,默认 8。
+						},
+						itemStyle: {            // 仪表盘指针样式。
+		                    color: "auto",          // 指针颜色，默认(auto)取数值所在的区间的颜色
+		                    opacity: 1,             // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+		                    borderWidth: 0,         // 描边线宽,默认 0。为 0 时无描边。
+		                    borderType: "solid",    // 柱条的描边类型，默认为实线，支持 'solid', 'dashed', 'dotted'。
+		                    borderColor: "#000",    // 图形的描边颜色,默认 "#000"。支持的颜色格式同 color，不支持回调函数。
+		                    shadowBlur: 5,         // (发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。 
+		                    shadowColor: "#fff",    // 阴影颜色。支持的格式同color。
+		                   /*  formatter: function(value){
+		                    	return option5Data1;
+		                    }, */ 
+		                },
+		                title: {                // 仪表盘标题。
+		                    color: "#fff",          // 文字的颜色,默认 #333。
+		                    fontSize: 12,           // 文字的字体大小,默认 15。
+		                },
+			            detail: {               // 仪表盘详情，用于显示数据。
+		                    show: true,             // 是否显示详情,默认 true。
+		                    offsetCenter: [0,"65%"],// 相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+		                    color: "auto",          // 文字的颜色,默认 auto。
+		                    fontSize: 16,           // 文字的字体大小,默认 15。
+		                    formatter: function(value){
+		                    	return option5Data1;
+		                    },  // 格式化函数或者字符串
+		                },
+			            data: [{value: option5Data2, name: '当月'}],
+			        }
+			    ]
+			};
+			var option6Data0=[];
+			var option6Data1=[];
+			var option6Data2=[];
+			 $.ajax({
+					url: "/indexReport/queryMainChange", 
+					async:false,
+					success: function(result){
+						option6Data0=result[0];
+						option6Data1=result[1];
+						option6Data2=result[2];
+			      }})
+			
+			var option6 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						//type: 'cross',
+						crossStyle: {
+							color: '#999'
+						}
+					}
+				},
+				legend: {
+		            x: 'right', //居右显示
+		            y: '8%',    //延Y轴居上
+					data: ['数量', '平均分'],
+					itemWidth: 22, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF',
+						fontSize: 10
+					}
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#fff'
+						},
+						interval: 0,
+						rotate: "30"
+					},
+					axisLine:{
+		                lineStyle:{color:'#fff'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: option6Data0,
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'white',
+					            width:1
+					        }
+					    },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff'
+							}
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						splitLine: {
+							show: false
+						}
+						/*name: '水量',
+						min: 0,
+						max: 250,
+						interval: 50,
+						axisLabel: {
+						    formatter: '{value} ml'
+						}*/
+					},
+					{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'white',
+					            width:1
+					        }
+					    },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff'
+							}
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						splitLine: {
+							show: false
+						}
+						/*name: '温度',
+						min: 0,
+						max: 25,
+						interval: 5,
+						axisLabel: {
+						    formatter: '{value} °C'
+						}*/
+					}
+				],
+				series: [{
+						name: '数量',
+						type: 'bar',
+						itemStyle: {
+			                normal: {
+			                		label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#83bff6'},
+			                            {offset: 0.5, color: '#188df0'},
+			                            {offset: 1, color: '#188df0'}
+			                        ]
+			                    )
+			                },
+			                emphasis: {
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#2378f7'},
+			                            {offset: 0.7, color: '#2378f7'},
+			                            {offset: 1, color: '#83bff6'}
+			                        ]
+			                    )
+			                }
+			            },
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						data: option6Data1
+					},
+					{
+						name: '平均分',
+						type: 'line',
+						yAxisIndex: 1,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#fff', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#fff' //改变折线颜色
+								} 
+							} 
+						},
+						data: option6Data2
+					}
+				]
+			};
+			 
+				var option7Data0=[];
+				var option7Data1=[];
+				var option7Data2=[];
+				 $.ajax({
+						url: "/indexReport/queryDebtChange", 
+						async:false,
+						success: function(result){
+							option7Data0=result[0];
+							option7Data1=result[1];
+							option7Data2=result[2];
+				      }})
+			 
+			 
+			var option7 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						//type: 'cross',
+						crossStyle: {
+							color: '#999'
+						}
+					}
+				},
+				legend: {
+					x: 'right', //居右显示
+					y: '8%',    //延Y轴居上
+					data: ['数量', '平均分'],
+					itemWidth: 22, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF',
+						fontSize: 10
+					}
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#fff'
+						},
+						interval: 0,
+						rotate: "30"
+					},
+					axisLine:{
+		                lineStyle:{color:'#fff'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false
+					},
+					data: option7Data0,
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'white',
+					            width:1
+					        }
+					    },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff'
+							}
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						splitLine: {
+							show: false
+						}
+					},
+					{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'white',
+					            width:1
+					        }
+					    },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff'
+							}
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						splitLine: {
+							show: false
+						}
+					}
+				],
+				series: [{
+						name: '数量',
+						type: 'bar',
+						itemStyle: {
+			                normal: {
+			                		label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#83bff6'},
+			                            {offset: 0.5, color: '#188df0'},
+			                            {offset: 1, color: '#188df0'}
+			                        ]
+			                    )
+			                },
+			                emphasis: {
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#2378f7'},
+			                            {offset: 0.7, color: '#2378f7'},
+			                            {offset: 1, color: '#83bff6'}
+			                        ]
+			                    )
+			                }
+			            },
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						data: option7Data1
+					},
+					{
+						name: '平均分',
+						type: 'line',
+						yAxisIndex: 1,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#fff', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#fff' //改变折线颜色
+								} 
+							} 
+						},
+						data: option7Data2
+					}
+				]
+			};
+			var option8Data0=[];
+			var option8Data1=[];
+			var option8Data2=[];
+			var option8Data3=[];
+			 $.ajax({
+					url: "/indexReport/queryWarnTrend", 
+					async:false,
+					success: function(result){
+						option8Data0=result[0];
+						option8Data1=result[1];
+						option8Data2=result[2];
+						option8Data3=result[3];
+			      }})
+			
+			var option8 = {
+			    tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					x: 'right', //居右显示
+		            y: '8%',    //延Y轴居上
+					data: ['工商', '诉讼', '舆情'],
+					itemWidth: 22, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF',
+						fontSize: 10
+					}
+				},
+			    xAxis: {
+			        type: 'category',
+			        axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#fff'
+						},
+						interval: 0,
+						rotate: "30"
+					},
+					axisLine:{
+		                lineStyle:{color:'#fff'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false　　
+					},
+			        data: option8Data0
+			    },
+			    yAxis: {
+			        type: 'value',
+			        axisLine:{
+		                lineStyle:{color:'#fff'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+			        axisLabel: {
+						formatter: '{value}',
+						textStyle: {
+							color: '#fff'
+						}
+					},
+					splitLine: {
+						show: false
+					}
+			    },
+			    series: [
+			        {
+			            name: '工商',
+						type: 'line',
+						symbol: 'circle',     //设定为实心点
+			            symbolSize: 5,   //设定实心点的大小
+			            animation: true,
+			            animationEasing: "ExponentialOut",
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#06d783', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#06d783' //改变折线颜色
+								} 
+							} 
+						},
+						data: option8Data1
+			        },
+			        {
+			            name: '诉讼',
+						type: 'line',
+						symbol: 'circle',     //设定为实心点
+						symbolSize: 5,   //设定实心点的大小
+						animation: true,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#eb6f4b', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#eb6f4b' //改变折线颜色
+								} 
+							} 
+						},
+						data: option8Data2
+			        },
+			        {
+			            name: '舆情',
+						type: 'line',
+						symbol: 'circle',     //设定为实心点
+						symbolSize: 5,   //设定实心点的大小
+						animation: true,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#068ef1', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#068ef1' //改变折线颜色
+								} 
+							} 
+						},
+						data: option8Data3
+			        },
+			    ]
+			};
+			 
+			 
+			 
+				var option9Data0=[];
+				var option9Data1=[];
+				 $.ajax({
+						url: "/indexReport/mainIndustry", 
+						async:false,
+						success: function(result){
+							option9Data0=result[0];
+							option9Data1=result[1];
+							console.log("option9Data1",option9Data1);
+				      }})
+			 
+			var option9 = {
+				tooltip: {
+					trigger: 'item',
+					formatter:function(data){
+						return data.name+': '+data.percent.toFixed(1)+'%';
+					}
+				},
+				color: ['#0c4685', '#0e69cd', '#4da2ff', '#68affe', '#a7d0fd', '#79ade6'], //环形图每块的颜色
+				//color: ['#35C788', '#3DB5D7', '#2B8FFE', '#DBC22A', '#F3642A', '#BE59E5'], //环形图每块的颜色
+				legend: {
+					x: 'center',
+				    bottom: '5%',
+				    itemWidth: 10, //图例的宽度
+					itemHeight: 10, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF'
+					},
+					formatter: function (name) {
+				    	if (!name) return '';
+			            if (name.length >= 2) {
+			                name =  name.slice(0,2);
+			                return name;
+			            }
+				    },
+				    tooltip: {
+				        show: true
+				    },
+				    data:option9Data0
+				},
+				series: [{
+					type: 'pie',
+					radius: ['33%', '48%'],
+					label: {
+						normal: {
+							formatter: '{d}%'
+						}
+					},
+					data: option9Data1,
+					label: {
+		                normal: {
+		                	formatter:function(data){ return '{per|'+data.percent.toFixed(1)+'%}';},
+		                    rich: {
+		                        per: {
+		                            color: '#fff'
+		                        }
+		                    }
+		                }
+		            },
+		            labelLine: {
+		                normal: {
+		                    lineStyle: {
+		                        color: '#fff'
+		                    },
+		                    smooth: 0.2,
+		                    length: 10,
+		                    length2: 20
+		                }
+		            },
+					// itemStyle 设置饼状图扇形区域样式
+					itemStyle: {
+						// emphasis：英文意思是 强调;着重;（轮廓、图形等的）鲜明;突出，重读
+						// emphasis：设置鼠标放到哪一块扇形上面的时候，扇形样式、阴影
+						emphasis: {
+							shadowBlur: 10,
+							shadowOffsetX: 0,
+							shadowColor: 'rgba(30, 144, 255，0.5)'
+						}
+					}
+				}]
+			};
+				 
+					var option10Data0=[];
+					var option10Data1=[];
+					 $.ajax({
+							url: "/indexReport/warnIndustry", 
+							async:false,
+							success: function(result){
+								option10Data0=result[0];
+								option10Data1=result[1];
+					      }})
+				 
+			var option10 = {
+				tooltip: {
+					trigger: 'item',
+					formatter:function(data){
+						return data.name+': '+data.percent.toFixed(1)+'%';
+					}
+				},
+				color: ['#0c4685', '#0e69cd', '#4da2ff', '#68affe', '#a7d0fd', '#79ade6'], //环形图每块的颜色
+				//color: ['#35C788', '#3DB5D7', '#2B8FFE', '#DBC22A', '#F3642A', '#BE59E5'], //环形图每块的颜色
+				legend: {
+				    x: 'center',
+				    bottom: '5%',
+				    itemWidth: 10, //图例的宽度
+					itemHeight: 10, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF'
+					},
+					formatter: function (name) {
+				    	if (!name) return '';
+			            if (name.length >= 2) {
+			                name =  name.slice(0,2);
+			                return name;
+			            }
+				    },
+				    tooltip: {
+				        show: true
+				    },
+				    data:option10Data0
+				},
+				series: [{
+					type: 'pie',
+					radius: ['33%', '48%'],
+					label: {
+						normal: {
+							formatter: '{d}%'
+						}
+					},
+					data: option10Data1,
+					label: {
+		                normal: {
+		                	formatter:function(data){ return '{per|'+data.percent.toFixed(1)+'%}';},
+		                    rich: {
+		                        per: {
+		                            color: '#fff'
+		                        }
+		                    }
+		                }
+		            },
+		            labelLine: {
+		                normal: {
+		                    lineStyle: {
+		                        color: '#fff'
+		                    },
+		                    smooth: 0.2,
+		                    length: 10,
+		                    length2: 20
+		                }
+		            },
+					// itemStyle 设置饼状图扇形区域样式
+					itemStyle: {
+						// emphasis：英文意思是 强调;着重;（轮廓、图形等的）鲜明;突出，重读
+						// emphasis：设置鼠标放到哪一块扇形上面的时候，扇形样式、阴影
+						emphasis: {
+							shadowBlur: 10,
+							shadowOffsetX: 0,
+							shadowColor: 'rgba(30, 144, 255，0.5)'
+						}
+					}
+				}]
+			};
+					 
+					 
+						var option11Data0=[];
+						var option11Data1=[];
+						var option11Data2=[];
+						 $.ajax({
+								url: "/indexReport/mainRatingDepart", 
+								async:false,
+								success: function(result){
+									option11Data0=result[0];
+									option11Data1=result[1];
+									option11Data2=result[2];
+						      }})
+					 
+			var option11 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						//type: 'cross',
+						crossStyle: {
+							color: '#999'
+						}
+					}
+				},
+				legend: {
+		            x: 'right', //居右显示
+		            y: '8%',    //延Y轴居上
+					data: ['数量', '平均分'],
+					itemWidth: 12, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF',
+						fontSize: 10
+					}
+				},
+				grid:{
+				    y2:40
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#fff' //更改坐标轴文字颜色
+						},
+						interval: 0
+					},
+					axisLine:{
+		                lineStyle:{color:'#fff'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: option11Data0,
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'white',
+					            width:1
+					        }
+					    },
+						splitLine: {
+							show: false
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff' //更改坐标轴文字颜色
+							}
+						}
+					},
+					{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'white',
+					            width:1
+					        }
+					    },
+						splitLine: {
+							show: false
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff' //更改坐标轴文字颜色
+							}
+						}
+					}
+				],
+				series: [{
+						name: '数量',
+						type: 'bar',
+						itemStyle: {
+				                normal: {
+				                	label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#83bff6'},
+			                            {offset: 0.5, color: '#188df0'},
+			                            {offset: 1, color: '#188df0'}
+			                        ]
+			                    )
+			                },
+			                emphasis: {
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#2378f7'},
+			                            {offset: 0.7, color: '#2378f7'},
+			                            {offset: 1, color: '#83bff6'}
+			                        ]
+			                    )
+			                }
+			            },
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						data: option11Data1
+					},
+					{
+						name: '平均分',
+						type: 'line',
+						yAxisIndex: 1,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#fff', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#fff' //改变折线颜色
+								} 
+							} 
+						},
+						data: option11Data2
+					}
+				]
+			};
+						 
+						 
+						 var option12Data0=[];
+							var option12Data1=[];
+							var option12Data2=[];
+							 $.ajax({
+									url: "/indexReport/debtRatingDepart", 
+									async:false,
+									success: function(result){
+										option12Data0=result[0];
+										option12Data1=result[1];
+										option12Data2=result[2];
+							      }})
+						 
+			var option12 = {
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						//type: 'cross',
+						crossStyle: {
+							color: '#999'
+						}
+					}
+				},
+				legend: {
+		            x: 'right', //居右显示
+		            y: '8%',    //延Y轴居上
+					data: ['数量', '平均分'],
+					itemWidth: 12, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF',
+						fontSize: 10
+					}
+				},
+				grid:{
+				    y2:40
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#fff' //更改坐标轴文字颜色
+						},
+						interval: 0
+					},
+					axisLine:{
+		                lineStyle:{color:'#fff'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: option12Data0,
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'white',
+					            width:1
+					        }
+					    },
+						splitLine: {
+							show: false
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff' //更改坐标轴文字颜色
+							}
+						}
+					},
+					{
+						type: 'value',
+						axisLine:{  //设置坐标轴字体颜色和宽度
+					        lineStyle:{
+					            color:'white',
+					            width:1
+					        }
+					    },
+						splitLine: {
+							show: false
+						},
+						axisTick: {
+				            show: false  //隐藏刻度线
+				        },
+						axisLabel: {
+							formatter: '{value}',
+							textStyle: {
+								color: '#fff' //更改坐标轴文字颜色
+							}
+						}
+					}
+				],
+				series: [{
+						name: '数量',
+						type: 'bar',
+						itemStyle: {
+				                normal: {
+				                	label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#83bff6'},
+			                            {offset: 0.5, color: '#188df0'},
+			                            {offset: 1, color: '#188df0'}
+			                        ]
+			                    )
+			                },
+			                emphasis: {
+			                    color: new echarts.graphic.LinearGradient(
+			                        0, 0, 0, 1,
+			                        [
+			                            {offset: 0, color: '#2378f7'},
+			                            {offset: 0.7, color: '#2378f7'},
+			                            {offset: 1, color: '#83bff6'}
+			                        ]
+			                    )
+			                }
+			            },
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						data: option12Data1
+					},
+					{
+						name: '平均分',
+						type: 'line',
+						yAxisIndex: 1,
+						itemStyle : { 
+							normal : { 
+									label: {
+							            show: false,
+							            position: 'top',
+							            textStyle: {
+							                color: 'white'
+							        }
+							    },
+								color:'#fff', //改变折线点的颜色
+								lineStyle:{ 
+									color:'#fff' //改变折线颜色
+								} 
+							} 
+						},
+						data: option12Data2
+					}
+				]
+			};
+							 
+							 
+							 
+							 var option13Data0=[];
+								var option13Data1=[];
+								var option13Data2=[];
+								 $.ajax({
+										url: "/indexReport/warnRatingDepart", 
+										async:false,
+										success: function(result){
+											option13Data0=result[0];
+											option13Data1=result[1];
+											option13Data2=result[2];
+								      }})				 
+							 
+							 
+			var option13 = { 
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend: {
+			        data:['高风险','中风险'],
+		            x: 'right', //居右显示
+		            y: '8%',    //延Y轴居上
+			        itemWidth: 12, //图例的宽度
+					itemHeight: 12, //图例的高度
+					textStyle: { //图例文字的样式
+						color: '#FFF',
+						fontSize: 10
+					}
+			    },
+			    grid:{
+				    y2:40
+				},
+				xAxis: [{
+					type: 'category',
+					axisLabel: { //坐标轴刻度标签的相关设置。
+						textStyle: {
+							color: '#fff' //更改坐标轴文字颜色
+						},
+						interval: 0
+					},
+					axisLine:{
+		                lineStyle:{color:'#fff'}    // x轴坐标轴颜色
+		            },
+					axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					splitLine: {　　　　
+						show: false　　
+					},
+					data: option13Data0,
+					axisPointer: {
+						type: 'shadow'
+					}
+				}],
+				yAxis: [{
+					type: 'value',
+				    axisLine:{  //设置坐标轴字体颜色和宽度
+				        lineStyle:{
+				            color:'white',
+				            width:1
+				        }
+				    },
+				    axisTick: {
+			            show: false  //隐藏刻度线
+			        },
+					axisLabel: {
+						formatter: '{value}',
+						textStyle: {
+							color: '#fff' //更改坐标轴文字颜色
+						}
+					},
+					splitLine: {
+						show: false
+					}
+				}],
+				series: [{
+						name: '高风险',
+						type: 'bar',
+						color: '#f19500',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						stack: '总量',
+						label: {
+							normal: {
+								show: false,
+								position: 'inside'
+							}
+						},
+						data: option13Data1
+					},
+					{
+						name: '中风险',
+						type: 'bar',
+						color: '#1d53ff',
+						barBorderRadius: 5, //柱状角成椭圆形
+						barWidth: 12,
+						stack: '总量',
+						label: {
+							normal: {
+								show: false,
+								position: 'inside'
+							}
+						},
+						data: option13Data2
+					}
+				]
+			};
+			var option14Date0=[];
+			var option14Date1=[];
+			 $.ajax({
+					url: "/indexReport/newRadar", 
+					async:false,
+					success: function(result){
+						option14Date0=result[0];
+						option14Date1=result[1]
+			      }})
+			
+			var option14 = {
+				tooltip: {
+					position: ['22%', '0%'],
+					textStyle: { //文字的样式
+						color: '#FFF',
+						fontSize: 10
+					} 
+			    },			 	
+				radar: {
+					name: {
+						textStyle: {
+							color: '#333'
+						}
+					},
+					splitArea: {
+			            areaStyle: {
+			                color: ['#2a2c42', '#2a2c42', '#2a2c42', '#2a2c42', '#2a2c42'], //圆环颜色
+			                //shadowColor: 'aqua', // 圆颜色
+			                //shadowBlur: 10
+			            }
+			        },
+					indicator:option14Date0,
+					radius: '60%',
+					name: {
+			            //formatter: '{value}',
+			            textStyle: {
+			                color: '#fff', // 文字颜色
+			                fontSize: 10  //文字大小
+			            }
+			        }
+				},
+				series: [{
+					name: '主体新建2.0模型指标得分',
+					type: 'radar',
+					data: [{
+						value: option14Date1,
+						areaStyle: {
+			                normal: {
+			                    color: '#378ef0' // 选择区域颜色
+			                }
+			            },
+						label: {
+		                    normal: {
+		                        show: false,
+		                        formatter:function(params) {
+		                            return params.value;
+		                        }
+		                    }
+			            },
+						itemStyle: {
+							normal: {
+								color: '#b6d9ff',
+								lineStyle: {
+									color: '#b6d9ff',
+								}
+							}
+						}
+					}]
+				}]
+			};
+			 
+			 
+			 var option15Date0=[];
+				var option15Date1=[];
+				 $.ajax({
+						url: "/indexReport/TyRadar", 
+						async:false,
+						success: function(result){
+							option15Date0=result[0];
+							option15Date1=result[1]
+				      }})
+			 
+			var option15 = {
+				tooltip: {
+					position: ['22%', '0%'],
+					textStyle: { //文字的样式
+						color: '#FFF',
+						fontSize: 10
+					} 
+			    },
+				radar: {
+					name: {
+						textStyle: {
+							color: '#333'
+						}
+					},
+					splitArea: {
+			            areaStyle: {
+			                color: ['#2a2c42', '#2a2c42', '#2a2c42', '#2a2c42', '#2a2c42'], //圆环颜色
+			                //shadowColor: 'aqua', // 圆颜色
+			                //shadowBlur: 10
+			            }
+			        },
+					indicator: option15Date0,
+					radius: '60%',
+					name: {
+			            //formatter: '{value}',
+			            textStyle: {
+			                color: '#fff', // 文字颜色
+			                fontSize: 10  //文字大小
+			            }
+			        }
+				},
+				series: [{
+					name: '主体通用2.0模型指标得分',
+					type: 'radar',
+					data: [{
+						value: option15Date1,
+						areaStyle: {
+			                normal: {
+			                    color: '#378ef0' // 选择区域颜色
+			                }
+			            },
+						label: {
+		                    normal: {
+		                        show: false,
+		                        formatter:function(params) {
+		                            return params.value;
+		                        }
+		                    }
+			            },
+						itemStyle: {
+							normal: {
+								color: '#b6d9ff',
+								lineStyle: {
+									color: '#b6d9ff',
+								}
+							}
+						}
+					}]
+				}]
+			};
+				 
+				 var option16Date0=[];
+					var option16Date1=[];
+					 $.ajax({
+						 url: "/indexReport/newRadar1",
+							async:false,
+							success: function(result){
+								option16Date0=result[0];
+								option16Date1=result[1]
+					      }})
+				 
+				var option16 = {
+					tooltip: {
+						position: ['22%', '0%'],
+						textStyle: { //文字的样式
+							color: '#FFF',
+							fontSize: 10
+						} 
+				    },
+					radar: {
+						name: {
+							textStyle: {
+								color: '#333'
+							}
+						},
+						splitArea: {
+				            areaStyle: {
+				                color: ['#2a2c42', '#2a2c42', '#2a2c42', '#2a2c42', '#2a2c42'], //圆环颜色
+				                //shadowColor: 'aqua', // 圆颜色
+				                //shadowBlur: 10
+				            }
+				        },
+						indicator: option16Date0,
+						radius: '60%',
+						name: {
+				            //formatter: '{value}',
+				            textStyle: {
+				                color: '#fff', // 文字颜色
+				                fontSize: 10  //文字大小
+				            }
+				        }
+					},
+					series: [{
+						name: '主体新建1.0模型指标得分',
+						type: 'radar',
+						data: [{
+							value: option16Date1,
+							areaStyle: {
+				                normal: {
+				                    color: '#378ef0' // 选择区域颜色
+				                }
+				            },
+							label: {
+			                    normal: {
+			                        show: false,
+			                        formatter:function(params) {
+			                            return params.value;
+			                        }
+			                    }
+				            },
+							itemStyle: {
+								normal: {
+									color: '#b6d9ff',
+									lineStyle: {
+										color: '#b6d9ff',
+									}
+								}
+							}
+						}]
+					}]
+				};
+					 
+					 var option17Date0=[];
+						var option17Date1=[];
+						 $.ajax({
+								url: "/indexReport/TyRadar1", 
+								async:false,
+								success: function(result){
+									option17Date0=result[0];
+									option17Date1=result[1]
+						      }})
+					 
+					var option17 = {
+						tooltip: {
+							position: ['22%', '0%'],
+							textStyle: { //文字的样式
+								color: '#FFF',
+								fontSize: 10
+							} 
+					    },
+						radar: {
+							name: {
+								textStyle: {
+									color: '#333'
+								}
+							},
+							splitArea: {
+					            areaStyle: {
+					                color: ['#2a2c42', '#2a2c42', '#2a2c42', '#2a2c42', '#2a2c42'], //圆环颜色
+					                //shadowColor: 'aqua', // 圆颜色
+					                //shadowBlur: 10
+					            }
+					        },
+							indicator: option17Date0,
+							radius: '60%',
+							name: {
+					            //formatter: '{value}',
+					            textStyle: {
+					                color: '#fff', // 文字颜色
+					                fontSize: 10  //文字大小
+					            }
+					        }
+						},
+						series: [{
+							name: '主体通用1.0模型指标得分',
+							type: 'radar',
+							data: [{
+								value: option17Date1,
+								areaStyle: {
+					                normal: {
+					                    color: '#378ef0' // 选择区域颜色
+					                }
+					            },
+								label: {
+				                    normal: {
+				                        show: false,
+				                        formatter:function(params) {
+				                            return params.value;
+				                        }
+				                    }
+					            },
+								itemStyle: {
+									normal: {
+										color: '#b6d9ff',
+										lineStyle: {
+											color: '#b6d9ff',
+										}
+									}
+								}
+							}]
+						}]
+					};		 
+			// 使用刚指定的配置项和数据显示图表。
+			columnar.setOption(option1);
+			area.setOption(option2);
+			histogram3.setOption(option3);
+			dashboard1.setOption(option4);
+			dashboard2.setOption(option5);
+			mixlinebar3.setOption(option6);
+			mixlinebar4.setOption(option7);
+			lineChart.setOption(option8);
+			pie1.setOption(option9);
+			pie2.setOption(option10);
+			mixlinebar1.setOption(option11);
+			mixlinebar2.setOption(option12);
+			histogram4.setOption(option13);
+			radarMap1.setOption(option14);
+			radarMap2.setOption(option15);
+			radarMap3.setOption(option16);
+			radarMap4.setOption(option17);
+			setTimeout(function (){
+			    window.onresize = function () {
+			    	columnar.resize();
+					area.resize();
+					histogram3.resize();
+					dashboard1.resize();
+					dashboard2.resize();
+					mixlinebar3.resize();
+					mixlinebar4.resize();
+					lineChart.resize();
+					pie1.resize();
+					pie2.resize();
+					mixlinebar1.resize();
+					mixlinebar2.resize();
+					histogram4.resize();
+					radarMap1.resize();
+					radarMap2.resize();
+					radarMap3.resize();
+					radarMap4.resize();
+			    }
+			},200)
+			/* window.addEventListener("resize", function () {  //多图表自适应window
+				columnar.resize();
+				area.resize();
+				histogram3.resize();
+				dashboard1.resize();
+				dashboard2.resize();
+				mixlinebar3.resize();
+				mixlinebar4.resize();
+				lineChart.resize();
+				pie1.resize();
+				pie2.resize();
+				mixlinebar1.resize();
+				mixlinebar2.resize();
+				histogram4.resize();
+				radarMap1.resize();
+				radarMap2.resize();
+			}); */
+		</script>
+	</body>
+</html>

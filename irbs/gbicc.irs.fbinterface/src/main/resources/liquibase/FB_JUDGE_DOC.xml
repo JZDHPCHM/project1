@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_JUDGE_DOC" author="framework">
+
+        <!-- 裁判文书 -->
+        <createTable tableName="FB_JUDGE_DOC" remarks="裁判文书">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="URL" type="java.sql.Types.VARCHAR(200)" remarks="URL"></column>
+            <column name="NOT_OPEN_REASON" type="java.sql.Types.VARCHAR(100)" remarks="不公开理由"></column>
+            <column name="SENTENCE_TOTAL_AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="判决总金额"></column>
+            <column name="SENTENCE_DATE" type="java.sql.Types.VARCHAR(20)" remarks="判决时间"></column>
+            <column name="PUBLIC_DATE" type="java.sql.Types.VARCHAR(20)" remarks="发布时间"></column>
+            <column name="DOCUMENT_TYPE" type="java.sql.Types.VARCHAR(30)" remarks="文书类型"></column>
+            <column name="TITLE" type="java.sql.Types.VARCHAR(1000)" remarks="标题"></column>
+            <column name="CASE_TYPE" type="java.sql.Types.VARCHAR(30)" remarks="案件类别"></column>
+            <column name="CASE_NO" type="java.sql.Types.VARCHAR(500)" remarks="案号"></column>
+            <column name="CASE_REASON" type="java.sql.Types.VARCHAR(500)" remarks="案由"></column>
+            <column name="JUDGE" type="java.sql.Types.VARCHAR(36)" remarks="法官"></column>
+            <column name="COURT" type="java.sql.Types.VARCHAR(100)" remarks="法院"></column>
+            <column name="LEGAL_FEE" type="java.sql.Types.VARCHAR(36)" remarks="诉讼费"></column>
+            <column name="SETTLEMENT_DATE" type="java.sql.Types.VARCHAR(20)" remarks="结案日期"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 判决金额 -->
+        <createTable tableName="FB_JUDGE_DOC_SENTENCE" remarks="判决金额">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="JUDGE_DOC_ID" type="java.sql.Types.VARCHAR(36)" remarks="裁判文书ID"></column>
+            <column name="AMOUNT" type="java.sql.Types.VARCHAR(36)" remarks="给付金额"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 判决金额给付方 -->
+        <createTable tableName="FB_JUDGE_DOC_SENTENCE_INFO" remarks="判决金额给付方">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="JUDGE_DOC_ID" type="java.sql.Types.VARCHAR(36)" remarks="裁判文书ID"></column>
+            <column name="JUDGE_DOC_SENTENCE_ID" type="java.sql.Types.VARCHAR(36)" remarks="判决金额ID"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="名称"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 当事人详情 -->
+        <createTable tableName="FB_JUDGE_DOC_PARTY" remarks="当事人详情">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="JUDGE_DOC_ID" type="java.sql.Types.VARCHAR(36)" remarks="裁判文书ID"></column>
+            <column name="COMPANY_NAME" type="java.sql.Types.VARCHAR(100)" remarks="公司名"></column>
+            <column name="JUDGE_RESULT" type="java.sql.Types.VARCHAR(100)" remarks="判决结果"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(500)" remarks="名字"></column>
+            <column name="TYPE" type="java.sql.Types.VARCHAR(50)" remarks="类型"></column>
+            <column name="ORGANIZATION_NAME" type="java.sql.Types.VARCHAR(100)" remarks="组织名"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 其他角色 -->
+        <createTable tableName="FB_JUDGE_DOC_PARTY_OTHER" remarks="其他角色">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="JUDGE_DOC_ID" type="java.sql.Types.VARCHAR(36)" remarks="裁判文书ID"></column>
+            <column name="JUDGE_DOC_PARTY_ID" type="java.sql.Types.VARCHAR(36)" remarks="当事人ID"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="名称"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 曾用名 -->
+        <createTable tableName="FB_JUDGE_DOC_PARTY_USED" remarks="曾用名">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="JUDGE_DOC_ID" type="java.sql.Types.VARCHAR(36)" remarks="裁判文书ID"></column>
+            <column name="JUDGE_DOC_PARTY_ID" type="java.sql.Types.VARCHAR(36)" remarks="当事人ID"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="曾用名"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 法定代表人 -->
+        <createTable tableName="FB_JUDGE_DOC_PARTY_LEGAL" remarks="法定代表人">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="JUDGE_DOC_ID" type="java.sql.Types.VARCHAR(36)" remarks="裁判文书ID"></column>
+            <column name="JUDGE_DOC_PARTY_ID" type="java.sql.Types.VARCHAR(36)" remarks="当事人ID"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="法定代表人"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 角色 -->
+        <createTable tableName="FB_JUDGE_DOC_PARTY_ROLE" remarks="角色">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="JUDGE_DOC_ID" type="java.sql.Types.VARCHAR(36)" remarks="裁判文书ID"></column>
+            <column name="JUDGE_DOC_PARTY_ID" type="java.sql.Types.VARCHAR(36)" remarks="当事人ID"></column>
+            <column name="ROLE" type="java.sql.Types.VARCHAR(100)" remarks="角色"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 段落 -->
+        <createTable tableName="FB_JUDGE_DOC_PARAGRAPH" remarks="段落">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="JUDGE_DOC_ID" type="java.sql.Types.VARCHAR(36)" remarks="裁判文书ID"></column>
+            <column name="CONTENT" type="java.sql.Types.CLOB" remarks="内容"></column>
+            <column name="LABEL" type="java.sql.Types.VARCHAR(100)" remarks="标签"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

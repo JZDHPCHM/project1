@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>预警信号列表</title>
+<style type="text/css">
+	.form-group {
+	    margin-bottom: 10px;
+	}
+	.ibox-content{
+		padding: 10px;
+	}
+	.modal-lg {
+	    width: 600px;
+	}
+	.statistical-block{
+		padding-bottom: 10px;
+    	color: #ff0000;
+    	font-weight: bolder;
+	}
+	.statistical-level{
+		display: inline-block;
+	}
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+	                <div class="col-lg-12">
+	            		<form class="form-horizontal" id="formSearch">
+							<div class="form-group">
+								<label class="col-sm-1 control-label">预警类别</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" id="">
+										<option value="总公司">总公司</option>
+										<option value="分公司">分公司</option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label">预警级别</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" id="">
+										<option value="总公司">总公司</option>
+										<option value="分公司">分公司</option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label">推送状态</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" id="">
+										<option value="总公司">总公司</option>
+										<option value="分公司">分公司</option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label">承租人名称</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" id="">
+										<option value="总公司">总公司</option>
+										<option value="分公司">分公司</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">关联人类型</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" id="">
+										<option value="总公司">总公司</option>
+										<option value="分公司">分公司</option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label">预警小类</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" id="">
+										<option value="总公司">总公司</option>
+										<option value="分公司">分公司</option>
+									</select>
+								</div>
+								<label class="col-sm-1 control-label">预警规则</label>
+								<div class="col-sm-2">
+									<select class="chosen-select" id="">
+										<option value="总公司">总公司</option>
+										<option value="分公司">分公司</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">预警时间</label>
+						         <div class="col-sm-3">
+						          <div class="input-daterange input-group" id="datepicker">
+						           <input id="date2" type="text"
+						            class="form-control" name="date2" placeholder="请选择开始日期" readonly />
+						           <span class="input-group-addon">至</span> <input
+						            id="date1" type="text" class="form-control"
+						            name="date1" placeholder="请选择结束日期" readonly />
+						          </div>
+						         </div>
+						         <div class="col-sm-3">
+									<b id="btn-query" class="btn btn-success">查询</b>
+									<b id="btn-reset" class="btn btn-danger">重置</b>
+									<b id="btn-push" class="btn btn-success">推送</b>
+								</div>                                
+							</div>
+						</form>
+						<div class="statistical-block">
+	                		<div class="statistical-level">高风险预警信号：（<span id="highSignal">16</span>）</div>
+	                		<div class="statistical-level" style="padding-left: 30px;color: #FF9900;">中风险预警信号：（<span id="middSignal">10</span>）</div>	
+	                	</div>
+						<!-- 模态窗口 -->
+						<div class="modal inmodal fade" id="myModal1" tabindex="-1" role="dialog"  aria-hidden="true">
+                             <div class="modal-dialog modal-lg">
+                                 <div class="modal-content">
+                                     <div class="modal-header">
+                                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                         <h4 class="modal-title"></h4>
+                                     </div>
+                                     <div class="modal-body">
+										<div class="checkbox checkbox-primary">
+                                            <input id="checkbox1" type="checkbox">
+                                            <label for="checkbox1">工商</label>
+                                        </div>
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="checkbox2" type="checkbox">
+                                            <label for="checkbox2">诉讼</label>
+                                        </div>
+                                        <div class="checkbox checkbox-primary">
+                                            <input id="checkbox3" type="checkbox">
+                                            <label for="checkbox3">舆情</label>
+                                        </div>                                    		    
+                                     </div>
+                                     <div class="modal-footer">
+                                         <button type="button" class="btn btn-primary" id="btn_determine">确定</button>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+						<div class="jqGrid_wrapper">
+                            <table id="table_list"></table>
+                            <div id="pager_list"></div>
+                        </div>    	    
+	                </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	$('.chosen-select').chosen({width: "100%"});
+	$('#formSearch .input-daterange').datepicker({
+		keyboardNavigation: false,
+	    forceParse: false,
+	    autoclose: true
+	});
+	$("#date1").datepicker({
+		changeYear : true,
+		changeMonth : true,
+		numberOfMonths : 1,
+		showButtonPanel: true,
+		onSelect : function(selectedDate) {
+		$("#date2").datepicker("option", "minDate", selectedDate);  }
+	});		 
+	$("#date2").datepicker({
+		changeYear : true,
+		changeMonth : true,
+		numberOfMonths : 1,
+		showButtonPanel: true,
+		onSelect : function(selectedDate) {
+		$("#date1").datepicker("option", "maxDate", selectedDate);  }
+	});
+	$(document).ready(function(){
+		/* 实现图片切换 */
+	    /* $(".imgclick").toggle(function() {
+	        $(this).attr("src", "/image/open.png");
+	    }, function() {
+	        $(this).attr("src", "/image/close.png");
+	    }).attr("src", "/image/close.png"); */
+		$("#table_list").jqGrid({
+			url : "",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        datatype: "json",
+	        height: 280,
+	        autowidth: true,
+	        shrinkToFit: true,
+	        multiselect : true, //允许多选
+	        scrollOffset : 0,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['承租人名称','关联人类型','预警级别','预警类别', '预警小类','预警规则', '预警详情', '预警时间', '推送状态'],
+	        colModel:[
+	            {name:'reportName',index:'reportName', editable: true},
+	            {name:'companyType',index:'companyType', editable: true},
+	            {name:'uploadTime',index:'uploadTime', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadIssue',index:'uploadIssue', editable: true},
+	            {name:'uploadHeir',index:'uploadHeir', editable: true}
+	        ],
+	        pager: "#pager_list",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "data",
+	        	records: "recordsTotal",
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		$("#table_list").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+		// Setup buttons
+        $("#table_list").jqGrid('navGrid', '#pager_list',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+
+        // Add responsive to jqGrid
+        $(window).bind('resize', function () {
+            var width = $('.jqGrid_wrapper').width();
+            $('#table_list').setGridWidth(width);
+        });
+	});
+	function automaticPush(){
+		//alert(1111);
+		$(".imgclick").attr("src", "/image/close.png");
+	}
+</script>
+</html>

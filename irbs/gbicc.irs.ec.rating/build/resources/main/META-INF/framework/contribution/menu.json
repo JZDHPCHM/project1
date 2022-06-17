@@ -1,0 +1,75 @@
+/**[
+	{
+		"type": "CATEGORY",
+		"id": "menuitem.irs.rating",
+		"title": "[(#{menuitem.irs.rating})]",
+		"order": 300
+	},
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.rating",
+		"id": "menuitem.irs.rating.companyrating",
+		"title": "[(#{menuitem.irs.rating.companyrating})]",
+		"order": 700
+	},
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.rating",
+		"id": "menuitem.irs.rating.companyrating.task",
+		"title": "[(#{menuitem.irs.rating.companyrating.task})]",
+		"order": 800
+	},
+	{
+		"type": "ANNOTATION",
+		"parentId": "menuitem.irs.rating",
+		"id": "menuitem.irs.assetsRating.assetsRatingLaunch",
+		"title": "[(#{menuitem.irs.assetsRating.assetsRatingLaunch})]",
+		"order": 900
+	}	
+]*/
+
+
+[
+	//评级管理
+	{"type":"CATEGORY",	"id":"menuitem.irs.rate","title":"[(#{menuitem.irs.rate})]","order":200},
+		//评级管理/主体评级管理
+		{"type":"CATEGORY","parentId":"menuitem.irs.rate","id":"menuitem.irs.rating","title":"[(#{menuitem.irs.rating})]","order":600},
+			//评级管理/主体评级管理/主体评级发起
+			{"type":"ANNOTATION","parentId":"menuitem.irs.rating","id":"menuitem.irs.rating.companyrating","title":"[(#{menuitem.irs.rating.companyrating})]","order":200},
+			//评级管理/主体评级管理/主体台账查询
+			{"type":"ANNOTATION","parentId":"menuitem.irs.rating","id":"menuitem.irs.rating.companyrating.task","title":"[(#{menuitem.irs.rating.companyrating.task})]","order":300},
+			{"type":"ANNOTATION","parentId":"menuitem.irs.rating","id":"menuitem.irs.rating.companyrating2.task","title":"[(#{menuitem.irs.rating.companyrating2.task})]","order":400},
+		//评级管理/资产评级管理
+		{"type":"CATEGORY","parentId":"menuitem.irs.rate","id":"menuitem.irs.assetsRating","title":"[(#{menuitem.irs.assetsRating})]","order":700},
+			//评级管理/资产评级管理/资产评级发起
+			{"type":"ANNOTATION","parentId":"menuitem.irs.assetsRating","id":"menuitem.irs.assetsRating.assetsRatingLaunch","title":"[(#{menuitem.irs.assetsRating.assetsRatingLaunch})]","order":200},
+			//评级管理/资产评级管理/资产台账查询
+			{"type":"ANNOTATION","parentId":"menuitem.irs.assetsRating","id":"menuitem.irs.assetsRating.assetsRatingStanding","title":"[(#{menuitem.irs.assetsRating.assetsRatingStanding})]","order":200},
+		//评级管理/债项评级管理
+		{"type":"CATEGORY","parentId":"menuitem.irs.rate","id":"menuitem.irs.debtRating","title":"[(#{menuitem.irs.debtRating})]","order":800},
+			//评级管理/债项评级管理/债项评级发起
+			{"type":"ANNOTATION","parentId":"menuitem.irs.debtRating","id":"menuitem.irs.debtRating.contract","title":"[(#{menuitem.irs.debtRating.contract})]","order":300},
+			//评级管理/债项评级管理/债项台账查询
+			{"type":"ANNOTATION","parentId":"menuitem.irs.debtRating","id":"menuitem.irs.debtRating.Parameter","title":"[(#{menuitem.irs.debtRating.Parameter})]","order":200},
+			{"type":"ANNOTATION","parentId":"menuitem.irs.debtRating","id":"menuitem.irs.debtRating.Parameter2","title":"[(#{menuitem.irs.debtRating.Parameter2})]","order":200}
+]
+
+
+/**
+[
+	//系统管理
+	{"type":"CATEGORY",	"id":"menuitem.system","title":"[(#{menuitem.system})]","order":200},
+		//系统管理/用户管理
+		{"type":"ANNOTATION","parentId":"menuitem.system","id":"menuitem.system.user","title":"[(#{menuitem.system.user})]","order":100},
+		//系统管理/分隔符
+		{"type":"SEPERATOR","parentId":"menuitem.system","order":500},
+		//系统管理/系统监控
+		{"type":"CATEGORY","parentId":"menuitem.system","id":"menuitem.system.monitor","title":"[(#{menuitem.system.monitor})]","order":600},
+			//系统管理/系统监控/日志监控
+			{"type":"ANNOTATION","parentId":"menuitem.system.monitor","id":"menuitem.system.monitor.log","title":"[(#{menuitem.system.monitor.log})]","order":200},
+	
+	//用户Profile
+	{"type":"CATEGORY","id":"menuitem.profile","title":"<span class='fa-stack fa-lg' style='color:white'><i class='fa fa-circle fa-stack-2x'></i><i class='fa fa-user fa-stack-1x fa-inverse' style='color:green'></i></span><span th:text='${T(org.wsp.framework.security.util.SecurityUtil).getUserName()}'>User Name</span>","order":10000,"align":"RIGHT"},
+		{"type":"JAVASCRIPT","parentId":"menuitem.profile","id":"menuitem.profile.changePassword","title":"[(#{menuitem.profile.changePassword})]","javascript":"FrameworkUiInterface.changePassword();","order":300},
+]
+*/

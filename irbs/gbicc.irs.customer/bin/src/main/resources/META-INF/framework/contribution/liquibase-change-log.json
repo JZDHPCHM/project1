@@ -1,0 +1,10 @@
+[
+    {
+        "category" : "install",
+        "order"    : 12300,
+        "description":"内评客戶管理数据库表结构及初始数据",
+        "locations":[
+        "classpath:/liquibase/MV_1.0.0_20171101__Customer Database Schema DDL.xml"
+         ]
+    }
+]

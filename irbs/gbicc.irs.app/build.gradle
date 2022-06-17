@@ -1,0 +1,82 @@
+
+apply plugin: 'war'
+
+configurations {
+	compile.exclude module: 'spring-boot-starter-tomcat'
+}
+
+dependencies {
+    providedRuntime(
+        "org.springframework.boot:spring-boot-starter-undertow",
+		//"org.springframework.boot:spring-boot-starter-tomcat",
+    )
+    compile(
+		project(":gbicc.irs.customer"),
+		project(":gbicc.irs.ec.rating"),
+		project(":gbicc.irs.assetsRating"),
+		project(":gbicc.irs.defaultcustomer.management"),
+		project(":gbicc.irs.report"),
+		project(":gbicc.irs.reportTemplate"),
+		project(":gbicc.irs.risk.exposure"),
+		project(":gbicc.irs.code.library"),
+		project(":gbicc.irs.debtRating"),
+		project(":gbicc.irs.commom.module"),
+		project(":gbicc.irs.query"),
+		project(":gbicc.irs.fbinterface"),
+		project(":org.wsp.framework.security.impl.jpa"),
+		project(":org.framework.ui.inspinia"),
+		project(":org.framework.ui.inspinia.template"),
+		project(":gbicc.irs.index"),
+		project(":gbicc.irs.warning"),
+		project(":gbicc.irs.rti"),
+		project(":com.gbicc.aicr.system"),
+		'org.webjars:webjars-locator-weblogic:0.10',
+    	"javax.servlet:javax.servlet-api",
+    	//"org.wsp:org.wsp.framework.asciidoc:${framework_version}",
+        "org.wsp:org.wsp.framework.batch:${framework_version}",
+        "org.wsp:org.wsp.framework.core:${framework_version}",
+        "org.wsp:org.wsp.framework.datasource:${framework_version}",
+        "org.wsp:org.wsp.framework.developer:${framework_version}",
+        "org.wsp:org.wsp.framework.dynamic:${framework_version}",
+        "org.wsp:org.wsp.framework.ext.thymeleaf:${framework_version}",
+        "org.wsp:org.wsp.framework.flowable:${framework_version}",
+        "org.wsp:org.wsp.framework.installer:${framework_version}",
+        "org.wsp:org.wsp.framework.jdbc:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa.model:${framework_version}",
+        "org.wsp:org.wsp.framework.mvc:${framework_version}",
+        "org.wsp:org.wsp.framework.scheduler:${framework_version}",
+        "org.wsp:org.wsp.framework.scheduler.impl.spring:${framework_version}",
+        "org.wsp:org.wsp.framework.security:${framework_version}",
+        "org.wsp:org.wsp.framework.webservice.ws.cxf:${framework_version}",
+        "org.wsp:org.wsp.model.validator:${framework_version}",
+        "org.wsp:org.wsp.model.validator.testdata:${framework_version}",
+        //模型引擎相关jar包
+        "org.wsp:org.wsp.engine.model.client:${framework_version}",
+        "org.wsp:org.wsp.engine.model.client.spring:${framework_version}",
+		"org.wsp:org.wsp.engine.model.core:${framework_version}",
+		"org.wsp:org.wsp.engine.model.server:${framework_version}",
+        //"org.wsp:gbicc.poc.hankou.irs.doc:${framework_version}",
+        //"org.wsp:gbicc.model.engine.doc:${framework_version}",
+		//"org.wsp:org.wsp.model.validator.doc:${framework_version}",
+		//"org.wsp:org.wsp.framework.developer.doc:${framework_version}",
+		//"org.wsp:org.wsp.developer.doc:${framework_version}",
+		//其他的外部包
+		fileTree(dir:'libs', include:['*.jar']),
+		"org.jboss.logging:jboss-logging:3.3.2.Final"
+	)
+}
+
+bootWar{
+	mainClassName = 'gbicc.irs.app.Application'
+	requiresUnpack '**/jruby-complete-*.jar','**/asciidoctor*.jar'
+	launchScript()
+}
+
+clean {
+	delete 'bin'
+	delete 'config'
+	delete 'logs'
+	delete 'tmp'
+	delete 'work'
+}

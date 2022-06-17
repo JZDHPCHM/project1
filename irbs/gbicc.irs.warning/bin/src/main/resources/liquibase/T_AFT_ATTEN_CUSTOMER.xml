@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="T_AFT_ATTEN_CUSTOMER" author="framework">
+
+        <createTable tableName="T_AFT_ATTEN_CUSTOMER" remarks="客户关注表">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <!-- <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column> -->
+            <column name="LESSEE_ID" type="java.sql.Types.VARCHAR(36)" remarks="承租人ID"></column>
+            <!-- <column name="LESSEE_CODE" type="java.sql.Types.VARCHAR(30)" remarks="承租人编码"></column> -->
+            <column name="LESSEE_NAME" type="java.sql.Types.VARCHAR(90)" remarks="承租人名称"></column>
+            <column name="LESSEE_COMPANY_ID" type="java.sql.Types.VARCHAR(90)" remarks="承租人统一社会信用代码、注册码"></column>
+            <column name="ASSO_ID" type="java.sql.Types.VARCHAR(36)" remarks="关联人ID"></column>
+            <!-- <column name="ASSO_CODE" type="java.sql.Types.VARCHAR(30)" remarks="关联人编码"></column> -->
+            <column name="ASSO_NAME" type="java.sql.Types.VARCHAR(90)" remarks="关联人名称"></column>
+            <column name="ASSO_COMPANY_ID" type="java.sql.Types.VARCHAR(90)" remarks="关联人统一社会信用代码、注册码"></column>
+            <column name="ASSO_TYPE" type="java.sql.Types.VARCHAR(30)" remarks="关联人类型"></column>
+            <column name="ASSO_TYPE_NAME" type="java.sql.Types.VARCHAR(30)" remarks="关联人类型名称"></column>
+            <column name="PARTNER_CATEGORY" type="java.sql.Types.VARCHAR(30)" remarks="商业伙伴类别"></column>
+            <column name="IS_ATTEN" type="java.sql.Types.VARCHAR(1)" remarks="是否关注"></column>
+            <column name="DATA_DT" type="DATETIME" remarks="数据时间"></column>
+        </createTable>
+        
+    </changeSet>
+</databaseChangeLog>

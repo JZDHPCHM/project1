@@ -1,0 +1,7 @@
+SELECT chdrcoy,round(sum(CLOSURE_TIME-COMPLAINT_DATE)   --结案日期-受理日期
+/COUNT(ID),2)
+from COMPLAINTSRISKREPORT
+where MAIN_STATUSNAME = '投诉件' --案件类型
+and CLOSURE_TIME>='20180401' --结案日期区间
+and CLOSURE_TIME<='20180630'
+GROUP BY chdrcoy

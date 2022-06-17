@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+
+isc.FwRestDataSource.create({
+    ID: 'allOrgDs',
+    fields:[
+    	{name:'id',		title:'唯一标识',			primaryKey:true},
+    	{name:'code',	title:'代码'},
+    	{name:'name',	title:'名称'},
+    	{name:'parent',	title:'父机构唯一标识',	foreignKey:'allOrgDs.id'}
+    	
+    ],
+    fetchDataURL: '[[@{/system/orgs/isc/fetch}]]'
+});
+
+//字段定义
+var DebtRatingBHSXSParamFields ={
+	grid: [
+			{width:'*',		name:'id',	primaryKey:true,	hidden:true},
+			//{width:'*',		name:'branch',	 title:'机构'},
+			{width:'*',		name:'principal',	 title:'业务金额'},
+			{width:'*',		name:'ocAdj', title:'调整系数'},
+			{width:'*',		name:'status',	 title:'状态'},
+			{width:'*',		name:'startDate', title:'启用时间'},
+	],
+	edit: [
+		{width:'*',		name:'id',	primaryKey:true,hidden:true,canEdit:true},
+		{width:'*',		name:'principal',	 title:'业务金额'},
+		{width:'*',		name:'ocAdj', title:'调整系数'},
+		{width:'*',		name:'status',	 title:'状态'},
+		{width:'*',		name:'startDate', title:'启用时间'},
+	]
+};
+
+//保证人回收调整系数数据源
+isc.FwRestDataSource.create({
+	ID: 'debtRatingBHSXSParamDS',
+    fields: DebtRatingBHSXSParamFields.grid,
+    dataURL: '[[@{/irs/RpmParOcAdj/isc}]]'
+});
+
+//保证人回收调整系数列表
+isc.FwListGrid.create({
+	ID: 'debtRatingBHSXSParamListGrid',
+	title: '<b>运营费用调整参数表</b>',
+	dataSource: debtRatingBHSXSParamDS,
+	sortField:"bzTypeCode",
+	fields: DebtRatingBHSXSParamFields.grid,
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: debtRatingBHSXSParamDS,
+            fields: DebtRatingBHSXSParamFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh'
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				debtRatingBHSXSParamListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+
+
+//字段定义
+var leverWeightsFields ={
+		query: [
+				{width:'*',name:'indexNo',  title:'指标编号',type: 'text'},
+				{width:'*',name:'indexName',title:'指标名称',type: 'text'}
+		],
+		grid: [
+				{name:'id',		primaryKey:true,hidden:true},
+			    {width:200,name:'indexNo',		title:'指标编号',	required:true},
+			    {width:200,name:'indexName',	title:'指标名称',	required:true},
+			    {width:200,name:'singleItemMin',title:'单项最低值',required:true	},
+			    {width:200,name:'singleItemMax',title:'单项最高值',required:true}
+		],
+		edit: [
+				{width:80, name:'id',			title:'[(#{id})]',	type: 'text',	hidden:true},
+				{width:200,name:'indexNo',		title:'指标编号',		type: 'text',	required:true},
+			    {width:200,name:'indexName',	title:'指标名称',		type: 'text',	required:true},
+			    {width:200,name:'singleItemMin',title:'单项最低值',		type: 'integer',required:true},
+			    {width:200,name:'singleItemMax',title:'单项最高值',		type: 'integer',required:true}
+		]
+};
+
+// 杠杆系数权重数据源
+isc.FwRestDataSource.create({
+	 ID: 'leverWeightsDS',
+ 	 fields: leverWeightsFields.grid,
+ 	 dataURL: '[(@{/irs/leverWeights/isc})]'
+});
+
+
+isc.FwListGrid.create({
+	ID: 'leverWeightsId',
+	title: '<b>杠杆系数权重列表</b>',
+	dataSource: leverWeightsDS,
+	sortField: 'indexNo',
+	canHover:true,
+	fields: leverWeightsFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: leverWeightsFields.query
+	},
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+      form: {
+      	numCols:4,
+      	titleWidth:150,
+      	colWidths: [190, "*"],
+          dataSource: leverWeightsDS,
+          fields: leverWeightsFields.edit
+      },
+      afterShow: function(action){
+     	
+      },
+      actionMembers:[
+             		'ok','close'
+      ]
+	},
+	actionMembers:[
+		'query','reset','refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+  },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				leverWeightsId
+			]
+		})
+	}
+});
+
+</script>
+</html>

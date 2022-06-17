@@ -1,0 +1,36 @@
+/*
+ * 数据库建表 Liquibase ChangeLog XML 贡献项配置示例
+ * 功能: 该贡献项配置为框架提供数据库无关的建表脚本
+ * 使用说明:
+ * category: 建表脚本分类,可能的值包括: 
+ * 		install : 系统安装时自动执行
+ *		manual  : 系统安装时不自动执行,可通过 '开发者工具'-->'导入示例数据' 功能菜单执行
+ * order: 执行顺序
+ * description: 描述信息
+ * locations: 建表 liquibase changelog xml 文件位置
+ */
+ 
+[
+    {
+        "category" : "install",
+        "order"    : 200,
+        "description":"分公司绩效结果表",
+        "locations":[
+            "classpath:/liquibase/T_PFM_BRANCH_RESULT.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 201,
+        "description":"渠道绩效结果表",
+        "locations":[
+            "classpath:/liquibase/T_PFM_CHANNEL_RESULT.xml"
+        ]
+    },{
+        "category" : "install",
+        "order"    : 202,
+        "description":"部门绩效结果表",
+        "locations":[
+            "classpath:/liquibase/T_PFM_DEPA_RESULT.xml"
+        ]
+    }
+]

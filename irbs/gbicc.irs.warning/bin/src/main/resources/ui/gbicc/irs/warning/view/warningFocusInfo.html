@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>预警关联人管理</title>
+<style type="text/css">
+	.left-cont{
+		display: inline-block;
+    	width: 31%;
+    	margin-right: 2%;
+	}
+	.arrow-icon{
+		display: inline-block;
+	    width: 4%;
+	    position: relative;
+	    top: -160px;
+	}
+	.right-cont{
+		display: inline-block;
+    	width: 31%;
+	}
+	.form-group {
+	    margin-bottom: 10px;
+	}
+	.ibox-content{
+		padding: 10px;
+	}
+	.relation-list ul > li{
+		text-indent: 2em;
+	}
+	input[type='checkbox']{
+		margin-left: 80px;
+	}
+	.bottom-div{
+		text-align: right;
+		padding-top: 10px;
+	}
+	.comp-name{
+		float: left;
+		display: inline-block;
+		padding-left: 80px;
+		line-height: 35px;
+	}
+	.col-lg-1{
+		text-align: center;
+    	position: relative;
+    	top: 150px;
+    	left: 55px;
+	}
+	.glyphicon{
+		font-size: 55px;
+    	color: #199fff;
+	}
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+	                <div class="col-lg-12">
+	                	<div class="tabs-container">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#tab-1" style="color: #000 !important;">关联关系管理</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-2" style="color: #000 !important;">新增关联关系管理</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="tab-1" class="tab-pane active">
+                                <div class="panel-body">
+                                	<div class="left-cont">
+                                		<form class="form-horizontal">
+											<div class="form-group" style="margin-left: 0;">
+												<label class="control-label">承租人名称</label>
+												<div style="display: inline-block;width: 67%;">
+													<input id="lesseeName" type="text" placeholder="模糊查找" class="form-control">
+												</div>
+												<div style="display: inline-block;">
+													<b id="btn-query" class="btn btn-success"><i class="fa"></i>查询</b>
+													<!-- <b id="btn-reset" class="btn btn-danger"><i class="fa"></i>重置</b> -->
+												</div>
+											</div>
+										</form>
+										<div class="jqGrid_wrapper">
+				                            <table id="table_list_1"></table>
+				                            <div id="pager_list_1"></div>
+				                        </div>
+                                	</div>
+                                	<div class="right-cont">
+                                		<div>关联人列表</div>
+                             			<div class="jqGrid_wrapper">
+			                            	<table id="table_list_2"></table>
+			                            	<div id="pager_list_2"></div>
+			                        	</div>
+                                	</div>
+                                	<div class="arrow-icon">
+                        				<div><i class="glyphicon glyphicon-arrow-right"></i></div>
+                        				<div><i class="glyphicon glyphicon-arrow-left"></i></div>
+                       				</div>
+                                	<div class="right-cont">
+                                		<div>已关注关联人列表</div>
+                              			<div class="jqGrid_wrapper">
+				                            <table id="table_list_3"></table>
+				                            <div id="pager_list_3"></div>
+				                        </div>
+                                	</div>
+                                	<!-- <div class="row">
+                                		<div class="col-lg-12">
+                                			<div class="col-lg-3">
+                                				<form class="form-horizontal">
+													<div class="form-group">
+														<label class="col-sm-3 control-label">承租人名称</label>
+														<div class="col-sm-5">
+															<input id="lesseeName" type="text" placeholder="模糊查找" class="form-control">
+														</div>
+														<div class="col-sm-4">
+															<b id="btn-query" class="btn btn-success"><i class="fa"></i>查询</b>
+															<b id="btn-reset" class="btn btn-danger"><i class="fa"></i>重置</b>
+														</div>
+													</div>
+												</form>
+												<div class="jqGrid_wrapper">
+						                            <table id="table_list_1"></table>
+						                            <div id="pager_list_1"></div>
+						                        </div>
+                                			</div>
+                                			<div class="col-lg-4">
+                                				<div>关联人列表</div>
+                                				<div class="jqGrid_wrapper">
+						                            <table id="table_list_2"></table>
+						                            <div id="pager_list_2"></div>
+						                        </div>
+                                				<div class="bottom-div">
+                                					<div class="comp-name">XXX公司</div>
+                                				</div>	
+                                			</div>
+                                			<div class="col-lg-1">
+                                				<div class="arrow-icon">
+	                                				<div><i class="glyphicon glyphicon-arrow-right"></i></div>
+	                                				<div><i class="glyphicon glyphicon-arrow-left"></i></div>
+                                				</div>
+                                			</div>
+                                			<div class="col-lg-4">
+                                				<div>已关注关联人列表</div>
+                                				<div class="jqGrid_wrapper">
+						                            <table id="table_list_3"></table>
+						                            <div id="pager_list_3"></div>
+						                        </div>
+                                				<div class="bottom-div">
+                                					<div style="display: inline-block;"><button class="btn btn-success">保存</button></div>
+                                				</div>
+                                			</div>		
+                                		</div>
+                                	</div> -->
+                                </div>
+                            </div>
+                            <div id="tab-2" class="tab-pane">
+                                <div class="panel-body">
+                                	<div class="left-cont">
+										<div class="jqGrid_wrapper">
+				                            <table id="table_list_4"></table>
+				                            <div id="pager_list_4"></div>
+				                        </div>
+                                	</div>
+                                	<div class="right-cont">
+                                		<div>关联人列表</div>
+                             			<div class="jqGrid_wrapper">
+			                            	<table id="table_list_5"></table>
+			                            	<div id="pager_list_5"></div>
+			                        	</div>
+                                	</div>
+                                	<div class="arrow-icon" style="top: -135px;">
+                        				<div><i class="glyphicon glyphicon-arrow-right"></i></div>
+                        				<div><i class="glyphicon glyphicon-arrow-left"></i></div>
+                       				</div>
+                                	<div class="right-cont">
+                                		<div>已关注关联人列表</div>
+                              			<div class="jqGrid_wrapper">
+				                            <table id="table_list_6"></table>
+				                            <div id="pager_list_6"></div>
+				                        </div>
+                                	</div>
+                                	<!-- <div class="row">
+                                		<div class="col-lg-12">
+                                			<div class="col-lg-4">
+												<div class="jqGrid_wrapper">
+						                            <table id="table_list_4"></table>
+						                            <div id="pager_list_4"></div>
+						                        </div>
+                                			</div>
+                                			<div class="col-lg-3">
+                                				<div>关联人列表</div>
+                                				<div class="jqGrid_wrapper">
+						                            <table id="table_list_5"></table>
+						                            <div id="pager_list_5"></div>
+						                        </div>
+                                				<div class="bottom-div">
+                                					<div class="comp-name">XXX公司</div>
+                                				</div>	
+                                			</div>
+                                			<div class="col-lg-1">
+                                				<div class="arrow-icon">
+	                                				<div><i class="glyphicon glyphicon-arrow-right"></i></div>
+	                                				<div><i class="glyphicon glyphicon-arrow-left"></i></div>
+                                				</div>
+                                			</div>
+                                			<div class="col-lg-3" style="margin-left: 23px;">
+                                				<div>已关注关联人列表</div>
+                                				<div class="jqGrid_wrapper">
+						                            <table id="table_list_6"></table>
+						                            <div id="pager_list_6"></div>
+						                        </div>
+                                				<div class="bottom-div">
+                                					<div style="display: inline-block;"><button class="btn btn-success">保存</button></div>
+                                				</div>
+                                			</div>		
+                                		</div>
+                                	</div> -->		    
+                                </div>
+                            </div>
+                        </div>
+                    </div>	            		    	    
+	                </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+$(function(){
+  /* var lesseeNames = [
+      {
+        label: "北京星光拓诚投资有限公司"
+      },
+      {
+        label: "北京华远意通热力科技股份有限公司 "    
+      }
+    ]; */ 
+     $("#lesseeName").autocomplete({
+         minLength: 0,
+         source: "/bpMaster/fuzzySearch",
+         focus: function(event, ui) {
+            $("#lesseeName").val(ui.item.label);
+            return false;
+          },
+          select: function(event, ui) {
+             $("#lesseeName").val(ui.item.label);
+          }
+     })
+}) 
+</script>
+<script type="text/javascript">
+	$('.chosen-select').chosen({width: "100%"});
+	$(document).ready(function(){
+		$("#table_list_1").jqGrid({
+			url : "/warn/queryAllLessee",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        datatype: "json",
+	        height: 320,
+	        autowidth: true,
+	        shrinkToFit: true,
+	        scrollOffset : 0,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['承租人ID','承租人名称'],
+	        colModel:[
+	            {name:'LESSEE_COMPANY_ID',index:'LESSEE_COMPANY_ID', editable: true,hidden:true},
+	            {name:'LESSEE_NAME',index:'LESSEE_NAME', editable: true}
+	        ],
+	        pager: "#pager_list_1",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "response.data",
+	        	records: "response.totalRows",
+                total: "response.totalPages", // 总共多少页
+	        	repeatitems: false,
+	        	id: "0"
+	        },onSelectRow: function(id){
+	        	var rowData = $("#table_list_1").jqGrid("getRowData",id);
+	        	if(rowData){
+	        		$("#table_list_2").jqGrid('setGridParam',{
+	                    datatype:'json',
+	                    postData:{"lesseeId":rowData.LESSEE_COMPANY_ID},
+	                }).trigger("reloadGrid");
+	        		
+	        		$("#table_list_3").jqGrid('setGridParam',{
+	                    datatype:'json',
+	                    postData:{"lesseeId":rowData.LESSEE_COMPANY_ID},
+	                }).trigger("reloadGrid");
+	        		
+	        	}
+	        }
+	    });
+		
+		
+		$(".glyphicon-arrow-right").click(function(){
+			var selectedRowId = $("#table_list_2").jqGrid("getGridParam", "selrow");
+			var rowData = $("#table_list_2").jqGrid("getRowData",selectedRowId);
+	        if(!selectedRowId){
+	            swal({
+	                title: "提示",
+	                text: "请先选择要修改的数据",
+	                type: "info"
+	            });
+	            return;
+	        }else{
+	        	 $.ajax({
+						url : "https://data.riskstorm.com/v1/following/"+rowData.ASSO_COMPANY_ID+"?apikey=wR7k6HoDXurt4VFL8qckdg",
+						type:"put",
+						async : false,
+						success : function(result) {
+							 $.ajax({
+									url : "/warn/changeFocusOn",
+									data:{assoID:rowData.ASSO_COMPANY_ID},
+									type:"post",
+									async : false,
+									success : function(result) {
+										if(true){
+											 swal({
+									                title: "提示",
+									                text: "关注成功！",
+									                type: "info"
+									            });
+												$("#table_list_2").jqGrid('setGridParam',{
+								                    datatype:'json',
+								                    postData:{"lesseeId":rowData.LESSEE_COMPANY_ID},
+								                }).trigger("reloadGrid");
+								        		
+								        		$("#table_list_3").jqGrid('setGridParam',{
+								                    datatype:'json',
+								                    postData:{"lesseeId":rowData.LESSEE_COMPANY_ID},
+								                }).trigger("reloadGrid");
+								        		
+										}
+									}
+								}) 
+						},error:function(result){
+							swal({
+				                title: "提示",
+				                text: "请求关注失败！"+result.responseJSON.message,
+				                type: "info"
+				            });
+						}
+					}) 
+	        	
+	        	$("#table_list_3").jqGrid('setGridParam',{
+	                datatype:'json',
+	                postData:{"modelId":selectedRowId.model_id},
+	            }).trigger("reloadGrid");
+	        }
+		})
+		//点击左箭头
+		$(".glyphicon-arrow-left").click(function(){
+			var selectedRowId = $("#table_list_3").jqGrid("getGridParam", "selrow");
+			var rowData = $("#table_list_3").jqGrid("getRowData",selectedRowId);
+	        if(!selectedRowId){
+	            swal({
+	                title: "提示",
+	                text: "请先选择要修改的数据",
+	                type: "info"
+	                
+	            });
+	            return;
+	        }else{
+	        	
+	        	 $.ajax({
+						url : "https://data.riskstorm.com/v1/following/"+rowData.ASSO_COMPANY_ID+"?apikey=wR7k6HoDXurt4VFL8qckdg",
+						type:"DELETE",
+						async : false,
+						success : function(result) {
+							 $.ajax({
+									url : "/warn/changeNoFocusOn",
+									data:{assoID:rowData.ASSO_COMPANY_ID},
+									type:"post",
+									async : false,
+									success : function(result) {
+										if(true){
+											 swal({
+									                title: "提示",
+									                text: "取消关注成功！",
+									                type: "info"
+									            });
+												$("#table_list_2").jqGrid('setGridParam',{
+								                    datatype:'json',
+								                    postData:{"lesseeId":rowData.LESSEE_COMPANY_ID},
+								                }).trigger("reloadGrid");
+								        		
+								        		$("#table_list_3").jqGrid('setGridParam',{
+								                    datatype:'json',
+								                    postData:{"lesseeId":rowData.LESSEE_COMPANY_ID},
+								                }).trigger("reloadGrid");
+								        		
+										}
+									}
+								}) 
+						},error:function(){
+							swal({
+				                title: "提示",
+				                text: "请求取消关注失败！",
+				                type: "info"
+				            });
+						}
+					}) 
+	        	
+	        	
+	        	
+	        	$("#table_list_2").jqGrid('setGridParam',{
+	                datatype:'json',
+	                postData:{"modelId":selectedRowId.model_id},
+	            }).trigger("reloadGrid");
+	        }
+		})
+		
+	 	/*  $.ajax({
+			url : "/warn/findByAssoidY",
+			type:"POST",
+			success : function(result) {
+			$.each(result.response.data,function(i,row){
+				 $.ajax({
+					url : "https://data.riskstorm.com/v1/following/"+row.ASSO_COMPANY_ID+"?apikey=wR7k6HoDXurt4VFL8qckdg",
+					type:"PUT",
+					async : false,
+					success : function(result) {
+						 $.ajax({
+								url : "/warn/changeFocusOn",
+								data:{assoID:row.ASSO_COMPANY_ID},
+								type:"post",
+								async : false,
+								success : function(result) {
+								}
+							})
+					}
+				}) 
+			})
+			 
+				
+			}
+		})  */
+		
+		
+		
+		$("#table_list_2").jqGrid({
+			url : "/warn/findByAssoidN",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    postData:{"lesseeId":""},
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        datatype: "json",
+	        height: 345,
+	        autowidth: true,
+	        shrinkToFit: true,
+	        scrollOffset : 0,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 300,
+	        rowList: [10, 20, 30],
+	        colNames:['','关联人类型','关联人名称'],
+	        colModel:[
+	        	{name:'ASSO_COMPANY_ID',index:'ASSO_COMPANY_ID', editable: true,hidden:true},
+	        	{name:'ASSO_TYPE_NAME',index:'ASSO_NAME', editable: true, width: 40},
+	            {name:'ASSO_NAME',index:'ASSO_NAME', editable: true}
+	            
+	        ],
+	        pager: "#pager_list_2",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        //rownumbers: true,
+	        //rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "response.data",
+	        	records: "response.totalRows",
+                total: "response.totalPages", // 总共多少页
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		$("#table_list_3").jqGrid({
+			url : "/warn/findByAssoidY",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+			 postData:{"lesseeId":""},
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        datatype: "json",
+	        height: 345,
+	        autowidth: true,
+	        shrinkToFit: true,
+	        scrollOffset : 0,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['','关联人类型','关联人名称'],
+	        colModel:[
+	        	{name:'ASSO_COMPANY_ID',index:'ASSO_COMPANY_ID', editable: true,hidden:true},
+	        	{name:'ASSO_TYPE_NAME',index:'ASSO_NAME', editable: true, width: 40},
+	            {name:'ASSO_NAME',index:'ASSO_NAME', editable: true}
+	            
+	        ],
+	        pager: "#pager_list_3",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        //rownumbers: true,
+	        //rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "response.data",
+	        	records: "response.totalRows",
+                total: "response.totalPages", // 总共多少页
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		//$("#table_list_1").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+		// Setup buttons
+        $("#table_list_1").jqGrid('navGrid', '#pager_list_1',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        $("#table_list_2").jqGrid('navGrid', '#pager_list_2',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        $("#table_list_3").jqGrid('navGrid', '#pager_list_3',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        var mydata4 = [
+        	{name1: "闻喜祥和热力有限公司"}
+	    ];
+		//
+        $("#table_list_4").jqGrid({
+			url : "",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+		    //datatype: "json",
+	        data: mydata4,
+	        datatype: "local",
+	        width : 419,
+	        height: 324,
+	        autowidth: false,
+	        shrinkToFit: true,
+	        scrollOffset : 0,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['承租人名称'],
+	        colModel:[
+	            {name:'name1',index:'name1', editable: true}
+	        ],
+	        pager: "#pager_list_4",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        //rownumbers: true,
+	        //rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "data",
+	        	records: "recordsTotal",
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+        var mydata5 = [
+	        {name1: "子公司", name2: "北京点石成晶投资管理有限公司"},
+	        {name1: "母公司", name2: "北京蓝天瑞德环保技术股份有限公司"}
+	    ];
+		//
+		$("#table_list_5").jqGrid({
+			url : "",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	      	//datatype: "json",
+	        data: mydata5,
+	        datatype: "local",
+	        width : 419,
+	        height: 310,
+	        autowidth: false,
+	        shrinkToFit: true,
+	        scrollOffset : 0,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['关联人类型','关联人名称'],
+	        colModel:[
+	            {name:'name1',index:'name1', editable: true, width: 40},
+	            {name:'name2',index:'name2', editable: true}
+	        ],
+	        pager: "#pager_list_5",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        //rownumbers: true,
+	        //rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "data",
+	        	records: "recordsTotal",
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		//
+		$("#table_list_6").jqGrid({
+			url : "",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        datatype: "json",
+	        width : 419,
+	        height: 310,
+	        autowidth: false,
+	        shrinkToFit: true,
+	        scrollOffset : 0,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['关联人类型','关联人名称'],
+	        colModel:[
+	            {name:'reportName',index:'reportName', editable: true, width: 40},
+	            {name:'reportName',index:'reportName', editable: true}
+	        ],
+	        pager: "#pager_list_6",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        //rownumbers: true,
+	        //rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "data",
+	        	records: "recordsTotal",
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		//$("#table_list_2").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+		// Setup buttons
+        $("#table_list_4").jqGrid('navGrid', '#pager_list_4',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        $("#table_list_5").jqGrid('navGrid', '#pager_list_5',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        $("#table_list_6").jqGrid('navGrid', '#pager_list_6',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        // Add responsive to jqGrid
+        $(window).bind('resize', function () {
+            var width = $('.jqGrid_wrapper').width();
+            $('#table_list_1').setGridWidth(width);
+            $('#table_list_2').setGridWidth(width);
+        });
+	});
+</script>
+</html>

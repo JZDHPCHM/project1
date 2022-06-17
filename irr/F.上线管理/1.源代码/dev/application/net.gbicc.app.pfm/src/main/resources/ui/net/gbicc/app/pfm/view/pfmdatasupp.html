@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+<body style='background-color:white'>
+	<div class='wrapper'>
+		<div class='wrapper wrapper-content animated fadeInRight'>
+			<div class='row'>
+				<div class='col-lg-12'>
+					<div class='row'>
+						<form class='form-inline' id='dataSuppSearchForm'>
+							<div class="form-group">
+	                            <label for="taskName" class="control-label">评估计划</label>
+		                        <select class="form-control" name="taskId" id="taskId">
+		                        	<option value=''>请选择</option>
+		                            <option th:each="option: ${@irrTaskServiceImpl.getTaskMap('YWC')}" th:value="${option.key}" th:text="${option.value}"></option>
+		                        </select>
+	                        </div>
+							<div class="form-group hidden">
+                                 <label class="control-label" for="searchProjTypeId">评估项目</label>
+                               	 <select class="form-control" name="projTypeId" id="searchProjTypeId">
+                                    	<option value=''>请选择</option>
+	                             	<option th:each="option: ${@irrProjTypeServiceImpl.projTypeSelect(4)}" th:value="${option.key}" th:text="${option.value}"></option>
+                               	 </select>
+			                </div>
+							<div class="form-group">
+	                            <label class="control-label" for="pfmLevel">补录层级</label>
+	                          	<select class="form-control" name="pfmLevel" id="pfmLevel">
+	                          	    <option value=''>请选择</option>
+	                         		<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('pfmLevel',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+	                          	</select>
+	                        </div>
+							<div class="form-group">
+	                            <!-- <label for="indexCode" class="control-label">指标编码</label> -->
+	                            <input type="hidden" placeholder="模糊查询" id="indexCode" name="indexCode" class="form-control">
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="indexName" class="control-label">指标名称</label>
+	                            <input type="text" placeholder="模糊查询" id="indexName" name="indexName" class="form-control">
+	                        </div>
+						</form>
+						<div class='row' style='margin:5px 0 0 0'>
+							<button type='button' class='btn btn-primary btn-sm' id='searchBtn'>查询</button>
+							<button type='button' class='btn btn-primary btn-sm' id='resetBtn'>重置</button>
+							<button type='button' class='btn btn-primary btn-sm' id='dataSuppBtn'>补录</button>
+						</div>
+					</div>
+					<div class='row' style="margin-top:5px;" id='pfmDataSuppTableDiv'>
+						<table id='pfmDataSuppTable'></table>
+						<div id='pfmDataSuppPage'></div>
+					</div>
+					
+					<!-- 上传excel模态框 -->
+                   	<div class="row">
+                   		<div class="modal inmodal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">								
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">
+											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+										</button>
+										<h4 class="modal-title">上传数据</h4>
+										<small class="font-bold">您可以在这里上传采集的数据</small>
+									</div>
+									<div style="text-align:center;">
+										<form class="form-inline">
+									          <div class="form-group">
+									             <div>
+									                <big class="font-bold">您需要先下载对应模板</big>
+									             </div>
+									             <div style="margin-top:10px">
+									                 <button id="obtainTemplate" type="button" class="btn btn-primary">下载模板</button>
+									             </div>
+									         </div>							
+											</form>
+									</div>
+									<div class="modal-body">
+										<form action="/pfm/branchResult/readPfmDataSupp.action" class="dropzone" id="dropzoneForm">
+				                            <input type='hidden' name='taskId' id='uploadTaskId'>
+				                            <div class="fallback" style="float:left;">
+				                                <input name="file" type="file" multiple />
+				                            </div>
+				                        </form> 
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+									</div>
+								</div>
+							</div>
+						</div>
+                   	</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	Dropzone.autoDiscover = false;
+	var irrDropzone = new Dropzone('#dropzoneForm',{
+	    paramName: "file", // The name that will be used to transfer the file
+	    maxFilesize: 2, // MB
+	    maxFiles : 1,
+	    parallelUploads : 1,//并行处理多少文件上传
+	    dictRemoveFile : true,//如果addRemoveLinks为true，则用于删除文件的文本
+	    dictDefaultMessage: "<strong>拖动文件到这里或者点击此处进行上传文件</strong>",
+	    acceptedFiles : '.xls,.xlsx',
+	    addRemoveLinks : true,
+	    dictRemoveFile : '删除',
+	    autoProcessQueue : true,//是否自动上传
+	    sending: function(file, xhr, formData) {
+	      	  
+	    },
+	    success: function (file, response, e) {
+	    	if(response.flag == true){
+	    		swal('提示',response.mes,'success');
+			}else{
+				swal('提示',response.mes,'error');
+			}
+	    }
+	});
+
+	/*查询方法*/
+	function seachFn(){
+		var pfmLevel = $('#pfmLevel').val();
+    	var pfmLevelText = $('#pfmLevel').find("option:selected").text();
+    	if(pfmLevelText!='总公司绩效1'&&pfmLevelText!='总公司绩效2'&&pfmLevelText!='分公司绩效'){
+    		swal('提示','请先选择补录层级!','warning');
+    		return false;
+    	}
+    	var info = $('#dataSuppSearchForm').getNotNullJson();
+    	if(pfmLevel=='HEAD1'){
+    		$("#pfmDataSuppTable").jqGrid('clearGridData');//清空表格
+			$("#pfmDataSuppTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',					
+				postData : info,
+				page : 1,
+				url:"[(@{/pfm/depaResult/queryDepaResult.action})]"
+			},true).trigger("reloadGrid");
+    	}else if(pfmLevel=='HEAD2'){
+    		$("#pfmDataSuppTable").jqGrid('clearGridData');//清空表格
+			$("#pfmDataSuppTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',					
+				postData : info,
+				page : 1,
+				url:"[(@{/pfm/channelResult/queryChannelResult.action})]"
+			},true).trigger("reloadGrid");
+    	}else if(pfmLevel=='BRANCH'){
+    		$("#pfmDataSuppTable").jqGrid('clearGridData');//清空表格
+			$("#pfmDataSuppTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',					
+				postData : info,
+				page : 1,
+				url:"[(@{/pfm/branchResult/queryBranchResult.action})]"
+			},true).trigger("reloadGrid");
+    	}
+	}
+	
+	var headOneColNames = ['期次','指标名称','投资部','精算部','财务管理部','会计运营部','IT'];
+	var headOneColModel = [{
+		name : 'TASK_BATCH',
+    	index : 'TASK_BATCH',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	},{
+		name : 'INDEXNAME',
+    	index : 'INDEXNAME',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	},{
+		name : 'TZB',
+    	index : 'TZB',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	},{
+		name : 'JSB',
+    	index : 'JSB',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	},{
+		name : 'CWGLB',
+    	index : 'CWGLB',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	},{
+		name : 'KJYYB',
+    	index : 'KJYYB',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	},{
+		name : 'IT',
+    	index : 'IT',
+    	hidden : false,
+    	editable : false,
+    	search : true
+	}];
+	$(document).ready(function(){
+		/*配置指标表格*/
+		$("#pfmDataSuppTable").jqGrid({
+			url:"[(@{/pfm/depaResult/queryDepaResult.action})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 350,
+	        autowidth: true,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 1,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['期次','指标名称','投资部','精算部','财务管理部','会计运营部','IT'],
+	        colModel:[{
+	    		name : 'TASK_BATCH',
+	        	index : 'TASK_BATCH',
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	    	},{
+	    		name : 'INDEXNAME',
+	        	index : 'INDEXNAME',
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	    	},{
+	    		name : 'TZB',
+	        	index : 'TZB',
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	    	},{
+	    		name : 'JSB',
+	        	index : 'JSB',
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	    	},{
+	    		name : 'CWGLB',
+	        	index : 'CWGLB',
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	    	},{
+	    		name : 'KJYYB',
+	        	index : 'KJYYB',
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	    	},{
+	    		name : 'IT',
+	        	index : 'IT',
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	    	}],
+	        pager: "#pfmDataSuppPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }
+	    });
+	    $("#pfmDataSuppTable").jqGrid('navGrid', '#pfmDataSuppPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+		/*补录按钮*/
+	    $('#dataSuppBtn').click(function(){
+	    	var taskId=$('#taskId').val();
+	    	if(isSelect(taskId)){
+	    		swal('提示','请先选择评估计划!','warning');
+	    		return false;
+	    	}
+	    	defineResetForm('#dropzoneForm');
+	    	irrDropzone.removeAllFiles();
+	    	$('#uploadTaskId').val(taskId);
+	    	$('#uploadModal').modal('show');
+	    });
+	    /*补录层级下拉框改变事件*/
+	    $('#pfmLevel').change(function(){
+	    	var pfmLevel = $('#pfmLevel').val();
+	    	if(isEmpty(pfmLevel)){
+	    		swal('提示','请先选择补录层级!','warning');
+	    		return false;
+	    	}
+	    	var colNameParam = null;
+	    	var colModelParam = null;
+	    	if(pfmLevel == 'HEAD1'){
+	    		colNameParam = headOneColNames;
+	    		colModelParam = headOneColModel;
+	    		jqGridConfig('#pfmDataSuppTable','#pfmDataSuppPage','[(@{/pfm/depaResult/queryDepaResult.action})]',headOneColNames,headOneColModel);
+	    	}else if(pfmLevel == 'HEAD2'){
+	    		colNameParam = ['期次','指标名称','客服','个险','团险','银保','多元','收展'];
+	    		colModelParam = [{
+	    			name : 'TASK_BATCH',
+	    	    	index : 'TASK_BATCH',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'INDEXNAME',
+	    	    	index : 'INDEXNAME',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'KF',
+	    	    	index : 'KF',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'FC',
+	    	    	index : 'FC',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'GP',
+	    	    	index : 'GP',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'BK',
+	    	    	index : 'BK',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'AD',
+	    	    	index : 'AD',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'RP',
+	    	    	index : 'RP',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		}];
+	    		jqGridConfig('#pfmDataSuppTable','#pfmDataSuppPage','[(@{/pfm/channelResult/queryChannelResult.action})]',colNameParam,colModelParam);
+	    	}else if(pfmLevel == 'BRANCH'){
+	    		colNameParam = ['期次','指标名称','北京','天津','辽宁','大连','江苏','山东','青岛','河南','广东','四川'];
+	    		colModelParam = [{
+	    			name : 'TASK_BATCH',
+	    	    	index : 'TASK_BATCH',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'INDEXNAME',
+	    	    	index : 'INDEXNAME',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'BJ',
+	    	    	index : 'BJ',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'TJ',
+	    	    	index : 'TJ',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'LN',
+	    	    	index : 'LN',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'DL',
+	    	    	index : 'DL',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'JS',
+	    	    	index : 'JS',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'SD',
+	    	    	index : 'SD',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'QD',
+	    	    	index : 'QD',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'HN',
+	    	    	index : 'HN',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'GD',
+	    	    	index : 'GD',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		},{
+	    			name : 'SC',
+	    	    	index : 'SC',
+	    	    	hidden : false,
+	    	    	editable : false,
+	    	    	search : true
+	    		}];
+	    		jqGridConfig('#pfmDataSuppTable','#pfmDataSuppPage','[(@{/pfm/branchResult/queryBranchResult.action})]',colNameParam,colModelParam);
+	    	}
+	    	$('#taskId').val('');
+	    	$('#indexName').val('');
+	    });
+	    /* 点击查询按钮 */
+	    $("#searchBtn").click(function(){
+	    	seachFn();
+	    });
+	    /* 点击重置按钮 */
+	    $("#resetBtn").click(function(){
+	    	$("#dataSuppSearchForm")[0].reset();
+	    });
+	    /* 获取模板按钮 */
+	    $('#obtainTemplate').click(function(){
+	    	var taskId = $('#taskId').val();
+	        window.location.href="/pfm/branchResult/downloadPfmDataSupp.action?taskId="+taskId;
+	    });
+	    
+	});	
+</script>
+</html>

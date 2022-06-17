@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FR_2019.01.22_17.24.40__fr_sys_dictionary.xml -->
+<export>
+  <summary>
+    <t name="fr_sys_dictionary">SELECT * FROM `fr_sys_dictionary`</t>
+  </summary>
+  <table name="fr_sys_dictionary">
+    <sql>SELECT * FROM `fr_sys_dictionary`</sql>
+      <fields>
+        <field name="FD_ID"                        type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CODE"                      type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_KEY"                       type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_ORDER"                     type="4"                  typeName="java.sql.Types.INTEGER"/>
+        <field name="FD_CREATOR"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATE_DATE"               type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+        <field name="FD_LAST_MODIFIER"             type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_LAST_MODIFYDATE"           type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+      </fields>
+    <resultset>
+       <row>
+        <f>53b53451-caf4-4260-8b34-ef559036294b</f>
+        <f>FinancialStatementTemplateType</f>
+        <f>INSTITUTION</f>
+        <f>5</f>
+        <f>admin</f>
+        <f>2018-10-16 15:35:46.0</f>
+        <f>admin</f>
+        <f>2018-10-16 15:35:46.0</f>
+      </row>
+      <row>
+        <f>fb7e597c-69be-42c4-8aec-e74282be97aa</f>
+        <f>FinancialStatementTemplateType</f>
+        <f>INSTITUTIONOLD</f>
+        <f>7</f>
+        <f>admin</f>
+        <f>2019-01-28 15:44:46.496</f>
+        <f>admin</f>
+        <f>2019-01-28 15:44:46.496</f>
+      </row>
+      <row>
+        <f>466B8B9E44BB4B1AB7767F62F25A8EB8</f>
+        <f>FinancialStatementTemplateType</f>
+        <f>GENERALENTERPRISEOLD</f>
+        <f>6</f>
+        <f>admin</f>
+        <f>2019-01-28 16:11:05.0</f>
+        <f>admin</f>
+        <f>2019-01-28 16:11:05.0</f>
+      </row>
+      <row>
+        <f>37B78A5537FE43EFA437758D060B1FC9</f>
+        <f>FinancialStatementTemplateType</f>
+        <f>GENERALENTERPRISE</f>
+        <f>10</f>
+        <f>admin</f>
+        <f>2019-01-28 16:14:55.0</f>
+        <f>admin</f>
+        <f>2019-01-28 16:14:55.0</f>
+      </row>
+      <row>
+        <f>4B4E902E1BB642BF96974D9828F9ACE6</f>
+        <f>FinancialStatementTemplateType</f>
+        <f>SMALLENTERPRISE</f>
+        <f>8</f>
+        <f>admin</f>
+        <f>2019-01-28 16:15:18.0</f>
+        <f>admin</f>
+        <f>2019-01-28 16:15:18.0</f>
+      </row>
+      <row>
+        <f>1717BE749D994E18852ABE33614EB6E1</f>
+        <f>FinancialStatementTemplateType</f>
+        <f>SMALLENTERPRISEOLD</f>
+        <f>11</f>
+        <f>admin</f>
+        <f>2019-01-28 16:16:21.0</f>
+        <f>admin</f>
+        <f>2019-01-28 16:16:21.0</f>
+      </row>
+       <row>
+        <f>090c5104-0b4f-48b6-a1b0-ef78ff5b657a</f>
+        <f>ACCOUNT_CLASSIFICATION</f>
+        <f>CASH_FLOW_STATEMENT</f>
+        <f>2</f>
+        <f>admin</f>
+        <f>2018-10-25 10:46:04.0</f>
+        <f>admin</f>
+        <f>2018-10-25 10:46:50.0</f>
+      </row>
+      <row>
+        <f>30a4b10f-bc4a-4d3b-b5ea-52166aaab464</f>
+        <f>ACCOUNT_CLASSIFICATION</f>
+        <f>BALANCE_SHEET_SIMPLE</f>
+        <f>4</f>
+        <f>admin</f>
+        <f>2018-10-25 10:45:58.0</f>
+        <f>admin</f>
+        <f>2018-10-25 10:47:09.0</f>
+      </row>
+      <row>
+        <f>4f45aad4-234f-4875-9a4a-c24f84794b76</f>
+        <f>ACCOUNT_CLASSIFICATION</f>
+        <f>PROFIT_AND_LOSS_STATEMENT</f>
+        <f>3</f>
+        <f>admin</f>
+        <f>2018-10-25 10:46:12.0</f>
+        <f>admin</f>
+        <f>2018-10-25 10:47:03.0</f>
+      </row>
+      <row>
+        <f>5930e6ca-6b2f-4174-b4be-3d1d177fe9cb</f>
+        <f>ACCOUNT_CLASSIFICATION</f>
+        <f>BALANCE_SHEET</f>
+        <f>1</f>
+        <f>admin</f>
+        <f>2018-10-25 10:43:28.0</f>
+        <f>admin</f>
+        <f>2018-10-25 10:43:28.0</f>
+      </row>
+      <row>
+        <f>da609424-48ee-4489-a901-ee2b5bed52b6</f>
+        <f>ACCOUNT_CLASSIFICATION</f>
+        <f>INCOME_STATEMENT_AND_PROFIT_APPR</f>
+        <f>5</f>
+        <f>admin</f>
+        <f>2018-10-25 10:46:27.0</f>
+        <f>admin</f>
+        <f>2018-10-25 10:47:18.0</f>
+      </row>
+      <row>
+        <f>fc28c274-02f8-4898-9455-916c85808de3</f>
+        <f>ACCOUNT_CLASSIFICATION</f>
+        <f>INCOME_AND_EXPENSE_STATEMENT</f>
+        <f>6</f>
+        <f>admin</f>
+        <f>2018-10-25 10:46:19.0</f>
+        <f>admin</f>
+        <f>2018-10-25 10:47:22.0</f>
+      </row>
+    </resultset>
+  </table>
+</export>

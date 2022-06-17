@@ -1,0 +1,55 @@
+group='net.gbicc'
+
+apply plugin: 'war'
+
+configurations {
+	compile.exclude module: 'spring-boot-starter-tomcat'
+}
+
+dependencies {
+    providedRuntime(
+        "org.springframework.boot:spring-boot-starter-undertow",
+    )
+
+    compile(
+    	"javax.servlet:javax.servlet-api",
+    	
+        "org.wsp:org.wsp.framework.core:${framework_version}",
+        "org.wsp:org.wsp.framework.datasource:${framework_version}",
+        "org.wsp:org.wsp.framework.developer:${framework_version}",
+        "org.wsp:org.wsp.framework.developer.doc:${framework_version}",
+        "org.wsp:org.wsp.framework.ext.thymeleaf:${framework_version}",
+        "org.wsp:org.wsp.framework.installer:${framework_version}",
+        "org.wsp:org.wsp.framework.jdbc:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa.model:${framework_version}",
+        "org.wsp:org.wsp.framework.mvc:${framework_version}",
+        "org.wsp:org.wsp.framework.scheduler:${framework_version}",
+        "org.wsp:org.wsp.framework.scheduler.impl.spring:${framework_version}",
+        "org.wsp:org.wsp.framework.security:${framework_version}",
+        "org.wsp:org.wsp.framework.security.impl.jpa:${framework_version}",
+        "org.wsp:org.wsp.framework.flowable:${framework_version}",
+		project(":net.gbicc.app.irr"),
+		project(":net.gbicc.app.pfm"),
+		project(":org.framework.ui.inspinia"),
+		project(":org.framework.ui.inspinia.template"),
+		project(":com.gbicc.aicr.system")
+	)
+}
+
+bootWar{
+	mainClassName = 'net.gbicc.app.Application'
+	requiresUnpack '**/jruby-complete-*.jar','**/asciidoctor*.jar'
+	launchScript()
+	from('src/main/resources') {
+    	include '**/*'
+	}
+}
+
+clean {
+	delete 'bin'
+	delete 'config'
+	delete 'logs'
+	delete 'tmp'
+	delete 'work'
+}

@@ -1,0 +1,10 @@
+
+include 'com.gbicc.aicr.system'
+include 'net.gbicc.app'
+include 'net.gbicc.app.cas.client'
+include 'net.gbicc.app.irr'
+include 'net.gbicc.app.parent'
+include 'net.gbicc.app.pfm'
+include 'net.gbicc.app.xbrl'
+include 'org.framework.ui.inspinia'
+include 'org.framework.ui.inspinia.template'

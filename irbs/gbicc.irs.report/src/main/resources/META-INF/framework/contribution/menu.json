@@ -1,0 +1,79 @@
+[
+  /*报表管理*/
+  {
+    "type": "CATEGORY",
+    "id": "menuitem.irs.report",
+    "title": "[(#{menuitem.irs.report})]",
+    "order": 500
+  },
+  /*评级总体报表*/
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report",
+    "id": "menuitem.irs.report.queryReportMain",
+    "title": "[(#{menuitem.irs.report.queryReportMain})]",
+    "order": 600
+  },
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report",
+    "id": "menuitem.irs.report.queryReportNational",
+    "title": "[(#{menuitem.irs.report.queryReportNational})]",
+    "order": 700
+  },
+   {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report",
+    "id": "menuitem.irs.report.tenantRatingDistribution",
+    "title": "[(#{menuitem.irs.report.tenantRatingDistribution})]",
+    "order": 800
+  },
+   {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report",
+    "id": "menuitem.irs.report.serviceOriented",
+    "title": "[(#{menuitem.irs.report.serviceOriented})]",
+    "order": 900
+  },
+     {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report",
+    "id": "menuitem.irs.report.financialAccount",
+    "title": "[(#{menuitem.irs.report.financialAccount})]",
+    "order": 901
+  },
+     {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report",
+    "id": "menuitem.irs.report.newType",
+    "title": "[(#{menuitem.irs.report.newType})]",
+    "order": 902
+  },
+  {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report",
+    "id": "menuitem.irs.report.debtBaseList",
+    "title": "[(#{menuitem.irs.report.debtBaseList})]",
+    "order": 903
+  },
+    {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report",
+    "id": "menuitem.irs.report.debtReportNational",
+    "title": "[(#{menuitem.irs.report.debtReportNational})]",
+    "order": 904
+  }, {
+    "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report",
+    "id": "menuitem.irs.report.debtReportAsWhole",
+    "title": "[(#{menuitem.irs.report.debtReportAsWhole})]",
+    "order": 905
+  },{
+  "type": "ANNOTATION",
+    "parentId": "menuitem.irs.report",
+    "id": "menuitem.irs.report.debtNationalStandardIndustry",
+    "title": "[(#{menuitem.irs.report.debtNationalStandardIndustry})]",
+    "order": 906
+  }
+
+]

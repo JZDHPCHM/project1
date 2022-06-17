@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+ 
+//=============================================客户列表===========================================================
+
+var statusData =[
+	        {code:"DTJ",name:"待提交"},
+			{code:"DSP",name:"待审批"},
+			{code:"TH",name:"退回"},
+			{code:"WC",name:"完成"}
+];
+
+var lauchTypeData =[
+			{code:"RG",name:"人工发起"},
+			{code:"XT",name:"系统发起"}
+];
+
+var jobType =[
+    {code:"WY",name:"违约认定"},
+	{code:"BH",name:"违约重生"}
+];
+
+//字典数据_违约事件
+var defaultEvent =[(${@jacksonObjectMapper.writeValueAsString(@defaultEventLibController.findAllDefaultEvent())})];
+
+//字段定义
+var EnterpriseCustomerFieldsToShow ={
+	edit: [		
+			{width:'100%',		name:'custNo',                        title:'[[#{custNo}]]',			primaryKey:true,hidden:false,	validators:[{type:'lengthRange',max:20}],	validators:[{type:'required'}]},
+			{width:'100%',		name:'unCustNo',                      title:'[[#{unCustNo}]]',			validators:[{type:'lengthRange',max:25}]									},
+			{width:'100%',		name:'custName',                      title:'[[#{custName}]]',			validators:[{type:'lengthRange',max:100}],	validators:[{type:'required'}]	},
+			{width:'100%',		name:'custSimpleName',                title:'[[#{custSimpleName}]]',	validators:[{type:'lengthRangeB',max:100}]									},
+			{width:'100%',		name:'custEAllName',                  title:'[[#{custEAllName}]]',		validators:[{type:'lengthRange',max:100}]									},
+			{width:'100%',		name:'custESimpleName',               title:'[[#{custESimpleName}]]',	validators:[{type:'lengthRange',max:100}]									},
+			{width:'100%',		name:'registrationAmount',            title:'[[#{registrationAmount}]]',validators:[{type:'floatRange',max:9999999999999}]							},
+			{width:'100%',		name:'countryCode',                   title:'[[#{countryCode}]]', type: 'select'},
+			{width:'100%',		name:'provinceCode',                  title:'[[#{provinceCode}]]',type: 'select'},
+			{width:'100%',		name:'cityCode',                      title:'[[#{cityCode}]]',type: 'select'},
+			{width:'100%',		name:'descriptionRegisteredAddress',  title:'[[#{descriptionRegisteredAddress}]]',	type:'textArea' ,	colSpan:3,	height:70		},
+			{width:'100%',		name:'industryCategoryA',             title:'[[#{industryCategoryA}]]',type: 'select'},
+			{width:'100%',		name:'industryCategoryB',             title:'[[#{industryCategoryB}]]',type: 'select'},
+			{width:'100%',		name:'industryCategoryC',             title:'[[#{industryCategoryC}]]',type: 'select'},
+			{width:'100%',		name:'businessLicense',            	  title:'[[#{businessLicense}]]',		validators:[{type:'lengthRange',max:17}]															},
+			{width:'100%',		name:'employeesCount',                title:'[[#{employeesCount}]]',		validators:[{type:'integerRange',max:999999999}]													},
+			{width:'100%',		name:'legalRepresentative',        	  title:'[[#{legalRepresentative}]]',	validators:[{type:'lengthRange',max:10}]															},
+			{width:'100%',		name:'accountManager',            	  title:'[[#{accountManager}]]',		validators:[{type:'lengthRange',max:10}]															},
+			{width:'100%',		name:'businessScope',                 title:'[[#{businessScope}]]' ,		type:'textArea' ,		colSpan:3,		height:70,		validators:[{type:'lengthRange',max:500}]	},
+			{width:'100%',		name:'officeAddress',                 title:'[[#{officeAddress}]]' ,		type:'textArea',		colSpan:3,		height:70,		validators:[{type:'lengthRange',max:200}]	},
+			{width:'100%',		name:'officeAddressZipCode',          title:'[[#{officeAddressZipCode}]]',	validators:[{type:'lengthRange',max:6}]},
+			{width:'100%',		name:'enterpriseScale',               title:'[[#{enterpriseScale}]]',		type: 'select',		optionCriteria:{code:'enterpriseScale'},	displayField:'name',	valueField:'code',		allowEmptyValue:true,		autoFetchData:false},
+			{width:'100%',		name:'establishmentTime',             title:'[[#{establishmentTime}]]',		type:'date',		useTextField:true,endRow:true},
+			{width:'100%',		name:'newEnterpriseMark',             title:'[[#{newEnterpriseMark}]]',		type: 'boolean',endRow:true},
+			{width:'100%',		name:'defaultId',                      title:'[[#{defaultId}]]',			hidden:true},
+			{width:'100%',		name:'jobType',                      title:'[[#{jobType}]]',			hidden:true}
+			
+	]
+};
+isc.FwDynamicForm.create({
+	ID : "customerVieweForm",
+	numCols : 4,
+	autoFetchData : false,
+	canEdit: false,
+	readOnlyDisplay : 'static',
+	fields : EnterpriseCustomerFieldsToShow.edit
+});
+
+//违约定义
+//违约历史事件字段定义	
+var wyCureventItemFields ={
+	grid: [
+			{name:'id',					    	title:'主键',	primaryKey:true,hidden:true},
+			{name:'eventStartTime',				title:'违约时间'},
+		    {name:'defaultEventCode',			title:'违约原因',	valueMap:defaultEvent},	            			   
+		    {name:'defaultEventDescribe',		title:'违约描述'}
+	]
+};
+//违约事件列表数据源
+isc.FwRestDataSource.create({
+	ID: 'wyCurEventDS',
+	autoFetchData:false,
+    fields: wyCureventItemFields.grid,
+    fetchDataURL: '[[@{/irs/defaultCustomerEventItem/findVaildEventByCustNo}]]'
+});
+//违约事件列表 
+isc.FwListGrid.create({
+	ID: 'wyCurEventList',
+	title: '<b>违约事件</b>',
+	dataSource: wyCurEventDS,	
+	autoFetchData:false,
+	autoDraw:true,
+	canPageable:false,
+	fields: wyCureventItemFields.grid,
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	}
+});
+
+//违约历史
+//违约历史事件字段定义	
+var wyHisEventItemFields ={
+	grid: [
+			{name:'id',					    	title:'主键',	primaryKey:true,hidden:true},
+			{name:'eventStartTime',				title:'违约时间'},
+		    {name:'defaultEventCode',			title:'违约原因',	valueMap:defaultEvent},	            			   
+		    {name:'defaultEventDescribe',		title:'违约描述'},
+		    {name:'eventEndTime',				title:'重生生效时间'},
+		    {name:'defaultEventRebirthDescribe',		title:'重生原因'},
+	]
+};
+
+//违约事件列表数据源
+isc.FwRestDataSource.create({
+	ID: 'wyHisEventDS',
+	autoFetchData:false,
+    fields: wyHisEventItemFields.grid,
+    fetchDataURL: '[[@{/irs/defaultCustomerEventItem/findInvaildEventByCustNo}]]'
+});
+//违约事件列表 
+isc.FwListGrid.create({
+	ID: 'wyHisEventGrid',
+	title: '<b>历史违约事件</b>',
+	dataSource: wyHisEventDS,	
+	autoFetchData:false,
+	autoDraw:true,
+	canPageable:false,
+	canEdit: false,
+    autoSaveEdits: false,
+	fields: wyHisEventItemFields.grid,
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	}
+});
+
+
+//审批字段定义	
+var wyAproveFields ={
+	grid: [
+			{name:'id',					title:'主键',	primaryKey:true,hidden:true},
+			{name:'judgeUser',			title:'操作人员'},
+		    {name:'judgeDate',			title:'审批时间'},	            			   
+		    {name:'judgeAct',		    title:'审批意见'},
+		    {name:'judgeDescribe',		title:'审批说明'}
+	]
+};
+
+//审批数据源
+isc.FwRestDataSource.create({
+	ID: 'wyCurApproveDS',
+	autoFetchData:false,
+fields: wyAproveFields.grid,
+fetchDataURL: '[[@{/irs/defaultCustomerApprove/findCurArrpoveByCustNo}]]'
+});
+//审批列表 
+isc.FwListGrid.create({
+	ID: 'wyCurApproveGrid',
+	title: '<b>审批意见</b>',
+	dataSource: wyCurApproveDS,	
+	autoFetchData:false,
+	autoDraw:true,
+	canPageable:false,
+	canEdit: false,
+autoSaveEdits: false,
+	fields: wyAproveFields.grid,
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	}
+});
+
+//历史审批数据源
+isc.FwRestDataSource.create({
+	ID: 'wyHisApproveDS',
+	autoFetchData:false,
+  fields: wyAproveFields.grid,
+  fetchDataURL: '[[@{/irs/defaultCustomerApprove/findHisArrpoveByCustNo}]]'
+});
+//历史审批列表 
+isc.FwListGrid.create({
+	ID: 'wyHisApproveGrid',
+	title: '<b>历史审批意见</b>',
+	dataSource: wyHisApproveDS,	
+	autoFetchData:false,
+	autoDraw:true,
+	canPageable:false,
+	canEdit: false, 
+	fields: wyAproveFields.grid,
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	}
+});
+
+
+
+isc.FwVLayout.create({
+	ID:"wyCurLyt",
+    members:[
+    	wyCurEventList,             	    	
+    	isc.LayoutSpacer.create({height:20}),
+    	wyCurApproveGrid
+    ]});
+    
+    
+isc.FwVLayout.create({
+	ID:"wyHisLyt",
+    members:[
+    	wyHisEventGrid,             	    	
+    	isc.LayoutSpacer.create({height:20}),
+    	wyHisApproveGrid
+    ]});
+
+
+
+isc.TabSet.create({
+    ID: "wyTab",
+    width: '90%',
+    height: '100%',
+    tabs: [{
+        id: "wyBaseInfo",
+        title: "客户基本信息",
+        pane: customerVieweForm
+
+    },{
+        id: "wyCur",
+        title: "违约事件",
+        pane: wyCurLyt
+    },{
+        id: "wyHis",
+        title: "历史违约事件",
+        pane: wyHisLyt
+    }]
+});
+
+//定义新增违约事件页面
+isc.Window.create({
+     	ID:"wyWin",
+  		title: "违约认定信息",
+ 		width: 800,						//窗口默认宽度
+ 		height:'90%',
+		canDragResize: false,				//用户不能通过拖拽调整窗口大小
+  		autoCenter: true,					//自动将窗口定位于页面中央
+  		showMaximizeButton: false,			//在窗口标题栏中不显示最大化按钮
+  		showMinimizeButton: false,			//在窗口标题栏中不显示最小化按钮
+  		isModal: true,						//模式窗口
+  		showModalMask: true,				//显示遮罩
+  		autoSize:false,						
+  		canFocus: true,						//窗口可以获得焦点
+  		contentLayout:'hertical',			//窗口采用水平布局
+  		bodyStyle: 'fwWindowBody',			//窗口 body 样式名称
+  		dismissOnEscape: true,				//按 ESC 键后窗口关闭(会调用 close() 方法)
+  		bodyDefaults:{
+		   		padding:0
+		},
+		closeAndDestroy: false,			//关闭按钮点击时是否关闭并摧毁窗口
+	  	items: [wyTab]
+});
+
+//重生定义
+//违约历史事件字段定义	
+var bhCureventItemFields ={
+	grid: [
+			{name:'id',					    	title:'主键',	primaryKey:true,hidden:true},
+			{name:'eventStartTime',				title:'违约时间'},
+		    {name:'defaultEventCode',			title:'违约原因',	valueMap:defaultEvent},	            			   
+		    {name:'defaultEventDescribe',		title:'违约描述'},
+		    {name:'eventEndTime',				title:'重生生效时间'},
+		    {name:'defaultEventRebirthDescribe',title:'重生原因'}
+	]
+};
+//违约事件列表数据源
+isc.FwRestDataSource.create({
+	ID: 'bhCurEventDS',
+	autoFetchData:false,
+  fields: bhCureventItemFields.grid,
+  fetchDataURL: '[[@{/irs/defaultCustomerEventItem/findVaildEventByCustNo}]]'
+});
+//违约事件列表 
+isc.FwListGrid.create({
+	ID: 'bhCurEventList',
+	title: '<b>重生信息</b>',
+	dataSource: bhCurEventDS,	
+	autoFetchData:false,
+	autoDraw:true,
+	canPageable:false,
+	fields: bhCureventItemFields.grid,
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	}
+});
+
+
+//违约历史
+//违约历史事件字段定义	
+var bhHisEventItemFields ={
+	grid: [
+			{name:'id',					    	title:'主键',	primaryKey:true,hidden:true},
+			{name:'eventStartTime',				title:'违约时间'},
+		    {name:'defaultEventCode',			title:'违约原因',	valueMap:defaultEvent},	            			   
+		    {name:'defaultEventDescribe',		title:'违约描述'},
+		    {name:'eventEndTime',				title:'重生生效时间'},
+		    {name:'defaultEventRebirthDescribe',title:'重生原因'}
+	]
+};
+
+//违约事件列表数据源
+isc.FwRestDataSource.create({
+	ID: 'bhHisEventDS',
+	autoFetchData:false,
+  fields: bhHisEventItemFields.grid,
+  fetchDataURL: '[[@{/irs/defaultCustomerEventItem/findInvaildEventByCustNo}]]'
+});
+
+//违约事件列表 
+isc.FwListGrid.create({
+	ID: 'bhHisEventGrid',
+	title: '<b>历史违约事件</b>',
+	dataSource: bhHisEventDS,	
+	autoFetchData:false,
+	autoDraw:true,
+	canPageable:false,
+	canEdit: false,
+  autoSaveEdits: false,
+	fields: bhHisEventItemFields.grid,
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	}
+});
+
+
+//审批字段定义	
+var bhAproveFields ={
+	grid: [
+			{name:'id',					title:'主键',	primaryKey:true,hidden:true},
+			{name:'judgeUser',			title:'操作人员'},
+		    {name:'judgeDate',			title:'审批时间'},	            			   
+		    {name:'judgeAct',		    title:'审批意见'},
+		    {name:'judgeDescribe',		title:'审批说明'}
+	]
+};
+
+//审批数据源
+isc.FwRestDataSource.create({
+	ID: 'bhCurApproveDS',
+	autoFetchData:false,
+fields: bhAproveFields.grid,
+fetchDataURL: '[[@{/irs/birthCustomerApprove/findCurArrpoveByCustNo}]]'
+});
+//审批列表 
+isc.FwListGrid.create({
+	ID: 'bhCurApproveGrid',
+	title: '<b>审批意见</b>',
+	dataSource: bhCurApproveDS,	
+	autoFetchData:false,
+	autoDraw:true,
+	canPageable:false,
+	canEdit: false,
+autoSaveEdits: false,
+	fields: bhAproveFields.grid,
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	}
+});
+
+//历史审批数据源
+isc.FwRestDataSource.create({
+	ID: 'bhHisApproveDS',
+	autoFetchData:false,
+fields: bhAproveFields.grid,
+fetchDataURL: '[[@{/irs/birthCustomerApprove/findHisArrpoveByCustNo}]]'
+});
+//历史审批列表 
+isc.FwListGrid.create({
+	ID: 'bhHisApproveGrid',
+	title: '<b>历史审批意见</b>',
+	dataSource: bhHisApproveDS,	
+	autoFetchData:false,
+	autoDraw:true,
+	canPageable:false,
+	canEdit: false, 
+	fields: bhAproveFields.grid,
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	}
+});
+
+
+
+isc.FwVLayout.create({
+	ID:"bhCurLyt",
+  members:[
+  	bhCurEventList,             	    	
+  	isc.LayoutSpacer.create({height:20}),
+  	bhCurApproveGrid
+  ]});
+  
+  
+isc.FwVLayout.create({
+	ID:"bhHisLyt",
+  members:[
+  	bhHisEventGrid,             	    	
+  	isc.LayoutSpacer.create({height:20}),
+  	bhHisApproveGrid
+  ]});
+
+
+
+isc.TabSet.create({
+  ID: "bhTab",
+  width: '90%',
+  height: '100%',
+  tabs: [{
+      id: "bhBaseInfo",
+      title: "客户基本信息",
+      pane: customerVieweForm
+
+  },{
+      id: "bhCur",
+      title: "违约事件",
+      pane: bhCurLyt
+  },{
+      id: "bhHis",
+      title: "历史违约事件",
+      pane: bhHisLyt
+  }]
+});
+
+//定义新增违约事件页面
+isc.Window.create({
+   	ID:"bhWin",
+		title: "违约认定信息",
+		width: 800,						//窗口默认宽度
+		height:'90%',
+		canDragResize: false,				//用户不能通过拖拽调整窗口大小
+		autoCenter: true,					//自动将窗口定位于页面中央
+		showMaximizeButton: false,			//在窗口标题栏中不显示最大化按钮
+		showMinimizeButton: false,			//在窗口标题栏中不显示最小化按钮
+		isModal: true,						//模式窗口
+		showModalMask: true,				//显示遮罩
+		autoSize:false,						
+		canFocus: true,						//窗口可以获得焦点
+		contentLayout:'hertical',			//窗口采用水平布局
+		bodyStyle: 'fwWindowBody',			//窗口 body 样式名称
+		dismissOnEscape: true,				//按 ESC 键后窗口关闭(会调用 close() 方法)
+		bodyDefaults:{
+		   		padding:0
+		},
+		closeAndDestroy: false,			//关闭按钮点击时是否关闭并摧毁窗口
+	  	items: [bhTab]
+});
+
+//字段定义
+var DefaultCustomerFields ={
+	query: [
+			 {width:200,		name:'custNo',				title:'客户编号'},	
+		     {width:200,		name:'custName',			title:'客户名称'}
+	],
+	grid: [
+			{width:100,		name:'defaultId',		title:'违约主键',hidden:true},			
+		    {width:100,		name:'custNo',				title:'客户编号'},	
+		    {width:200,		name:'custName',			title:'客户名称'},	
+		    {width:'*',		name:'finalLevel',			title:'当前评级等级'},	
+		    {
+		    	width:150,		
+		    	name:'jobType',						
+		    	title:'流程类型',
+		    	formatCellValue: function (value) {  
+		    		var resStr = value;
+		    		for(var i = 0 ;i<jobType.length;i++){
+		    			if(jobType[i].code==value){
+		    				resStr = jobType[i].name;
+		    				break;
+		    			}
+		    		} 
+		    		return resStr;
+	        	}
+		    },		   
+		    {
+		    	width:150,		
+		    	name:'status',						
+		    	title:'流程状态',
+		    	formatCellValue: function (value) {  
+		    		var resStr = value;
+		    		for(var i = 0 ;i<statusData.length;i++){
+		    			if(statusData[i].code==value){
+		    				resStr = statusData[i].name;
+		    				break;
+		    			}
+		    		} 
+		    		return resStr;
+	        	}
+		    },		   		
+		    {width:100,		name:'startUser',						title:'发起人'},
+		    {width:150,		name:'startDate',					title:'发起时间'},
+		    {width:100,		name:'endDate',				title:'完成时间'},		    
+		    {
+		    	width:100,		
+		    	name:'initiationMode',				
+		    	title:'发起方式',
+		    	formatCellValue: function (value) {
+		    		var resStr = value;
+		    		for(var i = 0 ;i<lauchTypeData.length;i++){
+		    			if(lauchTypeData[i].code==value){
+		    				resStr = lauchTypeData[i].name;
+		    				break;
+		    			}
+		    		} 
+		    		return resStr;
+	        	}
+		    },
+		    {width:300,		name:'btn',						    title:'操作'}
+	]
+};
+
+//客户数据源
+isc.FwRestDataSource.create({
+	ID: 'defaultCustomerDS',
+    fields: DefaultCustomerFields.grid,
+    fetchDataURL: '[[@{/irs/customerQuery/fetchCustomer}]]'
+});
+
+function createOperationButton(record, colNum){
+    var fieldName = custList.getFieldName(colNum);  	
+    if (fieldName == "btn") {
+    	
+    	    var button = isc.IButton.create({
+            layoutAlign: "center",
+            title: "查看",
+            click : function () {   
+         		         		
+            	if(record.jobType=="WY"){
+            		
+            		customerVieweForm.setValues(record);     
+            		
+            		wyCurEventList.fetchData({'custNo':record.custNo});
+            		wyCurApproveGrid.fetchData({'custNo':record.custNo});
+                    
+            		wyHisEventGrid.fetchData({'custNo':record.custNo});  
+            		wyHisApproveGrid.fetchData({'custNo':record.custNo}); 
+            		
+            		wyWin.show();
+            		
+            	}else{
+            		
+            		customerVieweForm.setValues(record);     
+            		
+            		bhCurEventList.fetchData({'custNo':record.custNo});
+            		bhCurApproveGrid.fetchData({'custNo':record.custNo});
+                    
+            		bhHisEventGrid.fetchData({'custNo':record.custNo});  
+            		bhHisApproveGrid.fetchData({'custNo':record.custNo}); 
+            		
+            		bhWin.show();
+            	}
+          
+            }
+            });
+            return button;  
+    	
+    } 
+    
+    return null;  
+}
+//客户列表
+isc.FwListGrid.create({
+	ID: 'custList',
+	title: '<b>违约认定列表</b>',
+	dataSource: defaultCustomerDS,
+	sortField: 'custNo',
+	fields: DefaultCustomerFields.grid,
+    showRecordComponents: true,
+    showRecordComponentsByCell: true,
+    recordComponentPoolingMode: "recycle",
+    cellHeight: 30,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: DefaultCustomerFields.query
+	},
+	actionMembers:['query','reset','seperator','refresh'],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+    createRecordComponent : function (record, colNum) {
+    	return createOperationButton(record, colNum);
+    },
+    updateRecordComponent: function (record, colNum, component, recordChanged) {
+    	return createOperationButton(record, colNum);
+    }
+
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.VLayout.create({
+					showResizeBar: true,
+				    width: '100%',
+				    members: [custList]     
+				})
+			]
+		})
+	}
+});
+
+</script>
+</html>

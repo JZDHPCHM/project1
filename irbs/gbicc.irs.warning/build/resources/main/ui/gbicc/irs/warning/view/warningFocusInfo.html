@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>预警关联人管理</title>
+<style type="text/css">
+	.form-group {
+	    margin-bottom: 10px;
+	}
+	.form-horizontal .form-group {
+    margin-right: 0;
+    margin-left: 0;
+}
+	.ibox-content{
+		padding: 10px;
+	}
+	input[type='checkbox']{
+		margin-left: 80px;
+	}
+	.bottom-div{
+		text-align: right;
+		padding-top: 10px;
+	}
+	.comp-name{
+		float: left;
+		display: inline-block;
+		padding-left: 80px;
+		line-height: 35px;
+	}
+	.col-lg-5{
+		width: 47%;
+		padding: 0;
+	}
+	.col-lg-2{
+		width: 6%;
+		    text-align: center;
+    position: relative;
+    margin-top: 10.5%;
+	}
+	.glyphicon{
+		font-size: 55px;
+    	color: #199fff;
+	}
+</style>
+</head>
+<body class="top-navigation">
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<div class="wrapper wrapper-content">
+				<div class="row row1">
+                                		<div class="col-lg-12">
+                                			<div class="col-lg-9" style="padding: 0;">
+                                				<form class="form-horizontal" id="form-horizontal">
+													<div class="form-group">
+														<label class="col-sm-1 control-label">承租人名称</label>
+														<div class="col-sm-3">
+															<input id="lesseeName" name="custName" type="text" placeholder="模糊查找" class="form-control" autocomplete="off" data-provide="typeahead">
+														</div>
+														<label class="col-sm-1 control-label">创建日期</label>
+														<div class="col-sm-5">
+															<div class="input-daterange input-group" id="datepicker">
+																<input id="date1" type="text" class="form-control"
+																	name="date1" placeholder="请选择开始日期" readonly /> <span
+																	class="input-group-addon">至</span> <input id="date2"
+																	type="text" class="form-control" name="date2"
+																	placeholder="请选择结束日期" readonly />
+															</div>
+														</div>
+														<div class="col-sm-2">
+															<b id="btn-query" class="btn btn-success"><i class="fa"></i>查询</b>
+															<b id="btn-reset" class="btn btn-success"><i class="fa"></i>重置</b>
+														</div>
+													</div>
+												</form>
+												<div class="jqGrid_wrapper">
+						                            <table id="table_list_1"></table>
+						                            <div id="pager_list_1"></div>
+						                        </div>	
+                                			</div>	
+                                		</div>
+                                	</div>
+                                	<div class="row">
+                                		<div class="col-lg-12" style="padding-top: 20px;">
+                                			<div class="col-lg-5">
+                                				<div>关联人列表</div>
+                                				<div class="jqGrid_wrapper">
+						                            <table id="table_list_2"></table>
+						                            <div id="pager_list_2"></div>
+						                        </div>
+                                			</div>
+                                			<div class="col-lg-2">
+                                				<div class="arrow-icon">
+	                                				<div><i class="glyphicon glyphicon-arrow-right"></i></div>
+	                                				<div><i class="glyphicon glyphicon-arrow-left"></i></div>
+                                				</div>
+                                			</div>
+                                			<div class="col-lg-5">
+                                				<div>已关注关联人列表</div>
+                                				<div class="jqGrid_wrapper">
+						                            <table id="table_list_3"></table>
+						                            <div id="pager_list_3"></div>
+						                        </div>
+                                			</div>
+                                		</div>
+                                	</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	$("input").blur(function(){
+		$(".typeahead.dropdown-menu").css("display","none");
+	});
+	$('#date1').datepicker({
+		  autoclose : true,
+	    todayHighlight : true,
+	    endDate : new Date()
+	 }).on('show',function(e){
+	    if ($('#date2').val() == '') {
+	       //$('#date2').datepicker('setEndDate', null);
+	    }
+	 }).on('changeDate',function(e){
+	    if (e.date) {
+	       $('#date2').datepicker('setStartDate', new Date(e.date.valueOf()));
+	    } else {
+	       $('#date2').datepicker('setStartDate', null);
+	    }
+	 });
+	 
+	 $('#date2').datepicker({
+	    autoclose : true,
+	    todayHighlight : true,
+	    endDate : new Date()
+	 }).on('show',function(e){
+	    if ($('#date1').val() == '') {
+	       //$('#date1').datepicker('setStartDate', null);
+	    }
+	 }).on('changeDate',function(e){
+	    if (e.date) {
+	       $('#date1').datepicker('setEndDate', new Date(e.date.valueOf()));
+	    } else {
+	       $('#date1').datepicker('setEndDate', null);
+	    }
+	 });
+	var lesseeNames = [];
+	$.ajax({
+		  url : "/bpMaster/fuzzySearch",
+		  type:'GET',
+		  dataType:'json',
+		  async : false,
+		  success : function(result) {
+		  	  lesseeNames=result;
+		  }
+	});
+	$('#lesseeName').typeahead({
+		  source: lesseeNames,
+		  minLength: 0,//键入字数多少开始补全
+		  showHintOnFocus: "true",//将显示所有匹配项
+		  fitToElement: true,//选项框宽度与输入框一致
+		  items: 'all',//下拉选项中出现条目的最大数量。也可以设置为“all”
+		  autoSelect: true,//允许你决定是否自动选择第一个建议
+	});
+
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//重置按钮
+		$("#btn-reset").click(function(){
+			$(".form-horizontal input").val("");
+			$(".form-horizontal select").val("");
+			$(".form-horizontal select").trigger("chosen:updated");
+			$('#date1').datepicker('setEndDate', new Date());
+			$('#date2').datepicker('setEndDate', new Date());  
+			$('#date2').datepicker('setStartDate', null);
+		});
+		var form="";
+		$('#btn-query').click(function(){
+			form = $('#form-horizontal').serializeObject();
+			//debugger
+		    $("#table_list_1").jqGrid('setGridParam', {postData:form,page:1}).trigger("reloadGrid");
+		    $("#table_list_2").jqGrid('setGridParam', {postData:{"lesseeId":""},page:1}).trigger("reloadGrid");
+		    $("#table_list_3").jqGrid('setGridParam', {postData:{"lesseeId":""},page:1}).trigger("reloadGrid");
+		});
+		$("#table_list_1").jqGrid({
+			url : "/warn/queryAllLessee",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        datatype: "json",
+	        height: 150,
+	        autowidth: true,
+	        shrinkToFit: true,
+	        scrollOffset : 0,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 5,
+	        rowList: [5, 15, 25],
+	        colNames:['承租人ID','承租人名称'],
+	        colModel:[
+	            {name:'LESSEE_COMPANY_ID',index:'LESSEE_COMPANY_ID', editable: true,hidden:true},
+	            {name:'LESSEE_NAME',index:'LESSEE_NAME', editable: true}
+	        ],
+	        pager: "#pager_list_1",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "response.data",
+	        	records: "response.totalRows",
+                total: "response.totalPages", // 总共多少页
+	        	repeatitems: false,
+	        	id: "0"
+	        },onSelectRow: function(id){
+	        	var rowData = $("#table_list_1").jqGrid("getRowData",id);
+	        	if(rowData){
+	        		$("#table_list_2").jqGrid('setGridParam',{
+	                    datatype:'json',
+	                    postData:{"lesseeId":rowData.LESSEE_COMPANY_ID},
+	                }).trigger("reloadGrid");
+	        		
+	        		$("#table_list_3").jqGrid('setGridParam',{
+	                    datatype:'json',
+	                    postData:{"lesseeId":rowData.LESSEE_COMPANY_ID},
+	                }).trigger("reloadGrid");
+	        		
+	        	}
+	        }
+	    });
+		
+		
+		$(".glyphicon-arrow-right").click(function(){
+			var selectedRowId = $("#table_list_2").jqGrid("getGridParam", "selrow");
+			var rowData = $("#table_list_2").jqGrid("getRowData",selectedRowId);
+	        if(!selectedRowId){
+	            swal({
+	                title: "提示",
+	                text: "请先选择要修改的数据",
+	                type: "info"
+	            });
+	            return;
+	        }else{
+	        	 $.ajax({
+						url : "/warn/putCustomerAtten.action",
+						type:"get",
+						data:{
+							"companyId":rowData.ASSO_COMPANY_ID
+						},
+						async : false,
+						success : function(result) {
+							if(result){
+							    $.ajax({
+									url : "/warn/changeFocusOn",
+									data:{assoID:rowData.ASSO_COMPANY_ID},
+									type:"post",
+									async : false,
+									success : function(data) {
+										if(data){
+											 swal({
+									                title: "提示",
+									                text: "关注成功！",
+									                type: "info"
+									            });
+												$("#table_list_2").jqGrid('setGridParam',{
+								                    datatype:'json',
+								                    postData:{"lesseeId":rowData.LESSEE_COMPANY_ID},
+								                }).trigger("reloadGrid");
+								        		
+								        		$("#table_list_3").jqGrid('setGridParam',{
+								                    datatype:'json',
+								                    postData:{"lesseeId":rowData.LESSEE_COMPANY_ID},
+								                }).trigger("reloadGrid");
+								        		
+										}
+									}
+								})
+							}else{
+								swal({
+	                                title: "提示",
+	                                text: "请求关注失败！"+result.responseJSON.message,
+	                                type: "info"
+	                            });
+							}
+						},error:function(result){
+							swal({
+				                title: "提示",
+				                text: "请求关注失败！"+result.responseJSON.message,
+				                type: "info"
+				            });
+						}
+					}) 
+	        	
+	        	$("#table_list_3").jqGrid('setGridParam',{
+	                datatype:'json',
+	                postData:{"modelId":selectedRowId.model_id},
+	            }).trigger("reloadGrid");
+	        }
+		})
+		//点击左箭头
+		$(".glyphicon-arrow-left").click(function(){
+			var selectedRowId = $("#table_list_3").jqGrid("getGridParam", "selrow");
+			var rowData = $("#table_list_3").jqGrid("getRowData",selectedRowId);
+	        if(!selectedRowId){
+	            swal({
+	                title: "提示",
+	                text: "请先选择要修改的数据",
+	                type: "info"
+	                
+	            });
+	            return;
+	        }else{
+	        	
+	        	 $.ajax({
+						url : "/warn/deleteCustomerAtten.action",
+						type:"GET",
+						data:{
+							"companyId":rowData.ASSO_COMPANY_ID
+						},
+						async : false,
+						success : function(result) {
+							if(result){
+							    $.ajax({
+									url : "/warn/changeNoFocusOn",
+									data:{assoID:rowData.ASSO_COMPANY_ID},
+									type:"post",
+									async : false,
+									success : function(data) {
+										if(data){
+											 swal({
+									                title: "提示",
+									                text: "取消关注成功！",
+									                type: "info"
+									            });
+												$("#table_list_2").jqGrid('setGridParam',{
+								                    datatype:'json',
+								                    postData:{"lesseeId":rowData.LESSEE_COMPANY_ID},
+								                }).trigger("reloadGrid");
+								        		
+								        		$("#table_list_3").jqGrid('setGridParam',{
+								                    datatype:'json',
+								                    postData:{"lesseeId":rowData.LESSEE_COMPANY_ID},
+								                }).trigger("reloadGrid");
+										}
+									}
+								}) 
+							}else{
+								swal({
+	                                title: "提示",
+	                                text: "请求取消关注失败！",
+	                                type: "info"
+	                            });
+							}
+						},error:function(){
+							swal({
+				                title: "提示",
+				                text: "请求取消关注失败！",
+				                type: "info"
+				            });
+						}
+					}) 
+	        	
+	        	
+	        	
+	        	$("#table_list_2").jqGrid('setGridParam',{
+	                datatype:'json',
+	                postData:{"modelId":selectedRowId.model_id},
+	            }).trigger("reloadGrid");
+	        }
+		})
+		
+	 	/*  $.ajax({
+			url : "/warn/findByAssoidY",
+			type:"POST",
+			success : function(result) {
+			$.each(result.response.data,function(i,row){
+				 $.ajax({
+					url : "https://data.riskstorm.com/v1/following/"+row.ASSO_COMPANY_ID+"?apikey=wR7k6HoDXurt4VFL8qckdg",
+					type:"PUT",
+					async : false,
+					success : function(result) {
+						 $.ajax({
+								url : "/warn/changeFocusOn",
+								data:{assoID:row.ASSO_COMPANY_ID},
+								type:"post",
+								async : false,
+								success : function(result) {
+								}
+							})
+					}
+				}) 
+			})
+			 
+				
+			}
+		})  */
+		
+		
+		
+		$("#table_list_2").jqGrid({
+			url : "/warn/findByAssoidN",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    postData:{"lesseeId":""},
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        datatype: "json",
+	        height: ($(window).height()-$(".row1").height()-167),//屏幕高度-承租人表格高度-167的偏差值
+	        autowidth: true,
+	        shrinkToFit: true,
+	        scrollOffset : 0,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 15,
+	        rowList: [15, 25, 35],
+	        colNames:['','关联人类型','关联人名称'],
+	        colModel:[
+	        	{name:'ASSO_COMPANY_ID',index:'ASSO_COMPANY_ID', editable: true,hidden:true},
+	        	{name:'ASSO_TYPE_NAME',index:'ASSO_NAME', editable: true, width: 40},
+	            {name:'ASSO_NAME',index:'ASSO_NAME', editable: true}
+	            
+	        ],
+	        pager: "#pager_list_2",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "response.data",
+	        	records: "response.totalRows",
+                total: "response.totalPages", // 总共多少页
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		$("#table_list_3").jqGrid({
+			url : "/warn/findByAssoidY",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+			 postData:{"lesseeId":""},
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "post",
+	        datatype: "json",
+	        height: ($(window).height()-$(".row1").height()-167),//屏幕高度-承租人表格高度-167的偏差值
+	        autowidth: true,
+	        shrinkToFit: true,
+	        scrollOffset : 0,
+	        prmNames: {
+	            page: "page"   // 表示请求页码的参数名称
+	        },
+	        rowNum: 15,
+	        rowList: [15, 25, 35],
+	        colNames:['','关联人类型','关联人名称'],
+	        colModel:[
+	        	{name:'ASSO_COMPANY_ID',index:'ASSO_COMPANY_ID', editable: true,hidden:true},
+	        	{name:'ASSO_TYPE_NAME',index:'ASSO_NAME', editable: true, width: 40},
+	            {name:'ASSO_NAME',index:'ASSO_NAME', editable: true}
+	            
+	        ],
+	        pager: "#pager_list_3",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        rownumWidth: 60,
+	        hidegrid: false,
+	        jsonReader: {
+	        	root: "response.data",
+	        	records: "response.totalRows",
+                total: "response.totalPages", // 总共多少页
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	    });
+		$("#table_list_1").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+		$("#table_list_2").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+		$("#table_list_3").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+		// Setup buttons
+        $("#table_list_1").jqGrid('navGrid', '#pager_list_1',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        $("#table_list_2").jqGrid('navGrid', '#pager_list_2',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        $("#table_list_3").jqGrid('navGrid', '#pager_list_3',
+                {edit: false, add: false, del: false, search: false},
+                {height: 200, reloadAfterSubmit: true}
+        );
+        // Add responsive to jqGrid
+        $(function(){
+     	   $(window).resize(function(){   
+     	      $("#table_list_1").setGridWidth($(window).width());
+     	      $("#table_list_2").setGridWidth($(window).width());
+     	      $("#table_list_3").setGridWidth($(window).width());
+     	   });
+     	});
+	});
+	$.fn.serializeObject = function() {  
+	    var o = {};  
+	    var a = this.serializeArray();  
+	    $.each(a, function() {  
+	        if (o[this.name]) {  
+	            if (!o[this.name].push) {  
+	                o[this.name] = [ o[this.name] ];  
+	            }  
+	            o[this.name].push(this.value || '');  
+	        } else {  
+	            o[this.name] = this.value || '';  
+	        }  
+	    });  
+	    return o;  
+	}
+</script>
+</html>

@@ -1,0 +1,14 @@
+{
+    "includes":[
+        "gbicc.irs.ec.rating.entity",
+        "gbicc.irs.ec.rating.repository",
+        "gbicc.irs.ec.financialtrade.rating.entity",
+        "gbicc.irs.ec.financialtrade.rating.repository",
+        "gbicc.irs.ec.issueBonds.rating.entity",
+        "gbicc.irs.ec.issueBonds.rating.repository",
+        "gbicc.irs.ec.ratingconfig.entity",
+        "gbicc.irs.ec.ratingconfig.repository",
+        "gbicc.irs.main.rating.entity",
+        "gbicc.irs.main.rating.repository"
+    ]
+}

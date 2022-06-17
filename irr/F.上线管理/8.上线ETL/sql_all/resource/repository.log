@@ -1,0 +1,172 @@
+Save repository element : /E_BDS_AFMS_AFMSAAUDIT_HISTORY : Checked in
+Save repository element : /E_BDS_ATS_CHOUDAN_TMP : Checked in
+Save repository element : /E_BDS_BIDM_CHNLCOD : Checked in
+Save repository element : /E_BDS_BIDM_CHNL_MAP : Checked in
+Save repository element : /E_BDS_BIDM_FC_AREACODE : Checked in
+Save repository element : /E_BDS_BIDM_KPI : Checked in
+Save repository element : /E_BDS_BIDM_LA_F_BUSINESS : Checked in
+Save repository element : /E_BDS_BIDM_MGECMP : Checked in
+Save repository element : /E_BDS_BIDM_MGECMP_MAP : Checked in
+Save repository element : /E_BDS_BIDM_ORGMAP : Checked in
+Save repository element : /E_BDS_BIDM_RENEWAL_RP_FY : Checked in
+Save repository element : /E_BDS_CCCMP_COMPLAINTSRISK : Checked in
+Save repository element : /E_BDS_CCCMP_CRM_CALL_LIST : Checked in
+Save repository element : /E_BDS_CCCMP_CRM_CASE3 : Checked in
+Save repository element : /E_BDS_CCCMP_POLICYS_BASE : Checked in
+Save repository element : /E_BDS_CCCMP_POL_INDICATOR : Checked in
+Save repository element : /E_BDS_CCNT_CRM_CASE3 : Checked in
+Save repository element : /E_BDS_CLAIMS_CLAIMS : Checked in
+Save repository element : /E_BDS_CLAIMS_CLAIMSAUDIT : Checked in
+Save repository element : /E_BDS_CLAIMS_DUTY : Checked in
+Save repository element : /E_BDS_CLAIMS_DUTY_DETAIL : Checked in
+Save repository element : /E_BDS_CLAIMS_FINANCE_PAYMENT : Checked in
+Save repository element : /E_BDS_CLAIMS_FINANCE_RESPONSE : Checked in
+Save repository element : /E_BDS_CLAIMS_INSURANCE : Checked in
+Save repository element : /E_BDS_CLAIMS_LIABILITY : Checked in
+Save repository element : /E_BDS_CLAIMS_LOAN_NOT_PAY : Checked in
+Save repository element : /E_BDS_CLAIMS_PARAM : Checked in
+Save repository element : /E_BDS_CLAIMS_PAYMENT : Checked in
+Save repository element : /E_BDS_CLAIMS_SMALL_AUTO_CLAIMS : Checked in
+Save repository element : /E_BDS_CLAIMS_TASKTIME : Checked in
+Save repository element : /E_BDS_CLAIMS_TASK_TO_FINANCE : Checked in
+Save repository element : /E_BDS_CSBPM_CS_105_MAIN : Checked in
+Save repository element : /E_BDS_CSBPM_CS_107_MAIN : Checked in
+Save repository element : /E_BDS_CSBPM_PARAM : Checked in
+Save repository element : /E_BDS_CSBPM_PAY_INFO : Checked in
+Save repository element : /E_BDS_CSBPM_POLICY_CHANGE : Checked in
+Save repository element : /E_BDS_CSBPM_POLICY_SERVICE : Checked in
+Save repository element : /E_BDS_CSBPM_PROCESSSTEP : Checked in
+Save repository element : /E_BDS_CSBPM_SERVICE_DD : Checked in
+Save repository element : /E_BDS_LISHASL_LZCARDSTATE : Checked in
+Save repository element : /E_BDS_LISHASL_LZCARDTRACK : Checked in
+Save repository element : /ALL_Jobs : Checked in
+Save repository element : /BIDM : Checked in
+Save repository element : /HASLCLAIMS : Checked in
+Save repository element : /HASLCSBPM : Checked in
+Save repository element : /OTHER : Checked in
+Save repository element : /tset1 : Checked in
+Save repository element : irr : Creation of initial version
+Rename transformation : Renamed from 调用SP to EXEC_SP_JUDGE_FIN
+Rename job : Renamed from ScheDule to SCHEDULE
+Rename job : Renamed from FORE_SCHEDULE to FORMER_SCHEDULE
+Rename job : Renamed from FORMER_SCHEDULE to PRE_SCHEDULE
+Rename job : Renamed from PRE_SCHEDULE to JUDGE_FIN_DATA_MOD_TASKSTATE
+Rename job : Renamed from SCHEDULE to UPDATE_TASK_STATE
+Save repository element : dfgsdg : Creation of initial version
+Rename job : Renamed from UPDATE_TASK_STATE to UPDATE_TASK_STATE
+Rename job : Renamed from JUDGE_FIN_DATA_MOD_TASKSTATE to JUDGE_FIN_DATA
+Rename job : Renamed from UPDATE_TASK_STATE to JUDGE_TASK_STATE
+Rename job : Renamed from JUDGE_RUN_OVER to JUDGE_RUN_OVER
+Rename job : Renamed from ALL_Jobs to SYNC_DATA
+Rename job : Renamed from JUDGE_RUN_OVER to RUN_ALL
+Rename job : Renamed from RUN_ALL to OVERALL_SCHEDULE
+Save repository element : dw_irr : Creation of initial version
+Save database : Modification by user
+Save repository element : irr : Modification by user
+Rename transformation : Renamed from E_BDS_NEW_LISHASL_LCGRPAPPNT to E_BDS_GBS_LCGRPAPPNT
+Rename transformation : Renamed from E_BDS_NEW_LISHASL_LJSPAY to E_BDS_GBS_LJSPAY
+Rename transformation : Renamed from E_BDS_NEW_LISHASL_LPBALANCEAPP to E_BDS_GBS_LPBALANCEAPP
+Rename transformation : Renamed from E_BDS_NEW_LISHASL_LPBALRELA to E_BDS_GBS_LPBALRELA
+Rename transformation : Renamed from E_BDS_NEW_LISHASL_LPGRPEMAIN to E_BDS_GBS_LPGRPEMAIN
+Rename job : Renamed from NEW_LISHASL to GBS
+Save repository element : bojin : Creation of initial version
+Save repository element : /AFMS : Checked in
+Save repository element : /ATS : Checked in
+Save repository element : /CREATE_WRITE_TASK : Checked in
+Save repository element : /LISHASL : Checked in
+Rename job : Renamed from OTHER to CCCMP
+Rename job : Renamed from CREATE_WRITE_TASK to INIT_TASK
+Rename job : Renamed from OVERALL_SCHEDULE to OVERALL_SCHED
+Rename transformation : Renamed from E_BDS_MANAGESTATE to E_BDS_HRM_MANAGESTATE
+Rename transformation : Renamed from E_BDS_EMPLOYEEDEGREE to E_BDS_HRM_EMPLOYEEDEGREE
+Rename transformation : Renamed from E_BDS_EMPLOYEESTATE to E_BDS_HRM_EMPLOYEESTATE
+Rename transformation : Renamed from EXEC_SP to RUN_SP_MDS_INDEX
+Save database : Modification by user
+Save repository element : bojin : Modification by user
+Rename job : Renamed from INIT_TASK to INSERT_NEW_TASK
+Rename transformation : Renamed from E_BDS_HRM_EMPLOYEEDEGREE to E_BDS_HRM_EMPLOYEEDEGREE_TEMP
+Rename transformation : Renamed from E_BDS_HRM_EMPLOYEESTATE to E_BDS_HRM_EMPLOYEESTATE_TEMP
+Rename transformation : Renamed from E_BDS_HRM_MANAGESTATE to E_BDS_HRM_MANAGESTATE_TEMP
+Rename job : Renamed from 作业 1 to RUN_MDS_PROC
+Rename job : Renamed from 作业 1 to LOAD_HRM_DATA
+Rename transformation : Renamed from 判断当前季度加载人力数据 to JUDGE_HRM_DATA
+Rename transformation : Renamed from JUDGE_HRM_DATA to EXEC_SP_JUDEG_HRM
+Rename transformation : Renamed from E_BDS_HRM_EMPLOYEEDEGREE_TEMP to E_BDS_HRM_EMPLOYEEDEGREE_MIR
+Rename transformation : Renamed from E_BDS_HRM_EMPLOYEESTATE_TEMP to E_BDS_HRM_EMPLOYEESTATE_MIR
+Rename transformation : Renamed from E_BDS_HRM_MANAGESTATE_TEMP to E_BDS_HRM_MANAGESTATE_MIR
+Rename transformation : Renamed from E_BDS_HRM_ORGANIZATION to E_BDS_HRM_ORGANIZATION_MIR
+Rename transformation : Renamed from sp_hrm_backups to SP_HRM_BACKUPS
+Rename job : Renamed from OVERALL_SCHED to SYN_DATA
+Rename job : Renamed from UPDATE_STATE_RUN_PROC to RUN_PROC
+Save database : Modification by user
+Save repository element : dw_irr : Modification by user
+Save database : Modification by user
+Save repository element : dw_irr : Modification by user
+Save database : Modification by user
+Save repository element : dw_irr : Modification by user
+Save database : Modification by user
+Save repository element : dw_irr : Modification by user
+Save database : Modification by user
+Save repository element : dw_irr : Modification by user
+Save database : Modification by user
+Save repository element : dw_irr : Modification by user
+Save database : Modification by user
+Save repository element : dw_irr : Modification by user
+Save database : Modification by user
+Save repository element : irr : Modification by user
+Save database : Modification by user
+Save repository element : bojin : Modification by user
+Save database : Modification by user
+Save repository element : bojin : Modification by user
+Updating database connection   {0} 
+Save repository element : bojin : Modification by user
+Save database : Modification by user
+Save repository element : bojin : Modification by user
+Save database : Modification by user
+Save repository element : bojin : Modification by user
+Updating database connection   {0} 
+Save repository element : dw_irr : Modification by user
+Updating database connection   {0} 
+Save repository element : irr : Modification by user
+Save database : Modification by user
+Save repository element : data_dwirr : Modification by user
+Save database : Modification by user
+Save repository element : data_dwirr : Modification by user
+Save database : Modification by user
+Save repository element : data_irr : Modification by user
+Save database : Modification by user
+Save repository element : irr : Modification by user
+Save database : Modification by user
+Save repository element : data_irr : Modification by user
+Save database : Modification by user
+Save repository element : irr : Modification by user
+Save database : Modification by user
+Save repository element : irr : Modification by user
+Save database : Modification by user
+Save repository element : irr : Modification by user
+Save database : Modification by user
+Save repository element : dw_irr : Modification by user
+Save database : Modification by user
+Save repository element : dw_irr : Modification by user
+Save database : Modification by user
+Save repository element : dw_irr : Modification by user
+Save database : Modification by user
+Save repository element : dw_irr : Modification by user
+Save database : Modification by user
+Save repository element : dw_irr : Modification by user
+Save database : Modification by user
+Save repository element : bojin : Modification by user
+Updating database connection   {0} 
+Save repository element : irr : Modification by user
+Updating database connection   {0} 
+Save repository element : irr : Modification by user
+Save database : Modification by user
+Save repository element : data_lishasl : Modification by user
+Save database : Modification by user
+Save repository element : data_lishasl : Modification by user
+Save database : Modification by user
+Save repository element : bojin : Modification by user
+Save database : Modification by user
+Save repository element : bojin : Modification by user
+Save database : Modification by user
+Save repository element : bojin : Modification by user

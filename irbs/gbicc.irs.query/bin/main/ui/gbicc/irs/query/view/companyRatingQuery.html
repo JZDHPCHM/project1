@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<body>
+<script th:inline="javascript">
+	var flg = false;
+</script>
+</body>
+<script type="text/javascript" th:src="@{/webjars/jquery/1.12.4/js/jquery.js}"></script>
+<script th:src="@{/portlet/js/echarts.js}"></script>
+<script>
+//审批页面是否可以输入
+var levelFlag = false;
+var orgs = [(${@ProcessDataService.findOrgs()})];
+var isManager = false;
+var users=[(${@DefaultCustomerService.findUserNames()})];
+var RatingResult = [(${@ProcessDataService.findRatingLevel("010")})];
+//当前登录人账号
+var userAccout = "[(${T(org.wsp.framework.security.util.SecurityUtil).getLoginName()})]";
+//违约客户认定状态
+//发起机构
+//var StartOrgs = [(${@ProcessDataService.findOrgs()})];
+//用户当前所属机构
+var currentOrg = "[(${@ProcessDataService.findCurrentOrg()})]";
+//用户当前所属机构的父级机构
+var currentParentOrg = "[(${@ProcessDataService.findCurrentParentOrg()})]";
+// 风险定量、定性信息展示
+var isRiskShow = currentOrg == "1002299" || userAccout == "admin";
+// 总行风险定量、定性信息展示
+var isHeadOfficeShow = currentOrg == "1009999" || currentParentOrg == "1009999" || userAccout == "admin";
+
+//当前登录人默认角色
+//当前登录人账号
+var roleCode = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+var defaultRole = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+
+if(roleCode=="CUSTOMER_MANAGER"){
+	isManager = true;
+}else{
+	//userAccout="admin";
+}
+//机构
+isc.FwRestDataSource.create({
+    ID: 'allOrgDs',
+    fields:[
+    	{name:'id',		title:'唯一标识',			primaryKey:true},
+    	{name:'code',	title:'代码'},
+    	{name:'name',	title:'名称'},
+    	{name:'parent',	title:'父机构唯一标识',	foreignKey:'allOrgDs.id'}
+    	
+    ],
+    fetchDataURL: '[(@{/system/orgs/isc/fetch})]'
+});
+
+var userAccoutAndRole = defaultRole + userAccout;
+//模型列表
+var ModelList = [(${@frSystemDictionaryService.getDictionaryMapJsonString('MODEL_TYPE',#locale)})];
+var newModelList = {};
+for( modelCode in ModelList){
+	if(!modelCode.startsWith("F") && !modelCode.startsWith("B")){
+		newModelList[modelCode]=ModelList[modelCode];
+	}
+}
+//是否开启试算功能
+var ratingTrialEnable = [(${@frSystemParameterService.getParameter(T(gbicc.irs.ec.rating.support.RatingConstants).RATING_TRIAL_ENABLE)})];
+//试算次数
+var ratingTrialCount = [(${@frSystemParameterService.getParameter(T(gbicc.irs.ec.rating.support.RatingConstants).RATING_TRIAL_NUM_LIMIT)})];
+//评级状态
+var RatingStatus = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.RatingStatus),#locale)})];
+//企业规模
+var EnterpriseScales =[(${@CodeLibraryService.findByItemCode("Scope")})];
+//公司客户评级类型
+var RatingType = [(${@frSystemDictionaryService.getDictionaryMapJsonString('RATING_TYPE',#locale)})]
+//公司客户评级流程状态
+var RatingProcessStatus = [(${@frSystemDictionaryService.getDictionaryMapJsonString('CUSTOMER_RATING_PROCESS_STATUS',#locale)})];
+//评级状态
+var RatingStatus = [(${@frSystemDictionaryService.getDictionaryMapJsonString('RATING_STATUS',#locale)})];
+//评级触发类型
+var RatingTriggerType = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.ec.rating.support.RatingTriggerType),#locale)})];
+//企业规模
+var EnterpriseScales =[(${@CodeLibraryService.findByItemCode("Scope")})];
+//财报币种
+var ReportCurrencys =[(${@CodeLibraryService.findByItemCode("Currency")})];
+//财报周期
+var ReportCycles = [(${@CodeLibraryService.findByItemCode("ReportPeriod")})];
+//财报类型
+var ReportTypes = [(${@frSystemDictionaryService.getDictionaryMapJsonString('FinancialStatementTemplateType',#locale)})];
+//财报科目分类
+var FinanciaAccountCategory =[(${@frSystemDictionaryService.getDictionaryMapJsonString('ACCOUNT_CLASSIFICATION',#locale)})];
+//客户分类
+var ctmTyps =[(${@CodeLibraryService.findByItemCode("CustomerType")})];
+//证件类型
+var certTypes = [(${@CodeLibraryService.findByItemCode("CertType")})];
+//用户列表
+var userEntitys =[(${@jacksonObjectMapper.writeValueAsString(@userService2.findByUser("12"))})] ;
+//统计口径
+var ReportSpecificationss = [(${@CodeLibraryService.findByItemCode("ReportScope")})];
+//国标行业
+var GBindustrys=[(${@CodeLibraryService.findByItemCode("IndustryType")})];
+//行内行业
+var industrys=[(${@CodeLibraryService.findByItemCode("IndustryType1")})];
+//是否审计
+var isAudits=[(${@CodeLibraryService.findByItemCode("报表审计")})];
+//是否空表
+var isNullTabels=[(${@CodeLibraryService.findByItemCode("IsEmpty")})];
+//是否平衡
+var isNullBalances=[(${@CodeLibraryService.findByItemCode("IsBalanced")})];
+//客户财报类型
+var customerReportTypes=[(${@CodeLibraryService.findByItemCode("FinanceBelong")})];
+
+
+isc.defineClass('UserWorkflowAction','HLayout').addProperties({
+	//自定义扩展属性列表及默认值===========================================
+	//获取回退按钮列表的 url,由系统自动提供,使用者无需指定
+	gobackActionUrl: FrameworkUiInterface.webContextPath +'/irs/FlowGetMenu/getButtom',	//获取回退操作的 url
+	actionUrl: null,													//操作对应的服务器端控制器 url
+	taskId : null,	
+	suggLevel : null,		//任务ID
+	transientVariables:null,											//临时变量
+	comPanyId:null,
+	actionButtonWidth: 100,												//回退按钮默认宽度
+	defaultActionButtons:[],											//默认按钮
+	defaultActionButtonsAlign:'right',									//默认按钮对齐方式
+	/**
+	 * 回调函数
+	 */
+	callback: function(){
+		isc.say('操作成功！');
+		//ratingTaskListGrid.refresh();
+		rateWindow.close();
+	},
+	
+	initWidget: function(){
+		var target =this;
+        if(this.taskId!=null){
+        	//如果是完成任务,首先获取可选的操作按钮列表
+        	isc.FwRPCManager.get({
+        		url: this.gobackActionUrl ,
+        		urlParameters:{taskId:"",suggLevel:"",comPanyId:""}, //传入当前步骤ID
+        		callback: function(response, rawData, request){
+        			target.buildMembers(rawData);
+        		}
+        	});
+        }else{
+        	//如果是创建流程实例
+        	this.buildMembers();
+        }
+        this.Super("initWidget", arguments);
+	},
+	buildMembers: function(gobacks){
+		var target =this;
+		
+		//添加默认按钮
+		if(this.defaultActionButtonsAlign=='left'){
+			if(this.defaultActionButtons && isc.isA.Array(this.defaultActionButtons) && this.defaultActionButtons.length>0){
+				for(var i=0;i<this.defaultActionButtons.length;i++){
+					var button =isc.IButton.create(this.defaultActionButtons[i]);
+					this.addMembers([button,isc.LayoutSpacer.create({width:10})]);
+				}
+			}
+		}
+		
+		
+		//回退按钮
+		if(gobacks){
+			for(var i=0;i<gobacks.length;i++){
+				var goback =gobacks[i];
+				var transientVariables ={};
+				transientVariables[goback.variableName] =goback.variableValue;
+				this.addMembers([
+					isc.LayoutSpacer.create({width:10}),
+					isc.IButton.create({
+						title:goback.title || I18n.goback,
+						width:this.actionButtonWidth,
+						transientVariables: transientVariables,
+						click: function(){
+							target.submit(this.transientVariables);
+						}
+					})
+				]);
+			}
+		}
+		
+		//添加默认按钮
+		if(this.defaultActionButtonsAlign=='right'){
+			if(this.defaultActionButtons && isc.isA.Array(this.defaultActionButtons) && this.defaultActionButtons.length>0){
+				for(var i=0;i<this.defaultActionButtons.length;i++){
+					var button =isc.IButton.create(this.defaultActionButtons[i]);
+					this.addMembers([isc.LayoutSpacer.create({width:10}),button]);
+				}
+			}
+		}
+	},
+	
+	//提交（即：用户点击“提交”或者“回退”按钮,如果点击了“提交”按钮，无参数，如果点击了“回退”按钮，传入回退控制变量）
+	submit: function(goback){
+		//首先清除临时变量，为第二次提交初始化数据
+		this.transientVariables ={};
+		
+		//如果是点击了“回退”按钮，将回退控制变量付给临时变量
+		if(goback){
+			isc.addProperties(this.transientVariables,goback);
+		}
+		
+		//数据验证
+		if(goback){
+			if(this.validate(goback.goback)){
+				this.doSubmit();
+			}
+		}else{
+			if(this.validate(0)){
+				this.doSubmit();
+			}
+		}
+	},
+	
+	//真正的提交(可能一次就提交完毕，也可能发现存在多个候选人，弹出选择处理人对话框，当用户选择完毕后再次提交)
+	doSubmit: function(){
+		var target =this;
+		//首先获取客户端需要提交的业务数据
+		var data =this.getData() || {};
+		if(isc.FwUtil.isNull(data.transientVariables)){
+			data.transientVariables ={};
+		}
+		//将本次保存的临时变量和用户数据的临时变量进行合并
+		isc.addProperties(data.transientVariables,this.transientVariables);
+		
+		//发起服务器端请求
+		isc.FwRPCManager.post({
+           	url: this.actionUrl,
+            data: data,
+            callback: function(response, rawData, request){
+            	if(rawData.code==0){//操作成功
+            		if(target.successCallback){
+            			target.successCallback();
+            		}
+            	}else if(rawData.code==1){//需要选择处理人
+            		var candidates ={};
+            		for(var i=0;i<rawData.assignees.length;i++){
+            			var assignee =rawData.assignees[i];
+            			candidates[assignee.loginName] =assignee.loginName + '/' + assignee.userName;
+            		}
+            		
+            		isc.SelectAssigneeWindow.create({
+            			assignees: candidates,
+            			afterSelectedAssignee: function(assignee){
+            				isc.addProperties(target.transientVariables,{assignee:assignee});
+            				target.doSubmit();
+            			}
+            		}).show();
+            	}
+            }
+        });
+	},
+	
+	validate: function(){
+		return true;
+	},
+	
+	getData: function(){
+		return null;
+	}
+});
+
+//字段定义
+var DefaultCustomerFields ={
+	query:[
+		{width:'*',		name:'custNo',								title:'客户编号'},
+		{width:'*',		name:'custName',							title:'客户名称'},
+		{width:'*',		name:'modelCode',							title:'模型名称',type:"select",valueMap:newModelList,autoFetchData:false},
+		{width:'*',		name:'processStatus',						title:'流程状态',type:"select",valueMap:RatingProcessStatus},
+		{width:'*',		name:'finalLevel',							title:'最终审定等级',type:"select",valueMap:RatingResult},
+		{width:'*',		name:'ratingStatus',						title:'评级状态',type:"select",valueMap:RatingStatus},
+		{width:200,		name:'launchUser',			title:'发起人'},
+		//{width:200,		name:'launchOrg',			title:'发起机构',type: 'select',valueMap:StartOrgs},
+		{
+			width:'*',	
+			name:'launchOrg',					
+			title:'发起机构',
+			//hidden:roleShow,
+			optionDataSource: allOrgDs,	
+			dataSetType: "tree",
+			autoFetchData:false,
+			loadDataOnDemand:true,
+			displayField:'name',
+			valueField:'id',
+			pickListProperties:{
+				nodeIcon: '[SKIN]/folder_open.png'
+			},
+			specialValues: {"": ""},
+		    separateSpecialValues: true
+		},
+	],
+	grid:[
+	    {width:100,		name:'id',									primaryKey:true,hidden:true},
+		{width:120,		name:'custNo',								title:'客户编号'},
+		{width:200,		name:'custName',							title:'客户名称'},
+		{width:120,		name:'modelCode',							title:'模型名称',type:"select",valueMap:newModelList},
+		{width:120,		name:'ratingType',							title:'评级类型',type:"select",valueMap:RatingType},
+		{width:120,		name:'score',								title:'系统评估得分',type:"float",format:"0.00"},
+		{width:120,		name:'modelLevel',							title:'系统评估等级'},
+		{width:120,		name:'adjLevel',							title:'特例调整等级'},
+		{width:120,		name:'finalLevel',							title:'最终审定等级'},
+		{width:120,		name:'effectiveDate',						title:'生效时间'},
+		{width:120,		name:'deadTime',							title:'失效时间'},
+		{width:75,		name:'ratingStatus',					    title:'评级状态',type:"select",valueMap:RatingStatus},
+		/* {width:150,		name:'riskLimit',							title:'风险限额', type:"float",format:"0.00"}, */
+		{width:150,		name:'admissionSuggest',					title:'准入建议'},
+		{width:120,		name:'startTime',							title:'发起日期'},
+		{width:80,		name:'launchUser',							title:'发起人',type: 'select',valueMap:users},
+		{width:80,		name:'processStatus',						title:'流程状态',type:"select",valueMap:RatingProcessStatus},
+		{width:90,		name:'currentAssignee',						title:'当前处理人',type: 'select',valueMap:users},
+		{width:500,		name:'btn',					title:'操作'}
+		
+	]
+};
+
+//评级建议等级历史字段定义
+var RatingOverturnFields = {
+		 DS: [
+				{name:'id',			primaryKey:true},
+				{name:'ratingMain'	},
+				{name:'roleName'	},
+				{name:'roleCode'	},
+				{name:'userCode'	},
+			    {name:'userName'	},
+			    {name:'suggLevel'	},
+			    {name:'adjReason'	},
+			    {name:'createDate'	}
+		 ],
+		 grid:[
+				{widht:'*',		name:'roleName',		title:"建议角色"},
+			    {widht:'*',		name:'userName',		title:"建议人",type: 'select',valueMap:users},
+			    {widht:'*',		name:'orgId',			title:"机构",type:"select",valueMap:orgs},
+			    {width:120,		name:'operationalAction',title:"操作动作"},
+			    {widht:'*',		name:'suggLevel',		title:"建议级别"},
+			    {widht:'*',		name:'adjReason',		title:"意见",type:"textArea",hidden:isManager},
+			    {widht:'*',		name:'createDate',		title:"提交时间"},
+		 ]
+}
+
+//客户数据源
+isc.FwRestDataSource.create({
+	ID: 'defaultCustomerDS',
+    fields: DefaultCustomerFields.grid,
+    fetchDataURL: '[[@{/irs/companyRatingQuery/customerRatinglist}]]'
+});
+
+//客户列表
+isc.FwListGrid.create({
+	ID: 'custList',
+	title: '<b>公司客户评级查询列表</b>',
+	dataSource: defaultCustomerDS,
+	sortField: 'custNo',
+	fields: DefaultCustomerFields.grid,
+    showRecordComponents: true,
+    showRecordComponentsByCell: true,
+    recordComponentPoolingMode: "recycle",
+    cellHeight: 30,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: DefaultCustomerFields.query
+	},
+	actionMembers:[
+	'query','reset','refresh'
+	],
+	createRecordComponent : function (record, colNum) {  
+		return createOperationButton(record, colNum);
+    },
+    updateRecordComponent: function (record, colNum, component, recordChanged) {
+    	return createOperationButton(record, colNum);
+    },
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+});
+//自定义窗口，用于保存评级当前步骤以及是否可编辑
+isc.defineClass("RatingWindow", "Window").addProperties({
+	step : new Object,			//当前步骤对象
+	RatingObject : new Object,	//评级对象
+	qualStepId : "",			//定性步骤ID
+	quanStepId : "",			//定量步骤ID
+	editable : false,
+	editable1_3 : false,
+	leftBtnDis : false,
+	defaultLevel : "",
+	trialObject : new Object,
+	headOfficeShow:isHeadOfficeShow,		// 总行定量、定性信息展示
+	riskShow:isRiskShow,					// 风险定量和定性展示
+	ProjectLoanRating : new Object,		// 关联评级（S3模型）
+	isProjectLoan : false,
+	levelFlag:levelFlag					// 审批页面能否操作
+});
+
+
+//评级建议等级历史数据源定义
+isc.FwRestDataSource.create({
+	ID: 'RatingOverturnDSDetail',
+	fields:RatingOverturnFields.DS,
+	dataURL: FrameworkUiInterface.webContextPath+'/irs/ratingOverturn/isc',
+	fetchDataURL: FrameworkUiInterface.webContextPath + '/irs/ratingOverturn/getRatingOverturnListOpinion'  //用于指定自定义控制器方法属性
+});
+
+isc.Window.create({
+	ID : "opinionDetailWindow",
+	title : "审批信息",
+	width : "100%",
+	height : "100%",
+	autoCenter : true,
+	isModal : true,
+	visiable : false,
+	showModalMask : true,
+	autoDraw : false,
+	headerControls : ["headerLabel", "closeButton"],
+	items : [
+		isc.FwListGrid.create({
+    		ID:"overturnHisListDetail",
+    		title: '<b>意见历史列表</b>',
+    		height:200,
+    		canPageable:false,
+    		dataSource: RatingOverturnDSDetail,
+    		fields: RatingOverturnFields.grid
+    	})
+		
+	]
+});
+
+//展示评级步骤组件
+isc.ViewLoader.create({
+	ID : "rateWindowLoader",
+	autoDraw : false,
+	loadingMessage : "",
+	redrawOnStateChange : true,
+	overflow : 'auto'
+});
+
+//评级窗口，弹出框
+isc.RatingWindow.create({
+			ID : "rateWindow",
+			title : "",
+			width : "100%",
+			height : "100%",
+			autoCenter : true,
+			isModal : true,
+			visiable : false,
+			showModalMask : true,
+			autoDraw : false,
+			headerControls : ["headerLabel", "closeButton"],
+			changePage : function(url) {
+				rateWindowLoader.setViewURL(url);
+			},
+			items : [rateWindowLoader],
+			closeClick : function() {
+				isStart = false;
+				noFinStepId = ""; // 定性步骤id
+				finStepId = ""; // 定量步骤id
+				rateWindow.hide();
+				//刷新评级列表数据
+				custList.invalidateCache();
+			}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[custList]
+		})
+	}
+});
+//==========================================================违约循信息查询列表结束===============================================
+
+//====================================================违约查询列表页面查看按钮定义开始=====================================================================
+function createOperationButton(record, colNum){
+	//alert("2");
+    var fieldName = custList.getFieldName(colNum);  	
+    if (fieldName == "btn") {
+	    	 var recordCanvas = isc.HLayout.create({
+	             height: 22,
+	             width: "100%",
+	             align: "left"
+	         });
+    		 
+    		 var showRatingReportBtn = isc.IButton.create({
+    	        	name:"showRatingReportBtn",
+    	            title: "查看报告",
+    	            grid: this,
+    	            click : function () {
+    	            	window.open("[(@{/irs/companyRating/customerReport.html})]?custNo="+record.custNo + "&id=" + record.id,"评级报告"); 
+    	            }
+    	        });
+    	        
+    	        var viewComments = isc.IButton.create({
+    	        	name:"viewComments",
+    	            title: "查看意见",
+    	            grid: this,
+    	            click : function () {
+    	            	overturnHisListDetail.fetchData({"ratingId":record.id});
+    	            	opinionDetailWindow.show();
+    	            }
+    	        });
+    		 
+    		 
+    	        var viewDetails = isc.IButton.create({
+    	        	name:"viewDetails",
+    	            title: "查看评级详情",
+    	            grid: this,
+    	            click : function () {
+    					isc.FwRPCManager.get({
+    						url:"[(@{/irs/companyRating/getRatingById})]",
+    	        	       	urlParameters:{ratingId:record.id},
+    				        callback: function(response, rawData, request){
+    				        	if(rawData){
+    					        	//显示评级审批页面
+    								rateWindow.setTitle("客户评级 ："+rawData.custName+" 模型为 ："+ModelList[rawData.modelCode]);
+    								rateWindow.RatingObject =rawData;//评级对象
+    								rateWindow.taskId = record.taskId;//任务ID
+    								rateWindow.editable=false;		//设置不可修改
+    								rateWindow.leftBtnDis=true;	//左侧按钮可用
+    								
+    								isc.FwRPCManager.get({
+    				                   	url:'[(@{/irs/ratingOverturn/getRatingOverturnList})]',
+    				                   	urlParameters:{ratingId:rateWindow.RatingObject.id},
+    				                    callback: function(response, rawData, request){
+    				                    	if(rawData && rawData.response.data[0]){
+    				                    		// 审批-调整等级展示级别
+    											rateWindow.defaultLevel = rawData.response.data[0].suggLevel;
+    				                    	}
+    				                    }
+    				                    });
+    								
+    								rateWindow.changePage("[[@{/js/rating_Frame_For_App.js}]]");
+    								rateWindow.show();
+    				        	}
+    				        }
+    			    	});
+    					
+    					rateWindow.changePage("[[@{/js/rating_Frame_For_App.js}]]");
+						rateWindow.show();
+    	            }
+    	        });
+    		 
+    		        
+  		        if(record.processStatus == "060" && record.source == "IRB"){
+  		        	// 查看报告
+  		            recordCanvas.addMember(showRatingReportBtn);
+  		            recordCanvas.addMember(isc.LayoutSpacer.create({width:20}));
+  		        }
+  		        
+  		        if(record.source == "IRB"){
+	  		        recordCanvas.addMember(viewComments);
+	  		        recordCanvas.addMember(isc.LayoutSpacer.create({width:20}));
+  		        }
+  		        // 查看意见
+  		        
+  		        if((record.triggerType == null || record.triggerType == "") && record.source == "IRB"){
+	  		      	recordCanvas.addMember(viewDetails);
+		            recordCanvas.addMember(isc.LayoutSpacer.create({width:20}));
+  		        }
+    } 
+    
+    return recordCanvas;  
+}
+
+
+</script>
+</html>

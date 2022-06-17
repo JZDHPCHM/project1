@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<body>
+</body>
+<script>
+//客户分类
+var ctmTyps =[(${@CodeLibraryService.findByItemCode("CustomerType")})];
+var users=[(${@DefaultCustomerService.findUserNames()})];
+//当前登录人账号
+var userAccout //"[(${T(org.wsp.framework.security.util.SecurityUtil).getLoginName()})]";
+//获取登陆用户角色
+var roleCode = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+//违约客户发起方式
+var DefaultCustomerAffirmMode =[(${@frJsonObjectMapper.enumerate(T(gbicc.irs.defaultcustomer.support.DefaultCustomerAffirmMode),#locale)})];
+//违约事件列表
+var defaultEvent =[(${@jacksonObjectMapper.writeValueAsString(@defaultEventLibController.findAllDefaultEvent())})];
+var roleShow=0;
+var validStatus = {"0":"否决","1":"同意"};
+var EnterpriseScales ={"2":"大型企业","3":"中型企业","4":"小型企业","5":"微型企业"};
+var approveResult = {"DEFAULT":"违约", "NOT_DEFAULT":"非违约", "IN_REBIRTH":"重生","REBIRTH":"重生", "NOT_REBIRTH":"不重生"};
+var test = true;
+var intitiationModes = {"MAN":"人工认定","SYSTEM":"系统认定","SYS_RIGIDITY":"系统刚性","SYS_FLEXIBILITY":"系统柔性"};
+var vailds = {"1":"违约","0":"非违约","2":"非违约","3":"非违约","4":"非违约","5":"非违约"};
+//机构
+isc.FwRestDataSource.create({
+    ID: 'allOrgDs',
+    fields:[
+    	{name:'id',		title:'唯一标识',			primaryKey:true},
+    	{name:'code',	title:'代码'},
+    	{name:'name',	title:'名称'},
+    	{name:'parent',	title:'父机构唯一标识',	foreignKey:'allOrgDs.id'}
+    	
+    ],
+    fetchDataURL: '[(@{/system/orgs/isc/fetch})]'
+});
+
+if(roleCode=="CUSTOMER_MANAGER"){
+	userAccout="";
+}else{
+	//userAccout="admin";
+}
+//违约流程状态
+var DefaultCustomerContractStatus = [(${@frSystemDictionaryService.getDictionaryMapJsonString('DEFAULT_PROCESS_STATE',#locale)})];
+//发起机构
+//var StartOrgs = [(${@ProcessDataService.findOrgs()})];
+//发起方式
+var DefaultCustomerPorcessMode = {
+		  "分支行客户经理发起":"分支行客户经理发起",
+		  "总行公司大客户部客户经理发起":"总行公司大客户部客户经理发起",
+		  "总行小企业金融部客户经理发起":"总行小企业金融部客户经理发起",
+		  "分支行管理人员发起":"分支行管理人员发起",
+		  "总行管理人员发起":"总行管理人员发起",
+		  "系统发起":"系统发起"
+		};
+//验证表单值空方法
+function isBlank(val){
+	if(val==""){
+		return true;
+	}
+	if(val==null){
+		return true;
+	}
+	if(typeof val=="undefined"){
+		return true;
+	}
+	return false;
+} 
+//================================================发起违约客户页面定义——结束===========================================================
+
+//==========================================================违约循信息查询列表页面开始===============================================
+//字段定义
+var DefaultCustomerFields ={
+	query:[
+		{width:200,		name:'custNo',				title:'客户编号'},	
+		{width:200,		name:'custName',			title:'客户名称'},
+		{width:200,		name:'flowstatus',			title:'流程状态',type: 'select',valueMap:DefaultCustomerContractStatus },
+		{width:200,		name:'creator',			title:'发起人'},
+		//{width:200,		name:'creatorg',			title:'发起机构',type: 'select',valueMap:StartOrgs},
+		{
+				width:'*',	
+				name:'creatorg',					
+				title:'发起机构',
+				//hidden:roleShow,
+				optionDataSource: allOrgDs,	
+				dataSetType: "tree",
+				autoFetchData:false,
+				loadDataOnDemand:true,
+				displayField:'name',
+				valueField:'id',
+				pickListProperties:{
+					nodeIcon: '[SKIN]/folder_open.png'
+				},
+				specialValues: {"": ""},
+			    separateSpecialValues: true
+			},
+		{width:200,		name:'startType',			title:'发起方式',type: 'select',valueMap:DefaultCustomerPorcessMode}
+	],
+	grid:[
+	    {width:200,		name:'custno',				title:'客户编号'},	
+	    {width:200,	    name:'custname',			title:'客户名称'},
+	    {width:200,	    name:'vaild',			title:'是否违约', valueMap:vailds},
+	    {width:200,	    name:'intitiationMode',			title:'违约类型', valueMap:intitiationModes},
+		{width:200,		name:'startType',		title:'发起方式',		type:'select',	valueMap:DefaultCustomerAffirmMode},	
+		{width:200,	    name:'effectiveDate',			title:'违约时间'},
+		{width:200,	    name:'rateBefore',			title:'违约前评级等级'},	
+		{width:200,		name:'flowstatus',				title:'流程状态',		type:'select',	valueMap:DefaultCustomerContractStatus},
+		{width:200,		name:'creator',			title:'发起人',type: 'select',valueMap:users},
+	    {width:200,		name:'createdate',			title:'发起时间', type:'string'},
+	    {width:200,		name:'completeTime',			title:'完成时间', type:'string'},
+	    {width:200,		name:'endDate',			title:'违约结束时间', type:'string'},
+		{width:300,		name:'btn',					title:'操作'}
+	]
+};
+
+//客户数据源
+isc.FwRestDataSource.create({
+	ID: 'defaultCustomerDS',
+    fields: DefaultCustomerFields.grid,
+    fetchDataURL: '[[@{/irs/defaultCustomerQuery/fetchDefaultCustomer}]]'
+});
+
+//客户列表
+isc.FwListGrid.create({
+	ID: 'custList',
+	title: '<b>违约客户查询列表</b>',
+	dataSource: defaultCustomerDS,
+	sortField: 'custNo',
+	fields: DefaultCustomerFields.grid,
+    showRecordComponents: true,
+    showRecordComponentsByCell: true,
+    recordComponentPoolingMode: "recycle",
+    cellHeight: 30,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: DefaultCustomerFields.query
+	},
+	actionMembers:[
+	'query','reset','refresh'
+	],
+	createRecordComponent : function (record, colNum) {
+    	return createOperationButton(record, colNum);
+ 	},
+ 	updateRecordComponent: function (record, colNum, component, recordChanged) {
+    	return createOperationButton(record, colNum);
+    },
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[custList]
+		})
+	}
+});
+//==========================================================违约循信息查询列表结束===============================================
+
+//====================================================违约查询列表页面查看按钮定义开始=====================================================================
+function createOperationButton(record, colNum){
+	//alert("2");
+    var fieldName = custList.getFieldName(colNum);  	
+    if (fieldName == "btn") {
+	    	 var recordCanvas = isc.HLayout.create({
+	             height: 22,
+	             width: "100%",
+	             align: "left"
+	         });
+    		 var viewComments = isc.IButton.create({
+    	        	name:"viewComments",
+    	            title: "查看",
+    	            grid: this,
+    	            click : function () {
+    	            	
+    	            	 isc.FwRPCManager.get({
+	    		        		url: "[[@{/irs/companyCustomer/findByCustNo}]]" ,
+	    		        		urlParameters:{custNo:record.custno},
+	    		        		callback: function(response, rawData, request){
+	    		        			customerVieweForm.setValues(rawData);  
+	    		        		}
+	    		        	});
+    	            	 
+    	            	hisEventGrid.fetchData({defaultId:record.custid, type:record.type});
+     	            	hisSuggestionGrid.fetchData({defaultId:record.custid, type:record.type});
+		    	        CustomerInfoDetailPlan.show();
+    	            }
+    	        });	
+    		recordCanvas.addMember(viewComments);
+          	recordCanvas.addMember(isc.LayoutSpacer.create({width:10}));
+    } 
+    
+    return recordCanvas;  
+}
+//====================================================违约查询列表页面查看按钮定义结束=====================================================================
+//========================================查看开始======================================================
+//========================================客户基本信息开始============================================================
+//客户基本信息字段定义
+var EnterpriseCustomerFieldsToShow ={
+		edit: [
+			{width:'100%',		name:'defaultId',           		primaryKey:true,hidden:true},//,hidden:true,hidden:true
+			{width:'100%',		name:'custNo',              title:'信贷客户号',	required:true},
+			{width:'100%',		name:'unCustNo',            title:'统一客户号',	required:true},
+			{width:'100%',		name:'custName',            title:'客户中文名',	required:true},
+			{width:'100%',		name:'regAmount',     		title:'注册金额(元)', type:"float",format:"0.00"},//countryAreaDs
+			{width:'100%',		name:'ctmType',     title:'企业分类',type: 'select',valueMap:ctmTyps},
+			{width:'100%',		name:'businessLicense',     title:'营业执照号'},
+			{width:'100%',		name:'empCount',     		title:'员工数量'},
+			{width:'100%',		name:'legalRep',     		title:'法人代表名称'},
+			{width:'100%',		name:'managerName',     	title:'客户经理名称'},
+			{width:'100%',		name:'managerUser',     	title:'客户经理编号'},
+			{width:'100%',		name:'offcAddrZipCode',     title:'办公地址邮编',	length:6},
+			{width:'100%',		name:'enterpriseScale',    	title:'企业规模',		type: 'select',valueMap:EnterpriseScales,allowEmptyValue:true,autoFetchData:false},
+			{width:'100%',		name:'crdtAmt',    	 		title:'授信金额(元)', type:"float",format:"0.00"},
+			{width:'100%',		name:'regAddress',     		title:'注册地址描述',		type:"textArea"	,rowspan:5},
+			{width:'100%',		name:'offcAddress',     	title:'办公地址',		type:"textArea"	,rowspan:5},
+			{width:'100%',		name:'busScope',     		title:'经营范围',		type:"textArea",	rowspan:5},
+			{width:'100%',		name:'isAbnormalOperation',   title:'经营异常',	type:'boolean'},
+			{width:'100%',		name:'isBlankBlackList',   title:'联合惩戒',	type:'boolean'},
+			{width:'100%',		name:'isLitigation',   title:'重大涉诉',	type:'boolean'},
+			{width:'100%',		name:'isNewMark',   title:'新建企业标识',	type:'boolean'}
+		]
+};
+isc.FwReadOnlyDynamicForm.create({
+	ID : "customerVieweForm",
+	numCols : 4,
+	width:'50%',
+	height:'100%',
+	autoDraw : false,
+	overflow : "auto",
+	autoFocus : false,
+	fields : EnterpriseCustomerFieldsToShow.edit
+});
+
+
+	//违约历史事件字段定义	
+var HisEventItemFields ={
+    grid: [
+			
+		    {name:'defaultEventCode',			title:'违约事件',		width:'20%',			type: 'select',	valueMap:defaultEvent},	
+		    {name:'eventStartTime',				title:'事件开始时间',	width:'10%',			showHover:false,type:'string'},
+		    {name:'defaultEventDescribe',		title:'违约事件说明',	width:'20%'},
+	
+	]
+};
+//违约事件列表数据源
+isc.FwRestDataSource.create({
+	ID: 'hisEventDS',
+  fields: HisEventItemFields.grid,
+  fetchDataURL: '[[@{/irs/defaultCustomerEventItem/findCurrEventByCustNo}]]',
+	autoFetchData:false
+});
+//违约事件列表 
+isc.FwListGrid.create({
+	ID: 'hisEventGrid',
+	title: '<b>违约认定信息</b>',
+	dataSource: hisEventDS,	
+	autoFetchData:false,
+	border:0,
+	width:"100%",
+	height:"30%",
+	canPageable:false,
+	canSort:false,
+	fields: HisEventItemFields.grid
+});
+//意见历史列表
+var HisSuggestionItemFields ={
+	grid: [
+			{name:'id',					    	title:'主键',	primaryKey:true,hidden:true},
+			{name:'fileUrl',					    	hidden:true},
+			{name:'custNo',						hidden:true},	
+		    {name:'creator',		width:'20%',	title:'处理人',type: 'select',valueMap:users},
+		    {name:'createDate',				width:'20%',	title:'提交时间',	type:'string'},
+		    {name:'isValid',				width:'20%',	title:'认定结果', valueMap:validStatus},
+		    {name:'remark',				width:'20%',	title:'意见说明'},
+		    {name:"fileName",				width:'20%',	title:'附件材料',
+			formatCellValue:function(value,rocde){
+				if(rocde && rocde.fileUrl){
+					return "<a href=\"#\" onclick=\"downloadFile('"+rocde.fileUrl+"')\">'"+rocde.fileName+"'</a>";
+				}else{
+					return "";
+				}
+		    }
+		  }
+	]
+};
+//意见历史列表数据源
+isc.FwRestDataSource.create({
+	ID: 'hisSuggestionTtemDS',
+	autoFetchData:false,
+  fields: HisSuggestionItemFields.grid,
+ fetchDataURL: '[[@{/irs/defaultCustomer/findComments}]]'
+});
+//意见历史列表 
+isc.FwListGrid.create({
+	ID: 'hisSuggestionGrid',
+	title: '<b>意见列表</b>',
+	dataSource: hisSuggestionTtemDS,	
+	autoFetchData:false,
+	border:0,
+	width:"100%",
+	height:"30%",
+	canPageable:false,
+	canSort:false,
+	fields: HisSuggestionItemFields.grid
+});
+function downloadFile(path){
+	if(path.length > 0){
+		var index = path.lastIndexOf("\/");
+		var fileName = path.substring(index,path.length);
+		window.open(FrameworkUiInterface.webContextPath +"/commom/fileManager/downloadFile?filePath="+encodeURI(path)+"&fileName="+fileName);
+	}
+}
+//=======================================================违约认定明细结束===================================================================
+//=======================================================违约重生明细开始===================================================================
+	//违约历史事件字段定义	
+var HisResetEventItemFields ={
+    grid: [
+		    {name:'defaultEventCode',			title:'违约事件',		width:250,			type: 'select',	valueMap:defaultEvent},	
+		    {name:'eventStartTime',				width:250,	showHover:false,	title:'违约日期',	type:'string'},
+		    {name:'defaultEventDescribe',		title:'违约事件说明',	width:500},
+	
+	]
+};
+
+//意见历史列表
+var HisResetSuggestionItemFields ={
+	grid: [
+			{name:'id',					    	title:'主键',	primaryKey:true,hidden:true},
+			{name:'fileUrl',					    	hidden:true},
+			{name:'custNo',						hidden:true},	
+		    {name:'creator',		width:'250',	title:'处理人',type: 'select',valueMap:users},
+		    {name:'createDate',				width:250,	showHover:false,	title:'提交时间',	type:'string'},
+		    {name:'isValid',				width:250,	title:'认定结果'},
+		    {name:'remark',				width:350,	title:'意见说明'},
+		    {name:"fileName",				width:100,	title:'附件材料',
+			formatCellValue:function(value,rocde){
+				if(rocde && rocde.fileUrl){
+					return "<a href=\"#\" onclick=\"downloadFile('"+rocde.fileUrl+"')\">'"+rocde.fileName+"'</a>";
+				}else{
+					return "";
+				}
+		    }
+		  }
+	]
+};
+//意见历史列表数据源
+isc.FwRestDataSource.create({
+	ID: 'hisResetSuggestionTtemDS',
+	autoFetchData:false,
+  fields: HisResetSuggestionItemFields.grid,
+ fetchDataURL: '[[@{/irs/defaultCustomer/findComments}]]'
+});
+//意见历史列表 
+isc.FwListGrid.create({
+	ID: 'hisResetSuggestionGrid',
+	title: '<b>意见列表</b>',
+	//dataSource: hisSuggestionTtemDS,	
+	autoFetchData:false,
+	border:0,
+	width:"100%",
+	height:"30%",
+	canPageable:false,
+	canSort:false,
+	fields: HisResetSuggestionItemFields.grid
+});
+
+isc.Window.create({
+   		ID:"CustomerInfoDetailPlan",
+		title: "违约客户信息",
+		width: '100%',						//窗口默认宽度
+		height:'100%',
+		canDragResize: false,				//用户不能通过拖拽调整窗口大小
+		autoCenter: true,					//自动将窗口定位于页面中央
+		showMaximizeButton: false,			//在窗口标题栏中不显示最大化按钮
+		showMinimizeButton: false,			//在窗口标题栏中不显示最小化按钮
+		isModal: true,						//模式窗口
+		showModalMask: true,				//显示遮罩
+		canFocus: true,						//窗口可以获得焦点
+		contentLayout:'hertical',			//窗口采用垂直布局
+		bodyStyle: 'fwWindowBody',			//窗口 body 样式名称
+		dismissOnEscape: true,				//按 ESC 键后窗口关闭(会调用 close() 方法)
+		bodyDefaults:{padding:0},
+		closeAndDestroy: true,				//关闭按钮点击时是否关闭并摧毁窗口
+	  	items: [
+			isc.VLayout.create({
+			    ID: "theTabs",
+			    height: '100%',
+			    width: '100%', 
+			    members: [
+			        isc.HLayout.create({
+				  			width:'100%',
+				  			height:'100%',
+				  			members:[
+				  				customerVieweForm,
+				  				isc.VLayout.create({
+		  							widht:"50%",
+		  							height:"100%",
+		  							members:[
+		  								hisEventGrid,hisSuggestionGrid
+		  							]
+		  						})
+			         		]
+  			         })
+			    ]
+			})
+	 	]
+});
+</script>
+</html>

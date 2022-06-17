@@ -1,0 +1,24 @@
+dependencies {
+	compile(
+		project(":gbicc.irs.customer"),
+		project(":gbicc.irs.risk.exposure"),
+		project(":gbicc.irs.commom.module"),
+		project(":gbicc.irs.reportTemplate"),
+		
+		"com.hkb.esb:com.hkb.esb.client:3.0",
+		"com.hkb.esb:com.hkb.esb.fileclient:3.0",
+		"com.hkb.esb:com.hkb.esb.framework:3.0",
+		"org.wsp:org.wsp.framework.asciidoc:${framework_version}",
+		"org.wsp:org.wsp.framework.flowable:${framework_version}",
+		"org.wsp:org.wsp.framework.batch:${framework_version}",
+		"org.wsp:org.wsp.framework.scheduler:${framework_version}",
+		"org.wsp:org.wsp.framework.scheduler.impl.spring:${framework_version}",
+		
+        "org.webjars:org.webjars.mxgraph:${webjar_mxgraph_version}",
+        "org.wsp:org.wsp.framework.grapheditor:${framework_version}",
+        "com.googlecode.aviator:aviator:${aviator_version}",
+        
+        "org.wsp:org.wsp.engine.model.client:${framework_version}",
+        "org.wsp:org.wsp.engine.model.client.spring:${framework_version}",
+	)
+}

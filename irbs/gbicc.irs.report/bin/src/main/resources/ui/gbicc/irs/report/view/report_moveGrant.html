@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery/1.12.4/js/jquery.js}"></script>
+</head>
+
+<body>
+</body>
+<script>
+var newData = [];
+var areaObj = {};
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQueryQuarter,
+	grid: [
+			{width:100, name:'id',		primaryKey:true,hidden:true},
+			{
+				width:120,
+				name:'fdKindName',					
+				title:'上期客户评级<br>分布情况',
+				getGridSummary:function (records, summaryField) {
+					return "本期合计";
+	            }
+			},
+ 			{width:100, name:'fdAaaDistri',			title:'AAA',summaryFunction:function() {return (sumData['fdAaaDistri']);}},//本月 AAA
+ 			{width:100, name:'fdAaPDistri',			title:'AA+',summaryFunction:function() {return (sumData['fdAaPDistri']);}},//本月 AA+
+ 			{width:100, name:'fdAaDistri',			title:'AA',summaryFunction:function() {return (sumData['fdAaDistri']);}},//本月 AA
+ 			{width:100, name:'fdAaMDistri',			title:'AA-',summaryFunction:function() {return (sumData['fdAaMDistri']);}},//本月 AA-
+ 			{width:100, name:'fdAPDistri',			title:'A+',summaryFunction:function() {return (sumData['fdAPDistri']);}},//本月 A+
+ 			{width:100, name:'fdADistri',			title:'A',summaryFunction:function() {return (sumData['fdADistri']);}},//本月 A
+ 			{width:100, name:'fdAMDistri',			title:'A-',summaryFunction:function() {return (sumData['fdAMDistri']);}},//本月 A-
+ 			{width:100, name:'fdBbbPDistri',			title:'BBB+',summaryFunction:function() {return (sumData['fdBbbPDistri']);}},//本月 BBB+
+ 			{width:100, name:'fdBbbDistri',			title:'BBB',summaryFunction:function() {return (sumData['fdBbbDistri']);}},//本月 BBB
+ 			{width:100, name:'fdBbbMDistri',			title:'BBB-',summaryFunction:function() {return (sumData['fdBbbMDistri']);}},//本月 BBB-
+ 			{width:100, name:'fdBbPDistri',			title:'BB+',summaryFunction:function() {return (sumData['fdBbPDistri']);}},//本月 BB+
+ 			{width:100, name:'fdBbDistri',			title:'BB',summaryFunction:function() {return (sumData['fdBbDistri']);}},//本月 BB
+ 			{width:100, name:'fdBbMDistri',			title:'BB-',summaryFunction:function() {return (sumData['fdBbMDistri']);}},//本月 BB-
+ 			{width:100, name:'fdBDistri',			title:'B',summaryFunction:function() {return (sumData['fdBDistri']);}},//本月 B
+ 			{width:100, name:'fdCDistri',			title:'C',summaryFunction:function() {return (sumData['fdCDistri']);}},//本月 C
+ 			{width:100, name:'fdDDistri',			title:'D',summaryFunction:function() {return (sumData['fdDDistri']);}},//本月 D 
+ 			{width:100, name:'fdLastSumDistri',			title:'上期合计',summaryFunction:function() {return (sumData['fdLastSumDistri']);}},//上期合计
+ 			{width:100, name:'fdMoveUpNum',			title:'向上迁移总数',summaryFunction:function() {return sumData['fdMoveUpNum'];}},//本月 C
+ 			{width:100, name:'fdMoveUpPer',			title:'向上迁移占比',summaryFunction:function() {return formatPer(sumData['fdMoveUpPer']);}},//本月 D 
+ 			{width:100, name:'fdMoveDownNum',			title:'向下迁移总数',summaryFunction:function() {return sumData['fdMoveDownNum'];}},//本月 C
+ 			{width:100, name:'fdMoveDownPer',			title:'向下迁移占比',summaryFunction:function() {return formatPer(sumData['fdMoveDownPer']);}},//本月 D 
+ 			{width:100, name:'fdMovePoint',			title:'迁移指数',summaryFunction:function() {return (sumData['fdMovePoint']);}},//本月 D 
+	]
+};
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields:BorrowKeyBussFields.grid,
+    fetchDataURL:'[[@{/irs/report_moveGrant/isc/fetchData}]]'
+});
+
+
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>借款人评级迁徙表（授信余额）</b>',
+	dataSource: report_borrowKeyBussDS,
+	sortField: 'fdKindName',
+	canPageable: false,
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	allowRowSpanning:true,
+	fields: BorrowKeyBussFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	exportFilename:'整体借款人评级分布_门类行业',
+	exportActionMembers:['export2Excel','exportAll2Excel'],
+	actionMembers:[
+		'query','reset',{
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+					url:"[(@{/irs/report_moveGrant/isc/fetchData/Results.csv})]",
+					"year":year,"quarter":quarter,
+					fileName:  "借款人评级迁徙表（授信余额）",
+                    sortBy: "fdKindName"
+				});
+            }
+        }
+	],
+	headerSpans: [
+         {
+             fields: ["fdAaaDistri", "fdAaPDistri","fdAaDistri","fdAaMDistri","fdAPDistri", "fdADistri","fdAMDistri",
+                      "fdBbbPDistri", "fdBbbDistri","fdBbbMDistri","fdBbPDistri","fdBbDistri", "fdBbMDistri","fdBDistri",
+                      "fdCDistri", "fdDDistri"
+                      ], 
+             title: "本期客户评级分布情况（客户数目）"
+         },
+         {
+        	 fields:["fdMoveUpNum","fdMoveUpPer"],
+        	 title: "向上迁移"
+         },
+         {
+        	 fields:["fdMoveDownNum","fdMoveDownPer"],
+        	 title: "向下迁移"
+         }
+     ],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+
+	formatCellValue:function(value, record, rowNum, colNum){
+		
+		var formatVal = value;
+		var fieldName = borrowKeyBussFieldsListGrid.getField(colNum).name;
+		if( fieldName=='fdMoveUpPer'|| fieldName ==='fdMoveDownPer'){
+			formatVal = (value);
+		}
+		return formatVal;
+	},
+    query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_moveGrant/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year,"quarter":quarter},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                sumData = [];
+                newData=[];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.fdKindName==='本期合计'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                borrowKeyBussFieldsListGrid.setData(newData);
+            }
+        });
+    },
+	afterQuery:function(dsResponse,data,dsRequest){
+		borrowKeyBussFieldsListGrid.setData(newData);
+	}  
+	
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+
+</script>
+</html>

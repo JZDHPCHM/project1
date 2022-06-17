@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+//验证表单值空方法
+function isBlank(val){
+	if(val==""){
+		return true;
+	}
+	if(val==null){
+		return true;
+	}
+	if(typeof val=="undefined"){
+		return true;
+	}
+	return false;
+}
+//字段定义
+var DebtRatingBHSXSParamFields ={
+	grid: [
+			{width:240,		name:'code',	primaryKey:true,	title:'编码'},
+			{width:240,		name:'detailType',	title:'类型',
+				formatCellValue : function(value, record, rowNum, colNum){
+				       return record.type+"-"+record.detailType;
+        	}},
+			{width:240,		name:'isStart',		title:'是否启用',type:'boolean'},
+			{width:'*',		name:'createDate',	title:'创建时间'}
+	],
+	edit: [
+			{width:200,		name:'code',		primaryKey:true,	title:'编码'},
+			{width:200,		name:'detailType',	title:'风险暴露细类'},
+			{width:200,		name:'type',		title:'风险暴露大类'},
+			{width:'*',		name:'isStart',		title:'是否启用',type: 'boolean',    defaultValue:true	}
+	]
+};
+//保证人回收调整系数数据源
+isc.FwRestDataSource.create({
+	ID: 'debtRatingBHSXSParamDS',
+    fields: DebtRatingBHSXSParamFields.grid,
+    dataURL: '[[@{/irs/risk/config/isc}]]'
+});
+//保证人回收调整系数列表
+isc.FwListGrid.create({
+	ID: 'debtRatingBHSXSParamListGrid',
+	title: '<b>风险暴露分类</b>',
+	dataSource: debtRatingBHSXSParamDS,
+	sortField:"code",
+	fields: DebtRatingBHSXSParamFields.grid,
+	editWindow: {
+		ID: 'popWin',
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	ID: 'popFrm',
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: debtRatingBHSXSParamDS,
+            fields: DebtRatingBHSXSParamFields.edit
+        },
+        afterShow: function(action){
+        	if(action=="add"){
+        		this.getForm().getField("code").setDisabled(false);
+        	}
+        	if(action=="update"){
+        		this.getForm().getField("code").setDisabled(true);
+        	}
+        },
+        actionMembers:[
+        	{
+     			title:"确定",
+     		    click: function () {
+     		    	if(isBlank(popFrm.getValue("code"))||isBlank(popFrm.getValue("detailType")) || isBlank(popFrm.getValue("type"))){
+     		    		isc.say("编码，风险暴露大类和细类都不能为空!");
+     		    		return;
+     		    	}
+     		  		isc.FwRPCManager.post({    		
+     			       	url:"[(@{/irs/risk/config/saveRiskTypeEntity})]",//defaultId
+     			        data:{code:popFrm.getValue("code"),type:popFrm.getValue("type"),detailType:popFrm.getValue("detailType"),isStart:popFrm.getValue("isStart")},
+     			        //data:popFrm.getValues(),
+     			         callback: function(response,rawData,request){ 
+     			    	  	debtRatingBHSXSParamListGrid.refresh();
+    			     		popWin.close();
+    			        } 
+     		    	}); 
+     		    }
+     		     },'close'
+        ]
+	},
+	actionMembers:[
+		'refresh','add','update','remove'
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				debtRatingBHSXSParamListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

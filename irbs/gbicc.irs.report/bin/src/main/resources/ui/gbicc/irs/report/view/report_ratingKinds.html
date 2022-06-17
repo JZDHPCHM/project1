@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+</head>
+<body>
+</body>
+<script>
+    var typeVal = 1;
+    var newData=[];
+tQuery.push({
+	width:'*',		name:'type',		title:'类型',type: 'select',operator:'equals',valueMap: fdType,defaultToFirstOption:true,
+	changed: function(form, item, value){
+		if(value==1){
+			typeName = '客户数目';
+		}
+		if(value==2){
+			typeName = '授信金额';
+		}
+		if(value==3){
+			typeName = '授信余额';
+		}
+		for(var i=0;i<16;i++)
+			borrowKeyBussFieldsListGrid.setFieldProperties(i*2+1, {title:typeName})
+
+        typeVal = value;
+	}});
+	
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQuery,
+	grid: [
+			{width:100, name:'id',		primaryKey:true,hidden:true},
+			{
+				width:120,
+				name:'kindName',					
+				title:'门类行业',
+				getGridSummary:function (records, summaryField) {
+					return "合计";
+	            }
+			},
+ 			{width:100, name:'aaaNum',			title:'客户数目',summaryFunction:function() {return sumData['aaaNum'];}},//客户<br>数目
+		    {width:100, name:'aaaPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['aaaPercent']);}},//占比
+		    {width:100, name:'aaPNum',			title:'客户数目',summaryFunction:function() {return sumData['aaPNum'];}},//客户<br>数目
+		    {width:100, name:'aaPPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['aaPPercent']);}},//占比
+			{width:100, name:'aaNum',			title:'客户数目',summaryFunction:function() {return sumData['aaNum'];}},//客户<br>数目
+		    {width:100, name:'aaPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['aaPercent']);}},//占比
+			{width:100, name:'aaMNum',			title:'客户数目',summaryFunction:function() {return sumData['aaMNum'];}},//客户<br>数目
+		    {width:100, name:'aaMPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['aaMPercent']);}},//占比
+		    
+			{width:100, name:'aPNum',			title:'客户数目',summaryFunction:function() {return sumData['aPNum'];}},//客户<br>数目
+		    {width:100, name:'aPPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['aPPercent']);}},//占比
+			{width:100, name:'aNum',			title:'客户数目',summaryFunction:function() {return sumData['aNum'];}},//客户<br>数目
+		    {width:100, name:'aPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['aPercent']);}},//占比
+			{width:100, name:'aMNum',			title:'客户数目',summaryFunction:function() {return sumData['aMNum'];}},//客户<br>数目
+		    {width:100, name:'aMPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['aMPercent']);}},//占比 
+			{width:100, name:'bbbPNum',			title:'客户数目',summaryFunction:function() {return sumData['bbbPNum'];}},//客户<br>数目
+		    {width:100, name:'bbbPPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['bbbPPercent']);}},//占比
+		    
+			{width:100, name:'bbbNum',			title:'客户数目',summaryFunction:function() {return sumData['bbbNum'];}},//客户<br>数目
+		    {width:100, name:'bbbPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['bbbPercent']);}},//占比
+			{width:100, name:'bbbMNum',			title:'客户数目',summaryFunction:function() {return sumData['bbbMNum'];}},//客户<br>数目
+		    {width:100, name:'bbbMPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['bbbMPercent']);}},//占比
+			{width:100, name:'bbPNum',			title:'客户数目',summaryFunction:function() {return sumData['bbPNum'];}},//客户<br>数目
+		    {width:100, name:'bbPPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['bbPPercent']);}},//占比
+			{width:100, name:'bbNum',			title:'客户数目',summaryFunction:function() {return sumData['bbNum'];}},//客户<br>数目
+		    {width:100, name:'bbPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['bbPercent']);}},//占比
+		    
+			{width:100, name:'bbMNum',			title:'客户数目',summaryFunction:function() {return sumData['bbMNum'];}},//客户<br>数目
+		    {width:100, name:'bbMPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['bbMPercent']);}},//占比
+			{width:100, name:'bNum',			title:'客户数目',summaryFunction:function() {return sumData['bNum'];}},//客户<br>数目
+		    {width:100, name:'bPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['bPercent']);}},//占比
+			{width:100, name:'cNum',			title:'客户数目',summaryFunction:function() {return sumData['cNum'];}},//客户<br>数目
+		    {width:100, name:'cPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['cPercent']);}},//占比
+			{width:100, name:'dNum',			title:'客户数目',summaryFunction:function() {return sumData['dNum'];}},//客户<br>数目
+		    {width:100, name:'dPercent',			title:'占比',summaryFunction:function() {return formatPer(sumData['dPercent']);}}//占比
+	]
+};
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields:BorrowKeyBussFields.grid,
+    fetchDataURL:'[[@{/irs/report_ratingKinds/isc/fetchData}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>整体借款人评级分布--门类行业</b>',
+	dataSource: report_borrowKeyBussDS,
+	sortField: 'kindName',
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	canPageable: false,
+	fields: BorrowKeyBussFields.grid,
+	headerSpans: [
+         {
+            fields: ["aaaNum", "aaaPercent"], 
+            title: "AAA"        
+        },
+        {
+            fields: ["aaPNum", "aaPPercent"], 
+            title: "AA+"
+        },
+        {
+            fields: ["aaNum", "aaPercent"], 
+            title: "AA"        
+        },
+        {
+            fields: ["aaMNum", "aaMPercent"], 
+            title: "AA-"
+        },
+        {
+            fields: ["aPNum", "aPPercent"], 
+            title: "A+"        
+        },
+        {
+            fields: ["aNum", "aPercent"], 
+            title: "A"
+        },
+        {
+            fields: ["aMNum", "aMPercent"], 
+            title: "A-"        
+        },
+        {
+            fields: ["bbbPNum", "bbbPPercent"], 
+            title: "BBB+"
+        },
+        {
+            fields: ["bbbNum", "bbbPercent"], 
+            title: "BBB"
+        },
+        {
+            fields: ["bbbMNum", "bbbMPercent"], 
+            title: "BBB-"
+        },
+        {
+            fields: ["bbPNum", "bbPPercent"], 
+            title: "BB+"
+        },
+        {
+            fields: ["bbNum", "bbPercent"], 
+            title: "BB"
+        },
+        {
+            fields: ["bbMNum", "bbMPercent"], 
+            title: "BB-"
+        },
+        {
+            fields: ["bNum", "bPercent"], 
+            title: "B"
+        },
+        {
+            fields: ["cNum", "cPercent"], 
+            title: "C"
+        },
+        {
+            fields: ["dNum", "dPercent"], 
+            title: "D"
+        }
+    ],
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	actionMembers:[
+		'query','reset',
+        {
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+                    url:"[(@{/irs/report_ratingKinds/isc/fetchData/Results.csv})]",
+                    "year":year,"month":month,"type":typeVal,
+                    fileName:  "整体借款人评级分布_门类行业",
+                    sortBy: "kindName"
+                });
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+	afterQuery:function(dsResponse,data,dsRequest){
+		borrowKeyBussFieldsListGrid.setData(newData);
+	},
+    query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_ratingKinds/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year,"month":month,"type":typeVal},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                sumData = [];
+                newData=[];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.kindName==='合计'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                borrowKeyBussFieldsListGrid.setData(newData);
+            }
+        });
+    },
+	formatCellValue:function(value, record, rowNum, colNum){
+		var formatVal = value;
+		var fieldName = borrowKeyBussFieldsListGrid.getField(colNum).title;
+		if( fieldName === "占比"){
+			formatVal = formatPer(value);
+		}
+		return formatVal;
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+
+</script>
+</html>

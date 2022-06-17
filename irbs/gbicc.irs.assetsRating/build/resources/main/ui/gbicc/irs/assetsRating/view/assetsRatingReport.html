@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>资产信用评级报告</title>
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/jquery-3.1.1.min.js}"></script>
+
+	<script type="text/javascript" th:src="@{/webjars/inspinia/2.7.0/js/echarts.js}"></script>
+	<link rel="stylesheet" type="text/css" href="/css/index.css?t=2">
+
+</head>
+<body>
+        <div class="container">
+    <div class="container_title">
+      <div class="container_title_left">
+        资产信用评级报告
+      </div>
+       <div class="container_title2" id="company">
+      <label></label><span>（客户编号：）</span>
+    </div>
+    </div>
+   
+    <div class="content1">
+      <div class="grade bgw mr10">
+        <div id="grade">
+
+        </div>
+        <div class="tip" id="tip">
+            <img src="../../image/tip.png"/>
+            <span class="tooltiptext"><li>
+								            <span></span><span></span>
+								          </li>
+								             <li>
+								            <span></span><span></span>
+								          </li>
+								          </span>
+        </div>
+        <div class="list">
+         <!-- <li>
+								            <span></span><span id="list_sp1"></span>
+								          </li> -->
+								             <li>
+								            <span></span><span id="list_sp2"></span>
+								          </li>
+								          
+								      
+           <div class="time" id="time1">
+								            评级有效日期：<span></span>-<span></span>
+								          </div>
+        </div>
+      </div>
+      <div class="content1_right">
+        <div class="content1_right1 bgw">
+          <label>
+
+          </label>
+          <ul class="list">
+                                       <li  id="li1">
+									               初复评有差异
+									              </li>
+									              <li  id="li2">
+									              存在重大潜在风险
+									              </li>
+									              <li  id="li3">
+									                存量评级排名前十
+									              </li>
+									              <li  id="li4">
+									        同产品评级排名前五
+									              </li>
+									               <li  id="li5">
+									            同部门评级排名前三
+									              </li>
+          </ul>
+        </div>
+        <div class="content1_right2 bgw mt10">
+          <div class="content1_right2_1">
+            <div class="title">
+              评级得分
+            </div>
+            <div class="content1_1">
+              <label></label><span>分</span>
+            </div>
+          </div>
+          <div class="content1_right2_2">
+            <div class="title">
+              初评复核差异
+            </div>
+            <div class="content1_2">
+              <div class="content1_2_1">
+                <span></span>（初评人   : <label></label>）
+              </div>
+              <div class="content1_2_2">
+                <span></span>（复评人  : <label></label>）
+              </div>
+            </div>
+          </div>
+          <div class="content1_right2_3">
+            <div class="title">
+              其他信息
+            </div>
+            <div class="content1_right1_3">
+
+              <div class="content1_right1_3_bottom">
+                 <div class="content1_right1_3_bottom1" id="PRODUCT_TYPE">
+								
+	               </div>
+	               <div class="content1_right1_3_bottom1" id="LEASE_ITEM_SHORT_NAME">
+	            
+	               </div>
+              </div>
+              <div class="content1_right1_3_top">
+                <div class="content1_right1_3_top1">
+                  租赁物净值： <span></span> 
+                </div>
+                <div class="content1_right1_3_top2">
+             评估价值：     <span></span>  
+                </div>
+                <div class="content1_right1_3_top3">
+          核心租赁物占比：        <span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content1_right3 bgw">
+          <div class="content1_right3_11">
+	           <label>
+	            等级描述
+	          </label>
+	          <div class="content1_right3_1" id="FD_ADMISSION_SUGGEST">
+	            
+	          </div>
+          </div>
+          <!-- <div class="content1_right3_12">
+	           <label>
+	            结论
+	          </label>
+	          <div class="content1_right3_12_1" id="WARNING">
+	           
+	          </div>
+          </div> -->
+          
+        </div>
+      </div>
+    </div>
+    <div class="content2 mt10 bgw">
+      <div class="content2_top">
+        <div class="content2_top_left">
+          <span></span><label>超过存量资产的百分比</label>
+        </div>
+        <div class="content2_top_right">
+          <span></span><label>超过同产品资产的百分比</label>
+        </div>
+      </div>
+      <div class="content2_botoom">
+        <div class="content2_botoom_left">
+          <div id="progress1">
+
+          </div>
+        </div>
+        <div class="content2_botoom_right">
+          <div id="progress2">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content3 bgw mt10">
+      <div class="content3_top">
+        <div class="content3_top_left">
+          <span></span><label>跟公司所有存量资产对比</label>
+        </div>
+        <div class="content3_top_center">
+          <span></span><label>跟部门的对比</label>
+        </div>
+        <div class="content3_top_right">
+          <span></span><label>跟产品的对比</label>
+        </div>
+
+      </div>
+      <div class="content3_botoom">
+        <div class="content3_botoom_left">
+          <div id="compare1">
+
+          </div>
+        </div>
+        <div class="content3_botoom_center">
+          <div id="compare2">
+
+          </div>
+        </div>
+        <div class="content3_botoom_right">
+          <div id="compare3">
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content4">
+      <div class="content4_top bgw mt10">
+        <div class="content4_top_left">
+          <div class="content4_top_title1">
+            创收性
+          </div>
+          <div class="content4_top_title2" id="title">
+           
+          </div>
+          <div class="content4_top_content" id="incomeGenerating">
+
+          </div>
+        </div>
+        <div class="content4_top_right">
+          <div class="content4_top_title1">
+            保值性
+          </div>
+          <div class="content4_top_title2" id="title2">
+            
+          </div>
+          <div class="content4_top_content2" id="valuePreservation">
+
+          </div>
+        </div>
+      </div>
+      <div class="content4_bottom">
+
+      </div>
+      <div class="content4_top bgw mt10">
+        <div class="content4_top_left">
+          <div class="content4_top_title1">
+            可控性
+          </div>
+          <div class="content4_top_title2" id="title3">
+            
+          </div>
+          <div class="content4_top_content3" id="controllability">
+
+          </div>
+        </div>
+        <div class="content4_top_right">
+          <div class="content4_top_title1">
+            流通性
+          </div>
+          <div class="content4_top_title2" id="title4">
+            
+          </div>
+          <div class="content4_top_content4" id="liquidity">
+
+          </div>
+        </div>
+      </div>
+      <div class="content4_bottom">
+
+      </div>
+    </div>
+    <div class="content5 bgw mt10" id="riskTips">
+        <div class="content5_1" >
+          资产信用重大风险提示
+        </div>
+          <div class="content5_2" id="MAJOR_RISK_WARNING">
+          
+        </div>
+    </div>
+  </div>
+
+
+    
+</body>
+<script type="text/javascript"
+	src="/js/assetsRatingReport.js?t=2"></script>
+
+
+
+
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+
+
+var DebtRatingBHSXSParamFields ={
+	grid: [
+			{width:'*',		name:'id',	primaryKey:true,	hidden:true},
+			{width:'*',		name:'ccy',	 title:'币种'},
+			{width:'*',		name:'term',	 title:'期限'},
+			{width:'*',		name:'rateType',	 title:'利率特性'},
+			{width:'*',		name:'repriceFreq', title:'重定价频率'},
+			{width:'*',		name:'repayWays',   title:'还款方式'},
+			{width:'*',		name:'repayPrinFreq',	 title:'还本频率'},
+			{width:'*',		name:'repayIntFreq',	 title:'还息频率'},
+			{width:'*',		name:'adjust',	 title:'调节项'},
+			{width:'*',		name:'ftpRate',	 title:'FTP价格'},
+			{width:'*',		name:'maPrdNo',	 title:'产品'},
+			{width:'*',		name:'ftpFlag',	 title:'是否可用'},
+			{width:'*',		name:'startDate',	 title:'生效日期'},
+			{width:'*',		name:'updateDate',	 title:'更新日期'}
+	],
+	edit: [
+		{width:'*',		name:'id',	primaryKey:true,hidden:true,canEdit:true},
+		{width:'*',		name:'ccy',	 title:'币种',required:true},
+		{width:'*',		name:'term',	 title:'期限',required:true},
+		{width:'*',		name:'rateType',	 title:'利率特性',required:true},
+		{width:'*',		name:'repriceFreq', title:'重定价频率',required:true},
+		{width:'*',		name:'rpymType',   title:'还款方式',required:true},
+		{width:'*',		name:'rpymCapitalFreq',	 title:'还本频率',required:true},
+		{width:'*',		name:'rpymDoubleerestFreq',	 title:'还息频率',required:true},
+		{width:'*',		name:'adjust',	 title:'调节项',required:true},
+		{width:'*',		name:'ftpRate',	 title:'FTP价格',required:true},
+		{width:'*',		name:'status',	 title:'状态',required:true},
+		{width:'*',		name:'product',	 title:'产品',required:true},
+		{width:'*',		name:'chrOne',	 title:'待定1',hidden:true},
+		{width:'*',		name:'chrTwo',	 title:'待定2',hidden:true},
+		{width:'*',		name:'numOne',	 title:'待定3',hidden:true}
+	]
+};
+
+//保证人回收调整系数数据源
+isc.FwRestDataSource.create({
+	ID: 'debtRatingBHSXSParamDS',
+    fields: DebtRatingBHSXSParamFields.grid,
+    dataURL: '[[@{/irs/RpmParFTP/isc}]]'
+});
+
+//保证人回收调整系数列表
+isc.FwListGrid.create({
+	ID: 'debtRatingBHSXSParamListGrid',
+	title: '<b>资金成本配置</b>',
+	dataSource: debtRatingBHSXSParamDS,
+	sortField:"bzTypeCode",
+	fields: DebtRatingBHSXSParamFields.grid,
+	editWindow: {
+		width:800,
+		showOperateSuccessMessage: true,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: debtRatingBHSXSParamDS,
+            fields: DebtRatingBHSXSParamFields.edit
+        },
+        afterShow: function(action){
+       	
+        },
+        actionMembers:[
+               		'ok','close'
+        ]
+	},
+	actionMembers:[
+		'refresh'
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				debtRatingBHSXSParamListGrid
+			]
+		})
+	}
+});
+</script>
+</html>

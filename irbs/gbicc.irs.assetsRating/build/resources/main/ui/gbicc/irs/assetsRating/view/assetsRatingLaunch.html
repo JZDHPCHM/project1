@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+
+<head>
+<title>资产评级发起</title>
+<link rel="stylesheet" href="/css/debtRatingInitiate.css?t=2"
+	type="text/css">
+	 <link rel="stylesheet" type="text/css" href="/css/newStyle.css?t=2">
+	 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+     <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+<style type="text/css">
+.modal-lg {
+	width: 60%;
+}
+.modal-lg, .modal-content {
+	height: 420px;
+}
+.bottom-btn{
+	padding-top: 0;
+}
+.col-sm-4{
+	padding: 0;
+}
+.span-value{
+	height: 30px;
+    line-height: 33px;
+    display: inline-block;
+}
+</style>
+</head>
+<body>
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-title">
+								<h5>资产评级管理&nbsp;&nbsp;/&nbsp;&nbsp;资产评级发起</h5>
+							</div>
+							<div class="ibox-content" style="padding-bottom: 0;">
+								<form class="form-horizontal" id="formSearch">
+									<div class="form-group">
+										<label class="col-sm-1 control-label">项目名称</label>
+										<div class="col-sm-2">
+											<input id="entryName" type="text" placeholder="请选择项目名称"
+												name="entryName" class="form-control" autocomplete="off" data-provide="typeahead">
+										</div>
+										<label class="col-sm-1 control-label">项目编号</label>
+										<div class="col-sm-2">
+											<input id="entryCode" type="text" placeholder="请选择项目编号"
+												name="entryCode" class="form-control" autocomplete="off" data-provide="typeahead">
+										</div>
+										<label class="col-sm-1 control-label">所属部门</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="" name="leaseOrganization">
+												<option value="">请选择</option>
+												<option th:each="option: ${@clockDictionary.dicOrg()}"
+													th:value="${option.key}" th:text="${option.value}"></option>
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">业务经理</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" id="userSearch"
+												name="employee" class="form-control" autocomplete="off" data-provide="typeahead">
+										</div>
+										
+										<!-- <label class="col-sm-1 control-label">资产经理</label>
+										<div class="col-sm-2">
+											<input type="text" placeholder="模糊查找" id="userSearch1"
+												class="form-control" name="assetreview" autocomplete="off" data-provide="typeahead">
+										</div> -->
+									</div>
+									<div class="form-group">
+										<label class="col-sm-1 control-label">产品类型 </label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="productType" name="productType" >
+											<option value="">请选择</option>
+           									<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('AssetsRatingTemplate','')}"
+             								th:value="${option.key}" th:text="${option.value}"></option>												
+											</select>
+										</div>
+										<label class="col-sm-1 control-label">评级类型</label>
+										<div class="col-sm-2">
+											<!-- <select class="chosen-select" id="rateType" name="productType" >
+											    <option value="">请选择</option>
+           									 	<option value='000'>评级测算</option>
+												<option value='010'>评级初评</option>		
+												<option value='020'>评级复评</option>						
+											</select> -->
+											<select class="chosen-select" name=method>
+                                            <option value="">请选择</option>
+                                            <option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('RatingMethods','')}"
+                                                    th:value="${option.key}" th:text="${option.value}"></option>
+                                        </select>
+										</div>
+										<!-- <label class="col-sm-1 control-label">评级状态</label>
+										<div class="col-sm-2">
+											<select class="chosen-select" id="rateType" name="productType" >
+											    <option value="">请选择</option>
+           									 	<option value='1'>评级测算</option>
+												<option value='0'>历史评级</option>												
+											</select>
+										</div> -->
+										<label class="col-sm-1 control-label">评级日期</label>
+										<div class="col-sm-3">
+											<div class="input-daterange input-group" id="datepicker">
+												<input id="date2" type="text" class="form-control"
+													name="date2" placeholder="请选择开始日期" readonly /> <span
+													class="input-group-addon">至</span> <input id="date1"
+													type="text" class="form-control" name="date1"
+													placeholder="请选择结束日期" readonly />
+											</div>
+										</div>
+										<div class="col-sm-2" style="text-align: right;">
+											<b id="btn-query" class="btn btn-success pull-right" style="margin-left: 10px;">查询</b> <b
+												id="btn-reset" class="btn btn-success pull-right"
+												style="margin-left: 10px;">重置</b>
+										</div>
+										
+									</div>
+								</form>
+
+							</div>
+						</div>
+						<div class="jqGrid_wrapper">
+							<table id="table_list"></table>
+							<div id="pager_list"></div>
+						</div>
+					</div>
+				</div>
+				<!-- 模态窗口 -->
+				<div class="modal inmodal fade" id="myModal" tabindex="-1"
+					role="dialog" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+								</button>
+								<h4 class="modal-title">资产评级发起</h4>
+							</div>
+							<div class="modal-body">
+	
+								<form id="formUpload" target="frame1"  action="/irs/assetsRating/fileUpload"
+								enctype="multipart/form-data" method="POST" 
+								class="form-horizontal">
+									<input type="text" name="id" id="id" hidden="true">
+									<input type="text" name="proCode" id="proCode" hidden="true">
+									<input type="text" name="custCode" id="custCode" hidden="true">
+									<div class="form-group">
+										<label class="col-sm-5 control-label">项目名称：</label>
+										<div class="col-sm-4">
+											<span id="proName" class="span-value"></span>
+											<input type="text" name="proName" id="proName1" hidden="true">											
+										</div>
+									</div> 
+									<div class="form-group">
+										<label class="col-sm-5 control-label">客户名称：</label>
+										<div class="col-sm-4">
+											<span id="custName" class="span-value"></span>
+											<input type="text" name="custName" id="custName1" hidden="true">
+										</div>
+									</div> 
+									<div class="form-group">
+										<label class="col-sm-5 control-label">资产评级模型</label>
+										<div class="col-sm-4">
+											<select class="chosen-select" id="tempType" name="modelSteps">
+												<option value="">请选择</option>
+												<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('AssetsRatingTemplate','')}"
+													th:value="${option.key}" th:text="${option.value}"></option>
+											</select>
+										</div>
+									</div> 
+									<div class="form-group">
+										<label class="col-sm-5 control-label">上传租赁物清单模板：</label>
+										<div class="col-sm-4" style="position: relative; top: 6px;">
+											<input type="file" name="file1" id="file">
+										</div>
+
+										
+									</div>
+									<div class="bottom-btn" style="margin-top:50px;">
+									<button class="btn btn-default" type="button" onclick="downFile()"  style="background:#1C84C6;color:#fff;">下载模板</button>
+									<button class="btn btn-default" type="submit" style="background:#1C84C6;color:#fff;">上传并计算</button>
+									<b data-dismiss="modal" class="btn btn-default" style="background:#1C84C6;color:#fff;">返回</b>
+								</div>
+								</form>
+								<iframe name="frame1" frameborder="0" height="40" hidden="true"></iframe>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			    <!-- 模态窗口2 -->
+            <div class="modal inmodal fade modal-grade" id="myModal2" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg2">
+                   <form class="modal-content"   id="dxDl" style="height: 100%;"  method="get" action="">
+                       <fieldset>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"><span
+                                    aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title"></h4>
+                        </div>
+                        <div class="modal-body">
+							<div class="progress-left">
+								<div class='progress-left-head'>评级步骤</div>
+							
+								<div id="dxTxt" class="progress-name">评级信息录入  </div>
+                               <!--  <div class="filter-box" style="display: none;"> -->
+                                <div class="filter-box" >
+                                <!--     <p>点击下方选项增/删条目</p> -->
+                                    <div class="filter-content" id="filter-content">
+                                    </div>
+                                </div>
+								<div id="reportTxt" class="progress-name">评级报告</div>
+							</div>
+							<div class="progress-right">
+								<div  class="width-100">
+									
+									<div id="dingxing" class="width-100">
+										<div class="progress-head" id="dxAnalysis"><h5 class="progress-title">评级信息录入 </h5></div>
+									</div>
+								</div>
+								<div id="report" class="col-lg-10 col-sm-10 col-sm-10 .col-xs-12" style="display: none;">
+									<div class="progress-head"><h5 class="progress-title">评级报告</h5></div>
+									<div class="tabs-container" style="padding-top: 15px;">
+										<ul class="nav nav-tabs">
+											<li class="active"><a data-toggle="tab" href="#tab-1">评级报告</a></li>
+											<li class=""><a data-toggle="tab" href="#tab-2">评级明细</a></li>
+										</ul>
+										<div class="tab-content">
+											<div id="tab-1" class="tab-pane active">
+												<iframe id="tab_sheet_1"
+														style="min-width: 1118px;height:1000px;overflow: auto !important;"
+														frameborder="no" border="0" marginwidth="0" marginheight="0"
+														scrolling="no" allowtransparency="yes"></iframe>
+											</div>
+											<div id="tab-2" class="tab-pane">
+												<iframe id="tab_sheet_2" style="width:100%;height:1300px"
+														frameborder="no" border="0" marginwidth="0" marginheight="0"
+														scrolling="no" allowtransparency="yes"></iframe>
+											</div>
+										</div>
+									</div>
+								
+								</div>
+							</div>
+                        </div>
+                     
+                       <div class="modal-footer" id="footer2">
+                            <div id="scoreInfo" style="padding-right: 40px;font-size: 16px;display: none;">
+                                <span>定量得分：</span><span class="cale-score" id="dlScore"></span>
+                                <span>定性得分：</span><span class="cale-score" id="dxScore"></span>
+                                <span>总得分：</span><span class="cale-score" id="sumScore"></span>
+                            </div>
+                           
+                       
+                         <!--    <button type="button" class="btn btn-success" id="btn_next2">下一步</button> -->
+                          <input class="submit" type="submit" value="下一步" id="btn_next2">
+                        </div>
+                        <div class="modal-footer" id="footer3" style="display: none;">                           
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" id="closeModal">关闭
+                            </button>
+                        </div>
+                      <fieldset>
+                    </form>
+                </div>
+            </div>
+        
+        
+			
+			</div>
+		</div>
+	</div>
+    
+</body>
+<script type="text/javascript"
+	src="/js/assetsRatingLaunch.js?t=2"></script>
+<script type="text/javascript"
+	src="/js/stepsAssetsRating.js?t=2"></script>
+<script>
+var csName="";
+var prName="";
+var csCode="";
+var prCode="";
+	$("input").blur(function(){
+		$(".typeahead.dropdown-menu").css("display","none");
+	});
+ 	$('#formUpload').submit(function(event) {
+ 		 var tempType1=$("#tempType option:selected").val();
+ 		 var fileName = $(this).find("input[name=file1]").val();
+ 		  if(!tempType1){
+ 			 swal({
+ 	            title: "提示",
+ 	            text: "请选择资产评级模型！",
+ 	            type: "info"
+ 	        });
+              return;
+          }
+         if (!fileName) {
+         	swal({
+	            title: "提示",
+	            text: "请选择文件！",
+	            type: "info"
+	        });
+             return;
+         }
+       
+         // mulitipart form,如文件上传类
+         var formData = new FormData(this);
+   
+         $.ajax({
+             async: false,
+             type: "POST",
+             url: "/irs/assetsRating/fileUpload",
+             data: formData,
+             dataType: "JSON",
+             mimeType: "multipart/form-data",
+             contentType: false,
+             cache: false,
+             processData: false,
+             success: function (data) {
+                 if (data.flag=='true') {
+     				 $("#formUpload file").val("");
+     			
+     				initSteps(data.id,$("#tempType option:selected").val(),csCode,prCode);
+             		//window.open("/irs/DebtRatingResults/enterReport?projectNo="+data.id);
+                   	$('#myModal').modal('hide');
+                   	var formInit = $('#formSearch').serializeObject();
+                   	$("#table_list").jqGrid('setGridParam', {formInit,page:1}).trigger("reloadGrid"); 
+                   
+                 } else {
+                	 swal({
+          	            title: "提示",
+          	            text: data.msg,
+          	            type: "info"
+          	        });
+                 }
+             }
+         });
+         return false;
+	}); 
+
+
+
+//资产租赁物清单模板下载
+function downFile(){
+	 window.location.href="/irs/assetsRating/downFile";
+}
+
+$("#refresh").click(function(){
+	showHistoryModal(csName,prName,csCode,prCode);
+})
+function showHistoryModal(custName,proName,custCode,proCode,id){
+	 $.ajax({
+        async: false,
+        type: "GET",
+        url: "/irs/assetsRating/isExitAssets",
+        data: {
+        	custCode:custCode,
+        	proCode:proCode,
+        },
+        success: function (data) {
+        	console.log(111,data);
+        	 var res=data;
+             if(res.isNext=='1'){  
+            	    $('#formUpload').find("input[name=file1]").val('');
+            		csName=custName;
+            		prName=proName;
+            		csCode=custCode;//客户编号
+            		prCode=proCode;//项目编号
+            		id=id;
+            	    $("#myModal").modal("show");	
+            		$("#proName1").val(prName);
+            		$("#custName1").val(csName);
+            	    $("#proName").text(prName);
+            	    $("#custName").text(csName);
+            	    $("#proCode").val(prCode);
+            	    $("#custCode").val(csCode);
+            	    $("#id").val(id); 
+             }else{
+            	 swal({
+     	            title: "提示",
+     	            text: "该项目存在业务系统发起-初评的记录，暂不能进行评级测算！",
+     	            type: "info"
+     	         });
+         	     return;
+             }
+        }
+	});
+}
+$("#ratingLevelSpan").click(function(){
+	var id =$("#id").val();
+/* 	if(!type){
+		 swal({
+	            title: "提示",
+	            text: "请选择评级模板！",
+	            type: "info"
+	        });
+		 return;
+	} */
+	var cust = $("#custCode").val();
+	window.open("/irs/mainRating/mainRatingTrial.html"+
+	"?id="+id+"&cust="+cust);
+})
+var form="";
+	$('#btn-query').click(function(){
+		form = $('#formSearch').serializeObject();
+	    $("#table_list").jqGrid('setGridParam', {postData:form,page:1}).trigger("reloadGrid");
+	});
+	//重置按钮
+	$("#btn-reset").click(function(){
+		$("#formSearch input").val("");
+		$("#formSearch select").val("");
+		$("#formSearch select").trigger("chosen:updated");
+		$('#date2').datepicker('setEndDate', new Date());
+		$('#date1').datepicker('setEndDate', new Date());  
+		$('#date1').datepicker('setStartDate', null);
+	});
+var custNo="";
+var tempType="";
+$(document).ready(function(){
+	$("#table_list").jqGrid({
+		url : "/irs/assetsRating/parameterQuery",
+		recordtext: "显示：{0} - {1}，总数：{2} ",
+	    emptyrecords: "本次查询无数据！",
+	    loadtext: "读取中...",
+	    postData:{'vailds':'1'},
+	    pgtext : "第 {0}页， 共{1}页",
+		mtype : "GET",
+	    datatype: "json",
+        height: ($(window).height()-$(".float-e-margins").height()-140),//屏幕高度-查询框高度-140的偏差值
+        //scrollOffset : 0,
+        autowidth: true,
+        shrinkToFit: true,
+        prmNames: {
+            page: "page"   // 表示请求页码的参数名称
+        },
+        rowNum: 20,
+        rowList: [20, 30, 40],
+        //colNames:['','项目编号','项目名称','承租人名称','初评等级','初评保障倍数','复核等级','复核保障倍数','业务部',"业务经理",'项目经理','评审经理','资产经理','评级类型','评级日期','操作'],
+        //colNames:['评级编号','项目编号','项目名称','项目状态','承租人编号','承租人名称','评级模板','业务部','业务类别','业务类型','初评等级','复核等级','总体保障倍数','评级类型','评级生效日期','操作'],
+        colNames:['项目编号','项目名称','客户编号','客户名称','所属部门','业务经理','资产经理','租赁物名称','操作'],//"租赁物名称"
+        colModel:[
+        	/* {name:'id',index:'id', editable: true,sortable:false}, */
+       	 {name:'proCode',index:'proCode', editable: true,sortable:false, width: 70},
+        	{name:'proName',index:'proName', editable: true,sortable:false, width: 150},
+        	{name:'custcode',index:'custcode', editable: true,sortable:false,align: 'center',width: 60},
+           {name:'custname',index:'custname', editable: true,sortable:false,align: 'center',width: 100},
+           {name:'orgName',index:'orgName', editable: true,sortable:false,align: 'center', width: 50},
+           {name:'employeeId',index:'employeeId', editable: true,sortable:false,align: 'center', width: 50,
+           	formatter:function(value,row,index){
+           		if([(${@clockDictionary.fuzzySearchUser('')})][value]){
+           			return 	[(${@clockDictionary.fuzzySearchUser('')})][value]; 
+           		}else{
+           			return "";
+           		}
+           	}},
+           {name:'assetReview',index:'assetReview', editable: true,sortable:false,align: 'center', width: 50},
+           {name:'proItemName',index:'proItemName', editable: true,sortable:false,align: 'center', width: 50},
+           
+           
+           /**{name:'internBs',index:'internBs', editable: true,sortable:false,align: 'center', width: 70,formatter:function(value,row,index){
+            	if(value){
+            		value=value*1;
+            		return value.toFixed(2);
+            	}else{
+            		return "";
+            	}
+            }},
+            {name:'finallevel',index:'finallevel', editable: true,sortable:false,align: 'center', width: 50},
+            {name:'finalBs',index:'finalBs', editable: true,sortable:false,align: 'center', width: 70,formatter:function(value,row,index){
+            	if(value){
+            		value=value*1;
+            		return value.toFixed(2);
+            	}else{
+            		return "";
+            	}
+            }},
+            {name:'orgName',index:'sales', editable: true,sortable:false,align: 'center', width: 70},
+            {name:'employeeId',index:'sales', editable: true,sortable:false,align: 'center', width: 50,
+            	formatter:function(value,row,index){
+            		if([(${@clockDictionary.fuzzySearchUser('')})][value]){
+            			return 	[(${@clockDictionary.fuzzySearchUser('')})][value]; 
+            		}else{
+            			return "";
+            		}
+            	}},
+            {name:'internName',index:'internName', editable: true,sortable:false,align: 'center',hidden:true, width: 50},
+            {name:'finalName',index:'finalName', editable: true,sortable:false,align: 'center', width: 50,hidden:true},
+            {name:'assetReview',index:'assetManager', editable: true,sortable:false,align: 'center', width: 50,hidden:true},
+             {name:'ratingstatus',index:'ratingstatus', editable: true,sortable:false,align: 'center', width: 80,
+            	formatter:function(value,row,index){
+            	if([(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingMethods','')})][value]){
+                	return [(${@frSystemDictionaryService.getDictionaryMapJsonString('RatingMethods','')})][value];
+            	}else{
+            		return "";
+            	}
+            }}, 
+            {name:'finaldate',index:'finaldate', editable: true,sortable:false,align: 'center', width: 70},*/
+            {name:'id',index:'id', editable: true,align: 'center',sortable:false, width: 60,
+            	formatter:function(value,index,row){
+            	custNo=row.proCode;
+            	tempType=row.type;
+            	//return "<span style='color: #199fff;text-decoration: underline;cursor: pointer;' onclick='showHistoryModal(\""+row.proCode+"\")'>"+value+"</span>";
+/* custname" : "天津新能再生资源有限公司",
+      "custcode" : "BP000626",
+      "proCode" : "PJ2016040017",
+      "proName" : "天津新能再生资源有限公司回租项目", */
+            	return "<button class='btn btn-success btn-small' "+
+            	"onclick='showHistoryModal(\""+row.custname+"\",\""+row.proName+"\",\""+row.custcode+"\",\""+row.proCode+"\",\""+row.id+"\");'>评级发起</button>";
+            }}
+        ],
+        pager: "#pager_list",
+        viewrecords: true,
+        caption: "",
+        add: true,
+        edit: true,
+        addtext: 'Add',
+        edittext: 'Edit',
+        rownumbers: true,
+        rownumWidth: 60,
+        hidegrid: false,
+        jsonReader: {
+        	root: "response.data",
+        	records: "response.totalRows",
+        	//page: "response.currPage", // 当前第几页
+            total: "response.totalPages", // 总共多少页
+        	repeatitems: false,
+        	id: "0"
+        }
+    });	
+	$("#table_list").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');
+	// Setup buttons
+    $("#table_list").jqGrid('navGrid', '#pager_list',
+            {edit: false, add: false, del: false, search: false},
+            {height: 200, reloadAfterSubmit: true}
+    );
+});
+$(function(){
+	   $(window).resize(function(){   
+	      $("#table_list").setGridWidth($(window).width());
+	   });
+	});
+
+$("#closeModal").click(function(){
+	var form="";
+		form = $('#formSearch').serializeObject();
+	    $("#table_list").jqGrid('setGridParam', {postData:form,page:1,'vailds':'1'}).trigger("reloadGrid");
+})
+
+$(document).ready(function () {
+        //任何需要执行的js特效
+        var proCode = "";
+        proCode= "[[${proCode}]]";
+        var cust="";
+        cust="[[${cust}]]";
+        var proName='';
+        proName="[[${proName}]]";
+        var custName='';
+        custName="[[${custName}]]";
+        if (proCode&&cust) {
+        	showHistoryModal(custName,proName,"[[${cust}]]","[[${proCode}]]",id);
+            goBack = "/irs/DebtRatingResults/debtRatingInitiate";
+        };
+
+        // 单选变色效果
+        $(document).on('click', '.child_row1 > label input[type="radio"]', function () {
+            $(this).parents('label').addClass('selected').siblings('label').removeClass('selected');
+        });
+
+        // 模态框关闭时隐藏 新增条目框
+        $('#myModal').on('hidden.bs.modal', function () {
+          /*   $('.filter-box').slideUp(120); */
+        })
+    });
+$.fn.serializeObject = function() {  
+    var o = {};  
+    var a = this.serializeArray();  
+    $.each(a, function() {  
+        if (o[this.name]) {  
+            if (!o[this.name].push) {  
+                o[this.name] = [ o[this.name] ];  
+            }  
+            o[this.name].push(this.value.replace(new RegExp(",","gm"),"") || '');  
+        } else {  
+            o[this.name] = this.value.replace(new RegExp(",","gm"),"") || '';  
+        }  
+    });  
+    return o;  
+}
+
+</script>
+
+
+
+</html>

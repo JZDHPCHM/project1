@@ -1,0 +1,38 @@
+/*
+ * 自动导出资源贡献项配置示例
+ * 功能: 该贡献项配置为框架提供在启动时自动将 war 包中的资源导出到安装目录的功能
+ * 使用说明:
+ * type			: 资源类型，可能选项
+ *					file	: 文件
+ *					dir		: 目录
+ *					zip		: 压缩包
+ * name			: 资源名称
+ * description	: 资源名称描述
+ * sources		: 资源源,按照顺序查找资源,只要存在就采用
+ * target		: 资源目标
+ */
+
+
+[
+	{
+		"type"			:"file",
+		"name"			:"chrome_installer_32bit",
+		"description"	:"谷歌浏览器32位",
+		"sources"		:[
+							"classpath:/75.0.3770.90_chrome_installer_32bit.exe",
+							"classpath:/chromeBrowser/75.0.3770.90_chrome_installer_32bit.exe"
+						 ],
+		"target"		:"${application.home.dir}/work/web/anonymous-download/75.0.3770.90_chrome_installer_32bit.exe"
+	},
+	{
+		"type"			:"file",
+		"name"			:"chrome_installer_64bit",
+		"description"	:"谷歌浏览器64位",
+		"sources"		:[
+							"classpath:/75.0.3770.90_chrome_installer_64bit.exe",
+							"classpath:/chromeBrowser/75.0.3770.90_chrome_installer_64bit.exe"
+						 ],
+		"target"		:"${application.home.dir}/work/web/anonymous-download/75.0.3770.90_chrome_installer_64bit.exe"
+	}
+]
+

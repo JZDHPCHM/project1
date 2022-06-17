@@ -1,0 +1,13 @@
+/*
+ * 系统属性贡献项配置示例
+ * 功能: 该贡献项配置为框架提供在启动时自动注册系统属性功能(执行 System.setProperty())
+ * 使用说明:
+ * key		: 属性名
+ * value	: 属性值
+ */
+
+/*
+{
+	"h2.dbname.default"            : "DB_FRAMEWORK"
+}
+*/

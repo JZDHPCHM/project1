@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+</head>
+<body style='background-color:white'>
+	<div class='wrapper'>
+		<div class='wrapper wrapper-content animated fadeInRight'>
+			<div class='row'>
+				<form class="form-inline" >
+                	<div class="form-group">
+	                    <label for="taskName" class="control-label">评价计划</label>
+	                    <select class="form-control" name="taskName" id="taskName">
+		                    <option value=''>请选择</option>
+		                    <option value=''></option>
+	                    </select>
+                	</div>
+                	<button type='button' class='btn btn-primary'>导出</button>							
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

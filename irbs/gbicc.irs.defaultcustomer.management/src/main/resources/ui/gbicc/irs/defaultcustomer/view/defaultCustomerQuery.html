@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+</head>
+<body>
+</body>
+<script>
+
+//违约客户发起方式
+var DefaultStatus =[(${@frJsonObjectMapper.enumerate(T(gbicc.irs.defaultcustomer.support.DefaultStatus),#locale)})];
+//字典数据_违约事件
+var defaultEvent =[(${@jacksonObjectMapper.writeValueAsString(@defaultEventLibController.findAllDefaultEvent())})];
+
+//字段定义
+var DefaultCustomerFields ={
+	query: [
+		{width:'*',		name:'customer.custNo',				title:'客户编号',type: 'text'},
+		{width:'*',		name:'customer.custName',			title:'客户名称',type: 'text',	operator:'equals'},
+	],
+	dataSource:[
+		{width:80,		name:'id',			primaryKey:true},
+		{width:150,		name:'customer'		},
+	    {width:300,		name:'defaultStatus'}
+	],
+	grid: [
+		{width:80,		name:'id',						primaryKey:true,hidden:true,canEdit:false},
+		{width:200,		name:'customer.custNo',			title:'客户编号'},
+		{width:'*',		name:'customer.custName',		title:'客户名称'},
+		{width:200,		name:'customer.managerName',    title:'客户经理'},
+		{width:200,		name:'customer.businessLicense',title:'营业执照号'},
+		{width:200,		name:'customer.regAmount',     	title:'注册金额'},
+		{width:150,		name:'defaultStatus',	title:'违约状态',	type:"select",	valueMap:DefaultStatus}
+	]
+};
+
+//模型选项数据源
+isc.FwRestDataSource.create({
+	ID: 'defaultCustomerDataSource',
+    fields: DefaultCustomerFields.dataSource,
+    dataURL: '[[@{/irs/defaultCustomer/isc}]]'
+});
+
+//模型选项定义列表
+isc.FwListGrid.create({
+	ID: 'defaultCustomerListGrid',
+	title: '<b>违约事件定义列表</b>',
+	dataSource: defaultCustomerDataSource,
+	sortField: 'customer.custNo',
+	fields: DefaultCustomerFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: DefaultCustomerFields.query
+	},
+	actionMembers:[
+		'query','reset','refresh'
+	]
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.VLayout.create({
+					showResizeBar: true,
+				    width: '100%',
+				    members: [defaultCustomerListGrid]     
+				})
+			]
+		})
+	}
+});
+</script>
+</html>

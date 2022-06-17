@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+<script type="text/javascript" th:src="@{/webjars/echarts/js/echarts.min.js}"></script>
+<script type="text/javascript" th:src="@{/org.wsp.framework.mvc.ui.template.smartclient/js/smartclient-echarts.js}"></script>
+</head>
+<body>
+</body>
+<script>
+//当前登录人账号
+var roleCode = "[(${T(org.wsp.framework.security.util.SecurityUtil).getDefaultRoleCode()})]";
+var roleShow=false;
+var userShow=false;
+var isScomer=false;
+if(roleCode=="CUSTOMER_MANAGER"){
+	 roleShow=true;
+	 userShow=true;
+}
+//分支行查询岗
+if("BRANCHBRANCH_PRESIDENT"==roleCode){
+	roleShow=true;
+}
+//小企业isScomer
+/* if("1009699"==roleCode){
+	isScomer=true;
+} */
+//总行查询岗
+/* if("1103999"==roleCode){
+	roleShow=true;
+} */
+//企业规模
+var EnterpriseScales =[(${@CodeLibraryService.findByItemCode("Scope")})];
+//财报币种
+var ReportCurrencys =[(${@CodeLibraryService.findByItemCode("Currency")})];
+//财报周期
+var ReportCycles = [(${@CodeLibraryService.findByItemCode("ReportPeriod")})];
+//财报类型
+var ReportTypes = [(${@frSystemDictionaryService.getDictionaryMapJsonString('FinancialStatementTemplateType',#locale)})];
+//财报科目分类
+var FinanciaAccountCategory =[(${@frSystemDictionaryService.getDictionaryMapJsonString('ACCOUNT_CLASSIFICATION',#locale)})];
+//客户分类
+var ctmTyps =[(${@CodeLibraryService.findByItemCode("CustomerType")})];
+//证件类型
+var certTypes = [(${@CodeLibraryService.findByItemCode("CertType")})];
+//用户列表
+var userEntitys =[(${@jacksonObjectMapper.writeValueAsString(@userService2.findByUser("12"))})] ;
+//统计口径
+var ReportSpecificationss = [(${@CodeLibraryService.findByItemCode("ReportScope")})];
+//对标企业范围
+var BenchmarkingCompanys = [(${@frJsonObjectMapper.enumerate(T(gbicc.irs.customer.support.BenchmarkingCompany),#locale)})];
+//国标行业
+var GBindustrys=[(${@CodeLibraryService.findByItemCode("IndustryType")})];
+//行内行业
+var industrys=[(${@CodeLibraryService.findByItemCode("IndustryType1")})];
+//是否审计可能会改
+var isAudits=[(${@CodeLibraryService.findByItemCode("报表审计")})];
+//是否空表
+var isNullTabels=[(${@CodeLibraryService.findByItemCode("IsEmpty")})];
+//是否平衡
+var isNullBalances=[(${@CodeLibraryService.findByItemCode("IsBalanced")})];
+//客户财报类型
+var customerReportTypes=[(${@CodeLibraryService.findByItemCode("FinanceBelong")})];
+//预警主题
+var waringMap=[(${@CompanyCustomerService.queryWarning()})];
+//预警信号
+var signalMap=[(${@CompanyCustomerService.querySignal()})];
+//预警等级
+var levelMap=[(${@CompanyCustomerService.queryLevel()})];
+//机构
+isc.FwRestDataSource.create({
+    ID: 'allOrgDs',
+    fields:[
+    	{name:'id',		title:'唯一标识',			primaryKey:true},
+    	{name:'code',	title:'代码'},
+    	{name:'name',	title:'名称'},
+    	{name:'parent',	title:'父机构唯一标识',	foreignKey:'allOrgDs.id'}
+    	
+    ],
+    fetchDataURL: '[(@{/system/orgs/isc/fetch})]'
+});
+/**
+ * ====================================================================================================================
+ * 对公客户列表
+ * ====================================================================================================================
+**/
+
+var startTime = '';
+var endTime = '';
+//字段定义
+var CompanyCustomerFields ={
+	query: [
+			{width:'*',			name:'custNo',              title:'[[#{custNo}]]'},
+			{width:'*',			name:'custName',            title:'[[#{custName}]]'},
+			{width:'*',			name:'enterpriseScale',     hidden:isScomer,  title:'[[#{enterpriseScale}]]',type: 'select',valueMap:EnterpriseScales,},
+			{width:'*',		    name:'gbIndustry',     			title:'国标行业', type: 'select',valueMap:GBindustrys},
+			{
+				width:'*',	
+				name:'accountOrg',					
+				title:'机构',
+				//hidden:roleShow,
+				optionDataSource: allOrgDs,	
+				dataSetType: "tree",
+				autoFetchData:false,
+				loadDataOnDemand:true,
+				displayField:'name',
+				valueField:'id',
+				pickListProperties:{
+					nodeIcon: '[SKIN]/folder_open.png'
+				},
+				specialValues: {"": ""},
+			    separateSpecialValues: true
+			},
+			{width:'*',			name:'accountManager', hidden:userShow ,   	title:'[[#{managerName}]]'},
+			{width:'*',			name:'startDt',	title:'[(#{establishmentTime})][(#{dateFrom})]',	type:'date',startDate:'1700/1/1',	useTextField:true, 		
+			changed : function(form, item, value) {
+				startTime = value;
+				if(endTime!=''&& new Date(startTime) > new Date(endTime)){
+					isc.say("开始时间不能比结束时间大！");
+					item.setValue('');
+				}
+			}
+			},
+			{width:'*',			name:'endDt',	title:'[(#{dateTo})]',								type:'date',startDate:'1700/1/1',	useTextField:true,
+			changed : function(form, item, value) {
+				endTime = value;
+				if(startTime!=''&& new Date(startTime) > new Date(endTime)){
+					isc.say("开始时间不能比结束时间大！");
+					item.setValue('');
+				}
+			}
+			}
+	],
+	grid: [
+			{width:'170',		name:'custNo',              title:'[[#{custNo}]]',primaryKey:true},
+			{width:'170',		name:'custName',            title:'[[#{custName}]]'},
+			{width:'170',		name:'businessLicense',     title:'[[#{businessLicense}]]'},
+			{width:'170',		name:'ctmType',     		title:'企业类型',	type: 'select',valueMap:ctmTyps,allowEmptyValue:true,autoFetchData:false},
+			{width:'170',		name:'regAmount',     		title:'注册资本(元)'},
+			{width:'170',		name:'enterpriseScale',     title:'[[#{enterpriseScale}]]',type: 'select',valueMap:EnterpriseScales},
+			{width:'170',		name:'gbIndustry',     		title:'[[#{gbIndustry}]]', 		   type: 'select',valueMap:GBindustrys},
+			{width:'170',		name:'managerName',    		title:'管户经理'},
+			{width:'170',		name:'org.name',   			title:'[[#{accountOrg}]]'},
+			{width:'170',		name:'inputDt',   			title:'登记时间'}
+			
+	]
+};
+
+/**
+ * ====================================================================================================================
+ * 客户财报基本信息列表
+ * ====================================================================================================================
+**/
+//字段定义
+var CusFinancialStatementsFields ={
+	grid: [
+			{width:100,		name:'id',                          title:'[[#{id}]]' ,		hidden:true,		primaryKey:true,		canEdit:false},
+			{width:150,		name:'companyCustomer',   			title:'[[#{custNo}]]'},
+			{width:100,		name:'reportBussDate',           	title:'[[#{reportBussDate}]]'},
+			{width:100,		name:'reportSpecifications',    	title:'[[#{reportSpecifications}]]',type: 'select',valueMap:ReportSpecificationss,allowEmptyValue:true,autoFetchData:false},
+		    {width:100,		name:'reportCurrency',      		title:'[[#{reportCurrency}]]',type: 'select',valueMap:ReportCurrencys,allowEmptyValue:true,autoFetchData:false},
+		    {width:100,		name:'reportCycle',					title:'[[#{reportCycle}]]',type: 'select',valueMap:ReportCycles,allowEmptyValue:true,autoFetchData:false},
+		    {width:80,		name:'reportSource',           		title:'[[#{reportSource}]]'},
+		    {width:100,		name:'reportType',          		title:'[[#{reportType}]]',type: 'select',valueMap:ReportTypes,allowEmptyValue:true,autoFetchData:false},
+		    {width:80,		name:'vaild',           			title:'[[#{vaild}]]' ,				type: 'boolean' },
+		    {width:80,		name:'isAudit',           			title:'[[#{isAudit}]]',				type: 'select',valueMap:isAudits,allowEmptyValue:true,autoFetchData:false},
+		    {width:200,		name:'auditOrganization',           title:'[[#{auditOrganization}]]',	hidden:true},
+		    {width:200,		name:'auditOpinion',           		title:'[[#{auditOpinion}]]',		hidden:true},
+		    {width:80,		name:'isNullTable',           		title:'是否空表',			type: 'select',valueMap:isNullTabels,allowEmptyValue:true,autoFetchData:false},
+		    {width:80,		name:'isNullBalance',           	title:'是否平衡',			type: 'select',valueMap:isNullBalances,allowEmptyValue:true,autoFetchData:false},
+		    {width:80,		name:'checkPassRate',           	title:'勾稽校验通过率'},
+		
+	]
+};
+
+/**
+ * ====================================================================================================================
+ * 客户财报科目数据列表
+ * ====================================================================================================================
+**/
+//字段定义
+var FinAccountDataFields ={
+	grid: [
+			{width:100,		name:'id',                          title:'[[#{id}]]' ,				primaryKey:true,	canEdit:false,		hidden:true},
+			{width:100,		name:'financia',               		hidden:true	},
+			{width:100,		name:'accountCategory',             title:'[[#{accountCategory}]]',	type:'select',	valueMap:FinanciaAccountCategory},
+			{width:100,		name:'lineCode',          		    title:'[[#{lineCode}]]',		canEdit:false,		validators:[{type:"required"}]},
+			{width:120,		name:'dataitemCode',           		title:'[[#{dataitemCode}]]',	validators:[{type:"required"},{type:"lengthRange",max:10}]},
+			{width:"*",		name:'dataitemName',           		title:'[[#{dataitemName}]]',	validators:[{type:"required"},{type:"lengthRange",max:25}]},
+			{width:100,		name:'beginValue',        			title:'[[#{beginValue}]]',		validators:[{type:"isFloat"},{type:"floatRange",max:999999999999}]},
+			{width:100,		name:'endValue',        			title:'[[#{endValue}]]',		validators:[{type:"required"},{type:"isFloat"},{type:"floatRange",max:999999999999}]}
+	]
+};
+
+//客户财报科目数据源
+isc.FwRestDataSource.create({
+	ID: 'finAccountDataDS',
+    fields: FinAccountDataFields.grid,
+    dataURL:'[[@{/irs/finAccountData/isc}]]'								 	//默认查询及增删改操作属性
+});
+
+//客户财报科目数据列表
+isc.FwListGrid.create({
+	ID: 'finAccountDataListGrid',
+	title: '<b>科目数据</b>',
+	dataSource: finAccountDataDS,
+	sortField: 'lineCode',
+	canSort:false,
+	autoFetchData:false,
+	canPageable:true,
+    autoSaveEdits: false,
+    listEndEditAction: "done",
+    groupByField: 'accountCategory',
+	fields: FinAccountDataFields.grid,
+	actionMembers:[
+		{
+   			title:'<span class="fa fa-refresh"></span> 刷新',
+ 			name:"refresh",
+			click:function(){
+		    	 var cusRecord = cusFinancialStatementsListGrid.getSelectedRecord();
+		    	 if(cusRecord){
+		    		 finAccountDataListGrid.fetchData({"financia":cusRecord.id});
+		    	 }else{
+		    		 isc.say("请选择一条财务报表！");
+		    	 }
+			}
+		}
+		
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	}
+
+});
+//财报信息列表数据源
+isc.FwRestDataSource.create({
+	ID: 'cusFinancialStatementsDS',
+    fields: CusFinancialStatementsFields.grid,
+    dataURL: '[[@{/irs/cusFinancialStatements/isc}]]'
+});
+
+
+//公司客户列表数据源
+isc.FwRestDataSource.create({
+	ID: 'companyCustomerDS',
+    fields: CompanyCustomerFields.grid,
+   	fetchDataURL: '[[@{/irs/companyCustomer/queryCustomer}]]',
+    //dataURL: '[[@{/irs/companyCustomer/isc}]]'
+});
+
+//客户财报基本信息列表
+isc.FwListGrid.create({
+	ID: 'cusFinancialStatementsListGrid',
+	title: '<b>财报列表</b>',
+	dataSource: cusFinancialStatementsDS,
+	//canPageable:false,
+	autoFetchData:false,
+	fields: CusFinancialStatementsFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	editWindow: {
+		width:800,
+        form: {
+        	numCols:4,
+        	titleWidth:150,
+            dataSource: cusFinancialStatementsDS,
+            fields: CusFinancialStatementsFields.edit
+        },
+        afterShow: function(action){
+        	this.Super('afterShow',arguments);
+        	var cusRecord = companyCustomerListGrid.getSelectedRecord();
+        	if(cusRecord){
+        		this.getForm().setValue('custNo',cusRecord.custNo);
+        		this.getForm().setValue('companyCustomer.custNo',cusRecord.custNo);
+        	}else{
+        		isc.say("请选择一条客户数据！");
+        	}
+        },
+        actionMembers:['ok','close']
+	},
+	actionMembers:[
+		'refresh'
+	],
+	selectionUpdated: function(record, recordList){  
+		this.Super('selectionUpdated',arguments);
+		finAccountDataListGrid.fetchData({'financia':record.id});
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+
+//字段定义
+var EnterpriseCustomerFieldsToShow ={
+		grid: [
+			{width:'10%',		name:'bankShareholders',    title:'是否本行股东',	 type:'boolean'},
+			{width:'10%',		name:'isPeanuts',             title:'是否小企业',	 type:'boolean'},
+			{width:'10%',		name:'newTechnology',       title:'是否政府认定高新技术企业',type:'boolean'},
+			{width:'10%',		name:'technology',       	title:'是否科技企业',	 type:'boolean'},
+			{width:'10%',		name:'isFinancingGuarantee',title:'是否融资担保机构',type:'boolean'},
+			{width:'10%',		name:'isElseWhere',      	title:'是否异地客户',   type:'boolean'}
+		],
+		grid1: [
+			{width:'5%',		name:'custNo',              title:'客户编号',		canEdit:false},
+			{width:'10%',		name:'ctmCoreNo',           title:'核心客户编号',	canEdit:false},
+			{width:'10%',		name:'businessLicense',     title:'组织机构代码',	canEdit:false},
+			{width:'10%',		name:'certType',    		title:'登记注册证件类型',	canEdit:false,type:'select',	valueMap:certTypes},
+			//{width:'10%',		name:'certidNo',      		title:'证件号',canEdit:false},
+			
+			{width:'10%',		name:'certidNo',      		title:'登记注册证件号码',canEdit:false},
+			{width:'10%',		name:'intraIndustry',      		title:'行内行业',canEdit:false ,type:'select',	valueMap:industrys},
+			
+			{width:'10%',		name:'gbIndustry',      		title:'国标行业分类',canEdit:false,type:'select',	valueMap:GBindustrys},
+			{width:'10%',		name:'regAddress',      		title:'注册地址',canEdit:false},
+			
+			{width:'10%',		name:'empCount',      		title:'职工人数',canEdit:false},
+			{width:'10%',		name:'annualIncome',      	title:'营业收入（元）',canEdit:false,type:'float',format:"0.00"},
+			{width:'10%',		name:'totalAssets',      	title:'资产总额（元）',canEdit:false,type:'float',format:"0.00"},
+			{width:'20%',		name:'FinancialStatementsType',title:'财务报表类型',canEdit:false,type:'select',	valueMap:customerReportTypes},
+			{width:'10%',		name:'org.name',      		title:'登记机构',canEdit:false},
+			{width:'10%',		name:'inputDt',      		title:'登记日期',canEdit:false},
+			{width:'10%',		name:'updateOrgid.name',      title:'更新机构',canEdit:false},
+			{width:'10%',		name:'updateDt',      		title:'更新日期',canEdit:false},
+			{width:'10%',		name:'busScope',      		title:'经营范围',type:'textarea',rowSpan:2}
+			]
+};
+
+isc.FwReadOnlyDynamicForm.create({
+	ID : "customerViewForm1",
+	numCols : 20,
+	width:'100%',
+	height:'3%',
+	overflow : "auto",
+	autoFocus : false,
+	bodyDefaults:{padding:0},
+	fields : EnterpriseCustomerFieldsToShow.grid
+});
+isc.FwDynamicForm.create({
+	ID : "customerViewForm2",
+	numCols : 6,
+	width:'100%',
+	height:'20%',
+	overflow : "auto",
+	autoFocus : false,
+	bodyDefaults:{padding:0},
+	fields : EnterpriseCustomerFieldsToShow.grid1
+});
+
+//waringMap,waringMap,levelMap
+//字段定义
+var CustomerEarlyWarningFieldsToShow ={
+		grid: [
+			{width:'*',		name:'ctmNo',    title:'预警主题',hidden:true},
+			{width:'*',		name:'earlyWarning',    title:'预警主题',type:'select',valueMap: waringMap},
+			{width:'*',		name:'earlyDt',    		title:'预警时间',	type:'miniDateRange',	useTextField:true},
+			{width:'*',		name:'earlySignal',     title:'预警信号',type:'select',valueMap: signalMap},
+			{width:'*',		name:'signalLevel',     title:'信号等级',type:'select',valueMap: levelMap},
+			{width:'*',		name:'earlyDesc',       title:'预警描述'}
+		],
+		query: [
+			{width:'*',		name:'ctmNo',    title:'预警主题',hidden:true},
+			{width:'*',		name:'earlyWarning',    title:'预警主题',type:'select',valueMap: waringMap},
+			{width:'*',		name:'earlyDt',    		title:'预警时间',	type:'miniDateRange',	useTextField:true},
+			{width:'*',		name:'earlySignal',     title:'预警信号',type:'select',valueMap: signalMap},
+			{width:'*',		name:'signalLevel',     title:'信号等级',type:'select',valueMap: levelMap}
+			]
+};
+
+//公司客户列表数据源
+isc.FwRestDataSource.create({
+	ID: 'CustomerEarlyWarningDS',
+    fields: CustomerEarlyWarningFieldsToShow.grid,
+   // dataURL: '[[@{/irs/Customer/EarlyWarning/isc}]]'
+    fetchDataURL: '[[@{/irs/Customer/EarlyWarning/isc/fetch}]]'
+});
+
+isc.FwListGrid.create({
+	ID : "CustomerEarlyWarningForm",
+	width:'100%',
+	overflow : "auto",
+	autoFocus : false,
+	bodyDefaults:{padding:0},
+	dataSource:CustomerEarlyWarningDS,
+	fields : CustomerEarlyWarningFieldsToShow.grid,
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: CustomerEarlyWarningFieldsToShow.query
+	},
+	actionMembers:[
+	       		'refresh','reset','query'
+	     ],
+	     query:function(){
+	    	 var cusRecord = companyCustomerListGrid.getSelectedRecord();
+	    	// var url= CustomerEarlyWarningForm.dataSource.fetchDataURL;
+	    	 CustomerEarlyWarningForm.dataSource.fetchDataURL="/irs/Customer/EarlyWarning/isc/fetch"+"?ctmNo="+cusRecord.custNo;
+	    	 this.Super('query',arguments);
+	    	 //CustomerEarlyWarningForm.dataSource.fetchDataURL=url;
+	     }
+});
+
+function contentHtml(customer){
+	var enterpriseName="";
+	if(customer.enterpriseName!=null&&customer.enterpriseName!=undefined)
+	{
+		enterpriseName= customer.enterpriseName;
+	}
+	var content="<div style='height: 70%;width: 95%;border: 2px solid #DE7C00;margin-top: 15px;margin-left: 2%;margin-bottom: 0px'>"
+				+"<div style='height: 40%;width: 100%;margin: 0px auto;'>"
+			    +"	 <div style='float: left; width: 70%; height: 90%; margin-top:2px;margin-left:3%;font-size: 3vh;'>"+transfromNull(customer.custName)+"</div>"
+				+"	 <div style='float: left; width: 30%; height: 70%; margin-top:5px;'>";
+				
+	if(customer.isAbnormalOperation==true||customer.isAbnormalOperation=="true"){
+		content+="<label style='background-color: #E46C5E;color: white;font-size: 2vh;'>经营异常名录</label>";
+	}
+	if(customer.isBlankBlackList==true || customer.isBlankBlackList=="true"){
+		content+="<label style='background-color: #E46C5E;color: white;font-size: 2vh;margin-left:15px'>人行联合惩戒名单</label>";
+	}
+	if(customer.litigation==true|| customer.litigation=="true"){
+		content+="<label style='background-color: #E46C5E;color: white;font-size: 2vh;margin-left:15px'>重大涉诉</label>";
+	}
+	var creditDate="";
+	if(customer.creditDate!=null&&customer.creditDate!=undefined)
+	{
+		creditDate= customer.creditDate;
+	}
+	content+="</div>"
+				+"<div style='float: right; width: 22%; height: 76%;padding-top: 10px;'>";
+	if(creditDate!=""){
+		content+="<label style='color:  #666666;font-size: 2vh;'>与我行建立信贷关系时间:"+transfromNull(creditDate)+"</label>";
+	}
+				
+	content+="			 </div>"
+	+"		</div>"	
+	+"		<div  style='height: 20%;width: 100%;margin: 0px auto;clear:both'>"
+	+"			<div style='float: left; width: 12%; height: 95%; padding-left: 10px;padding-top: 5px'>"
+	+"				<label style='color: #666666;font-size: 2vh;'>客户类型："+transfromNull(ctmTyps[customer.ctmType])+"</label>"
+	+"			 </div>"
+	+"			 <div style='float: left; width: 16%; height: 95%;padding-top: 5px '>"
+	+"				<label style='color: #666666;font-size: 2vh;'>法人代表姓名："+transfromNull(customer.legalRep)+"</label>"
+	+"			 </div>"
+	+"			 <div style='float: left; width: 16%; height: 95%;padding-top: 5px'>"
+	+"				<label style='color: #666666;font-size: 2vh;'>企业规模："+transfromNull(EnterpriseScales[customer.enterpriseScale])+"</label>"
+	+"			 </div>"
+	+"			  <div style='float: left; width: 14%; height: 95%;padding-top: 5px'>"
+	+"				<label style='color: #666666;font-size: 2vh;'>成立日期："+transfromNull(customer.establishmentTime.substring(0,10))+"</label>"
+	+"			 </div>"
+	var industryStr = transfromNull(GBindustrys[customer.gbIndustry]);
+	var newIndustryStr;
+	if(industryStr!=""){
+		if(industryStr.length>23){
+			newIndustryStr = industryStr.substring(0,23);
+		}else{
+			newIndustryStr = industryStr;
+		}
+	}else{
+		newIndustryStr = industryStr;
+	}
+	+"			 <div style='float: left; width: 18%; height: 95%;padding-top: 5px'>"
+	+"				<label style='color: #666666;font-size: 2vh;' title='"+industryStr+"'>国标行业分类："+newIndustryStr+"</label>"
+	+"			 </div>"
+	+"			 <div style='float: left; width: 18%; height: 95%;padding-top: 5px'>"
+	+"				<label style='color: #666666;font-size: 2vh;'>行内行业分类："+transfromNull(industrys[customer.intraIndustry])+"</label>"
+	+"			 </div>"		
+	+"		</div>";
+	return content;
+}
+isc.HTMLPane.create({
+	ID:"userInfo",
+    width:'100%', 
+    height:'10%', 
+    styleName:"exampleTextBlock",
+    selectContentOnSelectAll:true
+});
+isc.HTMLPane.create({
+	ID:"bordFrom",
+    width:'100%', 
+    height:'2%', 
+    styleName:"exampleTextBlock",
+    contents:'<hr style="border: 2px solid #369FE0;width: 98%;size: 3">',
+    selectContentOnSelectAll:true
+})
+
+//字段定义
+var customerIndexAnalysisFieldsToShow ={
+		grid: [
+			{width:'*',		name:'reportIssue',      title:'财报期次' ,type:'select',
+				allowEmptyValue:false,
+		        changed:function(form, item, value){
+		        	createtableAndSering(value,this.form.getValue("StatisticalCaliber"),this.form.getValue("BenchmarkingCompany"),this.form.getValue("custNo"));
+			    }
+			},
+			{width:'*',		name:'StatisticalCaliber',title:'财报口径',defaultValue:'01',type:'select',	valueMap:ReportSpecificationss ,
+				 changed:function(form, item, value){
+			        	createtableAndSering(this.form.getValue("reportIssue"),value,this.form.getValue("BenchmarkingCompany"),this.form.getValue("custNo"));
+				    }},
+			{width:'*',		name:'custNo',hidden:true},
+			{width:'*',		name:'BenchmarkingCompany',title:'对标企业范围',defaultValue:'ADJACENT10',type:'select',valueMap: BenchmarkingCompanys,
+				 changed:function(form, item, value){
+			        	createtableAndSering(this.form.getValue("reportIssue"),this.form.getValue("StatisticalCaliber"),value,this.form.getValue("custNo"));
+				    }}
+		]
+		
+};
+isc.FwDynamicForm.create({
+	ID : "customerIndexAnalysisPlan",
+	numCols : 10,
+	width:'100%',
+	height:'5%',
+	overflow : "auto",
+	autoFocus : false,
+	bodyDefaults:{padding:0},
+	fields : customerIndexAnalysisFieldsToShow.grid
+});
+
+function createtableAndSering(reportDt,reportType,benchmarkingCompany,ctmNo){
+	if(reportDt==null||reportDt==undefined){
+		return false;
+	}
+	isc.FwRPCManager.get({    		
+	       	url:"[(@{/irs/financial/report/data/queryReportDtAndReportType})]",
+	       	urlParameters:{reportDt:reportDt,reportType:reportType,benchmarkingCompany:benchmarkingCompany,ctmNo:ctmNo},
+	        callback: function(response,rowsData,request){
+	        	if(rowsData["result"]==false){
+	        		return false;
+	        	}
+	        	var tagetDatas=rowsData["targets"]; //全部指标
+	        	var list=new Array();   // 指标分类   指标复选框
+	        	var profitAbilityS=new Array(); 
+	        	var payingAbilityS=new Array();
+	        	var operationEfficienS=new Array();
+	        	var ScaleGrowthS=new Array();
+	        	//盈利能力
+	        	var  profitAbility={ defaultValue:"盈利能力", type:"section", sectionExpanded:true,
+	                itemIds: profitAbilityS,width:200
+	            };
+	        	var contentS= Array()
+	        	for (var i=0;i<tagetDatas.length;i++)
+	        	{
+	        		if(tagetDatas[i].indexType=="盈利能力"){
+	        			contentS.push({name:tagetDatas[i].indexCode, type: 'boolean',showTitle:false, width:100,title:tagetDatas[i].indexName,defaultValue:true,
+	        				changed:function(form, item, value){
+	    			        	if(value){
+	    			        		window[item.name].show();
+	    			        		window[item.name+"_B"].show();
+	    			        	}else{
+	    			        		window[item.name].hide();
+	    			        		window[item.name+"_B"].hide();
+	    			        	}
+	    				    }});
+	        			profitAbilityS.push(tagetDatas[i].indexCode);
+	        		}
+	        	}
+	        	profitAbility.itemIds=profitAbilityS;
+	        	list.push(profitAbility);
+	        	for (var i=0;i<contentS.length;i++)
+	        	{
+	        		list.push(contentS[i])
+	        	}
+	        	contentS= Array();
+	        	 //偿债能力
+	            var payingAbility={ defaultValue:"偿债能力", type:"section", sectionExpanded:true,
+	                itemIds: payingAbilityS,width:200
+	            };
+	        	for (var i=0;i<tagetDatas.length;i++)
+	        	{
+	        		if(tagetDatas[i].indexType=="偿债能力"){
+	        			contentS.push({ name:tagetDatas[i].indexCode, type: 'boolean',showTitle:false, width:100, title:tagetDatas[i].indexName,defaultValue:true,
+	        				changed:function(form, item, value){
+	        					if(value){
+	    			        		window[item.name].show();
+	    			        		window[item.name+"_B"].show();
+	    			        	}else{
+	    			        		window[item.name].hide();
+	    			        		window[item.name+"_B"].hide();
+	    			        	}
+	    				    }});
+	        			payingAbilityS.push(tagetDatas[i].indexCode);
+	        		}
+	        	}
+	        	payingAbility.itemIds=payingAbilityS;
+	        	list.push(payingAbility);
+	        	for (var i=0;i<contentS.length;i++)
+	        	{
+	        		list.push(contentS[i])
+	        	}
+	        	
+	        	contentS= Array();
+	        	 //运营效率
+	            var operationEfficienc={ defaultValue:"运营效率", type:"section", sectionExpanded:true,
+	                itemIds: operationEfficienS,width:200
+	            };
+	            for (var i=0;i<tagetDatas.length;i++)
+	        	{
+	        		if(tagetDatas[i].indexType=="运营效率"){
+	        			contentS.push({ name:tagetDatas[i].indexCode, type: 'boolean',showTitle:false, width:100, title:tagetDatas[i].indexName,defaultValue:true,
+	        				changed:function(form, item, value){
+	        					if(value){
+	    			        		window[item.name].show();
+	    			        		window[item.name+"_B"].show();
+	    			        	}else{
+	    			        		window[item.name].hide();
+	    			        		window[item.name+"_B"].hide();
+	    			        	}
+	    				    }});
+	        			operationEfficienS.push(tagetDatas[i].indexCode);
+	        		}
+	        	}
+	            operationEfficienc.itemIds=operationEfficienS;
+	        	list.push(operationEfficienc);
+	        	for (var i=0;i<contentS.length;i++)
+	        	{
+	        		list.push(contentS[i])
+	        	}
+	        	contentS= Array();
+	        	 //规模性成长
+	            var ScaleGrowth={ defaultValue:"规模性成长", type:"section", sectionExpanded:true,
+	                itemIds: ScaleGrowthS,width:200
+	            };
+	            for (var i=0;i<tagetDatas.length;i++)
+	        	{
+	        		if(tagetDatas[i].indexType=="规模性成长"){
+	        			contentS.push({ name:tagetDatas[i].indexCode, type: 'boolean',showTitle:false, width:100, title:tagetDatas[i].indexName,defaultValue:true,
+	        				changed:function(form, item, value){
+	        					if(value){
+	    			        		window[item.name].show();
+	    			        		window[item.name+"_B"].show();
+	    			        	}else{
+	    			        		window[item.name].hide();
+	    			        		window[item.name+"_B"].hide();
+	    			        	}
+	    				    }});
+	        			ScaleGrowthS.push(tagetDatas[i].indexCode);
+	        		}
+	        	};
+	        	ScaleGrowth.itemIds=ScaleGrowthS;
+	        	list.push(ScaleGrowth);
+	        	for (var i=0;i<contentS.length;i++)
+	        	{
+	        		list.push(contentS[i])
+	        	}
+	            CustomerTargetFrom.setFields(list);
+	            
+	        	var tagetData=null
+	        	var tagetDataValus=rowsData["datas"];
+	        	TableDivH2.removeMembers(TableDivH2.getMembers());
+	        	TableDivH3.removeMembers(TableDivH3.getMembers());
+	        	for (var i=0;i<tagetDatas.length;i++)
+	        	{
+	        		tagetData=tagetDatas[i];
+	        		//本行业
+	        		var IndustryValue=tagetDataValus[tagetData.indexCode].brokenLinetableData.IndustryValue;
+	        		//本企业
+	        		var ActualValue=tagetDataValus[tagetData.indexCode].brokenLinetableData.actualValue;
+	        		var IndustryValueTiTles=new Array();
+	        		var IndustryValueDatas=new Array();
+	        		var IndustryValueFulllineDatas=new Array();
+	        		for (var n=0;n<IndustryValue.length;n++)
+		        	{
+	        			if(n<IndustryValue.length-2){
+	        				IndustryValueDatas.push(IndustryValue[n].targetValue);
+	        				IndustryValueFulllineDatas.push("-");
+	        			}else if(n==IndustryValue.length-2){
+	        				IndustryValueDatas.push(IndustryValue[n].targetValue);
+	        				IndustryValueFulllineDatas.push(IndustryValue[n].targetValue);
+	        			}else{
+	        				IndustryValueDatas.push("-");
+	        				IndustryValueFulllineDatas.push(IndustryValue[n].targetValue);
+	        			}
+	        			IndustryValueTiTles.push(IndustryValue[n].financialReportDt);
+		        	}
+	        		var ActualValueDatas=new Array();
+	        		var ActualValueFulllineDatas=new Array();
+	        		for (var n=0;n<ActualValue.length;n++)
+		        	{
+	        			if(n<ActualValue.length-2){
+	        				ActualValueDatas.push(ActualValue[n].targetValue);
+	        				ActualValueFulllineDatas.push("-");
+	        			}else if(n==ActualValue.length-2){
+	        				ActualValueDatas.push(ActualValue[n].targetValue);
+	        				ActualValueFulllineDatas.push(ActualValue[n].targetValue);
+	        			}else{
+	        				ActualValueDatas.push("-");
+	        				ActualValueFulllineDatas.push(ActualValue[n].targetValue);
+	        			}
+		        	}
+	        		var option = {
+ 		        		    title : {
+ 		        		       text: tagetDatas[i].indexName,
+ 		        		       textAlign:"left",
+ 		        		       textStyle:{
+ 		        		    	  fontSize: 15
+ 		        		       }
+ 		        		    },
+ 		        		    tooltip : {
+ 		        		        trigger: 'axis'
+ 		        		    },
+ 		        		    legend: {
+ 		        		        data:['本企业','本行业'],
+ 		        		        y:'bottom'
+ 		        		    },
+ 		        		    calculable : true,
+ 		        		    xAxis : [
+ 		        		        {
+ 		        		            type : 'category',
+ 		        		            boundaryGap : false,
+ 		        		            data : IndustryValueTiTles
+ 		        		        }
+ 		        		    ],
+ 		        		    yAxis : [
+ 		        		        {
+ 		        		            type : 'value'/* ,
+ 		        		            axisLabel : {
+ 		        		                formatter: '{value} %'
+ 		        		            } */
+ 		        		        }
+ 		        		    ],
+ 		        		    series : [
+ 		        		        {
+ 		        		            name:'本企业',
+ 		        		            type:'line',
+ 		        		            data:ActualValueDatas,
+ 		        		            
+ 		        		        }, {
+ 		        		            name:'本企业',
+ 		        		            type:'line',
+ 		        		           	smooth:false, 
+		        		           	itemStyle:{
+		        		               normal:{
+		        		                   lineStyle:{
+		        		                       width:2,
+		        		                       type:'dotted'  //'dotted'虚线 'solid'实线
+		        		                   }
+		        		               }
+		        		           	}, 
+ 		        		            data:ActualValueFulllineDatas,
+ 		        		            
+ 		        		        },
+ 		        		        {
+ 		        		            name:'本行业',
+ 		        		            type:'line',
+ 		        		            data:IndustryValueDatas,
+ 		        		           
+ 		        		        },
+ 		        		       {
+ 		        		            name:'本行业',
+ 		        		            type:'line',
+ 		        		            smooth:false, 
+ 		        		           	itemStyle:{
+ 		        		               normal:{
+ 		        		                   lineStyle:{
+ 		        		                       width:2,
+ 		        		                       type:'dotted'  //'dotted'虚线 'solid'实线
+ 		        		                   }
+ 		        		               }
+ 		        		           	}, 
+ 		        		            data:IndustryValueFulllineDatas,
+ 		        		           
+ 		        		        }
+ 		        		    ]
+ 		        		}; 
+	        			TableDivH2.addMember(isc.FwEcharts.create({
+	                        ID: tagetDatas[i].indexCode,
+	                        width:'500',
+	                        height:'300', 
+	                    	option:option
+	                    }),i);
+		        		//本行业
+	        		   IndustryValue=tagetDataValus[tagetDatas[i].indexCode].ranking.ranking;
+	        		   IndustryValueDatas=new Array();
+		        	   IndustryValueTiTles=new Array();
+		        	   for (var n=0;n<IndustryValue.length;n++)
+				        	{
+		        				IndustryValueDatas.push(IndustryValue[n].targetValue);
+			        			IndustryValueTiTles.push(IndustryValue[n].custName);
+				        	}
+		        		option = {
+		        			    title : {
+		        			        text: tagetDatas[i].indexName+"排名",
+		        			        textAlign:"left",
+		 		        		       textStyle:{
+		 		        		    	  fontSize: 15
+		 		        		       }
+		        			    },
+		        			    grid:{
+		        			    	top:20,
+		        			    	left:200,
+		        			    	right:10
+		        			    },
+		        			    tooltip : {
+		        			        trigger: 'axis'
+		        			    },
+		        			    legend: {
+		        			        data:[tagetDatas[i].indexName],
+		        			        x: 'center',
+		        			        y:'bottom'
+		        			    },
+		        			    calculable : true,
+		        			    xAxis : [
+		        			        {
+		        			            type : 'value'
+		        			        }
+		        			    ],
+	 	        			    yAxis : [
+		        			        {
+		        			            type : 'category',
+		        			            data : IndustryValueTiTles,
+		        			            axisLabel : {//坐标轴刻度标签的相关设置。
+											formatter : function(params){ 
+											var newParamsName = "";
+											// 最终拼接成的字符串 
+											var paramsNameNumber = params.length;
+											// 实际标签的个数 
+											var provideNumber = 3;
+											// 每行能显示的字的个数 
+											var rowNumber = Math.ceil(paramsNameNumber / provideNumber);
+											// 换行的话，需要显示几行，向上取整 
+		                                    // 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签
+		                                     // 条件等同于rowNumber>1 
+		                                   if (paramsNameNumber > provideNumber) { 
+		                                    	/** 循环每一行,p表示行 */ 
+		                                    	 for (var p = 0; p < rowNumber; p++) { 
+		                                    		var tempStr = "";
+		                                    		// 表示每一次截取的字符串
+		                                    		var start = p * provideNumber;
+		                                    		// 开始截取的位置 
+		                                    		var end = start + provideNumber;
+		                                    		// 结束截取的位置 // 此处特殊处理最后一行的索引值
+		                                    		if (p == rowNumber - 1) { 
+		                                    			// 最后一次不换行 
+		                                    			tempStr = params.substring(start, paramsNameNumber); 
+		                                    		} else { 
+		                                    			// 每一次拼接字符串并换行
+		                                    			tempStr = params.substring(start, end) + "\n";
+		                                    		} newParamsName += tempStr;
+		                                    		// 最终拼成的字符串 
+		                                    		} 
+		                                    	} else { 
+		                                    		// 将旧标签的值赋给新标签 
+		                                    		newParamsName = params; 
+		                                    	} 
+		                                    	//将最终的字符串返回 
+		                                    	return newParamsName } }
+		   
+		        			        }
+		        			    ],
+		        			    series : [
+		        			        {
+		        			            name:tagetDatas[i].indexName,
+		        			            type:'bar',
+		        			            data:IndustryValueDatas,
+		        			            markLine : {
+		        			          　　　　　　data : [
+		        			          　　　　　　　　{type : 'average', name: '平均值'}
+		        			          　　　　　　]
+		        			          　　　　} 
+		        			        }
+		        			    ]
+		        			};
+	        			TableDivH3.addMember(isc.FwEcharts.create({
+	                        ID: tagetDatas[i].indexCode+"_B",
+	                        width:'500',
+	                        height:'300', 
+	                    	option:option
+	                    }),i);
+	        }
+	}
+   	}); 
+}
+
+isc.DynamicForm.create({
+	ID:"CustomerTargetFrom",
+    width: "100%",
+});
+
+
+ isc.Window.create({
+   		ID:"CustomerInfoDetailPlan",
+		title: "风险分析管理",
+		width: '100%',						//窗口默认宽度
+		height:'100%',
+		canDragResize: false,				//用户不能通过拖拽调整窗口大小
+		autoCenter: true,					//自动将窗口定位于页面中央
+		showMaximizeButton: false,			//在窗口标题栏中不显示最大化按钮
+		showMinimizeButton: false,			//在窗口标题栏中不显示最小化按钮
+		isModal: true,						//模式窗口
+		showModalMask: true,				//显示遮罩
+		canFocus: true,						//窗口可以获得焦点
+		contentLayout:'hertical',			//窗口采用垂直布局
+		bodyStyle: 'fwWindowBody',			//窗口 body 样式名称
+		dismissOnEscape: true,				//按 ESC 键后窗口关闭(会调用 close() 方法)
+		bodyDefaults:{padding:0},
+		closeAndDestroy: true,				//关闭按钮点击时是否关闭并摧毁窗口
+	  	items: [
+			isc.TabSet.create({
+			    ID: "theTabs",
+			    height: '100%',
+			    width: '100%', 
+			    tabs: [
+			        {title:"客户基本信息",
+			         pane: isc.VLayout.create({
+				  			width:'100%',
+				  			height:'100%',
+				  			members:[
+								userInfo,
+								customerViewForm1,bordFrom,customerViewForm2
+			         		]
+  			         })
+			        },
+			        {title:"财务分析", 
+			         pane: isc.TabSet.create({
+						    ID: "theTab5",
+						    height: '100%',
+						    width: '100%',
+						    tabs: [
+						        {title:"财务报表",
+						         pane: isc.HLayout.create({
+							  			width:'100%',
+							  			height:'100%',
+							  			members:[cusFinancialStatementsListGrid,finAccountDataListGrid]
+			  			         })
+						        },
+						        {title:"财务指标", 
+						         pane: isc.VLayout.create({
+							  			width:'100%',
+							  			height:'100%',
+							  			members:[
+												isc.VLayout.create({
+														width:'100%',
+														height:'50',
+														members:[
+														customerIndexAnalysisPlan
+														]
+												}) ,
+												isc.HLayout.create({
+													width:'100%',
+													height:'70%',
+													members:[
+															isc.HLayout.create({
+																width:'5%',
+																height:'100%',
+																members:[
+																	CustomerTargetFrom
+																]
+															}) ,
+															isc.LayoutSpacer.create({width:30}),
+															isc.HLayout.create({
+																ID:'TableDivHl',
+																members:[
+																	isc.VLayout.create({
+																		ID:'TableDivH2',
+																		members:[
+																	           
+																		        ]
+																	}),
+																	isc.VLayout.create({
+																		ID:'TableDivH3',
+																		members:[
+																			
+																		        ]
+																	})
+																         
+																]
+															}) 
+													]
+											}) 
+						         		]
+									}) 
+						        }
+								]
+						    })
+			        },
+			        {title:"预警分析", 
+				         pane:isc.HLayout.create({
+					  			width:'100%',
+					  			height:'100%',
+					  			members:[
+									CustomerEarlyWarningForm
+				         		]
+	  			         })
+				        }
+			    ]
+			})
+	 	]
+});
+
+//公司客户列表
+isc.FwListGrid.create({
+	ID: 'companyCustomerListGrid',
+	title: '<b>公司客户列表</b>',
+	dataSource: companyCustomerDS,
+	fields: CompanyCustomerFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: CompanyCustomerFields.query
+	},
+	actionMembers:[
+		{
+			title:'<span class="fa fa-line-chart"></span> 风险分析',
+ 			name:"CUSTOMER_DETAIL_INFO",
+			click:function(){
+				var cusRecord = companyCustomerListGrid.getSelectedRecord();
+				if(cusRecord){
+					if(cusRecord.bankShareholders=="TRUE"){
+						cusRecord.bankShareholders=true;
+					}else{
+						cusRecord.bankShareholders=false;
+					}
+					if(cusRecord.isPeanuts=="TRUE"){
+						cusRecord.isPeanuts=true;
+					}else{
+						cusRecord.isPeanuts=false;
+					}	
+					if(cusRecord.newTechnology=="TRUE"){
+						cusRecord.newTechnology=true;
+					}else{
+						cusRecord.newTechnology=false;
+					}
+					if(cusRecord.technology=="TRUE"){
+						cusRecord.technology=true;
+					}else{
+						cusRecord.technology=false;
+					}
+					if(cusRecord.isFinancingGuarantee=="TRUE"){
+						cusRecord.isFinancingGuarantee=true;
+					}else{
+						cusRecord.isFinancingGuarantee=false;
+					}
+					if(cusRecord.isElseWhere=="TRUE"){
+						cusRecord.isElseWhere=true;
+					}else{
+						cusRecord.isElseWhere=false;
+					}
+					
+					
+					customerViewForm1.setValues(cusRecord);
+					//查询客户指标期次
+		        	isc.FwRPCManager.get({
+		        		url: "[(@{/irs/financial/report/data/queryCustomerIndexReportDate})]" ,
+		        		urlParameters:{customerNo:cusRecord.custNo},
+		        		callback: function(response, rawData, request){
+		        			if(rawData && rawData.length>0){
+		        				customerIndexAnalysisPlan.getItem("reportIssue").setValueMap(rawData);
+		        				customerIndexAnalysisPlan.getItem("reportIssue").setValue(rawData[0]);
+		        				//加载图标数据
+		        				createtableAndSering(customerIndexAnalysisPlan.getValue("reportIssue"),customerIndexAnalysisPlan.getValue("StatisticalCaliber"),customerIndexAnalysisPlan.getValue("BenchmarkingCompany"),cusRecord.custNo);
+		        			}
+		        		}
+		        	});
+					
+					CustomerInfoDetailPlan.setTitle(cusRecord.custName+"("+cusRecord.custNo+")");
+					CustomerInfoDetailPlan.show();
+       	        	if(cusRecord.enterpriseScale=="s"){
+       	        		cusRecord.isSmart=true;
+       	        	}
+       	        	customerViewForm2.setValues(cusRecord);
+       	        	customerIndexAnalysisPlan.setValues(cusRecord);
+       	        	CustomerEarlyWarningForm.fetchData({"ctmNo":cusRecord.custNo});
+       	        	userInfo.setContents(contentHtml(cusRecord));
+       	        	customerIndexAnalysisPlan.getField("reportIssue").fetchData(function(dsResponse,data,dsRequest){
+       	        		customerIndexAnalysisPlan.getField("reportIssue").defaultToFirstOption=true;
+                      },{data:{"custNo":cusRecord.custNo}});
+					cusFinancialStatementsListGrid.fetchData({"companyCustomer":cusRecord.custNo});
+					//清除财报科目数据缓存
+					finAccountDataListGrid.fetchData({"dataitemCode":"f7ff7bbb-c3fd-43a3-8b30-cf4127b6dda8"});
+				}else{
+					isc.say("请选择一条客户数据！");
+				}
+			}
+		},
+		{
+			title:'<span class="fa fa-line-chart"></span> 客户评级报告',
+ 			name:"CUSTOMER_DETAIL_INFO",
+			click:function(){
+				var cusRecord = companyCustomerListGrid.getSelectedRecord();
+				if(cusRecord){
+					var id="";
+					isc.FwRPCManager.get({    		
+     			       	url:"[(@{/irs/companyCustomer/queryRatingId})]",//defaultId
+     			       	urlParameters:{custNo:cusRecord.custNo},
+     			        callback: function(response,rawData,request){ 
+     			        	if(rawData){
+     		    	           window.open("[(@{/irs/companyRating/customerReport.html})]?fd_process_tatus = '060'&custNo="+cusRecord.custNo + "&id=" + rawData,"评级报告"); 
+     			        	}else{
+     			        		isc.say("该客户没有评级报告！");
+     			        	}
+     			       }
+     		    	});
+					//客户评级报告
+				}else{
+					isc.say("请选择一条客户数据！");
+				}
+			}
+		},
+		'query','reset','refresh'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		var status =FwUtil.isNull(record)?'disable':'enable';
+   		this.setActionMemberButtonStatus(status,['Manager_Report']);
+   		this.setActionMemberButtonStatus(status,['CustomerView']);
+   		this.setActionMemberButtonStatus(status,['JD_View']);
+   		this.setActionMemberButtonStatus(status,['FK_ROBOT_View']);
+   		this.setActionMemberButtonStatus(status,['COPY_CUSTOMER']);
+   		this.setActionMemberButtonStatus(status,['CUSTOMER_DETAIL_INFO']);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		
+	}
+});
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				companyCustomerListGrid
+			]
+		})
+	}
+});
+//空值转换的方法
+function transfromNull(inputValue){
+	if(inputValue) {
+		return inputValue;
+	}else{
+		return "";
+	}
+}
+</script>
+</html>

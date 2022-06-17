@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- FR_2019.03.05_19.25.37__FR_SYS_QUARTZ.xml -->
+<export>
+  <summary>
+    <t name="FR_SYS_QUARTZ">select * from FR_SYS_QUARTZ</t>
+  </summary>
+  <table name="FR_SYS_QUARTZ">
+    <sql>select * from FR_SYS_QUARTZ</sql>
+      <fields>
+        <field name="FD_ID"                        type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CRON"                      type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CLASS_PATH"                type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_QUARTZ_NAME"               type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_QUARTZ_ID"                 type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_STATE"                     type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_DESC"                      type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATOR"                   type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_CREATE_DATE"               type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+        <field name="FD_LAST_MODIFIER"             type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_LAST_MODIFYDATE"           type="93"                 typeName="java.sql.Types.TIMESTAMP"/>
+        <field name="FD_GROUP_NAME"                type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_TIGGER_NAME"               type="12"                 typeName="java.sql.Types.VARCHAR"/>
+        <field name="FD_TIGGER_GROUP_NAME"         type="12"                 typeName="java.sql.Types.VARCHAR"/>
+      </fields>
+    <resultset>
+      <row>
+        <f>6b35b62b-7bd2-4ce9-8c3d-8a02f98f2148</f>
+        <f>* * * * * ? *</f>
+        <f>gbicc.irs.quartz.manger.service.impl.testJob</f>
+        <f>testjob</f>
+        <f>group.testjob</f>
+        <f>CREATE</f>
+        <f>aaa</f>
+        <f>admin</f>
+        <f>2019-03-05 17:09:15.0</f>
+        <f>admin</f>
+        <f>2019-03-05 19:19:34.911</f>
+        <f>group</f>
+        <f>testjob</f>
+        <f>testjobgroup</f>
+      </row>
+    </resultset>
+  </table>
+</export>

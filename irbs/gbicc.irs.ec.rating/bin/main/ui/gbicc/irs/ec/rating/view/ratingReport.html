@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html th:replace="template/bootstrap/bootstrap.html::html(removeNavbar=true)">
+<head>
+	<title>评级报告</title>
+	<script type="text/javascript" th:src="@{/webjars/echarts/js/echarts.min.js}"></script>
+	<style type="text/css">
+		.circle_red {
+		     width: 25px;
+		     height: 25px;
+		     background: red;
+		     -moz-border-radius: 50px;
+		     -webkit-border-radius: 50px;
+		     border-radius: 50px;
+		 }
+		 .circle_yellow {
+		     width: 25px;
+		     height: 25px;
+		     background: yellow;
+		     -moz-border-radius: 50px;
+		     -webkit-border-radius: 50px;
+		     border-radius: 50px;
+		 }
+	</style>
+</head>
+<style>
+		
+</style>
+<body style="padding-left:100px;padding-right:100px;">
+	<!-- 第一行-->
+	<div class="row">
+		<div class="col-xs-12">
+			<div style="text-align:center;">
+				<h1 style="color:#1f88c4">[(${report.customer.custName})]([(${report.customer.custNo})])公司评级报告</h1>
+			</div>
+			<div style="text-align:right; padding-right:20px;margin-top:40px;">
+				<font style="text-align:right;" color="#2a48a8" size="3">报告有效期：[(${#dates.format(report.rating.effectiveTime,'yyyy-MM-dd')})] ~ [(${#dates.format(report.rating.dueTime,'yyyy-MM-dd')})] </font> 
+			</div>
+		</div>
+	</div>
+	<!-- 第二行 -->
+	<div class="row" style="padding-top:40px;">
+		<h2 style="color:#1f88c4;padding-left:50px">评级结果</h2>
+		<div class="col-xs-7">
+			<div id="myChart4" style="height:400px;width:100%;">图表</div>
+		</div>
+		<div class="col-xs-5">
+			<div class="alert alert-success" role="alert">
+			  <p style="text-indent:20px;">该企业业绩表现一般，经营管理状况一般，从当前情况看，企业能够为信贷业务提供相应的财务保障，信贷基本面尚可，但企业在短期内有可能面对一些影响其偿付能力和履约意愿的不利因素。</p>
+			 </div>
+		</div>
+	</div>
+	<!-- 第三行-->
+	<div class="row" style="padding-top:40px;">
+		<h2 style="color:#1f88c4;padding-left:50px">评级概况</h2>
+		<div class="col-xs-12">
+			<table class="table">
+			  <thead>
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">2017年度评级</th>
+			      <th scope="col">2018年1季度评级</th>
+			      <th scope="col">2018年2季度评级</th>
+			      <th scope="col">2018年度评级</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <th scope="row">评级</th>
+			      <td>B</td>
+			      <td>A</td>
+			      <td>A</td>
+			      <td>B</td>
+			    </tr>
+			    <tr>
+			      <th scope="row">分数</th>
+			      <td>66.8</td>
+			      <td>73.1</td>
+			      <td>70.2</td>
+			      <td>67.6</td>
+			    </tr>
+			    <tr>
+			      <th scope="row">基期财报期次</th>
+			      <td>201612</td>
+			      <td>201803</td>
+			      <td>201806</td>
+			      <td>201712</td>
+			    </tr>
+			  </tbody>
+			</table>
+			<div>
+				<h3 style="color:#1f88c4">两期评级结果变化</h3>
+				<!-- 评级结果比较图表 -->
+				<div id="comparisonOfRatingChanges" style="height:400px;width:100%;">两期评级结果变化</div>
+				<!-- 定量结果比较图表 -->
+				<div id="comparisonOfQuanChanges" style="height:400px;width:100%;">定量结果比较图表</div>
+				<!-- 定性结果比较图表 -->
+				<div id="comparisonOfQualChanges" style="height:400px;width:100%;">定性结果比较图表</div>
+				<h4 style="color:#1f88c4">一、基本信息</h4>
+				<table class="table table-striped">
+				  <caption>客户基本信息</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>客户编号</b></td>
+				      <td>[(${report.customer.custNo})]</td>
+				      <td><b>客户名称</b></td>
+				      <td>[(${report.customer.custName})]</td>
+				    </tr>
+				    <tr>
+				      <td><b>客户类型</b></td>
+				      <td>[(#{'gbicc.irs.customer.support.EnterpriseType.'})]</td>
+				      <td><b>所有制类型</b></td>
+				      <td>[(#{'gbicc.irs.customer.support.EnterpriseType.'})]</td>
+				    </tr>
+				    <tr>
+				      <td><b>客户规模</b></td>
+				      <td>[(#{'gbicc.irs.customer.support.EnterpriseScale.'+${report.customer.enterpriseScale}})]</td>
+				    </tr>
+				    <tr>
+				      <td><b>注册币种</b></td>
+				      <td>人民币</td>
+				      <td><b>注册资本(万元)</b></td>
+				      <td>[[${report.customer.regAmount}]]</td>
+				    </tr>
+				    <tr>
+				      <td><b>工商营业执照号码 </b></td>
+				      <td>[[${report.customer.businessLicense}]]</td>
+				      <td><b>地税登记证号</b></td>
+				      <td>/</td>
+				    </tr>
+				    <tr>
+				      <td><b>成立时间 </b></td>
+				      <td>[[${report.customer.establishmentTime}]]</td>
+				      <td><b>所属行业</b></td>
+				      <td>[[${report.customer.busScope}]]</td>
+				    </tr>
+				    <tr>
+				      <td><b>注册地址 </b></td>
+				      <td>[[${report.customer.regAddress}]]</td>
+				      <td><b>实际办公地址</b></td>
+				      <td>[[${report.customer.offcAddress}]]</td>
+				    </tr>
+				    <tr>
+				      <td><b>主管客户经理 </b></td>
+				      <td colspan=3>[[${report.customer.managerName}]]</td>
+				    </tr>
+				  </tbody>
+				</table>
+				<h4 style="color:#1f88c4">二、评级结果</h4>
+				<table class="table table-striped">
+				  <caption>评级结果</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>发起类型</b></td>
+				      <td>[(#{'gbicc.irs.ec.rating.support.RatingType.'+${report.rating.ratingType}})]</td>
+				      <td><b>评级模型</b></td>
+				      <td>[(${report.rating.modelCode})]</td>
+				      <td><b>评级发起日期</b></td>
+				      <td>[(${report.rating.createDate})]</td>
+				    </tr>
+				     <tr>
+				      <td><b>评级得分</b></td>
+				      <td>[[${report.rating.score}]]</td>
+				      <td><b>模型等级</b></td>
+				      <td>[[${report.rating.modelLevel}]]</td>
+				      <td><b>调整后等级</b></td>
+				      <td>[(${report.rating.adjLevel})]</td>
+				    </tr>
+				  </tbody>
+				</table>
+				<table class="table table-striped">
+				  <caption>审批信息</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>审批角色</b></td>
+				      <td><b>审批人员</b></td>
+				      <td><b>审批等级</b></td>
+				      <td><b>审批意见</b></td>
+				    </tr>
+				    <tr th:each="overTurn : ${report.overTurns}">
+				      <td th:text="${overTurn.roleName}"></td>
+				      <td th:text="${overTurn.userName}"></td>
+				      <td th:text="${overTurn.suggLevel}"></td>
+				      <td th:text="${overTurn.adjReason}"></td>
+				    </tr>
+				  </tbody>
+				</table>
+				<table class="table table-striped">
+				  <caption>债项评级</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>评级时间</b></td>
+				      <td><b>评级结果</b></td>
+				      <td><b>违约风险暴露(EAD)</b></td>
+				      <td colspan=2><b>违约损失率(LGD)</b></td>
+				    </tr>
+				    <tr>
+				      <td><b>2017/8/7 15:30</b></td>
+				      <td><b>B</b></td>
+				      <td><b>/</b></td>
+				      <td colspan=2><b>/</b></td>
+				    </tr>
+				    <tr>
+				      <td><b>2017/12/1 9:45</b></td>
+				      <td><b>B</b></td>
+				      <td><b>/</b></td>
+				      <td colspan=2><b>/</b></td>
+				    </tr>
+				  </tbody>
+				</table>
+				<h4 style="color:#1f88c4">三、评级应用</h4>
+				<table class="table table-striped">
+				  <caption>客户限额</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>表内授信业务余额之和</b></td>
+				      <td><b>授信申请金额</b></td>
+				      <td><b>审批在途业务金额</b></td>
+				      <td><b>单一客户限额</b></td>
+				      <td><b>限额占用率1</b></td>
+				      <td><b>限额占用率2</b></td>
+				      <td><b>测算结果生成时间</b></td>
+				      <td><b>限额测算触发原因</b></td>
+				      <td><b>限额测算历史</b></td>
+				    </tr>
+				    <tr>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				    </tr>
+				  </tbody>
+				</table>
+				<table class="table table-striped">
+				  <caption>贷款定价</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>授信分项编号</b></td>
+				      <td><b>授信申请编号</b></td>
+				      <td><b>违约损失率(LGD)</b></td>
+				      <td><b>违约风险暴露(EAD)</b></td>
+				      <td><b>风险加权资产(RWA)</b></td>
+				      <td><b>内部净收入</b></td>
+				      <td><b>资金成本率</b></td>
+				      <td><b>风险成本率</b></td>
+				      <td><b>运营成本率</b></td>
+				      <td><b>税务成本率</b></td>
+				      <td><b>经济资本</b></td>
+				      <td><b>参考利率</b></td>
+				      <td><b>拟定利率</b></td>
+				      <td><b>最终利率</b></td>
+				      <td><b>目标RAROC收益率</b></td>
+				      <td><b>最终RAROC收益率</b></td>
+				      <td><b>定价测试时间</b></td>
+				      <td><b>审批通过时间</b></td>
+				    </tr>
+				    <tr>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				    </tr>
+				  </tbody>
+				</table>
+				<div class="alert alert-warning">
+				    <strong>注释</strong>
+				    	<p>限额占用率1：当前时点的限额占用率（不包含审批在途业务金额）<br/>
+						限额占用率2：当前时点的限额占用率（包含审批在途业务金额）	<br/>
+						参考利率：申请该笔业务时系统根据当时要求的RAROC计算出的贷款参考价格	<br/>
+						拟定利率：客户经理业务申请时填写的拟定贷款利率	<br/>
+						最终利率：该笔业务最终审批通过的贷款利率	<br/>
+						目标RAROC收益率：系统记录申请业务时的目标RAROC收益率	<br/>
+						最终RAROC收益率：按照最终的贷款利率计算的RAROC收益率<br/>
+						</p>
+				</div>
+				<h4 style="color:#1f88c4">四、定量指标</h4>
+				<table class="table table-striped">
+				  <caption>财报信息</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>基准报表</b></td>
+				      <td><b>报表口径</b></td>
+				      <td><b>是否审计</b></td>
+				    </tr>
+				    <tr th:each="finstatems : ${report.customer.statems}">
+				      <td th:text="${finstatems.reportBussDate}"></td>
+				      <td th:text="${finstatems.reportSpecifications}"></td>
+				      <td th:text="${finstatems.isAudit}"></td>
+				    </tr>
+				  </tbody>
+				</table>
+				<table class="table table-striped">
+				  <caption>定量分析结果</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>指标名称</b></td>
+				      <td><b>得分</b></td>
+				    </tr>
+				    <tr th:each="quanItem : ${report.quanIndexs}">
+				      <td th:text="${quanItem.indexName}"></td>
+				      <td th:text="${quanItem.indexScore}"></td>
+				    </tr>
+				  </tbody>
+				</table>
+				<h4 style="color:#1f88c4">五、定性指标</h4>
+				<table class="table table-striped">
+				  <caption>定性分析结果</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>指标名称</b></td>
+				      <td><b>指标值</b></td>
+				      <td><b>得分</b></td>
+				    </tr>
+				    <tr th:each="qualItem : ${report.qualIndexs}">
+				      <td th:text="${qualItem.indexName}"></td>
+				      <td th:text="${qualItem.indexValue}"></td>
+				      <td th:text="${qualItem.indexScore}"></td>
+				    </tr>
+				  </tbody>
+				</table>
+				<h4 style="color:#1f88c4">六、信用记录分析</h4>
+				<table class="table table-striped">
+				  <caption>客户过往评级记录</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>模型名称</b></td>
+				      <td><b>评级生效时间</b></td>
+				      <td><b>评级到期日</b></td>
+				      <td><b>最终级别</b></td>
+				      <td><b>评级发起人</b></td>
+				    </tr>
+				    <tr>
+				      <td>中小企业模型</td>
+				      <td>2016-07-28</td>
+				      <td>2017-07-28</td>
+				      <td>AA+</td>
+				      <td>王伟</td>
+				    </tr>
+				  </tbody>
+				</table>
+				<table class="table table-striped">
+				  <caption>违约认定情况</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>违约时间</b></td>
+				      <td><b>违约事件</b></td>
+				      <td><b>违约发起方式</b></td>
+				      <td><b>违约发起人</b></td>
+				      <td><b>违约认定人</b></td>
+				    </tr>
+				    <tr>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				    </tr>
+				  </tbody>
+				</table>
+				<table class="table table-striped">
+				  <caption>违约重生情况</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>重生时间</b></td>
+				      <td><b>重生原因</b></td>
+				      <td><b>重生发起方式</b></td>
+				      <td><b>重生发起人</b></td>
+				      <td><b>重生认定人</b></td>
+				    </tr>
+				    <tr>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				    </tr>
+				  </tbody>
+				</table>
+				<h4 style="color:#1f88c4">七、预警分析</h4>
+				<table class="table table-striped">
+				  <caption>财务预警</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>基准财报</b></td>
+				      <td><b>财报类型</b></td>
+				      <td><b>指标类型</b></td>
+				      <td><b>指标名称</b></td>
+				      <td><b>指标值</b></td>
+				      <td><b>预警等级</b></td>
+				      <td><b>预警时间</b></td>
+				      <td><b>预警提示</b></td>
+				    </tr>
+				    <tr>
+				      <td>2017年3月</td>
+				      <td>季报</td>
+				      <td>财务杠杆</td>
+				      <td>净利润</td>
+				      <td>/</td>
+				      <td align="center"><div class="circle_red"></div></td>
+				      <td>2017/7/9 13:55</td>
+				      <td>与行内该行业50%分位数相比正偏离超过10%</td>
+				    </tr>
+				    <tr>
+				      <td>2016年12月</td>
+				      <td>年报</td>
+				      <td>财务杠杆</td>
+				      <td>净利润</td>
+				      <td>/</td>
+				      <td align="center"><div class="circle_yellow"></div></td>
+				      <td>2017/4/1 16:55</td>
+				      <td>与行内该行业50%分位数相比负偏离超过8%</td>
+				    </tr>
+				  </tbody>
+				</table>
+				<table class="table table-striped">
+				  <caption>季评结果</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>基准财报</b></td>
+				      <td><b>财报口径</b></td>
+				      <td><b>季评结果</b></td>
+				      <td><b>评级时间</b></td>
+				      <td colspan=3><b>建议</b></td>
+				    </tr>
+				    <tr>
+				      <td>2017年3月</td>
+				      <td>本部</td>
+				      <td>B</td>
+				      <td>2017/4/1 00:20</td>
+				      <td colspan=3>该评级结果与当前有效评级相比，下浮1级，建议重新发起评级</td>
+				    </tr>
+				  </tbody>
+				</table>
+				<table class="table table-striped">
+				  <caption>外部预警</caption>
+				  <tbody>
+				    <tr>
+				      <td colspan=2 align="center"><b>欠息</b></td>
+				      <td colspan=2 align="center"><b>不良</b></td>
+				      <td colspan=2 align="center"><b>关注</b></td>
+				      <td rowspan=2 align="center"><b>所担保关注余额</b></td>
+				      <td rowspan=2 align="center"><b>所担保不良余额</b></td>
+				    </tr>
+				    <tr>
+				      <td><b>笔数</b></td>
+				      <td><b>余额</b></td>
+				      <td><b>笔数</b></td>
+				      <td><b>余额</b></td>
+				      <td><b>笔数</b></td>
+				      <td><b>余额</b></td>
+				    </tr>
+				    <tr>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				      <td>/</td>
+				    </tr>
+				  </tbody>
+				</table>
+				<table class="table table-striped">
+				  <caption>诉讼预警</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>数据源</b></td>
+				      <td><b>预警时间</b></td>
+				      <td><b>预警提示</b></td>
+				    </tr>
+				    <tr>
+				      <td>法海</td>
+				      <td>2017/4/6 13:25</td>
+				      <td>借款人裁判文书记录数为<a href="#">3条</a></td>
+				    </tr>
+				    <tr>
+				      <td>法海</td>
+				      <td>2017/4/6 13:25</td>
+				      <td>借款人执行公告记录数为<a href="#">4条</a></td>
+				    </tr>
+				    <tr>
+				      <td>鹏元</td>
+				      <td>2017/4/16 14:55</td>
+				      <td>借款人对外投资记录数为<a href="#">2条</a>,对外投资标的公司涉诉记录为<a href="#">5条</a></td>
+				    </tr>
+				  </tbody>
+				</table>
+				<table class="table table-striped">
+				  <caption>新闻舆情--正面6条，负面3条</caption>
+				  <tbody>
+				    <tr>
+				      <td><b>标题</b></td>
+				      <td><b>关键词</b></td>
+				      <td><b>情感色彩</b></td>
+				      <td><b>主题</b></td>
+				      <td><b>风险类型</b></td>
+				      <td><b>风险等级</b></td>
+				      <td><b>发布时间</b></td>
+				      <td><b>来源</b></td>
+				    </tr>
+				    <tr>
+				      <td>标题1</td>
+				      <td>高管|离职|财务集体辞职</td>
+				      <td>负面</td>
+				      <td>管理层质量</td>
+				      <td>高管人员变动</td>
+				      <td align="center"><div class="circle_yellow"></div></td>
+				      <td>2017/5/18 12:25</td>
+				      <td>证券时报网>快讯>网站</td>
+				    </tr>
+				    <tr>
+				      <td>标题2</td>
+				      <td>******</td>
+				      <td>负面</td>
+				      <td>项目风险</td>
+				      <td>项目进度风险</td>
+				      <td align="center"><div class="circle_red"></div></td>
+				      <td>2017/4/20 16:25</td>
+				      <td>证券时报网>快讯>网站</td>
+				    </tr>
+				  </tbody>
+				</table>
+				<h4 style="color:#1f88c4">八、附录</h4>
+				<!-- 应收账款周转天数趋势图表 -->
+				<div id="daysOfReceivablesTurnover" style="height:400px;width:100%;">应收账款周转天数趋势图表</div>
+				<!-- 毛利率趋势分布图表 -->
+				<div id="grossProfitRate" style="height:400px;width:100%;margin-top:40px;">毛利率趋势分布图表</div>
+				
+				<div class="alert alert-danger" role="alert" style="margin-top:80px;">
+				 <strong>说明</strong>
+		    	 <p>本报告仅限**银行内部使用。未经允许，任何企业、机构或个人不得向第三方透漏本报告内容，不得以任何形式复制、
+		    	  转发或公开传播本报告全部或部分内容，不得将报告用于营利或未经允许的其他用途。否则，**银行保留追究泄露方相关法律责任的权利。
+				 </p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+
+//全局调色盘
+var chartsColor = ['#48D1CC','#9ACD32', '#FFFF00', '#EE6363'];
+var ratingLevel = "[(${report.rating.finLevel})]";
+option = {
+		// 全局调色盘
+		color: chartsColor,
+        tooltip: {
+            show:false,//防止鼠标移到不需要的数据上弹出label
+            trigger: 'item',
+            formatter: "{a} : {c} ({d}%)"
+        },
+         legend: {
+            //orient: 'vertical',
+            //x: '30%',
+           // top:'19%',
+            itemHeight: 10,//图例的高度
+            itemGap:5,//图例之间的间距 
+            data:['优于该区域56%的企业','优于26%的企业','优于该行业15%']//图例的名字需要和饼图的name一致，才会显示图例
+        },
+        series: [
+        	 {
+                 type:'pie',
+                 selectedMode: 'single',
+                 radius: [0, '20%'],
+                 label: {
+                     normal: {
+                         position: 'center',
+                         color:'#f4e242',
+                         fontWeight:"bold",
+                         fontSize:16
+                     }
+                 },
+                 labelLine: {
+                     normal: {
+                         show: false
+                     }
+                 },
+                 data:[
+                     {
+                    	 value:100, 
+                    	 name:ratingLevel+"级", 
+                    	 selected:true
+                    }
+                 ]
+             },
+            {
+                name:'优于该行业15%',
+                type:'pie',
+                radius: ['20%', '35%'],//环的位置
+                label: {
+                    normal: {
+                        position: 'outside'
+                    }
+                },
+                labelLine:{
+                	normal: {
+                        length: 100
+                    }
+                },
+                data:[
+                   {
+                	   value:15,
+                	   name:"优于该行业15%"
+                   },
+                   {value:80, //不需要显示的数据，颜色设置成和背景一样
+                    itemStyle: {
+                                normal: {
+                                 color: 'transparent'
+                                }
+                     }}
+                ]
+            },
+            {
+                name:'优于26%的企业',
+                type:'pie',
+                radius: ['40%', '55%'],
+                label: {
+                    normal: {
+                        position: 'outside'
+                    }
+                },
+                labelLine:{
+                	normal: {
+                        length: 80
+                    }
+                },
+                data:[
+                   {
+                	   value:26,
+                	   name:"优于26%的企业"
+                   },
+                   {
+                	   value:74, 
+	                    itemStyle: {
+	                                normal: {
+	                                 color: 'transparent'
+	                                }
+	                     },
+                   }
+                ]
+            },
+            {
+                name:'优于该区域56%的企业',
+                type:'pie',
+                radius: ['60%', '75%'],
+                label: {
+                    normal: {
+                        position: 'outside'
+                    }
+                },
+                labelLine:{
+                	normal: {
+                        length: 30
+                    }
+                },
+                data:[
+                   {
+                	   value:56,
+                	   name:"优于该区域56%的企业"
+                   },
+                   {value:44, 
+                    itemStyle: {
+                                normal: {
+                                 color: 'transparent'
+                                }
+                     }}
+                ]
+            }
+        ]
+};
+
+var myChart4 = echarts.init(document.getElementById('myChart4'));
+myChart4.setOption(option);
+
+//评级结果变换图表数据
+comparisonOfRatingChangesOption = {
+		// 全局调色盘
+		color: chartsColor,
+		title: {
+		        text: '评级结果比较'
+		},
+	    tooltip : {
+	        trigger: 'axis',
+	        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+	            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+	        }
+	    },
+	    legend: {
+	        data:['本期评级', '上期评级']
+	    },
+	    grid: {
+	        left: '3%',
+	        right: '4%',
+	        bottom: '3%',
+	        containLabel: true
+	    },
+	    xAxis : [
+	        {
+	            type : 'value'
+	        }
+	    ],
+	    yAxis : [
+	        {
+	            type : 'category',
+	            axisTick : {show: false},
+	            data : ['认定结果','调整后结果','推翻后结果','认定结果']
+	        }
+	    ],
+	    series : [
+	        {
+	            name:'本期评级',
+	            type:'bar',
+	            stack: '总量',
+	            label: {
+	                normal: {
+	                    show: true
+	                }
+	            },
+	            data:[4, 6, 5, 4]
+	        },
+	        {
+	            name:'上期评级',
+	            type:'bar',
+	            stack: '总量',
+	            label: {
+	                normal: {
+	                    show: true,
+	                    position: 'left'
+	                }
+	            },
+	            data:[-5, -4, -5, -5]
+	        }
+	    ]
+};
+var comparisonOfRatingChanges = echarts.init(document.getElementById('comparisonOfRatingChanges'));
+comparisonOfRatingChanges.setOption(comparisonOfRatingChangesOption);
+
+//定量结果比较图表数据
+comparisonOfQuanChangesOption = {
+		// 全局调色盘
+		color: chartsColor,
+		title: {
+		        text: '定量结果比较'
+		},
+	    tooltip : {
+	        trigger: 'axis',
+	        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+	            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+	        }
+	    },
+	    legend: {
+	        data:['本期定量指标', '上期定量指标']
+	    },
+	    grid: {
+	        left: '3%',
+	        right: '4%',
+	        bottom: '3%',
+	        containLabel: true
+	    },
+	    xAxis : [
+	        {
+	            type : 'value'
+	        }
+	    ],
+	    yAxis : [
+	        {
+	            type : 'category',
+	            axisTick : {show: false},
+	            data : ['债务权益比','借款与资产比','现金流动负债比率','主营业务收入净额','营业利润增长率']
+	        }
+	    ],
+	    series : [
+	        {
+	            name:'本期定量指标',
+	            type:'bar',
+	            stack: '总量',
+	            label: {
+	                normal: {
+	                    show: true
+	                }
+	            },
+	            data:[5, 2.8, 1.2, 2.2,3]
+	        },
+	        {
+	            name:'上期定量指标',
+	            type:'bar',
+	            stack: '总量',
+	            label: {
+	                normal: {
+	                    show: true,
+	                    position: 'left'
+	                }
+	            },
+	            data:[-4.7, -2, -1.3, -2.4,-2.9]
+	        }
+	    ]
+};
+var comparisonOfQuanChanges = echarts.init(document.getElementById('comparisonOfQuanChanges'));
+comparisonOfQuanChanges.setOption(comparisonOfQuanChangesOption);
+
+//定性结果比较图表数据
+comparisonOfQualChangesOption = {
+		// 全局调色盘
+		color: chartsColor,
+		title: {
+		        text: '定性结果比较'
+		},
+	    tooltip : {
+	        trigger: 'axis',
+	        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+	            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+	        }
+	    },
+	    legend: {
+	        data:['本期定性指标', '上期定性指标']
+	    },
+	    grid: {
+	        left: '3%',
+	        right: '4%',
+	        bottom: '3%',
+	        containLabel: true
+	    },
+	    xAxis : [
+	        {
+	            type : 'value'
+	        }
+	    ],
+	    yAxis : [
+	        {
+	            type : 'category',
+	            axisTick : {show: false},
+	            data : ['对外担保金额占财报净资产的比例','实际控制人从业年限','销售稳定性','融资渠道','批发商类型','核心管理层稳定性',
+	            		'最近一年内平均存贷比','内控及公司治理','市场地位及份额','主营业务持续时间','营业收入核实情况','行业发展前景',
+	            		'近24个月逾期次数','客户稳定性','过去24个月欠息垫款']
+	        }
+	    ],
+	    series : [
+	        {
+	            name:'本期定性指标',
+	            type:'bar',
+	            stack: '总量',
+	            label: {
+	                normal: {
+	                    show: true
+	                }
+	            },
+	            data:[1.5,3,2,5,3,4,4,3,3,4,6,6,4,4,5]
+	        },
+	        {
+	            name:'上期定性指标',
+	            type:'bar',
+	            stack: '总量',
+	            label: {
+	                normal: {
+	                    show: true,
+	                    position: 'left'
+	                }
+	            },
+	            data:[-1.5,-3,-2,-5,-3,-4,-4,-3,-3,-4,-6,-6,-4,-4,-5]
+	        }
+	    ]
+};
+var comparisonOfQualChanges = echarts.init(document.getElementById('comparisonOfQualChanges'));
+comparisonOfQualChanges.setOption(comparisonOfQualChangesOption);
+
+//应收账款周转天数趋势图表数据
+daysOfReceivablesTurnoverOption = {
+	// 全局调色盘
+	color: chartsColor,
+    title: {
+        text: '应收账款周转天数趋势图'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['本企业','全行平均','上市公司行业均值','银监会共享行业均值']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['2015年3季度','2015年年报','2016年1季度','2016年2季度','2016年3季度','2016年年报',
+        	'2017年1季度','2017年2季度','2017年3季度','2017年年报','2018年1季度']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name:'本企业',
+            type:'line',
+            data:[11, 13, 9, 10, 12, 14, 5,7,9,11,12]
+        },
+        {
+            name:'全行平均',
+            type:'line',
+            data:[18, 19, 18, 16, 18, 19, 18,17,19,18,19]
+        },
+        {
+            name:'上市公司行业均值',
+            type:'line',
+            data:[21, 20, 22, 24, 22, 21, 20,24,22,23,21]
+        },
+        {
+            name:'银监会共享行业均值',
+            type:'line',
+            data:[17, 18, 17, 15, 17, 18, 17,16,18,17,17]
+        }
+    ]
+};
+var daysOfReceivablesTurnover = echarts.init(document.getElementById('daysOfReceivablesTurnover'));
+daysOfReceivablesTurnover.setOption(daysOfReceivablesTurnoverOption);
+
+
+//毛利率趋势分布图表 
+grossProfitRateOption = {
+		// 全局调色盘
+		color: chartsColor,
+	    title: {
+	        text: '毛利率趋势图'
+	    },
+	    tooltip: {
+	        trigger: 'axis'
+	    },
+	    legend: {
+	        data:['本企业','全行平均','上市公司行业均值','银监会共享行业均值']
+	    },
+	    grid: {
+	        left: '3%',
+	        right: '4%',
+	        bottom: '3%',
+	        containLabel: true
+	    },
+	    xAxis: {
+	        type: 'category',
+	        boundaryGap: false,
+	        data: ['2015年3季度','2015年年报','2016年1季度','2016年2季度','2016年3季度','2016年年报',
+	        	'2017年1季度','2017年2季度','2017年3季度','2017年年报','2018年1季度']
+	    },
+	    yAxis: {
+	        type: 'value'
+	    },
+	    series: [
+	        {
+	            name:'本企业',
+	            type:'line',
+	            data:[16, 17, 9, 18, 19, 20, 18,18.5,21,22,20]
+	        },
+	        {
+	            name:'全行平均',
+	            type:'line',
+	            data:[20, 19, 22, 21, 23, 19, 25,23,26,25,27]
+	        },
+	        {
+	            name:'上市公司行业均值',
+	            type:'line',
+	            data:[21, 20, 22, 24, 22, 21, 20,24,22,23,21]
+	        },
+	        {
+	            name:'银监会共享行业均值',
+	            type:'line',
+	            data:[17, 18, 17, 15, 17, 18, 17,16,18,17,17]
+	        }
+	    ]
+};
+var grossProfitRate = echarts.init(document.getElementById('grossProfitRate'));
+grossProfitRate.setOption(grossProfitRateOption);
+
+</script>
+</html>

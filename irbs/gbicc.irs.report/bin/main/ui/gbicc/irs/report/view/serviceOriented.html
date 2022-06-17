@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>报表管理&nbsp;&nbsp;/&nbsp;&nbsp;主体-服务型-底表</title>
+<style type="text/css">
+	.ui-state-default, .ui-widget-content .ui-state-default {
+    	font-weight: normal;
+    	font-size: 12px;
+	}
+	.ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr {
+	    border-bottom: 1px solid #DDD;
+	}
+	.form-group {
+	    margin-bottom: 0;
+	}
+</style>
+</head>
+<body>
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+	                <div class="col-lg-12">
+	                	<div class="ibox float-e-margins">
+	                		<div class="ibox-title">
+	                            <h5>报表管理&nbsp;&nbsp;/&nbsp;&nbsp;主体-服务型-底表</h5>
+	                        </div>
+	                        <div class="ibox-content" style="padding-bottom: 0;">
+	                        	<form class="form-horizontal" id="formSearch">
+									<div class="form-group">
+										<label class="col-sm-1 control-label">报表日期</label>
+										<div class="col-sm-3">
+											<div class="input-daterange input-group" id="datepicker">
+												<input id="date2" type="text" class="form-control"
+													name="date2" placeholder="请选择开始日期" readonly /> <span
+													class="input-group-addon">至</span> <input id="date1"
+													type="text" class="form-control" name="date1"
+													placeholder="请选择结束日期" readonly />
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<b id="btn-query" class="btn btn-success">查询</b>
+											<b id="btn-reset" class="btn btn-success">重置</b>
+											<b id="btn-export-on" class="btn btn-success">导出</b>
+										</div>
+									</div>
+								</form>
+	                        </div>
+	                	</div>
+						<div class="jqGrid_wrapper">
+                            <div id="table_zz_div" class="spiner-example"
+								style="display: none;">
+								<div class="sk-spinner sk-spinner-wave">
+									<div class="sk-rect1"></div>
+									<div class="sk-rect2"></div>
+									<div class="sk-rect3"></div>
+									<div class="sk-rect4"></div>
+									<div class="sk-rect5"></div>
+								</div>
+							</div>
+							<div id="table_bg_div">
+								<table id="table_list" style="height: 1px;color: white;"></table>
+								<div id="pager_list"></div>
+							</div>
+                        </div>    	    
+	                </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+
+
+$("#btn-export-on").click(function(){
+	var sj1 = $('#date2').val();
+	var sj2 = $('#date1').val();
+	var sj="";
+	if(sj1){
+		sj =sj1+"至"+sj2;
+	}else{
+		sj =sj2;
+	}
+	$.ajax({
+		url: "/irs/reportMain/export.do",
+		data:{name:"主体-服务型-底表.xlsx",sj:sj,frequency:"月报"},
+		async:false,
+		success: function(result){
+			swal({
+                title: "提示",
+                text: "导出完毕，请到下载中心下载！",
+                })
+		}
+})
+})
+
+
+	//当前月份的上一个月
+	var d = new Date();
+	var y = d.getFullYear();
+	var m = d.getMonth()+1;
+	var nowDate = y + '-' + m;
+	if(m == 0){
+	   y = y-1;
+	   nowDate = y + '-' + 12;
+	}
+	
+	$('#date2').datepicker({
+		format: 'yyyy-mm-dd',
+		autoclose : true, 
+		//startView: 1,
+	    //minViewMode: 1,
+	    maxViewMode: 1
+	   }).on('show',function(e){
+	      if ($('#date1').val() == '') {
+	         //$('#date2').datepicker('setEndDate', null);
+	      }
+	   }).on('changeDate',function(e){
+	      if (e.date) {
+	         $('#date1').datepicker('setStartDate', new Date(e.date.valueOf()));
+	      } else {
+	         $('#date1').datepicker('setStartDate', null);
+	      }
+	   });
+	   
+	   $('#date1').datepicker({
+		   format: 'yyyy-mm-dd',
+			autoclose : true,
+			//startView: 1,
+		   // minViewMode: 1,
+		    maxViewMode: 1, 
+		    endDate:'0m',//结束时间，在这时间之后都不可选
+	   }).on('show',function(e){
+	      if ($('#date2').val() == '') {
+	         //$('#date1').datepicker('setStartDate', null);
+	      }
+	   }).on('changeDate',function(e){
+	      if (e.date) {
+	         $('#date2').datepicker('setEndDate', new Date(e.date.valueOf()));
+	      } else {
+	         $('#date2').datepicker('setEndDate', null);
+	      }
+	   });
+	
+	/* $('#date2').datepicker({ 
+		format: 'yyyy-mm',
+		autoclose : true, 
+		//startView: 1,
+	    minViewMode: 1,
+	    maxViewMode: 1
+	}).on('changeDate',function(e){ 
+		var startTime = e.date; 
+		$('#date1').datepicker('setStartDate',startTime);
+	});
+	$('#date1').datepicker({
+		format: 'yyyy-mm',
+		autoclose : true,
+		//startView: 1,
+	    minViewMode: 1,
+	    maxViewMode: 1, 
+	    endDate:'0m',//结束时间，在这时间之后都不可选 
+	}).on('changeDate',function(e){ 
+		var endTime = e.date; 
+		$('#date2').datepicker('setEndDate',endTime);
+	}); */
+	//设置值为当前月份的上一个月
+	$('#date2').datepicker('setDate', new Date(nowDate)); //把要设置的默认值放入new Date()里面
+	$('#date1').datepicker('setDate', new Date(nowDate)); //把要设置的默认值放入new Date()里面
+	var form="";
+	$('#btn-query').click(function(){
+	/* 	if($('#date2').val() == "" || $('#date1').val() == ""){
+    		swal({
+    		    title: "提示",
+    		    text: "请先选择报表日期查询",
+    		    type: "info"
+    		});
+    	}else{ */
+    		form = $('#formSearch').serializeObject();
+            $("#table_list").jqGrid('setGridParam', {postData:form,page:1}).trigger("reloadGrid");
+    	//}
+    });
+	//重置按钮
+	$("#btn-reset").click(function(){
+		$("#formSearch input").val("");
+		$('#date2').datepicker('setEndDate', new Date(nowDate));
+		$('#date1').datepicker('setEndDate', new Date(nowDate));  
+		$('#date1').datepicker('setStartDate', null);
+	});
+$(document).ready(function(){
+	var form="";
+	form = $('#formSearch').serializeObject();
+	$("#table_list").jqGrid({
+		   url: "/irs/reportMain/productionServiceS", 	
+		   recordtext: "显示：{0} - {1}，总数：{2} ",
+		   emptyrecords: "",
+ 	        loadtext: "读取中...",
+ 	        loadui:"block",
+ 		  beforeRequest:function(){
+             document.getElementById("table_zz_div").style.display="";
+             document.getElementById("table_bg_div").style.display="none";
+         },
+         loadComplete:function(){
+             document.getElementById("table_zz_div").style.display="none";
+             document.getElementById("table_bg_div").style.display="";
+             jqGridNoRecords("table_list");
+         },
+		   pgtext : "第 {0}页， 共{1}页",
+		   postData:form,
+	       colNames: [ "客户编号", "客户名称", "业务经理", "所属部门", "企业规模", "高精尖行业门类", "国标行业门类", "注册日期", "评级模板", "评级状态", "评级","初评得分",  "总分", "资产总计数值", "资产总计得分", "主营业务收入数值", "主营业务收入得分", "主营业务收入增长率数值", "主营业务收入增长率得分", "利润总额增长率数值", "利润总额增长率得分", "经营活动产生的现金流量净额增长率数值", "经营活动产生的现金流量净额增长率得分", "应收账款周转率数值", "应收账款周转率得分", "存货周转率数值", "存货周转率得分", "总资产周转率数值", "总资产周转率得分", "毛利率数值", "毛利率得分", "净利率数值", "净利率得分", "经营活动产生的现金流量净额/利润总额数值", "经营活动产生的现金流量净额/利润总额得分", "资产负债率数值", "资产负债率得分", "利息保障倍数数值", "利息保障倍数得分", "产权比率数值", "产权比率得分", "经营活动产生的现金流量净额/带息债务数值", "经营活动产生的现金流量净额/带息债务得分", "超速动比率数值", "超速动比率得分", "政策政府对行业支持力度数值", "政策政府对行业支持力度得分", "市场发展阶段数值", "市场发展阶段得分", "市场收入规模数值", "市场收入规模得分", "宏观周期影响数值", "宏观周期影响得分", "企业竞争地位分析数值", "企业竞争地位分析得分", "实际控制人的管理经验数值", "实际控制人的管理经验得分", "实际控制人的综合能力数值", "实际控制人的综合能力得分", "实际控制人运营能力数值", "实际控制人运营能力得分", "核心管理团队的稳定性数值", "核心管理团队的稳定性得分", "核心管理团队的复合性数值", "核心管理团队的复合性得分", "技术来源数值", "技术来源得分", "水平评价数值", "水平评价得分", "技术人员荣誉数值", "技术人员荣誉得分", "研发投入占比数值", "研发投入占比得分", "品牌的知名度数值", "品牌的知名度得分", "需求稳定性数值", "需求稳定性得分", "服务替代度数值", "服务替代度得分", "上游客户议价能力数值", "上游客户议价能力得分", "下游客户的品牌知名度数值", "下游客户的品牌知名度得分", "下游客户议价能力数值", "下游客户议价能力得分", "下游客户集中度数值", "下游客户集中度得分", "企业管理制度的健全性数值", "企业管理制度的健全性得分", "预算管理情况数值", "预算管理情况得分", "预算执行能力数值", "预算执行能力得分", "销售激励强度数值", "销售激励强度得分", "绩效达成率数值", "绩效达成率得分", "销售渠道稳定性数值", "销售渠道稳定性得分", "客户稳定性数值", "客户稳定性得分", "发展规划的清晰度数值", "发展规划的清晰度得分", "发展规划的合理性数值", "发展规划的合理性得分", "诉讼和法律纠纷数值", "诉讼和法律纠纷得分", "监管处罚情况数值", "监管处罚情况得分", "企业信息化系统覆盖程度数值", "企业信息化系统覆盖程度得分", "投资机构专业性数值", "投资机构专业性得分", "融资轮次数值", "融资轮次得分", "融资规模数值", "融资规模得分", "企业信用记录数值", "企业信用记录得分", "实际控制人信用记录数值", "实际控制人信用记录得分", "或有负债情况数值", "或有负债情况得分" ],
+	       colModel:[ 
+	    	   //{name: "DATA_DATE", index: "DATA_DATE"}																	                 ,
+	    	   {name: "客户编号", index: "客户编号", width: 80}                                                    ,
+	    	   {name: "客户名称", index: "客户名称", width: 220}                                                    ,
+	    	   {name: "业务经理", index: "业务经理", width: 60}                                                    ,
+	    	   {name: "所属部门", index: "所属部门", width: 90}                                                    ,
+	    	   {name: "企业规模", index: "企业规模", width: 60}                                                    ,
+	    	   {name: "高精尖行业门类", index: "高精尖行业门类", width: 180}                                        ,
+	    	   {name: "国标行业门类", index: "国标行业门类", width: 180}                                            ,
+	    	   {name: "注册日期", index: "注册日期", width: 80}                                                    ,
+	    	   {name: "评级模板", index: "评级模板", width: 60}                                                    ,
+	    	    {name: "评级状态", index: "评级状态", width: 60}                                                   ,
+	    	    {name: "评级", index: "评级", width: 60}                                                           ,
+	    	    {name: "初评得分", index: "初评得分",formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return numToMoneyField(cover);
+				}}                                                           ,
+	    	    {name: "总分", index: "总分", width: 60,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                                           ,
+	    	    {name: "资产总计数值", index: "资产总计数值", width: 120,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					//return cover;
+					return numToMoneyField(cover);
+				}}                                           ,
+	    	    {name: "资产总计得分", index: "资产总计得分", width: 80,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                           ,
+	    	    {name: "主营业务收入数值", index: "主营业务收入数值", width: 120,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					//return cover;
+					return numToMoneyField(cover);
+				}}                                   ,
+	    	    {name: "主营业务收入得分", index: "主营业务收入得分", width: 110,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "主营业务收入增长率数值", index: "主营业务收入增长率数值", width: 140,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                       ,
+	    	    {name: "主营业务收入增长率得分", index: "主营业务收入增长率得分", width: 140,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                       ,
+	    	    {name: "利润总额增长率数值", index: "利润总额增长率数值", width: 120,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                               ,
+	    	    {name: "利润总额增长率得分", index: "利润总额增长率得分", width: 120,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                               ,
+				{name: "JYHDXJLLZZL_VALUE", index: "JYHDXJLLZZL_VALUE", width: 230,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                               ,
+	    	    {name: "JYHDXJLLZZL_SCORE", index: "JYHDXJLLZZL_SCORE", width: 230,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                               ,
+	    	    {name: "应收账款周转率数值", index: "应收账款周转率数值", width: 120,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                               ,
+	    	    {name: "应收账款周转率得分", index: "应收账款周转率得分", width: 120,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                               ,
+	    	    {name: "存货周转率数值", index: "存货周转率数值", width: 100,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                       ,
+	    	    {name: "存货周转率得分", index: "存货周转率得分", width: 100,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                       ,
+	    	    {name: "总资产周转率数值", index: "总资产周转率数值", width: 110,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "总资产周转率得分", index: "总资产周转率得分", width: 110,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "毛利率数值", index: "毛利率数值", width: 75,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                               ,
+	    	    {name: "毛利率得分", index: "毛利率得分", width: 75,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                               ,
+	    	    {name: "净利率数值", index: "净利率数值", width: 75,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                               ,
+	    	    {name: "净利率得分", index: "净利率得分", width: 75,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                               ,
+				{name: "JYHD_LRZELL_VALUE", index: "JYHD_LRZELL_VALUE", width: 245,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                               ,
+	    	    {name: "JYHD_LRZELL_SCORE", index: "JYHD_LRZELL_SCORE", width: 245,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                               ,
+	    	    {name: "资产负债率数值", index: "资产负债率数值", width: 95,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                       ,
+	    	    {name: "资产负债率得分", index: "资产负债率得分", width: 95,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                       ,
+	    	    {name: "利息保障倍数数值", index: "利息保障倍数数值", width: 105,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "利息保障倍数得分", index: "利息保障倍数得分", width: 105,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+				{name: "CQBL_VALUE", index: "CQBL_VALUE", width: 85,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "CQBLS_SCORE", index: "CQBLS_SCORE", width: 85,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+				{name: "JJHD_DXZW_VALUE", index: "JJHD_DXZW_VALUE", width: 245,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "JJHD_DXZW_SCORE", index: "JJHD_DXZW_SCORE", width: 245,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "超速动比率数值", index: "超速动比率数值", width: 95,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                       ,
+	    	    {name: "超速动比率得分", index: "超速动比率得分", width: 95,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                       ,
+	    	    {name: "政策政府对行业支持力度数值", index: "政策政府对行业支持力度数值", width: 165}               ,
+	    	    {name: "政策政府对行业支持力度得分", index: "政策政府对行业支持力度得分", width: 165,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}               ,
+	    	    {name: "市场发展阶段数值", index: "市场发展阶段数值", width: 105}                                   ,
+	    	    {name: "市场发展阶段得分", index: "市场发展阶段得分", width: 105,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "市场收入规模数值", index: "市场收入规模数值", width: 105}                                   ,
+	    	    {name: "市场收入规模得分", index: "市场收入规模得分", width: 105,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "宏观周期影响数值", index: "宏观周期影响数值", width: 105}                                   ,
+	    	    {name: "宏观周期影响得分", index: "宏观周期影响得分", width: 105,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "企业竞争地位分析数值", index: "企业竞争地位分析数值", width: 130}                           ,
+	    	    {name: "企业竞争地位分析得分", index: "企业竞争地位分析得分", width: 130,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                           ,
+	    	    {name: "实际控制人的管理经验数值", index: "实际控制人的管理经验数值", width: 155}                   ,
+	    	    {name: "实际控制人的管理经验得分", index: "实际控制人的管理经验得分", width: 155,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                   ,
+	    	    {name: "实际控制人的综合能力数值", index: "实际控制人的综合能力数值", width: 155}                   ,
+	    	    {name: "实际控制人的综合能力得分", index: "实际控制人的综合能力得分", width: 155,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                   ,
+	    	    {name: "实际控制人运营能力数值", index: "实际控制人运营能力数值", width: 145}                       ,
+	    	    {name: "实际控制人运营能力得分", index: "实际控制人运营能力得分", width: 145,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                       ,
+	    	    {name: "核心管理团队的稳定性数值", index: "核心管理团队的稳定性数值", width: 155}                   ,
+	    	    {name: "核心管理团队的稳定性得分", index: "核心管理团队的稳定性得分", width: 155,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                   ,
+	    	    {name: "核心管理团队的复合性数值", index: "核心管理团队的复合性数值", width: 155}                   ,
+	    	    {name: "核心管理团队的复合性得分", index: "核心管理团队的复合性得分", width: 155,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                   ,
+	    	    {name: "技术来源数值", index: "技术来源数值", width: 80}                                           ,
+	    	    {name: "技术来源得分", index: "技术来源得分", width: 80,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                           ,
+	    	    {name: "水平评价数值", index: "水平评价数值", width: 80}                                           ,
+	    	    {name: "水平评价得分", index: "水平评价得分", width: 80,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                           ,
+	    	    {name: "技术人员荣誉数值", index: "技术人员荣誉数值", width: 105}                                   ,
+	    	    {name: "技术人员荣誉得分", index: "技术人员荣誉得分", width: 105,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "研发投入占比数值", index: "研发投入占比数值", width: 105}                                   ,
+	    	    {name: "研发投入占比得分", index: "研发投入占比得分", width: 105,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "品牌的知名度数值", index: "品牌的知名度数值", width: 105}                                   ,
+	    	    {name: "品牌的知名度得分", index: "品牌的知名度得分", width: 105,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "需求稳定性数值", index: "需求稳定性数值", width: 100}                                       ,
+	    	    {name: "需求稳定性得分", index: "需求稳定性得分", width: 100,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                       ,
+	    	    {name: "服务替代度数值", index: "服务替代度数值", width: 100}                                       ,
+	    	    {name: "服务替代度得分", index: "服务替代度得分", width: 100,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                       ,
+	    	    {name: "上游客户议价能力数值", index: "上游客户议价能力数值", width: 130}                           ,
+	    	    {name: "上游客户议价能力得分", index: "上游客户议价能力得分", width: 130,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                           ,
+	    	    {name: "下游客户的品牌知名度数值", index: "下游客户的品牌知名度数值", width: 155}                   ,
+	    	    {name: "下游客户的品牌知名度得分", index: "下游客户的品牌知名度得分", width: 155,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                   ,
+	    	    {name: "下游客户议价能力数值", index: "下游客户议价能力数值", width: 130}                           ,
+	    	    {name: "下游客户议价能力得分", index: "下游客户议价能力得分", width: 130,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                           ,
+	    	    {name: "下游客户集中度数值", index: "下游客户集中度数值", width: 125}                               ,
+	    	    {name: "下游客户集中度得分", index: "下游客户集中度得分", width: 125,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                               ,
+	    	    {name: "企业管理制度的健全性数值", index: "企业管理制度的健全性数值", width: 155}                   ,
+	    	    {name: "企业管理制度的健全性得分", index: "企业管理制度的健全性得分", width: 155,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                   ,
+	    	    {name: "预算管理情况数值", index: "预算管理情况数值", width: 110}                                   ,
+	    	    {name: "预算管理情况得分", index: "预算管理情况得分", width: 110,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "预算执行能力数值", index: "预算执行能力数值", width: 110}                                   ,
+	    	    {name: "预算执行能力得分", index: "预算执行能力得分", width: 110,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "销售激励强度数值", index: "销售激励强度数值", width: 110}                                   ,
+	    	    {name: "销售激励强度得分", index: "销售激励强度得分", width: 110,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                   ,
+	    	    {name: "绩效达成率数值", index: "绩效达成率数值", width: 100}                                       ,
+	    	    {name: "绩效达成率得分", index: "绩效达成率得分", width: 100,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                       ,
+	    	    {name: "销售渠道稳定性数值", index: "销售渠道稳定性数值", width: 115}                               ,
+	    	    {name: "销售渠道稳定性得分", index: "销售渠道稳定性得分", width: 115,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                               ,
+	    	    {name: "客户稳定性数值", index: "客户稳定性数值", width: 100}                                       ,
+	    	    {name: "客户稳定性得分", index: "客户稳定性得分", width: 100,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                       ,
+	    	    {name: "发展规划的清晰度数值", index: "发展规划的清晰度数值", width: 130}                           ,
+	    	    {name: "发展规划的清晰度得分", index: "发展规划的清晰度得分", width: 130,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                           ,
+	    	    {name: "发展规划的合理性数值", index: "发展规划的合理性数值", width: 130}                           ,
+	    	    {name: "发展规划的合理性得分", index: "发展规划的合理性得分", width: 130,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                           ,
+	    	    {name: "诉讼和法律纠纷数值", index: "诉讼和法律纠纷数值", width: 120}                               ,
+	    	    {name: "诉讼和法律纠纷得分", index: "诉讼和法律纠纷得分", width: 120,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                               ,
+	    	    {name: "监管处罚情况数值", index: "监管处罚情况数值", width: 110}                                   ,
+	    	    {name: "监管处罚情况得分", index: "监管处罚情况得分", width: 110,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                  ,
+	    	    {name: "企业信息化系统覆盖程度数值", index: "企业信息化系统覆盖程度数值", width: 165}              ,
+	    	    {name: "企业信息化系统覆盖程度得分", index: "企业信息化系统覆盖程度得分", width: 165,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}              ,
+	    	    {name: "投资机构专业性数值", index: "投资机构专业性数值", width: 120}                              ,
+	    	    {name: "投资机构专业性得分", index: "投资机构专业性得分", width: 120,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                              ,
+	    	    {name: "融资轮次数值", index: "融资轮次数值", width: 80}                                          ,
+	    	    {name: "融资轮次得分", index: "融资轮次得分", width: 80,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                          ,
+	    	    {name: "融资规模数值", index: "融资规模数值", width: 80}                                          ,
+	    	    {name: "融资规模得分", index: "融资规模得分", width: 80,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                          ,
+	    	    {name: "企业信用记录数值", index: "企业信用记录数值", width: 105}                                  ,
+	    	    {name: "企业信用记录得分", index: "企业信用记录得分", width: 105,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                                  ,
+	    	    {name: "实际控制人信用记录数值", index: "实际控制人信用记录数值", width: 140}                      ,
+	    	    {name: "实际控制人信用记录得分", index: "实际控制人信用记录得分", width: 140,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}                      ,
+	    	    {name: "或有负债情况数值", index: "或有负债情况数值", width: 105}                                  ,
+	    	    {name: "或有负债情况得分", index: "或有负债情况得分", width: 105,formatter:function(rowId, index, rowObject){
+	    	    	var cover = rowId*1.0;
+					cover = cover.toFixed(2);
+					return cover;
+				}}
+	       ],
+	       pager: '#pager_list',
+	       mtype: "GET", //向后台请求数据的ajax的类型 可选post,get
+	       datatype: "json",
+	       width: "100%",
+	   	   height: ($(window).height()-$(".float-e-margins").height()-160),//屏幕高度-查询框高度-160的偏差值
+	       autowidth: true,
+	       //shrinkToFit: true,
+	       //显示水平滚动条
+	       shrinkToFit:false,
+		   autoScroll: false,
+	       prmNames: {
+	           page: "page"   // 表示请求页码的参数名称
+	       },
+	       rowNum: 20,
+	       rowList: [20, 30, 40],
+	       viewrecords: true,
+	       caption: "",
+	       add: true,
+	       edit: true,
+	       addtext: 'Add',
+	       edittext: 'Edit',
+	       /* rownumbers: true,
+	       rownumWidth: 60, */
+	       hidegrid: false,
+	       jsonReader: {
+	        	root: "response.data",
+	        	records: "response.totalRows",
+	            total: "response.totalPages", // 总共多少页
+	        	repeatitems: false,
+	        	id: "0"
+	        }
+	   });
+	$("#table_list").jqGrid('setGroupHeaders', {
+	    useColSpanStyle: true,
+	    groupHeaders:[
+	        {startColumnName:'客户编号', numberOfColumns:8, titleText: '客户基础信息'},
+	        {startColumnName:'评级模板', numberOfColumns:5, titleText: '风险评级信息'},
+	        {startColumnName:'资产总计数值', numberOfColumns:32, titleText: '定量指标得分详情'},
+	        {startColumnName:'政策政府对行业支持力度数值', numberOfColumns:78, titleText: '定性指标得分详情'}
+	    ]  
+	});
+	//$("#table_list").jqGrid('setLabel','rn','序号',{'text-align':'center','vertical-align':'middle'},'');   
+	//滑动时冻结列设置
+    $('#table_list').jqGrid('setFrozenColumns');
+    $("#table_list").jqGrid('navGrid', '#pager_list',
+            {edit: false, add: false, del: false, search: false},
+            {height: 200, reloadAfterSubmit: true}
+    );
+});
+$.fn.serializeObject = function() {  
+    var o = {};  
+    var a = this.serializeArray();  
+    $.each(a, function() {  
+        if (o[this.name]) {  
+            if (!o[this.name].push) {  
+                o[this.name] = [ o[this.name] ];  
+            }  
+            o[this.name].push(this.value || '');  
+        } else {  
+            o[this.name] = this.value || '';  
+        }  
+    });  
+    return o;  
+}
+</script>
+</html>
+

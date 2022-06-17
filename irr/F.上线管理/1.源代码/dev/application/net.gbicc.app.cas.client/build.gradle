@@ -1,0 +1,11 @@
+group='org.wsp'
+
+dependencies {
+    compile(
+        "org.wsp:org.wsp.framework.core:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa:${framework_version}",
+        "org.wsp:org.wsp.framework.mvc:${framework_version}",
+        "org.wsp:org.wsp.framework.datasource:${framework_version}",
+        "org.springframework.security:spring-security-cas:${spring_security_cas}",
+	)
+}

@@ -1,0 +1,368 @@
+/***********************************************************************
+ * 配置 gradle 运行时 jvm 参数
+ * org.gradle.jvmargs=-Xmx2g -XX:MaxPermSize=256m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
+ **********************************************************************/
+
+/***********************************************************************
+ * 配置项目所需 gradle 插件(采用以下 buildscript 方式)
+ * 主要考虑可以将插件的版本配置在 gradle.properties 文件中
+ **********************************************************************/
+buildscript {
+    repositories {
+        maven {url "${repository_url}"}
+        mavenCentral()
+    }
+    dependencies {
+    	// springboot 插件(构建基于 springboot 应用的基本插件)
+    	classpath "org.springframework.boot:org.springframework.boot.gradle.plugin:${plugin_springboot_version}"
+        // asciidoctor 插件(用于构建 asciidoc 文档)
+        classpath "org.asciidoctor:asciidoctor-gradle-plugin:${plugin_asciidoctor_version}"
+        classpath "org.asciidoctor:asciidoctorj-pdf:${plugin_asciidoctor_pdf_version}"
+        // framework 插件(用于通过 gradle 命令构建脚手架工程)
+        classpath "org.wsp.gradle:org.wsp.gradle:${framework_version}"
+        // 用于构建 docker 的插件
+        classpath "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:${plugin_jib_version}"
+        //统计代码行数的插件
+        classpath "org.kordamp.gradle:stats-gradle-plugin:${plugin_stats_version}"
+    }
+}
+
+/* 在根工程中应用 org.wsp.gradle 插件,以便可以快速创建工程骨架 */
+apply plugin: 'org.wsp.gradle'
+
+/* 在根工程中定义"统计所有子工程的源代码行数"任务, 通过在根工程中执行 gradle stats report 获取统计结果 */
+task report(type: org.kordamp.gradle.stats.AggregateStatsReportTask) {}
+
+
+/***********************************************************************
+ * 自定义任务，用于同步 build.gradle 和 gradle.properties 文件
+ * 将 framework 项目的 build.gradle 和 gradle.properties 文件 同步到以下工程中
+ * framework-doc
+ * framework-project-scaffold
+ * gbicc-poc
+ * webjars
+ * 主要目的是：保持各个工程的构建文件保持一致
+ * 注意: 该 gradle 任务只应该在 framework 项目中执行
+ **********************************************************************/
+ import java.nio.file.Files;
+ import java.nio.file.Paths;
+ import java.nio.file.StandardCopyOption;
+ task syn {
+ 	doLast{
+ 		//同步各个普通工程
+	 	def sourceFiles =["build.gradle","gradle.properties",".gitignore"];
+	 	def targetFiles =[
+	 		'../framework-doc',
+	 		'../framework-project-scaffold',
+	 		'../gbicc-poc',
+	 		'../webjars'
+	 	];
+	 	sourceFiles.each{source->
+	 		targetFiles.each{target->
+	 			println "copy ${source} --> ${target}/${source}"
+	 			Files.copy(Paths.get(source),Paths.get(target + "/" + source),StandardCopyOption.REPLACE_EXISTING);
+	 		}
+	 	}
+	 	
+	 	//通过插件工程,由于插件工程采用组合工程布局，非多工程布局，需单独拷贝文件
+	 	println "copy .gitignore --> ../gradle-plugins/.gitignore"
+	 	Files.copy(Paths.get(".gitignore"),Paths.get("../gradle-plugins/.gitignore"),StandardCopyOption.REPLACE_EXISTING);
+	 	println "copy gradle.properties --> ../gradle-plugins/org.wsp.gradle/gradle.properties"
+	 	Files.copy(Paths.get("gradle.properties"),Paths.get("../gradle-plugins/org.wsp.gradle/gradle.properties"),StandardCopyOption.REPLACE_EXISTING);
+	 	println "copy gradle.properties --> ../gradle-plugins/org.wsp.gradle.test/gradle.properties"
+	 	Files.copy(Paths.get("gradle.properties"),Paths.get("../gradle-plugins/org.wsp.gradle.test/gradle.properties"),StandardCopyOption.REPLACE_EXISTING);
+ 	}
+ }
+
+
+/***********************************************************************
+ * 配置所有子项目通用配置
+ **********************************************************************/
+subprojects{
+    /*-----------------------------------------------------------------
+     * 使用插件
+     *----------------------------------------------------------------*/
+    apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'maven-publish'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'org.asciidoctor.convert'
+	apply plugin: 'com.google.cloud.tools.jib'
+	apply plugin: 'org.kordamp.gradle.stats'
+	
+	configurations.all {
+	    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+	}
+	
+	/*-----------------------------------------------------------------
+     * 项目构建时所需依赖 repository url
+     *----------------------------------------------------------------*/
+	repositories {
+		maven { url "${repository_url}" }
+	}
+	
+	/*-----------------------------------------------------------------
+     * java 编译时选项
+     *----------------------------------------------------------------*/
+    sourceCompatibility="${java_version}"
+	targetCompatibility ="${java_version}"
+	compileJava.options.encoding = "${java_encoding}"
+	compileTestJava.options.encoding = "${java_encoding}"
+	
+	tasks.withType(JavaCompile) {
+    	options.compilerArgs += ["-Xdoclint:none", "-Xlint:none", "-nowarn"]
+	}
+     
+	/*-----------------------------------------------------------------
+     * 配置项目基本信息
+     *----------------------------------------------------------------*/
+	//定义构建的组
+	group ="org.wsp"
+	//定义构建的版本
+	version = "${framework_version}"
+
+    /*-----------------------------------------------------------------
+     * 项目配置
+     *----------------------------------------------------------------*/
+	configurations{
+		//排除依赖
+		compile.exclude module: 'log4j-slf4j-impl'
+		compile.exclude group:  'org.apache.tomcat.embed'
+	}
+	
+	dependencies {
+        compile(
+            "com.querydsl:querydsl-jpa",
+            "com.querydsl:querydsl-apt",
+            "com.google.guava:guava:${guava_version}",
+        )
+		testCompile(
+			"junit:junit",
+		)
+	}
+
+	sourceSets{
+    	generated{
+    		java { srcDirs 'src/generated/java'}
+    		resources {srcDirs 'src/generated/resources'}
+    	}
+    }
+    
+    /*-----------------------------------------------------------------
+     * 源代码打包配置
+     *----------------------------------------------------------------*/
+    task sourceJar (type : Jar) {
+        classifier = "sources"
+        from sourceSets.main.allSource
+    }
+
+    /*-----------------------------------------------------------------
+     * Java 文档打包配置
+     *----------------------------------------------------------------*/
+    javadoc {
+        options.encoding = 'UTF-8'
+        //failOnError=false
+        excludes=['^org.wsp.framework.core.plugin.schema']
+    }
+    task javadocJar (type: Jar, dependsOn: javadoc) {
+        classifier = "javadoc"
+        from javadoc.destinationDir
+    }
+    
+    /*-----------------------------------------------------------------
+     * clean 任务配置
+     *----------------------------------------------------------------*/
+    clean {
+		delete 'bin'
+		delete sourceSets.generated.java.srcDirs
+    }
+	
+	/*-----------------------------------------------------------------
+     * eclipse 插件配置
+     *----------------------------------------------------------------*/
+    eclipse{
+		jdt{
+			sourceCompatibility ="${java_version}"
+			targetCompatibility ="${java_version}"
+		}
+	}
+
+	//通过 gradle eclipse 生成的 eclipse 工程的 classpath 没有按照 jar 名字进行排序，在查找时比较麻烦
+	//以下配置可以实现对 classpath 的 jar 按照名字进行排序
+	eclipse.classpath.file {
+		withXml { xml ->
+			def node = xml.asNode();
+
+			//如果 src/generated/java 目录不存在,移除 .classpath 文件中相应的项,避免 eclipse 中错误
+			def generatedSrcNode =node.find{it.@path=='src/generated/java'}
+			if(generatedSrcNode!=null){
+				File dir = new File(sourceSets.generated.java.srcDirs.iterator().next().toString());
+				if(!dir.exists() || !dir.isDirectory()){
+					node.remove(generatedSrcNode);
+				}
+			}
+
+			//重新对引用的 lib 进行排序
+			def libNodes =node.findAll{it.@kind=='lib'}
+			if(libNodes!=null){
+				Map map =new HashMap();
+				List<String> jars =new ArrayList<String>();
+				for(def libNode : libNodes){
+					def path =libNode.@path;
+					def index =path.lastIndexOf(File.separator);
+					if(index==-1){
+						index =path.lastIndexOf('/');
+					}
+					if(index>-1){
+						path =path.substring(index+1);
+					}
+					jars.add(path);
+					map.put(path,libNode);
+				}
+				Collections.sort(jars, new Comparator<String>() {
+					@Override
+					public int compare(String o1, String o2) {
+						return o1.toLowerCase().compareTo(o2.toLowerCase());
+					}
+				});
+
+				for(def libNode : libNodes){
+					node.remove(libNode);
+				}
+				for(String jarName : jars){
+					node.append(map.get(jarName));
+				}
+			}
+		}
+	}
+	
+	
+	/*-----------------------------------------------------------------
+     * springboot 插件配置
+     *----------------------------------------------------------------*/
+    jar {
+    	//可以生成普通的 jar
+		enabled = true
+		manifest {
+            attributes 	'Manifest-Version'		: '1.0',
+                        'Implementation-Title'	: name,
+                        'Implementation-Vendor'	: group,
+                        'Implementation-Version': version
+        }
+        from('src/main/resources') {
+    		include '**/*'
+		}
+    }
+    
+    
+    /*-----------------------------------------------------------------
+     * querydsl 插件配置
+     *----------------------------------------------------------------*/
+	task querydsl(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+        source = sourceSets.main.java
+        classpath = configurations.compileOnly + configurations.compile
+        options.encoding ='UTF-8'
+        options.compilerArgs = [
+                "-proc:only",
+                "-processor", "com.querydsl.apt.hibernate.HibernateAnnotationProcessor"
+        ]
+        destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+    }
+    
+    compileJava {
+        dependsOn querydsl
+        source querydsl.destinationDir
+    }
+
+    compileGeneratedJava {
+        dependsOn querydsl
+        classpath += sourceSets.main.runtimeClasspath
+    }
+    
+    //以下两个任务用户在执行完 querydsl 任务后，重新生成 eclipse 工程
+    //因为在执行 querydsl 后，会产生一个新的 src/generated/java 的源代码目录，
+    //需要加到 eclipse 的源代码路径中，才能在 eclipse 中正常编译通过
+    
+    /*
+    task eclipseWrapper(type: GradleBuild){
+        tasks = ['eclipse']
+    }
+    
+    querydsl {
+    	doLast {
+    		eclipseWrapper.execute()
+    	}
+    }
+	*/
+	
+	/*-----------------------------------------------------------------
+     * asciidoctor 插件配置,用于生成 asciidoc 文档,用于打包到 jar 中
+     *----------------------------------------------------------------*/
+	asciidoctor {
+		logDocuments = true
+    	backends = ["html5"]
+    	sourceDir = file('asciidoc')
+    	sources {
+    		include '*.adoc'
+    	}
+    	outputDir = file("$buildDir/resources/main/help/" + project.name)
+    	resources {
+    		from(sourceDir) {
+    			include 'resources/**'
+    		}
+    	}
+    }
+    
+    /*-----------------------------------------------------------------
+     * 自定义任务,用于生成 asciidoc 文档到 web 服务器,以便实时查看效果
+     *----------------------------------------------------------------*/
+    task doc(type: org.asciidoctor.gradle.AsciidoctorTask){
+		logDocuments = true
+    	backends = ["html5"]
+    	sourceDir = file('asciidoc')
+    	sources {
+    		include '*.adoc'
+    	}
+    	outputDir = file("$asciidoc_deploy_dir" + project.name)
+    	resources {
+    		from(sourceDir) {
+    			include 'resources/**'
+    		}
+    	}
+	}
+    
+    /*-----------------------------------------------------------------
+     * 资源处理前执行 asciidoctor
+     *----------------------------------------------------------------*/
+    processResources {
+    	dependsOn asciidoctor
+    	exclude { "**/rebel.xml" }
+	}
+    
+    /*-----------------------------------------------------------------
+     * maven publish 插件配置
+     *----------------------------------------------------------------*/
+    publishing{
+        repositories {
+            maven {
+                url = (version.contains('SNAPSHOT') ? "${repository_snapshot_url}" : "${repository_release_url}")
+				credentials {
+					username = (version.contains('SNAPSHOT') ? "${repository_snapshot_username}" : "${repository_release_username}")
+					password = (version.contains('SNAPSHOT') ? "${repository_snapshot_password}" : "${repository_release_password}")
+				}
+            }
+        }
+        publications{
+            publication(MavenPublication){
+                from components.java
+                artifact (sourceJar) {
+                    classifier = "sources"
+                }
+                artifact (javadocJar) {
+                    classifier = "javadoc"
+                }
+            }
+        }
+    }
+}

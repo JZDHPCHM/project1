@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>net.gbicc.app.parent</name>
+	<comment>此工程是为了方便查看和修改父 gradle 配置文件,将这些父 gradle 配置文件以 link 方式连接到工程中</comment>
+	<projects/>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.zeroturnaround.eclipse.jrebelNature</nature>
+	</natures>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments/>
+		</buildCommand>
+		<buildCommand>
+			<name>org.zeroturnaround.eclipse.rebelXmlBuilder</name>
+			<arguments/>
+		</buildCommand>
+	</buildSpec>
+	<linkedResources>
+		<link>
+			<name>links/CHANGELOG</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/CHANGELOG</locationURI>
+		</link>
+		<link>
+			<name>links/README.adoc</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/README.adoc</locationURI>
+		</link>
+		<link>
+			<name>links/build.gradle</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/build.gradle</locationURI>
+		</link>
+		<link>
+			<name>links/gitignore</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/.gitignore</locationURI>
+		</link>
+		<link>
+			<name>links/gradle.properties</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/gradle.properties</locationURI>
+		</link>
+		<link>
+			<name>links/settings.gradle</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/settings.gradle</locationURI>
+		</link>
+	</linkedResources>
+	<filteredResources/>
+</projectDescription>

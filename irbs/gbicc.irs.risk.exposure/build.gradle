@@ -1,0 +1,12 @@
+group='org.wsp'
+
+dependencies {
+    compile(
+    	project(":gbicc.irs.customer"),
+        "org.wsp:org.wsp.framework.core:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa:${framework_version}",
+        "org.wsp:org.wsp.framework.mvc:${framework_version}",
+        "org.wsp:org.wsp.framework.flowable:${framework_version}",
+          "com.alibaba:fastjson:1.2.47",
+	)
+}

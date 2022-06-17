@@ -1,0 +1,10 @@
+group='org.wsp'
+
+dependencies {
+    compile(
+    	project(":org.wsp.framework.security.impl.jpa"),
+        "org.wsp:org.wsp.framework.core:${framework_version}",
+        "org.wsp:org.wsp.framework.jpa:${framework_version}",
+        "org.wsp:org.wsp.framework.mvc:${framework_version}",
+	)
+}

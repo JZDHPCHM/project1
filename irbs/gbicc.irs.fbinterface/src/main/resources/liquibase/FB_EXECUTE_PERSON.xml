@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_EXECUTE_PERSON" author="framework">
+
+        <!-- 被执行人结果表 -->
+        <createTable tableName="FB_EXECUTE_PERSON" remarks="被执行人">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="PUBLIC_DATE" type="java.sql.Types.VARCHAR(20)" remarks="发布时间"></column>
+            <column name="EXECUTION_UNDERLY" type="java.sql.Types.VARCHAR(300)" remarks="执行标的"></column>
+            <column name="EXECUTION_COURT" type="java.sql.Types.VARCHAR(100)" remarks="执行法院"></column>
+            <column name="CASE_STATUS" type="java.sql.Types.VARCHAR(20)" remarks="案件状态"></column>
+            <column name="CASE_NUMBER" type="java.sql.Types.VARCHAR(100)" remarks="案号"></column>
+            <column name="CASE_DATE" type="java.sql.Types.VARCHAR(20)" remarks="立案时间"></column>
+            <column name="EXECUTION_NAME" type="java.sql.Types.VARCHAR(100)" remarks="被执行人姓名/名称"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+        
+        <!-- 被执行人相关实体名称 -->
+        <createTable tableName="FB_EXECUTE_PERSON_RELATED" remarks="被执行人相关实体">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="EXECUTE_PERSION_ID" type="java.sql.Types.VARCHAR(36)" remarks="被执行人结果ID"></column>
+            <column name="NAME" type="java.sql.Types.VARCHAR(100)" remarks="相关实体名称"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

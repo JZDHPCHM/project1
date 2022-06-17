@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="Financial_Trade" name="金融同业流程图" isExecutable="true">
+    <documentation>kkkk</documentation>
+    <startEvent id="startevent1" name="Start"/>
+    <userTask id="A1" name="提交" flowable:assignee="${user}">
+      <extensionElements>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+      </extensionElements>
+    </userTask>
+    <endEvent id="endevent1" name="End"/>
+    <userTask id="A4" name="审核" flowable:assignee="${assignee}" flowable:candidateGroups="FINANCIAL_MARKETS_APPROVER">
+      <extensionElements>
+        <modeler:group-info-name-FINANCIAL_MARKETS_APPROVER xmlns:modeler="http://flowable.org/modeler"><![CDATA[总行金融市场部评级审批人]]></modeler:group-info-name-FINANCIAL_MARKETS_APPROVER>
+        <modeler:activiti-idm-candidate-group xmlns:modeler="http://flowable.org/modeler"><![CDATA[true]]></modeler:activiti-idm-candidate-group>
+        <modeler:initiator-can-complete xmlns:modeler="http://flowable.org/modeler"><![CDATA[false]]></modeler:initiator-can-complete>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="A1"/>
+    <sequenceFlow id="sid-E0131316-A23F-4798-A333-D0B3185DC251" sourceRef="A1" targetRef="A4"/>
+    <sequenceFlow id="sid-0D00CE7E-1350-4BBA-9E8D-57D679824389" sourceRef="A4" targetRef="endevent1"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Financial_Trade">
+    <bpmndi:BPMNPlane bpmnElement="Financial_Trade" id="BPMNPlane_Financial_Trade">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="45.0" y="115.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="A1" id="BPMNShape_A1">
+        <omgdc:Bounds height="80.0" width="105.0" x="105.0" y="90.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="28.0" width="28.0" x="570.0" y="116.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="A4" id="BPMNShape_A4">
+        <omgdc:Bounds height="80.0" width="105.0" x="345.0" y="90.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-0D00CE7E-1350-4BBA-9E8D-57D679824389" id="BPMNEdge_sid-0D00CE7E-1350-4BBA-9E8D-57D679824389">
+        <omgdi:waypoint x="449.95000000000005" y="130.0"/>
+        <omgdi:waypoint x="570.0" y="130.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="74.94999807817577" y="130.0"/>
+        <omgdi:waypoint x="105.0" y="130.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-E0131316-A23F-4798-A333-D0B3185DC251" id="BPMNEdge_sid-E0131316-A23F-4798-A333-D0B3185DC251">
+        <omgdi:waypoint x="209.94999999998018" y="130.0"/>
+        <omgdi:waypoint x="344.99999999998033" y="130.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

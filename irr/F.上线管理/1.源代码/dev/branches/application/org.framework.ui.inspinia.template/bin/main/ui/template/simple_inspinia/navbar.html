@@ -1,0 +1,59 @@
+<!--/* 导航条 */-->
+<style type="text/css">
+    	.logoImg{
+    		width: 90px;
+		    display: inline-block !important;
+		    margin-right: 20px;
+		    position: relative;
+		    top: -3px;
+    	}
+    	.navbar-brand{
+    		padding-top: 12px !important;
+    	}
+    	.modal-footer{
+    		text-align: center;
+    	}
+    	.ibox-title-grid {
+		    background-color: #fff;
+		    border-color: #e7eaec;
+		    border-image: none;
+		    border-style: solid solid none;
+		    border-width: 0;
+		    color: inherit;
+		    margin-bottom: 0;
+		    padding: 8px;
+		    min-height: 35px;
+		}
+    </style>
+<div>
+<th:block th:fragment="showMenuItem(menu,firstLevel)">
+	<th:block th:if="${menu!=null}">
+		<!--/* 子菜单 */--><th:block th:if="${T(org.wsp.framework.jpa.model.menu.support.MenuType).CATEGORY==menu.menuType && menu.getSubmenu()!=null && menu.getSubmenu().size()>0}">
+			<li th:class="${firstLevel}?'dropdown':'dropdown-submenu'">
+				<th:block th:if="${T(org.wsp.framework.jpa.model.menu.support.MenuType).CATEGORY==menu.getMenuType()}">
+					<a href="#" tabindex="0" class="dropdown-toggle" data-toggle="dropdown" data-submenu="true">
+						[(${menu.title})]
+						<span class="caret" th:if="${firstLevel}"></span>
+					</a>
+				</th:block>
+				<ul class="dropdown-menu">
+					<th:block th:each="child : ${menu.getSubmenu()}">
+						<th:block th:replace="::showMenuItem(${child},false)"></th:block>
+					</th:block>
+				</ul>
+			</li>
+		</th:block>
+		<!--/* 菜单分割条 */--><li class="divider" th:if="${T(org.wsp.framework.jpa.model.menu.support.MenuType).SEPERATOR==menu.menuType}"></li>
+		<!--/* URL菜单项 */--><li th:if="${T(org.wsp.framework.jpa.model.menu.support.MenuType).URL==menu.menuType}">
+			<a tabindex="0" class="dropdown-toggle" th:href="@{${menu.url}}" th:target="${menu.urlOpenType==T(org.wsp.framework.jpa.model.menu.support.UrlOpenType).NEW_WINDOW}?'about:blank;'">
+				<span th:text="${menu.title}">菜单项标题</span>
+			</a>
+		</li>
+		<!--/* JavaScript菜单项 */--><li th:if="${T(org.wsp.framework.jpa.model.menu.support.MenuType).JAVASCRIPT==menu.menuType}">
+			<a tabindex="0" class="dropdown-toggle" th:href="|javascript:${menu.javaScript}|">
+				<span th:text="${menu.title}">菜单项标题</span>
+			</a>
+		</li>
+	</th:block>
+</th:block>
+</div>

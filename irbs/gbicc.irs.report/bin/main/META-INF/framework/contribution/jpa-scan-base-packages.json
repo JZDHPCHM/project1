@@ -1,0 +1,6 @@
+{
+  "includes": [
+    "gbicc.irs.report.entity",
+    "gbicc.irs.report.repository"
+  ]
+}

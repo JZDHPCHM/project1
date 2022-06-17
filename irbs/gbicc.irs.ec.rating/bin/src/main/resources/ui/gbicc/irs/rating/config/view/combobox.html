@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	
+</head>
+<body>
+</body>
+<script th:inline="javascript">
+//角色查询表单字段
+var RoleFields ={
+	ds:[
+		{name:'id',primaryKey:true},
+	    {name:'code'},
+	    {name:'name'},
+	    {name:'enable'},
+	    {name:'description'},
+	    {name:'creator'},
+	    {name:'createDate'},
+	    {name:'lastModifier'},
+	    {name:'lastModifyDate'}
+	]
+};
+
+//角色列表数据源
+isc.FwRestDataSource.create({
+  ID: 'roleDS',
+  autoFetchData: false,
+  fields: RoleFields.ds,
+  dataURL: '[(@{/system/roles/isc})]'
+});
+
+
+var UserFields ={
+	ds:[
+		{name:'id',						primaryKey:true},
+		{name:'loginName'},
+	    {name:'userName'},
+	    {name:'description'},
+		{name:'email'},
+		{name:'phone'},
+		{name:'mobile'},
+		{name:'weixin'},
+		{name:'qq'},
+	    {name:'enable'},
+	    {name:'roles'},
+	    {name:'defaultRoleId'},
+	    {name:'orgs'},
+	    {name:'defaultOrgId'},
+	    {name:'accountExpired'},
+	    {name:'accountLocked'},
+	    {name:'credentialsExpired'},
+	    {name:'creator'},
+	    {name:'createDate'},
+	    {name:'lastModifier'},
+	    {name:'lastModifyDate'}
+	]
+};
+//用户列表数据源
+isc.FwRestDataSource.create({
+	ID: 'userDS',
+	autoFetchData: false,
+	fields: UserFields.ds,
+	dataURL: '[(@{/system/users/isc})]'
+});
+
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.FwDynamicForm.create({
+					ID: 'form',
+					fields:[
+						{name:'roleId',title:'roleId',type:'select',optionDataSource:"roleDS", autoFetchData:false, displayField:'name',valueField:'id',changed:"form.clearValue('userId');"},
+						{name:'userId',tilte:'userId',type:'select',optionDataSource:"userDS", autoFetchData:false, displayField:'userName',valueField:'id',
+							getPickListFilterCriteria : function () {
+					            var roleId = this.form.getValue("roleId");
+					            return {roles:roleId};
+					        }
+						}
+					]
+				})
+			]
+		})
+	}
+});
+
+form.setValues({
+		'roleId':'00000000-0000-0000-3000-000000000001',
+		'userId':'00000000-0000-0000-3000-000000000001'
+});
+</script>
+</html>

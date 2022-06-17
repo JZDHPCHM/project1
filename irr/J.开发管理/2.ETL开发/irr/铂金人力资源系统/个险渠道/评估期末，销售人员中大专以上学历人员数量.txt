@@ -1,0 +1,17 @@
+SELECT COUNT(1) FROM  (
+SELECT  pid  FROM SSA.T_PERSON
+WHERE  enddate >add_months(to_date('20180630','yyyymmdd')+1,-3)
+AND startdate <=to_date('20180630','yyyymmdd')
+AND psntypeno='M'--取销售人员
+GROUP BY pid
+)   A
+LEFT JOIN (SELECT a.pid,a.studylevelno FROM  ssa.t_naturegx a  LEFT JOIN
+ (SELECT pid,MAX(workdate) wdate FROM ssa.t_naturegx
+GROUP BY pid
+) b ON a.pid=b.pid
+WHERE  a.workdate=b.wdate
+) B
+ON A.pid=B.pid
+LEFT JOIN (select * from ssa.t_codedef a where a.codetypeno='S002') C
+ON B.studylevelno=C.CODEVALUE
+WHERE  TO_NUMBER(C.CODEVALUE)<= '30'

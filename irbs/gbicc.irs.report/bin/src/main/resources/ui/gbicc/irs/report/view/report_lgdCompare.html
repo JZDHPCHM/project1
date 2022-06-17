@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+</head>
+<body>
+</body>
+<script>
+    var newData = [];
+    var halfVal =1;
+var halfs={
+		"1":"上半年",
+		"2":"下半年"
+};
+var q=[];
+q.push(tQuery[0]);
+q.push(
+		{width:'*',		name:'half',		title:'时间段',type: 'select',operator:'equals',valueMap: halfs,defaultToFirstOption:true,
+		changed: function(form, item, value){
+            halfVal = value;
+		}
+	});
+//字段定义
+var BorrowKeyBussFields ={
+	query: q,
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{
+				name:'fdGuestGr',					
+				title:'债项评级',
+				getGridSummary:function (records, summaryField) {
+					return "全行";
+	            }
+			},
+			{name:'fdLgdMin', title:'最小值',summaryFunction: function() {return sumData['fdLgdMin'];} },//新增客户数目
+		    {name:'fdLgdMiddle', title:'中位数',summaryFunction: function() {return sumData['fdLgdMiddle'];} },//占比
+			{name:'fdLgdMax', title:'最大值',summaryFunction: function() {return sumData['fdLgdMax'];} },//新增客户数目
+			{name:'fdLgdAvg', title:'平均值',summaryFunction: function() {return sumData['fdLgdAvg'];} },//新增客户数目
+		    {name:'fdLgdIlegal', title:'实际违约损失率',summaryFunction: function() {return formatPer(sumData['fdLgdIlegal']);} },//占比
+			{name:'fdEadAvgExp', title:'估计值平均',summaryFunction: function() {return sumData['fdEadAvgExp'];} },//授信余额占比较上季末变动度
+			{name:'fdEadAvgAct', title:'实际值平均',summaryFunction: function() {return sumData['fdEadAvgAct'];} },
+	]
+};
+
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields: BorrowKeyBussFields.grid,
+    fetchDataURL: '[[@{/irs/report_lgdCompare/isc/fetchData}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>LGD/EAD估值与实际值比较情况</b>',
+	dataSource: report_borrowKeyBussDS,
+	//sortField: 'fdGuestGr',
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	canPageable: false,
+	fields: BorrowKeyBussFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	headerSpans: [
+        {
+            fields: ["fdLgdMin", "fdLgdMiddle","fdLgdMax","fdLgdAvg","fdLgdIlegal"], 
+            title: "LGD"
+        },
+        {
+            fields: ["fdEadAvgExp", "fdEadAvgAct"], 
+            title: "EAD"
+        }
+    ],
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	exportFilename:'整体借款人评级分布',
+	//exportActionMembers:['export2Excel','exportAll2Excel'],
+	actionMembers:[
+		'query','reset',
+		{
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+					url:"[(@{/irs/report_lgdCompare/isc/fetchData/Results.csv})]",
+                    "year":year,"half":half,
+					fileName:  "LGD/EAD估值与实际值比较情况",
+                    sortBy: "fdGuestGr"
+				});
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+    query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_lgdCompare/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year,"half":halfVal},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                sumData = [];
+                newData=[];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.fdGuestGr==='全行'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                borrowKeyBussFieldsListGrid.setData(newData);
+            }
+        });
+    },
+	afterQuery:function(dsResponse,data,dsRequest){
+		borrowKeyBussFieldsListGrid.setData(newData);
+	},
+	formatCellValue:function(value, record, rowNum, colNum){
+		var formatVal = value;
+		if( colNum==5){
+			formatVal = formatPer(value);
+		}
+		return formatVal;
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+</script>
+</html>

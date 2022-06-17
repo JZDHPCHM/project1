@@ -1,0 +1,43 @@
+select aa.company 机构,
+       aa.amount  金额,
+       aa.numb    数量,
+       bb.amount  金额,
+       bb.numb    数量
+  from ( --退保金 
+        select substr(a.applyentity, 1, 1) company,
+                sum(a.amount) amount,
+                count(a.transseq) numb
+          from ats_choudan_tmp a
+         where a.transcode = '1988' --付款
+           and to_char(a.paymadedate, 'yyyy-mm') = '2020-09' --月份
+           and a.transstate = '2' --支付成功
+           and a.transsource = 'CUSTOMER SERVICE'
+           and a.reqreserved18 in ('301', -- 正常退保
+                                   '302', -- 通融退保
+                                   '304', --  附加险退保 
+                                   '305', --  犹豫期内退保  
+                                   '306', --  银行在线CFI 
+                                   '307' -- 银行在线退保
+                                   )
+         group by substr(a.applyentity, 1, 1)) aa,
+       ( --保险金
+        select substr(a.applyentity, 1, 1) company,
+                sum(a.amount) amount,
+                count(a.transseq) numb
+          from ats_choudan_tmp a
+         where a.transcode = '1988' --付款
+           and to_char(a.paymadedate, 'yyyy-mm') = '2020-09' --月份
+           and a.transstate = '2' --支付成功
+           and (a.transsource in ('GR', 'CUSTOMER CLAIM', 'STIS', 'MID') or
+               (a.transsource = 'CUSTOMER SERVICE' and
+               a.reqreserved18 not in ('301', -- 正常退保
+                                         '302', -- 通融退保
+                                         '304', --  附加险退保 
+                                         '305', --  犹豫期内退保  
+                                         '306', --  银行在线CFI 
+                                         '307' -- 银行在线退保
+                                         )))
+         group by substr(a.applyentity, 1, 1)) bb
+ where aa.company = bb.company
+
+ order by aa.company

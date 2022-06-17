@@ -1,0 +1,41 @@
+# 模块介绍
+本模块为框架开发者提供便利的模块。
+
+## 问题的提出
+项目采用 Gradle 作为项目构建工具，包含多个子模块，为了在各个子模块间贡献配置， 
+项目 gradle Hierarchical layout 模式组织，即采用如下目录结构进行组织:
+
+	root   项目根文件夹
+	+--- 第一个项目文件夹
+	|    +--- build.gradle
+	|    \--- grale.properties
+	+--- 第二个项目文件夹
+	|    +--- build.gradle
+	|    \--- grale.properties
+	+--- build.gradle
+	+--- grale.properties
+	+--- README.MD
+	\--- settings.gradle
+
+1. 按照上述目录结构进行组织的项目，在 eclipse IDE 中，每个子模块文件夹对应一个 eclipse 的项目。
+2. 项目根文件夹中的用于所有子模块共享的几个文件无法直接在 eclipse IDE 中进行编辑，当需要编辑这些文件时，必须手动到目录中进行编辑,就显得不是很方便了。
+
+## 问题的解决
+本模块就是为了能够解决上述 2 的不方便，其解决办法如下:
+
+1. 在 项目根文件夹中新建一个子项目，名称可以随便起,为了方便说明,这里假设名称为: project.all
+2. 在 project.all 子项目中新增一个名为 links 的目录
+3. 在 project.all 子项目中新增 build.gradle 文件，编写构建脚本，实现在 links 目录中建立类型为 link 的文件，这些 link 文件指向所有子模块共享的那几个文件。
+
+这样，在 eclipse IDE 环境中，就会有一个名为 project.all 项目，该项目中有个名为 links 的文件夹，
+里面有多个类型为 link 的文件，通过编辑这些文件，从而实现对所有子模块共享的这些文件进行修改。
+
+## 如何新增 link 文件
+当增加所有子模块共享的文件时，可通过如下方式，实现添加 link 文件:
+
+1. 打开 project.all 项目中的 build.gradle 文件
+2. 添加一个 link 配置
+3. 在 project.all 目录下执行 gradle eclipse
+4. 在 eclipse IDE 中重新刷新一下 project.all 项目
+
+此时就会在 project.all 项目的 links 目录中看到新增的 link 文件，通过它就可以对实际文件进行编辑了。

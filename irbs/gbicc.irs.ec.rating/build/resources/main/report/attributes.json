@@ -1,0 +1,14 @@
+{
+	"showtitle"			: true,
+	"icons"				: "font",
+	"doctype"			: "book",
+	"revdate"			: "revdate",
+	"toc-title"			: "目录",
+	"toc"				: "preamble",
+	"toclevels"			: 3,
+	"source-highlighter":"coderay",
+	"imagesdir": "/asciidoctor/images",
+	"iconsdir": "/asciidoctor/icons",
+	"stylesdir": "/asciidoctor/styles",
+	"scriptsdir": "/asciidoctor/js"
+}

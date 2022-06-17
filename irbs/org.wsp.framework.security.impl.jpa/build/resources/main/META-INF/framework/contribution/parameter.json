@@ -1,0 +1,86 @@
+[
+	/*系统/登录页面帮助文档 url*/
+	{
+		"id"			:"parameter.system.loginPageHelpUrl", 
+		"parentId"		:"parameter.system",
+		"code"			:"loginPageHelpUrl",
+		"defaultValue"	:"/anonymous-help/login-help/html5/index.html",
+		"order"			: 450
+	},
+	
+	/*系统/登录页面模板*/
+	{
+		"id"			:"parameter.system.loginPageTemplate", 
+		"parentId"		:"parameter.system",
+		"code"			:"loginPageTemplate",
+		"defaultValue"	:"org/wsp/framework/security/impl/jpa/view/login.html",
+		"order"			: 500
+	},
+	
+	/*系统/登录页面模板*/
+	{
+		"id"			:"parameter.system.loginErrorPageTemplate", 
+		"parentId"		:"parameter.system",
+		"code"			:"loginErrorPageTemplate",
+		"defaultValue"	:"org/wsp/framework/security/impl/jpa/view/login.html",
+		"order"			: 550
+	},
+	
+	/*系统/基于URL单点登录超时时间*/
+	{
+		"id"			:"parameter.system.urlSsoTokenExpirationTime", 
+		"parentId"		:"parameter.system",
+		"code"			:"urlSsoTokenExpirationTime",
+		"defaultValue"	:"60",
+		"order"			: 600
+	},
+	/*系统/是否启用LDAP认证*/
+	{
+		"id"			:"parameter.system.ldapEnabled", 
+		"parentId"		:"parameter.system",
+		"code"			:"LDAP_ENABLED",
+		"defaultValue"	:"false",
+		"order"			: 1999
+	},
+	/*系统/LDAP服务器地址*/
+	{
+		"id"			:"parameter.system.ldapHost", 
+		"parentId"		:"parameter.system",
+		"code"			:"LDAP_HOST",
+		"defaultValue"	:"192.168.5.28",
+		"order"			: 2000
+	},
+	/*系统/LDAP服务端口*/
+	{
+		"id"			:"parameter.system.ldapPort", 
+		"parentId"		:"parameter.system",
+		"code"			:"LDAP_PORT",
+		"defaultValue"	:"389",
+		"order"			: 2100
+	}
+	,
+	/*系统/LDAP Principal*/
+	{
+		"id"			:"parameter.system.ldapPrincipal", 
+		"parentId"		:"parameter.system",
+		"code"			:"LDAP_PRINCIPAL",
+		"defaultValue"	:"CN=hkbdp,OU=管理用户,DC=wucb,DC=com",
+		"order"			: 2200
+	},
+	/*系统/LDAP密码*/
+	{
+		"id"			:"parameter.system.ldapPassword", 
+		"parentId"		:"parameter.system",
+		"code"			:"LDAP_PASSWORD",
+		"defaultValue"	:"hkbdphkbank",
+		"order"			: 2300
+	},
+	/*系统/LDAP UserBaseDN*/
+	{
+		"id"			:"parameter.system.ldapUserBaseDN", 
+		"parentId"		:"parameter.system",
+		"code"			:"LDAP_USERBASEDN",
+		"defaultValue"	:"DC=wucb,DC=com",
+		"order"			: 2400
+	}
+]

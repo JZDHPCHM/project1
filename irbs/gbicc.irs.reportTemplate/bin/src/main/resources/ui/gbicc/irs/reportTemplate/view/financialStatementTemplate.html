@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head></head>
+<body>
+</body>
+<script th:inline="javascript">	
+var valueSelect =[(${@jacksonObjectMapper.writeValueAsString(@FinAccountNormService.resurltSelect())})];
+//指标科目分类
+var FinanciaAccountCategory = [(${@frSystemDictionaryService.getDictionaryMapJsonString('ACCOUNT_CLASSIFICATION',#locale)})]
+//系统标准财报模板
+var FinancialStatementTemplateType = [(${@frSystemDictionaryService.getDictionaryMapJsonString('FinancialStatementTemplateType',#locale)})];
+//外部财报模板
+var External_FinancialStatementTemplate = [(${@frSystemDictionaryService.getDictionaryMapJsonString('External_FinancialStatementTemplate',#locale)})];
+
+//财报模板列表字段
+var FinancialStatementTemplateFields = {
+		dataSourceGrid: [
+				{name:'id',					title:'[(#{id})]',			primaryKey:true,type: 'text',hidden:true},
+				{name:'fsType',				title:'[(#{fsType})]',		type:"select",	valueMap:FinancialStatementTemplateType},
+				{name:'fsFormerType',		title:'[(#{fsFormerType})]',type:"select",	valueMap:External_FinancialStatementTemplate},
+		    	{name:'fsValid',			title:'[(#{fsValid})]',		type:'boolean'}
+		 ],
+		 grid:[
+			 	{name:'fsType',				title:'[(#{fsType})]',		type:"select",	valueMap:FinancialStatementTemplateType},
+				{name:'fsFormerType',		title:'[(#{fsFormerType})]',type:"select",	valueMap:External_FinancialStatementTemplate},
+		    	{name:'fsValid',			title:'[(#{fsValid})]',		type:'boolean'}
+		 ],
+		 edit:[
+			 	{name:'id',					title:'[(#{id})]',			type: 'text',hidden:true},
+			 	{name:'fsType',				title:'[(#{fsType})]',		type:"select",	valueMap:FinancialStatementTemplateType},
+				{name:'fsFormerType',		title:'[(#{fsFormerType})]',type:"select",	valueMap:External_FinancialStatementTemplate},
+		    	{name:'fsValid',			title:'[(#{fsValid})]',type:'boolean'}
+		 ]
+}
+
+//财报模板数据源
+isc.FwRestDataSource.create({
+	ID: 'financialStatementTemplateDS',
+	autoFetchData:false,
+    fields:FinancialStatementTemplateFields.dataSourceGrid,
+    dataURL: '[(@{/reportTemplate/financialStatementTemplate/isc})]'
+});
+
+//财报模板列表
+isc.FwListGrid.create({
+	ID: 'financialStatementTemplateGrid',
+	title: '<b>财报模板列表</b>',
+	dataSource: financialStatementTemplateDS,
+	sortField: 'fsType',
+	canPageable:false,
+	showFilterEditor: true,
+	fields: FinancialStatementTemplateFields.grid,
+	editWindow: {
+		showOperateSuccessMessage: true,
+        form: {
+            dataSource: financialStatementTemplateDS,
+            fields: FinancialStatementTemplateFields.edit
+        },
+        actionMembers:[
+            'ok','close'
+        ]
+	},
+	actionMembers:[
+		'add','update','remove',
+		{
+			title:"<span class='fa fa-database'></span> 初始化财报模板",
+			name:"Generate_Template",
+			click:function(){
+				isc.ask("初始化操作会将当前已配置的财报模板删除，您确定要初始化吗？",function(value){
+					if(value){
+						//发起请求
+		        		isc.FwRPCManager.get({
+		        	       	url:"[(@{/reportTemplate/financialStatementTemplate/generateStatementTemplate})]",
+		        	        callback: function(response,rawData,request){
+		        	        	financialStatementTemplateGrid.invalidateCache();
+		        	        	isc.say("初始化完毕！");
+		        	        }
+		            	});
+					}
+				});
+			}
+		}
+	],
+	moreActionMembers:[
+		{
+			title:"<span class='fa fa-database'></span> 初始化财报模板",
+			name:"Generate_Template",
+			click:function(){
+				isc.ask("初始化操作会将当前已配置的财报模板删除，您确定要初始化吗？",function(value){
+					if(value){
+						//发起请求
+		        		isc.FwRPCManager.get({
+		        	       	url:"[(@{/reportTemplate/financialStatementTemplate/generateStatementTemplate})]",
+		        	        callback: function(response,rawData,request){	
+		        	        	financialStatementTemplateGrid.invalidateCache();
+		        	        	isc.say("初始化完毕！");
+		        	        }
+		            	});
+					}
+				});
+			}
+		}
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+		if(record){
+			//加载调整项列表数据
+			financialAccountTemplateMappingGrid.fetchData({"finanStateTemplate.id":record.id});
+			//FD_ACCOUNT_CATEGORY
+			checkedRelationshipConfigGrid.fetchData({"fdNormId":record.id});
+		}
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		
+    }
+});
+var checkedRelationshipConfigFields = {
+		dataSourceConfigGrid: [
+			{name:'fdId',primaryKey:true,hidden:true},
+			{name:'fdCode'},
+			{name:'fdNormId'},
+			{name:'fdName'},
+			{name:'fdNorm'},
+			{name:'fdNormConfig'}
+	],
+	  checkedRelationshipConfigGrid:[
+		{name:'fdId',			title:'Id',hidden:true},
+		{name:'fdCode',			title:'母项编码'},
+    	{name:'fdName',		title:'母项名称'},
+    	{name:'fdNorm',		title:'准则注释'},
+    	{name:'fdNormConfig',		title:'子项编码'},
+	],
+	 checkedRelationshipConfigEdit:[
+		{name:'fdId',			title:'Id',hidden:true},
+		{name:'fdCode',title:'母项编码',hidden:true,type:"select",valueMap:valueSelect,
+			change:function(form, item, value, oldValue){
+				form.setValue("fdName",item.valueMap[value]);
+ 		}},
+		{name:'fdNormId',	title:'模板ID',hidden:true},
+		{name:'fdName',		title:'母项名称',hidden:true},
+	 	{name:'fdNorm',			title:'准则注释'},
+		{name:'fdNormConfig',title:'子项编码'},
+		]	
+}
+
+//科目关系映射字段
+var FinancialAccountTemplateMappingFields = {
+		dataSourceGrid: [
+				{name:'id',					primaryKey:true,type: 'text',hidden:true},
+				{name:'finanStateTemplate'},
+				{name:'faCategory',			type:"select",	valueMap:FinanciaAccountCategory},
+				{name:'amNumber'},
+		    	{name:'templateFaCode'},
+		    	{name:'templateFaName'},
+		    	{name:'faFormerCode'},
+		    	{name:'faFormerName'}
+		],
+		grid:[
+			 	//{name:'faCategory',			title:'[(#{faCategory})]',	type:"select",	valueMap:FinanciaAccountCategory},
+				{name:'amNumber',			title:'[(#{amNumber})]',		width:80},
+		    	{name:'templateFaCode',		title:'[(#{templateFaCode})]',	width:100},
+		    	{name:'templateFaName',		title:'[(#{templateFaName})]',	width:150},
+		    	{name:'faFormerCode',		title:'[(#{faFormerCode})]',	width:100},
+		    	{name:'faFormerName',		title:'[(#{faFormerName})]',	width:'*'}
+		],
+		edit:[
+			 	{name:'id',					title:'[(#{id})]',			type: 'text',hidden:true},
+			 	{name:'faCategory',			title:'[(#{faCategory})]',	type:"select",	valueMap:FinanciaAccountCategory},
+				{name:'amNumber',			title:'[(#{amNumber})]'},
+		    	{name:'templateFaCode',		title:'[(#{templateFaCode})]'},
+		    	{name:'templateFaName',		title:'[(#{templateFaName})]'},
+		    	{name:'faFormerCode',		title:'[(#{faFormerCode})]'},
+		    	{name:'faFormerName',		title:'[(#{faFormerName})]'}
+		 ]
+}
+//科目关系映射数据源
+isc.FwRestDataSource.create({
+	ID: 'financialAccountTemplateMappingDS',
+	autoFetchData:false,
+    fields:FinancialAccountTemplateMappingFields.dataSourceGrid,
+    dataURL: '[(@{/reportTemplate/financialAccountTemplateMapping/isc})]'
+});
+
+isc.FwRestDataSource.create({
+	ID: 'financialAccountNorm',
+	autoFetchData:false,
+    fields:checkedRelationshipConfigFields.dataSourceConfigGrid,
+    //fetchDataURL:'[(@{/irs/FinAccountNormController/queryNorm})]',
+    dataURL:'[(@{/irs/FinAccountNormController/isc})]'
+});
+
+
+//科目关系映射列表
+isc.FwListGrid.create({
+	ID: 'financialAccountTemplateMappingGrid',
+	title: '<b>科目关系映射列表</b>',
+	canPageable:false,
+	showFilterEditor: true,
+	autoFetchData:false,
+	dataSource: financialAccountTemplateMappingDS,
+	sortField: 'amNumber',
+	groupByField: 'faCategory',
+	groupStartOpen:"all",
+	fields: FinancialAccountTemplateMappingFields.grid,
+	editWindow: {
+		showOperateSuccessMessage: true,
+        form: {
+            dataSource: financialAccountTemplateMappingDS,
+            fields: FinancialAccountTemplateMappingFields.edit
+        },
+        actionMembers:[
+            'ok','close','refresh'
+        ]
+	},
+	actionMembers:[
+		'add','update','remove','refresh'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	filterData :function(criteria, callback, requestProperties){
+		criteria["finanStateTemplate.id"] = criteria.finanStateTemplate.id;
+		this.Super('filterData',arguments);
+	}
+});
+
+
+
+//勾稽关系配置
+isc.FwListGrid.create({
+	ID: 'checkedRelationshipConfigGrid',
+	title: '<b>勾稽关系配置</b>',
+	canPageable:false,
+	showFilterEditor: true,
+	autoFetchData:false,
+	dataSource: financialAccountNorm,
+	sortField: 'amNumber',
+	groupByField: 'faCategory',
+	groupStartOpen:"all",
+	fields: checkedRelationshipConfigFields.checkedRelationshipConfigGrid,
+	editWindow: {
+		showOperateSuccessMessage: true,
+        form: {
+            dataSource: financialAccountNorm,
+            fields: checkedRelationshipConfigFields.checkedRelationshipConfigEdit
+        },
+    	afterShow:function(action){
+    		if(action=='add'){
+    			this.getForm().getField("fdCode").show();
+    			var record = financialStatementTemplateGrid.getSelectedRecord();
+    			this.getForm().setValue("fdNormId",record.id);
+    			//this.getForm().getField("fdName").show();
+    		}
+    	},
+        actionMembers:[
+            'ok','close','refresh'
+        ]
+	},
+	actionMembers:[
+		'refresh','add','update','remove'
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+    }
+});
+
+
+
+
+/* isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				financialStatementTemplateGrid,
+				financialAccountTemplateMappingGrid
+			]
+		})
+	}
+}); */
+
+
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.VLayout.create({
+					showResizeBar: true,
+				    width: '40%',
+				    members: [financialStatementTemplateGrid]     
+				}),
+				isc.TabSet.create({
+					ID: 'tabSet',
+					tabs:[
+						//{name:'steps',title: '步骤',pane: financialStatementTemplateGrid},
+						{name:'adjitems',title: '科目',pane: financialAccountTemplateMappingGrid},
+						{name:'checkedRelationshipConfig',title: '勾稽关系配置',pane: checkedRelationshipConfigGrid}
+					]
+				})
+			]
+		})
+	}
+});
+
+
+</script>
+</html>

@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html th:replace="template/simple_inspinia/inspinia.html::html">
+<head>
+<title th:text="#{application.title}"></title>
+<style type="text/css">
+.btn{
+	margin:0 0 0 3px
+}
+</style>
+</head>
+<body style='background-color:white'>
+	<div class="wrapper">
+		<div class="wrapper wrapper-content animated fadeInRight">
+			<div class='row'>
+				<span id='submitInfoSpan'></span>
+				<ul class="nav nav-tabs">
+				    <li class="active"><a data-toggle="tab" href="#collNavTab">采集</a></li>
+                    <li><a data-toggle="tab" href="#indexNavTab">指标</a></li>
+                    <li><a data-toggle="tab" href="#projNavTab">评估项目</a></li>
+                    <li>
+                		<div class='form-inline'>
+                  			<label for="comment" class="control-label"><font size=3 color=red>审批意见</font></label>
+                  			<div class="form-group">
+                            	<input class="form-control" style="width:300%" placeholder="请填写审批意见(必填项)" id="comment" name="comment">
+                        	</div>
+                  		</div>
+                    </li>
+                    <li class='pull-right'><button type="button" class='btn btn-primary' id='backBtn'>退回</button></li>
+                    <li class='pull-right'><button type="button" class='btn btn-primary' id='submitBtn'>提交</button></li>
+                    <li class='pull-right'><button type="button" class='btn btn-primary' id='exportAllBtn'>导出</button></li>
+                    <li class='pull-right'><button type="button" class='btn btn-primary' id='summAllBtn'>汇总</button></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="collNavTab" class="tab-pane active">
+	                    <div class="full-height-scroll">
+	                    	<div class='row'  style="margin:10px 0 0 5px">
+	                    		<div class='row' style='margin:0 0 0 10px'>
+	                    			<form class='form-inline' id='collIndexForm'>
+	                    				<div class="form-group formMargin">
+			                                 <label class="control-label" for="sourceProjId">评估项目</label>
+		                                	 <select class="form-control" name="sourceProjId" id="sourceProjId">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@irrProjTypeServiceImpl.projTypeSelect(4)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+	                    			    <div class="form-group">
+			                                 <label for="searchSplitCode" class="control-label">指标编码</label>
+			                                 <input type="text" placeholder="模糊查询" id="searchSplitCode" name="splitCode" class="form-control">
+			                             </div>
+			                             <div class="form-group">
+			                                 <label for="searchSplitName" class="control-label">指标名称</label>
+			                                 <input type="text" placeholder="模糊查询" id="searchSplitName" name="splitName" class="form-control">
+			                             </div>
+			                             <div class="form-group formMargin">
+			                                 <label class="control-label" for="searchCollOrgName">采集机构/部门</label>
+		                                	 <select class="form-control" name="searchCollOrgName" id="searchCollOrgName">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@irrUploadResultServiceImpl.findAllOrgs()}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             
+			                             <div class="form-group">
+			                                 <label class="control-label" for="searchIsCommit">是否提交</label>
+				                             <select class="form-control" name="searchIsCommit" id="searchIsCommit">
+				                                <option value=''>请选择</option>
+						                        <option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('isUse',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+				                             </select>
+			                             </div>
+			                             <button type="button" class='btn btn-primary btn-sm pull-right' id='searchBtn'>查询</button>
+			                             <button type="button" class='btn btn-primary btn-sm pull-right' id='resetBtn'>重置</button>
+	                    			</form>
+	                    		</div>
+		                    	<div class='row' style='margin:5px 0 0 0;'>
+		                    		<div class="jqGrid_wrapper">
+					                    <table id="indexTable"></table>
+					                    <div id="indexPage"></div>
+					                </div>
+		                    	</div>
+		                    </div>
+		                </div>
+                   </div>
+                    <div id="indexNavTab" class="tab-pane">
+                    	<div class="full-height-scroll">
+                    		<div class="row" style="margin:5px 0 0 0">
+	                    		<div class='row'>
+	                    			<div class='col-lg-12'>
+	                    				<div class='row'  style='padding:0 20px 0 25px'>
+	                    					<form class='form-inline' id='indexSearchForm'>
+	                    						<div class="form-group formMargin">
+					                                 <label class="control-label" for="projTypeId">评估项目</label>
+				                                	 <select class="form-control" name="projTypeId" id="projTypeId">
+				                                     	<option value=''>请选择</option>
+						                             	<option th:each="option: ${@irrProjTypeServiceImpl.projTypeSelect(4)}" th:value="${option.key}" th:text="${option.value}"></option>
+				                                	 </select>
+					                             </div>
+	                    						<div class="form-group">
+					                                 <label for="searchIndexCode" class="control-label">指标编码</label>
+					                                 <input type="text" placeholder="模糊查询" id="searchIndexCode" name="indexCode" class="form-control">
+					                             </div>
+					                             <div class="form-group formMargin">
+					                                 <label for="searchIndexName" class="control-label">指标名称</label>
+					                                 <input type="text" placeholder="模糊查询" id="searchIndexName" name="indexName" class="form-control">
+					                             </div>
+					                             <div class="form-group">
+					                                 <label class="control-label" for="orgId">部门/机构</label>
+				                                	 <select class="form-control" name="orgId" id="orgId">
+				                                     	<option value=''>请选择</option>
+						                             	<option th:each="option: ${@irrTaskServiceImpl.getOrgsMap('86')}" th:value="${option.key}" th:text="${option.value}"></option>
+				                                	 </select>
+					                             </div>
+					                             <button type="button" class='btn btn-primary btn-sm pull-right hidden' id='indexSummBtn'>汇总</button>
+					                             <button type="button" class='btn btn-primary btn-sm pull-right hidden' id='indexExportBtn'>导出</button>
+					                             <button type="button" class='btn btn-primary btn-sm pull-right' id='indexRestBtn'>重置</button>
+					                             <button type="button" class='btn btn-primary btn-sm pull-right' id='indexSearchBtn'>查询</button>
+	                    					</form>
+	                    				</div>
+	                    				<div class='row' style='margin:5px 0 0 0;'>
+	                    					<div class='jqGrid_wrapper'>
+		                    					<table id="orgResultTable"></table>
+				                           		<div id="orgResultPage"></div>
+				                           	</div>
+	                    				</div>
+	                    			</div>
+	                    		</div>
+                    		</div>
+                    	</div>
+                    </div>
+                    <div id="projNavTab" class="tab-pane">
+	                    <div class="full-height-scroll">
+	                    	<div class='row'  style="margin:10px 0 0 5px">
+	                    		<div class='row' style='margin:0 0 0 10px'>
+	                    			<form class='form-inline'>
+		                    			<div class="form-group">
+			                                 <label class="control-label" for="projTypeDim">评估项目维度</label>
+		                                	 <select class="form-control" name="projTypeDim" id="projTypeDim">
+		                                     	<option value=''>请选择</option>
+				                             	<option th:each="option: ${@frSystemDictionaryService.getDictionaryMap('projTypeDim',#locale)}" th:value="${option.key}" th:text="${option.value}"></option>
+		                                	 </select>
+			                             </div>
+			                             <button type="button" class='btn btn-primary btn-sm pull-right hidden' id='projSummBtn'>汇总</button>
+			                             <button type="button" class='btn btn-primary btn-sm pull-right hidden' id='projExportBtn'>导出</button>
+			                             <button type="button" class='btn btn-primary btn-sm pull-right' id='projSearchBtn'>查询</button>
+	                    			</form>
+	                    		</div>
+		                    	<div class='row' style='margin:5px 0 0 0;'>
+		                    		<div class='jqGrid_wrapper'>
+			                    		<table id="projResultTable"></table>
+			                            <div id="projResultPage"></div>
+			                        </div>
+		                    	</div>
+		                    </div>
+		                </div>
+                   </div>
+				</div>
+				
+				<!-- 退回模态框 -->
+		        <div class="modal inmodal fade" id="backModal" tabindex="-1" role="dialog" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+								</button>
+								<h4 class="modal-title">退回</h4>
+								<small class="font-bold">在这里，您可以选择采集人进行退回！</small>
+							</div>
+							<div class="modal-body">
+								<div class='jqGrid_wrapper'>
+				                    <table id="collBackTable"></table>
+				                    <div id="collBackPage"></div>
+				                </div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+								<button type="button" class="btn btn-primary" id="backSureBtn">确定</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- 遮罩模态框 -->
+		        <div class="modal inmodal fade" id="waitModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop='static'>
+					<div class="modal-dialog">
+	                    <div class="ibox ">
+	                        <div class="ibox-title">
+	                            <h5>请等待...</h5>
+	                        </div>
+	                        <div class="ibox-content">
+	                            <div class="spiner-example">
+	                                <div class="sk-spinner sk-spinner-three-bounce">
+	                                    <div class="sk-bounce1"></div>
+	                                    <div class="sk-bounce2"></div>
+	                                    <div class="sk-bounce3"></div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var taskId = '[(${taskId})]';
+	var id = '[(${id})]';
+	var collUserLoginName = '[(${collUserLoginName})]';
+	/*指标tab查询*/
+	function indexSearch(){
+		var formJson = $('#indexSearchForm').getNotNullJson();
+    	formJson.taskId = id;
+    	var page = $('#orgResultTable').getGridParam('page');
+    	if(isEmpty(page)){
+    		page = 1;
+    	}
+    	$("#orgResultTable").jqGrid('clearGridData');//清空表格
+		$("#orgResultTable").jqGrid('setGridParam',{//重新加载数据
+			url : '[(@{/irr/orgResult/findOrgResult.action})]',
+			datatype : 'json',
+			postData : formJson,
+			page : page
+		},true).trigger("reloadGrid");
+	}
+	$(document).ready(function(){
+		/*添加提交信息*/
+		var submitInfo = [(${@irrTaskServiceImpl.getUserInfo(collUserLoginName)})];
+		if(isNotEmpty(submitInfo)){
+			$('#submitInfoSpan').html('提交人:' + submitInfo.userName +'&nbsp;/&nbsp;提交部门:' + submitInfo.orgName);
+		}
+		/*指标结果表格*/
+		$("#orgResultTable").jqGrid({
+			url:"[(@{/irr/orgResult/isc/fetch?isc_dataFormat=json})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+			postData : {
+				operationType : 'fetch',
+				textMatchStyle : 'substring',
+				taskId : id,
+				sortBy : 'indexCode'
+			},
+			cellEdit : true,
+    	    cellsubmit : 'remote',
+    	    cellurl : '[(@{/irr/orgResult/editOrgResult.action})]',
+	        datatype: "json",
+	        height: 340,
+	        autowidth: true,
+	        shrinkToFit: false,
+	        autoScroll: true,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['id','指标ID','任务期次','指标编码','指标名称','本期指标结果','本期指标得分','上期指标结果','上期指标得分','数据验证','数据说明',
+	        	'任务ID','机构ID','机构编码','机构名称'],
+	        colModel:[{
+	        	name:'id',
+	        	index:'id',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexId',
+	        	index:'indexId',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'taskBatch',
+	        	index:'taskBatch',
+	        	hidden : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexCode',
+	        	index:'indexCode',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexName',
+	        	index:'indexName',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexResultQ2',
+	        	index:'indexResultQ2',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexScoreQ2',
+	        	index:'indexScoreQ2',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'indexResultQ1',
+	        	index:'indexResultQ1',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable: true,
+	        	search : true,
+	        	edittype:'text'
+	        },{
+	        	name:'indexScoreQ1',
+	        	index:'indexScoreQ1',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'dataVali',
+	        	index:'dataVali',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name:'dataDesc',
+	        	index:'dataDesc',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : true,
+	        	search : true,
+	        	edittype:'text'
+	        },{
+	        	name:'taskId',
+	        	index:'taskId',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'orgId',
+	        	index:'orgId',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'orgCode',
+	        	index:'orgCode',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'orgName',
+	        	index:'orgName',
+	        	hidden : false,
+	        	editable: false,
+	        	search:true
+	        }],
+	        pager: "#orgResultPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        },
+	        afterSubmitCell : function(serverresponse, rowid, cellname, value, iRow, iCol){
+	        	indexSearch();
+	        }
+	    });
+	    $("#orgResultTable").jqGrid('navGrid', '#orgResultPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#orgResultTable').setGridWidth(width);
+	        $('#collBackTable').setGridWidth(width);
+	    });
+	    
+	    /*指标tab重置*/
+	    $('#indexRestBtn').click(function(){
+	    	$('#indexSearchForm')[0].reset();
+	    });
+	    
+	    /*指标tab查询*/
+	    $('#indexSearchBtn').click(function(){
+	    	indexSearch();
+	    });
+	    
+	    /*评估项目维度表格*/
+		$("#projResultTable").jqGrid({
+			url:"[(@{/irr/projResult/findProjResult.action})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        height: 340,
+	        autowidth: true,
+	        shrinkToFit: false,
+	        autoScroll: true,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 1,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['ID','评估项目','得分','总公司得分','分公司得分','北京','天津','辽宁','大连','江苏','山东','青岛','河南','广东','四川'],
+	        colModel:[{
+	        	name : 'projResult.id',
+	        	index : 'projResult.id',
+	        	hidden : true
+	        },{
+	        	name:'projResult.typeName',
+	        	index:'projResult.typeName',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name : 'projResult.totalScore',
+	        	index : 'projResult.totalScore',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name : 'projResult.headScore',
+	        	index : 'projResult.headScore',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name : 'projResult.branchScore',
+	        	index : 'projResult.branchScore',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name : 'beijing',
+	        	index : 'beijing',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name : 'tianjin',
+	        	index : 'tianjin',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name : 'liaoning',
+	        	index : 'liaoning',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name : 'dalian',
+	        	index : 'dalian',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name : 'jiangsu',
+	        	index : 'jiangsu',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name : 'shandong',
+	        	index : 'shandong',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name : 'qingdao',
+	        	index : 'qingdao',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name : 'henan',
+	        	index : 'henan',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name : 'guangdong',
+	        	index : 'guangdong',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        },{
+	        	name : 'sichuan',
+	        	index : 'sichuan',
+	        	sortable : false,
+	        	hidden : false,
+	        	editable : false,
+	        	search : true
+	        }],
+	        pager: "#projResultPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }
+	    });
+	    $("#projResultTable").jqGrid('navGrid', '#projResultPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#projResultTable').setGridWidth(width);
+	    });
+	    
+	    /*提交按钮*/
+	    $('#submitBtn').click(function(){
+	    	var comment = $('#comment').val();
+			if(isEmpty(comment)){
+	    		swal('提示','请您先填写审核意见!','warning');
+	    		return false;
+	    	}
+			swal({
+                title: "确定提交?",
+                text: "您正在执行提交操作，请确定是否提交？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "提交",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+            	$.ajax({
+    				url : '[(@{/irr/task/checkOrgResult.action})]',
+    				type : "post",
+    				dataType : "json",
+    				success : function(data,textStatus) {
+    					if(data.flag == true){
+    						var param = {
+    								id : taskId,
+    								path : 'submit',
+    								comment : comment,
+    								collUserLoginName : collUserLoginName
+    						};
+    						processAjaxHandleJson('/system/flowable/task/completeTask',param);
+    					}else{
+    						swal('提示',data.data,'error');
+    					}
+    				},
+    				error : function(data, textStatus){
+    					swal({
+    		                title : '提示',
+    		                text : '提交失败！',
+    		                type : 'error'
+    		            });
+    				}
+    			});
+            });
+	    });
+	    
+	    /*完成任务*/
+	    function completeTask(){
+	    	var param = {
+					id : taskId,
+					path : 'submit',
+					comment : comment,
+					collUserLoginName : collUserLoginName
+			};
+			processAjaxHandleJson('/system/flowable/task/completeTask',param);
+	    }
+	    
+	    /*退回按钮*/
+	    $('#backBtn').click(function(){
+	    	var comment = $('#comment').val();
+			if(isEmpty(comment)){
+	    		swal('提示','请您先填写审核意见!','warning');
+	    		return false;
+	    	}
+			swal({
+                title: "确定退回?",
+                text: "您正在执行退回操作，请确定是否退回？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "退回",
+                cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+            	var param = {
+    					id : taskId,
+    					path : 'back',
+    					comment : comment
+    			};
+    			processAjaxHandleJson('/system/flowable/task/completeTask',param);
+            });
+	    });
+	    
+	    /*机构模态框确定按钮*/
+	    $('#backSureBtn').click(function(){
+	    	var ids = $("#collBackTable").jqGrid('getGridParam', 'selarrrow');
+	    	if(isEmpty(ids)){
+	    		swal('提示','需要至少选择一个采集人进行退回！','warning');
+	    		return false;
+	    	}
+	    	var loginName = new Array();
+	    	$.each(ids,function(index,obj){
+	    		var rowData = $("#collBackTable").jqGrid('getRowData', ids[index]);
+	    		loginName.push(rowData.LOGINNAME);
+	    	});
+	    	var comment = $('#comment').val();
+	    	$.ajax({
+				url : '[(@{/irr/task/summBack.action})]',
+				type : "post",
+				dataType : "json",
+				data : {
+					taskId : taskId,
+					loginNames : loginName.join(','),
+					comment : comment
+				},
+				success : function(data,textStatus) {
+					if(data.flag == true){
+						swal({
+							title : "提示",
+							type : "success",
+							text : data.data
+						}, function() {
+							taskInterfaceRefresh();
+						});
+					}else{
+						swal('提示',data.data,'error');
+					}
+				},
+				error : function(data, textStatus){
+					swal({
+		                title : '提示',
+		                text : '退回失败！',
+		                type : 'error'
+		            });
+				}
+			});	    	
+	    });
+	    
+	    /*指标tab汇总按钮*/
+	    $('#indexSummBtn').click(function(){
+	    	swal({
+                title: "确定汇总指标?",
+                text: "您正在执行汇总操作，请确定是否汇总？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "汇总",
+                confirmButtonClass : "ladda-button",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            }, function () {
+            	$('#waitModal').modal('show');
+            	$.ajax({
+            		url : '[(@{/irr/task/indexSumm.action})]',
+            		type : "post",
+            		dataType : "json",
+            		data : {
+                		id : id
+                	},
+            		success : function(data,textStatus) {
+            			$('#waitModal').modal('hide');
+            			if(data.flag == true){
+            				swal('提示',data.data,'success');
+            			}else{
+            				swal('提示',data.data,'error');
+            			}
+            			indexSearch();
+            		},
+            		error : function(data, textStatus){
+            			$('#waitModal').modal('hide');
+            			swal('提示','请求失败！','error');
+            		}
+            	});
+            });
+	    });
+	    
+	    /*指标tab导出按钮*/
+	    $('#indexExportBtn').click(function(){
+	    	var projTypeCode = '';
+	    	var orgId = $('#orgId').val();
+	    	if(isSelect(orgId)){
+	    		orgId = '';
+	    	}
+	    	window.location.href = '[(@{/irr/orgResult/exportIndexResult.action?orgId='+orgId+'&projTypeCode='+projTypeCode+'&taskId='+id+'})]';
+	    });
+	    
+	    /*评估项目tab汇总*/
+	    $('#projSummBtn').click(function(){
+	    	swal({
+                title: "确定汇总评估项目?",
+                text: "您正在执行汇总操作，请确定是否汇总？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "汇总",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            }, function () {
+            	$('#waitModal').modal('show');
+            	$.ajax({
+            		url : '[(@{/irr/task/projSumm.action})]',
+            		type : "post",
+            		dataType : "json",
+            		data : {
+                		id : id
+                	},
+            		success : function(data,textStatus) {
+            			$('#waitModal').modal('hide');
+            			if(data.flag == true){
+            				swal('提示',data.data,'success');
+            			}else{
+            				swal('提示',data.data,'error');
+            			}
+            		},
+            		error : function(data, textStatus){
+            			$('#waitModal').modal('hide');
+            			swal('提示','请求失败！','error');
+            		}
+            	});
+            });
+	    });
+	    
+	    /*汇总全部*/
+	    $('#summAllBtn').click(function(){
+	    	swal({
+                title: "确定汇总全部?",
+                text: "您正在执行汇总操作，请确定是否汇总？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "汇总",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            }, function () {
+            	$('#waitModal').modal('show');
+            	$.ajax({
+            		url : '[(@{/irr/task/summAll.action})]',
+            		type : "post",
+            		dataType : "json",
+            		data : {
+                		id : id
+                	},
+            		success : function(data,textStatus) {
+            			$('#waitModal').modal('hide');
+            			if(data.flag == true){
+            				swal('提示',data.data,'success');
+            			}else{
+            				swal('提示',data.data,'error');
+            			}
+            			indexSearch();
+            		},
+            		error : function(data, textStatus){
+            			$('#waitModal').modal('hide');
+            			swal('提示','请求失败！','error');
+            		}
+            	});
+            });
+	    });
+	    
+	    /*导出全部*/
+	    $('#exportAllBtn').click(function(){
+	    	window.location.href = '[(@{/irr/orgResult/exportAllResult.action?taskId='+id+'})]';
+	    });
+	    
+	    setTimeout(function(){
+            $('.wrapper-content').removeClass('animated fadeInRight');
+            /*退回表格*/
+    	    $("#collBackTable").jqGrid({
+    	    	url:"[(@{/irr/task/findSummBackInfo.action})]",
+    			recordtext: "显示：{0} - {1}，总数：{2} ",
+    		    emptyrecords: "本次查询无数据！",
+    		    loadtext: "读取中...",
+    		    loadui:"block",
+    		    pgtext : "第 {0}页， 共{1}页",
+    			mtype : "get",
+    	        datatype: "json",
+    	        postData : {
+    	        	id : id
+    	        },
+    	        height: 250,
+    	        width : 500,
+    	        autowidth: false,
+    	        shrinkToFit: false,
+    	        multiselect : true,//支持多选
+    	        prmNames: {//表示请求页码的参数名称
+    	            page: "page",
+    	            rows: "size"
+    	        },
+    	        page : 0,
+    	        rowNum: 20,
+    	        rowList: [10, 20, 30],
+    	        colNames:['账号','姓名','机构'],
+    	        colModel:[{
+    	        	name : 'LOGINNAME',
+    	        	index : 'LOGINNAME',
+    	        	hidden : false,
+    	        	editable : false,
+    	        	search : true
+    	        },{
+    	        	name : 'USERNAME',
+    	        	index : 'USERNAME',
+    	        	hidden : false,
+    	        	editable : false,
+    	        	search : true
+    	        },{
+    	        	name : 'ORGNAME',
+    	        	index : 'ORGNAME',
+    	        	sortable : false,
+    	        	hidden : false,
+    	        	editable : false,
+    	        	search : true
+    	        }],
+    	        pager: "#collBackPage",
+    	        viewrecords: true,
+    	        caption: "",
+    	        add: true,
+    	        edit: true,
+    	        addtext: 'Add',
+    	        edittext: 'Edit',
+    	        rownumbers: true,
+    	        hidegrid: true,
+    	        jsonReader : {
+    	        	root:"response.data",
+    	        	records: "response.totalElements",
+    	        	total:"response.totalPages",
+    	        	page:"response.number"
+    	        }
+    	    });
+    	    $("#collBackTable").jqGrid('navGrid', '#collBackPage',
+    	            {edit: false, add: false, del: false, search: false},
+    	            {height: 200, reloadAfterSubmit: true}
+    	    );
+        },1000);
+	    
+	    /*评估项目tab查询按钮*/
+	    $('#projSearchBtn').click(function(){
+	    	$("#projResultTable").jqGrid('clearGridData');//清空表格
+			$("#projResultTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',
+				postData : {
+					taskId : id,
+					projTypeDim : $('#projTypeDim').val()
+				}
+			},true).trigger("reloadGrid");
+	    });
+	    /* 采集tab*/ 
+		/*配置指标表格*/
+		$("#indexTable").jqGrid({
+			url:"[(@{/irr/uploadResult/searchIndexByPresentLogin.action})]",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+		    emptyrecords: "本次查询无数据！",
+		    loadtext: "读取中...",
+		    loadui:"block",
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+	        datatype: "json",
+	        postData : {
+	        	taskId : id,
+	        	collUserName : collUserLoginName
+	        },
+	        height: 350,
+	        autowidth: true,
+	        shrinkToFit: false,
+	        prmNames: {//表示请求页码的参数名称
+	            page: "page",
+	            rows: "size"
+	        },
+	        page : 0,
+	        rowNum: 20,
+	        rowList: [10, 20, 30],
+	        colNames:['ID','拆分指标ID','任务期次','拆分指标编码','拆分指标名称','任务ID','主体编码','本期指标结果','本期指标得分','上期指标结果',
+	        	'上期指标得分','备注','采集方式','格式化前采集方式','采集机构','采集机构名称','是否人工改动',
+	        	'结果类型','是否填写原因','采集人名称'],
+	        colModel:[{
+	        	name:'ID',
+	        	index:'ID',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITID',
+	        	index:'SPLITID',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'TASKBATCH',
+	        	index:'TASKBATCH',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITCODE',
+	        	index:'SPLITCODE',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITNAME',
+	        	index:'SPLITNAME',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'TASKID',
+	        	index:'TASKID',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'DATABODY',
+	        	index:'DATABODY',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITRESULTQ2',
+	        	index:'SPLITRESULTQ2',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITSCOREQ2',
+	        	index:'SPLITSCOREQ2',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITRESULTQ1',
+	        	index:'SPLITRESULTQ1',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'SPLITSCOREQ1',
+	        	index:'SPLITSCOREQ1',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'REMARK',
+	        	index:'REMARK',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'COLLWAY',
+	        	index:'COLLWAY',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true,
+	        	formatter : function(cellValue,options,rowObject){
+	        		if(isEmpty(cellValue)){
+	        			return '';
+	        		}
+	        		return [(${@frSystemDictionaryService.getDictionaryMapJsonString('collWay',#locale)})][cellValue];
+	        	}
+	        },{
+	        	name:'COLLWAY',
+	        	index:'COLLWAY',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true,
+	        	hidden : true
+	        },{
+	        	name:'COLLORGID',
+	        	index:'COLLORGID',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'COLLORGNAME',
+	        	index:'COLLORGNAME',
+	        	hidden:false,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'ISHANDCHANGE',
+	        	index:'ISHANDCHANGE',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'RESULTTYPENAME',
+	        	index:'RESULTTYPENAME',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'ISFILLREASON',
+	        	index:'ISFILLREASON',
+	        	hidden:true,
+	        	editable: false,
+	        	search:true
+	        },{
+	        	name:'COLLUSERNAME',
+	        	index:'COLLUSERNAME',
+	        	sortable : false,
+	        	editable: false,
+	        	search:true
+	        }],
+	        pager: "#indexPage",
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: true,
+	        hidegrid: true,
+	        jsonReader : {
+	        	root:"response.data",
+	        	records: "response.totalElements",
+	        	total:"response.totalPages",
+	        	page:"response.number"
+	        }
+	    });
+	    $("#indexTable").jqGrid('navGrid', '#indexPage',
+	            {edit: false, add: false, del: false, search: false},
+	            {height: 200, reloadAfterSubmit: true}
+	    );
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#indexTable').setGridWidth(width);
+	    });
+	    $("#searchBtn").click(function(){
+	    	var sourceProjId = $('#sourceProjId').val();
+	    	var splitCode=$('#searchSplitCode').val();
+	    	var splitName=$('#searchSplitName').val();
+	    	var collOrgName=$('#searchCollOrgName').val();
+	    	var isCommit=$('#searchIsCommit').val();
+	    	$("#indexTable").jqGrid('clearGridData');//清空表格
+			$("#indexTable").jqGrid('setGridParam',{//重新加载数据
+				datatype : 'json',					
+				postData : {
+					taskId : id,
+					sourceProjId : sourceProjId,
+					splitCode : splitCode,
+					splitName : splitName,
+					collOrgName : collOrgName,
+					collUserName : collUserLoginName,
+					isCommit : isCommit
+				},
+				page : 1
+			},true).trigger("reloadGrid");
+	    });
+	    /*指标tab重置*/
+	    $('#resetBtn').click(function(){
+	    	$('#collIndexForm')[0].reset();
+	    });
+	});
+</script>
+</html>

@@ -1,0 +1,34 @@
+--评估期内承保的保单中完成回访的保单件数
+select chdrcoy,count(nvl(CHDRNUM,0)) from (
+select  base.COMPANYNO || base.branch chdrcoy ,base.chdrnum,base.endhesdate,
+  a.CHDRCOYID 机构号,
+  a.CHDRNUM 保单号,
+  a.CODE 产品代码,
+  a.OCCDATE 保单生效日,
+  a.HOISSDTE 保单签发日,
+  a.AGTYPE 渠道,
+  a.STATUS 工单状态,
+  a.BACRS 回访结果,
+  a.vslstatus 亲访信状态,
+ a.vslresult 亲访信回访结果,
+ a.ZACKDTE 回执签收日,
+ a.CBLSTATUS 回访信状态
+  from ccreport_policys_base base
+  left join ccnt.crm_case3@haslrd a on a.chdrcoyid = base.COMPANYNO || base.branch and a.chdrnum=base.chdrnum
+ inner join CCREPORT_POLICYS_INDICATOR indi on base.POLICYNO =
+                                               indi.POLICYNO
+ inner join ccreport_crm_case3 case3 on base.POLICYNO = case3.POLICYNO
+ where base.OCCDATE >= '20180401'
+   and base.OCCDATE <= '20180630'
+   and indi.ISCFI = '0'
+   and indi.ISWD = '0'
+   and base.ZACKDTE is not null
+   and base.ZACKDTE != '99999999'
+   and base.NEEDCALLBACK = '1'
+   and base.CNTTYPE not like 'PA%'
+   and case3.bacrs not in ('1', '10')
+   and NOT (CASE3.DATIME like '% 0:00AM' OR CASE3.DATIME LIKE '%000000')
+   and base.CHANNEL in ('FC', 'BK', 'AD', 'RP', 'GB')
+   ) t 
+   where BACRS in('2','9') 
+   group by chdrcoy

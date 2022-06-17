@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="T_IRR_SPLIT_INDEX" author="fc">
+        <createTable tableName="T_IRR_SPLIT_INDEX" remarks="拆分指标信息表">
+			<column name="ID"					type="java.sql.Types.VARCHAR(36)"		remarks="主键ID">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="SPLIT_CODE"       	type="varchar(50)"      	 			remarks="拆分指标编码"></column>
+			<column name="SPLIT_NAME"       	type="varchar(300)"      	 			remarks="拆分指标名称"></column>
+			<column name="SOURCE_INDEX_ID"      type="varchar(36)"      	 			remarks="源指标ID"></column>
+			<column name="SOURCE_INDEX_NAME"    type="varchar(300)"      	 			remarks="源指标名称"></column>
+			<column name="SOURCE_PROJ_NAME"     type="varchar(150)"      	 			remarks="评估项目名称"></column>
+			<column name="SPLIT_FORMULA" 		type="varchar(1000)" 					remarks="拆分指标公式"></column>
+			<column name="SPLIT_FORMULA_CODE" 	type="varchar(1000)" 					remarks="拆分指标公式编码"></column>
+			<column name="SPLIT_EVAL_FORM"      type="varchar(1000)"       				remarks="拆分指标可执行公式"></column>
+			<column name="IS_USE"       		type="varchar(5)"      	 				remarks="是否启用"></column>
+			<column name="COLL_WAY"  			type="varchar(5)"  						remarks="采集方式"></column>
+			<column name="USER_ROLE" 			type="varchar(20)" 						remarks="用户角色"></column>
+			<column name="USER_ORG_ID"  		type="varchar(36)" 						remarks="用户所属机构ID"></column>
+			<column name="USER_ORG_CODE" 		type="varchar(30)" 						remarks="用户所属机构编码"></column>
+			<column name="USER_ORG_NAME" 		type="varchar(90)" 						remarks="用户所属机构名称"></column>
+			<column name="DATA_BODY"      		type="varchar(50)"      				remarks="主体编码"></column>
+			<column name="FD_CREATOR"           type="varchar(255)"  					remarks="创建人"></column>
+			<column name="FD_CREATE_DATE"       type="DATETIME"                     	remarks="创建日期"></column>
+			<column name="FD_LAST_MODIFIER"     type="varchar(50)"  					remarks="最后修改人"></column>
+			<column name="FD_LAST_MODIFYDATE"   type="DATETIME"                     	remarks="最后修改日期"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

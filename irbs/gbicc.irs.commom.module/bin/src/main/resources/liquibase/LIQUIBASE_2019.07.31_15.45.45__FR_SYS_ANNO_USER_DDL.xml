@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?><!--LIQUIBASE_2019.07.31_15.45.45__FR_SYS_ANNO_USER.xml--><databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <property name="now" value="now()" dbms="postgresql"/>
+    <changeSet id="FR_2019.07.31_15.45.45__FR_SYS_ANNO_USER_DDL.xml" author="framework">
+        <createTable tableName="FR_SYS_ANNO_USER" remarks="用户查看公告记录表">
+            <column name="FD_ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="FD_A_ID" type="java.sql.Types.VARCHAR(36)" remarks="公告ID"></column>
+            <column name="FD_U_ID" type="java.sql.Types.VARCHAR(200)" remarks="用户ID"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,32 @@
+uvw_hasl_Employeecountbydep1   员工 可筛选 销售
+uvw_hasl_Employeecountbydep2   管理层离职率
+uvw_hasl_Employeecountbydep3   学历情况
+
+
+铂金系统 Carol电话：17710806842 
+
+
+渠道字段 channel
+
+
+FC  个险   GP 团险  RP续期 AD多元 BK银保
+
+
+
+
+
+
+新给你账号开了一张表的权限（organization ），这个表就是组织层级的对应表。
+
+select code,c_name from dbo.organization where typeid='2'
+---orgcode2
+select code,c_name from dbo.organization where typeid='3'
+---orgcode3
+select code,c_name from dbo.organization where typeid='4'
+---orgcode4
+?
+体系的对应关系
+
+payrid? 17---内勤薪酬
+
+payrid? 30---销售薪酬

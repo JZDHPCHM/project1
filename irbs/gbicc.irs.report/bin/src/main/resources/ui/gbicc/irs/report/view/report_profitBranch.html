@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+	<script type="text/javascript" th:src="@{/webjars/jquery/1.12.4/js/jquery.js}"></script>
+</head>
+
+<body>
+</body>
+<script>
+    var newData=[];
+var areaObj = {};
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQuery,
+	grid: [
+			{width:100, name:'id',		primaryKey:true,hidden:true},
+			{
+				width:120,
+				name:'fdArea',					
+				title:'地区',
+				getGridSummary:function (records, summaryField) {
+					return "全行合计";
+	            }
+			},
+			{width:100, name:'fdKindName',			title:'分支机构',summaryFunction:function(){return '——';}},
+ 			{width:100, name:'fdAaaProfit',			title:'AAA',summaryFunction:function() {return (sumData['fdAaaProfit']);}},//本月 AAA
+ 			{width:100, name:'fdAaPProfit',			title:'AA+',summaryFunction:function() {return (sumData['fdAaPProfit']);}},//本月 AA+
+ 			{width:100, name:'fdAaProfit',			title:'AA',summaryFunction:function() {return (sumData['fdAaProfit']);}},//本月 AA
+ 			{width:100, name:'fdAaMProfit',			title:'AA-',summaryFunction:function() {return (sumData['fdAaMProfit']);}},//本月 AA-
+ 			{width:100, name:'fdAPProfit',			title:'A+',summaryFunction:function() {return (sumData['fdAPProfit']);}},//本月 A+
+ 			{width:100, name:'fdAProfit',			title:'A',summaryFunction:function() {return (sumData['fdAProfit']);}},//本月 A
+ 			{width:100, name:'fdAMProfit',			title:'A-',summaryFunction:function() {return (sumData['fdAMProfit']);}},//本月 A-
+ 			{width:100, name:'fdBbbPProfit',			title:'BBB+',summaryFunction:function() {return (sumData['fdBbbPProfit']);}},//本月 BBB+
+ 			{width:100, name:'fdBbbProfit',			title:'BBB',summaryFunction:function() {return (sumData['fdBbbProfit']);}},//本月 BBB
+ 			{width:100, name:'fdBbbMProfit',			title:'BBB-',summaryFunction:function() {return (sumData['fdBbbMProfit']);}},//本月 BBB-
+ 			{width:100, name:'fdBbPProfit',			title:'BB+',summaryFunction:function() {return (sumData['fdBbPProfit']);}},//本月 BB+
+ 			{width:100, name:'fdBbProfit',			title:'BB',summaryFunction:function() {return (sumData['fdBbProfit']);}},//本月 BB
+ 			{width:100, name:'fdBbMProfit',			title:'BB-',summaryFunction:function() {return (sumData['fdBbMProfit']);}},//本月 BB-
+ 			{width:100, name:'fdBProfit',			title:'B',summaryFunction:function() {return (sumData['fdBProfit']);}},//本月 B
+ 			{width:100, name:'fdCProfit',			title:'C',summaryFunction:function() {return (sumData['fdCProfit']);}},//本月 C
+ 			{width:100, name:'fdDProfit',			title:'D',summaryFunction:function() {return (sumData['fdDProfit']);}},//本月 D 
+ 			{width:100, name:'fdAvgProfit',			title:'平均收益率',summaryFunction:function() {return (sumData['fdAvgProfit']);}}//本月 D 
+	]
+};
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields:BorrowKeyBussFields.grid,
+    fetchDataURL:'[[@{/irs/report_profitBranch/isc/fetchData}]]'
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>借款人评级与风险调整收益率分布—分支机构</b>',
+	dataSource: report_borrowKeyBussDS,
+	sortField: 'fdArea',
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	showGridSummary:true,
+	allowRowSpanning:true,
+	canPageable: false,
+	//useRowSpanStyling: true,
+	fields: BorrowKeyBussFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	actionMembers:[
+		'query','reset',
+        {
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+                    url:"[(@{/irs/report_profitBranch/isc/fetchData/Results.csv})]",
+                    "year":year,"month":month,
+                    fileName:  "借款人评级与风险调整收益率分布—分支机构",
+                    sortBy: "fdArea"
+                });
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+/* 	getRowSpan: function(record, rowNum, colNum){
+		if(colNum==0)
+			return areaObj[record.fdArea];
+		return 1;
+	}, */
+    query: function(){
+        isc.FwRPCManager.get({
+            url:"[(@{/irs/report_profitBranch/isc/fetchData})]",//defaultId
+            urlParameters:{"year":year,"month":month},
+            callback: function(response,rawData,request){
+                var data = rawData.response.data;
+                sumData = [];
+                newData=[];
+                for(var i =0 ;i<data.length;i++){
+                    var record = data[i];
+                    if(record.fdArea==='全行'){
+                        sumData = record;
+                        continue ;
+                    }
+                    newData.push(record);
+                }
+                borrowKeyBussFieldsListGrid.setData(newData);
+            }
+        });
+    },
+	afterQuery:function(dsResponse,data,dsRequest){
+		borrowKeyBussFieldsListGrid.setData(newData);
+	}  
+	
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+
+</script>
+</html>

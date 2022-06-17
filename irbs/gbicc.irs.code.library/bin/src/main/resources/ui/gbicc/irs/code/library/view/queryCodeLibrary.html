@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+<meta charset="UTF-8">
+<title th:text="#{application.title}"></title>
+</head>
+<body>
+
+</body>
+<script>
+var Fields ={ 
+	/* ds:[
+		{name:'codeNo',primaryKey:true},
+    	{name:'codeName'},
+		{name:'itemCode'},
+		{name:'itemName'},
+		{name:'isInuse'},
+		{name:'sortNo'}
+	], */
+	query:[
+		{width:'*',	name:'codeNo',title:'代码编号',type: 'text'},
+		{width:'*',	name:'itemCode',title:'项目编号',type: 'text'}
+	],
+	grid:[
+		{width:'*',name:'codeNo',title:'代码编号',primaryKey:true,},
+		{width:'*',name:'codeName',title:'代码描述'},
+		{width:'*',name:'itemCode',title:'项目编号',primaryKey:true,},
+		{width:'*',name:'itemName',title:'项目名称'},
+		{width:'*',name:'createDate',title:'创建时间'}
+	]
+	/* ,
+	edit: [
+		{width:'*',	name:'codeNo',          title:'[(#{codeNo})]',  		type: 'text',		primaryKey:true,canEdit:true},
+		{width:'*',name:'codeName',    		title:'[(#{codeName})]',		type: 'text',		allowEmptyValue:true,required: true},
+		{width:'*',name:'itemCode',  		title:'[(#{itemCode})]',		type: 'text',		hidden: true},
+		{width:'*',name:'itemName',    		title:'[(#{itemName})]',		type: 'text',		required: true},
+		{width:'*',name:'isInuse', 		 	title:'[(#{isInuse})]',			type: 'text'}
+	] */
+}
+
+isc.FwRestDataSource.create({
+	ID: 'codeLibraryDS',
+	width:500, height:224,
+    fields: Fields.ds,
+    dataURL: '[(@{/irs/codeLibrary/isc})]'
+});
+
+isc.FwListGrid.create({
+	ID: 'codeLibraryList',
+	title: '<b>码值列表</b>',
+	dataSource: codeLibraryDS,
+	autoFetchData:true,
+	canPageable:true,
+    loadDataOnDemand:true,
+	fields: Fields.grid,
+	sortField:'codeNo',
+	canSort:true,
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','10%','20%'],
+	    fields: Fields.query
+	},
+	actionMembers:[
+		'refresh','query'
+	]
+});
+
+
+isc.FwPage.create({
+	tab: {
+		pane:codeLibraryList
+	}
+});
+
+
+
+
+</script>
+</html>

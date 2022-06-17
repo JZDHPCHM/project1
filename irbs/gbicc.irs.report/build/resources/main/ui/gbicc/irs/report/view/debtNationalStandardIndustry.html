@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html th:replace="template/inspinia_singlemenu/inspinia.html::html">
+<head>
+<title>报表管理&nbsp;&nbsp;/&nbsp;&nbsp;债项-国标行业维度</title>
+<style type="text/css">
+	.ui-state-default, .ui-widget-content .ui-state-default {
+    	font-weight: normal;
+    	font-size: 12px;
+	}
+	.ui-th-ltr, .ui-jqgrid .ui-jqgrid-htable th.ui-th-ltr {
+	    border-bottom: 1px solid #DDD;
+	}
+	.form-group {
+	    margin-bottom: 0;
+	}
+</style>
+</head>
+<body>
+	<div id="wrapper" style="margin-left: 0;">
+		<div id="page-wrapper" class="gray-bg">
+			<!-- 菜单开始end -->
+			<div class="wrapper wrapper-content">
+				<div class="row">
+	                <div class="col-lg-12">
+	                	<div class="ibox float-e-margins">
+	                		<div class="ibox-title">
+	                            <h5>报表管理&nbsp;&nbsp;/&nbsp;&nbsp;债项-国标行业维度</h5>
+	                        </div>
+	                        <div class="ibox-content" style="padding-bottom: 0;">
+	                        	<form class="form-horizontal" id="formSearch">
+									<div class="form-group">
+										<label class="col-sm-1 control-label">报表日期</label>
+										<div class="col-sm-2">
+											<div class="input-daterange input-group" id="datepicker">
+												<input id="date1" type="text" class="form-control"
+													name="date1" placeholder="请选择报表日期" readonly />
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<b id="btn-query" class="btn btn-success">查询</b>
+											<b id="btn-reset" class="btn btn-success">重置</b>
+											<b id="btn-export-on" class="btn btn-success">导出</b>
+										</div>
+									</div>
+								</form>
+	                        </div>
+	                	</div>
+						<div class="jqGrid_wrapper">
+                            <div id="table_zz_div" class="spiner-example"
+								style="display: none;">
+								<div class="sk-spinner sk-spinner-wave">
+									<div class="sk-rect1"></div>
+									<div class="sk-rect2"></div>
+									<div class="sk-rect3"></div>
+									<div class="sk-rect4"></div>
+									<div class="sk-rect5"></div>
+								</div>
+							</div>
+							<div id="table_bg_div">
+								<table id="table_list" style="height: 1px;color: white;"></table>
+							</div>
+                        </div>    	    
+	                </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+
+$("#btn-export-on").click(function(){
+	var sj1 = $('#date2').val();
+	var sj2 = $('#date1').val();
+	var sj="";
+	if(sj1){
+		sj =sj1+"至"+sj2;
+	}else{
+		sj =sj2;
+	}
+	$.ajax({
+		url: "/irs/reportMain/export.do",
+		data:{name:"债项-国标行业维度.xlsx",sj:sj,frequency:"月报"},
+		async:false,
+		success: function(result){
+			swal({
+                title: "提示",
+                text: "导出完毕，请到下载中心下载！",
+                })
+		}
+})
+})
+	//当前月份的上一个月
+	var d = new Date();
+	var y = d.getFullYear();
+	var m = d.getMonth()+1;
+	var nowDate = y + '-' + m;
+	if(m == 0){
+	   y = y-1;
+	   nowDate = y + '-' + 12;
+	}  var date = d.getDate();//得到日期
+	  if (date < 10) date = "0" + date;
+	  nowDate = nowDate + "-" + date;
+	$('#date1').datepicker({
+		format: 'yyyy-mm-dd',
+	    language: "zh-CN",
+	    autoclose:true,
+	    showOtherMonths : false,
+		selectOtherMonths : false,
+		endDate:'0m',//结束时间，在这时间之后都不可选
+	    //startView: 1,
+	    //minViewMode: 1,
+	    maxViewMode: 1
+	});
+	//设置值为当前月份的上一个月
+	$('#date1').datepicker('setDate', new Date(nowDate)); //把要设置的默认值放入new Date()里面
+	
+	var mydata = [];
+	var mydata1 = [];
+	
+	var form="";
+	 $.ajax({
+			url: "/irs/reportMain/queryReportNationalDebt", 
+			async:false,
+			success: function(result){
+				mydata=result[0];
+				mydata1=result[1];
+	      }})
+    $('#btn-query').click(function(){
+    	if($('#date1').val() == ""){
+    		swal({
+    		    title: "提示",
+    		    text: "请先选择报表日期查询",
+    		    type: "info"
+    		});
+    	}else{
+    		form = $('#formSearch').serializeObject();
+     	   $.ajax({
+     		url: "/irs/reportMain/queryReportNationalDebt",  
+        		data:form,
+        		async:false,
+        		success: function(result){
+        			mydata=result[0];
+              }}) 
+ 		//此为第二次重新加载表头和数据
+ 	$("#gbox_table_list .jqg-second-row-header").remove();
+         $("#table_list").jqGrid('setGridParam', {postData:form,page:1}).trigger("reloadGrid");
+           	$("#table_list").jqGrid('setGroupHeaders', {
+ 		    useColSpanStyle: true,
+ 		    groupHeaders:[
+ 		    	{startColumnName:'FD_FINAL_LEVEL', numberOfColumns:1, titleText:'债项评级'},
+ 		        {startColumnName:'ONE_QTY', numberOfColumns:4, titleText:mydata[0].PARENT_NAME},
+ 		        {startColumnName:'TWO_QTY', numberOfColumns:4, titleText:mydata[1].PARENT_NAME},
+ 		        {startColumnName:'THREE_QTY', numberOfColumns:4, titleText:mydata[2].PARENT_NAME},
+ 		        {startColumnName:'FOUR_QTY', numberOfColumns:4, titleText:mydata[3].PARENT_NAME},
+ 		        {startColumnName:'FIVE_QTY', numberOfColumns:4, titleText:mydata[4].PARENT_NAME},
+ 		        {startColumnName:'SUM_QTY', numberOfColumns:4, titleText: '所有行业合计'}
+ 		    ]  
+ 		})
+ 		//$("#gbox_table_list .jqg-second-row-header").find("th")[0].remove();
+           	var obj=$("#gbox_table_list .jqg-second-row-header").find("th:eq(0)").attr("rowspan",2);
+           	$("#table_list_FD_FINAL_LEVEL").css("display","none");
+    	} 	
+    });
+	
+	 
+    var form="";
+    //重置按钮
+	$("#btn-reset").click(function(){
+		$("#formSearch input").val("");
+	});
+	$(document).ready(function(){
+		var form="";
+		form = $('#formSearch').serializeObject();
+		$("#table_list").jqGrid({
+			url : "/irs/reportMain/debtGbhy",
+			recordtext: "显示：{0} - {1}，总数：{2} ",
+			emptyrecords: "",
+  	        loadtext: "读取中...",
+  	        loadui:"block",
+  		  beforeRequest:function(){
+              document.getElementById("table_zz_div").style.display="";
+              document.getElementById("table_bg_div").style.display="none";
+          },
+          loadComplete:function(){
+              document.getElementById("table_zz_div").style.display="none";
+              document.getElementById("table_bg_div").style.display="";
+              jqGridNoRecords("table_list");
+          },
+		    pgtext : "第 {0}页， 共{1}页",
+			mtype : "get",
+			postData:form,
+	        datatype: "json",
+	        height: ($(window).height()-$(".float-e-margins").height()-140),//屏幕高度-查询框高度-140的偏差值
+	        //scrollOffset : 0,
+	        autowidth: true,
+	        //显示水平滚动条
+  	        shrinkToFit: false,
+  		    autoScroll: false,
+	        colNames:['债项评级','债项数目','数目占比','债项余额','余额占比','债项数目','数目占比','债项余额','余额占比','债项数目','数目占比','债项余额','余额占比','债项数目','数目占比','债项余额','余额占比','债项数目','数目占比','债项余额','余额占比','债项数目','数目占比','债项余额','余额占比'],
+	        colModel:[
+	        	{name:'FD_FINAL_LEVEL',index:'name1', sortable: false,width: 60, formatter:function(value,index,row){
+	        		if(value){
+	        			return value;
+	        		}else{
+	        			return "合计";
+	        		}
+	        	}},
+				{name:'ONE_QTY',index:'name2', sortable: false,width: 60, formatter:function(value,index,row){
+	        		if(value){
+	        			return value;
+	        		}else{
+	        			return "0";
+	        		}
+	        	}},
+	        	{name:'ONE_QTY_ZB',index:'name3', sortable: false,width: 80, formatter:function(value,index,row){
+	        		value=value*100;
+	        		value=value.toFixed(2); 
+	        		return value+"%";
+	        	}},
+	        	{name:'ONE_AMT',index:'name4', sortable: false,width: 110, formatter:function(value,index,row){
+	        		if(value){
+	        			return numToMoneyField(value);
+	        		}else{
+	        			return "0";
+	        		}
+	        	}},
+	        	{name:'ONE_AMT_ZB',index:'name5', sortable: false,width: 80, formatter:function(value,index,row){
+	        		value=value*100;
+	        		value=value.toFixed(2); 
+	        		return value+"%";
+	        	}},
+	        	{name:'TWO_QTY',index:'name6', sortable: false,width: 60, formatter:function(value,index,row){
+	        		if(value){
+	        			return value;
+	        		}else{
+	        			return "0";
+	        		}
+	        	}},
+	        	{name:'TWO_QTY_ZB',index:'name7', sortable: false,width: 80, formatter:function(value,index,row){
+	        		value=value*100;
+	        		value=value.toFixed(2); 
+	        		return value+"%";
+	        	}},
+	        	{name:'TWO_AMT',index:'name8', sortable: false,width: 110, formatter:function(value,index,row){
+	        		if(value){
+	        			return numToMoneyField(value);
+	        		}else{
+	        			return "0";
+	        		}
+	        	}},
+	        	{name:'TWO_AMT_ZB',index:'name9', sortable: false,width: 80, formatter:function(value,index,row){
+	        		value=value*100;
+	        		value=value.toFixed(2); 
+	        		return value+"%";
+	        	}},
+	        	{name:'THREE_QTY',index:'name10', sortable: false,width: 60, formatter:function(value,index,row){
+	        		if(value){
+	        			return value;
+	        		}else{
+	        			return "0";
+	        		}
+	        	}},
+	        	{name:'THREE_QTY_ZB',index:'name11', sortable: false,width: 80, formatter:function(value,index,row){
+	        		value=value*100;
+	        		value=value.toFixed(2); 
+	        		return value+"%";
+	        	}},
+	        	{name:'THREE_AMT',index:'name12', sortable: false,width: 110, formatter:function(value,index,row){
+	        		if(value){
+	        			return numToMoneyField(value);
+	        		}else{
+	        			return "0";
+	        		}
+	        	}},
+	        	{name:'THREE_AMT_ZB',index:'name13', sortable: false,width: 80, formatter:function(value,index,row){
+	        		value=value*100;
+	        		value=value.toFixed(2); 
+	        		return value+"%";
+	        	}},
+				{name:'FOUR_QTY',index:'name14', sortable: false,width: 60, formatter:function(value,index,row){
+	        		if(value){
+	        			return value;
+	        		}else{
+	        			return "0";
+	        		}
+	        	}},
+	        	{name:'FOUR_QTY_ZB',index:'name15', sortable: false,width: 80, formatter:function(value,index,row){
+	        		value=value*100;
+	        		value=value.toFixed(2); 
+	        		return value+"%";
+	        	}},
+	        	{name:'FOUR_AMT',index:'name16', sortable: false,width: 110, formatter:function(value,index,row){
+	        		if(value){
+	        			return numToMoneyField(value);
+	        		}else{
+	        			return "0";
+	        		}
+	        	}},
+	        	{name:'FOUR_AMT_ZB',index:'name17', sortable: false,width: 80, formatter:function(value,index,row){
+	        		value=value*100;
+	        		value=value.toFixed(2); 
+	        		return value+"%";
+	        	}},
+	        	{name:'FIVE_QTY',index:'name18', sortable: false,width: 60, formatter:function(value,index,row){
+	        		if(value){
+	        			return value;
+	        		}else{
+	        			return "0";
+	        		}
+	        	}},
+	        	{name:'FIVE_QTY_ZB',index:'name19', sortable: false,width: 80, formatter:function(value,index,row){
+	        		value=value*100;
+	        		value=value.toFixed(2); 
+	        		return value+"%";
+	        	}},
+	        	{name:'FIVE_AMT',index:'name20', sortable: false,width: 110, formatter:function(value,index,row){
+	        		if(value){
+	        			return numToMoneyField(value);
+	        		}else{
+	        			return "0";
+	        		}
+	        	}},
+	        	{name:'FIVE_AMT_ZB',index:'name21', sortable: false,width: 80, formatter:function(value,index,row){
+	        		value=value*100;
+	        		value=value.toFixed(2); 
+	        		return value+"%";
+	        	}},
+	        	{name:'SUM_QTY',index:'name22', sortable: false,width: 60, formatter:function(value,index,row){
+	        		if(value){
+	        			return value;
+	        		}else{
+	        			return "0";
+	        		}
+	        	}},
+	        	{name:'SUM_QTY_ZB',index:'name23', sortable: false,width: 80, formatter:function(value,index,row){
+	        		value=value*100;
+	        		value=value.toFixed(2); 
+	        		return value+"%";
+	        	}},
+	        	{name:'SUM_AMT',index:'name24', sortable: false,width: 110, formatter:function(value,index,row){
+	        		if(value){
+	        			return numToMoneyField(value);
+	        		}else{
+	        			return "0";
+	        		}
+	        	}},
+	        	{name:'SUM_AMT_ZB',index:'name25', sortable: false,width: 80, formatter:function(value,index,row){
+	        		value=value*100;
+	        		value=value.toFixed(2); 
+	        		return value+"%";
+	        	}}
+	        ],
+	        viewrecords: true,
+	        caption: "",
+	        add: true,
+	        edit: true,
+	        addtext: 'Add',
+	        edittext: 'Edit',
+	        rownumbers: false,
+	        hidegrid: false
+	    });
+		$("#table_list").jqGrid('setGroupHeaders', {
+		    useColSpanStyle: true,
+		    groupHeaders:[
+		    	{startColumnName:'FD_FINAL_LEVEL', numberOfColumns:1, titleText:'债项评级'},
+		    	{startColumnName:'ONE_QTY', numberOfColumns:4, titleText:mydata[0].PARENT_NAME},
+		        {startColumnName:'TWO_QTY', numberOfColumns:4, titleText:mydata[1].PARENT_NAME},
+		        {startColumnName:'THREE_QTY', numberOfColumns:4, titleText:mydata[2].PARENT_NAME},
+		        {startColumnName:'FOUR_QTY', numberOfColumns:4, titleText:mydata[3].PARENT_NAME},
+		        {startColumnName:'FIVE_QTY', numberOfColumns:4, titleText:mydata[4].PARENT_NAME},
+		        {startColumnName:'SUM_QTY', numberOfColumns:4, titleText: '所有行业合计'}
+		    ]  
+		})
+	    $(window).bind('resize', function () {
+	        var width = $('.jqGrid_wrapper').width();
+	        $('#table_list').setGridWidth(width);
+	    });
+
+	    setTimeout(function(){
+	        $('.wrapper-content').removeClass('animated fadeInRight');
+	    },700);
+	    var obj=$("#gbox_table_list .jqg-second-row-header").find("th:eq(0)").attr("rowspan",2);
+      	$("#table_list_FD_FINAL_LEVEL").css("display","none");
+	})
+    $.fn.serializeObject = function() {  
+        var o = {};  
+        var a = this.serializeArray();  
+        $.each(a, function() {  
+            if (o[this.name]) {  
+                if (!o[this.name].push) {  
+                    o[this.name] = [ o[this.name] ];  
+                }  
+                o[this.name].push(this.value || '');  
+            } else {  
+                o[this.name] = this.value || '';  
+            }  
+        });  
+        return o;  
+    }
+</script>
+</html>

@@ -1,0 +1,21 @@
+/*
+ * 自动组件扫描贡献项配置示例
+ * 功能: 该贡献项配置为框架提供自动扫描组件的包名
+ * 使用说明:
+ * includes: 包含自动扫描的包名成列表
+ * excludes: 排除自动扫描的包名成列表
+ * 注意: 当 includes 和 excludes 发生冲突时,排除优先
+ */
+
+{
+    "includes":[
+        "gbicc.irs.debtRating.parameter.controller",
+        "gbicc.irs.debtRating.parameter.service.impl",
+        "gbicc.irs.debtRating.calculate.controller",
+        "gbicc.irs.debtRating.calculate.service.impl",
+        "gbicc.irs.debtRating.debt.controller",
+        "gbicc.irs.debtRating.debt.service.impl",
+        "gbicc.irs.debtRating.util"
+    ],
+    "excludes":[]
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="FB_MAJOR_TAX_VIOLATION" author="framework">
+
+        <!-- 重大税收违法结果表 -->
+        <createTable tableName="FB_MAJOR_TAX_VIOLATION" remarks="重大税收违法">
+            <column name="ID" type="java.sql.Types.VARCHAR(36)" remarks="主键">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="COMPANY_ID" type="java.sql.Types.VARCHAR(18)" remarks="统一社会信用代码、注册号"></column>
+            <column name="ILLEGAL_FACTS" type="java.sql.Types.VARCHAR(300)" remarks="主要违法事实"></column>
+            <column name="FACTS_DATE" type="java.sql.Types.VARCHAR(20)" remarks="事件时间"></column>
+            <column name="PUBLIC_DATE" type="java.sql.Types.VARCHAR(20)" remarks="发布时间"></column>
+            <column name="CASE_REPORT_PERIOD" type="java.sql.Types.VARCHAR(20)" remarks="案件上报期"></column>
+            <column name="CASE_PROPERTIES" type="java.sql.Types.VARCHAR(1000)" remarks="案件性质"></column>
+            <column name="PUNISH_DETAIL" type="java.sql.Types.VARCHAR(300)" remarks="相关法律依据及税务处理处罚情况"></column>
+            <column name="TAXPAYER_NAME" type="java.sql.Types.VARCHAR(100)" remarks="纳税人名称"></column>
+            <column name="TAXPAYER_CODE" type="java.sql.Types.VARCHAR(36)" remarks="纳税人识别码"></column>
+            <column name="ORGANIZATION_CODE" type="java.sql.Types.VARCHAR(36)" remarks="组织机构代码"></column>
+            <column name="FD_CREATOR" type="java.sql.Types.VARCHAR(255)" remarks="创建人"></column>
+            <column name="FD_CREATE_DATE" type="DATETIME" remarks="创建日期"></column>
+            <column name="FD_LAST_MODIFIER" type="java.sql.Types.VARCHAR(255)" remarks="最后修改人"></column>
+            <column name="FD_LAST_MODIFYDATE" type="DATETIME" remarks="最后修改日期"></column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

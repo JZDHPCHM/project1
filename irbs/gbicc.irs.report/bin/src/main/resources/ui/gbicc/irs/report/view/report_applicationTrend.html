@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html th:replace="template/smartclient/smartclient.html::html">
+<head>
+	<script type="text/javascript" th:src="@{/js/report_time.js?t=2}"></script>
+</head>
+<body>
+</body>
+<script>
+var trendNames ={
+		'1':'上调2级以上','2':'上调2级','3':'上调1级','4':'无调整',
+		'5':'下调1级','6':'下调2级','7':'下调3级','8':'下调3级以上','9':'合计'
+}
+
+//字段定义
+var BorrowKeyBussFields ={
+	query: tQueryQuarter,
+	grid: [
+			{name:'id',		primaryKey:true,hidden:true},
+			{
+				name:'name',					
+				title:'分支机构名称',rowSpans:2
+			},
+			{name:'rangeOrder',			title:'评级推翻幅度'},//评级推翻幅度
+		    {name:'localRufuseTimes',			title:'推翻次数'},//本分支机构权限内 推翻次数
+			{name:'localRufusePer',			title:'占比'},
+		    {name:'localRufuseCompQ',			title:'较上季变动'},
+		    {name:'localRufuseCompY',			title:'比年初变动'},
+		    {name:'upperRufuseTimes',			title:'推翻次数'},//总行权限内 推翻次数
+			{name:'upperRufusePer',			title:'占比'},
+		    {name:'upperRufuseCompQ',			title:'较上季变动'},
+		    {name:'upperRufuseCompY',			title:'比年初变动'},
+		    {name:'sumRufusePer',			title:'推翻次数合计'}
+	]
+};
+
+
+//整体借款人评级分布 
+isc.FwRestDataSource.create({
+	ID: 'report_borrowKeyBussDS',
+    fields: BorrowKeyBussFields.grid,
+    fetchDataURL: '[[@{/irs/report_applicationTrend/list}]]',
+});
+
+//整体借款人评级分布--列表
+isc.FwListGrid.create({
+	ID: 'borrowKeyBussFieldsListGrid',
+	title: '<b>评级模型推翻幅度报告</b>',
+	dataSource: report_borrowKeyBussDS,
+	headerHeight: 65,
+	canHover:true,
+	autoFetchData:false,
+	canPageable: false,
+	fields: BorrowKeyBussFields.grid,
+	initialCriteria:{
+		enable: true
+	},
+	headerSpans: [
+         {
+             fields: ["localRufuseTimes", "localRufusePer","localRufuseCompQ","localRufuseCompY"], 
+             title: "本分支机构权限内"
+         },
+         {
+             fields: ["upperRufuseTimes", "upperRufusePer","upperRufuseCompQ","upperRufuseCompY"], 
+             title: "总行权限内"
+         }
+     ],
+	queryForm: {
+	    colWidths:['15%','20%','15%','20%','15%','15%'],
+	    fields: BorrowKeyBussFields.query
+	},
+	exportFilename:'整体借款人评级分布',
+	//exportActionMembers:['export2Excel','exportAll2Excel'],
+	actionMembers:[
+		'query','reset',
+		{
+            title:'导出',
+            name:'diagram',
+            click: function(){
+                export2Excel({
+					url:"[(@{/irs/report_applicationTrend/isc/fetchData/Results.csv})]",
+                    "year":year,"quarter":quarter,
+					fileName:  "评级模型推翻幅度报告",
+                    sortBy: "name"
+				});
+            }
+        }
+	],
+	selectionUpdated: function(record, recordList){
+		this.Super('selectionUpdated',arguments);
+	},
+	changeActionMemberButtonStatus: function(record, recordList){
+		this.Super('changeActionMemberButtonStatus',arguments);
+    },
+	afterRemove: function(dsResponse, data, dsRequest){
+		this.Super('changeActionMemberButtonStatus',arguments);
+	},
+	formatCellValue:function(value, record, rowNum, colNum){
+		var formatVal = value;
+		var fieldName = borrowKeyBussFieldsListGrid.getField(colNum).title;
+		if( fieldName == "占比"){
+			formatVal = value + '%';
+		}
+		if(fieldName == '评级推翻幅度'){
+			formatVal = trendNames[value+''];
+		}
+		return formatVal;
+	}
+});
+
+isc.FwPage.create({
+	tab: {
+		pane: isc.HLayout.create({
+			members:[
+				isc.HLayout.create({
+					showResizeBar: false,
+				    width: '100%',
+				    members: [borrowKeyBussFieldsListGrid]     
+				})
+			]
+		})
+	}
+});
+
+borrowKeyBussFieldsListGrid.query();
+
+</script>
+</html>
